@@ -188,10 +188,7 @@ class CPSPasswordWidget(CPSStringWidget):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            hidden = ""
-            for i in value:
-                hidden += "*"
-            return hidden
+            return "********"
         elif mode == 'edit':
             kw = {'type': 'password',
                   'name': self.getHtmlWidgetId(),
@@ -200,7 +197,6 @@ class CPSPasswordWidget(CPSStringWidget):
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
-
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
