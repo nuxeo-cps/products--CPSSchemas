@@ -3,7 +3,7 @@
 <dtml-var manage_tabs>
 </dtml-let>
 
-<p>You will find below what the Python dictionnary used to create the current
+<p>You will find below what the Python dictionary used to create the current
 schema should look like.</p>
 
 <pre>
