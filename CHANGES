@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- getFileInfo returned 'None' when file had no modification date; nows returns
+  the default empty string.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -1624,7 +1624,8 @@ class CPSFileWidget(CPSWidget):
                 current_name = file.getId()
                 current_title = file.title
                 size = file.get_size()
-                last_modified = str(file._p_mtime)
+                if file._p_mtime:
+                    last_modified = str(file._p_mtime)
             else:
                 current_name = self.getWidgetId()
                 current_title = ''
