@@ -1,6 +1,6 @@
 Requires:
 ~~~~~~~~~
--
+- TranslationService >= 0.5.0
 New features:
 ~~~~~~~~~~~~~
 - Better error message for the CPSAttachedFileWidget, it tells what the max size
