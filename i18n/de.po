@@ -2,35 +2,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-16 03:08default\n"
+"POT-Creation-Date: 2005-03-27 19:33default\n"
 "PO-Revision-Date: 2005-03-14 11:08+0100\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#.   <label content="here/label_false" attributes="for here/getHtmlWidgetId;"> False </label>
+#.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
 msgstr "Falsch"
 
-#.   <label content="here/label_true" attributes="for here/getHtmlWidgetId;"> True </label>
+#.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Wahr"
 
+#.   <button onclick="window.close()">Fermer</button>
+#: from ../skins/cps_schemas/popup_photo.pt
+#, fuzzy
+msgid "button_close"
+msgstr "Layout"
+
 #.   <button type="button" attributes="
-#.           id button_rte_id;
+#.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
 #.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
-msgid "button_rte"
-msgstr "Layout"
+msgid "button_text_editor_popup"
+msgstr ""
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -46,7 +52,15 @@ msgstr "h"
 #.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/unZip/${field_id}/${index_path}">
+#.           (preview)
+#.         </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.           (preview)
+#.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
 msgstr "(Vorabansicht)"
 
@@ -67,6 +81,8 @@ msgstr "m"
 #.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
 #.         </p>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr "Erlaubte Dateiendungen"
 
@@ -115,7 +131,7 @@ msgstr "Bildgröße ändern "
 msgid "cpsschemas_photo_subtitle"
 msgstr "Überschrift: "
 
-#.   <span>cpsschemas_render_format</span>
+#.   <block>cpsschemas_render_format</block>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Format: "
@@ -123,29 +139,19 @@ msgstr "Format: "
 #.   <span>
 #.             Render position
 #.           </span>
-#.   <span>cpsschemas_render_position</span>
+#.   <block>cpsschemas_render_position</block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Position: "
 
-#.   <block condition="b">
-#.               cpsschemas_size_max
-#.               ${size_max}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.             </block>
-#.   <block condition="m">
-#.               cpsschemas_size_max
-#.               ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
-#.             </block>
-#.   <block condition="k">
-#.               cpsschemas_size_max
-#.               ${size_max (tal content="python:'%s' % (size_max / 1024)")}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.             </block>
+#.   <p>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="str_sizeMax")}
+#.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
+#, fuzzy
+msgid "cpsschemas_size_max ${size_max}"
 msgstr "Max. Bildgrösse ${size_max}·${storage_unit}"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
@@ -175,7 +181,7 @@ msgstr "Löschen eines Wörterbuchs"
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
 msgstr "Bearbeiten Wörterbuch \"${voc_id}\""
 
-#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
 msgstr "Hinzufügen eines Eintrags"
@@ -205,6 +211,21 @@ msgstr "Nachrichten Id:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Wert:"
 
+#.   <p>description_vocabulary_manage_form</p>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#, fuzzy
+msgid "description_vocabulary_manage_form"
+msgstr "Wörterbuch Management"
+
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -227,13 +248,15 @@ msgstr "Klicken Sie den Wert den sie wollen:"
 msgid "heading_enter_searched_value"
 msgstr "Eingabe Suchgegriff:"
 
+#.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
 msgstr "Hilfe für dieses Feld"
 
-#.   <span content="widget/label" condition="widget/is_i18n">label</span>
+#.   <block content="widget/label" condition="widget/is_i18n">label</block>
+#.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -286,6 +309,10 @@ msgstr "Ungültiger Ganz Zahl"
 msgid "cpsschemas_err_date"
 msgstr "Ungültiges Datum"
 
+#, fuzzy
+msgid "cpsschemas_err_bad_date"
+msgstr "Ungültiges Datum"
+
 msgid "cpsschemas_err_file"
 msgstr "Ungültige Datei"
 
@@ -294,6 +321,10 @@ msgstr "Ungültiger Suffix ${allowed_file_suffixes}"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Leere Datei"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big"
+msgstr "Ungültige Datei"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr "Sorry diese Datei ist zu groß "
@@ -350,6 +381,14 @@ msgstr "Nur lesbares Feld"
 
 msgid "cpsschemas_err_rangelist"
 msgstr "Fehler Wertebereich"
+
+#, fuzzy
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr "Ungültige Email"
+
+#, fuzzy
+msgid "cpsschemas_err_zippedhtml_html_not_found"
+msgstr "String zu lang"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -462,4 +501,3 @@ msgstr "Anders-Selektion"
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Berbeiten online"
-

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-02-10 10:27default\n"
+"POT-Creation-Date: 2005-03-27 19:33default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
-#.   <label content="here/label_false" attributes="for here/getHtmlWidgetId;"> False </label>
+#.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
 msgstr ""
 
-#.   <label content="here/label_true" attributes="for here/getHtmlWidgetId;"> True </label>
+#.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr ""
@@ -32,6 +32,17 @@ msgstr ""
 #.   <button onclick="window.close()">Fermer</button>
 #: from ../skins/cps_schemas/popup_photo.pt
 msgid "button_close"
+msgstr ""
+
+#.   <button type="button" attributes="
+#.           id button_text_editor_popup_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_text_editor_popup"
 msgstr ""
 
 #.   <block>at</block>
@@ -48,7 +59,15 @@ msgstr ""
 #.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/unZip/${field_id}/${index_path}">
+#.           (preview)
+#.         </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.           (preview)
+#.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
 msgstr ""
 
@@ -69,6 +88,8 @@ msgstr ""
 #.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
 #.         </p>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
 
@@ -199,6 +220,15 @@ msgstr ""
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "description_vocabulary_manage_form"
+msgstr ""
+
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
 msgstr ""
 
 #.   <em style="color: red" content="err">err</em>
@@ -351,6 +381,12 @@ msgid "cpsschemas_err_readonly"
 msgstr ""
 
 msgid "cpsschemas_err_rangelist"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_html_not_found"
 msgstr ""
 
 msgid "jscalendar_date_fmt"

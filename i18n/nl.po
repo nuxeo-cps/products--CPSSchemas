@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-10 10:27default\n"
+"POT-Creation-Date: 2005-03-27 19:33default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -23,14 +23,30 @@ msgstr ""
 "Domain: default\n"
 "Language-Code: nl \n"
 
-#.   <label content="here/label_false" attributes="for here/getHtmlWidgetId;"> False </label>
+#.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
 msgstr ""
 
-#.   <label content="here/label_true" attributes="for here/getHtmlWidgetId;"> True </label>
+#.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
+msgstr ""
+
+#.   <button onclick="window.close()">Fermer</button>
+#: from ../skins/cps_schemas/popup_photo.pt
+msgid "button_close"
+msgstr ""
+
+#.   <button type="button" attributes="
+#.           id button_text_editor_popup_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_text_editor_popup"
 msgstr ""
 
 #.   <block>at</block>
@@ -47,14 +63,40 @@ msgstr "h"
 #.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/unZip/${field_id}/${index_path}">
+#.           (preview)
+#.         </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.           (preview)
+#.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
+msgstr "(Versie HTML)"
+
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.           (printable version)
+#.         </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#, fuzzy
+msgid "cpsschema_link_printable_version"
 msgstr "(Versie HTML)"
 
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
 msgstr "mn"
+
+#.   <p>
+#.           cpsschemas_allowed_file_suffixes
+#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
+#.         </p>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
+msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
+msgstr ""
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -72,6 +114,14 @@ msgstr "Laden"
 msgid "cpsschemas_label_file_delete"
 msgstr "Afschaffen"
 
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.                     Edit file online
+#.                   </a>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#, fuzzy
+msgid "cpsschemas_label_file_edit_online"
+msgstr "Niemand"
+
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
@@ -81,6 +131,12 @@ msgstr "Bewaren"
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Niemand"
+
+#.   <label attributes="for string:${radio_name}_resize">resize</label>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#, fuzzy
+msgid "cpsschemas_label_image_resize"
+msgstr "Formaat&nbsp;: "
 
 #.   <span>
 #.           Photo subtitle
@@ -102,6 +158,15 @@ msgstr "Formaat&nbsp;: "
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Positie&nbsp;: "
+
+#.   <p>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="str_sizeMax")}
+#.           </p>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#, fuzzy
+msgid "cpsschemas_size_max ${size_max}"
+msgstr "Formaat&nbsp;: "
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -160,6 +225,21 @@ msgstr "MsgId&nbsp;:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Waarde&nbsp;:"
 
+#.   <p>description_vocabulary_manage_form</p>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#, fuzzy
+msgid "description_vocabulary_manage_form"
+msgstr "Beleid van het woordenlijst"
+
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -204,6 +284,22 @@ msgstr ""
 msgid "label_alt_text"
 msgstr "Alternatieve tekst"
 
+#, fuzzy
+msgid "cpsschemas_unit_bytes"
+msgstr "mn"
+
+#, fuzzy
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr "In het centrum"
+
+#, fuzzy
+msgid "cpsschemas_unit_mega_bytes"
+msgstr "Formaat&nbsp;: "
+
+#, fuzzy
+msgid "cpsschemas_unit_giga_bytes"
+msgstr "Formaat van invalide datum"
+
 msgid "cpsschemas_err_string"
 msgstr "Keten van invalide karakter"
 
@@ -231,11 +327,26 @@ msgstr "Invalid int "
 msgid "cpsschemas_err_date"
 msgstr "Formaat van invalide datum"
 
+#, fuzzy
+msgid "cpsschemas_err_bad_date"
+msgstr "Formaat van invalide datum"
+
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
 
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
+msgstr ""
+
 msgid "cpsschemas_err_file_empty"
 msgstr "leeg bestand"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big"
+msgstr "Invalid file"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr "This float must be positive"
 
 msgid "cpsschemas_err_image"
 msgstr "Invalid image"
@@ -261,8 +372,48 @@ msgstr "Invalid float"
 msgid "cpsschemas_err_password_mismatch"
 msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
 
+#, fuzzy
+msgid "cpsschemas_err_password_size_min"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_lower"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_upper"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_digit"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_extra"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_identifier"
+msgstr "Invalid int "
+
 msgid "cpsschemas_err_email"
 msgstr "Invalide Email"
+
+#, fuzzy
+msgid "cpsschemas_err_readonly"
+msgstr "Invalide Email"
+
+#, fuzzy
+msgid "cpsschemas_err_rangelist"
+msgstr "Invalid image"
+
+#, fuzzy
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr "Invalide Email"
+
+#, fuzzy
+msgid "cpsschemas_err_zippedhtml_html_not_found"
+msgstr "Te lange keten van karakter"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -327,6 +478,14 @@ msgstr "Nee"
 msgid "cpsschemas_label_true"
 msgstr "Ja"
 
+#, fuzzy
+msgid "cpsschema_label_on"
+msgstr "Ja"
+
+#, fuzzy
+msgid "cpsschema_label_off"
+msgstr "Nee"
+
 msgid "cpsschemas_label_link_href"
 msgstr "URL"
 
@@ -335,6 +494,38 @@ msgstr "Link naam"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Beschrijving"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr "Identificatie&nbsp;:"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr "Toevoegen een woordenlijst"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr "Identificatie&nbsp;:"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr "Afschaffen"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr "Een toegang toevoegen"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr "Afschaffen"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr "Afschaffen"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr "Toevoegen een woordenlijst"
 
 msgid "label_none_selection"
 msgstr ""
