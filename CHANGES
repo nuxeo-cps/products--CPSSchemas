@@ -1,15 +1,13 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
-
 New features:
 ~~~~~~~~~~~~~
 -
-
 Bug fixes:
 ~~~~~~~~~~
--
-
+- ImageWidget uploading non image or invalid image result in a Zope error 
+  in getImageInfo
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
