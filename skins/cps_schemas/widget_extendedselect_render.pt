@@ -35,7 +35,7 @@
     <span tal:attributes="id string:${id}_text"
           tal:content="value">Value</span>
     <a href="javascript:open_select_dialog()"><img tal:replace="structure
-            python:here.getImgTag('search_popup.gif', width=32, height=32)"></a>
+            python:here.getImgTag('search_popup.png', width=32, height=32)"></a>
   </tal:block>
 </tal:block>
 </tal:block>

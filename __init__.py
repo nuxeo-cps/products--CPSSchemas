@@ -70,7 +70,7 @@ def initialize(registrar):
         'CPS Document Tools',
         tools = tools,
         product_name = 'CPSSchemas',
-        icon = 'tool.gif',
+        icon = 'tool.png',
         ).initialize(registrar)
     VocabularyTypeRegistry.register(CPSVocabulary)
     VocabularyTypeRegistry.register(MethodVocabulary)

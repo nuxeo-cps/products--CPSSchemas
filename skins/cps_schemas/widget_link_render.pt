@@ -9,7 +9,7 @@
     href_url ds/?href_id;
     content python: cells[1]['widget_rendered'];
     title python: cells[2]['widget_rendered'];">
-    <img tal:replace="structure python:here.getImgTag('link_icon.gif')" />
+    <img tal:replace="structure python:here.getImgTag('link_icon.png')" />
     <a href="" tal:attributes="href href_url;title title|nothing;
       target python: test(href_url.startswith('http'), 'CPS_Link', nothing);">
       <strong tal:content="python: test(content, content, href_url)" />
