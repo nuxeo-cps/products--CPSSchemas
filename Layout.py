@@ -135,9 +135,9 @@ class Layout(PropertiesPostProcessor,
         )
 
     style_prefix = 'layout_default_'
-    layout_create_method = None
-    layout_edit_method = None
-    layout_view_method = None
+    layout_create_method = ''
+    layout_edit_method = ''
+    layout_view_method = ''
     flexible_widgets = []
     validate_values_expr = ''
     validate_values_expr_c = None
@@ -382,7 +382,7 @@ class Layout(PropertiesPostProcessor,
         layout_mode = kw['layout_mode']
         layout_method_property = self.getProperty('layout_%s_method'
                                                   % layout_mode)
-        if layout_method_property is not None:
+        if layout_method_property != '':
             layout_method = layout_method_property
         else:
             style_prefix = kw.get('style_prefix')
