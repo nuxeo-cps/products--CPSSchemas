@@ -39,6 +39,7 @@ import BasicFields
 import BasicWidgets
 import ExtendedWidgets
 
+import DublinCorePatch
 import EpozPatch
 import DiskFile
 
@@ -73,5 +74,3 @@ def initialize(registrar):
         ).initialize(registrar)
     VocabularyTypeRegistry.register(CPSVocabulary)
     VocabularyTypeRegistry.register(MethodVocabulary)
-
-    

@@ -267,10 +267,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         'Format': ACCESSOR,
         'Language': ACCESSOR,
         'Rights': ACCESSOR,
-        # XXX move these to accessors too using a monkey-patch.
-        'Coverage': 'coverage',
-        'Source': 'source',
-        'Relation': 'relation',
+        'Coverage': ACCESSOR,
+        'Source': ACCESSOR,
+        'Relation': ACCESSOR,
         }
 
     def __init__(self, schema, ob, **kw):

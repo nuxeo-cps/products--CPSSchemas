@@ -10,4 +10,5 @@ Bug fixes:
   compatibility.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Implemented Coverage, Source, Relation DublinCore setters and getters through
+  a patch to the CMF DublinCore classes.
