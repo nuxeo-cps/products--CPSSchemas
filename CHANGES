@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Problem of variable initialization in getImageInfo.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -1936,6 +1936,8 @@ class CPSImageWidget(CPSFileWidget):
                 image = Image(self.getWidgetId(), '', image)
         if image_info['empty_file']:
             tag = ''
+            height = 0
+            width = 0
         else:
             height = int(getattr(image, 'height', 0))
             width = int(getattr(image,'width', 0))
