@@ -3,10 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Add the possibility to translate a vocabulary
 Bug fixes:
 ~~~~~~~~~~
--
+- Vocabulary export and import deal with msgid
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
