@@ -16,6 +16,7 @@ Bug fixes:
 - P1 #144: Versioning is not incremental while editing the document
 - P1 #158: Edit page of working version after submit/publish doesn't work
 - P2 #125: File/Image Widget must be able to not display anything if no file
+- P2 #176: offer export of a document's layout and schema
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - sf code cleaning
