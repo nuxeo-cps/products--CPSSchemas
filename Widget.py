@@ -133,10 +133,12 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     hidden_if_expr_c = None
     widget_mode_expr_c = None
+    widget_display_expr_c = None
 
     _properties_post_process_tales = (
         ('hidden_if_expr', 'hidden_if_expr_c'),
         ('widget_mode_expr', 'widget_mode_expr_c'),
+        ('widget_display_expr', 'widget_display_expr_c'),
         )
 
     def __init__(self, id, widgettype, **kw):
@@ -243,6 +245,25 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             else:
                 return 'edit'
         raise ValueError("Unknown layout mode '%s'" % layout_mode)
+
+    security.declarePrivate('getModeFromLayoutMode')
+    def getDisplayClassFromDatamodel(self, layout_mode, datamodel):
+        """ Get the default diplay css class"""
+        if self.css_class != '':
+            css_class = 'visible'
+        else:
+            css_class = self.css_class
+
+        if self.widget_display_expr_c:
+            # Creating the context for evaluating the TAL expression
+            expr_context = self._createExpressionContext(datamodel, layout_mode)
+            css_class_computed = self.widget_display_expr_c(expr_context)
+            if css_class_computed:
+                return css_class_computed
+            else:
+                return css_class
+        else:
+            return css_class
 
     #
     # May be overloaded.
