@@ -1221,7 +1221,7 @@ class CPSBooleanWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = datastructure.getDataModel()[self.getWidgetId()]
+        value = datastructure[self.getWidgetId()]
         if value and value != '0':
             label_value = self.label_true
         else:
@@ -1303,7 +1303,7 @@ class CPSIntWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = str(datastructure.getDataModel()[self.getWidgetId()])
+        value = str(datastructure[self.getWidgetId()])
         #format number according to widget prefs
         if self.thousands_separator:
             thousands = []
@@ -1392,7 +1392,7 @@ class CPSLongWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = str(datastructure.getDataModel()[self.getWidgetId()])
+        value = str(datastructure[self.getWidgetId()])
         #format number according to widget prefs
         if self.thousands_separator:
             thousands = []
@@ -1485,7 +1485,7 @@ class CPSFloatWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = str(datastructure.getDataModel()[self.getWidgetId()])
+        value = str(datastructure[self.getWidgetId()])
         #format number according to widget prefs
         if self.decimals_number:
             v = float(value)
