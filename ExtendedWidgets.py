@@ -548,9 +548,13 @@ class CPSInternalLinksWidget(CPSWidget):
         if self.is_required and (value == [] or value == ['']):
             err = 'cpsschemas_err_required'
         v = []
+
+
         for line in value:
-            if line.strip() != '':
+            if len(line.strip()):
                 v.append(line)
+            else:
+                value.remove(line)
 
         if err:
             datastructure.setError(widget_id, err)
