@@ -8,10 +8,10 @@ New features:
   Each line of input text will be a string in the string list, ala
   ZMI way of dealing with line fields.
 - image widget in edit mode display the current image
+- enhanced int, long, float widgets (better support for separators and range)
 Bug fixes:
 ~~~~~~~~~~
-- enhanced int, long, float widgets (better support for separators and range)
-
+- 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - getLayoutData now takes a widget mode chooser as argument, and renders
