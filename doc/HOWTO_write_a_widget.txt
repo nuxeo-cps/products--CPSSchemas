@@ -119,3 +119,5 @@ How to write a widget
       Example of widget_display_expr:
         python:test(datamodel[depends_on_field_id] == depends_on_field_value,
                     widget.css_class or 'visible', 'hidden')
+      In widget you can access to this property under the name of widget_css_class
+      in each cell of layouts structure.
