@@ -1,0 +1,38 @@
+<tal:block define="mode options/mode;
+                   value_name here/getHtmlWidgetId;
+                   value options/value;
+                   rmode options/render_mode;
+                   rdisp options/render_display;
+  ">
+<tal:block condition="python: mode == 'view'">
+ <div tal:attributes="class python:test(rdisp == 'col_left', 'dcolleft',
+                                        test(rdisp == 'col_right',
+                                             'dcolright', 'dnocol'))"
+    tal:content="structure value" />
+</tal:block>
+<tal:block condition="python: mode == 'edit'">
+  <textarea
+    tal:attributes="name value_name;
+                    cols here/width;
+                    rows here/height;"
+    tal:content="value" />
+  <tal:block condition="here/configurable"
+    define="rdisp_name string:${value_name}_rdisp;
+            rmode_name string:${value_name}_rmode;">
+   <br>mode:
+   <select tal:attributes="name rmode_name">
+     <option tal:repeat="o here/all_render_modes"
+       tal:attributes="selected python:o == rmode;
+                       value o"
+       tal:content="o" i18n:translate="" />
+   </select>
+   display:
+   <select tal:attributes="name rdisp_name">
+     <option tal:repeat="o here/all_render_displays"
+       tal:attributes="selected python:o == rdisp;
+                       value o"
+       tal:content="o" i18n:translate="" />
+   </select>
+  </tal:block>
+</tal:block>
+</tal:block>
