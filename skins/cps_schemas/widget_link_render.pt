@@ -4,17 +4,15 @@
 <tal:block condition="python: mode == 'view'"
   define="href python: cells[0]['widget_rendered'];
           content python: cells[1]['widget_rendered'];
-          title python: cells[2]['widget_rendered'];">
+          title python: cells[2]['widget_rendered'];
+          href_url ds/href ">
 <img tal:replace="structure python:here.getImgTag('link_icon.gif')" />
-<a href="" tal:attributes="href href;title title|nothing;
-  target python: test(href.startswith('http'), 'CPS LINK', nothing);">
+<a href="" tal:attributes="href href_url;title title|nothing;
+  target python: test(href_url.startswith('http'), 'CPS Link', nothing);">
   <b tal:content="python: test(content, content, href)" />
 </a>
 <div style="padding-left: 1.5em;"><span tal:condition="title" tal:content="structure title" />
-<div><a href="" class="url"
-tal:attributes="href href;title title|nothing;
-target python: test(href.startswith('http'), 'CPS LINK', nothing);"
-tal:content="href" /></div>
+<div tal:content="structure href" />
 </div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
