@@ -159,15 +159,15 @@ InitializeClass(CPSHtmlWidgetType)
 class CPSMethodWidget(CPSWidget):
     """Method widget."""
     meta_type = "CPS Method Widget"
-    
 
-    
+
+
     _properties = CPSWidget._properties + (
         {'id': 'render_method', 'type': 'string', 'mode': 'w',
          'label': 'the zpt or py script method'},
         {'id': 'field_types', 'type': 'lines', 'mode': 'w',
          'label': 'Field types'},)
-    
+
     field_types = ('CPS String Field',)
     render_method = ''
 
@@ -178,7 +178,7 @@ class CPSMethodWidget(CPSWidget):
             datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
         else:
             datastructure[self.getWidgetId()] = None
-        
+
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
@@ -236,7 +236,7 @@ class CPSStringWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
-        
+
 
     def _extractValue(self, value):
         """Return err and new value."""
@@ -326,7 +326,7 @@ class CPSURLWidget(CPSStringWidget):
         r"^[a-z0-9$_.+!*'(),;:@&=%/~-]*$")
 
     # See rfc1738 and rfc2396
-    # NB: rfc1738 says that "/", ";", "?" can't appear in the query, 
+    # NB: rfc1738 says that "/", ";", "?" can't appear in the query,
     # but that's not what we see (ex: ?file=/tmp/toto)
     def checkUrl(self, url):
         url = url.lower()
@@ -341,13 +341,13 @@ class CPSURLWidget(CPSStringWidget):
         if scheme in ('http', 'ftp', 'gopher', 'telnet',
                       'nttp', 'wais', 'prospero') and not netloc:
             return 0
-            
+
         if scheme in ('http', '', 'ftp'):
             return self.path_pat.match(path)
         else:
             # TODO: match more URL schemes
             return 1
-        
+
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
@@ -1546,23 +1546,23 @@ class CPSDateWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render this widget from the datastructure or datamodel."""
         if self.use_javascript:
-            js_onKeyPress = """if (navigator.appName == 'Netscape') 
+            js_onKeyPress = """if (navigator.appName == 'Netscape')
                 { var key = event.which } else { var key = event.keyCode };
                 if ( key < 32 ) { return true; }
                 if ( key < 48 || key > 57 ) { return false; }"""
 
-            js_onKeyUp = """if (navigator.appName == 'Netscape') 
+            js_onKeyUp = """if (navigator.appName == 'Netscape')
                 { var key = event.which } else { var key = event.keyCode };
                 if ( key < 32 ) { return true; }
                 if ( this.value > %(max_value)s ) { return false};
-                if ( this.value >= %(low_trigger)s || 
+                if ( this.value >= %(low_trigger)s ||
                      this.value.length >= %(max_size)s ) {
                     form.%(next_widget)s.focus() }
                  """
         else:
             js_onKeyPress = ""
             js_onKeyUp = ""
-                                             
+
         widget_id = self.getWidgetId()
         d = datastructure[widget_id+'_d']
         m = datastructure[widget_id+'_m']
@@ -1709,7 +1709,11 @@ class CPSFileWidget(CPSWidget):
                 # No object passed, and no id_field
                 entry_id = None
             if entry_id:
-                content_url = adapter._getContentUrl(entry_id, field_id)
+                # some adapters does not have _getContentUrl
+                if getattr(adapter,'_getContentUrl',None):
+                    content_url = adapter._getContentUrl(entry_id, field_id)
+                else:
+                    content_url = None
             else:
                 content_url = None
         else:
