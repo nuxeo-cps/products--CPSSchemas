@@ -19,24 +19,19 @@
 """Schemas Tool
 """
 
-from Globals import InitializeClass, DTMLFile
-from Acquisition import aq_parent, aq_inner, aq_base
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
-from OFS.Folder import Folder
-
 from Products.CMFCore.utils import UniqueObject
-from Products.CMFCore.CMFCorePermissions import ManagePortal
 
-from Products.CPSDocument.Schema import CPSSchema
+from Products.CPSDocument.Schema import SchemaContainer
 
-_marker = []
 
-class SchemasTool(UniqueObject, Folder):
+class SchemasTool(UniqueObject, SchemaContainer):
     """Schemas Tool
 
-    The Schemas Tool stores the definition of standard schemas. A schema
-    describes a set of fields that can store data.
+    The Schemas Tool stores the definition of standard schemas.
+    A schema describes a set of fields that can store data.
     """
 
     id = 'portal_schemas'
@@ -44,33 +39,7 @@ class SchemasTool(UniqueObject, Folder):
 
     security = ClassSecurityInfo()
 
-    def addSchema(self, id, schema):
-        """Add a schema."""
-        self._setObject(id, schema)
-        return self._getOb(id)
-
-    #
-    # ZMI
-    #
-
-    def all_meta_types(self):
-        return ({'name': 'CPS Schema',
-                 'action': 'manage_addCPSSchemaForm',
-                 'permission': ManagePortal},
-                )
-
-    security.declareProtected(ManagePortal, 'manage_addCPSSchemaForm')
-    manage_addCPSSchemaForm = DTMLFile('zmi/schema_addform', globals())
-
-    security.declareProtected(ManagePortal, 'manage_addCPSSchema')
-    def manage_addCPSSchema(self, id, REQUEST=None):
-        """Add a schema, called from the ZMI."""
-        schema = CPSSchema(id)
-        schema = self.addSchema(id, schema)
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(schema.absolute_url()+'/manage_main'
-                                      '?manage_tabs_message=Added.')
-        else:
-            return schema
+    def __init__(self):
+        SchemaContainer.__init__(self, self.id)
 
 InitializeClass(SchemasTool)

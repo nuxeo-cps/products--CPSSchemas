@@ -27,6 +27,8 @@ from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 
+from OFS.Folder import Folder
+
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
@@ -80,6 +82,56 @@ class OLDSchema(OrderedDictionary):
 ######################################################################
 ######################################################################
 ######################################################################
+
+
+class SchemaContainer(Folder):
+    """Schema Container
+
+    Stores the definition of schemas.
+    """
+
+    meta_type = 'CPS Schema Container'
+
+    security = ClassSecurityInfo()
+
+    def __init__(self, id):
+        self._setId(id)
+
+    security.declarePrivate('addSchema')
+    def addSchema(self, id, schema):
+        """Add a schema."""
+        self._setObject(id, schema)
+        return self._getOb(id)
+
+    #
+    # ZMI
+    #
+
+    def all_meta_types(self):
+        return ({'name': 'CPS Schema',
+                 'action': 'manage_addCPSSchemaForm',
+                 'permission': ManagePortal},
+                )
+
+    security.declareProtected(ManagePortal, 'manage_addCPSSchemaForm')
+    manage_addCPSSchemaForm = DTMLFile('zmi/schema_addform', globals())
+
+    security.declareProtected(ManagePortal, 'manage_addCPSSchema')
+    def manage_addCPSSchema(self, id, REQUEST=None):
+        """Add a schema, called from the ZMI."""
+        schema = CPSSchema(id)
+        schema = self.addSchema(id, schema)
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(schema.absolute_url()+'/manage_main'
+                                      '?manage_tabs_message=Added.')
+        else:
+            return schema
+
+InitializeClass(SchemaContainer)
+
+
+######################################################################
+
 
 class Schema(FolderWithPrefixedIds):
     """Schema

@@ -28,6 +28,8 @@ from copy import deepcopy
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 
+from OFS.Folder import Folder
+
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
@@ -83,6 +85,55 @@ class HtmlLayout(BasicLayout):
 
 ######################################################################
 ######################################################################
+######################################################################
+
+
+class LayoutContainer(Folder):
+    """Layout Tool
+
+    Stores persistent layout objects.
+    """
+
+    meta_type = 'CPS Layout Container'
+
+    security = ClassSecurityInfo()
+
+    def __init__(self, id):
+        self._setId(id)
+
+    security.declarePrivate('addLayout')
+    def addLayout(self, id, layout):
+        """Add a layout."""
+        self._setObject(id, layout)
+        return self._getOb(id)
+
+    #
+    # ZMI
+    #
+
+    def all_meta_types(self):
+        return ({'name': 'CPS Layout',
+                 'action': 'manage_addCPSLayoutForm',
+                 'permission': ManagePortal},
+                )
+
+    security.declareProtected(ViewManagementScreens, 'manage_addCPSLayoutForm')
+    manage_addCPSLayoutForm = DTMLFile('zmi/layout_addform', globals())
+
+    security.declareProtected(ManagePortal, 'manage_addCPSLayout')
+    def manage_addCPSLayout(self, id, REQUEST=None):
+        """Add a layout, called from the ZMI."""
+        layout = CPSLayout(id)
+        layout = self.addLayout(id, layout)
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(layout.absolute_url()+'/manage_main'
+                                      '?manage_tabs_message=Added.')
+        else:
+            return layout
+
+InitializeClass(LayoutContainer)
+
+
 ######################################################################
 
 

@@ -22,6 +22,7 @@ Type information for types described by a flexible set of schemas and layout.
 """
 
 from zLOG import LOG, DEBUG
+from Acquisition import aq_base, aq_parent, aq_inner
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo, Unauthorized
 
@@ -33,6 +34,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.TypesTool import TypeInformation
 
+from Products.CPSDocument.Schema import SchemaContainer
+from Products.CPSDocument.Layout import LayoutContainer
 from Products.CPSDocument.CPSDocument import addCPSDocument
 from Products.CPSDocument.DataModel import DataModel
 from Products.CPSDocument.DataStructure import DataStructure
@@ -133,6 +136,8 @@ class FlexibleTypeInformation(TypeInformation):
           'label': 'Default layout'},
          {'id': 'layout_style_prefix', 'type': 'string', 'mode': 'w',
           'label': 'Layout style prefix'},
+         {'id': 'flexible_layouts', 'type': 'tokens', 'mode': 'w',
+          'label': 'Flexible layouts'}, # XXX layout1:schema1 layout2:schema2
          )
         )
     content_meta_type = 'CPS Document'
@@ -141,6 +146,7 @@ class FlexibleTypeInformation(TypeInformation):
     # XXX assume fixed storage adapters for now
     default_layout = ''
     layout_style_prefix = ''
+    flexible_layouts = []
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
@@ -205,16 +211,79 @@ class FlexibleTypeInformation(TypeInformation):
     # Flexible behavior
     #
 
+    def _copyPasteObject(self, obj, dst):
+        id = obj.getId()
+        container = aq_parent(aq_inner(obj))
+        obj = obj._getCopy(container)
+        dst._setObject(id, obj)
+        return dst._getOb(id)
+
+    def _makeObjectFlexible(self, ob):
+        """Make an object flexible.
+
+        Creates an instance copy of the schemas defined in the type object.
+        """
+        flexible_schemas = self._getFlexibleSchemas()
+        flexible_layouts = self._getFlexibleLayouts()
+        if not (flexible_schemas or flexible_layouts):
+            return
+
+        if not hasattr(aq_base(ob), '.cps_schemas'):
+            schemas = SchemaContainer('.cps_schemas')
+            ob._setObject(schemas.getId(), schemas)
+        schemas = ob._getOb('.cps_schemas')
+        if not hasattr(aq_base(ob), '.cps_layouts'):
+            layouts = LayoutContainer('.cps_layouts')
+            ob._setObject(layouts.getId(), layouts)
+        layouts = ob._getOb('.cps_layouts')
+        stool = getToolByName(self, 'portal_schemas')
+        ltool = getToolByName(self, 'portal_layouts')
+
+        for schema_id in flexible_schemas:
+            if not hasattr(aq_base(schemas), schema_id):
+                obj = stool._getOb(schema_id)
+                self._copyPasteObject(obj, schemas)
+
+        for layout_id in flexible_layouts:
+            if not hasattr(aq_base(layouts), layout_id):
+                obj = ltool._getOb(layout_id)
+                self._copyPasteObject(obj, layouts)
+
+    def _getFlexibleInfo(self, n):
+        flex = []
+        for s in self.flexible_layouts:
+            v = s.split(':')
+            if len(v) != 2:
+                raise RuntimeError("Bad syntax for flexible_layouts, must be"
+                                   "'layout1:schema1 layout2:schema2 ...'")
+            flex.append(v[n])
+        return flex
+
+    def _getFlexibleLayouts(self):
+        return self._getFlexibleInfo(0)
+
+    def _getFlexibleSchemas(self):
+        return self._getFlexibleInfo(1)
+
     security.declarePrivate('getSchemas')
-    def getSchemas(self):
+    def getSchemas(self, ob=None):
         """Get the schemas for our type.
+
+        Takes into account flexible schemas from ob.
 
         Returns a sequence of Schema objects.
         """
         stool = getToolByName(self, 'portal_schemas')
+        flexible_schemas = self._getFlexibleSchemas()
         schemas = []
         for schema_id in self.schemas:
-            schema = stool._getOb(schema_id, None)
+            schema = None
+            if schema_id in flexible_schemas and ob is not None:
+                sc = ob._getOb('.cps_schemas', None)
+                if sc is not None:
+                    schema = sc._getOb(schema_id, None)
+            if schema is None:
+                schema = stool._getOb(schema_id, None)
             if schema is None:
                 raise RuntimeError("Missing schema '%s' in portal_type '%s'"
                                    % (schema_id, self.getId()))
@@ -224,20 +293,31 @@ class FlexibleTypeInformation(TypeInformation):
     security.declarePrivate('getDataModel')
     def getDataModel(self, ob):
         """Get the datamodel for an object of our type."""
-        schemas = self.getSchemas()
+        schemas = self.getSchemas(ob)
         dm = DataModel(ob, schemas)
         dm._fetch()
         return dm
 
     security.declarePrivate('getLayout')
-    def getLayout(self, layout_id=None):
-        """Get the layout for our type."""
+    def getLayout(self, layout_id=None, ob=None):
+        """Get the layout for our type.
+
+        Takes into account flexible layouts from ob.
+        """
         ltool = getToolByName(self, 'portal_layouts')
+        flexible_layouts = self._getFlexibleLayouts()
         if not layout_id:
             layout_id = self.default_layout
-        layout = ltool._getOb(layout_id, None)
+        layout = None
+        if layout_id in flexible_layouts and ob is not None:
+            lc = ob._getOb('.cps_layouts', None)
+            if lc is not None:
+                layout = lc._getOb(layout_id, None)
         if layout is None:
-            raise ValueError("No layout '%s'" % layout_id)
+            layout = ltool._getOb(layout_id, None)
+        if layout is None:
+            raise ValueError("No layout '%s' in portal_type '%s'"
+                             % (layout_id, self.getId()))
         return layout
 
     security.declarePrivate('_renderLayoutStyle')
@@ -253,7 +333,7 @@ class FlexibleTypeInformation(TypeInformation):
         """Render the object."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
-        layoutob = self.getLayout(layout_id)
+        layoutob = self.getLayout(layout_id, ob)
         layout = layoutob.getLayoutData(ds, dm)
         return self._renderLayoutStyle(ob, mode, layout=layout,
                                        datastructure=ds, datamodel=dm)
@@ -264,7 +344,7 @@ class FlexibleTypeInformation(TypeInformation):
         """Maybe modify the object from request, and renders to new mode."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
-        layoutob = self.getLayout(layout_id)
+        layoutob = self.getLayout(layout_id, ob)
         layoutdata = layoutob.getLayoutData(ds, dm)
         if (request is not None
             and request.has_key('cpsdocument_edit_button')): # XXX customizable

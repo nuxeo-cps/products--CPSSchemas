@@ -24,8 +24,6 @@ import ExtensionClass
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 
-from OFS.Folder import Folder
-
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 from Products.CMFCore.PortalContent import PortalContent
@@ -165,6 +163,7 @@ class CPSDocumentMixin(ExtensionClass.Base):
         return ti.renderEditObject(self, request, layout_id=layout,
                                    errmode='edit', okmode='edit')
 
+    # XXX make this a WorkflowMethod
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, **kw):
         """Edit the document.
@@ -195,6 +194,19 @@ class CPSDocumentMixin(ExtensionClass.Base):
         # XXX Deal with Unicode properly...
         return ' '.join(strings)
 
+    def _makeFlexible(self):
+        """Make this document flexible.
+
+        Creates an instance copy of the schemas defined in the type object.
+        """
+        ti = self.getTypeInfo()
+        ti._makeObjectFlexible(self)
+
+    security.declarePublic('debugMakeFlexible')
+    def debugMakeFlexible(self):
+        """ debug """
+        self._makeFlexible()
+        return 'ok'
 
 InitializeClass(CPSDocumentMixin)
 

@@ -21,27 +21,15 @@
 The Layouts Tool manages layouts.
 """
 
-from zLOG import LOG, DEBUG
-from types import DictType
-from Globals import InitializeClass, DTMLFile
-from Acquisition import aq_base, aq_parent, aq_inner
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from AccessControl.PermissionRole import rolesForPermissionOn
-from ZODB.PersistentMapping import PersistentMapping
-from ZODB.PersistentList import PersistentList
 
-from OFS.Folder import Folder
+from Products.CMFCore.utils import UniqueObject
 
-from Products.CMFCore.CMFCorePermissions import View
-from Products.CMFCore.CMFCorePermissions import ManagePortal
-from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
-from Products.CMFCore.utils import SimpleItemWithProperties
-from Products.CMFCore.utils import UniqueObject, getToolByName
-
-from Products.CPSDocument.Layout import CPSLayout
+from Products.CPSDocument.Layout import LayoutContainer
 
 
-class LayoutsTool(UniqueObject, Folder):
+class LayoutsTool(UniqueObject, LayoutContainer):
     """Layouts Tool
 
     Stores persistent layout objects.
@@ -52,37 +40,8 @@ class LayoutsTool(UniqueObject, Folder):
 
     security = ClassSecurityInfo()
 
-    security.declarePrivate('addLayout')
-    def addLayout(self, id, layout):
-        """Add a layout."""
-        self._setObject(id, layout)
-        return self._getOb(id)
-
-    #
-    # ZMI
-    #
-
-    def all_meta_types(self):
-        return ({'name': 'CPS Layout',
-                 'action': 'manage_addCPSLayoutForm',
-                 'permission': ManagePortal},
-                )
-
-
-    security.declareProtected(ViewManagementScreens, 'manage_addCPSLayoutForm')
-    manage_addCPSLayoutForm = DTMLFile('zmi/layout_addform', globals())
-
-    security.declareProtected(ManagePortal, 'manage_addCPSLayout')
-    def manage_addCPSLayout(self, id, REQUEST=None):
-        """Add a layout, called from the ZMI."""
-        layout = CPSLayout(id)
-        layout = self.addLayout(id, layout)
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(layout.absolute_url()+'/manage_main'
-                                      '?manage_tabs_message=Added.')
-        else:
-            return layout
-
+    def __init__(self):
+        LayoutContainer.__init__(self, self.id)
 
 InitializeClass(LayoutsTool)
 
