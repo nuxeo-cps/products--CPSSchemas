@@ -44,10 +44,11 @@ def convertFileToText(file, context=None):
     raw = str(file)
     if not raw:
         return None
+    LOG('convertFileToText', DEBUG, 'File is %s' % repr(file))
     data = transformer.convertTo('text/plain',
                                  raw,
                                  mimetype=file.content_type,
-                                 filename=file.filename,
+                                 filename='fooXXX',
                                  # encoding='',
                                  )
     return data.getData()
