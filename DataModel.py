@@ -284,6 +284,21 @@ class DataModel(UserDict):
             LOG("_commit", DEBUG, "Unauthorized to modify object %s" % (ob,))
             raise Unauthorized("Cannot modify object")
 
+        self._commitData()
+
+        # XXX temporary until we have a better API for this
+        if hasattr(aq_base(ob), 'postCommitHook'):
+            ob.postCommitHook(datamodel=self)
+
+        # Mark all fields as non-dirty.
+        for field_id in self._fields.keys():
+            self.dirty[field_id] = 0
+
+        return ob
+
+    def _commitData(self):
+        """Compute dependent fields and write data into object."""
+
         # Compute dependent fields.
         data = self.data
         for schema in self._schemas:
@@ -296,15 +311,6 @@ class DataModel(UserDict):
         # Call the adapters to store the data.
         for adapter in self._adapters:
             adapter.setData(data)
-
-        # XXX temporary until we have a better API for this
-        if hasattr(aq_base(ob), 'postCommitHook'):
-            ob.postCommitHook(datamodel=self)
-
-        for field_id in self._fields.keys():
-            self.dirty[field_id] = 0
-
-        return ob
 
     #
     # Import/export
