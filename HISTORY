@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.8.0 [R1 build 2003/11/19-17:50 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- New Photo Widget with position and sub title
+Bug fixes:
+~~~~~~~~~~
+- Fixing text block position 
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.7.0 [R1 build 2003/11/17-15:27 by ben]
 
 ZODB Requires:

@@ -1,12 +1,15 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
+
 New features:
 ~~~~~~~~~~~~~
-- New Photo Widget with position and sub title
+-
+
 Bug fixes:
 ~~~~~~~~~~
-- Fixing text block position 
+-
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
