@@ -1,0 +1,94 @@
+<metal:html>
+<metal:body use-macro="here/main_template/macros/master">
+
+<metal:header fill-slot="header"
+  tal:define="global context_urlc python:here.getContextUrl(utool=utool,
+                                                            concat=1)">
+
+  <tal:security condition="python:not checkPerm('Manage Boxes', here)">
+    <tal:redirect define="response request/RESPONSE;
+                          dummy python:response.redirect(context_url)" />
+  </tal:security>
+
+  <h1 i18n:translate="">cpsschemas_vocabulary_manage</h1>
+
+  <p i18n:translate="">description_vocabulary_manage_form</p>
+</metal:header>
+
+<metal:main fill-slot="main"
+            tal:define="vocabularies python:here.portal_vocabularies.objectValues('CPS Vocabulary')">
+
+<h2 i18n:translate="">cpsschemas_vocabulary_add</h2>
+<form action="vocabularies_addvoc" method="get"
+      tal:attributes="action string:${base_url}vocabularies_addvoc">
+  <table border="0">
+    <tr>
+      <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
+      <td><input type="text" name="new_vocid" size="25" /></td>
+    </tr>
+    <tr>
+      <td>
+        <input type="submit" value="button_add" i18n:attributes="value" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+<br/>
+
+<h2 i18n:translate="">cpsschemas_vocabulary_available</h2>
+<form action="vocabulary_edit_form" method="get"
+      tal:attributes="action string:${base_url}vocabulary_edit_form">
+  <table border="0">
+    <tr>
+      <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
+      <td>
+        <select name="voc_id">
+          <option value="" selected="selected"></option>
+          <option tal:repeat="voc vocabularies"
+                  tal:attributes="value voc/getId"
+                  tal:content="voc/title_or_id">
+            Vocabulary
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="submit" value="button_select" i18n:attributes="value" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+<br/>
+
+<h2 i18n:translate="">cpsschemas_vocabulary_delete</h2>
+<form action="vocabularies_delvoc" method="get"
+      tal:attributes="action string:${base_url}vocabularies_delvoc"
+      tal:condition="vocabularies">
+  <table border="0">
+    <tr>
+      <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
+      <td>
+        <select name="del_vocid">
+          <option value="" selected="selected"></option>
+          <option tal:repeat="voc vocabularies"
+                  tal:attributes="value voc/getId"
+                  tal:content="voc/title_or_id">
+            Vocabulary
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="submit" value="button_delete" i18n:attributes="value" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+</metal:main>
+</metal:body>
+</metal:html>
