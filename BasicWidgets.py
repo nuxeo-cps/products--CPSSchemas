@@ -1603,7 +1603,8 @@ class CPSFileWidget(CPSWidget):
             content_url = adapter._getContentUrl(ob, field_id, current_name)
 
         registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = registry.lookupExtension(current_name.lower())
+        mimetype = registry.lookupExtension(current_name.lower()) or\
+                   registry.lookupExtension('fake.bin')
 
         return {'empty_file': empty_file,
                 'content_url': content_url,
