@@ -593,7 +593,7 @@ class CPSSubObjectsField(CPSField):
                 continue
             try:
                 delattr(ob, k)
-            except AttributeError:
+            except (AttributeError, KeyError):
                 pass
         setattr(ob, field_id, tuple(value.keys()))
         for k, v in value.items():
