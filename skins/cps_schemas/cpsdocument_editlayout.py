@@ -3,13 +3,10 @@
 Action called when something is changed in the flexible part of a document.
 """
 
-layout = 'dummy2' # XXX
-
-# XXX PROTOTYPE
-
-
 if REQUEST is not None:
     kw.update(REQUEST.form)
+
+layout_id = kw['layout_id']
 
 up_row = None
 down_row = None
@@ -22,12 +19,12 @@ for k in kw.keys():
     if k.startswith('deleterow_'):
         delete_rows.append(int(k[len('deleterow_'):]))
 if up_row is not None or down_row is not None:
-    context.flexibleChangeLayout(layout, up_row=up_row, down_row=down_row)
+    context.flexibleChangeLayout(layout_id, up_row=up_row, down_row=down_row)
 if delete_rows:
-    context.flexibleDelWidgetRows(layout, delete_rows)
+    context.flexibleDelWidgetRows(layout_id, delete_rows)
 
 if kw.has_key('addwidget_button'):
-    context.flexibleAddWidget(layout, kw['widget_type'])
+    context.flexibleAddWidget(layout_id, kw['widget_type'])
 
 
 if REQUEST is not None:
