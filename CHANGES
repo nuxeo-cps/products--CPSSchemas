@@ -20,3 +20,4 @@ New internal features:
   default css row/fields ...
 - adding get_size method
 - adding CPSDefault hook getAdditionalContentInfo
+- adding hidden_view and hidden_edit attribute for layout
