@@ -64,7 +64,7 @@ class CPSFloatField(CPSField):
     """Integer field."""
     meta_type = "CPS Float Field"
     _properties = propertiesWithType(CPSField._properties, 'default', 'float')
-    default = 0
+    default = 0.0
 
     def validate(self, value):
         if isinstance(value, FloatType):
