@@ -333,11 +333,14 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         After rendering, the structure may be updated because some empty
         widgets may have been removed.
         """
+        widget_infos = layout_structure['widgets']
         for row in layout_structure['rows']:
             for cell in row:
                 widget = cell['widget']
                 mode = cell['widget_mode']
-                rendered = widget.render(mode, datastructure, **kw).strip()
+                rendered = widget.render(mode, datastructure,
+                                         widget_infos=widget_infos, **kw)
+                rendered = rendered.strip()
                 cell['widget_rendered'] = rendered
                 if widget.hidden_empty and not rendered:
                     cell['widget_mode'] = 'hidden'

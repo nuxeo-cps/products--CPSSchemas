@@ -25,7 +25,7 @@ from zLOG import LOG, DEBUG, PROBLEM
 from cgi import escape
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
 from types import ListType, TupleType
 try:
@@ -1437,11 +1437,131 @@ InitializeClass(CPSCustomizableWidgetType)
 
 ##################################################
 
+class CPSCompoundWidget(CPSWidget):
+    """Widget aggregating several widgets."""
+    meta_type = "CPS Compound Widget"
+
+    security = ClassSecurityInfo()
+
+    _properties = (
+        CPSWidget._properties[:1] + (
+        # Skip fields, which is computed.
+        {'id': 'widget_ids', 'type': 'tokens', 'mode': 'w',
+         'label': 'Widget ids'},
+        {'id': 'widget_type', 'type': 'string', 'mode': 'w',
+         'label': 'Widget type'},
+        ) + CPSWidget._properties[2:]
+        )
+    widget_ids = []
+    widget_type = ''
+
+    security.declarePrivate('_getRenderMethod')
+    def _getRenderMethod(self):
+        """Get the render method."""
+        wtool = getToolByName(self, 'portal_widget_types')
+        wt = getattr(wtool, self.widget_type)
+        return wt.getRenderMethod(self)
+
+    security.declarePrivate('getFieldTypes')
+    def getFieldTypes(self):
+        """Get field types from the underlying widgets."""
+        layout = aq_parent(aq_inner(self))
+        field_types = []
+        for widget_id in self.widget_ids:
+            widget = layout[widget_id]
+            fts = widget.getFieldTypes()
+            field_types.extend(fts)
+        return field_types
+
+    security.declarePrivate('getFieldInits')
+    def getFieldInits(self):
+        """Get field inits from the underlying widgets."""
+        layout = aq_parent(aq_inner(self))
+        field_inits = []
+        for widget_id in self.widget_ids:
+            widget = layout[widget_id]
+            fts = widget.getFieldTypes()
+            fis = widget.getFieldInits() or ()
+            if len(fis) != len(fts):
+                fis = [{} for ft in fts]
+            field_inits.extend(fis)
+        return field_inits
+
+    def prepare(self, datastructure, **kw):
+        """Prepare the underlying widgets."""
+        layout = aq_parent(aq_inner(self))
+        for widget_id in self.widget_ids:
+            widget = layout[widget_id]
+            widget.prepare(datastructure, **kw)
+
+    def validate(self, datastructure, **kw):
+        """Validate the underlying widgets."""
+        layout = aq_parent(aq_inner(self))
+        ok = 1
+        for widget_id in self.widget_ids:
+            widget = layout[widget_id]
+            ok = widget.validate(datastructure, **kw) and ok
+        return ok
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        layout = aq_parent(aq_inner(self))
+        widget_infos = kw['widget_infos']
+        render = self._getRenderMethod()
+        cells = []
+        for widget_id in self.widget_ids:
+            cell = {}
+            cell.update(widget_infos[widget_id]) # widget, widget_mode
+            widget = layout[widget_id]
+            widget_mode = cell['widget_mode']
+            rendered = widget.render(widget_mode, datastructure, **kw)
+            rendered = rendered.strip()
+            cell['widget_rendered'] = rendered
+            cells.append(cell)
+        return render(mode=mode, datastructure=datastructure,
+                      cells=cells)
+
+InitializeClass(CPSCompoundWidget)
+
+
+class CPSCompoundWidgetType(CPSWidgetType):
+    """Compound widget type."""
+    meta_type = "CPS Compound Widget Type"
+    cls = CPSCompoundWidget
+
+    security = ClassSecurityInfo()
+
+    _properties = CPSWidgetType._properties + (
+        {'id': 'render_method', 'type': 'string', 'mode': 'w',
+         'label': 'Render Method'},
+        )
+    render_method = ''
+
+    # API
+
+    security.declarePrivate('getRenderMethod')
+    def getRenderMethod(self, widget):
+        """Get the render method."""
+        if not self.render_method:
+            raise RuntimeError("Missing Render Method in widget type %s"
+                               % self.getId())
+        meth = getattr(widget, self.render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (self.render_method, self.getId()))
+        return meth
+
+InitializeClass(CPSCompoundWidgetType)
+
+
+##################################################
+
 #
 # Register widget types.
 #
 
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
+WidgetTypeRegistry.register(CPSCompoundWidgetType, CPSCompoundWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
