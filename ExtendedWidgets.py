@@ -353,7 +353,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
 
-        if kw['layout_mode'] == 'create':
+        if mode == 'create':
             file_info = {'empty_file': 1,
                          'content_url': '',
                          'current_name': '-',

@@ -1147,7 +1147,7 @@ class CPSFileWidget(CPSWidget):
     size_max = 4*1024*1024
 
     def getFileInfo(self, datastructure):
-        """Get the image info from the datastructure."""
+        """Get the file info from the datastructure."""
         dm = datastructure.getDataModel()
         field_id = self.fields[0]
         for adapter in dm._adapters:
@@ -1159,10 +1159,13 @@ class CPSFileWidget(CPSWidget):
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
             # ZODB takes the entry_id instead of object.
-            id_field = dm.getContext().id_field
-            entry_id = datastructure[id_field]
+            #id_field = dm.getContext().id_field
+            #entry_id = datastructure[id_field]
+            entry_id = datastructure[field_id]
             if entry_id:
                 content_url = adapter._getContentUrl(entry_id, field_id)
+            else:
+                content_url = None
         else:
             content_url = adapter._getContentUrl(ob, field_id)
 
