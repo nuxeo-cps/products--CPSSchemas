@@ -1,22 +1,24 @@
+# translation of en.po to francais
 # translation of en.po to ben
 # Gettext Message File for default.
 # Your Name <your@email>, Year
-# ben <ben@nuxeo.com>, 2003,2004
+# ben <ben@nuxeo.com>, 2003,2004.
+# emmanuel <epietriga@nuxeo.com>, 2004.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-23 10:42default\n"
-"PO-Revision-Date: 2004-01-23 10:49+0100\n"
-"Last-Translator: ben <ben@nuxeo.com>\n"
-"Language-Team: ben\n"
+"POT-Creation-Date: 2004-02-05 11:30default\n"
+"PO-Revision-Date: 2004-02-05 11:31+0100\n"
+"Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
+"Language-Team: francais <fr@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.0.2\n"
 
 #.   <input value="button_add" type="submit">
 #.         </input>
@@ -28,12 +30,9 @@ msgid "button_add"
 msgstr "Back"
 
 #.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
-#.         </input>
-#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
 #.       <input value="button_ok" class="context" type="submit">
 #.     </input></input>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
+#: from ../skins/cps_schemas/popup_internallinks_form.pt
 msgid "button_back"
 msgstr "Back"
 
@@ -74,12 +73,6 @@ msgstr "Ok"
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_rte"
 msgstr "..."
-
-#.   <input value="button_search" class="context" type="submit">
-#.         </input>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "button_search"
-msgstr "Search"
 
 #.   <input value="button_update" class="standalone" type="submit">
 #.   </input>
@@ -220,20 +213,6 @@ msgstr "Value:"
 msgid "err"
 msgstr ""
 
-#.   <th>
-#.           Click on the chosen value
-#.         </th>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "heading_click_chosen_value"
-msgstr "Click on the value you want:"
-
-#.   <th>
-#.           Enter a search term:
-#.         </th>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "heading_enter_searched_value"
-msgstr "Enter a search term:"
-
 msgid "cpsschemas_err_string"
 msgstr "Invalid string"
 
@@ -307,7 +286,12 @@ msgid "cpsschemas_err_password_digit"
 msgstr "Sorry your password mus contain a digit"
 
 msgid "cpsschemas_err_password_extra"
-msgstr "Sorry your password must contain a special character other than a letter or a digit"
+msgstr ""
+"Sorry your password must contain a special character other than a letter or "
+"a digit"
+
+msgid "cpsschemas_err_email"
+msgstr "Invalid Email"
 
 msgid "jscalendar_date_fmt"
 msgstr "m/d/y"
@@ -380,6 +364,15 @@ msgstr "Name of the link"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
+
+#~ msgid "button_search"
+#~ msgstr "Search"
+
+#~ msgid "heading_click_chosen_value"
+#~ msgstr "Click on the value you want:"
+
+#~ msgid "heading_enter_searched_value"
+#~ msgstr "Enter a search term:"
 
 #~ msgid "cpsschemas_psm_vocabulary_entry_added"
 #~ msgstr "Vocabulary entry added."

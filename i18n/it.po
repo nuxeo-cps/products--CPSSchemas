@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-23 10:42default\n"
+"POT-Creation-Date: 2004-02-05 11:30default\n"
 "PO-Revision-Date: 2004-01-15 16:02+0100\n"
 "Last-Translator: Paolo Dina <paolo@php3.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -24,12 +24,9 @@ msgid "button_add"
 msgstr "Indietro"
 
 #.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
-#.         </input>
-#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
 #.       <input value="button_ok" class="context" type="submit">
 #.     </input></input>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
+#: from ../skins/cps_schemas/popup_internallinks_form.pt
 msgid "button_back"
 msgstr "Indietro"
 
@@ -70,12 +67,6 @@ msgstr "Ok"
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_rte"
 msgstr "..."
-
-#.   <input value="button_search" class="context" type="submit">
-#.         </input>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "button_search"
-msgstr "Cerca"
 
 #.   <input value="button_update" class="standalone" type="submit">
 #.   </input>
@@ -216,20 +207,6 @@ msgstr "Valore:"
 msgid "err"
 msgstr ""
 
-#.   <th>
-#.           Click on the chosen value
-#.         </th>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "heading_click_chosen_value"
-msgstr "Clicca sul valore che desideri:"
-
-#.   <th>
-#.           Enter a search term:
-#.         </th>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "heading_enter_searched_value"
-msgstr "Immetti un parola di ricerca:"
-
 msgid "cpsschemas_err_string"
 msgstr "Il valore immesso non � valido"
 
@@ -310,6 +287,10 @@ msgstr "La password e la conferma non coincidono"
 msgid "cpsschemas_err_password_extra"
 msgstr "La password e la conferma non coincidono"
 
+#, fuzzy
+msgid "cpsschemas_err_email"
+msgstr "File non valido"
+
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
 
@@ -381,6 +362,15 @@ msgstr "Nome del collegamento"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Descrizione"
+
+#~ msgid "button_search"
+#~ msgstr "Cerca"
+
+#~ msgid "heading_click_chosen_value"
+#~ msgstr "Clicca sul valore che desideri:"
+
+#~ msgid "heading_enter_searched_value"
+#~ msgstr "Immetti un parola di ricerca:"
 
 #~ msgid "cpsschemas_psm_vocabulary_entry_added"
 #~ msgstr "Entrée ajoutée au vocabulaire."
