@@ -536,57 +536,19 @@ class CPSFileWidget(CPSWidget):
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
+        render_method = 'widget_file_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
         value = datastructure[self.getWidgetId()]
         if hasattr(aq_base(value), 'getId'):
-            current = value.getId()
+            current_name = value.getId()
         else:
-            current = '-'
-        if mode == 'view':
-            return renderHtmlTag('a',
-                                 href='url...',
-                                 contents=current,
-                                 css_class=self.css_class,
-                                 )
-        elif mode == 'edit':
-            html_widget_id = self.getHtmlWidgetId()
-            # XXX urgh put this in a macro somewhere
-            res = """
-  <table cellpadding="0" cellspacing="0" border="0">
-    <tr>
-      <td>
-        <input type="radio" name="%(radio)s" value="keep" checked>
-      </td>
-      <td valign="middle" colspan="2">
-        Keep %(current)s
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="radio" name="%(radio)s" value="change">
-      </td>
-      <td valign="middle">
-        Change:
-      </td>
-      <td>
-        <input type="file" name="%(name)s">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="radio" name="%(radio)s" value="delete">
-      </td>
-      <td valign="middle" colspan="2">
-        Delete
-      </td>
-    </tr>
-  </table>
-"""
-            res = res % {'radio': html_widget_id+'_choice',
-                         'name': html_widget_id,
-                         'current': escape(current),
-                         }
-            return res
-        raise RuntimeError('unknown mode %s' % mode)
+            current_name = '-'
+        return meth(mode=mode, datastructure=datastructure,
+                    datamodel=datamodel,
+                    current_name=current_name)
 
 InitializeClass(CPSFileWidget)
 
@@ -648,59 +610,19 @@ class CPSImageWidget(CPSWidget):
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
+        render_method = 'widget_image_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
         value = datastructure[self.getWidgetId()]
-        LOG('CPSImageWidget', DEBUG, self.getWidgetId())
         if hasattr(aq_base(value), 'getId'):
-            current = value.getId()
+            current_name = value.getId()
         else:
-            current = '-'
-        if mode == 'view':
-            src = self.getWidgetId() # XXX does not work in a document rendering
-            return renderHtmlTag('img',
-                                 src = src,
-                                 contents = current,
-                                 css_class = self.css_class,
-                                 )
-        elif mode == 'edit':
-            html_widget_id = self.getHtmlWidgetId()
-            # XXX urgh put this in a macro somewhere
-            res = """
-  <table cellpadding="0" cellspacing="0" border="0">
-    <tr>
-      <td>
-        <input type="radio" name="%(radio)s" value="keep" checked>
-      </td>
-      <td valign="middle" colspan="2">
-        Keep %(current)s
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="radio" name="%(radio)s" value="change">
-      </td>
-      <td valign="middle">
-        Change:
-      </td>
-      <td>
-        <input type="file" name="%(name)s">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="radio" name="%(radio)s" value="delete">
-      </td>
-      <td valign="middle" colspan="2">
-        Delete
-      </td>
-    </tr>
-  </table>
-"""
-            res = res % {'radio': html_widget_id+'_choice',
-                         'name': html_widget_id,
-                         'current': escape(current),
-                         }
-            return res
-        raise RuntimeError('unknown mode %s' % mode)
+            current_name = '-'
+        return meth(mode=mode, datastructure=datastructure,
+                    datamodel=datamodel,
+                    current_name=current_name)
 
 InitializeClass(CPSImageWidget)
 

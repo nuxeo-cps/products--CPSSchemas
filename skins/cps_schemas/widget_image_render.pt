@@ -1,0 +1,46 @@
+<tal:block define="mode options/mode;
+                   id here/getWidgetId;
+                   current_name options/current_name;
+                  ">
+<tal:block condition="python: mode == 'view'">
+  <img src="." tal:attributes="src python:here.fields[0]">
+</tal:block>
+<tal:block condition="python: mode == 'edit'">
+  <table cellpadding="0" cellspacing="0" border="0"
+    tal:define="name here/getHtmlWidgetId;
+                radio_name string:${name}_choice;"
+  >
+    <tr>
+      <td>
+        <input type="radio" name="." value="keep" checked="checked"
+          tal:attributes="name radio_name">
+      </td>
+      <td valign="middle" colspan="2">
+        Keep <span tal:replace="current_name">filename.gif</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="radio" name="." value="change"
+          tal:attributes="name radio_name">
+      </td>
+      <td valign="middle">
+        Change:
+      </td>
+      <td>
+        <input type="file" name="."
+          tal:attributes="name name">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="radio" name="." value="delete"
+          tal:attributes="name radio_name">
+      </td>
+      <td valign="middle" colspan="2">
+        Delete
+      </td>
+    </tr>
+  </table>
+</tal:block>
+</tal:block>
