@@ -130,8 +130,8 @@ class DataStructure(UserDict):
             for k, v in dict.items():
                 self.data[k] = v
 
-    def updateFromRequest(self, REQUEST):
-        """Updates and validates field data from a REQUEST object
+    def updateFromMapping(self, mapping):
+        """Updates and validates field data from a mapping.
 
         This method (unlike the standard update method) will only update
         existing fields. It is used to set the data from request (or indeed
@@ -139,10 +139,9 @@ class DataStructure(UserDict):
 
         No validation is done.
         """
-        form = REQUEST.form
         for key in self.keys():
-            if form.has_key(widgetname(key)):
-                self[key] = form[widgetname(key)]
+            if mapping.has_key(widgetname(key)):
+                self[key] = mapping[widgetname(key)]
 
     # Expose setter as method for restricted code.
     def set(self, key, value):

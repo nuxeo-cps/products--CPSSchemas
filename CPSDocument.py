@@ -165,6 +165,15 @@ class CPSDocumentMixin(ExtensionClass.Base):
         return ti.renderEditObject(self, request, layout_id=layout,
                                    errmode='edit', okmode='edit')
 
+    security.declareProtected(ModifyPortalContent, 'edit')
+    def edit(self, **kw):
+        """Edit the document.
+
+        The keyword arguments describes fields, not widgets.
+        """
+        ti = self.getTypeInfo()
+        ti.editObject(self, kw)
+
     security.declareProtected(View, 'SearchableText')
     def SearchableText(self):
         """Searchable text for CMF full-text indexing.

@@ -260,7 +260,7 @@ class FlexibleTypeInformation(TypeInformation):
         layoutdata = layoutob.getLayoutData(ds, dm)
         if (request is not None
             and request.has_key('cpsdocument_edit_button')): # XXX customizable
-            ds.updateFromRequest(request)
+            ds.updateFromMapping(request.form)
             ok = layoutob.validateLayout(layoutdata, ds, dm)
             if ok:
                 # Update the object from dm.
@@ -278,6 +278,20 @@ class FlexibleTypeInformation(TypeInformation):
             mode = okmode
         return self._renderLayoutStyle(ob, mode, layout=layoutdata,
                                        datastructure=ds, datamodel=dm, ok=ok)
+
+    security.declarePrivate('editObject')
+    def editObject(self, ob, mapping):
+        """Modify the object's fields from a mapping."""
+        dm = self.getDataModel(ob)
+        for key, value in mapping.items():
+            if dm.has_key(key):
+                dm[key] = value
+        dm._commit()
+        # CMF/CPS stuff.
+        ob.reindexObject()
+        evtool = getToolByName(self, 'portal_eventservice', None)
+        if evtool is not None:
+            evtool.notify('sys_modify_object', ob, {})
 
 InitializeClass(FlexibleTypeInformation)
 
