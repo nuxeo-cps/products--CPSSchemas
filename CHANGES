@@ -5,6 +5,7 @@ New features:
 ~~~~~~~~~~~~~
 - new URLWidget
 - new EmailWidget
+- TextWidget has size_max property
 Bug fixes:
 ~~~~~~~~~~
 -
