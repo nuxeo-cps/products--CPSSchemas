@@ -562,8 +562,6 @@ InitializeClass(CPSImageField)
 
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
-FieldRegistry.register(CPSListField)
-FieldRegistry.register(CPSListListField)
 FieldRegistry.register(CPSIntListListField)
 FieldRegistry.register(CPSStringListField)
 FieldRegistry.register(CPSIntField)
