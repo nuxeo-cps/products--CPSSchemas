@@ -1779,7 +1779,7 @@ class CPSFileWidget(CPSWidget):
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
 
-        if kw['layout_mode'] == 'create':
+        if kw.get('layout_mode') == 'create':
             # XXX getFileInfo already detects empty files
             file_info = {'empty_file': 1,
                          'content_url': '',
@@ -1962,7 +1962,7 @@ class CPSImageWidget(CPSFileWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        if kw['layout_mode'] == 'create':
+        if kw.get('layout_mode') == 'create':
             img_info = {'empty_file': 1,
                         'content_url': '',
                         'image_tag': '',
