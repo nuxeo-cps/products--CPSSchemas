@@ -195,7 +195,12 @@ InitializeClass(Vocabulary)
 
 
 class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
-    """Persistent Vocabulary."""
+    """Persistent Vocabulary.
+    
+    XXX Why is this vocabulary said persistent whereas it's "base" class already
+    is?
+    XXX Why isn't Vocabulary inherited?
+    """
 
     __implements__ = IVocabulary
 
@@ -239,6 +244,11 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     def setVocabulary(self, vocab):
         # XXX check base class ?
         self._vocab = vocab
+
+    security.declareProtected(ManagePortal, 'clear')
+    def clear(self):
+        # _p_changed shouldn't be necessary
+        return self._vocab.clear()
 
     security.declareProtected(ManagePortal, '__delitem__')
     def __delitem__(self, key):

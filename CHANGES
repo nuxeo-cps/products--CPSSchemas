@@ -12,3 +12,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Refactoring of unit tests.
+- Adding the clear method to CPSVocabulary, as it was in the base Vocabulary.
