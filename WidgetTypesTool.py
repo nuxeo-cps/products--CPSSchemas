@@ -81,6 +81,8 @@ class WidgetsTool(UniqueObject, Folder):
         widget = self._setObject(widget.getId(), widget)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_workspace')
+        else:
+            return widget
 
 InitializeClass(WidgetsTool)
 
