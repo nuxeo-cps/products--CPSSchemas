@@ -64,7 +64,7 @@
         <span i18n:translate="cpsschemas_image_resize">resize</span>
         <select tal:attributes="name string:${name}_resize"
           tal:define="wid_size python:(here.display_width, here.display_height);
-          sizes python:[s for s in here.getImgSizes() if s['size'] < wid_size]">
+          sizes python:[s for s in here.getImgSizes() if not wid_size[0] or s['size'] < wid_size]">
           <option tal:repeat="op sizes"
             tal:attributes="value op/id"
             tal:content="op/id" i18n:translate="" />
