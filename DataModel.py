@@ -18,6 +18,13 @@
 
 from UserDict import UserDict
 
+from DataStructure import DataStructure
+
+
+class ValidationError(Exception):
+    pass
+
+
 class DataModel(UserDict):
 
     def __init__(self, schemas=[], document=None):
@@ -83,15 +90,21 @@ class DataModel(UserDict):
         for fieldid in schema.keys():
             self.data[fieldid] = adapter.get(fieldid)
 
-    def _setData(self, schema):
+    def _commitData(self, schemaid):
         """Sets the data associated with the schema from self
 
         Internal use only, for external access use ob[fieldid]
         Data MUST be validated."""
-        pass
+        schema = self.getSchema(schemaid)
+        data = {}
+        for fieldid in schema.keys():
+            data[fieldid] = self[fieldid]
+
+        adapter = self.getAdapter(schemaid)
+        adapter.writeData(data)
 
 
-    def makeDataStructure(self, datamodel):
+    def makeDataStructure(self):
         """Returns a DataStructure with all the data"""
         data = {}
         for schemaid in self.getSchemaIds():
@@ -101,7 +114,7 @@ class DataModel(UserDict):
         ds = DataStructure(data)
         return ds
 
-    def writeDataStructure(self, datastructure):
+    def commitDataStructure(self, datastructure):
         """Updates the content of a storage from a DataStructure
 
         Will clear the DataStructures modifiedFlags after writing, so
@@ -113,18 +126,16 @@ class DataModel(UserDict):
 
         # First sort the data to be written into different
         # dicts, one for each schema.
-        changed_data = {}
+        affected_schemas = []
         for fieldid in datastructure.getModifiedFlags():
             schemaid = self.getSchemaId(fieldid)
-            if not changed_data.has_key(schemaid):
-                changed_data[schemaid] = {}
-            changed_data[schemaid][fieldid] = datastructure[fieldid]
+            if not schemaid in affected_schemas:
+                affected_schemas.append(schemaid)
+            self[fieldid] = datastructure[fieldid]
 
-        # Now take the changed data per schema, and write it to the
-        # DataAdapter correleating to that schema
-        for schemaid in changed_data.keys():
-            adapter = getAdapter(schemaid)
-            adapter.writeData(changed_data[schemaid])
+        # Now commit all modified schemas
+        for schemaid in affected_schemas:
+            self._commitData(schemaid)
         # It's now stored, so clear the modify flags
         datastructure.clearAllModifiedFlags()
 
@@ -136,15 +147,16 @@ class DataModel(UserDict):
         """
         has_errors = 0
         for schemaid in self.getSchemaIds():
-            for fieldid in self.getSchema(schemaid):
+            schema = self.getSchema(schemaid)
+            for fieldid in schema.keys():
                 field = self.getField(fieldid)
                 try:
                     self[fieldid] = field.validate(datastructure[fieldid])
-                    datastructure.delerrors(fieldid)
+                    datastructure.delError(fieldid)
                 except (TypeError, ValueError), errormsg:
-                    self.errors[fieldid] = errormsg
+                    datastructure.setError(fieldid, errormsg)
                     has_errors = 1
-        return not has_errors
+        return not has_errors # Means it returns true, if it validates OK
 
 #    # Other methods
 #     def makeDefault(self, datamodel):

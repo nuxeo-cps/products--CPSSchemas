@@ -2,7 +2,7 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.DataModel import DataModel
+from Products.NuxCPS3Document.DataModel import DataModel, ValidationError
 from Products.NuxCPS3Document.Schema import Schema
 from Products.NuxCPS3Document.Fields.TextField import TextField
 from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
@@ -18,7 +18,9 @@ class DataModelTests(unittest.TestCase):
         f2 = TextField('f2', 'Field2')
         f2.setDefaultValue('Value2')
         self.s1['f2'] = f2
-        self.s1['f3'] = SelectionField('f3', 'Field3')
+        f3 = SelectionField('f3', 'Field3')
+        f3.setOptions(('Value1', 'Value5', 'Value3'))
+        self.s1['f3'] = f3
         self.s2 = Schema('s2', 'Schema2')
         self.s2['f4'] = TextField('f4', 'Field4')
         f5 = SelectionField('f5', 'Field5')
@@ -68,15 +70,49 @@ class DataModelTests(unittest.TestCase):
         self.failUnlessRaises(ValueError, self.dm.__setitem__, 'f5', 'invalid')
         self.failUnlessRaises(ValueError, self.dm.update, {'f5': 'invalid'})
 
-    #def testCreateDoc(self):
-    #    dm[f1] = 'Value1'
+    def testMakeDataStructure(self):
+        doc = FakeDocument()
+        dm = DataModel((self.s1, self.s2), doc)
+        ds = dm.makeDataStructure()
+        self.failUnless(ds['f1'] is None)
+        self.failUnless(ds['f2'] == 'Value2')
 
-    # test saving to existing doc
-    # test creating new doc
-    # Saving with invalid data should fail.
-    # test that data from two different schemas can be used
-    # test that data is not changed in the storage until a commit is called
-    # test creating the data structure
+    def testValidateDataStructure(self):
+        doc = FakeDocument()
+        doc.f1 = 'Value1'
+        doc.f4 = 'Value4'
+        dm = DataModel((self.s1, self.s2), doc)
+        ds = dm.makeDataStructure()
+        ds['f1'] = 'NewValue1'
+        ds['f3'] = 'Value3'
+        # DataStructure now has None as value for 'f6'. 'f6' is required, and
+        # Validation should fail:
+        self.failIf(dm.validateDataStructure(ds)) # Fail if DOES validate
+        # Make sure 'f6' has the correct error:
+        self.failUnless(str(ds.getError('f6')) == 'This field is required') # Fail if DOES validate
+        ds ['f6'] = 'NewValue6'
+        self.failIf(not dm.validateDataStructure(ds)) # Fail if DOES NOT validate
+
+    def testSavedata(self):
+        doc = FakeDocument()
+        doc.f1 = 'Value1'
+        doc.f4 = 'Value4'
+        dm = DataModel((self.s1, self.s2), doc)
+        ds = dm.makeDataStructure()
+        ds['f1'] = 'NewValue1'
+        ds['f3'] = 'Value3'
+        # f6 is empty, commit should fail
+        self.failUnlessRaises(ValidationError, dm.commitDataStructure, ds)
+        # Make sure nothing actually got updated
+        self.failIf(doc.f1 == 'NewValue1')
+        # Set f6 and commit should succeed
+        ds['f6'] = 'NewValue6'
+        self.failIf(dm.commitDataStructure(ds))
+        # Make sure the document is updated
+        self.failUnless(doc.f1 == 'NewValue1')
+        self.failUnless(doc.f6 == 'NewValue6')
+
+
 
 def test_suite():
     return unittest.makeSuite(DataModelTests)

@@ -7,8 +7,6 @@ from Products.NuxCPS3Document.OrderedDictionary import OrderedDictionary
 class OrderedDictionaryTests(unittest.TestCase):
     """Tests for OrderedDictionary"""
 
-    # Not yet tested:  copy()
-
     def testAddRemoveItems(self):
         """Make sure items can be added and removed in the right order"""
 
