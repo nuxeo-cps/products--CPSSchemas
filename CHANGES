@@ -3,7 +3,7 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- P1 #187: Create documents without creating empty object.
 Bug fixes:
 ~~~~~~~~~~
 - LinkWidget convert url in lowercase
