@@ -40,6 +40,10 @@ widgets = {
             'type': 'CPS Html Widget Type',
             'data': {},
             },
+        'Rich Text Editor Widget': {
+            'type': 'CPS Rich Text Editor Widget Type',
+            'data': {},
+            },
         'Select Widget': {
             'type': 'CPS Select Widget Type',
             'data': {},
