@@ -348,16 +348,59 @@ class CPSAttachedFileWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        value = datastructure[self.getWidgetId()]
-        if hasattr(aq_base(value), 'getId'):
-            current_name = value.getId()
+
+        if kw['layout_mode'] == 'create':
+            file_info = {'empty_file': 1,
+                         'content_url': '',
+                         'current_name': '-',
+                         'mimetype': ''
+                        }
         else:
-            current_name = '-'
-        mimetype = None
+            file_info = self.getFileInfo(datastructure)
+
+        return meth(mode=mode, datastructure=datastructure,
+                    **file_info)
+
+    def getFileInfo(self, datastructure):
+        """Get the image info from the datastructure."""
+        dm = datastructure.getDataModel()
+        field_id = self.fields[0]
+        for adapter in dm._adapters:
+            if adapter.getSchema().has_key(field_id):
+                field = adapter.getSchema()[field_id]
+                break # Note: 'adapter' is still the right one
+
+        ob = dm.getObject()
+        if ob is None: # Not stored in the ZODB.
+            # StorageAdapters that do not store the object in
+            # ZODB takes the entry_id instead of object.
+            id_field = dm.getContext().id_field
+            entry_id = datastructure[id_field]
+            if entry_id:
+                content_url = adapter._getContentUrl(entry_id, field_id)
+                file = datastructure[self.getWidgetId()]
+                if file and type(file) is not File:
+                    file = File(self.getWidgetId(), '', file)
+                empty_file = 0
+            else:
+                empty_file = 1
+        else:
+            content_url = adapter._getContentUrl(ob, field_id)
+            file = self.restrictedTraverse(content_url)
+            empty_file = 0
+
+        if file:
+            current_name = file.getId()
+        else:
+            current_name = ''
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = registry.lookupExtension(current_name)
-        return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name, mimetype=mimetype)
+
+        return {'empty_file': empty_file,
+                'content_url': content_url,
+                'current_name': current_name,
+                'mimetype': mimetype,
+               }
 
 InitializeClass(CPSAttachedFileWidget)
 
@@ -598,49 +641,32 @@ class CPSPhotoWidget(CPSImageWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        content_url = ''
-        if kw['layout_mode'] == 'create':
-            empty_file = 1
-        else:
-            dm = datastructure.getDataModel()
-            ob = dm.getObject()
-            if ob is None: # Not stored in the ZODB.
-                id_field = dm.getContext().id_field
-                ob = datastructure[id_field]
-            field_id = self.fields[0]
-            if not ob:
-                empty_file = 1
-            else:
-                for adapter in dm._adapters:
-                    if adapter.getSchema().has_key(field_id):
-                        content_url = adapter._getContentUrl(ob, field_id)
-                        break
-                empty_file = 0
-
         render_method = 'widget_photo_render'
-        widget_id = self.getWidgetId()
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        value = datastructure[widget_id]
-        if hasattr(aq_base(value), 'getId'):
-            current_name = value.getId()
-        else:
-            current_name = '-'
-        mimetype = None
-        registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = registry.lookupExtension(current_name)
+
+
+        widget_id = self.getWidgetId()
         rposition = datastructure[widget_id + '_rposition']
         subtitle = datastructure[widget_id + '_subtitle']
 
+        if kw['layout_mode'] == 'create':
+            img_info = {'empty_file': 1,
+                        'content_url': '',
+                        'image_tag': '',
+                        'current_name': '-',
+                        'mimetype': ''
+                       }
+        else:
+            img_info = self.getImageInfo(datastructure)
+
         return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name, mimetype=mimetype,
                     subtitle=subtitle,
                     render_position=rposition,
                     configurable=str(self.configurable),
-                    content_url=content_url,
-                    empty_file=empty_file)
+                    **img_info)
 
 
 InitializeClass(CPSPhotoWidget)

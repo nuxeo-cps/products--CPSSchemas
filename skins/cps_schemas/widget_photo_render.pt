@@ -3,6 +3,7 @@
                    value_name here/getHtmlWidgetId;
                    current_name options/current_name;
                    content_url options/content_url;
+                   image_tag options/image_tag;
                    empty_file options/empty_file;
                    mimetype options/mimetype;
                    subtitle options/subtitle;
@@ -10,18 +11,16 @@
                    configurable options/configurable;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
- <div tal:attributes="class python:test(rposition == 'right', 'dright',
+  <div tal:attributes="class python:test(rposition == 'right', 'dright',
                                         test(rposition == 'center',
                                              'dcenter', 'dleft'))">
-   <img tal:replace="structure python:here.getImgTag(here.fields[0],
-    base_url='')" />
-   <br><small tal:content="subtitle" />
- </div>
+    <img tal:replace="structure image_tag" />
+    <br><small tal:content="subtitle" />
+  </div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
   <img tal:condition="python:current_name != '-'"
-    tal:replace="structure python:here.getImgTag(here.fields[0],
-    base_url='' )">
+       tal:replace="structure image_tag" />
   <metal:block use-macro="here/widget_image_render/macros/file_edit"
 />
   <br>

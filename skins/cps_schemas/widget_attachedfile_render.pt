@@ -1,8 +1,9 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    current_name options/current_name;
-                   empty_file python:current_name == '-';
+                   empty_file options/empty_file;
                    mimetype options/mimetype;
+                   content_url options/content_url;
                   ">
 <tal:block condition="python: mode == 'view' and not empty_file">
   <tal:block define="preview_id python:options['datastructure'][id+'_preview']">
