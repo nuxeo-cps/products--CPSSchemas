@@ -67,7 +67,7 @@
                                 (value.upper().find(searched) > -1)">
         <td>
           <b tal:omit-tag="python:key != previous">
-            <a tal:attributes='href string:javascript:set_parent_value("${input}", "${key}", "${value}"')
+            <a tal:attributes='href string:javascript:set_parent_value("${input}", "${key}", "${value}")'
                tal:content="value">
                Value
             </a>
