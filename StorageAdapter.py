@@ -48,13 +48,28 @@ class BaseStorageAdapter:
     Base class for storage adapters.
     """
 
-    def __init__(self, schema):
-        """Create a StorageAdapter for a schema."""
+    def __init__(self, schema, field_ids=None):
+        """Create a StorageAdapter for a schema.
+
+        If field_ids is specified, only those fields will be managed.
+        """
         self._schema = schema
+        if field_ids is None:
+            field_items = schema.items()
+        else:
+            field_items = []
+            for field_id, field in schema.items():
+                if field_id in field_ids:
+                    field_items.append((field_id, field))
+        self._field_items = field_items
 
     def getSchema(self):
         """Get schema this adapter is about."""
         return self._schema
+
+    def getFieldItems(self):
+        """Get the field ids and the fields."""
+        return self._field_items
 
     def getDefaultData(self):
         """Get the default data from the fields' default values.
@@ -62,7 +77,7 @@ class BaseStorageAdapter:
         Returns a mapping.
         """
         data = {}
-        for field_id, field in self._schema.items():
+        for field_id, field in self.getFieldItems():
             data[field_id] = field.getDefault()
         return data
 
@@ -85,7 +100,7 @@ class BaseStorageAdapter:
     def _getData(self, **kw):
         """Get data from the object, returns a mapping."""
         data = {}
-        for field_id, field in self._schema.items():
+        for field_id, field in self.getFieldItems():
             if field.read_ignore_storage:
                 value = field.getDefault()
             else:
@@ -96,7 +111,7 @@ class BaseStorageAdapter:
 
     def _getDataDoProcess(self, data, **kw):
         """Process data after read."""
-        for field_id, field in self._schema.items():
+        for field_id, field in self.getFieldItems():
             value = data[field_id]
             data[field_id] = field.processValueAfterRead(value, data)
 
@@ -107,7 +122,7 @@ class BaseStorageAdapter:
     def _setData(self, data, **kw):
         """Set data to the object, from a mapping."""
         data = self._setDataDoProcess(data, **kw)
-        for field_id, field in self._schema.items():
+        for field_id, field in self.getFieldItems():
             if field.write_ignore_storage:
                 continue
             self._setFieldData(field_id, field, data[field_id], **kw)
@@ -118,7 +133,7 @@ class BaseStorageAdapter:
         Returns a copy.
         """
         new_data = {}
-        for field_id, field in self._schema.items():
+        for field_id, field in self.getFieldItems():
             value = data[field_id]
             new_data[field_id] = field.processValueBeforeWrite(value, data)
         return new_data
@@ -134,13 +149,13 @@ class AttributeStorageAdapter(BaseStorageAdapter):
     This adapter simply gets and sets data from/to an attribute.
     """
 
-    def __init__(self, schema, ob):
+    def __init__(self, schema, ob, field_ids=None):
         """Create an Attribute Storage Adapter for a schema.
 
         The object passed is the one on which to get/set attributes.
         """
         self._ob = ob
-        BaseStorageAdapter.__init__(self, schema)
+        BaseStorageAdapter.__init__(self, schema, field_ids=field_ids)
 
     def setContextObject(self, ob):
         """Set a new underlying object for this adapter.
@@ -185,9 +200,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
     This adapter simply gets and sets metadata using X() and setX() methods
     """
 
-    def __init__(self, schema, ob):
+    def __init__(self, schema, ob, field_ids=None):
         self._ob = ob
-        BaseStorageAdapter.__init__(self, schema)
+        BaseStorageAdapter.__init__(self, schema, field_ids=field_ids)
 
     def setContextObject(self, ob):
         """Set a new underlying object for this adapter."""
