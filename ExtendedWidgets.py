@@ -709,7 +709,7 @@ class CPSGenericSelectWidget(CPSWidget):
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'render_types',
+         'select_variable': 'render_formats',
          'label': 'Render format : select menu (default) or radio buttons'},
         )
     render_formats = ['select', 'radio']
@@ -878,7 +878,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'render_types',
+         'select_variable': 'render_formats',
          'label': 'Render format : select menu (default), radio buttons or checkboxes'},
         )
     render_formats = ['select', 'radio', 'checkbox']
