@@ -43,6 +43,5 @@
        tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
    </select>
   </tal:block>
-  <br><br>
 </tal:block>
 </tal:block>
