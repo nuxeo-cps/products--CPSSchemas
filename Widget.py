@@ -194,20 +194,20 @@ class CPSWidget(Widget):
         self.fields = [id]
         Widget.__init__(self, id, widget_type, **kw)
 
-    security.declarePrivate('isTemplate')
-    def isTemplate(self):
-        """Check if the widget is a template.
+    security.declarePrivate('isHidden')
+    def isHidden(self):
+        """Check if the widget is a hidden
+        hidden widget are used as template to create flexible widgets
 
-        Returns true if the widget is used for flexible layouts. Returns
-        false if it is a true widget that references data.
+        Returns true if the widget is hidden
         """
         return (self.fields and self.fields[0] == '?')
 
-    security.declarePrivate('setTemplate')
-    def setTemplate(self):
-        """Turn a widget into a Template Widget.
+    security.declarePrivate('hide')
+    def hide(self):
+        """hide the widget.
 
-        A template widget is not displayed or validate
+        A hidden widget is not displayed or validate
         it is used in flexible mode to produce new widget"""
         self.fields = ['?']
 
