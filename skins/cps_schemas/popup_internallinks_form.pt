@@ -33,7 +33,7 @@
 
 <tal:notSelected condition="not:searching">
   <form action="" method="get"
-        tal:attributes="action string:${here/getContextUrl}/${template/id}">
+        tal:attributes="action string:${here_url}/${template/id}">
     <input type="hidden" name="textarea" value=""
            tal:attributes="value textarea">
     <metal:block use-macro="here/generic_lib/macros/search_form" />
