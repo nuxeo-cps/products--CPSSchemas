@@ -19,13 +19,13 @@ for k in kw.keys():
     if k.startswith('deleterow_'):
         delete_rows.append(int(k[len('deleterow_'):]))
 if up_row is not None or down_row is not None:
-    context.flexibleChangeLayout(layout_id, up_row=up_row, down_row=down_row)
+    context.getContent().flexibleChangeLayout(layout_id, up_row=up_row, down_row=down_row)
 if delete_rows:
-    context.flexibleDelWidgetRows(layout_id, delete_rows)
+    context.getContent().flexibleDelWidgetRows(layout_id, delete_rows)
 
 if kw.has_key('addwidget_button'):
     kwargs = {'title': kw['widget_title']}
-    context.flexibleAddWidget(layout_id, kw['widget_type'], **kwargs)
+    context.getContent().flexibleAddWidget(layout_id, kw['widget_type'], **kwargs)
 
 
 if REQUEST is not None:
