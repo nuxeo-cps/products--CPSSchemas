@@ -1366,6 +1366,67 @@ class CPSExtendedSelectWidgetType(CPSSelectWidgetType):
 InitializeClass(CPSExtendedSelectWidgetType)
 
 
+##########################################
+
+class CPSInternalLinksWidget(CPSWidget):
+    """Internal Links widget."""
+    meta_type = "CPS InternalLinks Widget"
+
+    field_types = ('CPS String List Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'new_window', 'type': 'boolean', 'mode': 'w',
+         'label': 'Display in a new window'},
+        {'id': 'size', 'type': 'int', 'mode': 'w',
+         'label': 'Links displayed'},
+        )
+    new_window = 0
+    size = 0
+
+    def prepare(self, datastructure):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+
+    def validate(self, datastructure):
+        """Update datamodel from user data in datastructure."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        err = 0
+        if self.is_required and value == [] or value == ['']:
+            err = 'cpsschemas_err_required'
+        v = []
+        for line in value:
+            if line.strip() != '':
+                v.append(line)
+
+        if err:
+            datastructure.setError(widget_id, err)
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+
+        return not err
+
+    def render(self, mode, datastructure):
+        """Render this widget from the datastructure or datamodel."""
+        if mode not in ('view', 'edit'):
+          raise RuntimeError('unknown mode %s' % mode)
+
+        render_method = 'widget_internallinks_render'
+        meth = getattr(self, render_method, None)
+        
+        return meth(mode=mode, datastructure=datastructure)
+
+InitializeClass(CPSInternalLinksWidget)
+
+class CPSInternalLinksWidgetType(CPSWidgetType):
+    """Internal links widget type."""
+    meta_type = "CPS InternalLinks Widget Type"
+    cls = CPSInternalLinksWidget
+
+InitializeClass(CPSInternalLinksWidgetType)
+
 ##################################################
 
 #
@@ -1391,3 +1452,5 @@ WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
 WidgetTypeRegistry.register(CPSMultiSelectWidgetType, CPSMultiSelectWidget)
 WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
                             CPSExtendedSelectWidget)
+WidgetTypeRegistry.register(CPSInternalLinksWidgetType,
+                            CPSInternalLinksWidget)
