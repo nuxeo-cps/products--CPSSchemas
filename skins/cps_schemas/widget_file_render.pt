@@ -19,7 +19,7 @@
         tal:attributes="href string:${content_url}?nocache=${last_modified}">
         <tal:block replace="current_title" /></a>
       <span tal:condition="size" class="note"
-        tal:define="str_size python:here.getHRSize(size);">
+        tal:define="str_size python:here.getHumanReadableSize(size);">
         <tal:block content="str_size"/>
       </span>
     </metal:block>
@@ -29,7 +29,7 @@
 
     <metal:block define-macro="file_size_max_view">
       <tal:block define="size_max python:here.size_max;
-                         str_sizeMax python:here.getHRSize(size_max)"
+                         str_sizeMax python:here.getHumanReadableSize(size_max)"
         condition="python:size_max > 0">
 
         <p i18n:translate="">
