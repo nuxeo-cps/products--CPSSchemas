@@ -178,6 +178,22 @@ def install(self):
                     },
                 },
             },
+        'dummy_form': {
+            'title': {
+                'type': 'CPS String Field',
+                'data': {
+                    'default': '',
+                    'is_indexed': 1,
+                    },
+                },
+            'description': {
+                'type': 'CPS String Field',
+                'data': {
+                    'default': '',
+                    'is_indexed': 1,
+                    },
+                },
+            },
         'news': {
             'title': {
                 'type': 'CPS String Field',
@@ -315,6 +331,44 @@ def install(self):
                    ],
                 },
             },
+        'dummy_form': {
+            'widgets': {
+                'title': {
+                    'type': 'String Widget',
+                    'data': {
+                        'fields': ['title'],
+                        'title': 'Dummy Form title field',
+                        'title_msgid': 'dummy_form_title_field',
+                        'description': 'Title for a dummy form',
+                        'css_class': 'title',
+                        'display_width': 20,
+                        'display_maxwidth': 0,
+                        },
+                    },
+                'description': {
+                    'type': 'TextArea Widget',
+                    'data': {
+                        'fields': ['description'],
+                        'title': 'Dummy Form Description field',
+                        'title_msgid': 'dummy_form_description_field',
+                        'description': 'Description field for a dummy form',
+                        'css_class': 'description',
+                        'width': 40,
+                        'height': 5,
+                        'render_mode': 'stx',
+                        },
+                    },
+                },
+            'layout': {
+                'ncols': 1,
+                'rows': [
+                   [{'ncols': 1, 'widget_id': 'title'},
+                    ],
+                   [{'ncols': 1, 'widget_id': 'description'},
+                    ],
+                   ],
+                },
+            },
         'news': {
             'widgets': {
                 'newsdate': {
@@ -440,7 +494,7 @@ def install(self):
 
     # setup portal_type: FAQ and News
     pr("Verifying portal types")
-    newptypes = ('FAQ', 'News')
+    newptypes = ('FAQ', 'News', 'Dummy Form')
     ttool = portal.portal_types
     if 'Workspace' in ttool.objectIds():
         workspaceACT = list(ttool['Workspace'].allowed_content_types)
@@ -468,11 +522,22 @@ def install(self):
             'schemas': ['news'],
             'default_layout': 'news',
             'layout_style_prefix': 'layout_dummy_',
+            },
+        'Dummy Form': {
+            'title': 'portal_type_Dummy_Form',
+            'description': 'portal_type_Dummy_description',
+            'icon': 'document_icon.gif',
+            'immediate_view': 'cpsdocument_edit_form',
+            'schemas': ['dummy_form'],
+            'default_layout': 'dummy_form',
+            'layout_style_prefix': 'layout_form_',
             }
         }
     allowed_content_type = {
                             'Workspace' : workspaceACT,
                             }
+
+    ttool['Workspace'].allowed_content_types = allowed_content_type['Workspace']
 
     ptypes_installed = ttool.objectIds()
 
@@ -484,7 +549,6 @@ def install(self):
         ti = ttool.addFlexibleTypeInformation(id=ptype)
         ti.manage_changeProperties(**data)
         pr("   Installation")
-
 
     # check site and workspaces proxies
     sections_id = 'sections'
