@@ -346,7 +346,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         Raises an exception if not.
         """
         self._checkAccess(datamodel, context,
-                          self.acl_write_permissions, self.acl_write_roles_c,
+                          self.acl_write_permissions_c, self.acl_write_roles_c,
                           self.acl_write_expr_c, WriteAccessError)
 
     #
