@@ -126,7 +126,7 @@ class CPSStringListField(CPSField):
     """String List field."""
     meta_type = "CPS String List Field"
 
-    default_expr = 'python:[]'
+    default_expr = 'string:'
     default_expr_c = Expression(default_expr)
 
     def validate(self, value):
