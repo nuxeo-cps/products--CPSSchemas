@@ -3,19 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- portal_layouts know how to render/validate a layout/schema
-- new MethodVocabulary this enable dynamic vocabulary
-- HTML RTE: Layout button now appears only when the selected render format is
-  HTML. This is now done through JavaScript.
-- new MappingStorageAdapter just using a dictionnary
+-
 Bug fixes:
 ~~~~~~~~~~
-- #312: refactor export tab to use smart writing. Now detects quotes used and
-  put stronger quotes.
-- Using the file title is there is one for file attachment. This makes other
-  CPSComponents happy.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Use tuples for vocabularies export
-- Clarify setContextObject use.
-- DateTime widget handle default time and minute
+-
