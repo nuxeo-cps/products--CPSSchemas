@@ -26,7 +26,9 @@ from cgi import escape
 from types import IntType, StringType, UnicodeType
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
+from OFS.PropertyManager import PropertyManager
 
+from Products.CMFCore.CMFCorePermissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSDocument.Field import ValidationError
@@ -173,45 +175,63 @@ class CPSCustomizableWidgetType(CPSWidgetType):
     security = ClassSecurityInfo()
 
     _properties = CPSWidgetType._properties + (
-        {'id': 'prepare_method', 'type': 'string', 'mode': 'w',
-         'label': 'Prepare Method'},
-        {'id': 'validate_method', 'type': 'string', 'mode': 'w',
-         'label': 'Validate Method'},
+        {'id': 'prepare_validate_method', 'type': 'string', 'mode': 'w',
+         'label': 'Prepare & Validate Method'},
         {'id': 'render_method', 'type': 'string', 'mode': 'w',
          'label': 'Render Method'},
         )
-    prepare_method = ''
-    validate_method = ''
+    prepare_validate_method = ''
     render_method = ''
+    _class_props = [p['id'] for p in _properties]
+
+    # Make properties editable.
+
+    def manage_propertiesForm(self, REQUEST, *args, **kw):
+        """Override to make the properties editable."""
+        return PropertyManager.manage_propertiesForm(
+            self, self, REQUEST, *args, **kw)
+
+    security.declareProtected(ManageProperties, 'manage_addProperty')
+    security.declareProtected(ManageProperties, 'manage_delProperties')
+
+    # API
 
     security.declarePrivate('makeInstance')
     def makeInstance(self, id, **kw):
         """Create an instance of this widget type."""
-        return CPSCustomizableWidget(id, self.getId(), **kw)
+        ob = CPSCustomizableWidget(id, self.getId(), **kw)
+        # Copy user-added properties to the instance.
+        for prop in self._properties:
+            id = prop['id']
+            if id in self._class_props:
+                continue
+            t = prop['type']
+            ob.manage_addProperty(id, '', t)
+        return ob
 
     security.declarePrivate('prepare')
     def prepare(self, widget, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
-        if not self.prepare_method:
+        if not self.prepare_validate_method:
             raise RuntimeError("Missing Prepare Method in widget type %s"
                                % self.getId())
-        meth = getattr(widget, self.prepare_method, None)
+        meth = getattr(widget, self.prepare_validate_method, None)
         if meth is None:
             raise RuntimeError("Unknown Prepare Method %s for widget type %s"
-                               % (self.prepare_method, self.getId()))
-        return meth(datastructure, datamodel)
+                               % (self.prepare_validate_method, self.getId()))
+        return meth('prepare', datastructure, datamodel)
 
     security.declarePrivate('validate')
     def validate(self, widget, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        if not self.validate_method:
+        if not self.prepare_validate_method:
             raise RuntimeError("Missing Validate Method in widget type %s"
                                % self.getId())
-        meth = getattr(widget, self.validate_method, None)
+        meth = getattr(widget, self.prepare_validate_method, None)
         if meth is None:
             raise RuntimeError("Unknown Validate Method %s for widget type %s"
-                               % (self.validate_method, self.getId()))
-        return meth(datastructure, datamodel)
+                               % (self.prepare_validate_method, self.getId()))
+        return meth('validate', datastructure, datamodel)
 
     security.declarePrivate('render')
     def render(self, widget, mode, datastructure, datamodel):
