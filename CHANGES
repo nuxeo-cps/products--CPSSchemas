@@ -1,13 +1,12 @@
 Requires:
 ~~~~~~~~~
-- CPSDocument > 0.27.2
+-
 New features:
 ~~~~~~~~~~~~~
 -
 Bug fixes:
 ~~~~~~~~~~
-- fix #175 for attachedFileWidget: 
-  (#175: File/Image widgets lose attached files when modifying after errors)
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -1,4 +1,21 @@
 *******************************************
+** CPSSchemas V0.32.1 [R1 build 2004/10/21-15:35 by ben]
+
+Requires:
+~~~~~~~~~
+- CPSDocument > 0.27.2
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- fix #175 for attachedFileWidget: 
+  (#175: File/Image widgets lose attached files when modifying after errors)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.32.0 [R1 build 2004/10/21-09:56 by ben]
 
 Requires:
