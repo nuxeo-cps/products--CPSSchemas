@@ -1,6 +1,21 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
 
+# Data structures are classes that hold the content of a document while it is
+# being used. It is NOT a storage, it's not persistent at all. It's purpose is:
+# - Acting as a cache (read and write) for data that is not stored in the ZODB
+# - Being one single point of access for data of different schemas and
+#   different storage
+# - Validating data before storage
+# - Keeping track of which fields have changed, so that StorageAdapters only
+#   need to update fields/tables that have been modified.
+#
+# The "caching" of the data is completely explicit. That is that you can change
+# the data of a DataStructure as much as you like, nothing will be written to
+# the storage until the StorageAdapter is called with the DataStructure to store
+# the data.
+#
+#
 # Required vs non-required fields and default data behaviour
 # ==========================================================
 # That a field is required mean that it must have some data and that this data
@@ -54,18 +69,29 @@ class DataStructure(UserDict):
 
     def __init__(self, data={}, errors={}):
         self.data = {}
-        if data is not None: self.update(data)
-        self.errors = errors
+        self.data.update(data)
+        self.errors = {}
+        self.errors.update(errors)
+        self.modified_fields = []
 
     # Override standard dictionary stuff:
-    def clear(self):
+    def clear(self, clear_modified_flags=0):
+        if clear_modified_flags:
+            self.modified_fields = []
+        else:
+            self.setModifiedFlags(self.data.keys())
         self.data.clear()
         self.errors.clear()
+
+    def __setitem__(self, key, item):
+        self.data[key] = item
+        self.setModifiedFlag(key)
 
     def __delitem__(self, key):
         del self.data[key]
         if self.errors.has_key(key):
             del self.errors[key]
+        self.setModifiedFlag(key)
 
     def copy(self):
         if self.__class__ is DataStructure:
@@ -80,19 +106,22 @@ class DataStructure(UserDict):
             del self.errors[key]
         return key, val
 
-    # update methods. Standard update() still exists, and will
-    # update the data, but not change the errors at all.
+    # update methods.
+    def update(self, dict):
+        if isinstance(dict, UserDict):
+            self.data.update(dict.data)
+            self.setModifiedKeys(dict.keys())
+        elif isinstance(dict, type(self.data)):
+            self.data.update(dict)
+            self.setModifiedKeys(dict.keys())
+        else:
+            for k, v in dict.items():
+                self.data[k] = v
+                self.setModifiedKey(k)
+
     def updateFromDictionaries(self, data, errors):
         self.update(data)
         self.errors = errors
-
-    def makeDefault(self, datamodel):
-        """Creates a DataStructure with the defaults from the data model"""
-        self.clear()
-        for fieldid in datamodel.keys():
-            data = datamodel[fieldid].getDefaultValue()
-            if data is not None:
-                self[fieldid] = data
 
     def updateFromRequest(self, datamodel, REQUEST):
         """Updates and validates field data from a REQUEST object"""
@@ -137,3 +166,37 @@ class DataStructure(UserDict):
 
     def getErrors(self):
         return errors # TODO: Should it return the original or a copy?
+
+    # Other methods
+    def makeDefault(self, datamodel):
+        """Creates a DataStructure with the defaults from the data model"""
+        self.clear(clear_modified_flags=1)
+        for fieldid in datamodel.keys():
+            data = datamodel[fieldid].getDefaultValue()
+            if data is not None:
+                self[fieldid] = data
+
+
+    def setModifiedFlag(self, key):
+        if key not in self.modified_fields:
+            self.modified_fields.append(key)
+
+    def setModifiedFlags(self, keys):
+        for key in keys:
+            self.setModifiedFlag(key)
+
+    def clearModifiedFlag(self, key):
+        if key in self.modified_fields:
+            self.modified_fields.remove(key)
+
+    def clearModifiedFlags(self, keys):
+        for key in keys:
+            self.clearModifiedFlag(key)
+
+    def clearAllModifiedFlags(self):
+        self.modified_flags = []
+
+    def getModifiedFlags(self):
+        return self.modified_fields
+
+

@@ -102,6 +102,55 @@ class DataStructureTests(unittest.TestCase):
         self.failUnless( copy.errors == {'f2': 'Error2'}, \
                          'Init failed to set errors')
 
+    def test_40_ModifiedFlags(self):
+        ds = DataStructure( {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'}, \
+                            {'f2': 'Error2'})
+        self.failUnless(ds.getModifiedFlags() == [])
+        ds.setModifiedFlag('f1')
+        self.failUnless(ds.getModifiedFlags() == ['f1'])
+        ds.setModifiedFlags( ('f2', 'f3') )
+        m = ds.getModifiedFlags()
+        m.sort()
+        self.failUnless( m == ['f1', 'f2', 'f3'])
+        ds.clearModifiedFlag('f2')
+        m = ds.getModifiedFlags()
+        m.sort()
+        self.failUnless( m == ['f1', 'f3'])
+        ds.clearModifiedFlags( ['f1', 'f3'])
+        self.failIf(ds.getModifiedFlags())
+
+    def test_41_ModificationSetsFlags(self):
+        ds = DataStructure( {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'}, \
+                            {'f2': 'Error2'})
+        ds['f1'] = 'Your hoovercraft is full of eels'
+        self.failUnless(ds.getModifiedFlags() == ['f1'])
+        del ds['f2']
+        m = ds.getModifiedFlags()
+        m.sort()
+        self.failUnless( m == ['f1', 'f2'])
+
+    def test_42_NoMultipleFlags(self):
+        ds = DataStructure( {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'}, \
+                            {'f2': 'Error2'})
+        self.failUnless(ds.getModifiedFlags() == [])
+        ds.setModifiedFlag('f1')
+        ds['f1'] = 'Your hoovercraft is full of eels'
+        del ds['f1']
+        self.failUnless(len(ds.getModifiedFlags()) == 1)
+
+    def test_43_ClearModifiedFlags(self):
+        ds = DataStructure( {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'}, \
+                            {'f2': 'Error2'})
+        ds.clear()
+        m = ds.getModifiedFlags()
+        m.sort()
+        self.failUnless(ds.getModifiedFlags() == ['f1', 'f2', 'f3'])
+        ds.clear(clear_modified_flags=1)
+        self.failIf(ds.getModifiedFlags())
+
+
+
+
     def test_50_UpdateFromRequest(self):
         """Update from request, with missing values"""
         # Make a 'fake' REQUEST from a dict:
