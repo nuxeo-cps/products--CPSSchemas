@@ -104,6 +104,9 @@ How to write a widget
       document. During creation, a datamodel and datastrucure are
       constructed, but don't (yet) have an object behind them.
 
+
+    XXX AT: the two following points are not up to date.
+
     - A widget has a 'widget_group_id' attribute. It makes possible to catch
       several widget in javascript with only one id. If this attribute is empty,
       it's the unique id of the widget following by '_widget' which used.
