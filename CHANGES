@@ -6,8 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Correctly convert an image to string in convertToLDAP.
-- Change widgets to use the new renderHtmlTag logic.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

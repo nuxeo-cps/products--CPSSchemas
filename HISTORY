@@ -1,4 +1,21 @@
 *******************************************
+** CPSSchemas V0.22.2 [R1 build 2004/06/04-14:17 by hcauwelier]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Correctly convert an image to string in convertToLDAP.
+- Change widgets to use the new renderHtmlTag logic.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.22.1 [R1 build 2004/05/26-15:13 by madarche]
 
 Requires:
