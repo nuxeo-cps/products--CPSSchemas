@@ -1,9 +1,10 @@
-<metal:body use-macro="here/main_template/macros/master">
-<metal:main fill-slot="main"
-            tal:define="vocabularies here/portal_vocabularies/objectValues">
+<html metal:use-macro="here/main_template/macros/master">
+<body metal:fill-slot="main"
+            tal:define="vocabularies python:here.portal_vocabularies.objectValues('CPS Vocabulary')">
 <h1 i18n:translate="">cpsschemas_vocabulary_manage</h1>
 
 <h2 i18n:translate="">cpsschemas_vocabulary_available</h2>
+
 <form action="vocabulary_edit_form" method="get"
       tal:attributes="action string:${base_url}vocabulary_edit_form">
   <table border="0">
@@ -73,5 +74,5 @@
   </table>
 </form>
 
-</metal:main>
-</metal:body>
+</body>
+</html>
