@@ -1171,7 +1171,7 @@ class CPSFileWidget(CPSWidget):
         else:
             content_url = adapter._getContentUrl(ob, field_id)
             file = self.restrictedTraverse(content_url)
-            if not file:
+            if file:
                 empty_file = 0
 
         if file:
@@ -1395,7 +1395,7 @@ class CPSImageWidget(CPSWidget):
         else:
             content_url = adapter._getContentUrl(ob, field_id)
             image = self.restrictedTraverse(content_url)
-            if not image:
+            if image:
                 empty_file = 0
 
         if empty_file:
