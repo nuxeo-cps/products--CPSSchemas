@@ -71,29 +71,31 @@ def copyImage(file_src):
     file_dest.manage_changeProperties(content_type=file_src.content_type)
     return file_dest
 
-def getHRSize(octet_size):
+def getHumanReadableSize(octet_size):
     """ returns a human readable file size
     """
     mega = 1024*1024
     kilo = 1024
 
     if octet_size is None or octet_size <= 0:
-        return '0 cpsschemas_unit_mega_bytes'
+        return (0, 'cpsschemas_unit_mega_bytes')
     elif octet_size >= mega:
         if octet_size == mega:
-            return '1 cpsschemas_unit_mega_bytes'
+            return (1, 'cpsschemas_unit_mega_bytes')
         else:
             msize = float(octet_size/float(mega))
-            return '%.02f cpsschemas_unit_mega_bytes' % msize
+            msize = float('%.02f' % msize)            
+            return (msize, 'cpsschemas_unit_mega_bytes')
     elif octet_size >= kilo:
 
         if octet_size == kilo:
-            return '1 cpsschemas_unit_kilo_bytes'
+            return (1, 'cpsschemas_unit_kilo_bytes')
         else:
             msize = float(octet_size/float(kilo))
-            return '%.02f cpsschemas_unit_kilo_bytes' % msize
+            msize = float('%.02f' % msize)
+            return (msize, 'cpsschemas_unit_kilo_bytes')
     else:
         if octet_size == 1:
-            return '1 cpsschemas_unit_bytes'
+            return (1, 'cpsschemas_unit_bytes')
         else:
-            return '%d cpsschemas_unit_bytes' % octet_size
+            return (octet_size ,'cpsschemas_unit_bytes') 
