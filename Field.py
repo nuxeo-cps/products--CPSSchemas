@@ -190,7 +190,11 @@ class FieldRegistry:
 
     def makeField(self, field_type, id, **kw):
         """Factory to make a field of the given type."""
-        return self._field_classes[field_type](id, **kw)
+        try:
+            cls = self._field_classes[field_type]
+        except KeyError:
+            raise KeyError("No field type '%s'" % field_type)
+        return cls(id, **kw)
 
 # Singleton
 FieldRegistry = FieldRegistry()
