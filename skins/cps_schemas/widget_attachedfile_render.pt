@@ -10,42 +10,40 @@
    filename.pdf
   </a>
 </tal:block>
-<tal:block condition="python: mode == 'edit'">
+<metal:block define-macro="file_edit"
+  tal:condition="python: mode == 'edit'">
   <table cellpadding="0" cellspacing="0" border="0"
     tal:define="name here/getHtmlWidgetId;
                 radio_name string:${name}_choice;"
   >
     <tr>
-      <td>
-        <input type="radio" name="." value="keep" checked="checked"
-          tal:attributes="name radio_name">
+      <td valign="middle" nowrap>
+        <input type="radio" class="noborder" name="." value="keep"
+        checked="checked" tal:attributes="name radio_name">
+        <label i18n:translate="cpsdoc_label_file_keep">Keep</label>
       </td>
-      <td valign="middle" colspan="2">
-        Keep <span tal:replace="current_name">filename.pdf</span>
+      <td valign="middle">
+        <span tal:replace="current_name">filename.pdf</span>
       </td>
     </tr>
     <tr>
-      <td>
-        <input type="radio" name="." value="change"
+      <td valign="middle" nowrap>
+        <input type="radio" class="noborder"  name="." value="change"
           tal:attributes="name radio_name">
+        <label i18n:translate="cpsdoc_label_file_change">Change</label>&nbsp;
       </td>
       <td valign="middle">
-        Change:
-      </td>
-      <td>
         <input type="file" name="."
           tal:attributes="name name">
       </td>
     </tr>
     <tr>
-      <td>
-        <input type="radio" name="." value="delete"
+      <td valign="middle" colspan="2" nowrap>
+        <input type="radio" class="noborder" name="." value="delete"
           tal:attributes="name radio_name">
-      </td>
-      <td valign="middle" colspan="2">
-        Delete
+        <label i18n:translate="cpsdoc_label_file_delete">Delete</label>
       </td>
     </tr>
   </table>
-</tal:block>
+</metal:block>
 </tal:block>
