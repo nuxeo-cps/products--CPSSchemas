@@ -6,15 +6,13 @@
   <tal:block condition="python: mode == 'view'">
       <tal:block repeat="cell cells">
         <tal:block define="widget cell/widget">
-          <div tal:attributes="class cell/widget_css_class;
-                               id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';
-                               style python:cell['widget_css_class'] == 'hidden' and 'visibility: hidden;;' or 'visibility: visible;;';">
+          <div tal:attributes="class cell/css_class|nothing">
             <div class="label" tal:condition="widget/label">
               <tal:block i18n:translate="" tal:condition="widget/is_i18n"
                     tal:content="widget/label">label</tal:block>
               <tal:block tal:condition="not:widget/is_i18n"
                     tal:content="widget/label">label</tal:block>
-          </div>
+            </div>
             <tal:block replace="structure cell/widget_rendered" />
           </div>
         </tal:block>
@@ -31,9 +29,7 @@
                          tooltip_id python:wid + '_help';
                          css_class python:test(err, 'row error', 'row')">
         <div tal:attributes="class css_class">
-        <div tal:attributes="class cell/widget_css_class;
-                             id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';
-                             style python:cell['widget_css_class'] == 'hidden' and 'visibility: hidden;;' or 'visibility: visible;;';">
+        <div tal:attributes="class cell/css_class|nothing">
           <div class="label" tal:condition="widget/label_edit"
                              tal:attributes="class python:test(is_required, 'label required',
                                               'label')">
