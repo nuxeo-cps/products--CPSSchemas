@@ -10,23 +10,7 @@
   last_modified options/last_modified;
   ">
   <div tal:condition="python: mode == 'view' and not empty_file">
-    <a target="_blank" tal:condition="mimetype"
-      tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <img tal:replace="structure python:here.getImgTag(mimetype.icon_path,
-        title=mimetype.name())" /></a>
-    <a class="strong"
-      tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <tal:block replace="current_title" /></a>
-
-    <span tal:condition="size" class="note"
-      tal:define="b python:size < 1024;
-      m python:size > 1048576;
-      k python:not b and not m;">
-      -
-      <tal:block condition="b" content="string:1 K"/>
-      <tal:block condition="m" content="python:'%.02f M' % float(size / 1048576.0)"/>
-      <tal:block condition="k" content="python:'%s K' % (size / 1024)"/>
-    </span>
+    <metal:block use-macro="here/widget_file_render/macros/file_view" />
     <span tal:define="ds options/datastructure;
                       dm ds/getDataModel;
                       proxy dm/getProxy;
@@ -35,7 +19,7 @@
           tal:condition="preview_id">
       <a href="http://url..."
          tal:define="field_id python:fields[0];
-                     field_html python:fields[2]"
+                     field_html python:len(fields)>2 and fields[2] or ''"
          tal:attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}"
          i18n:translate="cpsschema_link_preview">
         (preview)
@@ -49,6 +33,7 @@
   </div>
 
   <tal:block condition="python: mode == 'edit'">
+
     <tal:block define="allowed_suffixes python:here.allowed_suffixes;"
       condition="allowed_suffixes">
       <p i18n:translate="">
@@ -59,58 +44,11 @@
         </tal:block>
       </p>
     </tal:block>
-    <tal:block define="size_max python:here.size_max;"
-      condition="python:size_max > 0">
-      <p tal:define="
-        b python:size_max < 1024;
-        m python:size_max > 1048576;
-        k python:not b and not m;
-        cpsmcat nocall:here/Localizer/default;
-        ">
-        <tal:block condition="b" i18n:translate="">
-          cpsschemas_size_max
-          <tal:block i18n:name="size_max">1</tal:block>
-          <tal:block i18n:name="storage_unit"
-            content="python:cpsmcat('cpsschemas_unit_kilo_bytes')"/>
-        </tal:block>
-        <tal:block condition="m" i18n:translate="">
-          cpsschemas_size_max
-          <tal:block i18n:name="size_max"
-            content="python:'%.02f' % float(size_max / 1048576.0)">4
-          </tal:block>
-          <tal:block i18n:name="storage_unit"
-            content="python:cpsmcat('cpsschemas_unit_mega_bytes')"/>
-        </tal:block>
-        <tal:block condition="k" i18n:translate="">
-          cpsschemas_size_max
-          <tal:block i18n:name="size_max"
-            content="python:'%s' % (size_max / 1024)">400
-          </tal:block>
-          <tal:block i18n:name="storage_unit"
-            content="python:cpsmcat('cpsschemas_unit_kilo_bytes')"/>
-        </tal:block>
-      </p>
-    </tal:block>
-    <metal:block define-macro="file_title_edit">
 
-      <table cellpadding="0" cellspacing="0" border="0" 
-        summary="file title edit" tal:define="name here/getHtmlWidgetId;
-        title_name string:${name}_title;"> 
-        <tr>
-          <td align="left" i18n:translate="label_title">
-            The title
-          </td>
-          <td>
-            <input style="margin-left: 5px" type="text" size="30" maxlength="80"
-              tal:attributes="name title_name;
-              value current_title" />
-            <input type="hidden" tal:attributes="name string:${name}_filename;
-              value current_name" />
-          </td>
-        </tr>
-      </table>
-    </metal:block>
-    <metal:block use-macro="here/widget_image_render/macros/file_edit" />
+    <metal:block use-macro="here/widget_file_render/macros/file_size_max_view" />
+    <metal:block use-macro="here/widget_file_render/macros/file_title_edit" />
+    <metal:block use-macro="here/widget_file_render/macros/file_edit" />
+
   </tal:block>
 
 </tal:block>
