@@ -114,6 +114,8 @@ class CPSWidget(Widget):
     is_i18n = 0
     description = ''
     css_class = ''
+    hidden_view = 0
+    hidden_edit = 0
 
     #
     # ZMI
@@ -126,6 +128,10 @@ class CPSWidget(Widget):
          'label': 'the label on edit mode'},
         {'id': 'title_view', 'type': 'string', 'mode': 'w',
          'label': 'the label on view mode'},
+        {'id': 'hidden_view', 'type': 'boolean', 'mode': 'w',
+         'label': 'hidden field in view mode'},
+        {'id': 'hidden_edit', 'type': 'boolean', 'mode': 'w',
+         'label': 'hidden fiedl in edit mode'},
         {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
          'label': 'does the title and description use msgid ?'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
