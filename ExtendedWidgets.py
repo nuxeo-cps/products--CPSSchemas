@@ -633,8 +633,9 @@ class CPSPhotoWidget(CPSImageWidget):
 
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Sub title
-                   'CPS String Field',) # render_position if configurable
-    field_inits = ({}, {'is_searchabletext': 1,}, {})
+                   'CPS String Field',  # render_position if configurable
+		   'CPS String Field',) # original photo
+    field_inits = ({}, {'is_searchabletext': 1,}, {}, {})
 
     _properties = CPSImageWidget._properties + (
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',
@@ -652,7 +653,7 @@ class CPSPhotoWidget(CPSImageWidget):
     allow_resize = 1
     configurable = all_configurable[0]
     render_position = all_render_positions[0]
-    keep_original = 0
+    keep_original = 1
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
