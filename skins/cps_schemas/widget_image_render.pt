@@ -17,8 +17,8 @@
     summary="image alternative text edit" tal:define="name here/getHtmlWidgetId;
                 title_name string:${name}_title;"> 
   <tr>
-    <td align="left" i18n:translate="label_title">
-     The Title
+    <td align="left" i18n:translate="label_alt_text">
+     Alternative text
     </td>
     <td>
         <input style="margin-left: 5px" type="text" tal:attributes="name title_name;

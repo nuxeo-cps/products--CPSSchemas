@@ -1,11 +1,12 @@
+# translation of es.po to 
 # Álvaro Tejero Cantero <alvaro@antalia.com>, 2004.
 msgid ""
 msgstr ""
-"Project-Id-Version: es-CPSSchemas\n"
-"POT-Creation-Date: 2004-04-19 08:36default\n"
-"PO-Revision-Date: 2004-03-27 20:56+0100\n"
-"Last-Translator: Álvaro Tejero Cantero <alvaro@antalia.com>\n"
-"Language-Team: EspaÃ±ol <es@li.org>\n"
+"Project-Id-Version: es\n"
+"POT-Creation-Date: 2004-05-21 11:25default\n"
+"PO-Revision-Date: 2004-05-21 11:35+0200\n"
+"Last-Translator: \n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,12 +15,17 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-sv es-gt es-"
 "hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
-"X-Generator: KBabel 1.0.2\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #    <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #            string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
-#.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
-#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
+#.   <button type="button" attributes="
+#.           id button_rte_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_rte"
 msgstr "..."
@@ -39,7 +45,7 @@ msgstr "h"
 #    <a attributes="href preview_id" href="http://url..." target="_blank">
 #           (preview)
 #          </a>
-#.   <a attributes="href preview_id" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
 #.          (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -80,14 +86,14 @@ msgstr "Borrar"
 #    <label>Keep</label>
 #    <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
 #.   <label>Keep</label>
-#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
+#.   <label attributes="for string:${radio_name}_keep" condition="not: empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Guardar"
 
 #    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
-#.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Ninguno"
@@ -184,7 +190,7 @@ msgid "cpsschemas_vocabulary_value"
 msgstr "Valor: "
 
 #    <em content="err" style="color: red">err</em>
-#.   <em content="err" style="color: red">err</em>
+#.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
@@ -203,6 +209,13 @@ msgstr ""
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
 msgstr ""
+
+#.   <td align="left">
+#.        The Title
+#.       </td>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "label_alt_text"
+msgstr "Texto alternativo"
 
 msgid "cpsschemas_err_string"
 msgstr "Cadena de caracteres no válida"
@@ -371,9 +384,3 @@ msgstr "Nombre del enlace"
 msgid "cpsschemas_label_link_title"
 msgstr "Descripción"
 
-#    <a attributes="href string: #;
-#                           onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#    <a attributes="href string: #;
-#                           onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#~ msgid "epoz_insert_image"
-#~ msgstr "Insertar imagen"
