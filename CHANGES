@@ -1,6 +1,7 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
--
+- Convert metadata storage for Coverage, Source and Relation by running
+  once the external method CPSSchemas.convert_metadata.
 New features:
 ~~~~~~~~~~~~~
 - Password widget: able to define a policy for password validation:
@@ -18,3 +19,5 @@ New internal features:
 - Vocabularies are now preferrably initialized using the
   syntax (('foo': "Foo"), ('bar': "Bar")).
 - i18n using CPSDefault as black list pot
+- Storage as attributes of metadata is done using standard lowercase
+  identifiers. Uppercase is reserved for accessors.
