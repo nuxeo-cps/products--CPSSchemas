@@ -500,6 +500,54 @@ class CPSDiskFileField(CPSFileField):
                 return storage_path
             return 'var/files'
 
+    def computeDependantFields(self, schemas, data, context=None):
+        """Compute dependant fields.
+
+        schemas is the list of schemas
+
+        data is the dictionnary of the datamodel
+        """
+        field_id = self.getFieldId()
+        file = data[field_id] # May be None.
+        if _isinstance(file, File):
+            file = DiskFile(file.getId(), file.title, file.data,
+                            file.content_type, self.getStoragePath())
+            data[field_id] = file
+        text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
+        if text_field_id is not None:
+            data[text_field_id] = convertFileToText(file, context=context)
+
+        html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
+        html_subfiles_field_id = self._getDependantFieldId(
+            schemas,
+            self.suffix_html_subfiles)
+        if html_field_id is not None:
+            html_conversion = convertFileToHtml(file, context=context)
+            if html_conversion is not None:
+                html_string = html_conversion.getData()
+                fileid = cookId('', '', file)[0]
+                if '.' in fileid:
+                    fileid = fileid[:fileid.rfind('.')]
+                if not fileid:
+                    fileid = 'document'
+                fileid = fileid + '.html'
+                html_file = File(fileid, '', html_string,
+                                 content_type='text/html')
+
+                # getSubObjects returns a dict of sub-objects, each sub-object
+                # being a file but described as a string.
+                subobjects_dict = html_conversion.getSubObjects()
+                files_dict = {}
+                LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
+                for k, v in subobjects_dict.items():
+                    files_dict[k] = File(k, k, v)
+                LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
+            else:
+                html_file = None
+                files_dict = {}
+            data[html_field_id] = html_file
+            data[html_subfiles_field_id] = files_dict
+
     def validate(self, value):
         if not value:
             return None
