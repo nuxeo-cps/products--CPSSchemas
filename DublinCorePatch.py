@@ -1,4 +1,4 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
 # Author: M.-A. DARCHE <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
