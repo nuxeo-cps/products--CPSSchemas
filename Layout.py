@@ -267,7 +267,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         Prepare all the widgets and thus updates the datastructure.
         """
         for widget_id, widget in self.items():
-            if not widget.isTemplate():
+            if not widget.isHidden():
                 widget.prepare(datastructure)
 
     security.declarePrivate('computeLayoutStructure')
@@ -294,7 +294,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         # Choose the mode for all the widgets.
         widgets = {}
         for widget_id, widget in self.items():
-            if not widget.isTemplate():
+            if not widget.isHidden():
                 mode = widget_mode_chooser(widget)
                 widgets[widget_id] = {
                     'widget': widget,
@@ -361,7 +361,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         if layout_mode == 'edit':
             widget_ids = []
             for widget_id, widget in self.items():
-                if not widget.isTemplate():
+                if not widget.isHidden():
                     widget_ids.append(widget_id)
             flexible_widget_ids = self.getFlexibleWidgetIds()
             flexible_occurences = self.getFlexibleWidgetOccurences()
