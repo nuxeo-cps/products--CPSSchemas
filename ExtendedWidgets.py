@@ -606,6 +606,7 @@ class CPSPhotoWidget(CPSImageWidget):
         datastructure[widget_id + '_rposition'] = rposition
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
+        datastructure[widget_id + '_title'] = ''
         if self.allow_resize:
             datastructure[widget_id + '_resize'] = ''
 
@@ -644,6 +645,7 @@ class CPSPhotoWidget(CPSImageWidget):
                         'content_url': '',
                         'image_tag': '',
                         'current_name': '-',
+                        'current_title': '',
                         'mimetype': '',
                         'last_modified': '',
                        }

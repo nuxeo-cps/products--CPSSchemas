@@ -1601,14 +1601,17 @@ class CPSFileWidget(CPSWidget):
         last_modified = ''
         if file:
             if _isinstance(file, File):
-                current_name = file.title_or_id()
+                current_name = file.getId()
+                current_title = file.title
                 size = file.get_size()
                 last_modified = str(file._p_mtime)
             else:
                 current_name = self.getWidgetId()
+                current_title = ''
             empty_file = 0
         else:
             current_name = ''
+            current_title = ''
             empty_file = 1
 
         # The attached file current name should not contain spaces otherwise it
@@ -1649,6 +1652,7 @@ class CPSFileWidget(CPSWidget):
         return {'empty_file': empty_file,
                 'content_url': content_url,
                 'current_name': current_name,
+                'current_title': current_title,
                 'mimetype': mimetype,
                 'size': size,
                 'last_modified': last_modified,
@@ -1711,6 +1715,7 @@ class CPSFileWidget(CPSWidget):
             file_info = {'empty_file': 1,
                          'content_url': '',
                          'current_name': '-',
+                         'current_title': '',
                          'mimetype': '',
                          'last_modified': '',
                         }
@@ -1764,6 +1769,7 @@ class CPSImageWidget(CPSFileWidget):
         datastructure[widget_id] = datamodel[self.fields[0]]
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
+        datastructure[widget_id + '_title'] = ''
         if self.allow_resize:
             datastructure[widget_id + '_resize'] = ''
 
@@ -1773,7 +1779,16 @@ class CPSImageWidget(CPSFileWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
+        # read title from form
+        # in the case of image widgets the title is used
+        # as alternative text
+        filetitle = datastructure[widget_id + '_title']
         err = None
+        if choice == 'keep':
+            file = datamodel[field_id]
+            if file is not None:
+                file.manage_changeProperties(title=filetitle)
+                datamodel[field_id] = file
         if choice == 'delete':
             datamodel[field_id] = None
         elif choice == 'change' and datastructure.get(widget_id):
@@ -1790,7 +1805,15 @@ class CPSImageWidget(CPSFileWidget):
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     file.seek(0)
-                    fileid = cookId('', '', file)[0]
+                    fileid, filetitle = cookId('', filetitle, file)
+                    # important: cookId always returns a non-empty
+                    # string value for filetitle;
+                    # if the given filetitle argument is an empty string,
+                    # the filename is returned;
+                    # in order to allow empty titles we set to ''
+                    # a filetitle found identical to filename
+                    if fileid == filetitle:
+                        filetitle = ''
                     registry = getToolByName(self, 'mimetypes_registry')
                     mimetype = registry.lookupExtension(fileid.lower())
                     if (not mimetype or
@@ -1818,7 +1841,7 @@ class CPSImageWidget(CPSFileWidget):
                                 LOG('CPSImageWidget', PROBLEM,
                                     "Failed to resize file %s keep original" \
                                     % fileid)
-                        file = Image(fileid, fileid, file)
+                        file = Image(fileid, filetitle, file)
                         LOG('CPSImageWidget', DEBUG,
                             'validate change set %s' % `file`)
                         datamodel[field_id] = file
@@ -1831,6 +1854,7 @@ class CPSImageWidget(CPSFileWidget):
         # reset datastructure
         datastructure[widget_id] = datamodel[self.fields[0]]
         datastructure[widget_id + '_choice'] = ''
+        datastructure[widget_id + '_title'] = ''
         if self.allow_resize:
             datastructure[widget_id + '_resize'] = ''
 
@@ -1883,6 +1907,7 @@ class CPSImageWidget(CPSFileWidget):
                         'content_url': '',
                         'image_tag': '',
                         'current_name': '-',
+                        'current_title': '',
                         'mimetype': '',
                         'last_modified': '',
                        }
