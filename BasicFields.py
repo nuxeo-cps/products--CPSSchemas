@@ -72,7 +72,7 @@ class CPSStringField(CPSField):
 
 InitializeClass(CPSStringField)
 
-class CPSPwdField(CPSField):
+class CPSPasswordField(CPSField):
     """Password field."""
     meta_type = "CPS Password Field"
     #_properties = propertiesWithType(CPSField._properties, 'default', 'string')
@@ -82,7 +82,7 @@ class CPSPwdField(CPSField):
             return value
         raise ValidationError('Not a string: %s' % repr(value))
 
-InitializeClass(CPSPwdField)
+InitializeClass(CPSPasswordField)
 
 class CPSCheckBoxField(CPSField):
     """Check Box field."""
@@ -169,7 +169,7 @@ InitializeClass(CPSImageField)
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
-FieldRegistry.register(CPSPwdField)
+FieldRegistry.register(CPSPasswordField)
 #FieldRegistry.register(CPSCheckBoxField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSDateTimeField)

@@ -178,7 +178,7 @@ InitializeClass(CPSStringWidgetType)
 
 ##################################################
 
-class CPSPwdWidget(CPSStringWidget):
+class CPSPasswordWidget(CPSStringWidget):
     """Password widget."""
     meta_type = "CPS Password Widget"
 
@@ -204,14 +204,14 @@ class CPSPwdWidget(CPSStringWidget):
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
-InitializeClass(CPSPwdWidget)
+InitializeClass(CPSPasswordWidget)
 
-class CPSPwdWidgetType(CPSStringWidgetType):
+class CPSPasswordWidgetType(CPSStringWidgetType):
     """Password widget type."""
     meta_type = "CPS Password Widget Type"
-    cls = CPSPwdWidget
+    cls = CPSPasswordWidget
 
-InitializeClass(CPSPwdWidgetType)
+InitializeClass(CPSPasswordWidgetType)
 
 ##################################################
 
@@ -793,7 +793,7 @@ InitializeClass(CPSImageWidgetType)
 
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
-WidgetTypeRegistry.register(CPSPwdWidgetType, CPSPwdWidget)
+WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 #WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)

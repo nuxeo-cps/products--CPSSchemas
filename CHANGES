@@ -23,3 +23,4 @@ New internal features:
 - adding hidden_view and hidden_edit attribute for layout
 - when creating a field/widget through the manage_add* methods, all
   properties can be initialized directly as keyword arguments
+- renamed Pwd Widget and Field into Password
