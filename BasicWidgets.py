@@ -124,12 +124,12 @@ class CPSStringWidget(CPSWidget):
 
     field_types = ('CPS String Field',)
 
-    allow_empty = 1
+    is_required = 0
     display_width = 20
     display_maxwidth = 0
     _properties = CPSWidget._properties + (
-        {'id': 'allow_empty', 'type': 'boolean', 'mode': 'w',
-         'label': 'Allow empty'},
+        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
+         'label': 'Mandatory field'},
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
         {'id': 'display_maxwidth', 'type': 'int', 'mode': 'w',
@@ -145,16 +145,14 @@ class CPSStringWidget(CPSWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         try:
-            v = str(value)
+            v = str(value).strip()
         except ValueError:
-            datastructure.setError(widget_id, "cpsdoc_err_string")
+            datastructure.setError(widget_id, "cpsschemas_err_string")
             return 0
-        if not self.allow_empty:
-            v = v.strip()
-            if not v:
-                datastructure[widget_id] = v
-                datastructure.setError(widget_id, "cpsdoc_err_empty")
-                return 0
+        if self.is_required and not v:
+            datastructure[widget_id] = ''
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
         datamodel[self.fields[0]] = v
         return 1
 
@@ -286,13 +284,13 @@ class CPSTextAreaWidget(CPSWidget):
 
     field_types = ('CPS String Field',)
 
-    allow_empty = 1
+    is_required = 0
     width = 40
     height = 5
     render_mode = 'pre'
     _properties = CPSWidget._properties + (
-        {'id': 'allow_empty', 'type': 'boolean', 'mode': 'w',
-         'label': 'Allow empty'},
+        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
+         'label': 'Mandatory field'},
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
@@ -314,16 +312,14 @@ class CPSTextAreaWidget(CPSWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         try:
-            v = str(value)
+            v = str(value).strip()
         except ValueError:
-            datastructure.setError(widget_id, "cpsdoc_err_textarea")
+            datastructure.setError(widget_id, "cpsschemas_err_textarea")
             return 0
-        if not self.allow_empty:
-            v = v.strip()
-            if not v:
-                datastructure[widget_id] = v
-                datastructure.setError(widget_id, "cpsdoc_err_empty")
-                return 0
+        if self.is_required and not v:
+            datastructure[widget_id] = ''
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
         datamodel[self.fields[0]] = v
         return 1
 
@@ -391,11 +387,11 @@ class CPSSelectWidget(CPSWidget):
         try:
             v = str(value)
         except ValueError:
-            datastructure.setError(widget_id, "cpsdoc_err_select")
+            datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
         vocabulary = self._getVocabulary()
         if not vocabulary.has_key(value):
-            datastructure.setError(widget_id, "cpsdoc_err_select")
+            datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
         datamodel[self.fields[0]] = v
         return 1
@@ -473,7 +469,7 @@ class CPSMultiSelectWidget(CPSWidget):
         value = datastructure[widget_id]
         if (not _isinstance(value, ListType) and
             not _isinstance(value, TupleType)):
-            datastructure.setError(widget_id, "cpsdoc_err_multiselect")
+            datastructure.setError(widget_id, "cpsschemas_err_multiselect")
             return 0
         vocabulary = self._getVocabulary()
         v = []
@@ -481,10 +477,10 @@ class CPSMultiSelectWidget(CPSWidget):
             try:
                 i = str(i)
             except ValueError:
-                datastructure.setError(widget_id, "cpsdoc_err_multiselect")
+                datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                 return 0
             if not vocabulary.has_key(i):
-                datastructure.setError(widget_id, "cpsdoc_err_multiselect")
+                datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                 return 0
             v.append(i)
         datamodel[self.fields[0]] = v
@@ -550,7 +546,7 @@ class CPSIntWidget(CPSWidget):
             v = int(value)
         except (ValueError, TypeError):
             datastructure.setError(self.getWidgetId(),
-                                   "cpsdoc_err_int")
+                                   "cpsschemas_err_int")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
@@ -714,14 +710,14 @@ class CPSDateWidget(CPSWidget):
     field_types = ('CPS DateTime Field',)
 
     _properties = CPSWidget._properties + (
-        {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
-         'label': 'Allow empty date'},
+        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
+         'label': 'Mandatory field'},
         {'id': 'view_format', 'type': 'string', 'mode': 'w',
          'label': 'View format'},
         {'id': 'view_format_none', 'type': 'string', 'mode': 'w',
          'label': 'View format empty'},
         )
-    allow_none = 0
+    is_required = 0
     view_format = "%d/%m/%Y" # XXX unused for now
     view_format_none = "-"
 
@@ -748,15 +744,20 @@ class CPSDateWidget(CPSWidget):
         m = datastructure[widget_id+'_m'].strip()
         y = datastructure[widget_id+'_y'].strip()
 
-        if self.allow_none and not (d+m+y):
-            datamodel[field_id] = None
-            return 1
+        if not (d+m+y):
+            if self.is_required:
+                datastructure[widget_id] = ''
+                datastructure.setError(widget_id, "cpsschemas_err_required")
+                return 0
+            else:
+                datamodel[field_id] = None
+                return 1
 
         try:
             v = DateTime(int(y), int(m), int(d))
         except (ValueError, TypeError, DateTime.DateTimeError,
                 DateTime.SyntaxError, DateTime.DateError):
-            datastructure.setError(widget_id, 'cpsdoc_err_date')
+            datastructure.setError(widget_id, 'cpsschemas_err_date')
             return 0
         else:
             datamodel[field_id] = v
@@ -849,7 +850,7 @@ class CPSFileWidget(CPSWidget):
                 ok = 1
             else:
                 LOG('CPSFileWidget', DEBUG, 'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, 'cpsdoc_err_file')
+                datastructure.setError(widget_id, 'cpsschemas_err_file')
                 ok = 0
         if ok:
             self.prepare(datastructure, datamodel)
@@ -934,7 +935,7 @@ class CPSImageWidget(CPSWidget):
             else:
                 LOG('CPSImageWidget', DEBUG,
                     'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, 'cpsdoc_err_image')
+                datastructure.setError(widget_id, 'cpsschemas_err_image')
                 ok = 0
         if ok:
             self.prepare(datastructure, datamodel)
@@ -1003,7 +1004,7 @@ class CPSRichTextEditorWidget(CPSTextAreaWidget):
             v = str(value)
         except ValueError:
             datastructure.setError(self.getWidgetId(),
-                                   "cpsdoc_err_textarea")
+                                   "cpsschemas_err_textarea")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
