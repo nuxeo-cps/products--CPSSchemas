@@ -389,10 +389,10 @@ class CPSAttachedFileWidget(CPSFileWidget):
             fileUpload.seek(0)
             read_size = len(fileUpload.read(ms + 1))
             if ms and read_size > ms:
-                # Size is expressed in Mb
-                max_size = ms / (1024*1024)
+                # Size is expressed in human readable value
+                max_size_str = self.getHRSize(ms)
                 err = 'cpsschemas_err_file_too_big ${max_size}'
-                err_mapping = {'max_size': max_size}
+                err_mapping = {'max_size': max_size_str}
                 return self.doesNotValidate(err, err_mapping,
                                             file, datastructure)
             fileUpload.seek(0)
@@ -833,7 +833,7 @@ class CPSGenericSelectWidget(CPSWidget):
 
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-         'label': 'Vocabulary'},
+         'label': 'Vocabulary', 'is_required' : 1},
         {'id': 'translated', 'type': 'boolean', 'mode': 'w',
          'label': 'Is vocabulary translated on display'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
@@ -920,7 +920,10 @@ class CPSGenericSelectWidget(CPSWidget):
         if mode == 'view':
             if not vocabulary.has_key(value):
                 # for free input
-                return escape(value)
+                if value is not None:
+                    return escape(value)
+                else:
+                    return ''
             else:
                 if getattr(self, 'translated', None):
                     return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
@@ -1080,7 +1083,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
 
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-         'label': 'Vocabulary'},
+         'label': 'Vocabulary', 'is_required' : 1},
         {'id': 'translated', 'type': 'boolean', 'mode': 'w',
          'label': 'Is vocabulary translated on display'},
         {'id': 'size', 'type': 'int', 'mode': 'w',
