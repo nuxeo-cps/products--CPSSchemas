@@ -35,6 +35,7 @@ import WidgetTypesTool
 
 import BasicFields
 import BasicWidgets
+import ExtendedWidgets
 
 tools = (
     VocabulariesTool.VocabulariesTool,
