@@ -239,14 +239,16 @@ class FlexibleTypeInformation(TypeInformation):
         return self._renderLayoutStyle(ob, mode, layout=layout, ds=ds, dm=dm)
 
     security.declarePrivate('renderEditObject')
-    def renderEditObject(self, ob, REQUEST, errmode='edit', okmode='edit'):
+    def renderEditObject(self, ob, request=None, errmode='edit',
+                         okmode='edit'):
         """Maybe modify the object from request, and redirect to new mode."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
         layoutob = self.getLayout()
         layoutdata = layoutob.getLayoutData(ds, dm)
-        if REQUEST.has_key('cpsdocument_edit_button'):
-            ds.updateFromRequest(REQUEST)
+        if (request is not None
+            and request.has_key('cpsdocument_edit_button')): # XXX customizable
+            ds.updateFromRequest(request)
             ok = layoutob.validateLayout(layoutdata, ds, dm)
             if ok:
                 # Update the object from dm.
