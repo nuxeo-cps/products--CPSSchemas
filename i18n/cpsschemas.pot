@@ -1,0 +1,33 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2003-09-09 13:01default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: default\n"
+
+
+#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Change</label>
+msgid "cpsdoc_label_file_change"
+msgstr ""
+
+#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Delete</label>
+msgid "cpsdoc_label_file_delete"
+msgstr ""
+
+#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Keep</label>
+msgid "cpsdoc_label_file_keep"
+msgstr ""
