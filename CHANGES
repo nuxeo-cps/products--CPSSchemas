@@ -5,6 +5,8 @@ New features:
 ~~~~~~~~~~~~~
 - Password widget: able to define a policy for password validation:
   checking min, max size checking lower, upper, digit or extra chararcter
+- A new AutoIndex field for automatically generating numbers useful for
+  indexes.
 Bug fixes:
 ~~~~~~~~~~
 - renderHtmlTag unable to generate <option value=""> tag

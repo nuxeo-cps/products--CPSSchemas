@@ -23,6 +23,8 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG
 from types import IntType, StringType, ListType, FloatType, LongType
+from random import randint
+from time import time
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -236,6 +238,34 @@ class CPSImageField(CPSField):
 
 InitializeClass(CPSImageField)
 
+class CPSAutoIndexField(CPSField):
+    """Image field."""
+    meta_type = "CPS Auto Index Field"
+
+    _properties = CPSField._properties[0:1] + CPSField._properties[2:]
+    
+    def getDefault(self):
+        """Get the default value for this field."""
+        # This field calculates an automatic number which is useful
+        # to create automatic indexes. It's returned as a long int.
+        # The number is the time in seconds from "epoch" + four random 
+        # numbers. It's four, so that it is one number more than the 
+        # milliseconds from the  epoch, to avoid possible confusion. 
+        # The usage of a timestamp means the indexes generated are in order
+        # (unless somebody changes system clock). The random part avoids 
+        # most conflicts. Conflicts can still happen in theory, so a check 
+        # for conflicts by the storage adapter is not a bad idea).
+        return long(time() * 10000) + randint(0,9999)
+
+    def validate(self, value):
+        if not value:
+            return None
+        if _isinstance(value, int):
+            return value
+        raise ValidationError('Not an int: %s' % repr(value))
+
+InitializeClass(CPSAutoIndexField)
+
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
@@ -247,3 +277,4 @@ FieldRegistry.register(CPSFloatField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
 FieldRegistry.register(CPSImageField)
+FieldRegistry.register(CPSAutoIndexField)
