@@ -157,19 +157,36 @@ InitializeClass(CPSHtmlWidgetType)
 class CPSMethodWidget(CPSWidget):
     """Method widget."""
     meta_type = "CPS Method Widget"
+    
 
+    
     _properties = CPSWidget._properties + (
         {'id': 'render_method', 'type': 'string', 'mode': 'w',
-         'label': 'the zpt or py script method'},)
+         'label': 'the zpt or py script method'},
+        {'id': 'field_types', 'type': 'lines', 'mode': 'w',
+         'label': 'Field types'},)
+    
+    field_types = ('CPS String Field',)
     render_method = ''
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
-        pass
-
+        datamodel = datastructure.getDataModel()
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+        
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        return 1
+        widget_id = self.getWidgetId()
+        err = 0
+        v = datastructure[widget_id]
+        if err:
+            datastructure.setError(widget_id, err)
+            datastructure[widget_id] = v
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+
+        return not err
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -213,6 +230,7 @@ class CPSStringWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        
 
     def _extractValue(self, value):
         """Return err and new value."""
