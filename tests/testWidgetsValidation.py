@@ -464,11 +464,12 @@ def test_suite():
     from types import ClassType
     tests = []
     for obj in globals().values():
+        if obj is WidgetValidationTest:
+            continue
         if type(obj) is ClassType and issubclass(obj, WidgetValidationTest):
             # python 2.1
             tests.append(unittest.makeSuite(obj))
-        elif (isclass(obj) and issubclass(obj, WidgetValidationTest) and \
-            obj is not WidgetValidationTest):
+        elif isclass(obj) and issubclass(obj, WidgetValidationTest):
             # python 2.3
             tests.append(unittest.makeSuite(obj))
     return unittest.TestSuite(tests)
