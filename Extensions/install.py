@@ -147,9 +147,8 @@ def install(self):
         schema = stool.manage_addCPSSchema(id)
         for field_id, fieldinfo in info.items():
             pr("   Field %s." % field_id)
-            schema.manage_addField(field_id, fieldinfo['type'])
-            # TODO for fieldinfo['data']
-            #schema[field_id].manage_editProperties()
+            schema.manage_addField(field_id, fieldinfo['type'],
+                                   **fieldinfo['data'])
 
     # layouts
     pr("Verifiying layouts")
@@ -165,8 +164,8 @@ def install(self):
         layout = ltool.manage_addCPSLayout(id)
         for widget_id, widgetinfo in info['widgets'].items():
             pr("   Widget %s" % widget_id)
-            widget = layout.manage_addCPSWidget(widget_id, widgetinfo['type'])
-            widget.manage_changeProperties(**widgetinfo['data'])
+            widget = layout.manage_addCPSWidget(widget_id, widgetinfo['type'],
+                                                **widgetinfo['data'])
         layout.setLayoutDefinition(info['layout'])
 
 
