@@ -65,6 +65,9 @@ class Widget(SimpleItemWithProperties):
     security = ClassSecurityInfo()
 
     widget_type = ''
+    field_types = []
+    field_inits = [] # default settings for fields created in flexible mode
+                     # using the same order as in field_types
 
     def __init__(self, id, widget_type, **kw):
         self._setId(id)
@@ -88,9 +91,16 @@ class Widget(SimpleItemWithProperties):
         return widgetname(self.getWidgetId())
 
     security.declarePrivate('getFieldTypes')
-    def getFieldTypes(self):
+    def getFieldTypes(self, ):
         return self.field_types
 
+    security.declarePrivate('getFieldInits')
+    def getFieldInits(self, ):
+        nb_field = len(self.getFieldTypes())
+        if len(self.field_inits) == nb_field:
+            return self.field_inits
+        # return empty inits
+        return None
     #
     # To be implemented by widget classes.
     #
