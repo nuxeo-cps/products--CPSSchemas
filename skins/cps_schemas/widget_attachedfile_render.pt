@@ -13,7 +13,7 @@
     <span tal:condition="preview_id">
       <a href="http://url..." target="_blank"
          tal:attributes="href preview_id"
-      >
+         i18n:translate="cpsschema_link_preview">
        (preview)
       </a>
     </span>
