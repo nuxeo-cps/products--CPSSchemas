@@ -713,8 +713,18 @@ class CPSImageWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
          'label': 'Deletable'},
+        {'id': 'maxsize', 'type': 'int', 'mode': 'w',
+         'label': 'maximum image size'},
+        {'id': 'display_width', 'type': 'int', 'mode': 'w',
+         'label': 'Display width'},
+        {'id': 'display_height', 'type': 'int', 'mode': 'w',
+         'label': 'Display height'},
         )
+
     deletable = 1
+    maxsize = 2*1024*1024
+    display_height = 0
+    display_width = 0
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
@@ -735,10 +745,11 @@ class CPSImageWidget(CPSWidget):
             datamodel[field_id] = None
             ok = 1
         else: # 'change'
+            # XXX handle maxsize
             file = datastructure[widget_id]
             if _isinstance(file, FileUpload):
                 fileid, filetitle = cookId('', '', file)
-                file = File(fileid, filetitle, file)
+                file = Image(fileid, filetitle, file)
                 LOG('CPSImageWidget', DEBUG, 'validate change set %s' % `file`)
                 datamodel[field_id] = file
                 ok = 1

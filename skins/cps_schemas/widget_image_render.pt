@@ -3,7 +3,8 @@
                    current_name options/current_name;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
-  <img src="." tal:attributes="src python:here.fields[0]">
+  <tal:block replace="structure python:here.getImgTag(here.fields[0],
+    base_url='', height=here.display_height, width=here.display_width)" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
   <metal:block use-macro="here/widget_file_render/macros/file_edit" />
