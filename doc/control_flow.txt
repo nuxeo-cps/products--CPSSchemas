@@ -1,0 +1,145 @@
+This document describes the "flow" in the NuxCPS3Document for the
+complicated cases, namely data retrieval, document rendering and data
+editing. It will describe it step by step as it happens, in the order of
+1. Retreieving the data
+2. Displaying a form with the data
+3. Saving the updated data
+
+To make it all somewhat clearler (or maybe not) there is the associated
+control_flow.dia document that oulines what's in here graphically, but
+in much less detail.
+
+0. Introduction
+
+  Each document will have an associated portal_type, defined in the
+  portal_types tool. The type defined will probably be defined by a new type
+  of portal type (instead of like Factory Type Information). The type
+  definition is throughout this document referred to as a template.
+
+1. Retreiving the data
+
+  The documents data are accessed through a DataModel object. This
+  object is created by calling the documents makeDataModel() method
+  (This is actually currently done by the Template, but when document-
+  specific schemas is implemented it will move to the Document).
+  This method creates a DataModel object by fetching all the schemas that
+  are valid for the document and adding them to the DataModel. The schemas
+  can be either local to the document, local to the template, or some sort
+  of global schemas (the exact way of setting up the global schemas have yet
+  to be determined).
+
+  A schema is a collection of fields, and the DataModel is basically a
+  temporary collection of schemas, specific for each document. Each schema
+  also has it's own storage settings, that determine where the data for the
+  fields are to be stored. This could be an SQL database, or object
+  properties, or something else. The data is accessed through StorageAdapters
+  who are created by StorageAdapterFactories. Each schema has it's own
+  StorageAdapterFactory with it's own settings.
+
+  One StorageAdapter is created for each schema and kept in the DataModel
+  for access to the data. Each StorageAdapter is also called upon to
+  fetch the data. The data is also stored in the DataModel as a data 'cache'
+  so that external storages isn't called upon each time you make a change.
+
+  The makeDataModel() method then returns the new DataModel object.
+
+  Data access
+
+    You can access the data in the DataModel in two ways. Firstly the
+    DataModel has a dictionary type interface, so to get the data for a field
+    you just access the DataModel with datamodel['fieldname'] and the data
+    will be returned. You can also create DataStructures. A DataStructure
+    is a dictionary-type object that is especially designed for usage with
+    forms. It keeps the data rendered into a format that is directly
+    displayable, i.e. a text string (or possibly a number). This is used
+    when rendering documents.
+
+    (And it just struck me that if we are to have different format of one
+    field in different Layouts, we need to call the FieldWidget to render,
+    which means another refactoring...)
+
+2. Displaying a form with the data
+
+  Displaying a document is done by calling the documents render() method,
+  with a parameter naming the Layout to be used when rendering. Layouts
+  are collections of FieldWidget, each FieldWidget has a corresponding Field
+  that the widget is responsable for rendering.
+
+  The document fetches the Layout in question, either locally, if allowed or
+  from the template, which in turn get's it locally or from the global
+  storage.  The document then creates a DataModel (see above) and call the
+  DataModels makeDataStructure method to create a DataStructure that is then
+  passed to the Layouts render() method.
+
+  The Layout will then in turn go through each FieldWidget, pick out the
+  relevant data from the DataStructure and call each FieldWidgets render()
+  method with that data, and with the layouts Renderer.
+
+  A Renderer is an object that knows how to render basic graphical elements,
+  such as bits of text, and editboxes. The FieldWidget in turn knows which
+  of these graphical elements it needs to render the field. A text field
+  will either be rendered as a string or as an editbox, and the FieldWidget
+  know which, while the renderer in turn knows how to create strings and
+  editboxes. It's important to note here that different layouts may render
+  the same field differently. For exmaple most documents will have both
+  view and edit layouts, one for viewing the document and one for editing
+  it, where the view layout will render almost everything as text, while the
+  edit layout will render everything as HTML fields.
+
+  Each Layout will have it's own renderer, depending on which
+  target the layout is created for. There may be a CmfRenderer that uses
+  METAL macros defined in portal_skins to render, and a HtmlRenderer to
+  render into pure HTML, and a PDF renderer to render to PDF-files, and
+  TextRenderer to render into pure text (useful if you want to send document
+  as e-mail, for example) and a StructuredText renderer to make the whole
+  document into a STX file, etc...
+
+  So the Layout calls render() on each FieldWidget who in turn calls the
+  methods it needs on the Renderer, such as text() and editbox(). The
+  Renderer returns a text-string that represents the rendering, which is
+  concatenated together, and Layout.render() finally returns the full
+  rendrition for display.
+
+3. Saving the update data
+
+  The procedure outlined under 2  is exactly the same no matter if it is a
+  form or just an HTML page, or for that matter a PDF file. Asuuming that it
+  is a form used for updating the documents data, this is the procedure to
+  update the data from this form.
+
+  When a document is updated, a DataStructure needs to be updated from
+  the REQUEST object. The DataStructure could be created at this point,
+  but to improve performance it may be beneficial to store the
+  DataStructure as well as the DataModel created when the document form
+  was rendered in a volatile attribute on the document.
+
+  The DataStructure will go through it's fields to see if they exist in the
+  REQUEST and update it's data accordingly. It also keeps track of which
+  fields have been changed. After the update, the document passes the
+  updated DataStructure to the DataModels commitDataStructure method.
+
+  CommitDataStructure first validates the data in the DataStructure by
+  calling the fields and validating the data with them. If all Fields
+  validate properly, it updates it's internal storage of data. It uses
+  the DataStructures modified flags to keep track of which schemas that have
+  been affected by modified data. It then calls it's own _commitData method
+  to commit the data for storage for each affected schema. It does this by
+  using the writeData() method on the StorageAdapter connected to that
+  Schema.
+
+Thats it, I think. Hope this helps.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
