@@ -323,7 +323,7 @@ class CPSURLWidget(CPSStringWidget):
         "$")
 
     path_pat = compile(
-        r"^[a-z0-9$_.+!*'(),;:@&=%/-]*$")
+        r"^[a-z0-9$_.+!*'(),;:@&=%/~-]*$")
 
     # See rfc1738 and rfc2396
     # NB: rfc1738 says that "/", ";", "?" can't appear in the query, 

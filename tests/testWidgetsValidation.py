@@ -251,6 +251,9 @@ class URLWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, '/ww..com')
         self.assert_(ret, err)
 
+    def test_url_ok_15(self):
+        ret, err, ds = self._validate({}, 'http://nuxeo.com/~fermigier/')
+        self.assert_(ret, err)
 
     def test_url_nok_1(self):
         ret, err, ds = self._validate({}, 'a space')
