@@ -14,6 +14,6 @@
     tal:replace="structure python:here.getImgTag(here.fields[0],
     base_url='', height=here.display_height, width=here.display_width,
     keep_ratio=1)">
-  <metal:block use-macro="here/widget_file_render/macros/file_edit" />
+  <metal:block use-macro="here/widget_attachedfile_render/macros/file_edit" />
 </tal:block>
 </tal:block>
