@@ -381,9 +381,6 @@ class CPSTextAreaWidget(CPSWidget):
     field_types = ('CPS String Field',)
     field_inits = ({'is_indexed': 1,},)
 
-    width = 40
-    height = 5
-    render_format = 'pre'
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
@@ -393,9 +390,10 @@ class CPSTextAreaWidget(CPSWidget):
          'select_variable': 'all_render_formats',
          'label': 'Render format'},
         )
-
-
-    all_render_formats = ['pre', 'stx', 'text']
+    all_render_formats = ['text', 'pre', 'stx', 'html']
+    width = 40
+    height = 5
+    render_format = all_render_formats[0]
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -422,21 +420,29 @@ class CPSTextAreaWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
-        if mode == 'view':
-            render_format = self.render_format
-            if render_format == 'pre':
-                return '<pre>'+escape(value)+'</pre>'
-            elif render_format == 'stx':
-                return structured_text(value)
-            else: # render_format == 'text'
-                return '<div>'+newline_to_br(value)+'</div>'
-        elif mode == 'edit':
-            return renderHtmlTag('textarea',
-                                 name=self.getHtmlWidgetId(),
-                                 cols=self.width,
-                                 rows=self.height,
-                                 contents=value)
-        raise RuntimeError('unknown mode %s' % mode)
+        if mode == 'edit':
+            ret = renderHtmlTag('textarea',
+                                name=self.getHtmlWidgetId(),
+                                cols=self.width,
+                                rows=self.height,
+                                contents=value)
+        elif mode == 'view':
+            rformat = self.render_format
+            if rformat == 'pre':
+                ret = '<pre>'+escape(value)+'</pre>'
+            elif rformat == 'stx':
+                ret = structured_text(value)
+            elif rformat == 'text':
+                ret = newline_to_br(value)
+            elif rformat == 'html':
+                ret = value
+            else:
+                RuntimeError("unknown render_format '%s' for '%s'" %
+                             (render_format, self.getId()))
+        else:
+            raise RuntimeError('unknown mode %s' % mode)
+
+        return ret
 
 InitializeClass(CPSTextAreaWidget)
 
