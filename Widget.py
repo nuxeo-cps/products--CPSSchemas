@@ -259,7 +259,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         is returned.
 
         In edit mode if a css class is specified, this is the class name
-        suffixed by "_edit" that is returned. This is because in edit mode
+        suffixed by "Edit" that is returned. This is because in edit mode
         one usually doesn't want the widgets to have the same appearance that
         they have in view mode. Actually in edit mode one prefers to have all
         the widgets with the same neutral presentation.
@@ -273,7 +273,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
                 css_class = css_class_computed
 
         if css_class and layout_mode == 'edit':
-            css_class = css_class + '_edit'
+            css_class = css_class + 'Edit'
         else:
             css_class = css_class or 'visible'
 
