@@ -106,9 +106,13 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         layoutdef = {'ncols': 1, 'rows': []}
         self.setLayoutDefinition(layoutdef)
 
-    security.declarePrivate('_normalizeLayoutDefinition')
-    def _normalizeLayoutDefinition(self, layoutdef):
-        """Normalize a layout definition."""
+    security.declarePrivate('normalizeLayoutDefinition')
+    def normalizeLayoutDefinition(self, layoutdef):
+        """Normalize a layout definition.
+
+        Removes empty rows, normalize last cells so all widths are
+        equal, recomputes ncols.
+        """
         rows = layoutdef['rows']
         # Find max width.
         maxw = 1
@@ -118,6 +122,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 w += cell.get('ncols', 1)
             if w > maxw:
                 maxw = w
+        layoutdef['ncols'] = maxw
         # Normalize short widths.
         for row in rows:
             w = 0
@@ -126,14 +131,14 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                     cell['ncols'] = maxw - w
                 else:
                     w += cell.get('ncols', 1)
-        layoutdef['ncols'] = maxw
+        # Remove empty rows.
         layoutdef['rows'] = filter(None, rows)
         return layoutdef
 
     security.declarePrivate('setLayoutDefinition')
     def setLayoutDefinition(self, layoutdef):
         """Set the layout definition."""
-        layoutdef = self._normalizeLayoutDefinition(layoutdef)
+        layoutdef = self.normalizeLayoutDefinition(layoutdef)
         self._layoutdef = deepcopy(layoutdef)
 
     security.declareProtected(View, 'getLayoutDefinition')
@@ -141,24 +146,83 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         """Get the layout definition."""
         return deepcopy(self._layoutdef)
 
-    security.declarePrivate('getLayoutData')
-    def getLayoutData(self, datastructure):
-        """Get the layout data.
+    security.declarePrivate('getStandardWidgetModeChooser')
+    def getStandardWidgetModeChooser(self, layout_mode, datastructure):
+        """Get a function to choose the mode to render a widget.
+        """
+        def widgetModeChooser(widget,
+                              layout=self, layout_mode=layout_mode,
+                              datastructure=datastructure):
+            """Choose the mode to render a widget."""
+            if layout_mode == 'view':
+                if widget.hidden_view:
+                    mode = None
+                else:
+                    mode = 'view'
+            elif layout_mode in ('edit', 'create'):
+                if widget.hidden_edit:
+                    mode = None
+                elif 0: # XXX widget read-only
+                    mode = 'view'
+                else:
+                    mode = 'edit'
+            elif layout_mode == 'editlayout':
+                mode = 'view'
+            else:
+                raise ValueError("Unknown layout mode '%s'" % layout_mode)
+            return mode
 
-        This has actuel widget instances.
+        return widgetModeChooser
+
+    security.declarePrivate('getLayoutData')
+    def getLayoutData(self, datastructure, widget_mode_chooser):
+        """Get the layout data with rendered widgets.
+
+        Renders all the widgets in an appropriate mode, and computes the
+        final row/cell structure.
+
+        widget_mode_chooser(widget) must return the mode used for
+        rendering a widget, or None to not render the widget at all.
+
+        Returns a layoutdata, with the widgets and the rendered widgets.
         """
         layoutdata = self.getLayoutDefinition() # get a copy
-        widgets = {}
-        for row in layoutdata['rows']:
-            for cell in row:
-                widget_id = cell['widget_id']
-                widget = self[widget_id]
-                cell['widget'] = widget
-                widgets[widget_id] = widget
-                # XXX here filtering according to permissions ?
-                widget.prepare(datastructure)
         layoutdata['id'] = self.getId()
+        # Compute all the widgets.
+        widgets = {}
+        for widget_id, widget in self.items():
+            widget.prepare(datastructure)
+            # XXX here filtering according to permissions ?
+            # XXX also treat: hidden_view, hidden_edit, hidden_empty
+            mode = widget_mode_chooser(widget)
+            if mode is not None:
+                rendered = widget.render(mode, datastructure).strip()
+                if widget.hidden_empty and not rendered:
+                    hidden = 1
+                else:
+                    hidden = 0
+            else:
+                rendered = ''
+                hidden = 1
+            widgets[widget_id] = {
+                'widget': widget,
+                'widget_rendered': rendered,
+                'hidden': hidden,
+                }
         layoutdata['widgets'] = widgets
+        # Store computed widget info in row/cell structure.
+        for row in layoutdata['rows']:
+            new_row = []
+            for cell in row:
+                cell.update(widgets[cell['widget_id']])
+                if not cell['hidden']:
+                    new_row.append(cell)
+            row[:] = new_row
+        # XXX hiding a cell should be made more configurable,
+        # decide if it gets set to '', or if it is removed and
+        # its space contributed to the left or right cell.
+        # Re-normalize after removed cells.
+        self.normalizeLayoutDefinition(layoutdata)
         return layoutdata
 
     security.declarePrivate('validateLayout')
