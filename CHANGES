@@ -7,6 +7,9 @@ New features:
   parameters for the 'other' option.
 - Local vocabularies support, take a look at doc/localvocabulary.txt for more
   information.
+- New ZippedHtmlWidget: store a zip file that contains html which can be
+  viewed online. Using index.html or any html file from the zip as preview
+  page.
 Bug fixes:
 ~~~~~~~~~~
 - Made the Layout.renderLayoutStyle() method more generic so that it can deal
