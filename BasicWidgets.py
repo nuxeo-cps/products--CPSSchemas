@@ -75,6 +75,31 @@ def renderHtmlTag(tagname, **kw):
     return res
 
 
+##################################################
+class CPSNoneWidget(CPSWidget):
+    """None widget.
+
+    Deprecated widget can inherit form this widget, they will
+    disapear without breaking the rest of the document.
+    """
+    meta_type = "CPS None Widget"
+
+    def isHidden(self):
+        return 1
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        pass
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        return ''
+
+InitializeClass(CPSNoneWidget)
+
 
 ##################################################
 
