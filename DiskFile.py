@@ -47,7 +47,6 @@ class DiskFile(File, VTM):
         self.title = title
         self._file_store = storage_path
         self._filename = self.getNewFilename(id)
-        self._is_new_file = 1
         self.precondition = '' # For Image.File compatibility
         if file:
             data, size = self._read_data(file)
@@ -76,14 +75,14 @@ class DiskFile(File, VTM):
     # Transaction support
     #
     def _finish(self):
-        if not self._is_new_file:
+        if not self.is_new_file:
             try:
                 os.remove(self.getFullFilename())
             except OSError:
                 LOG('DiskFile', WARNING, 'Error during transaction commit',
                     'Removing file %s failed. \nStray files may linger.\n' %
                         self.getFullFilename())
-        self._is_new_file = 0
+        self.is_new_file = 0
         os.rename(self.getFullFilename(self._new_filename),
                   self.getFullFilename())
 
@@ -114,13 +113,17 @@ class DiskFile(File, VTM):
         filename = self.getFullFilename(self._new_filename)
         file = open(filename, 'wb')
         file.write(str(data))
+        self.is_new_file = 1
         self.ZCacheable_invalidate()
         self.ZCacheable_set(None)
         self.http__refreshEtag()
 
     security.declareProtected(View, 'getData')
     def getData(self):
-        filename = self.getFullFilename()
+        if self.is_new_file:
+            filename = self.getFullFilename(self._new_filename)
+        else:
+            filename = self.getFullFilename()
         file = open(filename, 'rb')
         data = file.read()
         return data

@@ -15,6 +15,7 @@ class TestDiskFile(unittest.TestCase):
         # Should return file size afterwards
         df.update_data(test_data)
         self.failUnlessEqual(df.get_size(), len(test_data))
+        self.failUnlessEqual(df.getData(), test_data)
 
         df._abort() # To remove the temporary files
 
@@ -42,7 +43,6 @@ class TestDiskFile(unittest.TestCase):
         # Remove the file:
         df.manage_beforeDelete(None,None)
         self.failIf(os.path.exists(df.getFullFilename()))
-
 
 def test_suite():
     suite = unittest.TestSuite()
