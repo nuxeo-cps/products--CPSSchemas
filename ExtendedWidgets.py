@@ -922,8 +922,8 @@ class CPSGenericSelectWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        datamodel = datastructure.getDataModel()
-        value = datamodel[self.fields[0]]
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default
@@ -1187,8 +1187,8 @@ class CPSGenericMultiSelectWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        datamodel = datastructure.getDataModel()
-        value = datamodel[self.fields[0]]
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default

@@ -33,6 +33,8 @@ Bug fixes:
   no value to display which made the 'hidden if empty' option ineffective.
 - The Email Widget returned an empty tag (<a ...></a>) when there was
   no value to display which made the 'hidden if empty' option ineffective.
+- Generic (Multi) Select widgets used value taken from datamodel instead of
+  datastructure for rendering
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Widget properties: widget_group_id was removed (not used ans not XHTML
