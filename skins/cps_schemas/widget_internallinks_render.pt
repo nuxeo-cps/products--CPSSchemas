@@ -23,16 +23,16 @@
     <tal:block define="base_url here/getBaseUrl">
       <script type="text/javascript" tal:content="structure string:<!--
         var base_url = '${base_url}'
-        var w_id = '${id}'
+        var intlinks_w_id = '${id}'
         -->">
       </script>
       <script type="text/javascript">
         <!--
         function open_search_dialog() {
           selector_window = window.open(base_url + 'popup_internallinks_form'+
-          '?textarea=' + w_id, 'popup_link', 'toolbar=0,scrollbars=1,' +
-          'location=0,statusbar=0,menubar=0,resizable=0,dependent=1,' +
-          'width=400,height=300');
+          '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
+          'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,' +
+          'dependent=1,width=400,height=300');
           if (! selector_window.opener)
             selector_window.opener = window
         }
