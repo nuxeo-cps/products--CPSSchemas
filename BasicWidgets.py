@@ -37,11 +37,42 @@ from Products.CPSDocument.Widget import CPSWidgetType
 from Products.CPSDocument.WidgetsTool import WidgetTypeRegistry
 
 
+def renderHtmlTag(tagname, **kw):
+    """Render an HTML tag."""
+    if kw.get('css_class'):
+        kw['class'] = kw['css_class']
+        del kw['css_class']
+    if kw.has_key('contents'):
+        contents = kw['contents']
+        del kw['contents']
+    else:
+        contents = None
+    attrs = []
+    for key, value in kw.items():
+        if value == None:
+            value = key
+        attrs.append('%s="%s"' % (key, escape(str(value))))
+    res = '<%s %s>' % (tagname, ' '.join(attrs))
+    if contents is not None:
+        res += contents + '</%s>' % tagname
+    return res
+
+
+
 ##################################################
 
 class CPSStringWidget(CPSWidget):
     """String widget."""
     meta_type = "CPS String Widget"
+
+    display_width = 20
+    display_maxwidth = 0
+    _properties = CPSWidget._properties + (
+        {'id': 'display_width', 'type': 'int', 'mode': 'w',
+         'label': 'Display width'},
+        {'id': 'display_maxwidth', 'type': 'int', 'mode': 'w',
+         'label': 'Maximum input'},
+        )
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
@@ -67,10 +98,16 @@ class CPSStringWidget(CPSWidget):
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
-            return ('<input type="text" name="%s" value="%s" />'
-                    % (escape(self.getHtmlWidgetId()), escape(value)))
-        else:
-            return '[XXX unknown mode %s]' % mode
+            kw = {'type': 'text',
+                  'name': self.getHtmlWidgetId(),
+                  'value': value,
+                  'size': self.display_width,
+                  'css_class': self.css_class,
+                  }
+            if self.display_maxwidth:
+                kw['maxlength'] = self.display_maxwidth
+            return renderHtmlTag('input', **kw)
+        raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSStringWidget)
 
@@ -81,6 +118,64 @@ class CPSStringWidgetType(CPSWidgetType):
     cls = CPSStringWidget
 
 InitializeClass(CPSStringWidgetType)
+
+##################################################
+
+class CPSTextAreaWidget(CPSWidget):
+    """TextArea widget."""
+    meta_type = "CPS TextArea Widget"
+
+    width = 40
+    height = 5
+    _properties = CPSWidget._properties + (
+        {'id': 'width', 'type': 'int', 'mode': 'w',
+         'label': 'Width'},
+        {'id': 'height', 'type': 'int', 'mode': 'w',
+         'label': 'Height'},
+        )
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        value = datastructure[self.getWidgetId()]
+        try:
+            v = str(value)
+        except ValueError:
+            datastructure.setError(self.getWidgetId(),
+                                   "Bad str received")
+            ok = 0
+        else:
+            datamodel[self.fields[0]] = v
+            ok = 1
+        return ok
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            return escape(value)
+        elif mode == 'edit':
+            return renderHtmlTag('textarea',
+                                 name=self.getHtmlWidgetId(),
+                                 cols=self.width,
+                                 rows=self.height,
+                                 contents=value,
+                                 css_class=self.css_class,
+                                 )
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSTextAreaWidget)
+
+
+class CPSTextAreaWidgetType(CPSWidgetType):
+    """TextArea widget type."""
+    meta_type = "CPS TextArea Widget Type"
+    cls = CPSTextAreaWidget
+
+InitializeClass(CPSTextAreaWidgetType)
 
 ##################################################
 
@@ -112,10 +207,13 @@ class CPSIntWidget(CPSWidget):
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
-            return ('<input type="text" name="%s" value="%s" />'
-                    % (escape(self.getHtmlWidgetId()), escape(str(value))))
-        else:
-            return '[XXX unknown mode %s]' % mode
+            return renderHtmlTag('input',
+                                 type='text',
+                                 name=self.getHtmlWidgetId(),
+                                 value=value,
+                                 css_class=self.css_class,
+                                 )
+        raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSIntWidget)
 
@@ -252,4 +350,5 @@ InitializeClass(CPSCustomizableWidgetType)
 
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
+WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)

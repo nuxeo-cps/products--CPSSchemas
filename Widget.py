@@ -107,17 +107,27 @@ class CPSWidget(Widget):
         Widget.__init__(self, id, **kw)
         self.fields = [id]
 
+    fields = []
+    title = ''
+    title_msgid = ''
+    description = ''
+    css_class = ''
+
     #
     # ZMI
     #
 
-    title = ''
-    msgid = ''
-    fields = []
     _properties = (
-        {'id': 'title', 'type': 'string', 'mode': 'w', 'label': 'Title'},
-        {'id': 'msgid', 'type': 'string', 'mode': 'w', 'label': 'Msgid'},
-        {'id': 'fields', 'type': 'tokens', 'mode': 'w', 'label': 'Fields'},
+        {'id': 'fields', 'type': 'tokens', 'mode': 'w',
+         'label': 'Fields'},
+        {'id': 'title', 'type': 'string', 'mode': 'w',
+         'label': 'Title'},
+        {'id': 'title_msgid', 'type': 'string', 'mode': 'w',
+         'label': 'Title msgid'},
+        {'id': 'description', 'type': 'text', 'mode': 'w',
+         'label': 'Description'},
+        {'id': 'css_class', 'type': 'string', 'mode': 'w',
+         'label': 'CSS class'},
         )
 
 InitializeClass(CPSWidget)
