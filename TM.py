@@ -13,7 +13,7 @@
 """Provide support for linking an external transaction manager with Zope's
 """
 
-# $id:$
+# $Id$
 
 # This File is a modified version of Shared.DC.ZRDB.TM to support
 # persistent classes. It comes from Gregor Heines ExtFile product.
