@@ -172,6 +172,11 @@ class FlexibleTypeInformation(TypeInformation):
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
+    
+    security.declarePublic('getProxyRolesAllowed')
+    def getProxyTypesAllowed(self):
+        """ return the list of allowed portal types strings """
+        return ['','document','folder','folderishdocument']
 
     #
     # ZMI
@@ -297,8 +302,8 @@ class FlexibleTypeInformation(TypeInformation):
             if lid == layout_id:
                 schema_id = sid
                 break
-        if sid is None:
-            raise ValueError("Layout %s is not flexible" % layout_id)
+            if sid is None:
+                raise ValueError("Layout %s is not flexible" % layout_id)
         layout = ob._getOb('.cps_layouts')._getOb(layout_id)
         schema = ob._getOb('.cps_schemas')._getOb(schema_id)
         return (layout, schema)
