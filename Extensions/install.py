@@ -17,6 +17,19 @@
 #
 # $Id$
 
+# to use CPSDocument in your product add the following line in your setup:
+#     #  CPSDocument installer/updater
+#     #
+#     if not portalhas('cpsdocument_installer'):
+#         from Products.ExternalMethod.ExternalMethod import ExternalMethod
+#         pr('Adding cpsdocument installer')
+#         cpsdocument_installer = ExternalMethod('cpsdocument_installer',
+#                                       'CPSDocument Updater',
+#                                       'CPSDocument.install',
+#                                       'install')
+#         portal._setObject('cpsdocument_installer', cpsdocument_installer)
+#     pr(portal.cpsdocument_installer())
+
 import os
 from zLOG import LOG, INFO, DEBUG
 
@@ -78,6 +91,9 @@ def install(self):
         npath = ', '.join(path)
         portal.portal_skins.addSkinSelection(skin_name, npath)
         pr(" Fixup of skin %s" % skin_name)
+    pr(" Resetting skin cache")
+    portal._v_skindata = None
+    portal.setupCurrentSkin()
 
     if portalhas('portal_schemas'):
         prok()
@@ -99,11 +115,9 @@ def install(self):
             'CPS Layouts Tool')
 
 
-# widgets
+    # widgets
     pr("Verifiying widgets")
-
-    from Products.CPSDocument.CPSDocumentWidgets import widgets
-    widgets = widgets
+    widgets = self.getDocumentWidgets()
 
     wtool = portal.portal_widgets
     for id, info in widgets.items():
@@ -117,9 +131,7 @@ def install(self):
 
     # schemas
     pr("Verifiying schemas")
-
-    from Products.CPSDocument.CPSDocumentSchemas import schemas
-    schemas = schemas
+    schemas = self.getDocumentSchemas()
 
     stool = portal.portal_schemas
     for id, info in schemas.items():
@@ -137,9 +149,7 @@ def install(self):
 
     # layouts
     pr("Verifiying layouts")
-
-    from Products.CPSDocument.CPSDocumentLayouts import layouts
-    layouts = layouts
+    layouts = self.getDocumentLayouts()
 
     ltool = portal.portal_layouts
     for id, info in layouts.items():
@@ -156,9 +166,10 @@ def install(self):
         layout.setLayoutDefinition(info['layout'])
 
 
-    # setup portal_type: FAQ and News
+    # setup portal_type
     pr("Verifying portal types")
-    newptypes = ('FAQ', 'News', 'Dummy Form')
+    flextypes = self.getDocumentTypes()
+    newptypes = flextypes.keys()
     ttool = portal.portal_types
     if 'Workspace' in ttool.objectIds():
         workspaceACT = list(ttool['Workspace'].allowed_content_types)
@@ -168,35 +179,6 @@ def install(self):
         if ptype not in  workspaceACT:
             workspaceACT.append(ptype)
 
-    flextypes = {
-        'FAQ': {
-            'title': 'portal_type_FAQ_title',
-            'description': 'portal_type_FAQ_description',
-            'icon': 'faq_icon.gif',
-            'immediate_view': 'cpsdocument_edit_form',
-            'schemas': ['faq'],
-            'default_layout': 'faq',
-            'layout_style_prefix': 'layout_dummy_',
-            },
-        'News': {
-            'title': 'portal_type_News_title',
-            'description': 'portal_type_News_description',
-            'icon': 'news_icon.gif',
-            'immediate_view': 'cpsdocument_edit_form',
-            'schemas': ['news'],
-            'default_layout': 'news',
-            'layout_style_prefix': 'layout_dummy_',
-            },
-        'Dummy Form': {
-            'title': 'portal_type_Dummy_Form',
-            'description': 'portal_type_Dummy_description',
-            'icon': 'document_icon.gif',
-            'immediate_view': 'cpsdocument_edit_form',
-            'schemas': ['dummy_form'],
-            'default_layout': 'dummy_form',
-            'layout_style_prefix': 'layout_form_',
-            }
-        }
     allowed_content_type = {
                             'Workspace' : workspaceACT,
                             }
