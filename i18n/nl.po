@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 16:46default\n"
+"POT-Creation-Date: 2004-03-24 17:16default\n"
 "PO-Revision-Date: 2004-02-05 11:33+0100\n"
 "Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
 "Language-Team: francais <fr@li.org>\n"
@@ -317,6 +317,14 @@ msgstr "Nee"
 
 msgid "cpsschemas_label_true"
 msgstr "Ja"
+
+#, fuzzy
+msgid "cpsschema_label_on"
+msgstr "Ja"
+
+#, fuzzy
+msgid "cpsschema_label_off"
+msgstr "Nee"
 
 msgid "cpsschemas_label_link_href"
 msgstr "URL"

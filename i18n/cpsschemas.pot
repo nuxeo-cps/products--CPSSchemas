@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-03-04 16:46default\n"
+"POT-Creation-Date: 2004-03-24 17:16default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -309,6 +309,12 @@ msgid "cpsschemas_label_false"
 msgstr ""
 
 msgid "cpsschemas_label_true"
+msgstr ""
+
+msgid "cpsschema_label_on"
+msgstr ""
+
+msgid "cpsschema_label_off"
 msgstr ""
 
 msgid "cpsschemas_label_link_href"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"POT-Creation-Date: 2004-03-04 16:46default\n"
+"POT-Creation-Date: 2004-03-24 17:16default\n"
 "PO-Revision-Date: 2004-02-27 15:27+0100\n"
 "Last-Translator: Paolo Dina <paolo@php3.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -310,6 +310,14 @@ msgstr "No"
 
 msgid "cpsschemas_label_true"
 msgstr "Si"
+
+#, fuzzy
+msgid "cpsschema_label_on"
+msgstr "Si"
+
+#, fuzzy
+msgid "cpsschema_label_off"
+msgstr "No"
 
 msgid "cpsschemas_label_link_href"
 msgstr "URL"

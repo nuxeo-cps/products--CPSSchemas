@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 16:46default\n"
-"PO-Revision-Date: 2004-03-16 12:36+0100\n"
+"POT-Creation-Date: 2004-03-24 17:16default\n"
+"PO-Revision-Date: 2004-03-24 17:21+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -313,6 +313,12 @@ msgstr "Non"
 
 msgid "cpsschemas_label_true"
 msgstr "Oui"
+
+msgid "cpsschema_label_on"
+msgstr "Actif"
+
+msgid "cpsschema_label_off"
+msgstr "Inactif"
 
 msgid "cpsschemas_label_link_href"
 msgstr "URL"
