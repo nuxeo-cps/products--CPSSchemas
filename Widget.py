@@ -72,6 +72,7 @@ class Widget(SimpleItemWithProperties):
 
     def __init__(self, id, **kw):
         self._setId(id)
+        self.manage_changeProperties(**kw)
 
     security.declarePublic('getWidgetId')
     def getWidgetId(self):
@@ -89,6 +90,10 @@ class Widget(SimpleItemWithProperties):
         """Get the html-form version of this widget's id."""
         return widgetname(self.getWidgetId())
 
+    security.declarePrivate('getFieldTypes')
+    def getFieldTypes(self):
+        return self.field_types
+
     def render(self, mode, datastructure, datamodel):
         """Render this widget in a given mode."""
         raise NotImplementedError
@@ -104,8 +109,8 @@ class CPSWidget(Widget):
     security = ClassSecurityInfo()
 
     def __init__(self, id, **kw):
-        Widget.__init__(self, id, **kw)
         self.fields = [id]
+        Widget.__init__(self, id, **kw)
 
     fields = []
     title = ''
