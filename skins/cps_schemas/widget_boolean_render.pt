@@ -1,17 +1,48 @@
 <tal:block define="mode options/mode;
                    value options/value;
-                   label_value options/label_value;">
+                   label_value options/label_value;
+                   render_format options/render_format">
 <tal:block condition="python: mode == 'view'">
   <span i18n:translate="" tal:content="label_value"></span>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
+<tal:checkbox condition="python:render_format == 'checkbox'">
+<input type="checkbox"
+       tal:attributes="checked python:test(value == 0, nothing, 'checked');
+                       value value;
+                       name here/getHtmlWidgetId;" />
+<input type="hidden" value=""
+       tal:attributes="name string:${here/getHtmlWidgetId}:default;" />
+</tal:checkbox>
+<tal:radio condition="python:render_format == 'radio'">
+<input type="radio" value="1"
+       tal:attributes="checked python:test(value and value!=0, 'checked', nothing);
+                       id string:{here/getHtmlWidgetId}_true;
+                       name here/getHtmlWidgetId;" />
+  <label tal:content="here/label_true"
+         tal:attributes="for here/getHtmlWidgetId;"
+         i18n:translate="" > True </label><br/>
+<input type="radio" value=""
+       tal:attributes="checked python:test(not value or value == 0, 'checked', nothing);
+                       id string:{here/getHtmlWidgetId}_false;
+                       name here/getHtmlWidgetId;" />
+  <label tal:content="here/label_false"
+         tal:attributes="for here/getHtmlWidgetId;"
+         i18n:translate="" > False </label><br/>
+<span tal:replace="value"/>
+</tal:radio>
+<tal:select condition="python:render_format == 'select'">
 <select tal:attributes="name here/getHtmlWidgetId;">
-  <option value="0" i18n:translate=""
-    tal:attributes="selected python:test(value or value=='0', nothing, 'selected')"
-    tal:content="here/label_false" />
-  <option value="1" i18n:translate=""
-    tal:attributes="selected python:test(value and value!='0', 'selected', nothing)"
-    tal:content="here/label_true" />
+  <option value="1"
+          tal:attributes="selected python:test(value and value!=0, 'selected', nothing);"
+          tal:content="here/label_true"
+          i18n:translate="" />
+  <option value=""
+          tal:attributes="selected python:test(not value or value==0, 'selected', nothing);"
+          tal:content="here/label_false"
+          i18n:translate="" />
 </select>
+<span tal:replace="value"/>
+</tal:select>
 </tal:block>
 </tal:block>
