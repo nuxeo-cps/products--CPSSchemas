@@ -120,7 +120,7 @@ class FlexibleTypeInformation(TypeInformation):
         TypeInformation._advanced_properties +
         (
          {'id': 'schemas', 'type': 'tokens', 'mode': 'w', 'label': 'Schemas'},
-         {'id': 'layout', 'type': 'string', 'mode': 'w', 'label': 'Layout'},
+         {'id': 'layout', 'type': 'string', 'mode': 'w', 'label': 'Default Layout'},
          )
         )
     content_meta_type = 'CPS Document'
