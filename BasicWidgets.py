@@ -927,7 +927,7 @@ class CPSSelectWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
-        {'id': 'is_translated', 'type': 'boolean', 'mode': 'w',
+        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
          'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
@@ -972,7 +972,7 @@ class CPSSelectWidget(CPSWidget):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default
         if mode == 'view':
-            if getattr(self, 'is_translated', False):
+            if getattr(self, 'translated', False):
                 return escape(cpsmcat(vocabulary.get(value, value)).encode('ISO-8859-15', 'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
@@ -981,7 +981,7 @@ class CPSSelectWidget(CPSWidget):
                                 name=self.getHtmlWidgetId())
             in_selection = 0
             for k, v in vocabulary.items():
-                if getattr(self, 'is_translated', False):
+                if getattr(self, 'translated', False):
                     kw = {'value': k,
                           'contents': cpsmcat(vocabulary.getMsgid(k)).encode('ISO-8859-15', 'ignore')
                           }
@@ -1025,7 +1025,7 @@ class CPSMultiSelectWidget(CPSWidget):
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
-        {'id': 'is_translated', 'type': 'boolean', 'mode': 'w',
+        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
          'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
@@ -1091,7 +1091,7 @@ class CPSMultiSelectWidget(CPSWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            elif getattr(self, 'is_translated', False):
+            elif getattr(self, 'translated', False):
                 return ', '.join([escape(cpsmcat(vocabulary.get(i, i))) for i in value])
             else:
                 return ', '.join([escape(vocabulary.get(i, i)) for i in value])
@@ -1104,7 +1104,7 @@ class CPSMultiSelectWidget(CPSWidget):
                 kw['size'] = self.size
             res = renderHtmlTag('select', **kw)
             for k, v in vocabulary.items():
-                if getattr(self, 'is_translated', False):
+                if getattr(self, 'translated', False):
                     kw = {'value': k,
                           'contents': cpsmcat(vocabulary.getMsgid(k)).encode('ISO-8859-15', 'ignore')
                           }
