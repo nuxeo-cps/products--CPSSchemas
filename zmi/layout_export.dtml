@@ -29,6 +29,13 @@ layout should look like.</p>
 </dtml-in>
     },
     'layout': {
+<dtml-in propertyItems>
+<dtml-if "_.same_type(_['sequence-item'], '')">
+        '<dtml-var sequence-key>': '<dtml-var sequence-item>',
+<dtml-else>
+        '<dtml-var sequence-key>': <dtml-var sequence-item>,
+</dtml-if>
+</dtml-in>
         'ncols': <dtml-var ncols>,
         'rows': [
 <dtml-in rows>
