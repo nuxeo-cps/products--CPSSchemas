@@ -9,7 +9,6 @@ New features:
 - Added the posibility of saving the original image for the Photo Widget
   in case of image resizing. The saved original image will be displayed
   in a popup.
-  
 Bug fixes:
 ~~~~~~~~~~
 -
