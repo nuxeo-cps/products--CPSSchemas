@@ -88,7 +88,7 @@ class Widget(SimpleItemWithProperties):
     def getFieldTypes(self):
         return self.field_types
 
-    def render(self, mode, datastructure, datamodel):
+    def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget in a given mode."""
         raise NotImplementedError
 

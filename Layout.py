@@ -142,7 +142,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         return deepcopy(self._layoutdef)
 
     security.declarePrivate('getLayoutData')
-    def getLayoutData(self, datastructure, datamodel):
+    def getLayoutData(self, datastructure):
         """Get the layout data.
 
         This has actuel widget instances.
@@ -156,19 +156,19 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 cell['widget'] = widget
                 widgets[widget_id] = widget
                 # XXX here filtering according to permissions ?
-                widget.prepare(datastructure, datamodel)
+                widget.prepare(datastructure)
         layoutdata['id'] = self.getId()
         layoutdata['widgets'] = widgets
         return layoutdata
 
     security.declarePrivate('validateLayout')
-    def validateLayout(self, layoutdata, datastructure, datamodel):
+    def validateLayout(self, layoutdata, datastructure):
         """Validate the layout."""
         ok = 1
         for row in layoutdata['rows']:
             for cell in row:
                 widget = cell['widget']
-                ok = widget.validate(datastructure, datamodel) and ok
+                ok = widget.validate(datastructure) and ok
         return ok
 
     def __repr__(self):

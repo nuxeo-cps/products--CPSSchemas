@@ -36,11 +36,12 @@ class DataStructure(UserDict):
 
     It also stores error messages if the data cannot be validated.
 
+    It also stores the datamodel backing this datastructure.
+
     It's basically two dictionaries, one for data and one for errors.
     The data dictionary is exposed through the standard dictionary
     interface, while the error dictionary is exposed through specific
     methods.
-
     """
     # Bugs/features:
     # - __setitem__ only updates the data, the errors will stay
@@ -49,11 +50,12 @@ class DataStructure(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, data={}, errors={}):
+    def __init__(self, data={}, errors={}, datamodel=None):
         self.data = {}
         self.data.update(data)
         self.errors = {}
         self.errors.update(errors)
+        self.datamodel = datamodel
 
     # Override standard dictionary stuff:
     def clear(self):
@@ -125,5 +127,10 @@ class DataStructure(UserDict):
 
     def getErrors(self):
         return self.errors # XXX Should it return the original or a copy?
+
+    def getDataModel(self):
+        """Return the datamodel associated with this datastructure."""
+        return self.datamodel
+
 
 InitializeClass(DataStructure)

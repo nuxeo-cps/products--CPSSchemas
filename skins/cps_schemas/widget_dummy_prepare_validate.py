@@ -1,4 +1,6 @@
-##parameters=mode, datastructure, datamodel
+##parameters=mode, datastructure
+
+datamodel = datastructure.getDataModel()
 
 widget_id = context.getWidgetId()
 field_id = context.fields[0]
