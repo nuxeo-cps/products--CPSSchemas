@@ -15,7 +15,7 @@
                                         test(rposition == 'center',
                                              'dcenter', 'dleft'))">
     <img tal:replace="structure image_tag" />
-    <br><small tal:content="subtitle" />
+    <div tal:condition="subtitle"><small tal:content="subtitle" /></div>
   </div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
@@ -23,22 +23,23 @@
        tal:replace="structure image_tag" />
   <metal:block use-macro="here/widget_image_render/macros/file_edit"
 />
-  <br>
-  <div class="label">
-    <span i18n:translate="">cpsschemas_photo_subtitle</span></div>
-  <div class="field">
-    <input type="text" size="30" maxlength="50"
-      tal:attributes="name string:${value_name}_subtitle;
-                      value subtitle"></div>
-  <br>
-  <tal:block condition="python: configurable.find('position')>=0">
-   <span i18n:translate="">cpsschemas_render_position</span>
+  <table><tr><td tal:condition="python: configurable.find('position')>=0">
+   <div class="label" i18n:translate="">cpsschemas_render_position</div>
+   <div class="field">
    <select tal:attributes="name string:${value_name}_rposition">
      <option tal:repeat="op here/all_render_positions"
        tal:attributes="selected python:op == rposition;
                        value op"
        tal:content="string:cpsschemas_rposition_${op}" i18n:translate="" />
    </select>
-  </tal:block>
+   </div>
+  </td><td>
+  <div class="label">
+    <span i18n:translate="">cpsschemas_photo_subtitle</span></div>
+  <div class="field">
+    <input type="text" size="30" maxlength="50"
+      tal:attributes="name string:${value_name}_subtitle;
+                      value subtitle">
+  </td></tr></table>
 </tal:block>
 </tal:block>
