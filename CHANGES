@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Generic select widget did not refuse validation of empty values when required
+  if vocabulary did not hold blank values
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
