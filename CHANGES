@@ -5,6 +5,8 @@ New features:
 ~~~~~~~~~~~~~
 - Generic select widget: now possible to set display width and max size
   parameters for the 'other' option.
+- Local vocabularies support, take a look at doc/localvocabulary.txt for more
+  information.
 Bug fixes:
 ~~~~~~~~~~
 - Made the Layout.renderLayoutStyle() method more generic so that it can deal
