@@ -838,7 +838,7 @@ class CPSGenericSelectWidget(CPSWidget):
             if not self.is_required and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
-                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
+                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
                           }
                     if not in_selection:
                         kw['selected'] = 'selected'
@@ -854,7 +854,7 @@ class CPSGenericSelectWidget(CPSWidget):
                         kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
-                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
+                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
@@ -1041,7 +1041,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
             if not self.is_required and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
-                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
+                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
                           }
                     if not in_selection:
                         kw['selected'] = 'selected'
@@ -1058,7 +1058,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                         kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
-                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
+                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
