@@ -546,6 +546,8 @@ class CPSSelectWidget(CPSWidget):
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
+        if not self.vocabulary:
+            raise ValueError("No vocabulary selected for widget %s" % self.getId())
         vtool = getToolByName(self, 'portal_vocabularies')
         try:
             vocabulary = getattr(vtool, self.vocabulary)

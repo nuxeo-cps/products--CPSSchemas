@@ -13,6 +13,8 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - fixing TextArea render format text, pre, stx and html default is text
+- If you forgot to set a vocabulary for a select widget, you got a very
+  unhelpful error message.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Possibility to define different render modes such as edit and 
