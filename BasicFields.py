@@ -25,6 +25,7 @@ from zLOG import LOG, DEBUG
 from types import IntType, StringType
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
+from DateTime.DateTime import DateTime
 
 from Products.CPSDocument.Field import CPSField, FieldRegistry
 from Products.CPSDocument.Field import propertiesWithType
@@ -41,8 +42,9 @@ class CPSIntField(CPSField):
     default = 0
 
     def validate(self, value):
-        if not isinstance(value, IntType):
-            raise ValidationError('Not an integer: %s' % repr(value))
+        if isinstance(value, IntType):
+            return value
+        raise ValidationError('Not an integer: %s' % repr(value))
 
 InitializeClass(CPSIntField)
 
@@ -53,11 +55,37 @@ class CPSStringField(CPSField):
     #_properties = propertiesWithType(CPSField._properties, 'default', 'string')
 
     def validate(self, value):
-        if not isinstance(value, StringType):
-            raise ValidationError('Not a string: %s' % repr(value))
+        if isinstance(value, StringType):
+            return value
+        raise ValidationError('Not a string: %s' % repr(value))
+
+
+InitializeClass(CPSStringField)
+
+
+class CPSDateTimeField(CPSField):
+    """DateTime field."""
+    meta_type = "CPS DateTime Field"
+    _properties = CPSField._properties + (
+        {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
+         'label': 'Allow None'},
+        },
+        )
+    _properties = propertiesWithType(_properties, 'default', 'date')
+    allow_none = 1
+
+    def validate(self, value):
+        if self.allow_none and not value:
+            return None
+        if isinstance(value, DateTime):
+            return value
+        raise ValidationError('Not a datetime: %s' % repr(value))
+
+InitializeClass(CPSDateTimeField)
 
 
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSIntField)
+FieldRegistry.register(CPSDateTimeField)
