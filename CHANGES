@@ -21,6 +21,7 @@ Bug fixes:
 - Better decoration for the CPSDocumentLanguageSelectWidget through CSS.
 - Fixed the BMP bug (#305)
 - Widgets controlling a forbidden field are now correctly hidden.
+- fix: SubjectWidget doesn't translate i18n vocabulary in view mode
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
