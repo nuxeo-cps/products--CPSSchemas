@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.12.0 [R1 build 2003/12/17-10:41 by regebro]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- new Boolean Widget
+- MetaDataStorage adapter handle non CMF Dublin Core Coverage, Source 
+  and Relation
+Bug fixes:
+~~~~~~~~~~
+- Bug fix for handling of non-ZODB images.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.11.0 [R1 build 2003/12/15-09:06 by ben]
 
 ZODB Requires:
