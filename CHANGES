@@ -10,6 +10,8 @@ New features:
 - image widget in edit mode display the current image
 - enhanced int, long, float widgets (better support for separators and range)
 - Vocabularies can now have write ACLs to allow user edits (no skins yet).
+- Fields can now check access rights (read and write).
+
 Bug fixes:
 ~~~~~~~~~~
 - 

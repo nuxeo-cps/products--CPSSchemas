@@ -31,6 +31,8 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import SimpleItemWithProperties
 
+from Products.CPSSchemas.Field import WriteAccessError
+
 
 def widgetname(id):
     """Return the name of the widget as used in HTML forms."""
@@ -64,7 +66,47 @@ class Widget(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
-    widget_type = ''
+    _properties = (
+        {'id': 'title', 'type': 'string', 'mode': 'w',
+         'label': 'Title'},
+        {'id': 'fields', 'type': 'tokens', 'mode': 'w',
+         'label': 'Fields'},
+        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
+         'label': 'Required widget'},
+        {'id': 'label', 'type': 'string', 'mode': 'w',
+         'label': 'Label in view layout mode'},
+        {'id': 'label_edit', 'type': 'string', 'mode': 'w',
+         'label': 'Label in edit layout mode'},
+        {'id': 'description', 'type': 'text', 'mode': 'w',
+         'label': 'Description'},
+        {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
+         'label': 'Label is i18n'},
+        {'id': 'readonly_layout_modes', 'type': 'tokens', 'mode': 'w',
+         'label': 'Read-only in layout modes'},
+        {'id': 'hidden_layout_modes', 'type': 'tokens', 'mode': 'w',
+         'label': 'Hidden in layout modes'},
+        {'id': 'hidden_readonly_layout_modes', 'type': 'tokens', 'mode': 'w',
+         'label': 'Hidden if readonly in layout modes'},
+        {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
+         'label': 'Hidden if empty'},
+        #
+        {'id': 'css_class', 'type': 'string', 'mode': 'w',
+         'label': 'CSS class for view'},
+        )
+
+    fields = []
+    is_required = 0
+    label = ''
+    label_edit = ''
+    description = ''
+    is_i18n = 0
+    css_class = ''
+    readonly_layout_modes = []
+    hidden_layout_modes = []
+    hidden_readonly_layout_modes = []
+    hidden_empty = 0
+
+    widget_type = '' # Not a property by default
     field_types = []
     field_inits = [] # default settings for fields created in flexible mode
                      # using the same order as in field_types
@@ -90,9 +132,29 @@ class Widget(SimpleItemWithProperties):
         """Get the html-form version of this widget's id."""
         return widgetname(self.getWidgetId())
 
+    #
+    # May be overloaded.
+    #
+
     security.declarePrivate('getFieldTypes')
-    def getFieldTypes(self, ):
+    def getFieldTypes(self):
+        """Get the types of the fields for this widget.
+
+        Used by dynamic widget creation to create its needed fields.
+        """
         return self.field_types
+
+    security.declarePrivate('isReadOnly')
+    def isReadOnly(self, datastructure):
+        """Return true if the widget is read-only."""
+        try:
+            datamodel = datastructure.getDataModel()
+            for field_id in self.fields:
+                datamodel.checkWriteAccess(field_id)
+        except WriteAccessError:
+            return 1
+        else:
+            return 0
 
     security.declarePrivate('getFieldInits')
     def getFieldInits(self, ):
@@ -101,6 +163,7 @@ class Widget(SimpleItemWithProperties):
             return self.field_inits
         # return empty inits
         return None
+
     #
     # To be implemented by widget classes.
     #
@@ -131,53 +194,14 @@ class CPSWidget(Widget):
         self.fields = [id]
         Widget.__init__(self, id, widget_type, **kw)
 
-    security.declarePrivate('isTemplateWidget')
+    security.declarePrivate('isTemplate')
     def isTemplate(self):
-        """Check is the widget is a template used for flexible layout
-        or if is a true widget that reference data"""
-        if len(self.fields) and self.fields[0] == '?':
-            return 1
-        return 0
+        """Check if the widget is a template.
 
-    fields = []
-    is_required = 0
-    label = ''
-    label_edit = ''
-    is_i18n = 0
-    description = ''
-    css_class = ''
-    hidden_view = 0
-    hidden_edit = 0
-    hidden_empty = 0
-
-    #
-    # ZMI
-    #
-
-    _properties = (
-        {'id': 'title', 'type': 'string', 'mode': 'w',
-         'label': 'Title'},
-        {'id': 'fields', 'type': 'tokens', 'mode': 'w',
-         'label': 'Fields'},
-        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
-         'label': 'Mandatory field'},
-        {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
-         'label': 'i18n widget'},
-        {'id': 'label_edit', 'type': 'string', 'mode': 'w',
-         'label': 'the label on edit mode'},
-        {'id': 'label', 'type': 'string', 'mode': 'w',
-         'label': 'the label on view mode'},
-        {'id': 'hidden_view', 'type': 'boolean', 'mode': 'w',
-         'label': 'hidden field in view mode'},
-        {'id': 'hidden_edit', 'type': 'boolean', 'mode': 'w',
-         'label': 'hidden field in edit mode'},
-        {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
-         'label': 'hidden field if empty in view mode'},
-        {'id': 'description', 'type': 'text', 'mode': 'w',
-         'label': 'Description'},
-        {'id': 'css_class', 'type': 'string', 'mode': 'w',
-         'label': 'CSS class for view'},
-        )
+        Returns true if the widget is used for flexible layouts. Returns
+        false if it is a true widget that references data.
+        """
+        return (self.fields and self.fields[0] == '?')
 
 InitializeClass(CPSWidget)
 

@@ -191,10 +191,22 @@ InitializeClass(CPSStringWidgetType)
 ##################################################
 
 class CPSPasswordWidget(CPSStringWidget):
-    """Password widget."""
+    """Password widget.
+
+    The password widget displays stars in view mode, and in edit mode
+    it always starts with an empty string.
+
+    When validating, it doesn't update data if the user entry is empty.
+    """
+
     meta_type = "CPS Password Widget"
 
     field_types = ('CPS Password Field',)
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        # Never fetch the real password.
+        datastructure[self.getWidgetId()] = ''
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -211,6 +223,38 @@ class CPSPasswordWidget(CPSStringWidget):
                 kw['maxlength'] = self.size_max
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        err = 0
+        try:
+            v = str(value).strip()
+        except ValueError:
+            err = 'cpsschemas_err_string'
+        else:
+            # In layout_mode == 'edit', an empty password means
+            # to not update it.
+            if kw.get('layout_mode') == 'edit':
+                required = 0
+            else:
+                required = self.is_required
+            if required and not v:
+                datastructure[widget_id] = ''
+                err = 'cpsschemas_err_required'
+            elif self.size_max and len(v) > self.size_max:
+                err = 'cpsschemas_err_string_too_long'
+
+        if err:
+            datastructure.setError(widget_id, err)
+        else:
+            if v:
+                # Only update if a new password was set.
+                datamodel = datastructure.getDataModel()
+                datamodel[self.fields[0]] = v
+
+        return not err
 
 InitializeClass(CPSPasswordWidget)
 

@@ -45,6 +45,7 @@ from cgi import escape
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo, Unauthorized
+from AccessControl import getSecurityManager
 
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
@@ -64,7 +65,8 @@ class DataModel(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, ob, adapters=(), proxy=None, context=None):
+    def __init__(self, ob, adapters=(), proxy=None, context=None,
+                 add_roles=()):
         """Constructor.
 
         Proxy must be passed, if different than the object, so that
@@ -73,6 +75,8 @@ class DataModel(UserDict):
         Context must be passed if the widgets or fields have some
         placeful computations to do. Be careful that the context may not
         be the proxy but its container during creation.
+
+        The context is also the one used for acl checks.
         """
         UserDict.__init__(self)
         # self.data initialized by UserDict
@@ -97,6 +101,79 @@ class DataModel(UserDict):
             schemas.append(schema)
         self._schemas = tuple(schemas)
         self._fields = fields
+        # Precomputed things used for validation
+        user = getSecurityManager().getUser()
+        self._acl_cache_user = user
+        user_roles = (tuple(user.getRolesInContext(self._context)) +
+                      tuple(add_roles))
+        self._acl_cache_user_roles = user_roles
+        self._acl_cache_permissions = {} # dict with perm: hasit/not
+        self._check_acls = 1
+
+    #
+    # Restricted accessors
+    #
+
+    def checkReadAccess(self, key):
+        if self._check_acls:
+            self._fields[key].checkReadAccess(self, self._context)
+
+    def checkWriteAccess(self, key):
+        if self._check_acls:
+            self._fields[key].checkWriteAccess(self, self._context)
+
+    def __getitem__(self, key):
+        self.checkReadAccess(key)
+        return self.data[key]
+
+    def get(self, key, failobj=None):
+        self.checkReadAccess(key)
+        return self.data.get(key, failobj)
+
+    def items(self):
+        for key in self.data.keys():
+            self.checkReadAccess(key)
+        return self.data.items()
+
+    def values(self):
+        for key in self.data.keys():
+            self.checkReadAccess(key)
+        return self.data.values()
+
+    def popitem(self):
+        key, item = self.data.popitem()
+        self.checkReadAccess(key)
+        return key, item
+
+    def pop(self, key):
+        # python2.3
+        self.checkReadAccess(key)
+        return self.data.pop(key)
+
+    def __setitem__(self, key, item):
+        self.checkWriteAccess(key)
+        self.data[key] = item
+
+    # Expose setter as method for restricted code.
+    def set(self, key, item):
+        self.checkWriteAccess(key)
+        self.data[key] = item
+
+    def update(self, dict):
+        for key in dict.keys():
+            self.checkWriteAccess(key)
+        UserDict.update(self, dict)
+
+    def setdefault(self, key, failobj=None):
+        self.checkReadAccess(key)
+        self.checkWriteAccess(key)
+        return UserDict.setdefault(self, key, failobj=failobj)
+
+    # XXX python2.2 iterators not done.
+
+    #
+    # DataModel accessors
+    #
 
     def getObject(self):
         """Get the object this DataModel is about."""
@@ -111,10 +188,9 @@ class DataModel(UserDict):
         """Get the context for this DataModel."""
         return self._context
 
-    # Expose setter as method for restricted code.
-    def set(self, key, value):
-        # XXX This should check field permission access...
-        self.__setitem__(key, value)
+    #
+    # Fetch and commit
+    #
 
     def _fetch(self):
         """Fetch the data into local dict for user access."""
@@ -195,6 +271,10 @@ class DataModel(UserDict):
             ob.postCommitHook()
 
         return ob
+
+    #
+    # Import/export
+    #
 
     def _exportAsXML(self):
         """Export the datamodel as XML string."""

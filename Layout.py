@@ -19,7 +19,7 @@
 # $Id$
 """Layout
 
-A layout describes how to render the basic fields of a schema.
+A layout describes how to render a set of widgets.
 """
 
 from zLOG import LOG, DEBUG
@@ -90,7 +90,13 @@ InitializeClass(LayoutContainer)
 class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     """Basic Layout.
 
-    A layout describes how to render the basic fields of a schema.
+    A layout describes how to render a set of widgets.
+
+    A layout can be rendered in several layout_modes (view, edit,
+    create, editlayout, etc.). The widgets rendered themselves can only
+    have two mode: 'view' and 'edit'. So the layout has to choose the
+    widget modes depending on the layout_mode and various information
+    about the widgets and their fields, notably read-only mode and ACLs.
 
     Layout rendering occurs with the following step:
 
@@ -108,7 +114,6 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
 
     - renderLayoutStyle(): returns the final rendering using the style
       method.
-
     """
 
     _properties = (
@@ -120,6 +125,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
 
     style_prefix = ''
     allowed_widgets = ''
+
     prefix = 'w__'
 
     security = ClassSecurityInfo()
@@ -178,27 +184,41 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     def getStandardWidgetModeChooser(self, layout_mode, datastructure):
         """Get a function to choose the mode to render a widget.
         """
-        def widgetModeChooser(widget,
-                              layout=self, layout_mode=layout_mode,
-                              datastructure=datastructure):
+        class standardWidgetModeChooser:
             """Choose the mode to render a widget."""
-            if layout_mode == 'view':
-                if widget.hidden_view:
+            def __init__(self, layout, layout_mode, datastructure):
+                self.layout = layout
+                self.layout_mode = layout_mode
+                self.datastructure = datastructure
+            def isReadOnly(self):
+                widget = self.widget
+                if self.readonly is None:
+                    if self.layout_mode in widget.readonly_layout_modes:
+                        self.readonly = 1
+                    else:
+                        self.readonly = widget.isReadOnly(self.datastructure)
+                return self.readonly
+            def __call__(self, widget):
+                self.readonly = None
+                self.widget = widget
+                layout_mode = self.layout_mode
+                if layout_mode in widget.hidden_layout_modes:
                     mode = 'hidden'
-                else:
-                    mode = 'view'
-            elif layout_mode in ('edit', 'create'):
-                if widget.hidden_edit:
+                elif (layout_mode in widget.hidden_readonly_layout_modes
+                      and self.isReadOnly()):
                     mode = 'hidden'
-                elif 0: # XXX widget read-only
+                elif layout_mode == 'view':
                     mode = 'view'
+                elif layout_mode in ('edit', 'create', 'search'):
+                    if self.isReadOnly():
+                        mode = 'view'
+                    else:
+                        mode = 'edit'
                 else:
-                    mode = 'edit'
-            else:
-                raise ValueError("Unknown layout mode '%s'" % layout_mode)
-            return mode
+                    raise ValueError("Unknown layout mode '%s'" % layout_mode)
+                return mode
 
-        return widgetModeChooser
+        return standardWidgetModeChooser(self, layout_mode, datastructure)
 
     security.declarePrivate('removeHiddenWidgets')
     def removeHiddenWidgets(self, layout_structure):
@@ -267,13 +287,17 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
 
     security.declarePrivate('validateLayoutStructure')
     def validateLayoutStructure(self, layout_structure, datastructure, **kw):
-        """Validate the layout structure."""
-        is_valid = 1
+        """Validate the layout.
+
+        Only validates the widgets that are in 'edit' mode.
+        """
+        ok = 1
         for row in layout_structure['rows']:
             for cell in row:
-                widget = cell['widget']
-                is_valid = widget.validate(datastructure, **kw) and is_valid
-        return is_valid
+                if cell['widget_mode'] == 'edit':
+                    widget = cell['widget']
+                    ok = widget.validate(datastructure, **kw) and ok
+        return ok
 
     security.declarePrivate('renderLayoutStructure')
     def renderLayoutStructure(self, layout_structure, datastructure, **kw):
@@ -311,15 +335,14 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         items = []
         for wid in self.allowed_widgets:
             widget = self[wid]
-            # TODO checking number of occurence
+            # XXX TODO checking number of occurence
             items.append(widget)
 
         rendered = layout_style(layout=layout_structure,
                                 datastructure=datastructure,
-                                allowed_widgets = items,
+                                allowed_widgets=items,
                                 **kw)
         return rendered
-
 
     def __repr__(self):
         return '<Layout %s>' % `self.getLayoutDefinition()`

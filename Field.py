@@ -26,10 +26,16 @@ from copy import deepcopy
 from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
+from AccessControl.PermissionRole import rolesForPermissionOn
 from Persistence import Persistent
 
+from Products.CMFCore.Expression import Expression
+from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
+from Products.CMFCore.CMFCorePermissions import ManageProperties
 from Products.CMFCore.utils import SimpleItemWithProperties
+
+from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
 
 class ValidationError(ValueError):
@@ -37,7 +43,29 @@ class ValidationError(ValueError):
     pass
 
 
-class Field(SimpleItemWithProperties):
+class AccessError(ValueError):
+    """Raised by a field when access is denied."""
+    def __init__(self, field, message=''):
+        self.field = field
+        self.message = message
+    def __str__(self):
+        s = "%s access to %s denied" % (self.type, self.field)
+        if self.message:
+            s += " ("+self.message+") "
+        return s
+
+class ReadAccessError(AccessError):
+    type = "Read"
+
+class WriteAccessError(AccessError):
+    type = "Write"
+
+class ValidationError(ValueError):
+    """Raised by a widget or a field when user input is incorrect."""
+    pass
+
+
+class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     """Basic Field.
 
     A field is part of a schema and describes a type of data that
@@ -49,33 +77,52 @@ class Field(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
+    _propertiesBaseClass = SimpleItemWithProperties
     _properties = (
         {'id': 'getFieldIdProperty', 'type': 'string', 'mode': '',
-         'label': 'Id'},
+         'label': "Id"},
         {'id': 'default', 'type': 'string', 'mode': 'w',
-         'label': 'Default'},
+         'label': "Default value"},
         {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is Indexed'},
+         'label': "Indexed in SearchableText"},
+        {'id': 'acl_read_permissions_str', 'type': 'string', 'mode': 'w',
+         'label': "ACL: read permissions"},
+        {'id': 'acl_read_roles_str', 'type': 'string', 'mode': 'w',
+         'label': "ACL: read roles"},
+        {'id': 'acl_read_expression_str', 'type': 'string', 'mode': 'w',
+         'label': "ACL: read expression"},
+        {'id': 'acl_write_permissions_str', 'type': 'string', 'mode': 'w',
+         'label': "ACL: write permission"},
+        {'id': 'acl_write_roles_str', 'type': 'string', 'mode': 'w',
+         'label': "ACL: write roles"},
+        {'id': 'acl_write_expression_str', 'type': 'string', 'mode': 'w',
+         'label': "ACL: write expression"},
         #{'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
         # 'label': 'Is Subschema'},
         #{'id': 'is_multi_valued', 'type': 'boolean', 'mode': 'w',
         # 'label': 'Is Multi-Valued'},
         #{'id': 'vocabulary', 'type': 'string', 'mode': 'w',
         # 'label': 'Vocabulary'},
-        #{'id': 'read_permission', 'type': 'string', 'mode': 'w',
-        # 'label': 'Read Permission'},
-        #{'id': 'write_permission', 'type': 'string', 'mode': 'w',
-        # 'label': 'Write Permission'},
         )
 
     default = ''
     is_indexed = 0
+    acl_read_permissions_str = ''
+    acl_read_roles_str = ''
+    acl_read_expression_str = ''
+    acl_write_permissions_str = ''
+    acl_write_roles_str = ''
+    acl_write_expression_str = ''
     #is_subschema = 0
     #is_multi_valued = 0
     #vocabulary = None
-    #read_permission = 'View'
-    #write_permission = 'Modify portal content'
-    #append_permission = 'Modify portal content'
+
+    acl_read_permissions = []
+    acl_read_roles = []
+    acl_read_expression = None
+    acl_write_permissions = []
+    acl_write_roles = []
+    acl_write_expression = None
 
     def __init__(self, id, **kw):
         self.id = id
@@ -87,10 +134,10 @@ class Field(SimpleItemWithProperties):
         return self.default
 
     security.declarePrivate('computeDependantFields')
-    def computeDependantFields(self, schema, data, context=None):
+    def computeDependantFields(self, schemas, data, context=None):
         """Compute dependant fields.
 
-        Has access to the current schema, and may update the data from
+        Has access to the current schemas, and may update the data from
         the datamodel.
 
         The context argument is passed to look for placeful information.
@@ -112,6 +159,41 @@ class Field(SimpleItemWithProperties):
             return id
 
     getFieldIdProperty = ComputedAttribute(getFieldId, 1)
+
+    def _postProcessProperties(self):
+        """Post-processing after properties change."""
+        # Split on ',' or ';' (or ' ').
+        for attr_str, attr, seps in (
+            ('acl_read_permissions_str', 'acl_read_permissions', ',;'),
+            ('acl_read_roles_str', 'acl_read_roles', ',; '),
+            ('acl_write_permissions_str', 'acl_write_permissions', ',;'),
+            ('acl_write_roles_str', 'acl_write_roles', ',; '),
+            ):
+            v = [getattr(self, attr_str)]
+            for sep in seps:
+                vv = []
+                for s in v:
+                    vv.extend(s.split(sep))
+                v = vv
+            v = [s.strip() for s in v]
+            v = filter(None, v)
+            setattr(self, attr_str, '; '.join(v))
+            setattr(self, attr, v)
+        # TALES expression.
+        for attr_str, attr in (
+            ('acl_read_expression_str', 'acl_read_expression'),
+            ('acl_write_expression_str', 'acl_write_expression'),
+            ):
+            p = getattr(self, attr_str).strip()
+            if p:
+                v = Expression(p)
+            else:
+                v = None
+            setattr(self, attr, v)
+
+    #
+    # Import/export
+    #
 
     def _exportValue(self, value):
         """Export this field's value as a string.
@@ -137,6 +219,90 @@ class Field(SimpleItemWithProperties):
         if info and info['none'] == 'true':
             return None
         raise NotImplementedError
+
+    #
+    # ACLs
+    #
+
+    def _createExpressionContext(self, datamodel):
+        context = datamodel._context
+        data = {
+            'field': self,
+            'datamodel': datamodel,
+            'user': datamodel._acl_cache_user,
+            'roles': datamodel._acl_cache_user_roles,
+            'nothing': None,
+            # Useful for objects
+            'context': context,
+            'proxy': datamodel._proxy,
+            # Useful for directories
+            'dir': context,
+            }
+        return getEngine().getContext(data)
+
+    def _checkAccess(self, datamodel, context,
+                     acl_permissions, acl_roles, acl_expression,
+                     exception,
+                     StringType=type('')):
+        """Check that field can be accesed.
+
+        Raises an exception if not.
+
+        The datamodel is used to cache often used things.
+        """
+        user = datamodel._acl_cache_user
+        if acl_permissions:
+            perms_cache = datamodel._acl_cache_permissions
+            ok = 0
+            for perm in acl_permissions:
+                ok = perms_cache.get(perm)
+                if ok is None:
+                    roles = rolesForPermissionOn(perm, context)
+                    if type(roles) is StringType:
+                        roles = [roles]
+                    ok = user.allowed(context, roles)
+                    perms_cache[perm] = ok
+                if ok:
+                    break
+            if not ok:
+                raise exception(self.getFieldId(), 'permissions')
+        if acl_roles:
+            user_roles = datamodel._acl_cache_user_roles
+            ok = 0
+            for role in acl_roles:
+                if role in user_roles:
+                    ok = 1
+                    break
+            if not ok:
+                raise exception(self.getFieldId(), 'roles')
+        if acl_expression:
+            expr_context = self._createExpressionContext(datamodel)
+            if not acl_expression(expr_context):
+                raise exception(self.getFieldId(), 'expression')
+
+    def checkReadAccess(self, datamodel, context):
+        """Check that field can be read.
+
+        Raises an exception if not.
+
+        The datamodel is used to cache often used things.
+        """
+        self._checkAccess(datamodel, context,
+                          self.acl_read_permissions, self.acl_read_roles,
+                          self.acl_read_expression, ReadAccessError)
+
+    def checkWriteAccess(self, datamodel, context):
+        """Check that field can be written.
+
+        Raises an exception if not.
+        """
+        self._checkAccess(datamodel, context,
+                          self.acl_write_permissions, self.acl_write_roles,
+                          self.acl_write_expression, WriteAccessError)
+
+    #
+    # Validation
+    #
 
     security.declarePublic('validate')
     def validate(self, value):
