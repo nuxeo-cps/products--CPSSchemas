@@ -106,8 +106,40 @@ class DataModel(UserDict):
                     value = field.getDefault()
                 self.data[field_id] = value
 
-    def _commit(self, check_perms=1):
-        """Commit modified data into object."""
+    def _setEditableFromProxy(self, proxy):
+        """Set the editable object for this DataModel from a proxy.
+
+        Future uses of the DataModel will refer to the editable object.
+
+        Needed by CPS because getEditableContent may have to be called
+        on the proxy before the object is ready for modification (CPS
+        uses this to provide "freezing", a lazy unsharing of objects).
+        """
+        if proxy is None:
+            return
+        if not hasattr(aq_base(proxy), 'getEditableContent'):
+            return
+        ob = self._ob
+        if ob is None:
+            return
+        # Get the language from the doc to be sure we have the correct one.
+        if hasattr(aq_base(ob), 'Language'):
+            lang = ob.Language()
+        else:
+            lang = None
+        ob = proxy.getEditableContent(lang=lang)
+        self._ob = ob
+
+    def _commit(self, proxy=None, check_perms=1):
+        """Commit modified data into object.
+
+        Returns the resulting object.
+
+        If a proxy is passed, try to re-get an editable version of the
+        object before modifying it. This is needed by CPS for frozen
+        objects.
+        """
+        self._setEditableFromProxy(proxy)
         ob = self._ob
 
         # Check permission on the object.
@@ -123,6 +155,7 @@ class DataModel(UserDict):
         if hasattr(aq_base(ob), 'postCommitHook'):
             ob.postCommitHook()
 
+        return ob
 
     def __repr__(self):
         return '<DataModel %s>' % (self.data,)
