@@ -43,7 +43,8 @@
                             links python:'\n'.join(values)"
                 tal:attributes="name string:${html_id}:lines;
                                 id id;
-                                rows python:test(here.size, here.size, None)"
+                                rows python:test(here.size, here.size, '4');
+                                cols string:75"
                 tal:content="links"></textarea>
       <a href="javascript:open_search_dialog()">
         <img tal:replace="structure python:here.getImgTag('link_popup.gif',
