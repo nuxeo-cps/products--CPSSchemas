@@ -12,6 +12,8 @@
 #import Data
 #import Layer
 
+import PatchTypesTool
+
 #contentClasses = (
 #    FlexibleDocument2.FlexibleDocument2,
 #    Data.Data,
