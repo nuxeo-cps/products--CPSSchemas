@@ -64,13 +64,15 @@ class DataModel(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, ob, schemas=[]):
+    def __init__(self, ob, schemas=[], context=None):
         UserDict.__init__(self)
         # self.data initialized by UserDict
         self._ob = ob
         self._fields = {}
         self._schemas = ()
         self._adapters = ()
+        # context is used to get to portal_transforms using getToolByName.
+        self._context = context
         for schema in schemas:
             self._addSchema(schema)
 
@@ -151,7 +153,8 @@ class DataModel(UserDict):
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
-                field.computeDependantFields(self._schemas, data)
+                field.computeDependantFields(self._schemas, data,
+                                             context=self._context)
 
         # Call the adapters to store the data.
         for adapter in self._adapters:
