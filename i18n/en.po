@@ -239,7 +239,7 @@ msgid "cpsschemas_err_password_upper"
 msgstr "Sorry your password must contain an upper case character"
 
 msgid "cpsschemas_err_password_digit"
-msgstr "Sorry your password mus contain a digit"
+msgstr "Sorry your password must contain a digit"
 
 msgid "cpsschemas_err_password_extra"
 msgstr ""
