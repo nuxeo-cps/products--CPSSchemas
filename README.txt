@@ -1,4 +1,4 @@
-NuxCPSFlexibleDocument3
+NuxCPS3Document
 
 Yet Another Flexible Document for CPS.
 

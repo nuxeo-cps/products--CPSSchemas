@@ -6,17 +6,23 @@ class FlexibleLayout:
     The layout is a list of fields"""
 
     def __init__(self):
-        self._field_list = [] # An ordered list of the field names
+        self._field_list = [] # An ordered list of the field ids
         self._fields = {} # The fields
 
-    def getFieldNames(self):
-        """Returns the ordered list of field names"""
+    def getFieldIds(self):
+        """Returns the ordered list of field ids"""
         return self._field_list
 
-    def getFields(self):
-        """Returns the list of fields"""
+    def getField(self, fieldid):
+        """Returns the field object with id fieldid"""
+        return self._fields[fieldid]
 
-        return None
+    def getFields(self):
+        """Returns a list of all fields"""
+        fields = []
+        for fieldid in self.getFieldIds():
+            fields.append(self.getField(fieldid))
+        return fields
 
     def addFields(self, fields):
         """Adds a field or a list of fields to the end of the field list"""
@@ -35,7 +41,7 @@ class FlexibleLayout:
         self._field_list.append(fieldid)
 
     def removeFields(self, fields):
-        """Removes a field or a list of fields by name"""
+        """Removes a field or a list of fields by id"""
         if type(fields) is ListType or type(fields) is TupleType:
             for field in fields:
                 self._removeField(field)
@@ -43,13 +49,13 @@ class FlexibleLayout:
             self._removeField(fields)
 
     def _removeField(self, fieldid):
-        """Removes a field by name"""
+        """Removes a field by id"""
         del self._fields[fieldid]
         self._field_list.remove(fieldid)
 
 
     def setFieldOrder(self, fieldid, order ):
-        """Sets the named field at the specifed position
+        """Sets the specified field at the specifed position
 
         0 is first, -1 is last, no other negativ numbers are supported (at least not yet)
         """
@@ -60,7 +66,7 @@ class FlexibleLayout:
             self._field_list.insert(order, fieldid)
 
     def moveField(self, fieldid, distance):
-        """Moves the named field a number of positions
+        """Moves the specified field a number of positions
 
         Positive numbers move to higher index numbers, negavtive to lower index numbers"""
         oldpos = self._field_list.index(fieldid)
