@@ -10,4 +10,5 @@ Bug fixes:
 - RTE button JavaScript toggle corrected
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Additional Field API to convert to and from LDAP attributes.
+- Additional StorageAdapter API: getFieldIds().
