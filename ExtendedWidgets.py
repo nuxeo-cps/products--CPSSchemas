@@ -1102,9 +1102,11 @@ class CPSGenericMultiSelectWidget(CPSWidget):
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
+        # Provide an 'other' option where free input is accepted
+        # (ignored if render format is 'select')
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
-         'label': 'Render format : select menu (default), radio buttons or checkboxes'},
+         'label': 'Render format'},
         # Enables the possibility to add blank values to vocabulary just to
         # change the way the list is presented (using items like 'choose a
         # category' or '------------' to separate items) and not affect the way
@@ -1113,7 +1115,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         # accept blank values if they were in the vocabulary (e.g
         # blank_value_ok_if_required = 1)
         {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
-         'label': "Accept blank values (defined in vocabulary) when validating if the widget is required and the vocabulary holds blank values"},
+         'label': "Accept blank values when validating"},
         )
     render_formats = ['select', 'radio', 'checkbox']
     # XXX make a menu for the vocabulary.
