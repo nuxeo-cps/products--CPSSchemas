@@ -10,6 +10,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - EmailWidget was always mandatory.
+- CheckBoxWidget's default should not be a list but an empty string.
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
