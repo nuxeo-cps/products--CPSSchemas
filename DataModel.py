@@ -20,6 +20,9 @@ from zLOG import LOG, DEBUG
 from Acquisition import aq_base
 from UserDict import UserDict
 
+from Globals import InitializeClass
+from AccessControl import ClassSecurityInfo
+
 from Products.CPSDocument.DataStructure import DataStructure
 
 
@@ -36,9 +39,9 @@ class OLDDataModel(UserDict):
         self._schemas = {}
         self._adapters = {}
         for schema in schemas:
-            self.addSchema(schema)
+            self._addSchema(schema)
 
-    def addSchema(self, schema):
+    def _addSchema(self, schema):
         for fieldid in schema.keys():
             if self._fields.has_key(fieldid):
                 raise KeyError('There two Schemas with field ' + fieldid + \
@@ -169,8 +172,13 @@ class OLDDataModel(UserDict):
 #             if data is not None:
 #                 self[fieldid] = data
 
+######################################################################
+######################################################################
 
 class DataModel(UserDict):
+
+    security = ClassSecurityInfo()
+    security.setDefaultAccess('allow')
 
     def __init__(self, ob, schemas=[]):
         UserDict.__init__(self)
@@ -178,9 +186,14 @@ class DataModel(UserDict):
         self._fields = {}
         self._schemas = {}
         for schema in schemas:
-            self.addSchema(schema)
+            self._addSchema(schema)
 
-    def addSchema(self, schema):
+    # Expose setter as method for restricted code.
+    def set(self, key, value):
+        # XXX This should check field permission access...
+        self.__setitem__(key, value)
+
+    def _addSchema(self, schema):
         for fieldid in schema.keys():
             if self._fields.has_key(fieldid):
                 raise KeyError("Two schemas have field id %s "
@@ -211,3 +224,5 @@ class DataModel(UserDict):
 
     def __repr__(self):
         return '<DataModel %s>' % (self.data,)
+
+InitializeClass(DataModel)

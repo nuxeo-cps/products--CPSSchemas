@@ -1,14 +1,15 @@
-<dtml-let swtid="REQUEST.other['traverse_subpath'][0]"
-          wtid="getUnstrippedWidgetTypeId(swtid)"
-          wt="portal_widgets[wtid]">
+<dtml-let swt="REQUEST.other['traverse_subpath'][0]"
+          wt="getUnstrippedWidgetType(swt)"
+          defid="wt.replace('CPS ', '').replace(' Type', '')"
+          >
 <dtml-var manage_page_header>
 
-<dtml-let form_title="'Add ' + wt.title_or_id()">
+<dtml-let form_title="'Add Type ' + wt">
 <dtml-var manage_form_title>
 </dtml-let>
 
-<form action="&dtml-URL1;/manage_addCPSWidget" method="POST">
-<input type="hidden" name="swtid" value="&dtml-swtid;" />
+<form action="&dtml-URL1;/manage_addCPSWidgetType" method="POST">
+<input type="hidden" name="swt" value="&dtml-swt;" />
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">
@@ -16,7 +17,7 @@
     </td>
     <td align="left" valign="top">
       <div class="form-element">
-        <input type="text" name="id" size="40" />
+        <input type="text" name="id" size="40" value="&dtml-defid;"/>
       </div>
     </td>
   </tr>

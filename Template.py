@@ -106,7 +106,7 @@ class Template:
         for schema in schemas:
             # The schemas can appear in any order, meaning this if there is
             # colliding field names, which field will "win" is completely random.
-            dm.addSchema(self.getSchema(schema))
+            dm._addSchema(self.getSchema(schema))
         # TODO: Also get global schemas.
         return dm
 

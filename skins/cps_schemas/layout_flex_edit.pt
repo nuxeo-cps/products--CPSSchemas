@@ -13,7 +13,7 @@
   </tr>
   <tr tal:repeat="row layout/rows">
     <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
-      <tal:block define="widget cell/widget; wid widget/id">
+      <tal:block define="widget cell/widget; wid widget/getWidgetId">
         <div tal:define="err python:ds.getError(wid)"
              tal:condition="err">
           <b style="color: red" tal:content="err">err</b>

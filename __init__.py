@@ -28,9 +28,10 @@ import Field
 import Schema
 import Layout
 
-import SchemasTool
 import VocabulariesTool
+import SchemasTool
 import LayoutsTool
+import WidgetsTool
 
 import BasicFields
 import BasicWidgets
@@ -38,9 +39,10 @@ import BasicWidgets
 import CPSDocument
 
 tools = (
-    SchemasTool.SchemasTool,
     VocabulariesTool.VocabulariesTool,
+    SchemasTool.SchemasTool,
     LayoutsTool.LayoutsTool,
+    WidgetsTool.WidgetsTool,
     )
 
 

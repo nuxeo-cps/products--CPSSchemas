@@ -125,6 +125,7 @@ class DataStructure(UserDict):
             self.data.update(dict.data)
         elif isinstance(dict, type(self.data)):
             self.data.update(dict)
+            # XXX do same for errors
         else:
             for k, v in dict.items():
                 self.data[k] = v
@@ -142,6 +143,10 @@ class DataStructure(UserDict):
         for key in self.keys():
             if form.has_key(widgetname(key)):
                 self[key] = form[widgetname(key)]
+
+    # Expose setter as method for restricted code.
+    def set(self, key, value):
+        self.__setitem__(key, value)
 
     # Expose the errors dictionary.
     def getError(self, key):
@@ -162,6 +167,6 @@ class DataStructure(UserDict):
         return self.errors.keys()
 
     def getErrors(self):
-        return errors # TODO: Should it return the original or a copy?
+        return self.errors # XXX Should it return the original or a copy?
 
 InitializeClass(DataStructure)

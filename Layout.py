@@ -32,12 +32,13 @@ from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
 from Products.CMFCore.utils import SimpleItemWithProperties
+from Products.CMFCore.utils import getToolByName
 
 from Products.CPSDocument.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 from Products.CPSDocument.Renderer import BasicRenderer, HtmlRenderer
+from Products.CPSDocument.WidgetsTool import WidgetTypeRegistry
 
-from Products.CPSDocument.Widget import WidgetRegistry
 
 class BasicLayout(OrderedDictionary):
     """Defines a document layout
@@ -175,7 +176,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         for row in layoutdata['rows']:
             for cell in row:
                 widget = cell['widget']
-                ok = ok and widget.validate(datastructure, datamodel)
+                ok = widget.validate(datastructure, datamodel) and ok
         return ok
 
     def __repr__(self):
@@ -196,9 +197,34 @@ class CPSLayout(Layout):
         self.id = id
         Layout.__init__(self, **kw)
 
+    security.declarePrivate('addWidget')
+    def addWidget(self, id, wtid):
+        """Add a new widget instance."""
+        wtool = getToolByName(self, 'portal_widgets')
+        widget_type = wtool[wtid]
+        widget = widget_type.makeInstance(id)
+        return self.addSubObject(widget)
+
     #
     # ZMI
     #
+
+    def all_meta_types(self):
+        # List of meta types contained in Folder, for copy/paste support.
+        return [
+            {'name': WidgetTypeRegistry.getClass(wt).meta_type,
+             'action': '',
+             'permission': ManagePortal}
+            for wt in WidgetTypeRegistry.listWidgetTypes()]
+
+    def filtered_meta_types(self):
+        # List of types available in Folder menu.
+        wtool = getToolByName(self, 'portal_widgets')
+        return [
+            {'name': wtid,
+             'action': 'manage_addCPSWidgetForm/'+wtid.replace(' ', ''),
+             'permission': ManagePortal}
+            for wtid in wtool.objectIds()]
 
     manage_options = (
         {'label': 'Widgets',
@@ -212,31 +238,24 @@ class CPSLayout(Layout):
     security.declareProtected(ManagePortal, 'manage_editLayout')
     manage_editLayout = DTMLFile('zmi/layout_editform', globals())
 
-    def all_meta_types(self):
-        return [
-            {'name': widget_type,
-             'action': 'manage_addCPSWidgetForm/'+widget_type.replace(' ', ''),
-             'permission': ManagePortal}
-            for widget_type in WidgetRegistry.listWidgetTypes()]
-
     security.declareProtected(ManagePortal, 'manage_addCPSWidgetForm')
     manage_addCPSWidgetForm = DTMLFile('zmi/widget_addform', globals())
 
-    security.declareProtected(ManagePortal, 'get_unstripped_widget_type')
-    def get_unstripped_widget_type(self, widget_type):
-        """Get an unstripped version of a widget type."""
-        wts = widget_type.replace(' ', '')
-        for wt in WidgetRegistry.listWidgetTypes():
-            if wt.replace(' ', '') == wts:
-                return wt
-        raise ValueError, widget_type
+    security.declareProtected(ManagePortal, 'getUnstrippedWidgetTypeId')
+    def getUnstrippedWidgetTypeId(self, wtid):
+        """Get an unstripped version of a widget type id."""
+        wtool = getToolByName(self, 'portal_widgets')
+        swtid = wtid.replace(' ', '')
+        for wtid in wtool.objectIds():
+            if wtid.replace(' ', '') == swtid:
+                return wtid
+        raise ValueError(wtid)
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidget')
-    def manage_addCPSWidget(self, id, widget_type_stripped, REQUEST=None):
+    def manage_addCPSWidget(self, id, swtid, REQUEST=None):
         """Add a widget, called from the ZMI."""
-        widget_type = self.get_unstripped_widget_type(widget_type_stripped)
-        widget = WidgetRegistry.makeWidget(widget_type, id)
-        widget = self.addSubObject(widget)
+        wtid = self.getUnstrippedWidgetTypeId(swtid)
+        widget = self.addWidget(id, wtid)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(widget.absolute_url()+
                                       '/manage_workspace')
