@@ -1979,6 +1979,8 @@ class CPSImageWidget(CPSFileWidget):
                         'current_title': '',
                         'mimetype': '',
                         'last_modified': '',
+                        'height': 0,
+                        'width': 0,
                        }
         else:
             img_info = self.getImageInfo(datastructure)
