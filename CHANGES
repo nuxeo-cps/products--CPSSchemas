@@ -1,23 +1,12 @@
-ZODB Requires:
-~~~~~~~~~~~~~~
-- Convert metadata storage for Coverage, Source and Relation by running
-  once the external method CPSSchemas.convert_metadata.
+Requires:
+~~~~~~~~~
+-
 New features:
 ~~~~~~~~~~~~~
-- Password widget: able to define a policy for password validation:
-  checking min, max size checking lower, upper, digit or extra chararcter
-- A new AutoIndex field for automatically generating numbers useful for
-  indexes.
+-
 Bug fixes:
 ~~~~~~~~~~
-- renderHtmlTag unable to generate <option value=""> tag
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- EmailWidget
-  - no validation in search mode 
-  - '+' is allowed in email addresses.
-- Vocabularies are now preferrably initialized using the
-  syntax (('foo': "Foo"), ('bar': "Bar")).
-- i18n using CPSDefault as black list pot
-- Storage as attributes of metadata is done using standard lowercase
-  identifiers. Uppercase is reserved for accessors.
+-
