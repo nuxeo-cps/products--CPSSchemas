@@ -4,8 +4,8 @@
 
 """
 
-raise 'ok', 'data is %s' % (datamodel,)
-pass
+#raise 'ok', 'data is %s' % (datamodel,)
+#pass
 
 
 
