@@ -194,8 +194,7 @@ def install(self):
             widget = layout.manage_addCPSWidget(widget_id, widgetinfo['type'],
                                                 **widgetinfo['data'])
         layout.setLayoutDefinition(info['layout'])
-        style_prefix = info['layout'].get('style_prefix')
-        layout.manage_changeProperties(style_prefix=style_prefix)
+        layout.manage_changeProperties(**info['layout'])
 
     # vocabularies
     pr("Verifiying vocabularies")
