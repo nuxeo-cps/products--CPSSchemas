@@ -1155,7 +1155,6 @@ class CPSFileWidget(CPSWidget):
                 field = adapter.getSchema()[field_id]
                 break # Note: 'adapter' is still the right one
 
-        empty_file = 1
         ob = dm.getProxy()
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
@@ -1164,20 +1163,20 @@ class CPSFileWidget(CPSWidget):
             entry_id = datastructure[id_field]
             if entry_id:
                 content_url = adapter._getContentUrl(entry_id, field_id)
-                file = datastructure[self.getWidgetId()]
-                if file and type(file) is not File:
-                    file = File(self.getWidgetId(), '', file)
-                empty_file = 0
         else:
             content_url = adapter._getContentUrl(ob, field_id)
-            file = datastructure[self.getWidgetId()]
-            if file:
-                empty_file = 0
 
+        file = datastructure[self.getWidgetId()]
         if file:
-            current_name = file.getId()
+            if _isinstance(file, File):
+                current_name = file.getId()
+            else:
+                current_name = self.getWidgetId()
+            empty_file = 0
         else:
             current_name = ''
+            empty_file = 1
+
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = registry.lookupExtension(current_name)
 
@@ -1266,7 +1265,7 @@ InitializeClass(CPSFileWidgetType)
 
 ##################################################
 
-class CPSImageWidget(CPSWidget):
+class CPSImageWidget(CPSFileWidget):
     """Image widget."""
     meta_type = "CPS Image Widget"
 
@@ -1372,71 +1371,37 @@ class CPSImageWidget(CPSWidget):
 
     def getImageInfo(self, datastructure):
         """Get the image info from the datastructure."""
-        dm = datastructure.getDataModel()
-        field_id = self.fields[0]
-        for adapter in dm._adapters:
-            if adapter.getSchema().has_key(field_id):
-                field = adapter.getSchema()[field_id]
-                break # Note: 'adapter' is still the right one
+        image_info = self.getFileInfo(datastructure)
+        image = datastructure[self.getWidgetId()]
+        if image:
+            if not _isinstance(image, Image):
+                image = Image(self.getWidgetId(), '', image)
 
-        empty_file = 1
-        ob = dm.getProxy()
-        if ob is None: # Not stored in the ZODB.
-            # StorageAdapters that do not store the object in
-            # ZODB takes the entry_id instead of object.
-            id_field = dm.getContext().id_field
-            entry_id = datastructure[id_field]
-            if entry_id:
-                content_url = adapter._getContentUrl(entry_id, field_id)
-                image = datastructure[self.getWidgetId()]
-                if image and type(image) is not Image:
-                    image = Image(self.getWidgetId(), '', image)
-                empty_file = 0
-        else:
-            content_url = adapter._getContentUrl(ob, field_id)
-            image = datastructure[self.getWidgetId()]
-            if image:
-                empty_file = 0
-
-        if empty_file:
-            height = 0
-            width = 0
+        if image_info['empty_file']:
             tag = ''
         else:
             height = int(getattr(image, 'height', 0))
             width = int(getattr(image,'width', 0))
-
             if self.allow_resize:
                 z_w = z_h = 1
-                h = int(getattr(image, 'height', 0))
-                w = int(getattr(image, 'width', 0))
+                h = int(self.display_height)
+                w = int(self.display_width)
                 if w and h:
                     if w < width:
-                        z_w = width / float(w)
+                        z_w = w / float(width)
                     if h < height:
-                        z_h = height / float(h)
+                        z_h = h / float(height)
                     zoom = min(z_w, z_h)
-                    width = int(zoom * w)
-                    height = int(zoom * h)
+                    width = int(zoom * width)
+                    height = int(zoom * height)
 
             title = getattr(image, 'title', None)
-            tag = renderHtmlTag('img', src=content_url, width=str(width),
-                    height=str(height), border='0', alt=title, title=title)
+            tag = renderHtmlTag('img', src=image_info['content_url'],
+                    width=str(width), height=str(height), border='0',
+                    alt=title, title=title)
 
-        if image:
-            current_name = image.getId()
-        else:
-            current_name = ''
-        registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = registry.lookupExtension(current_name)
-
-        return {'empty_file': empty_file,
-                'content_url': content_url,
-                'image_tag': tag,
-                'current_name': current_name,
-                'mimetype': mimetype,
-               }
-
+        image_info['image_tag'] = tag
+        return image_info
 
     def render(self, mode, datastructure, **kw):
 
