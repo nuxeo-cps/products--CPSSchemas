@@ -168,6 +168,7 @@ class CPSStringWidget(CPSWidget):
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
+                  'css_class': self.css_class,
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
@@ -185,7 +186,7 @@ InitializeClass(CPSStringWidgetType)
 
 ##################################################
 
-class CPSPasswordWidget(CPSStringWidget):
+class CPSPwdWidget(CPSStringWidget):
     """Password widget."""
     meta_type = "CPS Password Widget"
 
@@ -195,26 +196,31 @@ class CPSPasswordWidget(CPSStringWidget):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            return "********"
+            hidden = ""
+            for i in value:
+                hidden += "*"
+            return hidden
         elif mode == 'edit':
             kw = {'type': 'password',
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
+                  'css_class': self.css_class,
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
+
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
-InitializeClass(CPSPasswordWidget)
+InitializeClass(CPSPwdWidget)
 
-class CPSPasswordWidgetType(CPSStringWidgetType):
+class CPSPwdWidgetType(CPSStringWidgetType):
     """Password widget type."""
     meta_type = "CPS Password Widget Type"
-    cls = CPSPasswordWidget
+    cls = CPSPwdWidget
 
-InitializeClass(CPSPasswordWidgetType)
+InitializeClass(CPSPwdWidgetType)
 
 ##################################################
 
@@ -343,7 +349,8 @@ class CPSTextAreaWidget(CPSWidget):
                                  name=self.getHtmlWidgetId(),
                                  cols=self.width,
                                  rows=self.height,
-                                 contents=value)
+                                 contents=value,
+                                 css_class=self.css_class)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSTextAreaWidget)
@@ -465,7 +472,8 @@ class CPSIntWidget(CPSWidget):
             return renderHtmlTag('input',
                                  type='text',
                                  name=self.getHtmlWidgetId(),
-                                 value=value)
+                                 value=value,
+                                 css_class=self.css_class)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSIntWidget)
@@ -680,19 +688,22 @@ class CPSDateWidget(CPSWidget):
                                  name=html_widget_id+'_d',
                                  value=d,
                                  size=2,
-                                 maxlength=2)
+                                 maxlength=2,
+                                 css_class=self.css_class)
             mtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_m',
                                  value=m,
                                  size=2,
-                                 maxlength=2)
+                                 maxlength=2,
+                                 css_class=self.css_class)
             ytag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_y',
                                  value=y,
                                  size=6,
-                                 maxlength=6)
+                                 maxlength=6,
+                                 css_class=self.css_class)
             # XXX customize format
             return dtag + '/' + mtag + '/' + ytag
         raise RuntimeError('unknown mode %s' % mode)
@@ -867,6 +878,118 @@ class CPSImageWidgetType(CPSWidgetType):
 
 InitializeClass(CPSImageWidgetType)
 
+#################################################
+
+class CPSRichTextEditorWidget(CPSTextAreaWidget):
+    """Rich Text Editor widget."""
+    meta_type = "CPS Rich Text EditorWidget"
+
+    field_types = ('CPS String Field',)
+
+    width = 40
+    height = 5
+    render_mode = 'pre'
+    _properties = CPSWidget._properties + (
+        {'id': 'width', 'type': 'int', 'mode': 'w',
+         'label': 'Width'},
+        {'id': 'height', 'type': 'int', 'mode': 'w',
+         'label': 'Height'},
+        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_modes',
+         'label': 'Render mode'},
+        )
+
+
+    all_render_modes = ['pre', 'stx', 'text']
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        value = datastructure[self.getWidgetId()]
+        try:
+            v = str(value)
+        except ValueError:
+            datastructure.setError(self.getWidgetId(),
+                                   "cpsdoc_err_textarea")
+            ok = 0
+        else:
+            datamodel[self.fields[0]] = v
+            ok = 1
+        return ok
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        # XXXX
+        # Not finished !! Just for tests
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            # To change
+            return structured_text(value)
+        elif mode == 'edit':
+            #
+            # XXXX : version that has to work
+            # For multiple rte within popup's
+            #
+            #return """
+            #<script language="JavaScript" type="text/javascript">
+            #<!--
+            #function change_content(to_put) {
+            #  form = document.getElementById('form') ;
+            #  w = form.getElementById('%s') ;
+            #  wt.value = to_put ;
+            #}
+            #//-->
+            #</script>
+            #
+            #<script language="JavaScript" type="text/javascript">
+            #function open_rte_edit(value, input_id) {
+            #  args='?value='+value+'&input_id='+input_id ;
+            #  selector_window = window.open('widget_rte_edit'+args, '%s', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=0, dependent=1, width=500, height=400')
+            #  if(!selector_window.opener) selector_window.opener = window
+            #}
+            #//-->
+            #</script>
+            #%s
+            #<a href="javascript:open_rte_edit('%s', '%s')">Editer</a>
+            #<a href="javascript:change_content()">Change</a>
+            #""" %(self.getHtmlWidgetId(),
+            #      self.getHtmlWidgetId(),
+            #      renderHtmlTag('textarea',
+            #                    name=self.getHtmlWidgetId(),
+            #                    cols=self.width,
+            #                    rows=self.height,
+            #                    contents=value,
+            #                    css_class=self.css_class),
+            #      str(value), self.getHtmlWidgetId() )
+
+            #
+            # Tmp dirty solution
+            #
+            render_method = 'widget_rte_render'
+            meth = getattr(self, render_method, None)
+            if meth is None:
+                raise RuntimeError("Unknown Render Method %s for widget type %s"
+                                   % (render_method, self.getId()))
+            value = datastructure[self.getWidgetId()]
+            if hasattr(aq_base(value), 'getId'):
+                current_name = value.getId()
+            else:
+                current_name = '-'
+            return meth(mode=mode, datastructure=datastructure,
+                        datamodel=datamodel,
+                        current_name=current_name)
+
+InitializeClass(CPSRichTextEditorWidget)
+
+class CPSRichTextEditorWidgetType(CPSWidgetType):
+    """ RTE widget type """
+    meta_type = "CPS Rich Text Editor Widget Type "
+    cls = CPSRichTextEditorWidget
+
+InitializeClass(CPSRichTextEditorWidgetType)
 
 
 ##################################################
@@ -877,7 +1000,7 @@ InitializeClass(CPSImageWidgetType)
 
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
-WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
+WidgetTypeRegistry.register(CPSPwdWidgetType, CPSPwdWidget)
 #WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
@@ -885,4 +1008,5 @@ WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
 WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
+WidgetTypeRegistry.register(CPSRichTextEditorWidgetType, CPSRichTextEditorWidget)
 WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
