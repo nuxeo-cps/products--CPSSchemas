@@ -1,0 +1,54 @@
+<tal:block define="mode options/mode;
+                   datastructure options/datastructure;
+                   id here/getWidgetId;
+                   values datastructure/?id;
+                  ">
+  <tal:block condition="python:mode == 'view'">
+    <ul tal:define="lines python:test(here.size, values[:here.size], values)">
+      <tal:block repeat="line lines">
+        <li tal:define="tokens python:[e.strip() for e in line.split()];
+                           link python:tokens[0];
+                           desc python:test(len(tokens) > 1,
+                                                      ' '.join(tokens[1:]), '');
+                           target python:test(here.new_window, '_blank', None)"
+                   on-error="nothing">
+          <a href="" tal:attributes="href string:${link}/;
+                                     target target"
+                     tal:content="desc">Document Title</a>
+        </li>
+      </tal:block>
+    </ul>
+  </tal:block>
+  <tal:block condition="python:mode == 'edit'">
+    <tal:block define="base_url here/getBaseUrl">
+      <script type="text/javascript" tal:content="structure string:<!--
+        var base_url = '${base_url}'
+        var w_id = '${id}'
+        -->">
+      </script>
+      <script type="text/javascript">
+        <!--
+        function open_search_dialog() {
+          selector_window = window.open(base_url + 'popup_internallinks_form'+
+          '?textarea=' + w_id, 'popup_link', 'toolbar=0,scrollbars=1,' +
+          'location=0,statusbar=0,menubar=0,resizable=0,dependent=1,' +
+          'width=400,height=300');
+          if (! selector_window.opener)
+            selector_window.opener = window
+        }
+        -->
+      </script>
+      <textarea tal:define="html_id here/getHtmlWidgetId;
+                            links python:'\n'.join(values)"
+                tal:attributes="name string:${html_id}:lines;
+                                id id;
+                                cols string:100;
+                                rows python:test(here.size, here.size, None)"
+                tal:content="links"></textarea>
+      <a href="javascript:open_search_dialog()">
+        <img tal:replace="structure python:here.getImgTag('link_popup.gif',
+                                       base_url=base_url, width=32, height=32)">
+      </a>
+    </tal:block>
+  </tal:block>
+</tal:block>

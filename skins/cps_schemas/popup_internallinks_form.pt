@@ -1,0 +1,71 @@
+<metal:html tal:define="emptybody python:1;
+                        vtool here/portal_vocabularies;
+                        textarea request/textarea|string:;
+                        searching python:request.has_key('Title');
+                       ">
+<metal:body use-macro="here/main_template/macros/master">
+<metal:head fill-slot="head_slot">
+  <script type="text/javascript" tal:condition="searching">
+  <!--
+    function set_parent_value(parent_id) {
+      links = ''
+      selected = document.resultsform.elements
+      for (i = 0; i < selected.length; i++) {
+        checkbox = selected[i];
+        if (checkbox.checked) {
+          links += checkbox.value + '\n'
+        }
+      }
+      if (links) {
+        parent_input = opener.document.getElementById(parent_id)
+        value = parent_input.value
+        if (value && value.substr(value.length - 1) != '\n') {
+          parent_input.value += '\n'
+        }
+        parent_input.value += links
+        self.close()
+      }
+    }
+  -->
+  </script>
+</metal:head>
+<metal:main fill-slot="body">
+
+<tal:notSelected condition="not:searching">
+  <form action="" method="get"
+        tal:attributes="action string:${here/getContextUrl}/${template/id}">
+    <input type="hidden" name="textarea" value=""
+           tal:attributes="value textarea">
+    <metal:block use-macro="here/generic_lib/macros/search_form" />
+  </form>
+</tal:notSelected>
+
+<tal:selected condition="searching">
+  <form name="resultsform" onsubmit="javascript:set_parent_value"
+    tal:attributes="onsubmit string:javascript:set_parent_value('${textarea}');;
+                   ">
+    <tal:block define="SearchableText python:request.get('SearchableText','');
+                       sort_by python:request.get('sort_by', '');
+                       direction python:request.get('direction', '');
+                       folder_prefix python:request.get('folder_prefix', '');
+                       items python:here.search(query=request.form,
+                                                sort_by=sort_by,
+                                                direction=direction,
+                                                folder_prefix=folder_prefix);
+                       nav_action string:search_form;
+                       no_form nothing;
+                       site_wide python:1;
+                       items_length python:len(items);">
+      <metal:block use-macro="here/content_lib/macros/display_contents" />
+    </tal:block>
+    <hr>
+    <input type="button" class="standalone" value="button_back"
+           onclick="javascript:history.back()" i18n:attributes="value">
+    <input type="submit" class="context" value="button_ok"
+           i18n:attributes="value">
+  </form>
+</tal:selected>
+
+</metal:main>
+</metal:body>
+</metal:html>
