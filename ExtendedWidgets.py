@@ -337,7 +337,11 @@ class CPSAttachedFileWidget(CPSFileWidget):
         err_mapping = None
         if choice == 'keep':
             file = datamodel[field_id]
-            if file is not None:
+            if file is None:
+                if self.is_required:
+                    return self.doesNotValidate('cpsschemas_err_required',
+                                                None, file, datastructure)
+            else:
                 # do not allow empty title: it is used as link text
                 if not filetitle:
                     filetitle = datastructure[widget_id + '_filename']
@@ -345,6 +349,9 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     file.manage_changeProperties(title=filetitle)
                     datamodel[field_id] = file
         elif choice == 'delete':
+            if self.is_required:
+                return self.doesNotValidate('cpsschemas_err_required',
+                                            None, file, datastructure)
             datamodel[field_id] = None
         elif choice == 'change' and datastructure.get(widget_id):
             fileUpload = datastructure[widget_id]

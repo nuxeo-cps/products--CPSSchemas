@@ -9,7 +9,7 @@ New features:
   transformations.
 Bug fixes:
 ~~~~~~~~~~
--
+- Implemented the "is_required" property handling in the CPSAttachedFileWidget.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
