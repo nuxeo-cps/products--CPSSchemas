@@ -91,6 +91,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Help'},
         {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
          'label': 'Label is i18n'},
+        # layout mode
         {'id': 'readonly_layout_modes', 'type': 'tokens', 'mode': 'w',
          'label': 'Read-only in layout modes'},
         {'id': 'hidden_layout_modes', 'type': 'tokens', 'mode': 'w',
@@ -101,13 +102,13 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Hidden if empty'},
         {'id': 'hidden_if_expr', 'type': 'text', 'mode': 'w',
          'label': 'Hide the widget if the given TAL expression returns true'},
-        #
-        {'id': 'css_class', 'type': 'string', 'mode': 'w',
-         'label': 'CSS class for view'},
         {'id': 'widget_mode_expr', 'type': 'text', 'mode': 'w',
          'label': 'Get the widget mode from the given TAL expression'},
+        # CSS
+        {'id': 'css_class', 'type': 'string', 'mode': 'w',
+         'label': 'CSS class for view'},
         {'id': 'css_class_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Get the css class from the given TAL expression'},
+         'label': 'Get the CSS class from the given TAL expression'},
         )
 
     fields = []
