@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fix getFileInfo() within CPSFileWidget to cope with non proxy object
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
