@@ -59,8 +59,7 @@ class ValidationError(Exception):
 
 
 class DataModel(UserDict):
-    """An abstraction for the data stored in an object.
-    """
+    """An abstraction for the data stored in an object."""
 
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
@@ -119,7 +118,6 @@ class DataModel(UserDict):
     #
     # Restricted accessors
     #
-
     def checkReadAccess(self, key):
         if self._check_acls:
             self._fields[key].checkReadAccess(self, self._context)
@@ -183,7 +181,6 @@ class DataModel(UserDict):
     #
     # DataModel accessors
     #
-
     def getObject(self):
         """Get the object this DataModel is about."""
         # XXX used by what ???
@@ -200,7 +197,6 @@ class DataModel(UserDict):
     #
     # Fetch and commit
     #
-
     def _fetch(self):
         """Fetch the data into local dict for user access."""
         for adapter in self._adapters:
@@ -264,7 +260,7 @@ class DataModel(UserDict):
             LOG("_commit", DEBUG, "Unauthorized to modify object %s" % (ob,))
             raise Unauthorized("Cannot modify object")
 
-        # Compute dependant fields.
+        # Compute dependent fields.
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
@@ -284,7 +280,6 @@ class DataModel(UserDict):
     #
     # Import/export
     #
-
     def _exportAsXML(self):
         """Export the datamodel as XML string."""
         res = []
@@ -301,7 +296,6 @@ class DataModel(UserDict):
                 s += '>' + svalue + '</field>'
                 res.append(s)
         return '\n'.join(res)
-
 
     def __repr__(self):
         return '<DataModel %s>' % (self.data,)
