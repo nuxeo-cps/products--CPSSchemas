@@ -130,7 +130,7 @@ class LayoutTests(unittest.TestCase):
                                       'SeFieldOrder first failed' )
 
     def testReorderNonExistingFields(self):
-        """Reordering fields that doe not exist should raise errors"""
+        """Reordering fields that does not exist should raise errors"""
         layout = FlexibleLayout()
         field1 = LayoutField(id='firstfield')
         field2 = LayoutField(id='secondfield')
