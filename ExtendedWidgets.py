@@ -69,7 +69,8 @@ class CPSTextWidget(CPSStringWidget):
         )
     all_configurable = ['nothing', 'position', 'format', 'position and format']
     all_render_positions = ['normal', 'col_left', 'col_right']
-    all_render_formats = ['text', 'pre', 'stx', 'html']
+    all_render_formats = ['text', 'stx', 'html'] # remove 'pre' as we do the
+                                                 # same using text
 
     width = 40
     height = 5
