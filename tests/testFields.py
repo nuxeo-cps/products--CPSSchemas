@@ -2,82 +2,155 @@
 # $Id$
 
 import unittest
-from Testing.ZopeTestCase import ZopeLite
+import CPSSchemasTestCase
 
-from Products.CPSSchemas.Fields.BasicField import BasicField, BasicFieldWidget
-from Products.CPSSchemas.Fields.TextField import TextField, TextFieldWidget
-
-
-class BasicFieldTests(unittest.TestCase):
-
-    def testCreation(self):
-        """Test field creation"""
-        field = BasicField('the_id', 'the_title')
-        self.failUnless(field.id == 'the_id', 'Id was not set correctly')
-        self.failUnless(field.title == 'the_title', 
-            'Title was not set correctly')
-
-    def testBasicValidation(self):
-        field = BasicField('the_id', 'the_title')
-        self.failUnless(field.validate('bimbo') == 'bimbo')
-        self.failUnlessRaises(ValueError, field.validate, None)
-        field.setDefaultValue('spam')
-        self.failUnless(field.validate(None) == 'spam')
-        field.setNotRequired()
-        self.failUnless(field.validate(None) == None)
-
-#     def testDefaultValues(self):
-#         field = BasicField('the_id', 'the_title')
-#         self.failUnlessRaises(ValueError, field.validate, None)
-#         field.setNotRequired()
-#         self.failUnless(field.validate(None) is None)
-#         field.setDefaultValue('The Default Value')
-#         self.failUnless(field.getDefaultValue() == 'The Default Value')
-#         field.setRequired()
-#         self.failUnless(field.validate(None) == 'The Default Value')
-
-    def testSetSettings(self):
-        field = BasicField('the_id', 'the_title')
-        field.setSetting('default', 'newdefault')
-        self.failUnless(field.getSetting('default') == 'newdefault')
-        self.failUnlessRaises(KeyError, field.setSetting, 'notasetting', 'somevalue')
-
-
-
-    def testRequired(self):
-        field = BasicField('the_id', 'the_title')
-        self.failIf(not field.isRequired())
-        field.setNotRequired()
-        self.failIf(field.isRequired())
-        field.setRequired()
-        self.failIf(not field.isRequired())
-
-
+from DateTime.DateTime import DateTime
+from OFS.Folder import Folder
+from OFS.Image import Image, File
+from Products.CPSSchemas import BasicFields
+from Products.CPSSchemas.Field import FieldRegistry
 
 class NotAString:
     """A class can't be converted to a string"""
     def __str__(self):
         raise TypeError('This can not be converted to a string')
 
-class TextFieldTests(unittest.TestCase):
 
-    def testConversion(self):
-        field = TextField('the_id', 'the_title')
-        self.failUnless(field.validate('four') == 'four')
-        self.failUnless(field.validate(4) == '4')
-        four = NotAString()
-        self.failUnlessRaises(TypeError, field.validate, four)
+class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
+
+    def afterSetUp(self):
+        fields = Folder('fields')
+        self.portal._setObject('fields', fields)
+        self.fields = self.portal.fields
+
+    def testCreationThroughRegistry(self):
+        for field_type in FieldRegistry.listFieldTypes():
+            field_id = field_type.lower().replace(" ", "")
+            field = FieldRegistry.makeField(field_type, field_id)
+            self.fields._setObject(field_id, field)
+            field = getattr(self.fields, field_id)
+
+            self.assertEquals(field.getId(), field_id)
+
+            # Default values (0, 0.0, None, ""...) all have false boolean
+            # value
+            default = field.getDefault()
+            self.assert_(not default)
+
+            self.assertEquals(field.validate(default), default)
 
 
-    # OK, field settings are not attributes, instead each field instance
-    # has a 'settings' naahhhh. Testfirst!!!
-    # field.setSetting(setting, value)
-    # field.getSetting(setting)
-    # filed.get AllSettings(): return list
+    def testIntField(self):
+        field = BasicFields.CPSIntField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.id, 'the_id')
+        self.assertEquals(field.getFieldId(), 'the_id')
+
+        self.assertEquals(field.getDefault(), 0)
+
+        # Basic validation
+        self.assertEquals(field.validate(121), 121)
+        self.assertRaises(ValueError, field.validate, "1")
+
+    def testLongField(self):
+        field = BasicFields.CPSLongField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), 0L)
+        self.assertEquals(field.validate(121L), 121L)
+        self.assertRaises(ValueError, field.validate, 1)
+
+    def testFloatField(self):
+        field = BasicFields.CPSFloatField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), 0.0)
+        self.assertEquals(field.validate(1.0), 1.0)
+        self.assertRaises(ValueError, field.validate, 1)
+
+    def testStringField(self):
+        field = BasicFields.CPSStringField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), "")
+        self.assertEquals(field.validate('bimbo'), 'bimbo')
+        self.assertRaises(ValueError, field.validate, None)
+
+    # XXX: no difference between a StringField and a PasswordField.
+    # Strange, no ?
+    def testPasswordField(self):
+        field = BasicFields.CPSPasswordField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), "")
+        self.assertEquals(field.validate('bimbo'), 'bimbo')
+        self.assertRaises(ValueError, field.validate, None)
+
+    def testStringListField(self):
+        field = BasicFields.CPSStringListField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), [])
+        self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, [1])
+
+    def testDateTimeField(self):
+        field = BasicFields.CPSDateTimeField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), None)
+
+        # XXX: A bit strange. Do we really want that one ?
+        self.assertEquals(field.validate(""), None)
+
+        self.assertEquals(field.validate(None), None)
+        now = DateTime()
+        self.assertEquals(field.validate(now), now)
+        self.assertRaises(ValueError, field.validate, [1])
+
+    def testFileField(self):
+        field = BasicFields.CPSFileField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), None)
+
+        # XXX: A bit strange. Do we really want that one ?
+        self.assertEquals(field.validate(""), None)
+
+        self.assertEquals(field.validate(None), None)
+
+        file = File("", "", "")
+        self.assertEquals(field.validate(file), file)
+        self.assertRaises(ValueError, field.validate, [1])
+
+    def testImageField(self):
+        field = BasicFields.CPSImageField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), None)
+
+        # XXX: A bit strange. Do we really want that one ?
+        self.assertEquals(field.validate(""), None)
+
+        self.assertEquals(field.validate(None), None)
+
+        image = Image("", "", "")
+        self.assertEquals(field.validate(image), image)
+        self.assertRaises(ValueError, field.validate, [1])
 
 def test_suite():
-    suites = [unittest.makeSuite(BasicFieldTests),
-              unittest.makeSuite(TextFieldTests)]
+    suites = [unittest.makeSuite(BasicFieldTests)]
     return unittest.TestSuite(suites)
 
 if __name__=="__main__":

@@ -4,10 +4,10 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSSchemas.BasicStorageAdapter import BasicStorageAdapter
-from Products.CPSSchemas.AttributeStorageAdapter import AttributeStorageAdapter
-from Products.CPSSchemas.Fields.TextField import TextField
-from Products.CPSSchemas.Fields.SelectionField import SelectionField
+from Products.CPSSchemas.StorageAdapter import BaseStorageAdapter
+from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
+#from Products.CPSSchemas.Fields.TextField import TextField
+#from Products.CPSSchemas.Fields.SelectionField import SelectionField
 
 
 class AttributeHolder:
