@@ -84,11 +84,13 @@ class Field(SimpleItemWithProperties):
         return self.default
 
     security.declarePrivate('computeDependantFields')
-    def computeDependantFields(self, schema, data):
+    def computeDependantFields(self, schema, data, context=None):
         """Compute dependant fields.
 
         Has access to the current schema, and may update the data from
         the datamodel.
+
+        The context argument is passed to look for placeful information.
 
         This is used for fields that update other fields when they are
         themselves updated.
