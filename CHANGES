@@ -11,4 +11,4 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Added in doc the 'context' in namespace for field read/write expressions.
