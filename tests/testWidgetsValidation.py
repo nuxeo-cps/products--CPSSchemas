@@ -214,6 +214,10 @@ class TestWidgetsValidation(unittest.TestCase):
                                       '../index.html')
         self.failUnless(ret, err)
 
+    def test_url_ok_9(self):
+        ret, err, ds = self._validate('URL', {}, '')
+        self.failUnless(ret, err)
+
     def test_url_nok_1(self):
         ret, err, ds = self._validate('URL', {}, 'a space')
         self.failUnless(err == 'cpsschemas_err_url')
