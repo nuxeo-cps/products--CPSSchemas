@@ -1,10 +1,14 @@
+<dtml-let mt="REQUEST.other['traverse_subpath'][0]"
+          mt="getVocabularyMetaType(mt)"
+          >
 <dtml-var manage_page_header>
 
-<dtml-let form_title="'Add CPS Vocabulary'">
+<dtml-let form_title="'Add ' + mt">
 <dtml-var manage_form_title>
 </dtml-let>
 
-<form action="manage_addCPSVocabulary" method="POST">
+<form action="&dtml-URL1;/manage_addCPSVocabulary" method="POST">
+<input type="hidden" name="meta_type" value="&dtml-mt;" />
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">
@@ -12,7 +16,7 @@
     </td>
     <td align="left" valign="top">
       <div class="form-element">
-        <input type="text" name="id" size="40" />
+        <input type="text" name="id" size="40" value=""/>
       </div>
     </td>
   </tr>
@@ -28,3 +32,4 @@
 </form>
 
 <dtml-var manage_page_footer>
+</dtml-let>

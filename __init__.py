@@ -21,12 +21,14 @@ from Products.CMFCore import utils
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
-import Vocabulary
 import Field
 import Schema
 import Layout
 
 import VocabulariesTool
+from VocabulariesTool import VocabularyTypeRegistry
+from Vocabulary import CPSVocabulary
+
 import SchemasTool
 import LayoutsTool
 import WidgetTypesTool
@@ -45,12 +47,6 @@ registerDirectory('skins', globals())
 
 def initialize(registrar):
     registrar.registerClass(
-        Vocabulary.CPSVocabulary,
-        permission=ManagePortal,
-        constructors=(Vocabulary.addCPSVocabularyForm,
-                      Vocabulary.addCPSVocabulary,),
-        )
-    registrar.registerClass(
         Schema.CPSSchema,
         permission=ManagePortal,
         constructors=(Schema.addCPSSchemaForm,
@@ -62,3 +58,4 @@ def initialize(registrar):
         product_name = 'CPSSchemas',
         icon = 'tool.gif',
         ).initialize(registrar)
+    VocabularyTypeRegistry.register(CPSVocabulary)

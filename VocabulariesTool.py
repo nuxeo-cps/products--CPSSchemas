@@ -42,41 +42,69 @@ class VocabulariesTool(UniqueObject, Folder):
 
     security = ClassSecurityInfo()
 
-    security.declarePrivate('addVocabulary')
-    def addVocabulary(self, id, vocab=None):
-        """Add a vocabulary."""
-        ob = CPSVocabulary(id, vocab=vocab)
-        self._setObject(id, ob)
-        return self._getOb(id)
-
     #
     # ZMI
     #
 
     def all_meta_types(self):
-        return ({'name': 'CPS Vocabulary',
-                 'action': 'manage_addCPSVocabularyForm',
-                 'permission': ManagePortal},
-                # XXX also :
-                #  CPS Computed Vocabulary
-                #  CPS Members Vocabulary
-                #  CPS Roles Vocabulary
-                #  CPS Groups Vocabulary
-                #  CPS Directory Vocabulary
-                )
+        # Stripping is done to be able to pass a type in the URL.
+        return [
+            {'name': dt,
+             'action': 'manage_addCPSVocabularyForm/' + dt.replace(' ', ''),
+             'permission': ManagePortal}
+            for dt in VocabularyTypeRegistry.listTypes()]
 
     security.declareProtected(ManagePortal, 'manage_addCPSVocabularyForm')
     manage_addCPSVocabularyForm = DTMLFile('zmi/vocabulary_addform', globals())
 
     security.declareProtected(ManagePortal, 'manage_addCPSVocabulary')
-    def manage_addCPSVocabulary(self, id, dict=None, list=None, REQUEST=None):
+    def manage_addCPSVocabulary(self, id, meta_type='CPS Vocabulary',
+                                REQUEST=None, **kw):
         """Add a vocabulary, called from the ZMI."""
-        vocab = Vocabulary(dict=dict, list=list)
-        vocabulary = self.addVocabulary(id, vocab=vocab)
+        container = self
+        cls = VocabularyTypeRegistry.getType(meta_type)
+        ob = cls(id, **kw)
+        container._setObject(id, ob)
+        ob = container._getOb(id)
         if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(vocabulary.absolute_url()+'/manage_main'
-                                      '?psm=Added.')
+            REQUEST.RESPONSE.redirect(ob.absolute_url()+'/manage_workspace'
+                                      '?manage_tabs_message=Added.')
         else:
-            return vocabulary
+            return ob
+
+    security.declareProtected(ManagePortal, 'getVocabularyMetaType')
+    def getVocabularyMetaType(self, meta_type):
+        """Get an unstripped version of a vocabulary meta type."""
+        return VocabularyTypeRegistry.getType(meta_type).meta_type
 
 InitializeClass(VocabulariesTool)
+
+
+class VocabularyTypeRegistry:
+    """Registry of the available vocabulary types.
+
+    Internally strips spaces, to be able to use arguments extracted from
+    URL components.
+    """
+
+    def __init__(self):
+        self._types = {}
+
+    def register(self, cls):
+        """Register a vocabulary type."""
+        mt = cls.meta_type.replace(' ', '')
+        self._types[mt] = cls
+
+    def listTypes(self):
+        """List vocabulary types."""
+        types = [cls.meta_type for cls in self._types.values()]
+        types.sort()
+        return types
+
+    def getType(self, meta_type):
+        """Get a vocabulary type."""
+        mt = meta_type.replace(' ', '')
+        return self._types[mt]
+
+# Singleton
+VocabularyTypeRegistry = VocabularyTypeRegistry()

@@ -133,11 +133,10 @@ class CPSVocabulary(SimpleItemWithProperties):
     title_msgid = ''
     description = ''
 
-    def __init__(self, id, title='', vocab=None, **kw):
+    def __init__(self, id, title='', dict={}, list=[], **kw):
         self.id = id
         self.title = title
-        if vocab is None:
-            vocab = Vocabulary()
+        vocab = Vocabulary(dict=dict, list=list)
         self.setVocabulary(vocab)
 
     security.declareProtected(ManagePortal, 'setVocabulary')
@@ -238,15 +237,3 @@ class CPSVocabulary(SimpleItemWithProperties):
         return self.manage_main(REQUEST, manage_tabs_message='Deleted.')
 
 InitializeClass(CPSVocabulary)
-
-
-addCPSVocabularyForm = DTMLFile('zmi/vocabulary_addform', globals())
-
-def addCPSVocabulary(container, id, REQUEST=None):
-    """Add a CPS Vocabulary."""
-    ob = CPSVocabulary(id)
-    container._setObject(id, ob)
-    ob = container._getOb(id)
-    if REQUEST is not None:
-        REQUEST.RESPONSE.redirect(ob.absolute_url() + "/manage_main")
-

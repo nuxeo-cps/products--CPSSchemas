@@ -9,4 +9,5 @@ Bug fixes:
 - Installing EPOZ for the RTE widget
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Refactoring of vocabularies tool to allow registry of several type of
+  vocabularies.

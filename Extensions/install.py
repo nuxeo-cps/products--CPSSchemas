@@ -208,7 +208,8 @@ def install(self):
         pr("  Installing.")
         ddict = info['data']['dict']
         dlist = info['data']['list']
-        vtool.manage_addCPSVocabulary(id, dict=ddict, list=dlist)
+        vtool.manage_addCPSVocabulary(id, 'CPS Vocabulary',
+                                      dict=ddict, list=dlist)
 
     # importing .po files
     mcat = portal['Localizer']['default']
