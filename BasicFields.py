@@ -163,23 +163,23 @@ class CPSFileField(CPSField):
         """Get the default file object."""
         return None
 
-    def _getDependantFieldId(self, schema, suffix):
+    def _getDependantFieldId(self, schemas, suffix):
         """Get a dependant field id described by the suffix."""
         if not suffix:
             return None
         id = self.getFieldId() + suffix
-        if schema.has_key(id):
-            return id
-        else:
-            return None
+        for schema in schemas:
+            if schema.has_key(id):
+                return id
+        return None
 
-    def computeDependantFields(self, schema, data):
+    def computeDependantFields(self, schemas, data):
         """Compute dependant fields."""
         # XXX dummy implementation
-        html_field_id = self._getDependantFieldId(schema, self.suffix_html)
+        html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
         if html_field_id is not None:
             data[html_field_id] = 'html...' # XXX
-        text_field_id = self._getDependantFieldId(schema, self.suffix_text)
+        text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:
             data[text_field_id] = 'text...' # XXX
 

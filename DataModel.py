@@ -151,7 +151,7 @@ class DataModel(UserDict):
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
-                field.computeDependantFields(schema, data)
+                field.computeDependantFields(self._schemas, data)
 
         # Call the adapters to store the data.
         for adapter in self._adapters:
