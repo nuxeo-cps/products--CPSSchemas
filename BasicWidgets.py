@@ -1169,6 +1169,9 @@ class CPSBooleanWidget(CPSWidget):
         if not self.render_format:
             self.render_format = 'select'
 
+        if value.strip() == '':
+            value = 0
+
         try:
             v = int(value)
         except (ValueError, TypeError):
