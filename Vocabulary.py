@@ -273,6 +273,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         dict with keys key_0, label_0, msgid_0, etc.
         """
         self._checkWriteAllowed()
+        form = form.copy()
         if REQUEST is not None:
             form.update(REQUEST.form)
         vocab = Vocabulary()
