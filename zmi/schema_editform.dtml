@@ -53,6 +53,7 @@
     </td>
   </tr>
 </table>
+</form>
 <dtml-else>
 <p>
   The schema is empty.
@@ -62,6 +63,7 @@
 
 <br />
 
+<form action="&dtml-URL1;" method="POST">
 <table cellspacing="0" cellpadding="2" border="0" width="100%">
 <tr class="list-header">
   <td align="left" valign="top" colspan="2">
