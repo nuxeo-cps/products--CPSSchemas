@@ -4,6 +4,7 @@ ZODB Requires:
 New features:
 ~~~~~~~~~~~~~
 - CPSDefault layout (layout_default_)
+- cool News Document
 Bug fixes:
 ~~~~~~~~~~
 - fixing bad portal type icon init
