@@ -18,7 +18,7 @@
 # $Id$
 """Widget
 
-Base classes for widgets, graphical representation of data.
+Abstract base classes for widgets, graphical representation of data.
 
 Widget is the base widget class
 An instance w of it is parametrized, notably by one or several field names.
@@ -150,9 +150,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         return widgetname(self.getWidgetId())
 
     #
-    # Widget accessibility.
+    # Widget access control
     #
-
     def _createHiddenExpressionContext(self, datamodel):
         """Create an expression context for hidden evaluation."""
         wftool = getToolByName(self, 'portal_workflow')
@@ -227,7 +226,6 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # May be overloaded.
     #
-
     security.declarePrivate('getFieldTypes')
     def getFieldTypes(self):
         """Get the types of the fields for this widget.
@@ -245,9 +243,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         return None
 
     #
-    # To be implemented by widget classes.
+    # To be implemented by widget concrete classes.
     #
-
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         raise NotImplementedError
@@ -276,19 +273,21 @@ class CPSWidget(Widget):
 
     security.declarePrivate('isHidden')
     def isHidden(self):
-        """Check if the widget is a hidden
-        hidden widget are used as template to create flexible widgets
+        """Check if the widget is hidden
 
-        Returns true if the widget is hidden
+        Hidden widget are used as template to create flexible widgets.
+
+        Returns true if the widget is hidden.
         """
         return (self.fields and self.fields[0] == '?')
 
     security.declarePrivate('hide')
     def hide(self):
-        """hide the widget.
+        """Hide the widget.
 
-        A hidden widget is not displayed or validate
-        it is used in flexible mode to produce new widget"""
+        A hidden widget is not displayed or validated, it is used in flexible
+        mode to produce new widgets.
+        """
         self.fields = ['?']
 
 InitializeClass(CPSWidget)
@@ -324,7 +323,6 @@ class CPSWidgetType(SimpleItemWithProperties):
     #
     # ZMI
     #
-
     title = ''
     _properties = (
         {'id': 'title', 'type': 'string', 'mode': 'w', 'label': 'Title'},

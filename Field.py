@@ -207,7 +207,6 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # Import/export
     #
-
     def _exportValue(self, value):
         """Export this field's value as a string.
 
@@ -236,7 +235,6 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # Storage interaction
     #
-
     def _createStorageExpressionContext(self, value, data):
         """Create an expression context for field storage process."""
         # Put all the names in the data in the namespace.
@@ -271,7 +269,6 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # ACLs
     #
-
     def _createAclExpressionContext(self, datamodel):
         """Create an expression context for ACL evaluation."""
         context = datamodel._context
