@@ -64,6 +64,8 @@ class Widget(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
+    widget_type = ''
+
     def __init__(self, id, widget_type, **kw):
         self._setId(id)
         self.widget_type = widget_type
