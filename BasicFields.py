@@ -175,16 +175,16 @@ class CPSFileField(CPSField):
                 return id
         return None
 
-    def computeDependantFields(self, schemas, data):
+    def computeDependantFields(self, schemas, data, context=None):
         """Compute dependant fields."""
         field_id = self.getFieldId()
         value = data[field_id] # May be None.
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
         if html_field_id is not None:
-            data[html_field_id] = convertFileToHtml(value)
+            data[html_field_id] = convertFileToHtml(value, context=context)
         text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:
-            data[text_field_id] = convertFileToText(value)
+            data[text_field_id] = convertFileToText(value, context=context)
 
     def validate(self, value):
         if not value:
