@@ -36,7 +36,7 @@ Fields
 
     Fields are configured using the following properties.
 
-    default_expression_str -- Default value expression
+    default_expr -- Default value expression
 
       The default value for this field at creation time. It is also used
       if the attribute is not found on an object when it is accessed,
@@ -58,13 +58,13 @@ Fields
       If true the field is indexed in SearchableText. This only has
       meaning for String and String List fields.
 
-    acl_read_permissions_str -- ACL: Read permissions
+    acl_read_permissions -- ACL: Read permissions
 
       A ';'-separated list of permissions. If not empty, the user must
       have at least one of the permissions on the object to have read
       access to the field.
 
-    acl_read_roles_str -- ACL: Read roles
+    acl_read_roles -- ACL: Read roles
 
       A ';'-separated list of roles. If not empty, the user must have at
       least one of the roles on the object to have read access to the
@@ -73,7 +73,7 @@ Fields
       When dealing with member directory entries, the user is deemed to
       have the role 'Owner' if the entry in question is his.
 
-    acl_read_expression_str -- ACL: Read expression
+    acl_read_expr -- ACL: Read expression
 
       A TALES expression which returns a boolean describing on what
       condition read access to the field is allowed. In the expression
@@ -96,11 +96,11 @@ Fields
 
         - nothing: None
 
-    acl_write_permissions_str -- ACL: Write permissions
+    acl_write_permissions -- ACL: Write permissions
 
-    acl_write_roles_str -- ACL: Write roles
+    acl_write_roles -- ACL: Write roles
 
-    acl_write_expression_str -- ACL: Write expression
+    acl_write_expr -- ACL: Write expression
 
       Conditions to have write access to the field. See the read access
       description above.
@@ -111,7 +111,7 @@ Fields
       directory entry). The default value or the 'read expression' will
       be used.
 
-    read_process_expression_str -- Read: expression
+    read_process_expr -- Read: expression
 
       If not empty, the value read from the storage is further processed
       through this TALES expression. The expression's return value is
@@ -142,11 +142,11 @@ Fields
 
       If true, nothing will actually be written to the storage.
 
-    write_process_expression_str -- Write: expression
+    write_process_expr -- Write: expression
 
       If not empty, the written value will be processed though this
       TALES epxression before being really written to the storage. The
-      same namespace than for 'read_process_expression_str' is
+      same namespace than for 'read_process_expr is
       available, except that 'value' and 'data' refer to the value as
       seen by the rest of CPSSchemas before writing.
 
