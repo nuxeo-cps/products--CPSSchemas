@@ -6,6 +6,8 @@ New features:
 - new CPSDocumentLanguageSelectWidget, require CPSCore > 3.18
 - Possible to resize image within a Photo widget, and not anymore
   within an Image widget
+- Add an HTML id on each widget: group_id
+- Add 'depends on' attributes for javascript display toggle
 Bug fixes:
 ~~~~~~~~~~
 -
