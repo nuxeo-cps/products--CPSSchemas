@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.14.0 [R1 build 2004-01/06-15:06 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+
+New features:
+~~~~~~~~~~~~~
+- Ordered List and Unordered List widgets
+-
+
+Bug fixes:
+~~~~~~~~~~
+- Don't fail when logging an error when there are duplicate fields.
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Field property is_indexed has been renamed to is_searchabletext.
+  Update your schemas and schema creation scripts if needed.
+*******************************************
 ** CPSSchemas V0.13.1 [R1 build 2003/12/23-15:09 by ben]
 
 ZODB Requires:

@@ -1,17 +1,12 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
-
 New features:
 ~~~~~~~~~~~~~
-- Ordered List and Unordered List widgets
 -
-
 Bug fixes:
 ~~~~~~~~~~
-- Don't fail when logging an error when there are duplicate fields.
-
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Field property is_indexed has been renamed to is_searchabletext.
-  Update your schemas and schema creation scripts if needed.
+-
