@@ -1539,15 +1539,16 @@ class CPSImageWidget(CPSFileWidget):
                             'validate change set %s' % `file`)
                         datamodel[field_id] = file
 
+
         if err:
             datastructure.setError(widget_id, err)
             LOG('CPSImageWidget', DEBUG,
                 'error %s on %s' % (err, `file`))
-        else:
-            datastructure[widget_id] = datamodel[self.fields[0]]
-            datastructure[widget_id + '_choice'] = ''
-            if self.allow_resize:
-                datastructure[widget_id + '_resize'] = ''
+        # reset datastructure
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        datastructure[widget_id + '_choice'] = ''
+        if self.allow_resize:
+            datastructure[widget_id + '_resize'] = ''
 
         return not err
 
@@ -1556,10 +1557,10 @@ class CPSImageWidget(CPSFileWidget):
         """Get the image info from the datastructure."""
         image_info = self.getFileInfo(datastructure)
         image = datastructure[self.getWidgetId()]
+
         if image:
             if not _isinstance(image, Image):
                 image = Image(self.getWidgetId(), '', image)
-
         if image_info['empty_file']:
             tag = ''
         else:
