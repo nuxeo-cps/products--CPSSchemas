@@ -246,7 +246,7 @@ class CPSLinkWidget(CPSWidget):
         title = datastructure[widget_id + '_title']
         err = 0
         try:
-            href = str(href).strip().lower()
+            href = str(href).strip()
             content = str(content).strip()
             title = str(title).strip()
         except ValueError:
