@@ -714,6 +714,8 @@ class CPSGenericSelectWidget(CPSWidget):
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format : select menu (default) or radio buttons'},
+        {'id': 'other_option', 'type': 'boolean', 'mode':'w',
+         'label': "Provide an 'other' option where free input is accepted (ignored if render format is 'select')"},
         )
     render_formats = ['select', 'radio']
 
@@ -721,6 +723,7 @@ class CPSGenericSelectWidget(CPSWidget):
     vocabulary = ''
     translated = 0
     render_format = render_formats[0]
+    other_option = 0
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -758,8 +761,9 @@ class CPSGenericSelectWidget(CPSWidget):
         vocabulary = self._getVocabulary(datastructure)
         if len(value)>0:
             if not vocabulary.has_key(value):
-                datastructure.setError(widget_id, "cpsschemas_err_select")
-                return 0
+                if self.render_format == 'select' or not self.other_option:
+                    datastructure.setError(widget_id, "cpsschemas_err_select")
+                    return 0
         else:
             if self.is_required and not vocabulary.has_key(value):
                 datastructure.setError(widget_id, "cpsschemas_err_required")
@@ -775,12 +779,17 @@ class CPSGenericSelectWidget(CPSWidget):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default
         if mode == 'view':
-            if getattr(self, 'translated', None):
-                return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
+            if not vocabulary.has_key(value):
+                # for free input
+                return escape(value)
             else:
-                return escape(vocabulary.get(value, value))
+                if getattr(self, 'translated', None):
+                    return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
+                else:
+                    return escape(vocabulary.get(value, value))
         elif mode == 'edit':
             in_selection = 0
+            in_other_selection = 0
             res = ''
             html_widget_id = self.getHtmlWidgetId()
             render_format = self.render_format
@@ -814,9 +823,10 @@ class CPSGenericSelectWidget(CPSWidget):
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
-            # invalid selections
+            # invalid or free selections
             if value and not in_selection:
                 if render_format == 'select':
+                    in_selection = 1
                     kw = {'value': value,
                           'contents': 'invalid: '+value,
                           'selected': 'selected',
@@ -824,17 +834,59 @@ class CPSGenericSelectWidget(CPSWidget):
                     res += renderHtmlTag('option', **kw)
                     res += '\n'
                 else:
-                    kw = {'id': html_widget_id+'_'+value,
+                    if self.other_option:
+                        in_selection = 1
+                        in_other_selection = 1
+                        kw = {'id': html_widget_id+'_other_selection',
+                              'type': render_format,
+                              'name': html_widget_id,
+                              'value':  value,
+                              'checked': 'checked',
+                              }
+                        res += renderHtmlTag('input', **kw)
+                        kw = {'for': html_widget_id+'_other_selection',
+                              'contents': cpsmcat('label_other_selection').encode('ISO-8859-15', 'ignore'),
+                              }
+                        res += renderHtmlTag('label', **kw)
+                        kw = {'type': 'text',
+                              'name': html_widget_id+'_other',
+                              'value': value,
+                              'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value",
+                              }
+                        res += renderHtmlTag('input', **kw)
+                        res += '<br/>\n'
+                    else:
+                        kw = {'id': html_widget_id+'_'+value,
+                              'type': render_format,
+                              'name': html_widget_id,
+                              'value': value,
+                              'disabled': 'disabled',
+                              }
+                        res += renderHtmlTag('input', **kw)
+                        kw = {'for': html_widget_id+'_'+value,
+                              'contents': 'invalid: '+value,
+                              }
+                        res += renderHtmlTag('label', **kw)
+                        res += '<br/>\n'
+            # 'other' option
+            if self.other_option and not in_other_selection:
+                if render_format != 'select':
+                    kw = {'id': html_widget_id+'_other_selection',
                           'type': render_format,
                           'name': html_widget_id,
-                          'value': k,
-                          'disabled': 'disabled',
+                          'value': 'other',
                           }
                     res += renderHtmlTag('input', **kw)
-                    kw = {'for': html_widget_id+'_'+value,
-                          'contents': 'invalid: '+value,
+                    kw = {'for': html_widget_id+'_other_selection',
+                          'contents': cpsmcat('label_other_selection').encode('ISO-8859-15', 'ignore'),
                           }
                     res += renderHtmlTag('label', **kw)
+                    kw = {'type': 'text',
+                          'name': html_widget_id+'_other',
+                          'value': "",
+                          'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value",
+                          }
+                    res += renderHtmlTag('input', **kw)
                     res += '<br/>\n'
             # default option
             if not self.is_required and not vocabulary.has_key(''):
