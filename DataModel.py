@@ -35,7 +35,7 @@ It is *not* a storage, it isn't persistent at all. Its purpose is:
     useful for data that is not stored in the ZODB, but for simplicity
     *all* data is cached. (NOTIMPLEMENTED).
 
-The storage itself is done through a storage adapter (NOTIMPLEMENTED).
+The storage itself is done through a storage adapter.
 """
 
 from zLOG import LOG, DEBUG, WARNING
