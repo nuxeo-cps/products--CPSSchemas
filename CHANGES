@@ -4,6 +4,7 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - new Identifier Widget
+- new Heading Widget rendering with H tag
 Bug fixes:
 ~~~~~~~~~~
 - #336: File uploading fails for some extensions
