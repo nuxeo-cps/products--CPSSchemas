@@ -1,4 +1,4 @@
-# translation of es.po to 
+# translation of es.po to
 # Álvaro Tejero Cantero <alvaro@antalia.com>, 2004.
 msgid ""
 msgstr ""
@@ -190,7 +190,7 @@ msgstr "Posición: "
 #.             </block>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
+msgid "cpsschemas_size_max ${size_max}"
 msgstr "y redimensionar: "
 
 #    <h2>cpsschemas_vocabulary_add</h2>

@@ -166,8 +166,8 @@ msgstr "Position&nbsp;: "
 #.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
 #.             </block>
 #: from ../skins/cps_schemas/widget_file_render.pt
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
-msgstr "Taille maximale : ${size_max} ${storage_unit}."
+msgid "cpsschemas_size_max ${size_max}"
+msgstr "Taille maximale : ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -327,7 +327,7 @@ msgstr "Fichier trop volumineux"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
-"Ce fichier est trop volumineux, la taille max autorisée est ${max_size}Mo."
+"Ce fichier est trop volumineux, la taille max autorisée est ${max_size}."
 
 msgid "cpsschemas_err_image"
 msgstr "Image invalide"

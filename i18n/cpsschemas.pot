@@ -158,7 +158,7 @@ msgstr ""
 #.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
 #.             </block>
 #: from ../skins/cps_schemas/widget_file_render.pt
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
+msgid "cpsschemas_size_max ${size_max}"
 msgstr ""
 
 #.   <h2>cpsschemas_vocabulary_add</h2>

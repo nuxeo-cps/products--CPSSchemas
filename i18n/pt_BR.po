@@ -163,7 +163,7 @@ msgstr "Posição de renderização"
 #.             </block>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
+msgid "cpsschemas_size_max ${size_max}"
 msgstr "Redimensiona"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>

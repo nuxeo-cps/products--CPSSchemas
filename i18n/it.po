@@ -164,8 +164,8 @@ msgstr "Posizione: "
 #.             </block>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
-msgstr "Grandezza massima: ${size_max} Mb"
+msgid "cpsschemas_size_max ${size_max}"
+msgstr "Grandezza massima: ${size_max}"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
