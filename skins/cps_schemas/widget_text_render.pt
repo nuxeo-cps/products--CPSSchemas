@@ -10,7 +10,6 @@
                                         test(rposition == 'col_right',
                                              'dcolright', 'ddefault'))"
     tal:content="structure value" />
- <div class="dflush" tal:condition="python: rposition == 'col_right'"></div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
   <div>
