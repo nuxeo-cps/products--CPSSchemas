@@ -634,7 +634,7 @@ class CPSPhotoWidget(CPSImageWidget):
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Sub title
                    'CPS String Field',  # render_position if configurable
-		   'CPS String Field',) # original photo
+		   'CPS Image Field',)  # original photo
     field_inits = ({}, {'is_searchabletext': 1,}, {}, {})
 
     _properties = CPSImageWidget._properties + (
