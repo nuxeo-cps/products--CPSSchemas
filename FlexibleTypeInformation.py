@@ -281,6 +281,104 @@ class FlexibleTypeInformation(TypeInformation):
         schema = ob._getOb('.cps_schemas')._getOb(schema_id)
         return (layout, schema)
 
+    security.declareProtected(ModifyPortalContent, 'flexibleAddWidget')
+    def flexibleAddWidget(self, ob, layout_id, wtid, **kw):
+        """Add a new widget to the flexible part of a document.
+
+        Returns the widget id.
+        """
+        self._makeObjectFlexible(ob)
+        layout, schema = self._getFlexibleLayoutAndSchemaFor(ob, layout_id)
+
+        # Find free widget id (based on the widget type name).
+        widget_id_base = wtid.lower().replace(' widget', '').replace(' ', '')
+        widget_id = widget_id_base
+        widget_ids = layout.keys()
+        n = 0
+        while widget_id in widget_ids:
+            n += 1
+            widget_id = '%s_%d' % (widget_id_base, n)
+
+        # Create the widget.
+        widget = layout.addWidget(widget_id, wtid, **kw)
+
+        # Create the needed fields.
+        field_types = widget.getFieldTypes()
+        fields = []
+        for field_type in field_types:
+            # Find free field id (based on the field type name).
+            s = field_type.lower().replace(' field', '').replace('cps ', '')
+            field_id_base = s.replace(' ', '')
+            field_id = field_id_base
+            n = 0
+            all_field_ids = schema.keys()
+            while field_id in all_field_ids:
+                n += 1
+                field_id = '%s_%d' % (field_id_base, n)
+
+            # Create the field.
+            schema.addField(field_id, field_type) # Use default parameters.
+            fields.append(field_id)
+
+        # Set the fields used by the widget.
+        widget.fields = fields
+
+        # Add the widget to the end of the layout definition.
+        layoutdef = layout.getLayoutDefinition()
+        layoutdef['rows'].append([{'widget_id': widget_id}])
+        layout.setLayoutDefinition(layoutdef)
+        return widget_id
+
+    security.declareProtected(ModifyPortalContent, 'flexibleDelWidgets')
+    def flexibleDelWidgets(self, ob, layout_id, widget_ids):
+        """Delete widgets from the flexible part of a document.
+        """
+        self._makeObjectFlexible(ob)
+        layout, schema = self._getFlexibleLayoutAndSchemaFor(ob, layout_id)
+
+        # Remove the widgets from the layout.
+        layoutdef = layout.getLayoutDefinition()
+        rows = []
+        for row in layoutdef['rows']:
+            row = [cell for cell in row
+                   if cell['widget_id'] not in widget_ids]
+            rows.append(row)
+        layoutdef['rows'] = rows
+        layout.setLayoutDefinition(layoutdef)
+
+        # Delete the widgets and the fields they use.
+        for widget_id in widget_ids:
+            widget = layout[widget_id]
+            for field_id in widget.fields:
+                # Delete the field.
+                schema.delSubObject(field_id)
+            # Delete the widget.
+            layout.delSubObject(widget_id)
+
+    security.declareProtected(ModifyPortalContent, 'flexibleChangeLayout')
+    def flexibleChangeLayout(self, ob, layout_id, up_row=None, down_row=None,
+                             **kw):
+        """Change the flexible layout of a document..
+
+        Can move a row up or down.
+        """
+        self._makeObjectFlexible(ob)
+        layout, schema = self._getFlexibleLayoutAndSchemaFor(ob, layout_id)
+        layoutdef = layout.getLayoutDefinition()
+        # XXX this should be in the Layout class.
+        rows = layoutdef['rows']
+        if up_row is not None:
+            if up_row >= 1 and up_row < len(rows):
+                row = rows.pop(up_row)
+                rows.insert(up_row-1, row)
+        if down_row is not None:
+            if down_row >= 0 and down_row < len(rows)-1:
+                row = rows.pop(down_row)
+                rows.insert(down_row+1, row)
+        layoutdef['rows'] = rows
+        layout.setLayoutDefinition(layoutdef)
+        return
+
     security.declarePrivate('getSchemas')
     def getSchemas(self, ob=None):
         """Get the schemas for our type.

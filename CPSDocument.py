@@ -18,7 +18,7 @@
 #
 # $Id$
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, ERROR
 from types import ListType, TupleType
 import ExtensionClass
 from Globals import InitializeClass, DTMLFile
@@ -172,7 +172,7 @@ class CPSDocumentMixin(ExtensionClass.Base):
         The keyword arguments describes fields, not widgets.
         """
         ti = self.getTypeInfo()
-        ti.editObject(self, kw)
+        return ti.editObject(self, kw)
 
     security.declareProtected(View, 'SearchableText')
     def SearchableText(self):
@@ -197,51 +197,47 @@ class CPSDocumentMixin(ExtensionClass.Base):
 
     security.declareProtected(ModifyPortalContent, 'flexibleAddWidget')
     def flexibleAddWidget(self, layout_id, wtid, **kw):
-        """Add a new widget to the flexible part of document."""
+        """Add a new widget to the flexible part of the document.
+
+        Returns the widget id.
+        """
+        ti = self.getTypeInfo()
+        return ti.flexibleAddWidget(self, layout_id, wtid, **kw)
+
+    security.declareProtected(ModifyPortalContent, 'flexibleDelWidgets')
+    def flexibleDelWidgets(self, layout_id, widget_ids):
+        """Delete widgets from the flexible part of the document.
+        """
+        ti = self.getTypeInfo()
+        return ti.flexibleDelWidgets(self, layout_id, widget_ids)
+
+    security.declareProtected(ModifyPortalContent, 'flexibleDelWidgetRows')
+    def flexibleDelWidgetRows(self, layout_id, rows):
+        """Delete widget rows from the flexible part of the document.
+        """
         ti = self.getTypeInfo()
         ti._makeObjectFlexible(self)
         layout, schema = ti._getFlexibleLayoutAndSchemaFor(self, layout_id)
-
-        # Find free widget id (based on the widget type name).
-        widget_id_base = wtid.lower().replace(' widget', '').replace(' ', '')
-        widget_id = widget_id_base
-        widget_ids = layout.keys()
-        n = 0
-        while widget_id in widget_ids:
-            n += 1
-            widget_id = '%s_%d' % (widget_id_base, n)
-
-        # Create the widget.
-        widget = layout.addWidget(widget_id, wtid, **kw)
-
-        # Create the needed fields.
-        field_types = widget.getFieldTypes()
-        fields = []
-        for field_type in field_types:
-            # Find free field id (based on the field type name).
-            s = field_type.lower().replace(' field', '').replace('cps ', '')
-            field_id_base = s.replace(' ', '')
-            field_id = field_id_base
-            n = 0
-            all_field_ids = schema.keys()
-            while field_id in all_field_ids:
-                n += 1
-                field_id = '%s_%d' % (field_id_base, n)
-
-            # Create field.
-            schema.addField(field_id, field_type) # Use default parameters.
-            fields.append(field_id)
-
-        # Set fields used by the widget.
-        widget.fields = fields
-
-        # Now add widget to end of layout definition.
         layoutdef = layout.getLayoutDefinition()
-        layoutdef['rows'].append(
-            [{'ncols': 1, 'widget_id': widget_id}]
-            )
-        layout.setLayoutDefinition(layoutdef)
+        widget_ids = {}
+        i = -1
+        for row in layoutdef['rows']:
+            i += 1
+            if i not in rows:
+                continue
+            for cell in row:
+                widget_ids[cell['widget_id']] = None
+        widget_ids = widget_ids.keys()
+        return ti.flexibleDelWidgets(self, layout_id, widget_ids)
 
+    security.declareProtected(ModifyPortalContent, 'flexibleChangeLayout')
+    def flexibleChangeLayout(self, layout_id, **kw):
+        """Change the layout.
+
+        Can move a row up or down.
+        """
+        ti = self.getTypeInfo()
+        return ti.flexibleChangeLayout(self, layout_id, **kw)
 
 InitializeClass(CPSDocumentMixin)
 

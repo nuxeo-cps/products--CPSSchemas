@@ -8,8 +8,15 @@
   tal:define="ncols layout/ncols">
   <tr tal:repeat="row layout/rows">
     <td>
-      <a href="">Up</a>
-      <a href="">Down</a>
+      <input type="submit" name="." value="Monter"
+        tal:attributes="name string:uprow_${repeat/row/index}"
+        />
+      <input type="submit" name="." value="Descendre"
+        tal:attributes="name string:downrow_${repeat/row/index}"
+        />
+      <input type="submit" name="." value="Supprimer"
+        tal:attributes="name string:deleterow_${repeat/row/index}"
+        />
     </td>
     <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
       <tal:block define="widget cell/widget; wid widget/getWidgetId">
