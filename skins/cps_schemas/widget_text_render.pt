@@ -1,4 +1,5 @@
 <tal:block define="mode options/mode;
+  id here/getWidgetId;
   value_name here/getHtmlWidgetId;
   value options/value;
   rposition options/render_position;
@@ -31,22 +32,29 @@
         </select>
       </tal:block>
 
-      <tal:block condition="python: configurable.find('format')>=0">
+      <tal:block condition="python: configurable.find('format')>=0"
+        define="button_rte_id python:'widget__%s_button' % id"
+        >
         <span i18n:translate="">cpsschemas_render_format</span>
-        <select tal:attributes="name string:${value_name}_rformat">
+        <select tal:attributes="name string:${value_name}_rformat;
+          onchange python:'toggleElementVisibility(\'%s\')' % button_rte_id
+          ">
           <option tal:repeat="op here/all_render_formats"
             tal:attributes="selected python:op == rformat;
             value op"
             tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
         </select>
-        <tal:block condition="python:rformat == 'html'">
-          <button type="button"
-            i18n:translate="button_rte"
-            tal:condition="python:rformat=='html' or configurable.find('format')>=0"
-            tal:attributes="onclick
-            string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
-            >Layout</button>
-        </tal:block>
+        <button type="button"
+          i18n:translate="button_rte"
+          tal:condition="python:rformat=='html' or configurable.find('format')>=0"
+          tal:attributes="
+          id button_rte_id;
+          style python:test(rformat == 'html',
+          'visibility: visible;;', 'visibility: hidden;;');
+          onclick
+          string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+          "
+          >Layout</button>
       </tal:block>
     </div>
 

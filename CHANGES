@@ -5,7 +5,8 @@ New features:
 ~~~~~~~~~~~~~
 - portal_layouts know how to render/validate a layout/schema
 - new MethodVocabulary this enable dynamic vocabulary
-- HTML RTE: Layout button now appears only when render format is HTML
+- HTML RTE: Layout button now appears only when the selected render format is
+  HTML. This is now done through JavaScript.
 Bug fixes:
 ~~~~~~~~~~
 -
