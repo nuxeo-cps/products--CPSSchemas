@@ -73,9 +73,9 @@ class TemplateTests(unittest.TestCase):
 
     def testGetSchema(self):
         template = Template('template', 'Template')
-        self.failUnlessRaises(KeyError, template.getSchema, 'notaschema')
-        self.failUnless(isinstance(template.getSchema('default'), Schema))
-        self.failUnless(template.getSchema('default').id == 'default')
+        self.assertRaises(KeyError, template.getSchema, 'notaschema')
+        self.assert_(isinstance(template.getSchema('default'), CPSSchema))
+        self.assertEquals(template.getSchema('default').id, 'default')
 
     def testGetSchemaForFieldId(self):
         template = Template('template', 'Template')

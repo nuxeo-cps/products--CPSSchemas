@@ -16,16 +16,18 @@ class AttributeHolder:
 class SchemaTests(unittest.TestCase):
 
     def testCreation(self):
-        """Check that the schems sets up reasonable defaults"""
+        # Check that the schems sets up reasonable defaults
         schema = CPSSchema('schema', 'Schema')
-        self.failUnless(isinstance(schema.getStorageAdapterFactory(), AttributeStorageAdapterFactory),
-                        'Default adapter is not AttributeAdapter')
+        self.assert_(
+            isinstance(schema.getStorageAdapterFactory(), 
+                       AttributeStorageAdapterFactory),
+            'Default adapter is not AttributeAdapter')
 
     def testSetGetAdapter(self):
         schema = CPSSchema('schema', 'Schema')
         adapter = AttributeStorageAdapterFactory()
         schema.setStorageAdapterFactory(adapter)
-        self.failUnless(schema.getStorageAdapterFactory() == adapter,
+        self.assertEquals(schema.getStorageAdapterFactory(), adapter,
             'Set or get adapter failed')
 
 

@@ -23,10 +23,8 @@
 An ordered, persistent dictionary.
 """
 
-from types import ListType, TupleType
 from ZODB.PersistentMapping import PersistentMapping
 from ZODB.PersistentList import PersistentList
-
 
 def _isinstance(ob, cls):
     try:

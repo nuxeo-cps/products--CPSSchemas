@@ -78,11 +78,6 @@ class OLDSchema(OrderedDictionary):
         """Returns all the fields as a dictionary"""
         return self.data
 
-######################################################################
-######################################################################
-######################################################################
-
-
 class SchemaContainer(Folder):
     """Schema Container
 
@@ -105,7 +100,6 @@ class SchemaContainer(Folder):
     #
     # ZMI
     #
-
     def all_meta_types(self):
         return ({'name': 'CPS Schema',
                  'action': 'manage_addCPSSchemaForm',
@@ -127,9 +121,6 @@ class SchemaContainer(Folder):
             return schema
 
 InitializeClass(SchemaContainer)
-
-
-######################################################################
 
 
 class Schema(FolderWithPrefixedIds):
@@ -181,7 +172,6 @@ class CPSSchema(Schema):
     #
     # ZMI
     #
-
     _properties = (
         {'id': 'xxx', 'type': 'string', 'mode': 'w',
          'label':'yyy'},
