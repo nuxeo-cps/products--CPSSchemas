@@ -1,5 +1,6 @@
 <tal:block define="cells options/cells;
-                   mode options/mode">
+                   mode options/mode;
+                   ds options/datastructure">
 <tal:block condition="python: mode == 'view'"
   define="href python: cells[0]['widget_rendered'];
           content python: cells[1]['widget_rendered'];
@@ -20,12 +21,18 @@ tal:content="href" /></div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
 <table border="0" width="100%">
-<tr tal:repeat="cell cells">
-  <td valign="top" tal:content="cell/widget/label_edit"
-    i18n:translate="" />
-  <td valign="top"
-    tal:content="structure cell/widget_rendered" />
-</tr>
+  <tr tal:repeat="cell cells">
+    <td valign="top" tal:content="cell/widget/label_edit" i18n:translate="" />
+    <td valign="top"
+      tal:define="err python:ds.getError(cell['widget'].getWidgetId());
+      css_class python:test(err, 'row error', nothing);"
+      tal:attributes="class css_class">
+      <tal:block replace="structure cell/widget_rendered" />
+      <div >
+        <em tal:condition="err" style="color: red" i18n:translate="" tal:content="err">err</em>
+      </div>
+    </td>
+  </tr>
 </table>
 </tal:block>
 </tal:block>
