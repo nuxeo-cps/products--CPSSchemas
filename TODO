@@ -6,7 +6,7 @@
    - attached file
    - RTE
    - DublinCore
-   - Metadata 
+   - Metadata
    - ...
    - i18n
 
@@ -16,5 +16,7 @@
 
 - flexible doc
    be able to customize ttw a document type
-   
+
+- implementation of get_size
+
 - questions
