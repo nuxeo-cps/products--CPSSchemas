@@ -1,4 +1,32 @@
 *******************************************
+** CPSSchemas V0.26.0 [R1 build 2004/07/07-09:13 by madarche]
+
+Requires:
+~~~~~~~~~
+- Code calling getDefaultData() on the adapter should now also call a new
+  method afterward
+  data = adapter.getDefaultData()
+  adapter.finalizeDefaults(data)
+ 
+New features:
+~~~~~~~~~~~~~
+- Optimization: added a dirty_fields_map attribute to the DataModel to keep
+  track of which field should be committed to the storage adapter. At the moment
+  this optimization has the effect of computing dependent fields only when
+  necessary and thus avoid unneeded plain text generation (for indexation) and
+  html preview.
+
+Bug fixes:
+~~~~~~~~~~
+- Optimized the validate() method of the CPSAttachedFileWidget
+- Removing a widget without redoing the layout now doesn't raise an 
+  error when you render a document. 
+- You no longer can have a widget twice in a layouts layout.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Add a field class to manage all list field
+
+*******************************************
 ** CPSSchemas V0.25.0 [R1 build 2004/06/30-09:41 by anahide]
 
 Requires:
