@@ -163,7 +163,13 @@ InitializeClass(CPSTextWidgetType)
 ##################################################
 # previously named CPSDateWidget in BasicWidget r1.78
 class CPSDateTimeWidget(CPSWidget):
-    """DateTime widget."""
+    """DateTime widget.
+
+    A widget that displays and makes it possible to edit a DateTime object.
+    View and edit mode can be done in the ISO 8601 date format (YYYY-mm-dd)
+    or in a localized format (mm/dd/YYYY for English and dd/mm/YYYY for the rest
+    of the world) cf. http://www.w3.org/TR/NOTE-datetime
+    """
     meta_type = "CPS DateTime Widget"
 
     field_types = ('CPS DateTime Field',)
@@ -179,7 +185,6 @@ class CPSDateTimeWidget(CPSWidget):
          'label': 'default minutes for time'},
         )
     # When will CPS default to the more sensible ISO 8601 date format?
-    # cf. http://www.w3.org/TR/NOTE-datetime
     #view_format = 'iso8601_medium_easy'
     view_format = 'medium'
     time_setting = 1
