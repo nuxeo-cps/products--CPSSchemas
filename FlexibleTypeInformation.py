@@ -443,18 +443,18 @@ class FlexibleTypeInformation(TypeInformation):
         return layout_style(mode=mode, **kw)
 
     security.declarePrivate('renderObject')
-    def renderObject(self, ob, mode='view', layout_id=None):
+    def renderObject(self, ob, mode='view', layout_id=None, **kw):
         """Render the object."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
         layoutob = self.getLayout(layout_id, ob)
         layout = layoutob.getLayoutData(ds, dm)
         return self._renderLayoutStyle(ob, mode, layout=layout,
-                                       datastructure=ds, datamodel=dm)
+                                       datastructure=ds, datamodel=dm, **kw)
 
     security.declarePrivate('renderEditObject')
     def renderEditObject(self, ob, request=None, mode='edit', errmode='edit',
-                         layout_id=None):
+                         layout_id=None, **kw):
         """Modify the object from request, and renders to new mode.
 
         If request is None, the object is not modified and is rendered
@@ -484,7 +484,8 @@ class FlexibleTypeInformation(TypeInformation):
         else:
             ok = 1
         return self._renderLayoutStyle(ob, mode, layout=layoutdata,
-                                       datastructure=ds, datamodel=dm, ok=ok)
+                                       datastructure=ds, datamodel=dm, ok=ok,
+                                       **kw)
 
     security.declarePrivate('editObject')
     def editObject(self, ob, mapping):

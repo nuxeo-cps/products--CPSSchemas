@@ -147,22 +147,22 @@ class CPSDocumentMixin(ExtensionClass.Base):
     security = ClassSecurityInfo()
 
     security.declareProtected(View, 'render')
-    def render(self, mode='view', layout=None):
+    def render(self, mode='view', layout_id=None, **kw):
         """Render the object according to a mode."""
-        return self.getTypeInfo().renderObject(self, mode=mode,
-                                               layout_id=layout)
+        ti = self.getTypeInfo()
+        return ti.renderObject(self, mode=mode, layout_id=layout_id, **kw)
 
     security.declareProtected(ModifyPortalContent, 'renderEdit')
     def renderEdit(self, request=None, mode='edit', errmode='edit',
-                   layout=None):
+                   layout_id=None, **kw):
         """Modify the object from the request (if present), and return
         the rendering.
 
         Renders the mode, or the errmode if a validation error occurred.
         """
         ti = self.getTypeInfo()
-        return ti.renderEditObject(self, request, layout_id=layout,
-                                   mode=mode, errmode=errmode)
+        return ti.renderEditObject(self, request, mode=mode, errmode=errmode,
+                                   layout_id=layout_id, **kw)
 
     # XXX make this a WorkflowMethod
     security.declareProtected(ModifyPortalContent, 'edit')
