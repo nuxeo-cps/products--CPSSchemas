@@ -135,7 +135,7 @@ class DataModel(UserDict):
     def get(self, key, failobj=None):
         try:
             self.checkReadAccess(key)
-        except ReadAccessError:
+        except (ReadAccessError, KeyError):
             return failobj
         return self.data.get(key, failobj)
 
