@@ -27,7 +27,7 @@ from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
-from types import StringType, ListType
+from types import StringType, ListType, TupleType
 
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
@@ -254,16 +254,16 @@ class CPSCheckBoxWidget(CPSWidget):
             else:
                 return self.display_false
         elif mode == 'edit':
-            widget_id = self.getHtmlWidgetId()
+            html_widget_id = self.getHtmlWidgetId()
             kw = {'type': 'checkbox',
-                  'name': widget_id,
+                  'name': html_widget_id,
                   }
             if value:
                 kw['checked'] = None
             tag = renderHtmlTag('input', **kw)
             default_tag = renderHtmlTag('input',
                                         type='hidden',
-                                        name=widget_id+':tokens:default',
+                                        name=html_widget_id+':tokens:default',
                                         value='')
             return default_tag+tag
         raise RuntimeError('unknown mode %s' % mode)
@@ -427,6 +427,109 @@ class CPSSelectWidgetType(CPSWidgetType):
     cls = CPSSelectWidget
 
 InitializeClass(CPSSelectWidgetType)
+
+##################################################
+
+class CPSMultiSelectWidget(CPSWidget):
+    """MultiSelect widget."""
+    meta_type = "CPS MultiSelect Widget"
+
+    field_types = ('CPS String List Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
+         'label': 'Vocabulary'},
+        {'id': 'size', 'type': 'int', 'mode': 'w',
+         'label': 'Size'},
+        {'id': 'format_empty', 'type': 'string', 'mode': 'w',
+         'label': 'Format for empty list'},
+        )
+    # XXX make a menu for the vocabulary.
+    vocabulary = ''
+    size = 0
+    format_empty = ''
+
+    def _getVocabulary(self):
+        """Get the vocabulary object for this widget."""
+        vtool = getToolByName(self, 'portal_vocabularies')
+        try:
+            vocabulary = getattr(vtool, self.vocabulary)
+        except AttributeError:
+            raise ValueError("Missing vocabulary %s" % self.vocabulary)
+        return vocabulary
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        value = datamodel[self.fields[0]]
+        if value == '':
+            # Buggy Zope :lines prop may give us '' instead of [] for default.
+            value = []
+        # XXX make a copy of the list ?
+        datastructure[self.getWidgetId()] = value
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        if (not _isinstance(value, ListType) and
+            not _isinstance(value, TupleType)):
+            datastructure.setError(widget_id, "cpsdoc_err_multiselect")
+            return 0
+        vocabulary = self._getVocabulary()
+        v = []
+        for i in value:
+            try:
+                i = str(i)
+            except ValueError:
+                datastructure.setError(widget_id, "cpsdoc_err_multiselect")
+                return 0
+            if not vocabulary.has_key(i):
+                datastructure.setError(widget_id, "cpsdoc_err_multiselect")
+                return 0
+            v.append(i)
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        vocabulary = self._getVocabulary()
+        if mode == 'view':
+            if not value:
+                # XXX L10N empty format may be subject to i18n.
+                return self.format_empty
+            # XXX customize view mode, lots of displays are possible
+            return ', '.join([escape(vocabulary.get(i, i)) for i in value])
+        elif mode == 'edit':
+            html_widget_id = self.getHtmlWidgetId()
+            kw = {'name': html_widget_id+':list',
+                  'multiple': None,
+                  }
+            if self.size:
+                kw['size'] = self.size
+            res = renderHtmlTag('select', **kw)
+            for k, v in vocabulary.items():
+                kw = {'value': k, 'contents': v}
+                if k in value:
+                    kw['selected'] = None
+                res += renderHtmlTag('option', **kw)
+            res += '</select>'
+            default_tag = renderHtmlTag('input',
+                                        type='hidden',
+                                        name=html_widget_id+':tokens:default',
+                                        value='')
+            return default_tag+res
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSMultiSelectWidget)
+
+
+class CPSMultiSelectWidgetType(CPSWidgetType):
+    """MultiSelect widget type."""
+    meta_type = "CPS MultiSelect Widget Type"
+    cls = CPSMultiSelectWidget
+
+InitializeClass(CPSMultiSelectWidgetType)
 
 ##################################################
 
@@ -997,3 +1100,4 @@ WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
 WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
 WidgetTypeRegistry.register(CPSRichTextEditorWidgetType, CPSRichTextEditorWidget)
 WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
+WidgetTypeRegistry.register(CPSMultiSelectWidgetType, CPSMultiSelectWidget)
