@@ -44,11 +44,9 @@ def _convertFileToMimeType(file, mime_type, context=None):
     if not raw:
         return None
     LOG('convertFileToText', DEBUG, 'File is %s' % repr(file))
-    data = transformer.convertTo(mime_type,
-                                 raw,
-                                 mimetype=file.content_type,
-                                 # filename='fooXXX',
-                                 # encoding='',
+    mimetype = getattr(file, 'content_type', 'application/octet-stream')
+    data = transformer.convertTo(mime_type, raw, mimetype=mimetype,
+                                 # filename='fooXXX', encoding='',
                                  )
     if not data:
         return None
