@@ -124,9 +124,12 @@ class CPSStringWidget(CPSWidget):
 
     field_types = ('CPS String Field',)
 
+    allow_empty = 1
     display_width = 20
     display_maxwidth = 0
     _properties = CPSWidget._properties + (
+        {'id': 'allow_empty', 'type': 'boolean', 'mode': 'w',
+         'label': 'Allow empty'},
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
         {'id': 'display_maxwidth', 'type': 'int', 'mode': 'w',
@@ -139,17 +142,21 @@ class CPSStringWidget(CPSWidget):
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        value = datastructure[self.getWidgetId()]
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
         try:
             v = str(value)
         except ValueError:
-            datastructure.setError(self.getWidgetId(),
-                                   "cpsdoc_err_string")
-            ok = 0
-        else:
-            datamodel[self.fields[0]] = v
-            ok = 1
-        return ok
+            datastructure.setError(widget_id, "cpsdoc_err_string")
+            return 0
+        if not self.allow_empty:
+            v = v.strip()
+            if not v:
+                datastructure[widget_id] = v
+                datastructure.setError(widget_id, "cpsdoc_err_empty")
+                return 0
+        datamodel[self.fields[0]] = v
+        return 1
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
@@ -279,10 +286,13 @@ class CPSTextAreaWidget(CPSWidget):
 
     field_types = ('CPS String Field',)
 
+    allow_empty = 1
     width = 40
     height = 5
     render_mode = 'pre'
     _properties = CPSWidget._properties + (
+        {'id': 'allow_empty', 'type': 'boolean', 'mode': 'w',
+         'label': 'Allow empty'},
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
@@ -301,17 +311,21 @@ class CPSTextAreaWidget(CPSWidget):
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        value = datastructure[self.getWidgetId()]
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
         try:
             v = str(value)
         except ValueError:
-            datastructure.setError(self.getWidgetId(),
-                                   "cpsdoc_err_textarea")
-            ok = 0
-        else:
-            datamodel[self.fields[0]] = v
-            ok = 1
-        return ok
+            datastructure.setError(widget_id, "cpsdoc_err_textarea")
+            return 0
+        if not self.allow_empty:
+            v = v.strip()
+            if not v:
+                datastructure[widget_id] = v
+                datastructure.setError(widget_id, "cpsdoc_err_empty")
+                return 0
+        datamodel[self.fields[0]] = v
+        return 1
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""

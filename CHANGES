@@ -25,3 +25,4 @@ New internal features:
 - when creating a field/widget through the manage_add* methods, all
   properties can be initialized directly as keyword arguments
 - renamed Pwd Widget and Field into Password
+- add the possibility for string and textarea widgets to be mandatory
