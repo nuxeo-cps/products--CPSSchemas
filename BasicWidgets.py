@@ -285,7 +285,7 @@ class CPSURLWidget(CPSStringWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         err, v = self._extractValue(datastructure[widget_id])
-        if not err and not self.url_pat.match(v.lower()):
+        if not err and v and not self.url_pat.match(v.lower()):
             err = 'cpsschemas_err_url'
 
         if err:
