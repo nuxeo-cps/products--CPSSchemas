@@ -38,7 +38,16 @@
                tal:attributes="for string:${radio_name}_keep">Keep</label>
       </td>
       <td valign="middle">
-        <span tal:replace="current_name">filename.pdf</span>
+        <a href="http://url..." target="outerspace"
+          tal:condition="python: current_name != '-'"
+          tal:attributes="href python:here.fields[0]">
+        <tal:block condition="mimetype"
+          replace="structure python:here.getImgTag(mimetype.icon_path,
+          title=mimetype.name())" />
+        <tal:block replace="current_name" />
+        </a>
+        <tal:block condition="python:current_name == '-'"
+          replace="current_name" />
       </td>
     </tr>
     <tr>
