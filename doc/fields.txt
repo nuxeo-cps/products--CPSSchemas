@@ -172,3 +172,15 @@ Fields
 
         The conversion is currently done using the PortalTransforms
         framework.
+
+    Disk File Field
+      
+      This field stores the file on the disk instead of in the ZODB.
+    
+      disk_storage_path -- path relative to $INSTANCE_HOME for file storage.
+      
+        If this path is not set, it will check if portal_schemas has a 
+        disk_storage_path property. If neither is set then var/files will
+        be used.
+        
+      
