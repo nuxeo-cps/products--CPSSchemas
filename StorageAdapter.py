@@ -173,14 +173,13 @@ class BaseStorageAdapter:
         Returns a copy, without the fields that are not stored."""
         new_data = {}
         for field_id, field in self.getFieldItems():
-            # XXX we want here to pursue even if
-            # writing storage is ignored
-            if data.has_key(field_id):
-                value = data[field_id]
-                result = field.processValueBeforeWrite(value,
-                                    data,self.getContextObject())
-                if not field.write_ignore_storage:
-                    new_data[field_id] = result
+            if not data.has_key(field_id):
+                continue
+            value = data[field_id]
+            result = field.processValueBeforeWrite(value,
+                                data,self.getContextObject())
+            if not field.write_ignore_storage:
+                new_data[field_id] = result
         return new_data
 
     def _setFieldData(self, field_id, value):
