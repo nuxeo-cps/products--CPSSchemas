@@ -61,6 +61,8 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
                      'object')
     if REQUEST is not None:
         REQUEST.RESPONSE.redirect(container.absolute_url() + "/manage_main")
+    else:
+        return flexti
 
 # XXX add this at construction above
 factory_type_information = (
