@@ -73,12 +73,15 @@ class LayoutsTool(UniqueObject, Folder):
     manage_addCPSLayoutForm = DTMLFile('zmi/layout_addform', globals())
 
     security.declareProtected(ManagePortal, 'manage_addCPSLayout')
-    def manage_addCPSLayout(self, id, REQUEST):
+    def manage_addCPSLayout(self, id, REQUEST=None):
         """Add a layout, called from the ZMI."""
         layout = CPSLayout(id)
         layout = self.addLayout(id, layout)
-        REQUEST.RESPONSE.redirect(layout.absolute_url()+'/manage_main'
-                                  '?psm=Added.')
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(layout.absolute_url()+'/manage_main'
+                                      '?manage_tabs_message=Added.')
+        else:
+            return layout
 
 
 InitializeClass(LayoutsTool)
