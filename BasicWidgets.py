@@ -864,8 +864,8 @@ class CPSBooleanWidget(CPSWidget):
         {'id': 'label_true', 'type': 'string', 'mode': 'w',
          'label': 'True label'},
         )
-    label_false = 'cpsschema_label_false'
-    label_true = 'cpsschema_label_true'
+    label_false = 'cpsschemas_label_false'
+    label_true = 'cpsschemas_label_true'
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
