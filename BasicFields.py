@@ -509,7 +509,7 @@ class CPSDiskFileField(CPSFileField):
         """
         field_id = self.getFieldId()
         file = data[field_id] # May be None.
-        if _isinstance(file, File):
+        if _isinstance(file, File) and not _isinstance(file, DiskFile):
             file = DiskFile(file.getId(), file.title, file.data,
                             file.content_type, self.getStoragePath())
             data[field_id] = file

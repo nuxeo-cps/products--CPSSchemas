@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- More ExternalEditor support bugfixes for Disk File Field.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Better labels for Generic Select widget.
