@@ -24,8 +24,7 @@ Vocabulary interfaces.
 from Interface import Interface
 
 class IVocabulary(Interface):
-    """Interface for a basic Vocabulary.
-    """
+    """Interface for a basic Vocabulary."""
 
     def __delitem__(key):
         """Delete an item from the vocabulary."""
@@ -53,15 +52,4 @@ class IVocabulary(Interface):
 
     def values():
         """Get the ordered list of values."""
-
-
-class ITreeVocabulary(IVocabulary):
-    """Interface for a tree-like vocabulary.
-    """
-
-    def getDepth(key):
-        """Get the depth of a key."""
-
-    def itemsWithDepth():
-        """Get the ordered list of (key, value, depth)."""
 
