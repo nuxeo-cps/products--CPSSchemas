@@ -12,4 +12,5 @@ Bug fixes:
 - Small bug in CPSSubObjectsField when deleting fields.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- DataModel has a new isDirty method to check if a field is dirty (has
+  been modified).
