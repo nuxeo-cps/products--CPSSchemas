@@ -153,14 +153,14 @@ class CPSDocumentMixin(ExtensionClass.Base):
         return self.getTypeInfo().renderObject(self, mode=mode)
 
     security.declareProtected(ModifyPortalContent, 'renderEdit')
-    def renderEdit(self, REQUEST):
+    def renderEdit(self, request=None):
         """Attempt to modify the object from the request, and return
         the rendering of the error form.
 
         If not error, render the view mode.
         """
         ti = self.getTypeInfo()
-        return ti.renderEditObject(self, REQUEST,
+        return ti.renderEditObject(self, request,
                                    errmode='edit', okmode='edit')
 
     security.declareProtected(View, 'SearchableText')
