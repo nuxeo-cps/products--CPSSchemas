@@ -837,7 +837,9 @@ class CPSGenericSelectWidget(CPSWidget):
             # default option
             if not self.is_required and not vocabulary.has_key(''):
                 if render_format == 'select':
-                    kw = {'value': '', 'contents': 'None'}
+                    kw = {'value': '',
+                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
+                          }
                     if not in_selection:
                         kw['selected'] = 'selected'
                     res += renderHtmlTag('option', **kw)
@@ -852,7 +854,7 @@ class CPSGenericSelectWidget(CPSWidget):
                         kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
-                          'contents': 'None',
+                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
@@ -1001,7 +1003,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                     kw = {'id': html_widget_id+'_'+k,
                           'type': render_format,
                           'name': html_widget_id+':list',
-                          'value': v,
+                          'value': k,
                           }
                     if k in value:
                         kw['checked'] = 'checked'
@@ -1030,15 +1032,17 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                               'disabled': 'disabled',
                               }
                         res += renderHtmlTag('input', **kw)
-                        kw = {'for': html_widget_id+'_'+value,
-                              'contents': 'invalid: '+value,
+                        kw = {'for': html_widget_id+'_'+value_item,
+                              'contents': 'invalid: '+value_item,
                               }
                         res += renderHtmlTag('label', **kw)
                         res += '<br/>\n'
             # default option
             if not self.is_required and not vocabulary.has_key(''):
                 if render_format == 'select':
-                    kw = {'value': '', 'contents': 'None'}
+                    kw = {'value': '',
+                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
+                          }
                     if not in_selection:
                         kw['selected'] = 'selected'
                     res += renderHtmlTag('option', **kw)
@@ -1054,7 +1058,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                         kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
-                          'contents': 'None',
+                          'contents': cpsmcat('None').encode('ISO-8859-15', 'ignore'),
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
