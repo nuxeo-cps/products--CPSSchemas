@@ -282,7 +282,7 @@ class CPSDocumentMixin(ExtensionClass.Base):
         if sum:
             infos['summary'] = sum
 
-        if hasattr(aq_base(self), 'preview'):
+        if hasattr(aq_base(self), 'preview') and self.preview:
             infos['preview'] = self.absolute_url(1) + '/preview'
         return infos
 
