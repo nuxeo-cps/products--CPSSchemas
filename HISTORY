@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.25.0 [R1 build 2004/06/30-09:41 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Add the possibility to translate a vocabulary
+- Made the MetaDataStorageAdapter now accepts unknown attributes to him and
+  stores them as regular attributes. This makes it natural to customize the
+  metadata schema.
+
+Bug fixes:
+~~~~~~~~~~
+- Vocabulary export and import deal with msgid
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.24.1 [R1 build 2004/06/18-17:52 by madarche]
 
 Requires:
