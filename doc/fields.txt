@@ -43,6 +43,8 @@ Fields
       this can happen on an old instances if its schema is edited later.
       In the expression the following namespace is available:
 
+        - datamodel: the datamodel
+
         - field: the current field
 
         - user: the current user
