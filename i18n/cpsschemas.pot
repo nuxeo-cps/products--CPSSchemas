@@ -19,28 +19,6 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
-#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
-#.         </input>
-#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
-#.       <input value="button_ok" class="context" type="submit">
-#.     </input></input>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_back"
-msgstr ""
-
-#.   <input value="button_ok" class="context" type="submit">
-#.     </input>
-#: from ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_ok"
-msgstr ""
-
-#.   <input value="button_search" class="context" type="submit">
-#.         </input>
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-msgid "button_search"
-msgstr ""
-
 #.   <span>at</span>
 #: from ../skins/cps_schemas/widget_date_render.pt
 msgid "cpsschema_at"
