@@ -1,14 +1,18 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    current_name options/current_name;
+                   mimetype options/mimetype;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
   <tal:block define="preview_id python:options['datastructure'][id+'_preview']">
     <a href="http://url..."
        tal:attributes="href python:here.fields[0]"
-       tal:content="current_name"
+
     >
-     filename.pdf
+    <tal:block condition="mimetype"
+      replace="structure python:here.getImgTag(mimetype.icon_path,
+      title=mimetype.name())" />
+    <tal:block replace="current_name" />
     </a>
     <span tal:condition="preview_id">
       <a href="http://url..." target="_blank"
