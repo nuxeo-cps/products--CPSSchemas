@@ -1,8 +1,9 @@
 <tal:block define="mode options/mode;
                    value_name here/getHtmlWidgetId;
                    value options/value;
-                   rformat options/render_format;
                    rposition options/render_position;
+                   rformat options/render_format;
+                   configurable options/configurable;
   ">
 <tal:block condition="python: mode == 'view'">
  <div tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
@@ -11,35 +12,36 @@
     tal:content="structure value" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
-  <textarea
-    tal:attributes="id value_name;
-                    name value_name;
-                    cols here/width;
-                    rows here/height;"
-    tal:content="value" />
-   <button type="button" style="float: right;"
-    tal:condition="python:rformat=='html' or here.configurable"
-    tal:attributes="onclick
-      string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
-    >...</button><br>
-  <div tal:condition="here/configurable"
-    tal:define="rposition_name string:${value_name}_rposition;
-                rformat_name string:${value_name}_rformat;">
+  <div>
+    <textarea tal:attributes="id value_name;
+                              name value_name;
+                              cols here/width;
+                              rows here/height;"
+      tal:content="value" />
+    <button type="button" style="float: right;"
+      tal:condition="python:rformat=='html' or here.configurable"
+      tal:attributes="onclick
+        string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
+      >...</button><br>
+  </div>
+   <tal:block condition="python: configurable.find('position')>=0">
+   <span i18n:translate="">cpsschemas_render_position</span>
+   <select tal:attributes="name string:${value_name}_rposition">
+     <option tal:repeat="op here/all_render_positions"
+       tal:attributes="selected python:op == rposition;
+                       value op"
+       tal:content="string:cpsschemas_rposition_${op}" i18n:translate="" />
+   </select>
+   </tal:block>
+   <tal:block condition="python: configurable.find('format')>=0">
    <span i18n:translate="">cpsschemas_render_format</span>
-   <select tal:attributes="name rformat_name">
+   <select tal:attributes="name string:${value_name}_rformat">
      <option tal:repeat="op here/all_render_formats"
        tal:attributes="selected python:op == rformat;
                        value op"
        tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
    </select>
-   <span i18n:translate="">cpsschemas_render_position</span>
-   <select tal:attributes="name rposition_name">
-     <option tal:repeat="op here/all_render_positions"
-       tal:attributes="selected python:op == rposition;
-                       value op"
-       tal:content="string:cpsschemas_rposition_${op}" i18n:translate=""  />
-   </select>
+   </tal:block>
    <br><br>
-  </div>
 </tal:block>
 </tal:block>
