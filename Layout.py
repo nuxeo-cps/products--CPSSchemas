@@ -165,14 +165,20 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         """Normalize a layout definition.
 
         Removes empty rows, normalize last cells so all widths are
-        equal, recomputes ncols.
+        equal, recomputes ncols, removing duplicate widgets.
         """
+        used_widgets = []
         rows = layoutdef['rows']
         # Find max width.
         maxw = 1
         for row in rows:
             w = 0
             for cell in row:
+                wid = cell['widget_id']
+                if wid in used_widgets:
+                    cell['widget_id'] = ''
+                else:
+                    used_widgets.append(wid)
                 ncols = cell.get('ncols', 1)
                 cell['ncols'] = ncols
                 w += ncols
@@ -212,7 +218,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         for row in layout_structure['rows']:
             new_row = []
             for cell in row:
-                if cell['widget_mode'] != 'hidden':
+                if self.has_key(cell['widget_id']) and cell['widget_mode'] != 'hidden':
                     new_row.append(cell)
             row[:] = new_row
         # Re-normalize after removed cells.
@@ -262,7 +268,8 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         # Store computed widget info in row/cell structure.
         for row in layout_structure['rows']:
             for cell in row:
-                cell.update(widgets[cell['widget_id']])
+                if widgets.has_key(cell['widget_id']):
+                    cell.update(widgets[cell['widget_id']])
         # Eliminate hidden widgets.
         self.removeHiddenWidgets(layout_structure)
         return layout_structure
