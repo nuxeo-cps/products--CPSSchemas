@@ -186,7 +186,7 @@ InitializeClass(CPSStringWidgetType)
 
 ##################################################
 
-class CPSPwdWidget(CPSStringWidget):
+class CPSPasswordWidget(CPSStringWidget):
     """Password widget."""
     meta_type = "CPS Password Widget"
 
@@ -196,31 +196,26 @@ class CPSPwdWidget(CPSStringWidget):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            hidden = ""
-            for i in value:
-                hidden += "*"
-            return hidden
+            return "********"
         elif mode == 'edit':
             kw = {'type': 'password',
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
-                  'css_class': self.css_class,
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
-
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
-InitializeClass(CPSPwdWidget)
+InitializeClass(CPSPasswordWidget)
 
-class CPSPwdWidgetType(CPSStringWidgetType):
+class CPSPasswordWidgetType(CPSStringWidgetType):
     """Password widget type."""
     meta_type = "CPS Password Widget Type"
-    cls = CPSPwdWidget
+    cls = CPSPasswordWidget
 
-InitializeClass(CPSPwdWidgetType)
+InitializeClass(CPSPasswordWidgetType)
 
 ##################################################
 
@@ -349,8 +344,7 @@ class CPSTextAreaWidget(CPSWidget):
                                  name=self.getHtmlWidgetId(),
                                  cols=self.width,
                                  rows=self.height,
-                                 contents=value,
-                                 css_class=self.css_class)
+                                 contents=value)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSTextAreaWidget)
@@ -472,8 +466,7 @@ class CPSIntWidget(CPSWidget):
             return renderHtmlTag('input',
                                  type='text',
                                  name=self.getHtmlWidgetId(),
-                                 value=value,
-                                 css_class=self.css_class)
+                                 value=value)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSIntWidget)
@@ -688,22 +681,19 @@ class CPSDateWidget(CPSWidget):
                                  name=html_widget_id+'_d',
                                  value=d,
                                  size=2,
-                                 maxlength=2,
-                                 css_class=self.css_class)
+                                 maxlength=2)
             mtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_m',
                                  value=m,
                                  size=2,
-                                 maxlength=2,
-                                 css_class=self.css_class)
+                                 maxlength=2)
             ytag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_y',
                                  value=y,
                                  size=6,
-                                 maxlength=6,
-                                 css_class=self.css_class)
+                                 maxlength=6)
             # XXX customize format
             return dtag + '/' + mtag + '/' + ytag
         raise RuntimeError('unknown mode %s' % mode)
@@ -1000,7 +990,7 @@ InitializeClass(CPSRichTextEditorWidgetType)
 
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
-WidgetTypeRegistry.register(CPSPwdWidgetType, CPSPwdWidget)
+WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 #WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
