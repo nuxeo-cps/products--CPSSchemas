@@ -7,8 +7,9 @@ New features:
 - if PIL is installed ImageWidget resize image bigger than display_widhtxdisplay_height
   if allow_resize is set then user can choose a smaller format, list of size format
   is defined in getImgSizes.py, the imported image will be resized if bigger.
-- New Compound Widget Type, enabling the creation of compound widgets by
-  defining a render skin in the type, and the subwidget ids in the widget.
+- P2 #104: New Compound Widget Type, enabling the creation of compound widgets
+  by defining a render skin in the type, and the subwidget ids in the widget,
+  does not yet work in flexible mode.
 Bug fixes:
 ~~~~~~~~~~
 -
