@@ -22,14 +22,21 @@ Definition of extended widget types.
 """
 
 from zLOG import LOG, DEBUG
+from cgi import escape
+from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
-from Products.PythonScripts.standard import structured_text, newline_to_br
+from DateTime.DateTime import DateTime
+from ZPublisher.HTTPRequest import FileUpload
+from OFS.Image import cookId, File
 
+from Products.PythonScripts.standard import structured_text, newline_to_br
+from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
-from Products.CPSSchemas.BasicWidgets import renderHtmlTag, CPSSelectWidget
+from Products.CPSSchemas.BasicWidgets import renderHtmlTag, CPSSelectWidget, \
+     _isinstance
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
