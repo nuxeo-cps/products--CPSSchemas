@@ -1,39 +1,43 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
-# Fixed and extended from David Benjamins odict
+# An Ordered, Persistent dictionary.
+# Some code from David Benjamins odict
 # $Id$
 
 from types import ListType, TupleType
-from UserDict import UserDict
+#from UserDict import UserDict
+from ZODB.PersistentMapping import PersistentMapping
 
-class OrderedDictionary(UserDict):
+class OrderedDictionary(PersistentMapping):
     def __init__(self, dict = None):
         if dict:
             self._keys = dict.keys()
         else:
             self._keys = []
-        UserDict.__init__(self, dict)
+        PersistentMapping.__init__(self, dict)
 
     def __delitem__(self, key):
-        UserDict.__delitem__(self, key)
+        PersistentMapping.__delitem__(self, key)
         self._keys.remove(key)
 
     def __setitem__(self, key, item):
-        UserDict.__setitem__(self, key, item)
+        PersistentMapping.__setitem__(self, key, item)
         if key not in self._keys: self._keys.append(key)
 
     def __cmp__(self, dict):
-        if isinstance(dict, UserDict):
+        if isinstance(dict, OrderedDictionary):
             return cmp(self.data, dict.data) and cmp(self._keys, dict._keys)
         else:
             return 0
 
     def clear(self):
-        UserDict.clear(self)
+        PersistentMapping.clear(self)
         self._keys = []
 
     def copy(self):
-        import copy
-        return copy.deepcopy(self)
+        mcopy = OrderedDictionary()
+        mcopy.data = self.data.copy()
+        mcopy._keys = self._keys[:]
+        return mcopy
 
     def items(self):
         return zip(self._keys, self.values())
@@ -57,7 +61,7 @@ class OrderedDictionary(UserDict):
 
     def setdefault(self, key, failobj = None):
         if key not in self._keys: self._keys.append(key)
-        return UserDict.setdefault(self, key, failobj)
+        return PersistentMapping.setdefault(self, key, failobj)
 
     def update(self, dict):
         for (key,val) in dict.items():
