@@ -26,11 +26,15 @@ computed source.
 from zLOG import LOG, DEBUG
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
+from AccessControl import getSecurityManager
+from AccessControl import Unauthorized
 from Persistence import Persistent
 from Interface import Interface
 
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
+
+from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
 builtins_list = list
 
@@ -122,22 +126,54 @@ class Vocabulary(Persistent):
 InitializeClass(Vocabulary)
 
 
-class CPSVocabulary(SimpleItemWithProperties):
+class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     """Persistent Vocabulary."""
 
     meta_type = "CPS Vocabulary"
 
     security = ClassSecurityInfo()
 
+    _propertiesBaseClass = SimpleItemWithProperties
+    _properties = (
+        {'id': 'title', 'type': 'string', 'mode': 'w',
+         'label': 'Title'},
+        {'id': 'title_msgid', 'type': 'string', 'mode': 'w',
+         'label': 'Title msgid'},
+        {'id': 'description', 'type': 'text', 'mode': 'w',
+         'label':'Description'},
+        {'id': 'acl_write_roles_str', 'type': 'string', 'mode': 'w',
+         'label':'ACL: write roles'},
+        )
+
     title = ''
     title_msgid = ''
     description = ''
+    acl_write_roles_str = 'Manager'
+
+    acl_write_roles = ['Manager']
 
     def __init__(self, id, title='', dict={}, list=[], **kw):
         self.id = id
         self.title = title
         vocab = Vocabulary(dict=dict, list=list)
         self.setVocabulary(vocab)
+
+    def _postProcessProperties(self):
+        """Post-processing after properties change."""
+        # Split on ',' or ';' or ' '.
+        for attr_str, attr, seps in (
+            ('acl_write_roles_str', 'acl_write_roles', ',; '),
+            ):
+            v = [getattr(self, attr_str)]
+            for sep in seps:
+                vv = []
+                for s in v:
+                    vv.extend(s.split(sep))
+                v = vv
+            v = [s.strip() for s in v]
+            v = filter(None, v)
+            setattr(self, attr_str, '; '.join(v))
+            setattr(self, attr, v)
 
     security.declareProtected(ManagePortal, 'setVocabulary')
     def setVocabulary(self, vocab):
@@ -180,15 +216,6 @@ class CPSVocabulary(SimpleItemWithProperties):
     # ZMI
     #
 
-    _properties = (
-        {'id': 'title', 'type': 'string', 'mode': 'w',
-         'label': 'Title'},
-        {'id': 'title_msgid', 'type': 'string', 'mode': 'w',
-         'label': 'Title Msgid'},
-        {'id': 'description', 'type': 'text', 'mode': 'w',
-         'label':'Description'},
-        )
-
     manage_options = (
         {'label': 'Vocabulary',
          'action': 'manage_editVocabulary',
@@ -208,32 +235,51 @@ class CPSVocabulary(SimpleItemWithProperties):
     security.declareProtected(ManagePortal, 'manage_main')
     manage_main = manage_editVocabulary
 
-    security.declareProtected(ManagePortal, 'manage_addVocabularyItem')
-    def manage_addVocabularyItem(self, new_key, new_label, new_msgid, REQUEST):
-        """Add a vocabulary item TTW."""
-        self.set(new_key, new_label, new_msgid)
-        return self.manage_main(REQUEST, manage_tabs_message='Added.')
+    security.declarePrivate('')
+    def _checkWriteAllowed(self):
+        """Check that user can write to this vocabulary."""
+        if not getSecurityManager().getUser().has_role(
+            self.acl_write_roles):
+            raise Unauthorized("No write access to vocabulary (roles)")
 
-    security.declareProtected(ManagePortal, 'manage_changeVocabulary')
-    def manage_changeVocabulary(self, REQUEST):
-        """Change a vocabulary TTW."""
-        kw = REQUEST.form
+    security.declarePublic('manage_addVocabularyItem')
+    def manage_addVocabularyItem(self, new_key, new_label, new_msgid,
+                                 REQUEST=None):
+        """Add a vocabulary item."""
+        self._checkWriteAllowed()
+        self.set(new_key, new_label, new_msgid)
+        if REQUEST is not None:
+            return self.manage_main(REQUEST, manage_tabs_message='Added.')
+
+    security.declarePublic('manage_changeVocabulary')
+    def manage_changeVocabulary(self, form={}, REQUEST=None):
+        """Change a vocabulary.
+
+        The form parameter must contains the full new vocabulary as a
+        dict with keys key_0, label_0, msgid_0, etc.
+        """
+        self._checkWriteAllowed()
+        if REQUEST is not None:
+            form.update(REQUEST.form)
         vocab = Vocabulary()
         i = -1
         while 1:
             i += 1
             k = 'key_%d' % i
-            if not kw.has_key(k):
+            if not form.has_key(k):
                 break
-            vocab.set(kw[k], kw['label_%d' % i], kw['msgid_%d' % i])
+            vocab.set(form[k], form['label_%d' % i], form['msgid_%d' % i])
         self.setVocabulary(vocab)
-        return self.manage_main(REQUEST, manage_tabs_message='Changed.')
+        if REQUEST is not None:
+            return self.manage_main(REQUEST, manage_tabs_message='Changed.')
 
-    security.declareProtected(ManagePortal, 'manage_delVocabularyItems')
-    def manage_delVocabularyItems(self, keys, REQUEST):
-        """Delete vocabulary items TTW."""
+    security.declarePublic('manage_delVocabularyItems')
+    def manage_delVocabularyItems(self, keys, REQUEST=None):
+        """Delete vocabulary items."""
+        self._checkWriteAllowed()
         for key in keys:
             del self[key]
-        return self.manage_main(REQUEST, manage_tabs_message='Deleted.')
+        if REQUEST is not None:
+            return self.manage_main(REQUEST, manage_tabs_message='Deleted.')
 
 InitializeClass(CPSVocabulary)

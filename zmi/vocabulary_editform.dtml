@@ -47,7 +47,7 @@
     </td>
     <td align="left">
       <div class="form-item">
-        <input type="text" name="msgid_&dtml-index;" value="<dtml-var "getMsgid(key)" html_quote>" size="20" />
+        <input type="text" name="msgid_&dtml-index;" value="<dtml-var "getMsgid(key) or ''" html_quote>" size="20" />
       </div>
     </td>
   </tr>
