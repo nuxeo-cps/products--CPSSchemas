@@ -37,6 +37,8 @@ import BasicFields
 import BasicWidgets
 import ExtendedWidgets
 
+import EpozPatch
+
 tools = (
     VocabulariesTool.VocabulariesTool,
     SchemasTool.SchemasTool,
