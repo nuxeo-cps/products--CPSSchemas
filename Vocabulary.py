@@ -167,7 +167,6 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     def __init__(self, id, title='', dict={}, list=[], **kw):
         self.id = id
         self.title = title
-        self.user_modified = 0
         vocab = Vocabulary(dict=dict, list=list)
         self.setVocabulary(vocab)
 
