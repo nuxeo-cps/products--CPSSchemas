@@ -353,6 +353,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     # Validation
     #
 
+    # XXX this is never called yet.
     security.declarePublic('validate')
     def validate(self, value):
         """Validate a value."""

@@ -57,6 +57,7 @@ class CPSIntField(CPSField):
     default_expr = 'python:0'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, IntType):
             return value
@@ -72,6 +73,7 @@ class CPSLongField(CPSField):
     default_expr = 'python:0L'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, LongType):
             return value
@@ -87,6 +89,7 @@ class CPSFloatField(CPSField):
     default_expr = 'python:0.0'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, FloatType):
             return value
@@ -102,6 +105,7 @@ class CPSStringField(CPSField):
     default_expr = 'string:'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, StringType):
             return value
@@ -116,6 +120,7 @@ class CPSPasswordField(CPSField):
     default_expr = 'string:'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, StringType):
             return value
@@ -131,6 +136,7 @@ class CPSStringListField(CPSField):
     default_expr = 'python:[]'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, ListType):
             ok = 1
@@ -153,6 +159,7 @@ class CPSDateTimeField(CPSField):
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
@@ -212,6 +219,7 @@ class CPSFileField(CPSField):
                 html_file = None
             data[html_field_id] = html_file
 
+    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
@@ -229,6 +237,7 @@ class CPSImageField(CPSField):
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
@@ -257,6 +266,7 @@ class CPSAutoIndexField(CPSField):
         # for conflicts by the storage adapter is not a bad idea).
         return long(time() * 10000) + randint(0,9999)
 
+    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
