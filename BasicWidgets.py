@@ -366,7 +366,7 @@ class CPSURLWidget(CPSStringWidget):
             return 0
 
         if scheme in ('http', 'ftp', 'gopher', 'telnet',
-                      'nttp', 'wais', 'prospero') and not netloc:
+                      'nntp', 'wais', 'prospero') and not netloc:
             return 0
 
         if scheme in ('http', '', 'ftp'):
