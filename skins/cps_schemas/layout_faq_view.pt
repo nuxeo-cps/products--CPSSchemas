@@ -5,7 +5,6 @@
   <div tal:repeat="row layout/rows">
     <div tal:repeat="cell row" tal:attributes="colspan cell/ncols">
       <tal:block define="widget cell/widget">
-        <span tal:replace="python:str(row)" />
         <span tal:replace="structure python:widget.render('view', ds, dm)" />
       </tal:block>
     </div>
