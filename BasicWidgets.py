@@ -381,7 +381,7 @@ class CPSPasswordWidget(CPSStringWidget):
          'label': 'Password widget to compare with'},)
 
     field_types = ('CPS Password Field',)
-    
+
     password_widget = ''
 
     def prepare(self, datastructure, **kw):
@@ -788,6 +788,7 @@ class CPSSelectWidget(CPSWidget):
         if not vocabulary.has_key(value):
             datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
+
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         return 1
@@ -887,6 +888,9 @@ class CPSMultiSelectWidget(CPSWidget):
                 datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                 return 0
             v.append(i)
+        if self.is_required and not len(v):
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         return 1
