@@ -717,7 +717,7 @@ class CPSGenericSelectWidget(CPSWidget):
 
     # XXX make a menu for the vocabulary.
     vocabulary = ''
-    translated = False
+    translated = 0
     render_format = render_formats[0]
 
     def _getVocabulary(self, datastructure=None):
@@ -901,7 +901,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
     # XXX make a menu for the vocabulary.
 
     vocabulary = ''
-    translated = False
+    translated = 0
     size = 0
     format_empty = ''
     render_format = render_formats[0]

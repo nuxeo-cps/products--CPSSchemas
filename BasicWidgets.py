@@ -931,7 +931,7 @@ class CPSSelectWidget(CPSWidget):
          'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
-    translated = False
+    translated = 0
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -1031,7 +1031,7 @@ class CPSMultiSelectWidget(CPSWidget):
         )
     # XXX make a menu for the vocabulary.
     vocabulary = ''
-    translated = False
+    translated = 0
     size = 0
     format_empty = ''
 
