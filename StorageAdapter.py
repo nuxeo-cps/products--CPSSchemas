@@ -39,8 +39,8 @@ from zLOG import LOG, DEBUG
 from Acquisition import aq_base
 
 
-class BasicStorageAdapter:
-    """Basic Storage Adapter
+class BaseStorageAdapter:
+    """Base Storage Adapter
 
     Base class for storage adapters.
     """
@@ -62,7 +62,7 @@ class BasicStorageAdapter:
         raise NotImplementedError
 
 
-class AttributeStorageAdapter(BasicStorageAdapter):
+class AttributeStorageAdapter(BaseStorageAdapter):
     """Attribute Storage Adapter
 
     This adapter simply gets and sets data from/to an attribute.
@@ -74,7 +74,7 @@ class AttributeStorageAdapter(BasicStorageAdapter):
         The object passed is the one on which to get/set attributes.
         """
         self._ob = ob
-        BasicStorageAdapter.__init__(self, schema)
+        BaseStorageAdapter.__init__(self, schema)
 
     def setContextObject(self, ob):
         """Set a new underlying object for this adapter.
