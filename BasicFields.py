@@ -27,8 +27,20 @@ from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from DateTime.DateTime import DateTime
 
+from OFS.Image import File
+from OFS.Image import Image
+
 from Products.CPSDocument.Field import CPSField, FieldRegistry
 from Products.CPSDocument.Field import propertiesWithType
+
+
+def _isinstance(ob, cls):
+    try:
+        return isinstance(ob, cls)
+    except TypeError:
+        # In python 2.1 isinstance() raises TypeError
+        # instead of returning 0 for ExtensionClasses.
+        return 0
 
 
 class ValidationError(ValueError):
@@ -95,8 +107,46 @@ class CPSDateTimeField(CPSField):
 InitializeClass(CPSDateTimeField)
 
 
+class CPSFileField(CPSField):
+    """File field."""
+    meta_type = "CPS File Field"
+
+    def getDefault(self):
+        """Get the default file object."""
+        return None
+
+    def validate(self, value):
+        if not value:
+            return None
+        if _isinstance(value, File):
+            return value
+        raise ValidationError('Not a file: %s' % repr(value))
+
+InitializeClass(CPSFileField)
+
+
+class CPSImageField(CPSField):
+    """Image field."""
+    meta_type = "CPS Image Field"
+
+    def getDefault(self):
+        """Get the default file object."""
+        return None
+
+    def validate(self, value):
+        if not value:
+            return None
+        if _isinstance(value, Image):
+            return value
+        raise ValidationError('Not a file: %s' % repr(value))
+
+InitializeClass(CPSImageField)
+
+
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSDateTimeField)
+FieldRegistry.register(CPSFileField)
+FieldRegistry.register(CPSImageField)
