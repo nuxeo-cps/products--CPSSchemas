@@ -1,4 +1,28 @@
 *******************************************
+** CPSSchemas V0.7.0 [R1 build 2003/11/17-15:27 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- Epoz 0.6.0 is recommanded for Text widget
+- Warning Date and File widgets are deprecated
+  you should use DateTime and attachedFile.
+New features:
+~~~~~~~~~~~~~
+- CPSTextWidget handle an Epoz editor in a popup, enable multi RTE per document
+Bug fixes:
+~~~~~~~~~~
+- Correctly keep the proxy in the datamodel after a commit.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Spliting widgets into 2 files: Basic and Extended
+- CPSTextAreawidget is back to sample version,
+  the advanced version with format and position is named CPSTextWidget
+- CPSDateWidget is back to basic rendering, the advanced is named
+  CPSDateTimeWidget
+- CPSFileWidget is back to basic file upload, the advanced version is named
+  CPSAttachedFileWidget
+
+*******************************************
 ** CPSSchemas V0.6.0 [R1 build 2003/11/10-18:17 by guillaum]
 
 ZODB Requires:
