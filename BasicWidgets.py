@@ -168,7 +168,6 @@ class CPSStringWidget(CPSWidget):
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
-                  'css_class': self.css_class,
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
