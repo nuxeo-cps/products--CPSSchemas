@@ -55,13 +55,16 @@ class BaseStorageAdapter:
         """
         self._schema = schema
         if field_ids is None:
-            field_items = schema.items()
-        else:
-            field_items = []
-            for field_id, field in schema.items():
-                if field_id in field_ids:
-                    field_items.append((field_id, field))
+            field_ids = schema.keys()
+        field_items = []
+        writable_field_items = []
+        for field_id, field in schema.items():
+            if field_id in field_ids:
+                field_items.append((field_id, field))
+                if not field.write_ignore_storage:
+                    writable_field_items.append((field_id, field))
         self._field_items = field_items
+        self._writable_field_items = writable_field_items
 
     def getSchema(self):
         """Get schema this adapter is about."""
@@ -70,6 +73,10 @@ class BaseStorageAdapter:
     def getFieldItems(self):
         """Get the field ids and the fields."""
         return self._field_items
+
+    def getWritableFieldItems(self):
+        """Get the writable field ids and the fields."""
+        return self._writable_field_items
 
     def getDefaultData(self):
         """Get the default data from the fields' default values.
@@ -122,7 +129,7 @@ class BaseStorageAdapter:
     def _setData(self, data, **kw):
         """Set data to the object, from a mapping."""
         data = self._setDataDoProcess(data, **kw)
-        for field_id, field in self.getFieldItems():
+        for field_id, field in self.getWritableFieldItems():
             self._setFieldData(field_id, field, data[field_id], **kw)
 
     def _setDataDoProcess(self, data, **kw):
