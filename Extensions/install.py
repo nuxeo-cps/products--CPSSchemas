@@ -139,6 +139,25 @@ def install(self):
         portal.portal_transforms_installer()
         pr("   done")
 
+        pr("Adding additional mime types")
+        mimetypesRegistry = portal.mimetypes_registry
+        for extension, mimetype in (('sxw', 'application/vnd.sun.xml.writer'),
+                                    ('stw', 'application/vnd.sun.xml.writer.template'),
+                                    ('sxg', 'application/vnd.sun.xml.writer.global'),
+                                    ('sxc', 'application/vnd.sun.xml.calc'),
+                                    ('stc', 'application/vnd.sun.xml.calc.template'),
+                                    ('sxi', 'application/vnd.sun.xml.impress'),
+                                    ('sti', 'application/vnd.sun.xml.impress.template'),
+                                    ('sxd', 'application/vnd.sun.xml.draw'),
+                                    ('std', 'application/vnd.sun.xml.draw.template'),
+                                    ('sxm', 'application/vnd.sun.xml.math')):
+            if not mimetypesRegistry.extensions.has_key(extension):
+                mimetypesRegistry.manage_addMimeType(mimetype,
+                                                     [mimetype], [extension],
+                                                     '', 1)
+            else:
+                pr("We already have a registration for extension '%s'" % extension)
+        pr("   done")
 
     # Old stuff (UPGRADES)
     if portalhas('portal_widgets'):
