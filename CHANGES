@@ -6,7 +6,9 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Bug fixed : Redirection to the portal_repository  while editing the layouts. Adding an arguments proxy= in the render method signature. 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Moving schemas/widgets/layouts declations from the CPSDocument installer.
+  Now in : CPSDocumentSchemas.py CPSDocumentLayouts.py and CPSDocumentWidgets.py
+- Comming back to Florent form example.
