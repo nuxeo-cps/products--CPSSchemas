@@ -1,8 +1,127 @@
+# translation of ro.po to 
 # ##########################################################
 # ################# DON'T EDIT THIS FILE! ##################
 # ##########################################################
 # Gettext Message File for default.
 # Your Name <your@email>, Year
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
+# , 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
@@ -11,13 +130,14 @@ msgstr ""
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-code: ro\n"
 "Language-name: Romanian\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
@@ -32,7 +152,7 @@ msgstr ""
 #.   <button onclick="window.close()">Fermer</button>
 #: from ../skins/cps_schemas/popup_photo.pt
 msgid "button_close"
-msgstr ""
+msgstr "Inchide"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -48,12 +168,12 @@ msgstr ""
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
-msgstr ""
+msgstr "la"
 
 #.   <label attributes="for elt_hour_id">h</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_hour"
-msgstr ""
+msgstr "h"
 
 #.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
 #.                        field_html python:len(fields)>2 and fields[2] or ''">
@@ -65,19 +185,19 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
-msgstr ""
+msgstr "(previzualizare)"
 
 #.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_printable_version"
-msgstr ""
+msgstr "(versiunea printabila)"
 
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
-msgstr ""
+msgstr "mn"
 
 #.   <p>
 #.           cpsschemas_allowed_file_suffixes
@@ -87,56 +207,58 @@ msgstr ""
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
+"Fisierele autorizate trebuie sa aiba urmatoarele sufixe : "
+"${allowed_file_suffixes}."
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
-msgstr ""
+msgstr "si redimensionare : "
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
-msgstr ""
+msgstr "Schimba"
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_delete"
-msgstr ""
+msgstr "Sterge"
 
 #.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_edit_online"
-msgstr ""
+msgstr "Modifica in linie"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
-msgstr ""
+msgstr "Pastreaza"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_none"
-msgstr ""
+msgstr "Nimic"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_label_image_resize"
-msgstr ""
+msgstr "Redimensioneaza"
 
 #.   <span>
 #.           Photo subtitle
 #.         </span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr ""
+msgstr "Legenda&nbsp;: "
 
 #.   <block>cpsschemas_render_format</block>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
-msgstr ""
+msgstr "Format&nbsp;: "
 
 #.   <span>
 #.             Render position
@@ -145,7 +267,7 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
-msgstr ""
+msgstr "Pozitie&nbsp;: "
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -153,69 +275,69 @@ msgstr ""
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_size_max ${size_max}"
-msgstr ""
+msgstr "Marime maxima : ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
-msgstr ""
+msgstr "Adauga un vocabular"
 
 #.   <h2>cpsschemas_vocabulary_available</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_available"
-msgstr ""
+msgstr "Administreaza un vocabular"
 
 #.   <span class="description">cpsschemas_vocabulary_contains
 #.     ${voc_entries (tal replace="python:len(keys)")}
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
-msgstr ""
+msgstr "Acest vocabular contine ${voc_entries} intrare(i)"
 
 #.   <h2>cpsschemas_vocabulary_delete</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_delete"
-msgstr ""
+msgstr "Sterge acest vocabular"
 
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
-msgstr ""
+msgstr "Editeaza vocabularul ?&#160;${voc_id}&#160;?"
 
 #.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
-msgstr ""
+msgstr "Adauga o intrare"
 
 #.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
-msgstr ""
+msgstr "Identificator&nbsp;:"
 
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
-msgstr ""
+msgstr "Cheie&nbsp;:"
 
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_manage"
-msgstr ""
+msgstr "Administreaza vocabularele"
 
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
-msgstr ""
+msgstr "MsgId&nbsp;:"
 
 #.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
-msgstr ""
+msgstr "Valoare&nbsp;:"
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "description_vocabulary_manage_form"
-msgstr ""
+msgstr "Aceasta pagina iti permite sa administrezi vocabularele si intrarile lor."
 
 #.   <a attributes="href string: #;
 #.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
@@ -239,14 +361,14 @@ msgstr ""
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_click_chosen_value"
-msgstr ""
+msgstr "Selecteaza valoarea dorita&nbsp;:"
 
 #.   <th>
 #.           Enter a search term:
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
-msgstr ""
+msgstr "Introdu un termen de cautare&nbsp;:"
 
 #.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
@@ -268,115 +390,119 @@ msgstr ""
 #.             </span>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
-msgstr ""
+msgstr "Text alternativ"
 
 msgid "cpsschemas_unit_bytes"
-msgstr ""
+msgstr "octeti"
 
 msgid "cpsschemas_unit_kilo_bytes"
-msgstr ""
+msgstr "Kb"
 
 msgid "cpsschemas_unit_mega_bytes"
-msgstr ""
+msgstr "Mb"
 
 msgid "cpsschemas_unit_giga_bytes"
-msgstr ""
+msgstr "Gb"
 
 msgid "cpsschemas_err_string"
-msgstr ""
+msgstr "Sir de caractere invalid"
 
 msgid "cpsschemas_err_string_too_long"
-msgstr ""
+msgstr "Sir de caractere prea lung"
 
 msgid "cpsschemas_err_required"
-msgstr ""
+msgstr "Camp obligatoriu"
 
 msgid "cpsschemas_err_textarea"
-msgstr ""
+msgstr "Text invalid"
 
 msgid "cpsschemas_err_select"
-msgstr ""
+msgstr "Selectie invalida"
 
 msgid "cpsschemas_err_multiselect"
-msgstr ""
+msgstr "Selectie multipla invalida"
 
 msgid "cpsschemas_err_boolean"
-msgstr ""
+msgstr "Boolean invalid"
 
 msgid "cpsschemas_err_int"
-msgstr ""
+msgstr "Intreg invalid"
 
 msgid "cpsschemas_err_date"
-msgstr ""
+msgstr "Format de data invalid"
 
 msgid "cpsschemas_err_bad_date"
-msgstr ""
+msgstr "Data incorecta"
 
 msgid "cpsschemas_err_file"
-msgstr ""
+msgstr "Fisier invalid"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
+"Acest fisier nu are un sufix autorizat, sufixele autorizate sunt : "
+"${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
-msgstr ""
+msgstr "fisier invalid"
 
 msgid "cpsschemas_err_file_too_big"
-msgstr ""
+msgstr "Fisier prea voluminos"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr ""
+msgstr "Acest fisier este prea voluminos, marimea maxima autorizata este  ${max_size}."
 
 msgid "cpsschemas_err_image"
-msgstr ""
+msgstr "Imagine invalida"
 
 msgid "cpsschemas_err_url"
-msgstr ""
+msgstr "URL invalid"
 
 msgid "cpsschemas_err_long"
-msgstr ""
+msgstr "Intreg lung invalid"
 
 msgid "cpsschemas_err_long_range"
-msgstr ""
+msgstr "Intreg lung in afara limitelor"
 
 msgid "cpsschemas_err_float_positive"
-msgstr ""
+msgstr "Acest numar real trebuie sa fie pozitiv"
 
 msgid "cpsschemas_err_float_range"
-msgstr ""
+msgstr "Numar real in afara limitelor"
 
 msgid "cpsschemas_err_float"
-msgstr ""
+msgstr "Numar real invalid"
 
 msgid "cpsschemas_err_password_mismatch"
-msgstr ""
+msgstr "Parola si confirmarea ei nu corespund"
 
 msgid "cpsschemas_err_password_size_min"
-msgstr ""
+msgstr "Din pacate parola introdusa este prea scurta"
 
 msgid "cpsschemas_err_password_lower"
-msgstr ""
+msgstr "Parola ta trebuie sa contina cel putin o litera mica"
 
 msgid "cpsschemas_err_password_upper"
-msgstr ""
+msgstr "Parola ta trebuie sa contina cel putin o litera mare"
 
 msgid "cpsschemas_err_password_digit"
-msgstr ""
+msgstr "Parola ta trebuie sa contina cel putin o cifra"
 
 msgid "cpsschemas_err_password_extra"
 msgstr ""
+"Parola ta trebuie sa contina cel putin un caracter special altul decat"
+"o litera sau o cifra"
 
 msgid "cpsschemas_err_identifier"
-msgstr ""
+msgstr "Identificator invalid"
 
 msgid "cpsschemas_err_email"
-msgstr ""
+msgstr "Email invalid"
 
 msgid "cpsschemas_err_readonly"
-msgstr ""
+msgstr "Camp doar pentru lectura"
 
 msgid "cpsschemas_err_rangelist"
-msgstr ""
+msgstr "Lista de intervale invalida"
 
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
 msgstr ""
@@ -385,82 +511,82 @@ msgid "cpsschemas_err_zippedhtml_html_not_found"
 msgstr ""
 
 msgid "jscalendar_date_fmt"
-msgstr ""
+msgstr "d/m/y"
 
 msgid "cpsschemas_rposition_normal"
-msgstr ""
+msgstr "Largimea paginii"
 
 msgid "cpsschemas_rposition_col_right"
-msgstr ""
+msgstr "Coloana din dreapta"
 
 msgid "cpsschemas_rposition_col_left"
-msgstr ""
+msgstr "Coloana din stanga"
 
 msgid "cpsschemas_rposition_left"
-msgstr ""
+msgstr "Stanga"
 
 msgid "cpsschemas_rposition_right"
-msgstr ""
+msgstr "Dreapta"
 
 msgid "cpsschemas_rposition_center"
-msgstr ""
+msgstr "Centru"
 
 msgid "cpsschemas_rformat_text"
-msgstr ""
+msgstr "Text"
 
 msgid "cpsschemas_rformat_html"
-msgstr ""
+msgstr "HTML"
 
 msgid "cpsschemas_rformat_stx"
-msgstr ""
+msgstr "Text Zope structurat"
 
 msgid "cpsschemas_rformat_pre"
-msgstr ""
+msgstr "HTML preformatat"
 
 msgid "cpsschemas_rformat_original"
-msgstr ""
+msgstr "Original"
 
 msgid "img_auto_size"
-msgstr ""
+msgstr "Automatic"
 
 msgid "img_icon"
-msgstr ""
+msgstr "Imagine"
 
 msgid "img_xsmall"
-msgstr ""
+msgstr "Foarte mica"
 
 msgid "img_small"
-msgstr ""
+msgstr "Mica"
 
 msgid "img_medium"
-msgstr ""
+msgstr "Mediu"
 
 msgid "img_large"
-msgstr ""
+msgstr "Mare"
 
 msgid "img_xlarge"
-msgstr ""
+msgstr "Foarte mare"
 
 msgid "cpsschemas_label_false"
-msgstr ""
+msgstr "Nu"
 
 msgid "cpsschemas_label_true"
-msgstr ""
+msgstr "Da"
 
 msgid "cpsschema_label_on"
-msgstr ""
+msgstr "Activ"
 
 msgid "cpsschema_label_off"
-msgstr ""
+msgstr "Inactiv"
 
 msgid "cpsschemas_label_link_href"
-msgstr ""
+msgstr "URL"
 
 msgid "cpsschemas_label_link_content"
-msgstr ""
+msgstr "Numele legaturii"
 
 msgid "cpsschemas_label_link_title"
-msgstr ""
+msgstr "Descriere"
 
 # zctext
 msgid "cpsschemas_label_zctext_operator_and"
@@ -504,35 +630,36 @@ msgid "cpsschemas_label_modified_since_365"
 msgstr ""
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr ""
+msgstr "Identificatorul este deja folosit, alege altul"
 
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr ""
+msgstr "Vocabular creat."
 
 msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr ""
+msgstr "Identificatorul este obligatoriu."
 
 msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr ""
+msgstr "Intrarea a fost creata."
 
 msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr ""
+msgstr "Intrarea a fost adaugata."
 
 msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr ""
+msgstr "Intrarile au fost sterse."
 
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr ""
+msgstr "Trebuie sa selectezi o intrare."
 
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr ""
+msgstr "Vocabular adus la zi"
 
 msgid "label_none_selection"
-msgstr ""
+msgstr " -- Gol -- "
 
 msgid "label_other_selection"
-msgstr ""
+msgstr "Altul, precizeaza : "
 
 # ## action =================================================
 msgid "action_edit_online"
-msgstr ""
+msgstr "Modifica in linie"
+
