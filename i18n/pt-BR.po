@@ -1,0 +1,347 @@
+# translation of pt-BR.po to Português do Brasil
+# translation of pt-br.po to Português do Brasil
+# translation of cpsschemas.po to Português do Brasil
+# ##########################################################
+# ################# DON'T EDIT THIS FILE! ##################
+# ##########################################################
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+# Mario Olimpio de Menezes <mario@curiango.ipen.br>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: pt-BR\n"
+"POT-Creation-Date: 2004-05-21 11:25default\n"
+"PO-Revision-Date: 2004-06-08 16:42-0300\n"
+"Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
+"Language-Team: Português do Brasil <pt@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+
+#.   <button type="button" attributes="
+#.           id button_rte_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_rte"
+msgstr "Retorna"
+
+#.   <span>at</span>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_at"
+msgstr "às"
+
+#.   <span>h</span>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_hour"
+msgstr "hora"
+
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
+#.          (preview)
+#.         </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+msgid "cpsschema_link_preview"
+msgstr "Previsão"
+
+#.   <span>mn</span>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_minute"
+msgstr "min"
+
+#.   <span>resize</span>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr "Redimensiona"
+
+#.   <label>Change</label>
+#.   <label attributes="for string:${radio_name}_change">Change</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_change"
+msgstr "Mudar"
+
+#.   <label>Delete</label>
+#.   <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_delete"
+msgstr "Remover"
+
+#.   <label>Keep</label>
+#.   <label attributes="for string:${radio_name}_keep" condition="not: empty_file">Keep</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_keep"
+msgstr "Manter"
+
+#.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_none"
+msgstr "Nenhum"
+
+#.   <span>cpsschemas_photo_subtitle</span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr "Subtítulo"
+
+#.   <span>cpsschemas_render_format</span>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_format"
+msgstr "Formato de renderização"
+
+#.   <div class="label">cpsschemas_render_position</div>
+#.   <span>cpsschemas_render_position</span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_position"
+msgstr "Posição de renderização"
+
+#.   <h2>cpsschemas_vocabulary_add</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_add"
+msgstr "Adicionar vocabulário"
+
+#.   <h2>cpsschemas_vocabulary_available</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_available"
+msgstr "Vocabulário disponível"
+
+#.   <span class="description">cpsschemas_vocabulary_contains
+#.     ${voc_entries (tal replace="python:len(keys)")}
+#.     entry(ies)</span>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
+msgstr "Vocabulário contém ${voc_entries} entrada(s)."
+
+#.   <h2>cpsschemas_vocabulary_delete</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_delete"
+msgstr "Remover vocabulário"
+
+#.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_edit ${voc_id}"
+msgstr "Editar ${voc_id}"
+
+#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_entry_add"
+msgstr "Adicionar entrada de vocabulário"
+
+#.   <th>Id:</th>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_id"
+msgstr "Id:"
+
+#.   <th>Key:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_key"
+msgstr "Chave:"
+
+#.   <h1>cpsschemas_vocabulary_manage</h1>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_manage"
+msgstr "Administrar vocabulário"
+
+#.   <th>MsgId:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_msgid"
+msgstr "MsgId"
+
+#.   <th>Value:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_value"
+msgstr "Valor:"
+
+#.   <em style="color: red" content="err">err</em>
+#: from ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_textimage_render.pt
+msgid "err"
+msgstr "erro"
+
+#.   <th>
+#.           Click on the chosen value
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_click_chosen_value"
+msgstr "Clique no valor selecionado"
+
+#.   <th>
+#.           Enter a search term:
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_enter_searched_value"
+msgstr "Entre um termo de busca:"
+
+#.   <td align="left">
+#.        The Title
+#.       </td>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "label_alt_text"
+msgstr "Texto alternativo"
+
+msgid "cpsschemas_err_string"
+msgstr "cpsschemas_err_string"
+
+msgid "cpsschemas_err_string_too_long"
+msgstr "cpsschemas_err_string_too_long"
+
+msgid "cpsschemas_err_required"
+msgstr "cpsschemas_err_required"
+
+msgid "cpsschemas_err_textarea"
+msgstr "cpsschemas_err_textarea"
+
+msgid "cpsschemas_err_select"
+msgstr "cpsschemas_err_select"
+
+msgid "cpsschemas_err_multiselect"
+msgstr "cpsschemas_err_multiselect"
+
+msgid "cpsschemas_err_boolean"
+msgstr "cpsschemas_err_boolean"
+
+msgid "cpsschemas_err_int"
+msgstr "cpsschemas_err_int"
+
+msgid "cpsschemas_err_date"
+msgstr "cpsschemas_err_date"
+
+msgid "cpsschemas_err_file"
+msgstr "cpsschemas_err_file"
+
+msgid "cpsschemas_err_file_too_big"
+msgstr "cpsschemas_err_file_too_big"
+
+msgid "cpsschemas_err_file_empty"
+msgstr "cpsschemas_err_file_empty"
+
+msgid "cpsschemas_err_image"
+msgstr "cpsschemas_err_image"
+
+msgid "cpsschemas_err_url"
+msgstr "cpsschemas_err_url"
+
+msgid "cpsschemas_err_long"
+msgstr "cpsschemas_err_long"
+
+msgid "cpsschemas_err_long_range"
+msgstr "cpsschemas_err_long_range"
+
+msgid "cpsschemas_err_float_positive"
+msgstr "cpsschemas_err_float_positive"
+
+msgid "cpsschemas_err_float_range"
+msgstr "cpsschemas_err_float_range"
+
+msgid "cpsschemas_err_float"
+msgstr "cpsschemas_err_float"
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr "cpsschemas_err_password_mismatch"
+
+msgid "cpsschemas_err_password_size_min"
+msgstr "cpsschemas_err_password_size_min"
+
+msgid "cpsschemas_err_password_lower"
+msgstr "cpsschemas_err_password_lower"
+
+msgid "cpsschemas_err_password_upper"
+msgstr "cpsschemas_err_password_upper"
+
+msgid "cpsschemas_err_password_digit"
+msgstr "cpsschemas_err_password_digit"
+
+msgid "cpsschemas_err_password_extra"
+msgstr "cpsschemas_err_password_extra"
+
+msgid "cpsschemas_err_identifier"
+msgstr "cpsschemas_err_identifier"
+
+msgid "cpsschemas_err_email"
+msgstr "cpsschemas_err_email"
+
+msgid "cpsschemas_err_readonly"
+msgstr "cpsschemas_err_readonly"
+
+msgid "jscalendar_date_fmt"
+msgstr "%d/%m/%Y %T %Z"
+
+msgid "cpsschemas_rposition_normal"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_center"
+msgstr ""
+
+msgid "cpsschemas_rformat_text"
+msgstr ""
+
+msgid "cpsschemas_rformat_html"
+msgstr ""
+
+msgid "cpsschemas_rformat_stx"
+msgstr ""
+
+msgid "cpsschemas_rformat_pre"
+msgstr ""
+
+msgid "cpsschemas_rformat_original"
+msgstr ""
+
+msgid "img_auto_size"
+msgstr ""
+
+msgid "img_icon"
+msgstr "Ícone"
+
+msgid "img_xsmall"
+msgstr ""
+
+msgid "img_small"
+msgstr ""
+
+msgid "img_medium"
+msgstr ""
+
+msgid "img_large"
+msgstr ""
+
+msgid "img_xlarge"
+msgstr ""
+
+msgid "cpsschemas_label_false"
+msgstr "Não"
+
+msgid "cpsschemas_label_true"
+msgstr "Sim"
+
+msgid "cpsschema_label_on"
+msgstr ""
+
+msgid "cpsschema_label_off"
+msgstr ""
+
+msgid "cpsschemas_label_link_href"
+msgstr ""
+
+msgid "cpsschemas_label_link_content"
+msgstr ""
+
+msgid "cpsschemas_label_link_title"
+msgstr ""
