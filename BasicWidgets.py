@@ -21,14 +21,17 @@
 Definition of standard widget types.
 """
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, PROBLEM
 from cgi import escape
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
 from types import ListType, TupleType
-
+try:
+    import PIL.Image
+except ImportError:
+    pass
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 from OFS.PropertyManager import PropertyManager
@@ -1240,6 +1243,29 @@ class CPSImageWidget(CPSWidget):
                         not mimetype.normalized().startswith('image')):
                         err = 'cpsschemas_err_image'
                     else:
+                        size = (self.display_width,
+                                self.display_height)
+                        if size[0] and size[1]:
+                            try:
+                                img = PIL.Image.open(file)
+                                # keep ratio
+                                x, y = cur_size = img.size
+                                if x != size[0]:
+                                    y = y * size[0] / x;
+                                    x = size[0]
+                                if y > size[1]:
+                                    x = x * size[1] / y;
+                                    y = size[1]
+                                if (x, y) != cur_size:
+                                    img = img.resize((x, y),
+                                                     PIL.Image.ANTIALIAS)
+                                    file.seek(0)
+                                    img.save(file,
+                                             format=mimetype.extensions[0])
+                            except (NameError, IOError, ValueError):
+                                LOG('CPSImageWidget', PROBLEM,
+                                    "Failed to resize file %s keep original" \
+                                    % filetitle)
                         file = Image(fileid, filetitle, file)
                         LOG('CPSImageWidget', DEBUG,
                             'validate change set %s' % `file`)
