@@ -172,11 +172,13 @@ class OLDDataModel(UserDict):
 
 class DataModel(UserDict):
 
-    def __init__(self, ob):
+    def __init__(self, ob, schemas=[]):
         UserDict.__init__(self)
         self._ob = ob
         self._fields = {}
         self._schemas = {}
+        for schema in schemas:
+            self.addSchema(schema)
 
     def addSchema(self, schema):
         for fieldid in schema.keys():
@@ -189,10 +191,7 @@ class DataModel(UserDict):
 
     def _fetch(self):
         """Fetch the data into local dict for user access."""
-        self.data['i1'] = getattr(aq_base(self._ob), 'i1', 1231) # XXX test
-        self.data['i2'] = getattr(aq_base(self._ob), 'i2', 'foo') # XXX test
-        return
-        for schema in self._schemas:
+        for schema in self._schemas.values():
             # XXX use storage adapters for each schema
             for fieldid in schema.keys():
                 try:
@@ -204,12 +203,7 @@ class DataModel(UserDict):
 
     def _commit(self):
         """Commit modified data into object."""
-        # XXX use adapters
-        LOG('DataModel', DEBUG, 'committing data %s' % self.data)
-        self._ob.i1 = self.data['i1']
-        self._ob.i2 = self.data['i2']
-        return
-        for schema in self._schemas:
+        for schema in self._schemas.values():
             # XXX use storage adapters for each schema
             for fieldid in schema.keys():
                 setattr(self._ob, fieldid, self.data[fieldid])

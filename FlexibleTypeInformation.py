@@ -190,7 +190,7 @@ class FlexibleTypeInformation(TypeInformation):
     def getDataModel(self, ob):
         """Get the datamodel for an object of this type."""
         stool = getToolByName(self, 'portal_schemas')
-        dm = DataModel(ob)
+        schemas = []
         for schema_id in self.getSchemaIds():
             schema = stool._getOb(schema_id, None)
             if schema is None:
@@ -198,7 +198,8 @@ class FlexibleTypeInformation(TypeInformation):
                     'getDataModel: missing schema %s' % schema_id)
                 # XXX raise exception
                 continue
-            dm.addSchema(schema)
+            schemas.append(schema)
+        dm = DataModel(ob, schemas)
         dm._fetch()
         return dm
 
