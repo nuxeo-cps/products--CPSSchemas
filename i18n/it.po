@@ -287,9 +287,8 @@ msgstr "La password e la conferma non coincidono"
 msgid "cpsschemas_err_password_extra"
 msgstr "La password e la conferma non coincidono"
 
-#, fuzzy
 msgid "cpsschemas_err_email"
-msgstr "File non valido"
+msgstr "Email non valida"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
