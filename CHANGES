@@ -11,7 +11,8 @@ Bug fixes:
 ~~~~~~~~~~
 - EmailWidget was always mandatory.
 - CheckBoxWidget's default should not be a list but an empty string.
--
+- SelectWidget in edit mode adding display current value select 
+  even if not in the vocabulary
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- MultiSelect widget handle is_required property
