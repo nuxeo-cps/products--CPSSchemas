@@ -1,4 +1,19 @@
 *******************************************
+** CPSSchemas V0.4.0 [R1 build 2003-10/08-14:57 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- adding Link Widget
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+*******************************************
 ** CPSSchemas V0.3.1 [R1 build 2003-10/06-08:43 by ben]
 
 ZODB Requires:
