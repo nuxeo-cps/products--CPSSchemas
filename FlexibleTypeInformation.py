@@ -194,12 +194,12 @@ class FlexibleTypeInformation(TypeInformation):
 
     security.declarePrivate('getSchemaIds')
     def getSchemaIds(self):
-        """Get the schema ids for this type."""
+        """Get the schema ids for our type."""
         return self.schemas
 
     security.declarePrivate('getDataModel')
     def getDataModel(self, ob):
-        """Get the datamodel for an object of this type."""
+        """Get the datamodel for an object of our type."""
         stool = getToolByName(self, 'portal_schemas')
         schemas = []
         for schema_id in self.getSchemaIds():
@@ -216,7 +216,7 @@ class FlexibleTypeInformation(TypeInformation):
 
     security.declarePrivate('getLayout')
     def getLayout(self):
-        """Get the layout for this type."""
+        """Get the layout for our type."""
         ltool = getToolByName(self, 'portal_layouts')
         layout = ltool._getOb(self.layout, None)
         if layout is None:
@@ -241,7 +241,7 @@ class FlexibleTypeInformation(TypeInformation):
     security.declarePrivate('renderEditObject')
     def renderEditObject(self, ob, request=None, errmode='edit',
                          okmode='edit'):
-        """Maybe modify the object from request, and redirect to new mode."""
+        """Maybe modify the object from request, and renders to new mode."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
         layoutob = self.getLayout()
@@ -264,14 +264,14 @@ class FlexibleTypeInformation(TypeInformation):
 
     security.declareProtected(View, 'getDataStructure')
     def getDataStructure(self, ob):
-        """Get the datastructure for an object of this type."""
+        """Get the datastructure for an object of our type."""
         pass
 
 
 
     security.declarePublic('getSchemas')
     def getSchemas(self):
-        """Get the sequence of schemas describing this type.
+        """Get the sequence of schemas describing our type.
 
         Returns a sequence of Schema objects.
         """
