@@ -81,6 +81,11 @@ class DataModel(UserDict):
         self._schemas = ()
         self._adapters = ()
         self._proxy = proxy
+        if context is None:
+            if proxy is not None:
+                context = proxy
+            else:
+                context = ob
         self._context = context
         for schema in schemas:
             self._addSchema(schema)
