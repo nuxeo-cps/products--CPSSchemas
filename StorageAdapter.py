@@ -191,7 +191,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         setattr(self._ob, field_id, value)
 
     def _getContentUrl(self, object, field_id):
-        return '/%s/%s' % (object.absolute_url(relative=1), field_id)
+        return '%s/%s' % (object.absolute_url(), field_id)
 
 
 class MetaDataStorageAdapter(BaseStorageAdapter):
@@ -250,4 +250,4 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         meth(value)
 
     def _getContentUrl(self, object, field_id):
-        return '/%s/%s' % (object.absolute_url(relative=1), field_id)
+        return '%s/%s' % (object.absolute_url(), field_id)
