@@ -3,7 +3,9 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Select Widget (displays a menu to choose one string)
+- CheckBox Widget (displays a checkbox to choose true/false)
+- MultiSelect Widget (display a select multiple to choose a list of strings)
 Bug fixes:
 ~~~~~~~~~~
 -
