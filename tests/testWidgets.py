@@ -20,6 +20,8 @@
 import unittest
 import CPSSchemasTestCase
 
+from Products.CMFCore.Expression import Expression
+
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import Widget
 from Products.CPSSchemas.DataModel import DataModel
@@ -42,57 +44,8 @@ class TestWidgetTypesTool(CPSSchemasTestCase.CPSSchemasTestCase):
             # XXX AT: tests fail using zopectl. It seems like all_meta_types
             # returns the meta_type list twice. Did not investigate further to
             # see if this is because widget types are registered twice.
-            self.tool.manage_addCPSWidgetType(id, swt)
-
-
-    def test_getCssClass(self):
-        # create a bare widget, and set it in the portal to be able to create
-        # the expression namespace
-        widget = Widget('widget_id', widgettype='dummy_type')
-        self.portal._setOb('widget_id', widget)
-        widget = self.portal._getOb('widget_id')
-        # dummy datamodel to be passed to the expression
-        dm = DataModel(ob=self.portal, proxy=None)
-        layout_mode = 'view'
-
-        # just use css_class
-        self.assertEquals(widget.getCssClass('view', dm), '')
-        kw = {'css_class': 'stringClass'}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getCssClass('view', dm), 'stringClass')
-        self.assertEquals(widget.getCssClass('create', dm), 'stringClassEdit')
-        self.assertEquals(widget.getCssClass('edit', dm), 'stringClassEdit')
-
-        # just use css_class_expr
-        kw = {'css_class': '', 'css_class_expr': 'string:exprClass'}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
-        self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
-
-        # use both properties
-        kw = {'css_class': 'stringClass', 'css_class_expr': 'string:exprClass'}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
-        self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
-
-        kw = {'css_class': 'stringClass', 'css_class_expr': 'nothing'}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getCssClass('view', dm), '')
-        self.assertEquals(widget.getCssClass('edit', dm), '')
-
-        # use non dummy expressions :)
-        kw = {'css_class': 'stringClass',
-              'css_class_expr': "python:layout_mode == 'view' and 'viewExprClass' or nothing"}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getCssClass('view', dm), 'viewExprClass')
-        self.assertEquals(widget.getCssClass('edit', dm), '')
-
-        kw = {'css_class': 'stringClass',
-              'css_class_expr': "python:layout_mode == 'search' and 'searchExprClass' or nothing"}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getCssClass('view', dm), '')
-        self.assertEquals(widget.getCssClass('edit', dm), '')
-        self.assertEquals(widget.getCssClass('search', dm), 'searchExprClass')
+            if id not in self.tool.objectIds():
+                self.tool.manage_addCPSWidgetType(id, swt)
 
 
     def testRegistry(self):
@@ -138,6 +91,123 @@ class TestWidgetTypesTool(CPSSchemasTestCase.CPSSchemasTestCase):
         widget = self.tool["Float Widget"].makeInstance("widget_id")
         self.assertEquals(widget.getWidgetId(), "widget_id")
         self.assertEquals(widget.getFieldTypes(), ('CPS Float Field',))
+
+    def test_getCssClass(self):
+        # create a bare widget, and set it in the portal to be able to create
+        # the expression namespace
+        widget = Widget('widget_id', widgettype='dummy_type')
+        self.portal._setOb('widget_id', widget)
+        widget = self.portal._getOb('widget_id')
+        # dummy datamodel to be passed to the expression
+        dm = DataModel(ob=self.portal, proxy=None)
+
+        # just use css_class
+        self.assertEquals(widget.getCssClass('view', dm), '')
+        kw = {'css_class': 'stringClass'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'stringClass')
+        self.assertEquals(widget.getCssClass('create', dm), 'stringClassEdit')
+        self.assertEquals(widget.getCssClass('edit', dm), 'stringClassEdit')
+
+        # just use css_class_expr
+        kw = {'css_class': '', 'css_class_expr': 'string:exprClass'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
+        self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
+
+        # use both properties
+        kw = {'css_class': 'stringClass', 'css_class_expr': 'string:exprClass'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
+        self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
+
+        kw = {'css_class': 'stringClass', 'css_class_expr': 'nothing'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), '')
+        self.assertEquals(widget.getCssClass('edit', dm), '')
+
+        # use non dummy expressions :)
+        kw = {'css_class': 'stringClass',
+              'css_class_expr': "python:layout_mode == 'view' and 'viewExprClass' or nothing"}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'viewExprClass')
+        self.assertEquals(widget.getCssClass('edit', dm), '')
+
+        kw = {'css_class': 'stringClass',
+              'css_class_expr': "python:layout_mode == 'search' and 'searchExprClass' or nothing"}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), '')
+        self.assertEquals(widget.getCssClass('edit', dm), '')
+        self.assertEquals(widget.getCssClass('search', dm), 'searchExprClass')
+
+    def test_javascript_expr_compilation(self):
+        widget = Widget('widget_id', widgettype='dummy_type')
+        kw = {'javascript_expr': ''}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.javascript_expr_c, None)
+        js_code = """
+function getSelectedRadioId(buttonGroup) {
+  var i = getSelectedRadio(buttonGroup);
+  if (i == -1) {
+    return "";
+  } else {
+    if (buttonGroup[i]) {
+      return buttonGroup[i].id;
+    } else {
+      return buttonGroup.id;
+    }
+  }
+}
+"""
+
+        kw = {'javascript_expr': 'javascript:' + js_code}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.javascript_expr_c, js_code.strip())
+
+    def test_getJavaScriptCode(self):
+        # create a bare widget, and set it in the portal to be able to create
+        # the expression namespace
+        widget = Widget('widget_id', widgettype='dummy_type')
+        self.portal._setOb('widget_id', widget)
+        widget = self.portal._getOb('widget_id')
+        # dummy datamodel to be passed to the expression
+        dm = DataModel(ob=self.portal, proxy=None)
+
+        # dummy tests, sorry, no JavaScript inspiration :)
+        kw = {'javascript_expr': ''}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getJavaScriptCode('view', dm), '')
+
+        js_code = """
+function getSelectedRadioId(buttonGroup) {
+  var i = getSelectedRadio(buttonGroup);
+  if (i == -1) {
+    return "";
+  } else {
+    if (buttonGroup[i]) {
+      return buttonGroup[i].id;
+    } else {
+      return buttonGroup.id;
+    }
+  }
+}
+"""
+        kw = {'javascript_expr': 'javascript:' + js_code}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getJavaScriptCode('view', dm), js_code.strip())
+
+        js_code = """
+function getLayoutMode() {
+  return 'view';
+}
+"""
+        kw = {
+            'javascript_expr': """string:function getLayoutMode() {
+  return '${layout_mode}';
+}"""}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getJavaScriptCode('view', dm), js_code.strip())
+
 
 
 def test_suite():
