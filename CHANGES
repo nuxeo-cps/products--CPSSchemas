@@ -3,14 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
+-
 Bug fixes:
 ~~~~~~~~~~
-- fix: zoomed mimetype icon for attached file is ugly
-- RTE button JavaScript toggle corrected
-- Hardening + W3C compliance : Escaping content that has been entered in as text
-- CPSURLWidget now really uses the display_width value to truncate the display
-  of URLs that are too long and append '...' in the end.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Additional Field API to convert to and from LDAP attributes.
-- Additional StorageAdapter API: getFieldIds().
+-

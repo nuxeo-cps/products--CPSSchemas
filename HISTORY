@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.21.0 [R1 build 2004/05/05-00:21 by guillaum]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+Bug fixes:
+~~~~~~~~~~
+- fix: zoomed mimetype icon for attached file is ugly
+- RTE button JavaScript toggle corrected
+- Hardening + W3C compliance : Escaping content that has been entered in as text
+- CPSURLWidget now really uses the display_width value to truncate the display
+  of URLs that are too long and append '...' in the end.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Additional Field API to convert to and from LDAP attributes.
+- Additional StorageAdapter API: getFieldIds().
+
+*******************************************
 ** CPSSchemas V0.20.0 [R1 build 2004/04/29-11:09 by madarche]
 
 Requires:
