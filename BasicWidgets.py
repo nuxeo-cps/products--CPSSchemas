@@ -144,7 +144,7 @@ class CPSStringWidget(CPSWidget):
             v = str(value)
         except ValueError:
             datastructure.setError(self.getWidgetId(),
-                                   "Bad str received")
+                                   "cpsdoc_err_string")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
@@ -312,7 +312,7 @@ class CPSTextAreaWidget(CPSWidget):
             v = str(value)
         except ValueError:
             datastructure.setError(self.getWidgetId(),
-                                   "Bad str received")
+                                   "cpsdoc_err_textarea")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
@@ -368,7 +368,7 @@ class CPSIntWidget(CPSWidget):
             v = int(value)
         except (ValueError, TypeError):
             datastructure.setError(self.getWidgetId(),
-                                   "Bad int received")
+                                   "cpsdoc_err_int")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
@@ -575,7 +575,7 @@ class CPSDateWidget(CPSWidget):
             v = DateTime(int(y), int(m), int(d))
         except (ValueError, TypeError, DateTime.DateTimeError,
                 DateTime.SyntaxError, DateTime.DateError):
-            datastructure.setError(widget_id, "Bad date received")
+            datastructure.setError(widget_id, 'cpsdoc_err_date')
             return 0
         else:
             datamodel[field_id] = v
@@ -671,8 +671,7 @@ class CPSFileWidget(CPSWidget):
                 ok = 1
             else:
                 LOG('CPSFileWidget', DEBUG, 'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, "Bad file received (%s)"
-                                       % repr(file))
+                datastructure.setError(widget_id, 'cpsdoc_err_file')
                 ok = 0
         if ok:
             self.prepare(datastructure, datamodel)
@@ -746,8 +745,7 @@ class CPSImageWidget(CPSWidget):
             else:
                 LOG('CPSImageWidget', DEBUG,
                     'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, "Bad file received (%s)"
-                                       % repr(file))
+                datastructure.setError(widget_id, 'cpsdoc_err_image')
                 ok = 0
         if ok:
             self.prepare(datastructure, datamodel)
