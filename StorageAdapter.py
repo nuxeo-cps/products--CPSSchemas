@@ -248,6 +248,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         Calls the getter method.
         """
         ob = self._ob
+        if ob is None:
+            # Creation
+            return field.getDefault()
         attr = self._field_attributes.get(field_id)
         if attr is None:
             raise ValueError("Field %s not allowed by MetaDataStorageAdapter"
