@@ -51,14 +51,15 @@ class TestDataModel(unittest.TestCase):
         """Test the dirty_fields_map attribute of the DataModel"""
         doc = FakeDocument()
         dm = DataModel(doc, (doc.adapter,))
-        field_ids = ['f1', 'f2', 'f3']
+        field_ids = ('f1', 'f3')
         for field_id in field_ids:
             dm[field_id] = 'XXX'
-        dirty_fields_map = dm.dirty_fields_map
 
         # Test that after setting values in the datamodel,
         # each field is marked as dirty.
-        self.failUnless(dirty_fields_map.values() == len(field_ids) * [1])
+        for field_id in dm.keys():
+            dirty = not not dm.isDirty(field_id)
+            self.assertEquals(dirty, field_id in field_ids)
 
     def _testFieldIds(self):
         fields = self.dm.getFieldIds()
