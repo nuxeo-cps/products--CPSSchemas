@@ -1155,6 +1155,7 @@ class CPSFileWidget(CPSWidget):
                 field = adapter.getSchema()[field_id]
                 break # Note: 'adapter' is still the right one
 
+        empty_file = 1
         ob = dm.getObject()
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
@@ -1167,14 +1168,13 @@ class CPSFileWidget(CPSWidget):
                 if file and type(file) is not File:
                     file = File(self.getWidgetId(), '', file)
                 empty_file = 0
-            else:
-                empty_file = 1
         else:
             content_url = adapter._getContentUrl(ob, field_id)
             file = self.restrictedTraverse(content_url)
-            empty_file = 0
+            if not file:
+                empty_file = 0
 
-        if file and file != "''":
+        if file:
             current_name = file.getId()
         else:
             current_name = ''
@@ -1379,6 +1379,7 @@ class CPSImageWidget(CPSWidget):
                 field = adapter.getSchema()[field_id]
                 break # Note: 'adapter' is still the right one
 
+        empty_file = 1
         ob = dm.getObject()
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
@@ -1391,36 +1392,36 @@ class CPSImageWidget(CPSWidget):
                 if image and type(image) is not Image:
                     image = Image(self.getWidgetId(), '', image)
                 empty_file = 0
-            else:
-                empty_file = 1
         else:
             content_url = adapter._getContentUrl(ob, field_id)
             image = self.restrictedTraverse(content_url)
-            empty_file = 0
+            if not image:
+                empty_file = 0
 
         if empty_file:
             height = 0
             width = 0
+            tag = ''
         else:
             height = int(getattr(image, 'height', 0))
             width = int(getattr(image,'width', 0))
 
-        if self.allow_resize:
-            z_w = z_h = 1
-            h = int(getattr(image, 'height', 0))
-            w = int(getattr(image, 'width', 0))
-            if w and h:
-                if w < width:
-                    z_w = width / float(w)
-                if h < height:
-                    z_h = height / float(h)
-                zoom = min(z_w, z_h)
-                width = int(zoom * w)
-                height = int(zoom * h)
+            if self.allow_resize:
+                z_w = z_h = 1
+                h = int(getattr(image, 'height', 0))
+                w = int(getattr(image, 'width', 0))
+                if w and h:
+                    if w < width:
+                        z_w = width / float(w)
+                    if h < height:
+                        z_h = height / float(h)
+                    zoom = min(z_w, z_h)
+                    width = int(zoom * w)
+                    height = int(zoom * h)
 
-        title = getattr(image, 'title', None)
-        tag = renderHtmlTag('img', src=content_url, width=str(width),
-                height=str(height), border='0', alt=title, title=title)
+            title = getattr(image, 'title', None)
+            tag = renderHtmlTag('img', src=content_url, width=str(width),
+                    height=str(height), border='0', alt=title, title=title)
 
         if image:
             current_name = image.getId()
