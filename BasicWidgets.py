@@ -499,16 +499,22 @@ class CPSDateWidget(CPSWidget):
                                  type='text',
                                  name=html_widget_id+'_d',
                                  value=d,
+                                 size=2,
+                                 maxlength=2,
                                  css_class=self.css_class)
             mtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_m',
                                  value=m,
+                                 size=2,
+                                 maxlength=2,
                                  css_class=self.css_class)
             ytag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_y',
                                  value=y,
+                                 size=6,
+                                 maxlength=6,
                                  css_class=self.css_class)
             # XXX customize format
             return dtag + '/' + mtag + '/' + ytag
