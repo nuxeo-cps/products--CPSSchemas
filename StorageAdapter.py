@@ -201,11 +201,35 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         return '%s/%s' % (object.absolute_url(), field_id)
 
 
+ACCESSOR = []
+ACCESSOR_READ_ONLY = []
+
 class MetaDataStorageAdapter(BaseStorageAdapter):
     """MetaData Storage Adapter
 
-    This adapter simply gets and sets metadata using X() and setX() methods
+    This adapter simply gets and sets metadata using X() and setX()
+    methods for standard CMF Dublin Core methods, or using specific
+    attributes otherwise.
     """
+
+    _field_attributes = {
+        'Creator': ACCESSOR_READ_ONLY,
+        'CreationDate': ACCESSOR_READ_ONLY,
+        'Title': ACCESSOR,
+        'Subject': ACCESSOR,
+        'Description': ACCESSOR,
+        'Contributors': ACCESSOR,
+        'ModificationDate': ACCESSOR,
+        'EffectiveDate': ACCESSOR,
+        'ExpirationDate': ACCESSOR,
+        'Format': ACCESSOR,
+        'Language': ACCESSOR,
+        'Rights': ACCESSOR,
+        # XXX move these to accessors too using a monkey-patch.
+        'Coverage': 'coverage',
+        'Source': 'source',
+        'Relation': 'relation',
+        }
 
     def __init__(self, schema, ob, field_ids=None):
         self._ob = ob
@@ -224,14 +248,17 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         Calls the getter method.
         """
         ob = self._ob
-        if not hasattr(aq_base(ob), field_id):
+        attr = self._field_attributes.get(field_id)
+        if attr is None:
+            raise ValueError("Field %s not allowed by MetaDataStorageAdapter"
+                             % field_id)
+        elif attr is ACCESSOR or attr is ACCESSOR_READ_ONLY:
+            return getattr(ob, field_id)()
+        elif hasattr(aq_base(ob), attr):
+            return getattr(ob, attr)
+        else:
             # Use default from field.
             return field.getDefault()
-
-        meth = getattr(ob, field_id)
-        if callable(meth):
-            return meth()
-        return meth
 
     def _setFieldData(self, field_id, field, value):
         """Set data for one field.
@@ -239,22 +266,16 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         Calls the setter method.
         """
         ob = self._ob
-        if field_id in ('Coverage', 'Source', 'Relation'):
-            # finish the CMF Dublin Core implementation
-            # storing these metadata as attributes
-            setattr(ob, field_id, value)
-            return
-        meth_name = 'set' + field_id
-        if not hasattr(aq_base(ob), meth_name):
-            # skip metadata without setter method
-            LOG('MetaDataStorageAdapter._setFieldData', ERROR,
-                "Warning no method %s(), field not saved" % meth_name)
-            return
-        meth = getattr(ob, meth_name)
-        if not callable(meth):
-            raise ValueError(
-                "Invalid MetaData field, %s not callable" % meth_name)
-        meth(value)
+        attr = self._field_attributes.get(field_id)
+        if attr is None:
+            raise ValueError("Field %s not allowed by MetaDataStorageAdapter"
+                             % field_id)
+        elif attr is ACCESSOR:
+            getattr(ob, 'set'+field_id)(value)
+        elif attr is ACCESSOR_READ_ONLY:
+            raise ValueError("Field %s is read-only" % field_id)
+        else:
+            setattr(ob, attr, value)
 
     def _getContentUrl(self, object, field_id):
         return '%s/%s' % (object.absolute_url(), field_id)
