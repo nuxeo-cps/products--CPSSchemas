@@ -297,8 +297,8 @@ class DataModel(UserDict):
                 if info:
                     attrs = ['%s="%s"' % (k, escape(str(v)))
                              for k, v in info.items()]
-                    s += ' '+' '.join(attrs)
-                s += '>'+svalue+'</field>'
+                    s += ' ' + ' '.join(attrs)
+                s += '>' + svalue + '</field>'
                 res.append(s)
         return '\n'.join(res)
 

@@ -12,6 +12,7 @@ from Products.CPSSchemas.DataModel import DataModel, ValidationError
 class FakeDocument:
     pass
 
+# XXX: All these tests must be repared.
 class TestDataModel(unittest.TestCase):
 
     def xxxsetUp(self):
