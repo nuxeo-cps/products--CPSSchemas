@@ -1483,11 +1483,25 @@ class CPSFileWidget(CPSWidget):
 
     def getFileInfo(self, datastructure):
         """Get the file info from the datastructure."""
+        file = datastructure[self.getWidgetId()]
+        size = 0
+        if file:
+            if _isinstance(file, File):
+                current_name = file.getId()
+                size = file.get_size()
+            else:
+                current_name = self.getWidgetId()
+            empty_file = 0
+        else:
+            current_name = ''
+            empty_file = 1
+
+        # XXX This is a total mess, it needs refactoring.
+
         dm = datastructure.getDataModel()
         field_id = self.fields[0]
         for adapter in dm._adapters:
             if adapter.getSchema().has_key(field_id):
-                field = adapter.getSchema()[field_id]
                 break # Note: 'adapter' is still the right one
 
         ob = dm.getProxy()
@@ -1507,20 +1521,7 @@ class CPSFileWidget(CPSWidget):
             else:
                 content_url = None
         else:
-            content_url = adapter._getContentUrl(ob, field_id)
-
-        file = datastructure[self.getWidgetId()]
-        size = 0
-        if file:
-            if _isinstance(file, File):
-                current_name = file.getId()
-                size = file.get_size()
-            else:
-                current_name = self.getWidgetId()
-            empty_file = 0
-        else:
-            current_name = ''
-            empty_file = 1
+            content_url = adapter._getContentUrl(ob, field_id, current_name)
 
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = registry.lookupExtension(current_name)
