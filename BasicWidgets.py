@@ -1156,7 +1156,7 @@ class CPSFileWidget(CPSWidget):
                 break # Note: 'adapter' is still the right one
 
         empty_file = 1
-        ob = dm.getObject()
+        ob = dm.getProxy()
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
             # ZODB takes the entry_id instead of object.
@@ -1380,7 +1380,7 @@ class CPSImageWidget(CPSWidget):
                 break # Note: 'adapter' is still the right one
 
         empty_file = 1
-        ob = dm.getObject()
+        ob = dm.getProxy()
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
             # ZODB takes the entry_id instead of object.
