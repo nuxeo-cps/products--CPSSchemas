@@ -1,9 +1,11 @@
 Requires:
 ~~~~~~~~~
--
+- A recent version of PortalTransforms, at least PortalTransforms-1.0.tar.gz and
+  preferably PortalTransforms-1.0.3.tgz
 New features:
 ~~~~~~~~~~~~~
--
+- Handling of OpenOffice.org mimetypes if this is not already provided by the
+  host system
 Bug fixes:
 ~~~~~~~~~~
 -
