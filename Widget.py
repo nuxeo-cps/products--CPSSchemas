@@ -105,8 +105,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Get the widget mode from the given TAL expression'},
         {'id': 'widget_group_id', 'type': 'string', 'mode': 'w',
          'label': 'Group id for Javascript switching (if empty widget id is used)'},
-        {'id': 'widget_display_expr', 'type': 'boolean', 'mode': 'w',
-         'label': 'Depends on value display widget'},
+        {'id': 'widget_display_expr', 'type': 'text', 'mode': 'w',
+         'label': 'Return the css class given by the TAL expressions'},
         )
 
     fields = []
