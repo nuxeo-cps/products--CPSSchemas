@@ -75,6 +75,18 @@ class BaseStorageAdapter:
         self._field_items = field_items
         self._writable_field_items = writable_field_items
 
+    def getContextObject(self):
+        """Get the underlying context for this adapter.
+
+        If a getData/setData is later done, it will be done on this new
+        context.
+
+        This is used by CPS to switch to a writable object after unfreezing.
+        Also used by directory entry creation process, to specifiy the
+        id after an empty datamodel has been fetched.
+        """
+        return None
+
     def setContextObject(self, context):
         """Set a new underlying context for this adapter.
 
@@ -147,7 +159,8 @@ class BaseStorageAdapter:
         """Process data after read."""
         for field_id, field in self.getFieldItems():
             value = data[field_id]
-            data[field_id] = field.processValueAfterRead(value, data)
+            data[field_id] = field.processValueAfterRead(value, data,
+                                                         self.getContextObject())
 
     def _getFieldData(self, field_id, field, **kw):
         """Get data from one field."""
@@ -168,7 +181,8 @@ class BaseStorageAdapter:
             if field.write_ignore_storage:
                 continue
             value = data[field_id]
-            new_data[field_id] = field.processValueBeforeWrite(value, data)
+            new_data[field_id] = field.processValueBeforeWrite(value, data,
+                                                               self.getContextObject())
         return new_data
 
     def _setFieldData(self, field_id, value):
@@ -189,6 +203,10 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         """
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
+
+    def getContextObject(self):
+        """Get the underlying context for this adapter."""
+        return self._ob
 
     def setContextObject(self, context):
         """Set a new underlying context for this adapter."""
@@ -264,6 +282,10 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
 
+    def getContextObject(self):
+        """Get the underlying context for this adapter."""
+        return self._ob
+
     def setContextObject(self, context):
         """Set a new underlying context for this adapter."""
         self._ob = context
@@ -315,6 +337,10 @@ class MappingStorageAdapter(BaseStorageAdapter):
         """
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
+
+    def getContextObject(self):
+        """Get the underlying context for this adapter."""
+        return self._ob
 
     def setContextObject(self, context):
         """Set a new underlying context for this adapter."""

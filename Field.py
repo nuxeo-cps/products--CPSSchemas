@@ -236,7 +236,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # Storage interaction
     #
-    def _createStorageExpressionContext(self, value, data):
+    def _createStorageExpressionContext(self, value, data, context):
         """Create an expression context for field storage process."""
         # Put all the names in the data in the namespace.
         mapping = data.copy()
@@ -248,23 +248,27 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'portal': getToolByName(self, 'portal_url').getPortalObject(),
             'DateTime': DateTime,
             'nothing': None,
+            # Useful for objects
+            'context': context,
             })
         return getEngine().getContext(mapping)
 
     security.declarePrivate('processValueAfterRead')
-    def processValueAfterRead(self, value, data):
+    def processValueAfterRead(self, value, data, context):
         """Process value after read from storage."""
         if not self.read_process_expr_c:
             return value
-        expr_context = self._createStorageExpressionContext(value, data)
+        expr_context = self._createStorageExpressionContext(value, data,
+                                                            context)
         return self.read_process_expr_c(expr_context)
 
     security.declarePrivate('processValueBeforeWrite')
-    def processValueBeforeWrite(self, value, data):
+    def processValueBeforeWrite(self, value, data, context):
         """Process value before write to storage."""
         if not self.write_process_expr_c:
             return value
-        expr_context = self._createStorageExpressionContext(value, data)
+        expr_context = self._createStorageExpressionContext(value, data,
+                                                            context)
         return self.write_process_expr_c(expr_context)
 
     #
