@@ -1,7 +1,7 @@
 <table border="1"
    tal:define="layout options/layout;
-               ds options/ds;
-               dm options/dm;
+               ds options/datastructure;
+               dm options/datamodel;
              ">
   <tr>
     <td tal:attributes="colspan layout/ncols">

@@ -236,7 +236,8 @@ class FlexibleTypeInformation(TypeInformation):
         ds = DataStructure()
         layoutob = self.getLayout()
         layout = layoutob.getLayoutData(ds, dm)
-        return self._renderLayoutStyle(ob, mode, layout=layout, ds=ds, dm=dm)
+        return self._renderLayoutStyle(ob, mode, layout=layout,
+                                       datastructure=ds, datamodel=dm)
 
     security.declarePrivate('renderEditObject')
     def renderEditObject(self, ob, request=None, errmode='edit',
@@ -260,7 +261,7 @@ class FlexibleTypeInformation(TypeInformation):
             ok = 1
             mode = okmode
         return self._renderLayoutStyle(ob, mode, layout=layoutdata,
-                                       ds=ds, dm=dm, ok=ok)
+                                       datastructure=ds, datamodel=dm, ok=ok)
 
     security.declareProtected(View, 'getDataStructure')
     def getDataStructure(self, ob):
