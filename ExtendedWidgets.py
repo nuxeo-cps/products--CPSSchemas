@@ -315,34 +315,23 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     },
                    )
 
-    _properties = CPSWidget._properties + (
-        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
-         'label': 'Deletable'},
-        {'id': 'size_max', 'type': 'int', 'mode': 'w',
-         'label': 'Maximum file size'},
+    _properties = CPSFileWidget._properties + (
         {'id': 'allowed_suffixes', 'type': 'tokens', 'mode': 'w',
          'label': 'Allowed file suffixes (for example: .html .sxw)'},
         )
-    deletable = 1
-    size_max = 4*1024*1024
     allowed_suffixes = []
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
+        CPSFileWidget.prepare(self, datastructure, **kw)
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
-        datastructure[widget_id] = datamodel[self.fields[0]]
         # Compute preview info for widget.
         if len(self.fields) > 2 and datamodel.get(self.fields[2]) is not None:
             preview_id = self.fields[2]
         else:
             preview_id = None
         datastructure[widget_id + '_preview'] = preview_id
-        # make update from request work
-        datastructure[widget_id + '_choice'] = ''
-        datastructure[widget_id + '_title'] = ''
-        datastructure[widget_id + '_filename'] = ''
-
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -354,7 +343,12 @@ class CPSAttachedFileWidget(CPSFileWidget):
         file = None
         err = 0
         err_mapping = None
-        if choice == 'keep':
+        if choice == 'delete':
+            if self.is_required:
+                return self.doesNotValidate('cpsschemas_err_required',
+                                            None, file, datastructure)
+            datamodel[field_id] = None
+        elif choice == 'keep':
             if datastructure.has_key('restored_items') and \
                    widget_id in datastructure['restored_items']:
                 # the file is restored from the session after an invalid layout
@@ -375,11 +369,6 @@ class CPSAttachedFileWidget(CPSFileWidget):
                 if filetitle != file.title:
                     file.manage_changeProperties(title=filetitle)
                     datamodel[field_id] = file
-        elif choice == 'delete':
-            if self.is_required:
-                return self.doesNotValidate('cpsschemas_err_required',
-                                            None, file, datastructure)
-            datamodel[field_id] = None
         elif choice == 'change' and datastructure.get(widget_id):
             fileUpload = datastructure[widget_id]
             if not _isinstance(fileUpload, FileUpload):
@@ -432,7 +421,11 @@ class CPSAttachedFileWidget(CPSFileWidget):
 
     def doesNotValidate(self, err, err_mapping, file, datastructure):
         LOG('CPSAttachedFileWidget', DEBUG, 'error %s on %s' % (err, `file`))
-        datastructure.setError(self.getWidgetId(), err, err_mapping)
+        widget_id = self.getWidgetId ()
+        field_id = self.fields[0]
+        # do not keep rejected file; set error after change
+        datastructure[widget_id] = datastructure.getDataModel()[field_id]
+        datastructure.setError(widget_id, err, err_mapping)
         return 0
 
     def render(self, mode, datastructure, **kw):
@@ -656,11 +649,9 @@ class CPSPhotoWidget(CPSImageWidget):
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
+        CPSImageWidget.prepare(self, datastructure, **kw)
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
-
-        datastructure[widget_id] = datamodel[self.fields[0]]
-
         if len(self.fields) > 1:
             datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
         else:
@@ -673,28 +664,22 @@ class CPSPhotoWidget(CPSImageWidget):
                 if v in self.all_render_positions:
                     rposition = v
         datastructure[widget_id + '_rposition'] = rposition
-        # make update from request work
-        datastructure[widget_id + '_choice'] = ''
-        datastructure[widget_id + '_title'] = ''
-        if self.allow_resize:
-            datastructure[widget_id + '_resize'] = ''
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
-        field_id = self.fields[0]
         widget_id = self.getWidgetId()
+        subtitle = datastructure[widget_id + '_subtitle']
+        rposition = datastructure[widget_id + '_rposition']
+        # validate items specific to photo widget
+        if len(self.fields) > 1:
+            datamodel[self.fields[1]] = subtitle
+        if self.configurable != 'nothing':
+            if len(self.fields) > 2:
+                if rposition and rposition in self.all_render_positions:
+                    datamodel[self.fields[2]] = rposition
+        # CPSImage validation resets datastructure
         ret = CPSImageWidget.validate(self, datastructure, **kw)
-        if ret and datamodel[field_id]:
-            if len(self.fields) > 1:
-                datamodel[self.fields[1]] = datastructure[widget_id +
-                    '_subtitle']
-            if self.configurable != 'nothing':
-                if len(self.fields) > 2:
-                    rposition = datastructure[widget_id + '_rposition']
-                    if rposition and rposition in self.all_render_positions:
-                        datamodel[self.fields[2]] = rposition
-
         return ret
 
 
@@ -711,19 +696,7 @@ class CPSPhotoWidget(CPSImageWidget):
         rposition = datastructure[widget_id + '_rposition']
         subtitle = datastructure[widget_id + '_subtitle']
 
-        if kw.get('layout_mode') == 'create':
-            img_info = {'empty_file': 1,
-                        'content_url': '',
-                        'image_tag': '',
-                        'current_name': '-',
-                        'current_title': '',
-                        'mimetype': '',
-                        'last_modified': '',
-                        'height': 0,
-                        'width': 0,
-                       }
-        else:
-            img_info = self.getImageInfo(datastructure)
+        img_info = self.getImageInfo(datastructure)
 
         return meth(mode=mode, datastructure=datastructure,
                     subtitle=subtitle,
