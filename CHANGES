@@ -9,6 +9,8 @@ Bug fixes:
 ~~~~~~~~~~
 - Allow for "file:///xxx" URLs
 - Compute paths to preview URLs fine.
+- StorageAdapters now goes through write expressions despite write ignore
+  storage flag
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added variable mapping to errors stored in datastructure.
