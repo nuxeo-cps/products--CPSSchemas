@@ -5,6 +5,7 @@
                    current_name options/current_name;
                    empty_file options/empty_file;
                    mimetype options/mimetype;
+                   last_modified options/last_modified;
                   ">
 <img tal:condition="python: mode == 'view' and not empty_file"
      tal:replace="structure image_tag" />
@@ -31,7 +32,7 @@
       <td valign="middle">
         <a href="http://url..." target="_blank"
           tal:condition="python: not empty_file"
-          tal:attributes="href string:${content_url}?nocache">
+          tal:attributes="href string:${content_url}?nocache=${last_modified}">
         <tal:block condition="mimetype"
           replace="structure python:here.getImgTag(mimetype.icon_path,
           title=mimetype.name())" />

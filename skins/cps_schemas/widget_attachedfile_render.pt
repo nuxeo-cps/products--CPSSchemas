@@ -5,16 +5,18 @@
                    mimetype options/mimetype;
                    size options/size;
                    content_url options/content_url;
+                   last_modified options/last_modified;
                   ">
 <tal:block condition="python: mode == 'view' and not empty_file">
 
   <tal:block define="preview_id python:options['datastructure'][id+'_preview']">
-    <a target="_blank" tal:attributes="href content_url">
+    <a target="_blank"
+      tal:attributes="href string:${content_url}?nocache=${last_modified}">
       <tal:block condition="mimetype"
         replace="structure python:here.getImgTag(mimetype.icon_path,
         title=mimetype.name())" />
     </a>
-    <a tal:attributes="href string:${content_url}?nocache">
+    <a tal:attributes="href string:${content_url}?nocache=${last_modified}">
       <tal:block replace="current_name" />
     </a>
 
