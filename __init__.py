@@ -60,7 +60,7 @@ fti = (
 #    ()
 )
 
-registerDirectory('skins', globals())
+registerDirectory('skins/cps_document', globals())
 
 def initialize(registrar):
     #FieldsTypes.registerFieldType('string', StringField())
