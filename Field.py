@@ -228,6 +228,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
 
         Receives a string and additional info as arguments.
         """
+        # TODO
         if info and info['none'] == 'true':
             return None
         raise NotImplementedError

@@ -312,7 +312,7 @@ class CPSWidgetType(SimpleItemWithProperties):
 
     cls = None
 
-    def __init__(self, id, **kw):
+    def __init__(self, id):
         self._setId(id)
 
     security.declarePrivate('makeInstance')
