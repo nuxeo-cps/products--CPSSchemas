@@ -12,3 +12,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - sf code cleaning
+- Vocabularies are now used for all "choice" widgets.
