@@ -82,6 +82,9 @@ class BaseStorageAdapter:
         """Get the field ids and the fields."""
         return self._field_items
 
+    def getFieldIds(self):
+        return [field_id for field_id, field in self.getFieldItems()]
+
     def getWritableFieldItems(self):
         """Get the writable field ids and the fields."""
         return self._writable_field_items
