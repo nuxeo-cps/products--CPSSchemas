@@ -6,6 +6,9 @@ New features:
 - new URLWidget
 - new EmailWidget
 - TextWidget has size_max property
+- new 'help' attribute for widgets to store information related to filling the
+  widgets. This information can be displayed in UI as tooltips.
+
 Bug fixes:
 ~~~~~~~~~~
 -
