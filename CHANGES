@@ -3,7 +3,8 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Password widget: able to define a policy for password validation:
+  checking min, max size checking lower, upper, digit or extra chararcter
 Bug fixes:
 ~~~~~~~~~~
 - renderHtmlTag unable to generate <option value=""> tag
