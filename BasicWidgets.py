@@ -28,6 +28,8 @@ from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
 from types import ListType, TupleType, StringType
+from re import compile
+
 try:
     import PIL.Image
 except ImportError:
@@ -204,26 +206,31 @@ class CPSStringWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        widget_id = self.getWidgetId()
-        value = datastructure[widget_id]
+    def _extractValue(self, value):
+        """Return err and new value."""
+        err = None
         if not value:
-            value = ''                  # fix 'None' pb
-        err = 0
+            v = ''
+        else:
+            v = value
         try:
-            v = value.strip()
+            v = v.strip()
         except AttributeError:
             err = 'cpsschemas_err_string'
         else:
             if self.is_required and not v:
-                datastructure[widget_id] = ''
                 err = 'cpsschemas_err_required'
             elif self.size_max and len(v) > self.size_max:
                 err = 'cpsschemas_err_string_too_long'
+        return err, v
 
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        err, v = self._extractValue(datastructure[widget_id])
         if err:
             datastructure.setError(widget_id, err)
+            datastructure[widget_id] = v
         else:
             datamodel = datastructure.getDataModel()
             datamodel[self.fields[0]] = v
@@ -255,6 +262,78 @@ class CPSStringWidgetType(CPSWidgetType):
     cls = CPSStringWidget
 
 InitializeClass(CPSStringWidgetType)
+
+##################################################
+
+class CPSURLWidget(CPSStringWidget):
+    """URL widget."""
+    meta_type = "CPS URL Widget"
+    css_class = "url"
+    display_width = 72
+    size_max = 4096
+    # XXX should find a better one or check for invalid may be ?
+    # see test_url_nok_5
+    url_pat = compile(
+        r'^((http://)|/)?((\w|\~|\#|=|\.\.)[\:\.\-\/\?\=\&\+%]?)+$')
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        err, v = self._extractValue(datastructure[widget_id])
+        if not err and not self.url_pat.match(v.lower()):
+            err = 'cpsschemas_err_url'
+
+        if err:
+            datastructure.setError(widget_id, err)
+            datastructure[widget_id] = v
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+
+        return not err
+
+InitializeClass(CPSURLWidget)
+
+class CPSURLWidgetType(CPSWidgetType):
+    """URL widget type."""
+    meta_type = "CPS URL Widget Type"
+    cls = CPSURLWidget
+
+InitializeClass(CPSURLWidgetType)
+
+##################################################
+
+class CPSEmailWidget(CPSStringWidget):
+    """Email widget."""
+    meta_type = "CPS Email Widget"
+    css_class = "url"
+    display_width = 72
+    size_max = 256
+    email_pat = compile(r"^([\w_\.\-])+\@(([\w\-])+\.)+([\w]{2,4})+$")
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        err, v = self._extractValue(datastructure[widget_id])
+        if not err and not self.email_pat.match(v):
+            err = 'cpsschemas_err_email'
+        if err:
+            datastructure.setError(widget_id, err)
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+
+        return not err
+
+InitializeClass(CPSEmailWidget)
+
+class CPSEmailWidgetType(CPSWidgetType):
+    """Email widget type."""
+    meta_type = "CPS Email Widget Type"
+    cls = CPSEmailWidget
+
+InitializeClass(CPSEmailWidgetType)
+
 
 ##################################################
 
@@ -1382,7 +1461,7 @@ class CPSImageWidget(CPSFileWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
-        err = 0
+        err = None
         if choice == 'delete':
             datamodel[field_id] = None
         elif choice == 'change' or datastructure.get(widget_id):
@@ -1775,6 +1854,8 @@ InitializeClass(CPSCompoundWidgetType)
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSCompoundWidgetType, CPSCompoundWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
+WidgetTypeRegistry.register(CPSURLWidgetType, CPSURLWidget)
+WidgetTypeRegistry.register(CPSEmailWidgetType, CPSEmailWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
