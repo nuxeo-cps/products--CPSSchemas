@@ -624,6 +624,70 @@ class CPSPasswordWidgetType(CPSStringWidgetType):
 InitializeClass(CPSPasswordWidgetType)
 
 ##################################################
+
+class CPSCheckBoxWidget(CPSWidget):   
+    """CheckBox widget.
+       Deprecated, use CPS Boolean Widget !!!"""    
+    meta_type = "CPS CheckBox Widget"   
+    
+    field_types = ('CPS Int Field',)    
+    
+    _properties = CPSWidget._properties + (   
+        {'id': 'display_true', 'type': 'string', 'mode': 'w',   
+         'label': 'Display for true'},    
+        {'id': 'display_false', 'type': 'string', 'mode': 'w',    
+         'label': 'Display for false'},   
+        )   
+    display_true = "Yes"    
+    display_false = "No"    
+    
+    def prepare(self, datastructure, **kw):   
+        """Prepare datastructure from datamodel."""   
+        datamodel = datastructure.getDataModel()    
+        datastructure[self.getWidgetId()] = not not datamodel[self.fields[0]]   
+    
+    def validate(self, datastructure, **kw):    
+        """Validate datastructure and update datamodel."""    
+        value = datastructure[self.getWidgetId()]   
+        datamodel = datastructure.getDataModel()    
+        datamodel[self.fields[0]] = not not value   
+        return 1    
+    
+    def render(self, mode, datastructure, **kw):    
+        """Render in mode from datastructure."""    
+        value = datastructure[self.getWidgetId()]   
+        if mode == 'view':    
+            # XXX L10N Should expand view mode to be able to do i18n.   
+            if value:   
+                return self.display_true    
+            else:   
+                return self.display_false   
+        elif mode == 'edit':    
+            html_widget_id = self.getHtmlWidgetId()   
+            kw = {'type': 'checkbox',   
+                  'name': html_widget_id,   
+                  }   
+            if value:   
+                kw['checked'] = 'checked'   
+            tag = renderHtmlTag('input', **kw)    
+            default_tag = renderHtmlTag('input',    
+                                        type='hidden',    
+                                        name=html_widget_id+':default',   
+                                        value='')   
+            return default_tag+tag    
+        raise RuntimeError('unknown mode %s' % mode)    
+    
+InitializeClass(CPSCheckBoxWidget)    
+    
+    
+class CPSCheckBoxWidgetType(CPSStringWidgetType):   
+    """CheckBox widget type."""   
+    meta_type = "CPS CheckBox Widget Type"    
+    cls = CPSCheckBoxWidget   
+    
+InitializeClass(CPSCheckBoxWidgetType)    
+    
+##################################################
 # Warning textarea widget code is back to r1.75
 # refactored textarea with position and format is now located in
 # ExtendWidgets and named CPSTextWidget
@@ -2213,6 +2277,7 @@ WidgetTypeRegistry.register(CPSEmailWidgetType)
 WidgetTypeRegistry.register(CPSIdentifierWidgetType)
 WidgetTypeRegistry.register(CPSHeadingWidgetType)
 WidgetTypeRegistry.register(CPSPasswordWidgetType)
+WidgetTypeRegistry.register(CPSCheckBoxWidgetType)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType)
 WidgetTypeRegistry.register(CPSLinesWidgetType)
 WidgetTypeRegistry.register(CPSBooleanWidgetType)
