@@ -45,8 +45,8 @@ class CPSTextWidget(CPSWidget):
 
     # Warning if configurable the widget require field[1] and field[2]
     field_types = ('CPS String Field',  # text value
-                   'CPS String Field',  # render_format if configurable
-                   'CPS String Field')  # render_position if configurable
+                   'CPS String Field',  # render_position if configurable
+                   'CPS String Field')  # render_format if configurable
     field_inits = ({'is_indexed': 1,}, {}, {})
 
     _properties = CPSWidget._properties + (
@@ -54,23 +54,24 @@ class CPSTextWidget(CPSWidget):
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
-        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_formats',
-         'label': 'Render format'},
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_render_positions',
          'label': 'Render position'},
-        {'id': 'configurable', 'type': 'boolean', 'mode': 'w',
-         'label': 'Render format and position are editable, REQUIRES 3 FIELDS'},
-
+        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_formats',
+         'label': 'Render format'},
+        {'id': 'configurable', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_configurable',
+         'label': 'What is user configurable, require extra fields'},
         )
-    all_render_formats = ['text', 'pre', 'stx', 'html']
+    all_configurable = ['nothing', 'position', 'format', 'position and format']
     all_render_positions = ['normal', 'col_left', 'col_right']
+    all_render_formats = ['text', 'pre', 'stx', 'html']
 
     width = 40
     height = 5
-    render_format = all_render_formats[0]
     render_position = all_render_positions[0]
+    render_format = all_render_formats[0]
     configurable = 0
 
     def prepare(self, datastructure, **kw):
@@ -78,15 +79,15 @@ class CPSTextWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         datastructure[widget_id] = str(datamodel[self.fields[0]])
-        if self.configurable and len(self.fields) != 3:
-            raise ValueError("Invalid text widget '%s' " % widget_id +
-                             "configurable text requires 3 fields.")
+        rposition = self.render_position
+        rformat = self.render_format
         if self.configurable:
-            datastructure[widget_id + '_rformat'] = datamodel[self.fields[1]]
-            datastructure[widget_id + '_rposition'] = datamodel[self.fields[2]]
-        else:
-            datastructure[widget_id + '_rformat'] = self.render_format
-            datastructure[widget_id + '_rposition'] = self.render_position
+            if len(self.fields) > 1:
+                rposition = datamodel[self.fields[1]]
+            if len(self.fields) > 2:
+                rformat = datamodel[self.fields[2]]
+        datastructure[widget_id + '_rposition'] = rposition
+        datastructure[widget_id + '_rformat'] = rformat
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -104,14 +105,14 @@ class CPSTextWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         if self.configurable:
-            rformat = datastructure[widget_id + '_rformat']
-            rposition = datastructure[widget_id + '_rposition']
-            if rformat and rformat in self.all_render_formats:
-                datamodel[self.fields[1]] = rformat
-                LOG('text', DEBUG, 'saving rformat = %s' % rformat)
-            if rposition and rposition in self.all_render_positions:
-                datamodel[self.fields[2]] = rposition
-                LOG('text', DEBUG, 'saving rposition = %s' % rposition)
+            if len(self.fields) > 1:
+                rposition = datastructure[widget_id + '_rposition']
+                if rposition and rposition in self.all_render_positions:
+                    datamodel[self.fields[1]] = rposition
+            if len(self.fields) > 2:
+                rformat = datastructure[widget_id + '_rformat']
+                if rformat and rformat in self.all_render_formats:
+                    datamodel[self.fields[2]] = rformat
         return 1
 
     def render(self, mode, datastructure, **kw):
@@ -123,8 +124,8 @@ class CPSTextWidget(CPSWidget):
                                % (render_method, self.getId()))
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        rformat = datastructure[widget_id + '_rformat']
         rposition = datastructure[widget_id + '_rposition']
+        rformat = datastructure[widget_id + '_rformat']
         if mode == 'view':
             if rformat == 'pre':
                 value = '<pre>'+escape(value)+'</pre>'
@@ -137,9 +138,9 @@ class CPSTextWidget(CPSWidget):
             else:
                 RuntimeError("unknown render_format '%s' for '%s'" %
                              (rformat, self.getId()))
-        return meth(mode=mode, datastructure=datastructure,
-                    value=value, render_format=rformat,
-                    render_position=rposition)
+        return meth(mode=mode, datastructure=datastructure, value=value,
+                    render_position=rposition, render_format=rformat,
+                    configurable=str(self.configurable))
 
 InitializeClass(CPSTextWidget)
 
@@ -628,5 +629,3 @@ WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
 WidgetTypeRegistry.register(CPSLinkWidgetType, CPSLinkWidget)
 WidgetTypeRegistry.register(CPSInternalLinksWidgetType,
                             CPSInternalLinksWidget)
-
-
