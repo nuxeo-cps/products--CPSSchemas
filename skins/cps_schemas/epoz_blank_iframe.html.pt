@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+<meta http-equiv="Content-Type"
+  tal:define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % request.get('charset'))"
+  tal:attributes="content string:text/html;;charset=${request/charset}" />
+  <tal:block tal:define="base_url python:here.getBaseUrl();">
+    <style rel="Stylesheet" media="all"
+      tal:content="string:@import url(${base_url}nuxeo_css1.css);"></style>
+    <style type="text/css" media="all"
+      tal:content="string:@import url(${base_url}nuxeo_css2.css);"></style>
+    <style type="text/css" media="all"
+      tal:condition="exists: here/custom.css"
+      tal:content="string:@import url(${base_url}custom.css);"></style>
+  </tal:block>
+</head>
+<body style="font-size:80%; background: white; padding:0.5em;">
+</body>
+</html>
