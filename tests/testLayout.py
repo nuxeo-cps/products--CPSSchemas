@@ -1,5 +1,6 @@
 # Copyright (c) 2003-2005 Nuxeo SARL <http://nuxeo.com>
 # Authors: Tarek Ziade <tz@nuxeo.com>
+#          Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -18,17 +19,14 @@
 # $Id$
 
 import unittest
-import os
 from Acquisition import Implicit
-from Products.CPSSchemas.Layout import Layout, CPSLayout
+from Products.CPSSchemas.Layout import CPSLayout
 from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 from Products.CPSSchemas.BasicWidgets import CPSStringWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSIntWidgetType
-
-from Products.CPSSchemas.tests import __file__ as landmark
 
 
 class FakePortal(Implicit):
@@ -44,6 +42,7 @@ fakePortal.portal_url = fakeUrlTool
 class FakeWidgetTypesTool(Implicit):
     def __getitem__(self,name):
         if name == 'Int Widget':
+            # TODO should use fake widgets
             return CPSIntWidgetType('int_factory')
         elif name == 'String Widget':
             return CPSStringWidgetType('string_factory')
@@ -56,122 +55,127 @@ fakePortal.portal_widget_types = fakeWidgetTypeTool
 class FakeDocument:
     f1 = 'f1class'
 
-def openfile(filename, mode='r'):
-    path = os.path.join(os.path.dirname(landmark), 'scripts', filename)
-    return open(path, mode)
-
 
 class LayoutTests(unittest.TestCase):
 
-    def test_InstanciateLayout(self):
-        # simple Layout instanciation
-        ob = Layout()
-        self.assertNotEquals(ob, None)
-
-    def test_InstanciateCPSLayout(self):
-        # simple CPSLayout instanciation
-        ob = CPSLayout('my_layout')
-        self.assertNotEquals(ob, None)
-
-    def test_addingWidgets(self):
-        # adding a few widgets
-        ob = CPSLayout('my_layout').__of__(fakePortal)
-        ob.addWidget('my_int', 'Int Widget')
-        ob.addWidget('my_int2', 'Int Widget')
-        ob.addWidget('my_string', 'String Widget')
-        return ob
-
-    def test_setLayoutDefinition(self):
-        # Validate setLayoutDefinition
-        layout = self.test_addingWidgets()
-
-        # setting the layout definition
-        layoutdef = layout.getLayoutDefinition()
-
-        layoutdef['rows']= [[{'widget_id': 'my_int', 'ncols': 1},],
-               [{'widget_id': 'my_int2', 'ncols': 1},],
-               [{'widget_id': 'my_string', 'ncols': 1},]]
-
-        layout.setLayoutDefinition(layoutdef)
-        layoutdef = layout.getLayoutDefinition()
-        layoutdef = layout.getLayoutDefinition()
-        self.assertEquals(layoutdef['rows'],  [[{'widget_id': 'my_int',
-                                                 'ncols': 1},],
-                [{'widget_id': 'my_int2', 'ncols': 1},],
-               [{'widget_id': 'my_string', 'ncols': 1},]])
+    def makeLayoutOnlyWidgets(self):
+        layout = CPSLayout('my_layout').__of__(fakePortal)
+        layout.addWidget('my_int', 'Int Widget', fields=['my_int'])
+        layout.addWidget('my_int2', 'Int Widget', fields=['my_int2'])
+        layout.addWidget('my_string', 'String Widget', fields=['my_string'])
         return layout
 
-    def test_prepareLayoutWidgets(self):
+    def makeLayout(self):
+        layout = self.makeLayoutOnlyWidgets()
+        layoutdef = {'ncols': 1, 'rows': [
+            [{'widget_id': 'my_int', 'ncols': 1},],
+            [{'widget_id': 'my_int2', 'ncols': 1},],
+            [{'widget_id': 'my_string', 'ncols': 1},]]}
+        layout.setLayoutDefinition(layoutdef)
+        return layout
+
+    def makeDataModelWithSchema(self):
         doc = FakeDocument()
-        layout = self.test_setLayoutDefinition()
-
-        # settingup fields
-        layout['my_int'].fields = ['my_int']
-        layout['my_int2'].fields = ['my_int2']
-        layout['my_string'].fields = ['my_string']
-
-        # Acquisition is needed for expression context computation during fetch
         schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
         schema.addField('my_int', 'CPS Int Field')
         schema.addField('my_int2', 'CPS Int Field')
         schema.addField('my_string', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
         dm = DataModel(doc, (adapter,))
-        datastructure = DataStructure(datamodel=dm)
         dm['my_int'] = 13
         dm['my_int2'] = 23
         dm['my_string'] = 'sdfgtyhjkl'
-        layout.prepareLayoutWidgets(datastructure)
-        return layout, dm, datastructure
+        return dm
+
+    def makeDataStructure(self, dm):
+        ds = DataStructure(datamodel=dm)
+        return ds
+
+
+    def test_InstanciateCPSLayout(self):
+        ob = CPSLayout('my_layout')
+        self.assertNotEquals(ob, None)
+
+    def test_addingWidgets(self):
+        layout = self.makeLayoutOnlyWidgets()
+        self.assertEquals(layout.keys(), ['my_int', 'my_int2', 'my_string'])
+
+    def test_setLayoutDefinition(self):
+        layout = self.makeLayout()
+        layoutdef = layout.getLayoutDefinition()
+        self.assertEquals(layoutdef['ncols'], 1)
+        self.assertEquals(layoutdef['rows'],
+                          [[{'widget_id': 'my_int', 'ncols': 1},],
+                           [{'widget_id': 'my_int2', 'ncols': 1},],
+                           [{'widget_id': 'my_string', 'ncols': 1},]])
+
+    def test_prepareLayoutWidgets(self):
+        layout = self.makeLayout()
+        dm = self.makeDataModelWithSchema()
+        ds = self.makeDataStructure(dm)
+        self.assertEquals(ds.get('my_int', 'none'), 'none')
+        self.assertEquals(ds.get('my_int2', 'none'), 'none')
+        self.assertEquals(ds.get('my_string', 'none'), 'none')
+        self.failIf(ds.getError('my_int'))
+        self.failIf(ds.getError('my_int2'))
+        self.failIf(ds.getError('my_string'))
+        layout.prepareLayoutWidgets(ds)
+        self.assertEquals(ds['my_int'], '13')
+        self.assertEquals(ds['my_int2'], '23')
+        self.assertEquals(ds['my_string'], 'sdfgtyhjkl')
+        self.failIf(ds.getError('my_int'))
+        self.failIf(ds.getError('my_int2'))
+        self.failIf(ds.getError('my_string'))
+
+        # TODO should test widgets with errors
 
     def test_computeLayoutStructure(self):
-        layout_plus = self.test_prepareLayoutWidgets()
-        layout = layout_plus[0]
-        dm = layout_plus[1]
-        ds = layout_plus[2]
+        layout = self.makeLayout()
+        dm = self.makeDataModelWithSchema()
+        ds = self.makeDataStructure(dm)
+        layout.prepareLayoutWidgets(ds)
 
         ls = layout.computeLayoutStructure('edit', dm)
         self.assertEquals(ls['widgets'].has_key('my_int'), True)
         self.assertEquals(ls['widgets'].has_key('my_string'), True)
-        return layout, ls, dm, ds
 
     def test_validateLayoutStructure(self):
-        layout_plus = self.test_computeLayoutStructure()
-        layout = layout_plus[0]
-        ds = layout_plus[3]
-        ls = layout_plus[1]
+        layout = self.makeLayout()
+        dm = self.makeDataModelWithSchema()
+        ds = self.makeDataStructure(dm)
+        layout.prepareLayoutWidgets(ds)
+        ls = layout.computeLayoutStructure('edit', dm)
 
         validation = layout.validateLayoutStructure(ls, ds)
-        self.assertEquals(validation, 1)
+        self.assert_(validation)
 
+        # TODO test a validation that fails because of a widget
 
-    def test_validateLayoutStructureWithScripting(self):
-        layout_plus = self.test_computeLayoutStructure()
-        layout = layout_plus[0]
-        ds = layout_plus[3]
-        ls = layout_plus[1]
+    def test_validateLayoutStructure_global_validation(self):
+        layout = self.makeLayout()
+        dm = self.makeDataModelWithSchema()
+        ds = self.makeDataStructure(dm)
+        layout.prepareLayoutWidgets(ds)
+        ls = layout.computeLayoutStructure('edit', dm)
+        setlayprop = layout.manage_changeProperties
 
-        layout.validate_values_expr = "python:1"
+        setlayprop(validate_values_expr="python:1")
         validation = layout.validateLayoutStructure(ls, ds)
-        self.assertEquals(validation, 1)
+        self.assert_(validation, 1)
 
-        layout.validate_values_expr = "python:0"
+        setlayprop(validate_values_expr="python:0")
         validation = layout.validateLayoutStructure(ls, ds)
-        self.assertEquals(validation, 0)
+        self.failIf(validation)
 
-        my_script = openfile('validateLayout.py')
-        my_script_content = my_script.readlines()
-        my_script_content = ''.join(my_script_content)
-
-        layout.validate_values_expr = (
-            "python:datastructure['my_int'] > datastructure['my_int2']")
+        setlayprop(validate_values_expr=
+               "python:datastructure['my_int'] > datastructure['my_int2']")
         validation = layout.validateLayoutStructure(ls, ds)
-        self.assertEquals(validation, False)
+        self.failIf(validation)
 
-        layout.validate_values_expr = (
-            "python:datastructure['my_int'] < datastructure['my_int2']")
+        setlayprop(validate_values_expr=
+               "python:datastructure['my_int'] < datastructure['my_int2']")
         validation = layout.validateLayoutStructure(ls, ds)
-        self.assertEquals(validation, True)
+        self.assert_(validation)
 
 def test_suite():
     return unittest.TestSuite((
