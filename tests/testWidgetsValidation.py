@@ -8,7 +8,7 @@ from Testing.ZopeTestCase import ZopeLite
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
      CPSBooleanWidget, CPSURLWidget, CPSEmailWidget, CPSPasswordWidget, \
-     CPSIdentifierWidget
+     CPSIdentifierWidget, CPSFloatWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSRangeListWidget, \
      CPSTextWidget
 
@@ -36,6 +36,32 @@ class WidgetValidationTest(unittest.TestCase):
     def test_widget_nok_required_1(self):
         ret, err, ds = self._validate({'is_required': 1}, self.default_value)
         self.assertEquals(err, 'cpsschemas_err_required')
+
+
+
+class FloatWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSFloatWidget
+
+    def test_float_ok_1(self):
+        ret, err, ds = self._validate({}, '12345.803')
+        self.assert_(ret, err)
+
+    def test_float_ok_2(self):
+        ret, err, ds = self._validate({}, '12345')
+        self.assert_(ret, err)
+
+    def test_float_ok_3(self):
+        ret, err, ds = self._validate({'decimals_separator': ','}, '12345,803')
+        self.assert_(ret, err)
+
+    def test_float_nok_1(self):
+        ret, err, ds = self._validate({}, '12345,803')
+        self.assert_(ret, err)
+
+    def test_float_nok_2(self):
+        ret, err, ds = self._validate({'decimals_separator': ','}, '12345.803')
+        self.assert_(ret, err)
+
 
 class StringWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSStringWidget
