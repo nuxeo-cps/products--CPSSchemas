@@ -77,7 +77,7 @@ class DataStructure(UserDict):
         self.errors.clear()
 
     def __setitem__(self, key, item):
-        if item != self.data[key]: # Only change if it actually is different
+        if item != self.data.get(key, None): # Only change if it actually is different
             self.data[key] = item
             self.setModifiedFlag(key)
 
@@ -103,14 +103,14 @@ class DataStructure(UserDict):
     def update(self, dict):
         if isinstance(dict, UserDict):
             self.data.update(dict.data)
-            self.setModifiedKeys(dict.keys())
+            self.setModifiedFlags(dict.keys())
         elif isinstance(dict, type(self.data)):
             self.data.update(dict)
             self.setModifiedFlags(dict.keys())
         else:
             for k, v in dict.items():
                 self.data[k] = v
-                self.setModifiedKey(k)
+                self.setModifiedFlag(k)
 
     def updateFromRequest(self, REQUEST):
         """Updates and validates field data from a REQUEST object

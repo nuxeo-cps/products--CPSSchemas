@@ -16,6 +16,8 @@
 # the data of a DataModel as much as you like, nothing will be written to
 # the storage until it's committed.
 
+from zLOG import LOG, DEBUG
+from Acquisition import aq_base
 from UserDict import UserDict
 
 from Products.CPSDocument.DataStructure import DataStructure
@@ -25,7 +27,7 @@ class ValidationError(Exception):
     pass
 
 
-class DataModel(UserDict):
+class OLDDataModel(UserDict):
 
     def __init__(self, schemas=[], document=None):
         UserDict.__init__(self)
@@ -166,3 +168,52 @@ class DataModel(UserDict):
 #             data = datamodel[fieldid].getDefaultValue()
 #             if data is not None:
 #                 self[fieldid] = data
+
+
+class DataModel(UserDict):
+
+    def __init__(self, ob):
+        UserDict.__init__(self)
+        self._ob = ob
+        self._fields = {}
+        self._schemas = {}
+
+    def addSchema(self, schema):
+        for fieldid in schema.keys():
+            if self._fields.has_key(fieldid):
+                raise KeyError("Two schemas have field id %s "
+                               " but field ids must be unique" % fieldid)
+            else:
+                self._fields[fieldid] = schema[fieldid]
+        self._schemas[schema.id] = schema
+
+    def _fetch(self):
+        """Fetch the data into local dict for user access."""
+        self.data['i1'] = getattr(aq_base(self._ob), 'i1', 1231) # XXX test
+        self.data['i2'] = getattr(aq_base(self._ob), 'i2', 'foo') # XXX test
+        return
+        for schema in self._schemas:
+            # XXX use storage adapters for each schema
+            for fieldid in schema.keys():
+                try:
+                    v = getattr(aq_base(self._ob), fieldid)
+                except AttributeError:
+                    field = schema[fieldid]
+                    v = field.default # XXX use a method here
+                self.data[fieldid] = v
+
+    def _commit(self):
+        """Commit modified data into object."""
+        # XXX use adapters
+        LOG('DataModel', DEBUG, 'committing data %s' % self.data)
+        self._ob.i1 = self.data['i1']
+        self._ob.i2 = self.data['i2']
+        return
+        for schema in self._schemas:
+            # XXX use storage adapters for each schema
+            for fieldid in schema.keys():
+                setattr(self._ob, fieldid, self.data[fieldid])
+
+
+    def __repr__(self):
+        return '<DataModel %s>' % (self.data,)

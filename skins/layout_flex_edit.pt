@@ -1,0 +1,25 @@
+<form action="." method="POST"
+  tal:attributes="action string:${here/absolute_url}/cpsdocument_edit_form">
+<table border="1"
+   tal:define="layout options/layout;
+               ds options/ds;
+               dm options/dm;
+             ">
+  <tr>
+    <td tal:attributes="colspan layout/ncols">
+      This is layout_flex_edit.pt, ok=<span tal:replace="options/ok|nothing" />
+      ds=<span tal:replace="ds" />
+      request=<span tal:replace="request/form" />
+    </td>
+  </tr>
+  <tr tal:repeat="row layout/rows">
+    <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
+      <tal:block define="widget cell/widget">
+        <span tal:replace="widget/title">label</span>:
+        <div tal:replace="structure python:widget.render('edit', ds, dm)" />
+      </tal:block>
+    </td>
+  </tr>
+</table>
+<input type="submit" name="cpsdocument_edit_button" value="Change" />
+</form>

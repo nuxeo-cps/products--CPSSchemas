@@ -1,12 +1,47 @@
-# (c) 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# Authors: Lennart Regebro <regebro@nuxeo.com>
+#          Florent Guillaume <fg@nuxeo.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
 # $Id$
 
-from ZODB.PersistentMapping import PersistentMapping
+from zLOG import LOG, DEBUG
+import ExtensionClass
+from Globals import InitializeClass, DTMLFile
+from AccessControl import ClassSecurityInfo
 
+from OFS.Folder import Folder
+
+from Products.CMFCore.CMFCorePermissions import View
+from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
+from Products.CMFCore.PortalContent import PortalContent
+from Products.CMFCore.PortalFolder import PortalFolder
+
+
+######################################################################
+
+from ZODB.PersistentMapping import PersistentMapping
 from Products.CPSDocument.Template import Template
 from Products.CPSDocument.DataStructure import DataStructure
 
-class CPSDocument:
+class LayoutValidationError(ValueError):
+    pass
+
+
+class OLDCPSDocument:
     """A document with a flexible data structure"""
 
     def __init__(self, id, title, template):
@@ -95,3 +130,70 @@ class CPSDocument:
         if layout is None:
             layout = self.getLayout()
         return method(template.getLayout(), layout)
+
+
+######################################################################
+######################################################################
+######################################################################
+
+
+class CPSDocumentMixin(ExtensionClass.Base):
+    """Mixin giving CPS Document behaviour.
+
+    This means that the definition for the document's fields and layout
+    and widgets is indirected through its definition in the Types Tool,
+    and from there to the Schemas Tool.
+    """
+
+    security = ClassSecurityInfo()
+
+    security.declareProtected(View, 'render')
+    def render(self, mode='view'):
+        """Render the object according to a mode."""
+        return self.getTypeInfo().renderObject(self, mode=mode)
+
+    security.declareProtected(ModifyPortalContent, 'renderEdit')
+    def renderEdit(self, REQUEST):
+        """Attempt to modify the object from the request, and return
+        the rendering of the error form.
+
+        If not error, render the view mode.
+        """
+        ti = self.getTypeInfo()
+        return ti.renderEditObject(self, REQUEST,
+                                   errmode='edit', okmode='edit')
+
+
+InitializeClass(CPSDocumentMixin)
+
+
+# XXX remove later
+from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
+
+class CPSDocument(CPSDocumentMixin, PortalContent, PortalFolder, DefaultDublinCoreImpl):
+    """CPS Document
+
+    Basic document type from which real types are derived according to
+    the schemas and layouts specified in the Types Tool.
+    """
+
+    meta_type = "CPS Document"
+    portal_type = "CPS Document" # To ease testing.
+
+    security = ClassSecurityInfo()
+
+InitializeClass(CPSDocument)
+
+
+def addCPSDocument(container, id, REQUEST=None, **kw):
+    """Add a bare CPS Document.
+
+    The object doesn't have a portal_type yet, so we have no way to know
+    its schema. This simply constructs a bare instance.
+    """
+    ob = CPSDocument(id, **kw)
+    container._setObject(id, ob)
+    ob = container._getOb(id)
+    if REQUEST is not None:
+        REQUEST.RESPONSE.redirect(ob.absolute_url()+'/manage_main')
+    return ob

@@ -1,0 +1,105 @@
+<dtml-var manage_page_header>
+<dtml-let management_view="'Schema'">
+<dtml-var manage_tabs>
+</dtml-let>
+
+<form action="&dtml-URL1;" method="POST">
+
+<br>
+
+<dtml-let keys=objectIds>
+<dtml-if keys>
+<table cellspacing="0" cellpadding="2" border="0" width="100%">
+  <tr class="list-header">
+    <td align="left" valign="top">
+      &nbsp;
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Field Id</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Field Type</div>
+    </td>
+  </tr>
+  <dtml-in keys>
+  <dtml-let key=sequence-item index=sequence-index>
+  <dtml-if sequence-odd>
+  <tr class="row-normal">
+  <dtml-else>
+  <tr class="row-hilite">
+  </dtml-if>
+    <td align="left" valign="top">
+      <input type="checkbox" name="ids:list" value="&dtml-key;">
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">
+        <a href="&dtml-key;/manage_workspace">&dtml-key;</a>
+      </div>
+    </td>
+    <td align="left">
+      <div class="form-item">
+        <dtml-var "_[key].meta_type" html_quote>
+      </div>
+    </td>
+  </tr>
+  </dtml-let>
+  </dtml-in>
+  <tr>
+    <td align="left" colspan="3">
+      <input type="submit" name="manage_changeField:method" value=" Change " />
+      <input type="submit" name="manage_moveFieldItemsUp:method" value=" Move up " />
+      <input type="submit" name="manage_moveFieldItemsDown:method" value=" Move down " />
+      <input type="submit" name="manage_delFieldItems:method" value=" Delete " />
+    </td>
+  </tr>
+</table>
+<dtml-else>
+<p>
+  The schema is empty.
+</p>
+</dtml-if>
+</dtml-let>
+
+<br />
+
+<table cellspacing="0" cellpadding="2" border="0" width="100%">
+<tr class="list-header">
+  <td align="left" valign="top" colspan="2">
+    <div class="form-label">Add a new field</div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">Field Id</div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="id" size="40" /></div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">Field Type</div>
+  </td>
+  <td align="left">
+    <div class="form-item">
+      <select name="field_type">
+        <dtml-in listFieldTypes>
+          <option value="&dtml-sequence-item;">&dtml-sequence-item;</option>
+        </dtml-in>
+      </select>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td align="left">
+    <input type="submit" name="manage_addField:method" value=" Add ">
+  </td>
+</tr>
+</table>
+
+
+</form>
+
+
+<dtml-var manage_page_footer>

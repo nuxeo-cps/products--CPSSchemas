@@ -16,9 +16,9 @@
 # 02111-1307, USA.
 #
 # $Id$
-"""Layout Tool
+"""Layouts Tool
 
-A layout tool manages layouts.
+The Layouts Tool manages layouts.
 """
 
 from zLOG import LOG, DEBUG
@@ -38,35 +38,49 @@ from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import UniqueObject, getToolByName
 
+from Products.CPSDocument.Layout import CPSLayout
 
-class LayoutTool(UniqueObject, Folder):
-    """Layout Tool
+
+class LayoutsTool(UniqueObject, Folder):
+    """Layouts Tool
 
     Stores persistent layout objects.
     """
 
     id = 'portal_layouts'
-    meta_type = 'CPS Layout Tool'
+    meta_type = 'CPS Layouts Tool'
 
     security = ClassSecurityInfo()
+
+    security.declarePrivate('addLayout')
+    def addLayout(self, id, layout):
+        """Add a layout."""
+        self._setObject(id, layout)
+        return self._getOb(id)
 
     #
     # ZMI
     #
 
-    manage_options = (
-        {'label': 'Layouts',
-         'action': 'manage_listLayouts',
-         },
-        ) + Folder.manage_options[1:]
-
-    security.declareProtected(ViewManagementScreens, 'manage_listTrees')
-    manage_listLayouts = DTMLFile('zmi/trees_content', globals())
-
-    security.declareProtected(ViewManagementScreens, 'manage_addCPSTreeCacheForm')
-    manage_addCPSTreeCacheForm = DTMLFile('zmi/tree_add', globals())
+    def all_meta_types(self):
+        return ({'name': 'CPS Layout',
+                 'action': 'manage_addCPSLayoutForm',
+                 'permission': ManagePortal},
+                )
 
 
-InitializeClass(LayoutTool)
+    security.declareProtected(ViewManagementScreens, 'manage_addCPSLayoutForm')
+    manage_addCPSLayoutForm = DTMLFile('zmi/layout_addform', globals())
+
+    security.declareProtected(ManagePortal, 'manage_addCPSLayout')
+    def manage_addCPSLayout(self, id, REQUEST):
+        """Add a layout, called from the ZMI."""
+        layout = CPSLayout(id)
+        layout = self.addLayout(id, layout)
+        REQUEST.RESPONSE.redirect(layout.absolute_url()+'/manage_main'
+                                  '?psm=Added.')
+
+
+InitializeClass(LayoutsTool)
 
 
