@@ -380,8 +380,8 @@ class Layout(PropertiesPostProcessor,
         and "style_prefix" found in the document layout definitions.
         """
         layout_mode = kw['layout_mode']
-        layout_method_property = self.getProperty('layout_%s_method'
-                                                  % layout_mode)
+        layout_method_property = self.getProperty('layout_%s_method' %
+                                                  layout_mode, '')
         if layout_method_property != '':
             layout_method = layout_method_property
         else:
