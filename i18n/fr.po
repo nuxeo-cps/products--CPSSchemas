@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-21 16:19default\n"
-"PO-Revision-Date: 2003-11-21 16:26+0100\n"
+"PO-Revision-Date: 2003-12-01 10:19+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.0.1\n"
@@ -51,12 +51,12 @@ msgstr "Rechercher"
 #.   </input>
 #: from ../skins/cps_schemas/popup_rte_form.pt
 msgid "button_update"
-msgstr "Mettre Ã  jour"
+msgstr "Mettre à jour"
 
 #.   <span>at</span>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
-msgstr "Ã "
+msgstr "à"
 
 #.   <span>h</span>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -85,7 +85,7 @@ msgstr "Format : "
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
-msgstr "Changer"
+msgstr "Charger"
 
 #.   <label>Delete</label>
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
@@ -152,10 +152,10 @@ msgid "heading_enter_searched_value"
 msgstr "Entrez un terme de recherche&nbsp;:"
 
 msgid "cpsschemas_err_string"
-msgstr "ChaÃ®ne de caractÃ¨re invalide"
+msgstr "Chaîne de caractère invalide"
 
 msgid "cpsschemas_err_string_too_long"
-msgstr "ChaÃ®ne de caractÃ¨re trop longue"
+msgstr "Chaîne de caractère trop longue"
 
 msgid "cpsschemas_err_required"
 msgstr "Champ obligatoire"
@@ -197,7 +197,7 @@ msgid "cpsschemas_err_long_range"
 msgstr "Nombre en dehors des limites"
 
 msgid "cpsschemas_err_float_positive"
-msgstr "Ce nombre doit Ãªtre Positif"
+msgstr "Ce nombre doit être Positif"
 
 msgid "cpsschemas_err_float_range"
 msgstr "Nombre en dehors des limites"
@@ -212,10 +212,10 @@ msgid "cpsschemas_rposition_normal"
 msgstr "Largeur de la page"
 
 msgid "cpsschemas_rposition_col_right"
-msgstr "Colonne Ã  droite"
+msgstr "Colonne à droite"
 
 msgid "cpsschemas_rposition_col_left"
-msgstr "Colonne Ã  gauche"
+msgstr "Colonne à gauche"
 
 msgid "cpsschemas_rposition_left"
 msgstr "A gauche"
@@ -233,10 +233,10 @@ msgid "cpsschemas_rformat_html"
 msgstr "Html"
 
 msgid "cpsschemas_rformat_stx"
-msgstr "Texte structurÃ© zope"
+msgstr "Texte structuré zope"
 
 msgid "cpsschemas_rformat_pre"
-msgstr "Html prÃ©formatÃ©"
+msgstr "Html préformaté"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
@@ -248,7 +248,7 @@ msgid "img_icon"
 msgstr "Vignette"
 
 msgid "img_xsmall"
-msgstr "TrÃ©s pitite"
+msgstr "Trés pitite"
 
 msgid "img_small"
 msgstr "Petite"
@@ -260,7 +260,7 @@ msgid "img_large"
 msgstr "Grande"
 
 msgid "img_xlarge"
-msgstr "TrÃ©s grande"
+msgstr "Trés grande"
 
 #~ msgid "cpsschemas_rformat_icon"
 #~ msgstr "Vignette"
