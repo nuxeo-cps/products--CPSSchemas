@@ -100,22 +100,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     id = None
 
     def __init__(self, **kw):
-        #layoutdef = {'ncols': 1, 'rows': []}
-        layoutdef = {
-            'ncols': 3,
-            'rows': [[{'ncols': 1,
-                       'widget_id': 'foo',
-                       },
-                      {'ncols': 2,
-                       'widget_id': 'bar',
-                       },
-                      ],
-                     [{'ncols': 3,
-                       'widget_id': 'baz',
-                       },
-                      ],
-                     ],
-            }
+        layoutdef = {'ncols': 1, 'rows': []}
         self.setLayoutDefinition(layoutdef)
 
     security.declarePrivate('_normalizeLayoutDefinition')
