@@ -97,7 +97,7 @@ class DataModel(UserDict):
                 if fields.has_key(fieldid):
                     LOG('DataModel.__init__', WARNING,
                         "Two schemas have field id '%s', ignoring schema '%s'"
-                        % (fieldid, schema.getId(), ob and ob.getId()))
+                        % (fieldid, schema.getId()))
                     continue
                 fields[fieldid] = field
             schemas.append(schema)
@@ -106,11 +106,15 @@ class DataModel(UserDict):
         # Precomputed things used for validation
         user = getSecurityManager().getUser()
         self._acl_cache_user = user
+        self._setAddRoles(add_roles)
+        self._check_acls = 1
+
+    def _setAddRoles(self, add_roles):
+        user = self._acl_cache_user
         user_roles = (tuple(user.getRolesInContext(self._context)) +
                       tuple(add_roles))
         self._acl_cache_user_roles = user_roles
         self._acl_cache_permissions = {} # dict with perm: hasit/not
-        self._check_acls = 1
 
     #
     # Restricted accessors
