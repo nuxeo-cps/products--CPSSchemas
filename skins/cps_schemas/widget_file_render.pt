@@ -19,7 +19,7 @@
                 radio_name string:${name}_choice;"
   >
     <tr>
-      <td valign="middle" nowrap>
+      <td valign="middle" nowrap="nowrap">
         <input type="radio" class="noborder" name="." value="keep"
         checked="checked" tal:attributes="name radio_name" />
         <label i18n:translate="cpsschemas_label_file_keep">Keep</label>
@@ -29,7 +29,7 @@
       </td>
     </tr>
     <tr>
-      <td valign="middle" nowrap>
+      <td valign="middle" nowrap="nowrap">
         <input type="radio" class="noborder"  name="." value="change"
           tal:attributes="name radio_name" />
         <label i18n:translate="cpsschemas_label_file_change">Change</label>&nbsp;
@@ -40,7 +40,7 @@
       </td>
     </tr>
     <tr>
-      <td valign="middle" colspan="2" nowrap>
+      <td valign="middle" colspan="2" nowrap="nowrap">
         <input type="radio" class="noborder" name="." value="delete"
           tal:attributes="name radio_name" />
         <label i18n:translate="cpsschemas_label_file_delete">Delete</label>
