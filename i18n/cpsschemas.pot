@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-12-18 17:38default\n"
+"POT-Creation-Date: 2003-12-22 12:44default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -68,6 +68,12 @@ msgstr ""
 #.     </input>
 #: from ../skins/cps_schemas/popup_internallinks_form.pt
 msgid "button_ok"
+msgstr ""
+
+#.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_rte"
 msgstr ""
 
 #.   <input value="button_search" class="context" type="submit">
@@ -356,28 +362,4 @@ msgid "cpsschemas_label_link_content"
 msgstr ""
 
 msgid "cpsschemas_label_link_title"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_created"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr ""
-
-msgid "cpsschemas_psm_vocabulary_updated"
 msgstr ""
