@@ -23,6 +23,7 @@ from types import ListType, TupleType
 import ExtensionClass
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_base
 
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
@@ -143,6 +144,7 @@ class CPSDocumentMixin(ExtensionClass.Base):
     """
 
     security = ClassSecurityInfo()
+    _size = 0
 
     security.declareProtected(View, 'render')
     def render(self, mode='view', layout_id=None, **kw):
@@ -187,6 +189,7 @@ class CPSDocumentMixin(ExtensionClass.Base):
         """
         ti = self.getTypeInfo()
         return ti.editObject(self, kw)
+
 
     security.declareProtected(View, 'SearchableText')
     def SearchableText(self):
@@ -252,6 +255,66 @@ class CPSDocumentMixin(ExtensionClass.Base):
         """
         ti = self.getTypeInfo()
         return ti.flexibleChangeLayout(self, layout_id, **kw)
+
+
+    #
+    # CPSDefault integration
+    #
+    security.declarePrivate('postCommitHook')
+    def postCommitHook(self):
+        # this is called just after the dm commit
+        self._size = self._compute_size()
+
+
+    security.declareProtected(View, 'getAdditionalContentInfo')
+    def getAdditionalContentInfo(self):
+        """ Return a dictonary used in getContentInfo """
+        infos = {}
+        max_len = 418
+        summary_fields = ['body', 'content']
+        sum = ''
+        for f in summary_fields:
+            if hasattr(aq_base(self), f):
+                sum += getattr(self, f)
+                if len(sum) > max_len:
+                    sum = sum[:max_len] + '...'
+                    break
+        if sum:
+            infos['summary'] = sum
+
+        if hasattr(aq_base(self), 'preview'):
+            infos['preview'] = self.absolute_url(1) + '/preview'
+        return infos
+
+
+    security.declareProtected(View, 'get_size')
+    def get_size(self):
+        """ return the size of the data """
+        if self._size:
+            return self._size
+        return self._compute_size()
+
+
+    security.declarePrivate('_compute_size')
+    def _compute_size(self):
+        s = 0
+        dm = self.getTypeInfo().getDataModel(self)
+        # XXX uses internal knowledge of DataModel
+        for fieldid, field in dm._fields.items():
+            try:
+                if hasattr(aq_base(dm[fieldid]), 'get_size'):
+                    s += dm[fieldid].get_size()
+                else:
+                    s  += len(str(dm[fieldid]))
+            except KeyError:
+                pass
+
+        for item in self.propdict().keys():
+            s += len(str(getattr(self, item, '')))
+
+        return s
+
+
 
 InitializeClass(CPSDocumentMixin)
 
