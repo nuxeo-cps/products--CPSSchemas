@@ -7,7 +7,7 @@
       <tal:block repeat="cell cells">
         <tal:block define="widget cell/widget">
           <div tal:attributes="class python:test(widget.depends_on_field_id == '' or ((not widget.display_if_depends_equals) ^ (dm[widget.depends_on_field_id] == widget.depends_on_field_value)), widget.css_class or 'visible', 'hidden');
-                               id python:widget.widget_group_id or widget.getWidgetId() + '_widget';">
+                               id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';">
             <div class="label" tal:condition="widget/label">
               <span i18n:translate="" tal:condition="widget/is_i18n"
                     tal:content="widget/label">label</span>
@@ -31,7 +31,7 @@
                          css_class python:test(err, 'row error', 'row')">
         <div tal:attributes="class css_class">
         <div tal:attributes="class python:test(widget.depends_on_field_id == '' or ((not widget.display_if_depends_equals) ^ (dm[widget.depends_on_field_id] == widget.depends_on_field_value)), widget.css_class or 'visible', 'hidden');
-                             id python:widget.widget_group_id or wid + '_widget';">
+                             id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';">
           <div class="label" tal:condition="widget/label_edit"
                              tal:attributes="class python:test(is_required, 'label required',
                                               'label')">
