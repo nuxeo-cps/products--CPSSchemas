@@ -45,6 +45,11 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.assertEquals(v.keys(), ['fyy', 'bro'])
         self.assertEquals(v.values(), ['F', 'B'])
 
+    def test_empty(self):
+        v = Vocabulary.CPSVocabulary('someid')
+        self.assertEquals(v.keys(), [])
+        self.assertEquals(v.values(), [])
+
     def test_simple(self):
         self.makeOne()
         v = self.vocabs.the_id
@@ -63,6 +68,10 @@ class BasicVocabularyTests(CPSSchemasTestCase):
             'someid', tuples=('gol', 'do', 'rak'))
         self.assertEquals(v.keys(), ['gol', 'do', 'rak'])
         self.assertEquals(v.values(), ['gol', 'do', 'rak'])
+        v = Vocabulary.CPSVocabulary(
+            'someid', list=('gren', 'dizer'))
+        self.assertEquals(v.keys(), ['gren', 'dizer'])
+        self.assertEquals(v.values(), ['gren', 'dizer'])
         v = Vocabulary.CPSVocabulary(
             'someid', ('bidi', 'bulle'))
         self.assertEquals(v.keys(), ['bidi', 'bulle'])
