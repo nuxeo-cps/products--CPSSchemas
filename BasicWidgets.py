@@ -801,10 +801,15 @@ class CPSSelectWidget(CPSWidget):
         elif mode == 'edit':
             res = renderHtmlTag('select',
                                 name=self.getHtmlWidgetId())
+            in_selection = 0
             for k, v in vocabulary.items():
                 kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = None
+                    in_selection = 1
+                res += renderHtmlTag('option', **kw)
+            if value and not in_selection:
+                kw = {'value': value, 'contents': value, 'selected': None}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
             return res
