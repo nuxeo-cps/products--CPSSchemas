@@ -58,7 +58,7 @@ class OLDCPSDocument:
         validation_error = self.validateStructure(data_structure)
         if validation_error:
             # XXX: Maybe the validation_method should raise this?
-            raise LayoutValidationError(validation_error) 
+            raise LayoutValidationError(validation_error)
         self._structure = data_structure
 
     def getStructure(self):
@@ -76,7 +76,7 @@ class OLDCPSDocument:
         validation_error = self.validateLayout(new_layout)
         if validation_error:
             # XXX: Maybe the validation_method should raise this?
-            raise LayoutValidationError(validation_error) 
+            raise LayoutValidationError(validation_error)
         self._layout = new_layout
 
     def getLayout(self):
@@ -145,8 +145,9 @@ class CPSDocumentMixin(ExtensionClass.Base):
     security = ClassSecurityInfo()
 
     security.declareProtected(View, 'render')
-    def render(self, mode='view', layout_id=None, **kw):
+    def render(self, mode='view', layout_id=None, proxy=None, **kw):
         """Render the object according to a mode."""
+        kw['proxy'] = proxy
         ti = self.getTypeInfo()
         return ti.renderObject(self, mode=mode, layout_id=layout_id, **kw)
 
