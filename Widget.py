@@ -110,7 +110,8 @@ class CPSWidget(Widget):
 
     fields = []
     title = ''
-    title_msgid = ''
+    title_view = ''
+    is_i18n = 0
     description = ''
     css_class = ''
 
@@ -122,9 +123,11 @@ class CPSWidget(Widget):
         {'id': 'fields', 'type': 'tokens', 'mode': 'w',
          'label': 'Fields'},
         {'id': 'title', 'type': 'string', 'mode': 'w',
-         'label': 'Title'},
-        {'id': 'title_msgid', 'type': 'string', 'mode': 'w',
-         'label': 'Title msgid'},
+         'label': 'the label on edit mode'},
+        {'id': 'title_view', 'type': 'string', 'mode': 'w',
+         'label': 'the label on view mode'},
+        {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
+         'label': 'does the title and description use msgid ?'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
          'label': 'Description'},
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
