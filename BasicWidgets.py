@@ -589,6 +589,80 @@ class CPSIntWidgetType(CPSWidgetType):
 
 InitializeClass(CPSIntWidgetType)
 
+#######################################################
+
+class CPSLongWidget(CPSWidget):
+    """Long Widget with limits"""
+    meta_type = "CPS Long Widget"
+
+    field_types = ('CPS Long Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
+         'label': 'Field with limits'},
+        {'id': 'minimum', 'type': 'int', 'mode': 'w',
+         'label': 'Minimum limit'},
+        {'id': 'maximum', 'type': 'int', 'mode': 'w',
+         'label': 'Maximum  limit'},
+        )
+    is_required = 0
+    is_limited = 0
+    minimum = 0
+    maximum = 0
+
+    def prepare(self, datastructure):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+
+    def validate(self, datastructure):
+        """Update datamodel from user data in datastructure."""
+        datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        if not value and self.is_required:
+            datastructure[widget_id] = 0
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
+        try:
+            v = long(value)
+        except (ValueError, TypeError):
+            datastructure.setError(widget_id, "cpsschemas_err_int")
+            ok = 0
+        else:
+            if self.is_limited and (v < self.minimum or v > self.maximum):
+                datastructure.setError(widget_id,
+                                       "cpsschemas_err_long_out_off_limits")
+                ok = 0
+            else:
+                datamodel[self.fields[0]] = v
+                ok = 1
+        return ok
+
+    def render(self, mode, datastructure):
+        """Render this widget from the datastructure or datamodel."""
+        datamodel = datastructure.getDataModel()
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            return escape(value)
+        elif mode == 'edit':
+            return renderHtmlTag('input',
+                                 type='text',
+                                 name=self.getHtmlWidgetId(),
+                                 value=value)
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSLongWidget)
+
+
+class CPSLongWidgetType(CPSWidgetType):
+    """Long with limits widget type."""
+    meta_type = "CPS Long Widget Type"
+    cls = CPSLongWidget
+
+InitializeClass(CPSLongWidgetType)
+
+
 ##################################################
 
 class CPSFloatWidget(CPSWidget):
@@ -1193,6 +1267,7 @@ WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
+WidgetTypeRegistry.register(CPSLongWidgetType, CPSLongWidget)
 WidgetTypeRegistry.register(CPSFloatWidgetType, CPSFloatWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
