@@ -21,3 +21,5 @@ New internal features:
 - adding get_size method
 - adding CPSDefault hook getAdditionalContentInfo
 - adding hidden_view and hidden_edit attribute for layout
+- when creating a field/widget through the manage_add* methods, all
+  properties can be initialized directly as keyword arguments
