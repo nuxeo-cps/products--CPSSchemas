@@ -28,7 +28,7 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
             self.assertEquals(field.getId(), field_id)
 
             # Default values (0, 0.0, None, ""...) all have false boolean
-            # value 
+            # value
             default = field.getDefault()
             self.assert_(not default)
 
@@ -193,6 +193,31 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
         self.assertRaises(ValueError, field.validate, [(1, 2, 3)])
         self.assertRaises(ValueError, field.validate, [[1], (2, 5)])
         self.assertRaises(ValueError, field.validate, [(1), (2, 5)])
+
+    def testCoupleField(self):
+        field = BasicFields.CPSCoupleField('id_field')
+        self.fields._setObject('id_field', field)
+
+        field = getattr(self.fields, 'id_field')
+
+        # Default value
+        self.assertEquals(field.getDefault(), [])
+        # Integer values
+        self.assertEquals(field.validate([1,2]), [1,2])
+        # Char values
+        self.assertEquals(field.validate(['a','b']), ['a','b'])
+        # String values
+        self.assertEquals(field.validate(['abc','bca']), ['abc','bca'])
+        # List values
+        self.assertEquals(field.validate([['abc'],['bca']]), [['abc'],['bca']])
+
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, (1,2))
+        self.assertRaises(ValueError, field.validate, [1])
+        self.assertRaises(ValueError, field.validate, [1,])
+        self.assertRaises(ValueError, field.validate, ['a'])
+
+
 
 def test_suite():
     suites = [unittest.makeSuite(BasicFieldTests)]
