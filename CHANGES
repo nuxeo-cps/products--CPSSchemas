@@ -25,3 +25,4 @@ New internal features:
 - New PropertiesPostProcessor mixin to allow posprocessed ZMI properties.
 - Allow any layout_mode starting with 'view' to render widgets in view mode.
 - Added an isWriteAllowed method for the skins to check vocabulary editing.
+- StorageAdapter now has a getDefaultData method to get default data.
