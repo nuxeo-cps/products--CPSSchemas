@@ -1146,6 +1146,47 @@ class CPSFileWidget(CPSWidget):
     deletable = 1
     size_max = 4*1024*1024
 
+    def getFileInfo(self, datastructure):
+        """Get the image info from the datastructure."""
+        dm = datastructure.getDataModel()
+        field_id = self.fields[0]
+        for adapter in dm._adapters:
+            if adapter.getSchema().has_key(field_id):
+                field = adapter.getSchema()[field_id]
+                break # Note: 'adapter' is still the right one
+
+        ob = dm.getObject()
+        if ob is None: # Not stored in the ZODB.
+            # StorageAdapters that do not store the object in
+            # ZODB takes the entry_id instead of object.
+            id_field = dm.getContext().id_field
+            entry_id = datastructure[id_field]
+            if entry_id:
+                content_url = adapter._getContentUrl(entry_id, field_id)
+                file = datastructure[self.getWidgetId()]
+                if file and type(file) is not File:
+                    file = File(self.getWidgetId(), '', file)
+                empty_file = 0
+            else:
+                empty_file = 1
+        else:
+            content_url = adapter._getContentUrl(ob, field_id)
+            file = self.restrictedTraverse(content_url)
+            empty_file = 0
+
+        if file and file != "''":
+            current_name = file.getId()
+        else:
+            current_name = ''
+        registry = getToolByName(self, 'mimetypes_registry')
+        mimetype = registry.lookupExtension(current_name)
+
+        return {'empty_file': empty_file,
+                'content_url': content_url,
+                'current_name': current_name,
+                'mimetype': mimetype,
+               }
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -1200,13 +1241,18 @@ class CPSFileWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        value = datastructure[self.getWidgetId()]
-        if hasattr(aq_base(value), 'getId'):
-            current_name = value.getId()
+
+        if kw['layout_mode'] == 'create':
+            file_info = {'empty_file': 1,
+                         'content_url': '',
+                         'current_name': '-',
+                         'mimetype': ''
+                        }
         else:
-            current_name = '-'
+            file_info = self.getFileInfo(datastructure)
+
         return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name)
+                    **file_info)
 
 InitializeClass(CPSFileWidget)
 

@@ -1,10 +1,11 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    current_name options/current_name;
+                   content_url options/content_url;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
   <a href="url..."
-     tal:attributes="href python:here.fields[0]"
+     tal:attributes="href content_url"
      tal:content="current_name"
     >
    filename.pdf

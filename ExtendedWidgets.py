@@ -36,7 +36,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance, CPSImageWidget, CPSNoneWidget
+     _isinstance, CPSImageWidget, CPSNoneWidget, CPSFileWidget
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -266,7 +266,7 @@ InitializeClass(CPSDateTimeWidgetType)
 
 
 ##################################################
-class CPSAttachedFileWidget(CPSWidget):
+class CPSAttachedFileWidget(CPSFileWidget):
     """AttachedFile widget."""
     meta_type = "CPS AttachedFile Widget"
 
@@ -360,47 +360,6 @@ class CPSAttachedFileWidget(CPSWidget):
 
         return meth(mode=mode, datastructure=datastructure,
                     **file_info)
-
-    def getFileInfo(self, datastructure):
-        """Get the image info from the datastructure."""
-        dm = datastructure.getDataModel()
-        field_id = self.fields[0]
-        for adapter in dm._adapters:
-            if adapter.getSchema().has_key(field_id):
-                field = adapter.getSchema()[field_id]
-                break # Note: 'adapter' is still the right one
-
-        ob = dm.getObject()
-        if ob is None: # Not stored in the ZODB.
-            # StorageAdapters that do not store the object in
-            # ZODB takes the entry_id instead of object.
-            id_field = dm.getContext().id_field
-            entry_id = datastructure[id_field]
-            if entry_id:
-                content_url = adapter._getContentUrl(entry_id, field_id)
-                file = datastructure[self.getWidgetId()]
-                if file and type(file) is not File:
-                    file = File(self.getWidgetId(), '', file)
-                empty_file = 0
-            else:
-                empty_file = 1
-        else:
-            content_url = adapter._getContentUrl(ob, field_id)
-            file = self.restrictedTraverse(content_url)
-            empty_file = 0
-
-        if file:
-            current_name = file.getId()
-        else:
-            current_name = ''
-        registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = registry.lookupExtension(current_name)
-
-        return {'empty_file': empty_file,
-                'content_url': content_url,
-                'current_name': current_name,
-                'mimetype': mimetype,
-               }
 
 InitializeClass(CPSAttachedFileWidget)
 
