@@ -27,7 +27,7 @@ class TestFileUtils(CPSSchemasTestCase.CPSSchemasTestCase):
         file = File('test', 'test', 'test')
         file.content_type = 'text/html'
         result = FileUtils.convertFileToHtml(file, context=self.portal)
-        self.assertEquals(result.strip(), 'test')
+        self.assertEquals(result.getData().strip(), 'test')
 
 
 def test_suite():

@@ -23,7 +23,7 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG, WARNING
 import sys
-from types import IntType, StringType, ListType, FloatType, LongType
+from types import IntType, StringType, ListType, FloatType, LongType, DictType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -318,9 +318,12 @@ class CPSFileField(CPSField):
          'label': 'Suffix for field containing Text conversion'},
         {'id': 'suffix_html', 'type': 'string', 'mode': 'w',
          'label': 'Suffix for field containing HTML conversion'},
+        {'id': 'suffix_html_subfiles', 'type': 'string', 'mode': 'w',
+         'label': 'Suffix for field containing HTML conversion subobjects'},
         )
     suffix_text = ''
     suffix_html = ''
+    suffix_html_subfiles = ''
 
     def _getDependantFieldId(self, schemas, suffix):
         """Get a dependant field id described by the suffix."""
@@ -333,16 +336,26 @@ class CPSFileField(CPSField):
         return None
 
     def computeDependantFields(self, schemas, data, context=None):
-        """Compute dependant fields."""
+        """Compute dependant fields.
+
+        schemas is the list of schemas
+
+        data is the dictionnary of the datamodel
+        """
         field_id = self.getFieldId()
         file = data[field_id] # May be None.
+
         text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:
             data[text_field_id] = convertFileToText(file, context=context)
+
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
+        html_subfiles_field_id = self._getDependantFieldId(schemas,
+                                                           self.suffix_html_subfiles)
         if html_field_id is not None:
-            html_string = convertFileToHtml(file, context=context)
-            if html_string is not None:
+            html_conversion = convertFileToHtml(file, context=context)
+            if html_conversion is not None:
+                html_string = html_conversion.getData()
                 fileid = cookId('', '', file)[0]
                 if '.' in fileid:
                     fileid = fileid[:fileid.rfind('.')]
@@ -351,9 +364,20 @@ class CPSFileField(CPSField):
                 fileid = fileid + '.html'
                 html_file = File(fileid, '', html_string,
                                  content_type='text/html')
+
+                # getSubObjects returns a dict of sub-objects, each sub-object
+                # being a file but described as a string.
+                subobjects_dict = html_conversion.getSubObjects()
+                files_dict = {}
+                LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
+                for k, v in subobjects_dict.items():
+                    files_dict[k] = File(k, k, v)
+                LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
             else:
                 html_file = None
+                files_dict = {}
             data[html_field_id] = html_file
+            data[html_subfiles_field_id] = files_dict
 
     # XXX this is never called yet.
     def validate(self, value):
@@ -379,6 +403,47 @@ class CPSFileField(CPSField):
         return File(self.getFieldId(), '', values[0])
 
 InitializeClass(CPSFileField)
+
+
+class CPSSubObjectsField(CPSField):
+    """Sub-objects field."""
+    meta_type = "CPS SubObjects Field"
+
+    default_expr = 'python:{}'
+    default_expr_c = Expression(default_expr)
+
+    def getFromAttribute(self, ob, field_id):
+        value = {}
+        for k in getattr(ob, field_id, ()):
+            if k.startswith('_'):
+                continue
+            value[k] = getattr(ob, k, None)
+        return value
+
+    def setAsAttribute(self, ob, field_id, value):
+        for k in getattr(ob, field_id, ()):
+            if k.startswith('_'):
+                continue
+            try:
+                delattr(ob, k)
+            except AttributeError:
+                pass
+        setattr(ob, field_id, tuple(value.keys()))
+        for k, v in value.items():
+            if k.startswith('_'):
+                continue
+            setattr(ob, k, v)
+
+    # XXX this is never called yet.
+    def validate(self, value):
+        if value is None:
+            return None
+        if _isinstance(value, DictType):
+            return value
+        raise ValidationError('Not SubObjects: %s' % repr(value))
+
+
+InitializeClass(CPSSubObjectsField)
 
 
 class CPSImageField(CPSField):
@@ -423,4 +488,5 @@ FieldRegistry.register(CPSLongField)
 FieldRegistry.register(CPSFloatField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
+FieldRegistry.register(CPSSubObjectsField)
 FieldRegistry.register(CPSImageField)

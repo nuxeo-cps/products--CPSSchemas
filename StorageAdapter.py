@@ -38,6 +38,16 @@ ZMI.
 from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
 
+from Products.CPSSchemas.BasicFields import CPSSubObjectsField
+
+def _isinstance(ob, cls):
+    try:
+        return isinstance(ob, cls)
+    except TypeError:
+        # In python 2.1 isinstance() raises TypeError
+        # instead of returning 0 for ExtensionClasses.
+        return 0
+
 class BaseStorageAdapter:
     """Base Storage Adapter
 
@@ -182,12 +192,20 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if not hasattr(aq_base(ob), field_id):
             # Use default from field.
             return field.getDefault()
-        return getattr(ob, field_id)
+        if _isinstance(field, CPSSubObjectsField):
+            return field.getFromAttribute(ob, field_id)
+        else:
+            return getattr(ob, field_id)
 
     def _setFieldData(self, field_id, value):
         """Set data for one field."""
         # No kw arguments are expected.
-        setattr(self._ob, field_id, value)
+        ob = self._ob
+        field = self._schema[field_id] # XXX should be an arg
+        if _isinstance(field, CPSSubObjectsField):
+            field.setAsAttribute(ob, field_id, value)
+        else:
+            setattr(ob, field_id, value)
 
     def _getContentUrl(self, object, field_id, file_name):
         return '%s/downloadFile/%s/%s' % (
