@@ -956,7 +956,7 @@ class CPSSelectWidget(CPSWidget):
     vocabulary = ''
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-         'label': 'Vocabulary'},
+         'label': 'Vocabulary', 'is_required' : 1},
         {'id': 'translated', 'type': 'boolean', 'mode': 'w',
          'label': 'Is vocabulary translated on display'},
         )
