@@ -1161,7 +1161,7 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -1190,7 +1190,7 @@ class CPSBooleanWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure.getDataModel()[self.getWidgetId()]
-        if value and str(value) != '0':
+        if value and value != '0':
             label_value = self.label_true
         else:
             label_value = self.label_false

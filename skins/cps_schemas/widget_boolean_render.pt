@@ -23,7 +23,7 @@
          tal:attributes="for here/getHtmlWidgetId;"
          i18n:translate="" > True </label><br/>
 <input type="radio" value="0"
-       tal:attributes="checked python:test(not value or value == 0, 'checked', nothing);
+       tal:attributes="checked python:test(not value or value == '0', 'checked', nothing);
                        id string:{here/getHtmlWidgetId}_false;
                        name here/getHtmlWidgetId;" />
   <label tal:content="here/label_false"
@@ -37,7 +37,7 @@
           tal:content="here/label_true"
           i18n:translate="" />
   <option value="0"
-          tal:attributes="selected python:test(not value or value==0, 'selected', nothing);"
+          tal:attributes="selected python:test(not value or value=='0', 'selected', nothing);"
           tal:content="here/label_false"
           i18n:translate="" />
 </select>
