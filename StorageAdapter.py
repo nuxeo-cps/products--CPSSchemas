@@ -170,17 +170,6 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         """
         self._ob = ob
 
-    def _delete(self, field_id):
-        raise NotImplementedError
-        # TODO: implement something
-        ob = self._ob
-        if ob.__dict__.has_key(field_id):
-            # Only delete attributes that have been set on the instance.
-            delattr(ob, field_id)
-        else:
-            LOG('AttributeStorageAdapter._delete', DEBUG,
-                'Attempting to delete %s on %s' % (field_id, ob))
-
     def _getFieldData(self, field_id, field):
         """Get data from one field."""
         ob = self._ob
@@ -235,9 +224,6 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
     def setContextObject(self, ob):
         """Set a new underlying object for this adapter."""
         self._ob = ob
-
-    def _delete(self, field_id):
-        raise NotImplementedError
 
     def _getFieldData(self, field_id, field):
         """Get data from one field.
