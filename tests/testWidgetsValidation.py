@@ -30,15 +30,15 @@ class StringWidgetValidationTest(WidgetValidationTest):
 
     def test_string_ok_1(self):
         ret, err, ds = self._validate({}, '12345')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_string_ok_2(self):
         ret, err, ds = self._validate({}, '')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_string_ok_3(self):
         ret, err, ds = self._validate({}, None)
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
         # check convertion None into ''
         self.assertEquals(ds.getDataModel().values()[0], '')
 
@@ -48,19 +48,19 @@ class StringWidgetValidationTest(WidgetValidationTest):
 
     def test_string_size_max_ok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_string_size_max_ok_2(self):
         ret, err, ds = self._validate({'size_max': 10}, None)
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_string_size_max_ok_3(self):
         ret, err, ds = self._validate({'size_max': 10}, '')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_string_size_max_ok_4(self):
         ret, err, ds = self._validate({'size_max': 10}, '1234567890')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_string_size_max_nok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345678901')
@@ -72,7 +72,7 @@ class StringWidgetValidationTest(WidgetValidationTest):
 
     def test_string_required_ok_1(self):
         ret, err, ds = self._validate({'is_required': 1}, '123')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_string_required_nok_1(self):
         ret, err, ds = self._validate({'is_required': 1}, '')
@@ -87,11 +87,11 @@ class BooleanWidgetValidationTest(WidgetValidationTest):
 
     def test_boolean_ok_1(self):
         ret, err, ds = self._validate({}, 0)
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_boolean_ok_2(self):
         ret, err, ds = self._validate({}, 1)
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_boolean_nok_1(self):
         ret, err, ds = self._validate({}, 2)
@@ -122,15 +122,15 @@ class TextWidgetValidationTest(WidgetValidationTest):
 
     def test_text_ok_1(self):
         ret, err, ds = self._validate({}, '12345')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_text_ok_2(self):
         ret, err, ds = self._validate({}, '')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_text_ok_3(self):
         ret, err, ds = self._validate({}, None)
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
         # check convertion None into ''
         self.assertEquals(ds.getDataModel().values()[0], '')
 
@@ -148,7 +148,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
 	\\\\\\\\\\\\\\\'["[\\\\\\\\\\\\\\\\\\\\\\\
     """
         ret, err, ds = self._validate({}, text)
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_text_nok_1(self):
         ret, err, ds = self._validate({}, {'a':1} )
@@ -156,19 +156,19 @@ class TextWidgetValidationTest(WidgetValidationTest):
 
     def test_text_size_max_ok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_text_size_max_ok_2(self):
         ret, err, ds = self._validate({'size_max': 10}, None)
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_text_size_max_ok_3(self):
         ret, err, ds = self._validate({'size_max': 10}, '')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_text_size_max_ok_4(self):
         ret, err, ds = self._validate({'size_max': 10}, '1234567890')
-        self.failUnless(ret)
+        self.assert_(ret)
 
     def test_text_size_max_nok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345678901')
@@ -180,43 +180,44 @@ class URLWidgetValidationTest(WidgetValidationTest):
 
     def test_url_ok_1(self):
         ret, err, ds = self._validate({}, 'http://www.nuxeo.com/')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_2(self):
         ret, err, ds = self._validate({}, 'http://www.nuxeo.com')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
+
     def test_url_ok_3(self):
         ret, err, ds = self._validate({}, 'http://www.nuxeo.com/index.html')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_4(self):
         ret, err, ds = self._validate({}, '/foo')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_5(self):
         ret, err, ds = self._validate({}, '/foo#AZE')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_6(self):
         ret, err, ds = self._validate({}, 'HTtp://foo/#AZE')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_7(self):
         ret, err, ds = self._validate({},
                                       'http://www.google.fr/search?hl=fr&ie=UTF-8&oe=UTF-8&q=%40%5E%C3%A7%C3%A9%C3%A0%29%3F&btnG=Recherche+Google&meta=')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_8(self):
         ret, err, ds = self._validate({}, '../index.html')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_9(self):
         ret, err, ds = self._validate({}, '')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_ok_10(self):
         ret, err, ds = self._validate({}, 'tooo-%20oo')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_url_nok_1(self):
         ret, err, ds = self._validate({}, 'a space')
@@ -237,7 +238,7 @@ class URLWidgetValidationTest(WidgetValidationTest):
 # XXX make it pass !
 #    def test_url_nok_5(self):
 #        ret, err, ds = self._validate('URL', {}, '/ww..com')
-#        self.failUnless(err == 'cpsschemas_err_url')
+#        self.assert_(err == 'cpsschemas_err_url')
 
 
 class EmailWidgetValidationTest(WidgetValidationTest):
@@ -245,19 +246,19 @@ class EmailWidgetValidationTest(WidgetValidationTest):
 
     def test_email_ok_1(self):
         ret, err, ds = self._validate({}, 'root@nuxeo.com')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_email_ok_2(self):
         ret, err, ds = self._validate({}, 'r0Ot-me@nuxeo.foo-bar.fr')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_email_ok_3(self):
         ret, err, ds = self._validate({}, 'r-12@1.gouv')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_email_ok_4(self):
         ret, err, ds = self._validate({}, 'f+bar@be.bo.ba')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_email_nok_1(self):
         ret, err, ds = self._validate({}, 'root')
@@ -290,35 +291,35 @@ class EmailWidgetValidationTest(WidgetValidationTest):
 #  XXX should fail
 #    def test_email_nok_8(self):
 #        ret, err, ds = self._validate('Email', {}, 'a@foo.france')
-#        self.failUnless(err == 'cpsschemas_err_email', err)
+#        self.assert_(err == 'cpsschemas_err_email', err)
 
 class IdentifierWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSIdentifierWidget
 
     def test_identifier_ok_1(self):
         ret, err, ds = self._validate({}, 'POM')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_identifier_ok_2(self):
         ret, err, ds = self._validate({},
                                       'azermaozeiurpoiuwmfvljwxcvn12345678790')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_identifier_ok_3(self):
         ret, err, ds = self._validate({}, 'a_1234@12.zz')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_identifier_ok_4(self):
         ret, err, ds = self._validate({}, 'a_1.2')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_identifier_ok_5(self):
         ret, err, ds = self._validate({}, 'fbar@be.bo.ba')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_identifier_ok_5(self):
         ret, err, ds = self._validate({}, 'foo-bar')
-        self.failUnless(ret, err)
+        self.assert_(ret, err)
 
     def test_identifier_nok_1(self):
         ret, err, ds = self._validate({}, '1234')
