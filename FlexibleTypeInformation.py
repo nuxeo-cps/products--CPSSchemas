@@ -62,12 +62,12 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
                          # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
-        flexti.addAction('edit_layout',
-                         'Edit Layout',
-                         'cpsdocument_editlayout_form',
-                         # condition: only for CMF 1.4 and above
-                         ModifyPortalContent,
-                         'object')
+        #flexti.addAction('edit_layout',
+        #                 'Edit Layout',
+        #                 'cpsdocument_editlayout_form',
+        #                 # condition: only for CMF 1.4 and above
+        #                 ModifyPortalContent,
+        #                 'object')
     except TypeError, errorType:
         # CMF 1.4 compatible
         flexti.addAction('view',
@@ -82,12 +82,12 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
                          '', # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
-        flexti.addAction('edit_layout',
-                         'Edit Layout',
-                         'cpsdocument_editlayout_form',
-                         '', # condition: only for CMF 1.4 and above
-                         ModifyPortalContent,
-                         'object')
+        #flexti.addAction('edit_layout',
+        #                 'Edit Layout',
+        #                 'cpsdocument_editlayout_form',
+        #                 '', # condition: only for CMF 1.4 and above
+        #                 ModifyPortalContent,
+        #                 'object')
     if REQUEST is not None:
         REQUEST.RESPONSE.redirect(container.absolute_url() + "/manage_main")
     else:
@@ -175,7 +175,7 @@ class FlexibleTypeInformation(TypeInformation):
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
-    
+
     security.declarePublic('getProxyRolesAllowed')
     def getProxyTypesAllowed(self):
         """ return the list of allowed portal types strings """
@@ -592,5 +592,3 @@ class FlexibleTypeInformation(TypeInformation):
             evtool.notify('sys_modify_object', ob, {})
 
 InitializeClass(FlexibleTypeInformation)
-
-
