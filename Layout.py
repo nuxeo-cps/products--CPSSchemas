@@ -259,7 +259,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         for widget_id, widget in self.items():
             if not widget.isHidden():
                 mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
-                css_class = widget.getDisplayClassFromDatamodel(layout_mode, datamodel)
+                css_class = widget.getCssClassFromDatamodel(layout_mode, datamodel)
                 widgets[widget_id] = {
                     'widget': widget,
                     'widget_mode': mode,
