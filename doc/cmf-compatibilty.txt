@@ -34,6 +34,6 @@ TESTS on a 'stock' CMF :
 You can launch tests against CPSSchemas within the tests
 sub-directory. You'll need for that Localizer and TranslationService
 
-Simply launch go to the test directories :
+Simply go to the test directories and type :
 
  $ make test
