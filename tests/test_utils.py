@@ -20,35 +20,34 @@
 # $Id$
 import unittest, os
 from Testing.ZopeTestCase import ZopeTestCase
-from Products.CPSSchemas.utils import getHRSize
+from Products.CPSSchemas.utils import getHumanReadableSize
 
 class UtilsTestCase(ZopeTestCase):
 
-    def test_getHRSize(self):
+    def test_getHumanReadableSize(self):
         """ testing human readable size getter
         """
-        str_size = getHRSize(-1)
-        self.assertEquals(str_size, '0 cpsschemas_unit_mega_bytes')
+        str_size = getHumanReadableSize(-1)
+        self.assertEquals(str_size, (0, 'cpsschemas_unit_mega_bytes'))
 
-        str_size = getHRSize(0)
-        self.assertEquals(str_size, '0 cpsschemas_unit_mega_bytes')
+        str_size = getHumanReadableSize(0)
+        self.assertEquals(str_size, (0, 'cpsschemas_unit_mega_bytes'))
 
-        str_size = getHRSize(156)
-        self.assertEquals(str_size, '156 cpsschemas_unit_bytes')
+        str_size = getHumanReadableSize(156)
+        self.assertEquals(str_size, (156, 'cpsschemas_unit_bytes'))
 
-        str_size = getHRSize(1526)
-        self.assertEquals(str_size, '1.49 cpsschemas_unit_kilo_bytes')
+        str_size = getHumanReadableSize(1526)
+        self.assertEquals(str_size, (1.49, 'cpsschemas_unit_kilo_bytes'))
+
+        str_size = getHumanReadableSize(1024)
+        self.assertEquals(str_size, (1, 'cpsschemas_unit_kilo_bytes'))
 
 
-        str_size = getHRSize(1024)
-        self.assertEquals(str_size, '1 cpsschemas_unit_kilo_bytes')
+        str_size = getHumanReadableSize(1048576)
+        self.assertEquals(str_size, (1, 'cpsschemas_unit_mega_bytes'))
 
-
-        str_size = getHRSize(1048576)
-        self.assertEquals(str_size, '1 cpsschemas_unit_mega_bytes')
-
-        str_size = getHRSize(1098776)
-        self.assertEquals(str_size, '1.05 cpsschemas_unit_mega_bytes')
+        str_size = getHumanReadableSize(1098776)
+        self.assertEquals(str_size, (1.05, 'cpsschemas_unit_mega_bytes'))
 
 def test_suite():
     return unittest.TestSuite((
