@@ -152,13 +152,13 @@ class CPSFileField(CPSField):
     """File field."""
     meta_type = "CPS File Field"
     _properties = CPSField._properties + (
-        {'id': 'suffix_html', 'type': 'string', 'mode': 'w',
-         'label': 'Suffix for field containing HTML conversion'},
         {'id': 'suffix_text', 'type': 'string', 'mode': 'w',
          'label': 'Suffix for field containing Text conversion'},
+        {'id': 'suffix_html', 'type': 'string', 'mode': 'w',
+         'label': 'Suffix for field containing HTML conversion'},
         )
-    suffix_html = ''
     suffix_text = ''
+    suffix_html = ''
 
     def getDefault(self):
         """Get the default file object."""
@@ -178,6 +178,9 @@ class CPSFileField(CPSField):
         """Compute dependant fields."""
         field_id = self.getFieldId()
         file = data[field_id] # May be None.
+        text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
+        if text_field_id is not None:
+            data[text_field_id] = convertFileToText(file, context=context)
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
         if html_field_id is not None:
             html_string = convertFileToHtml(file, context=context)
@@ -193,9 +196,6 @@ class CPSFileField(CPSField):
             else:
                 html_file = None
             data[html_field_id] = html_file
-        text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
-        if text_field_id is not None:
-            data[text_field_id] = convertFileToText(file, context=context)
 
     def validate(self, value):
         if not value:
