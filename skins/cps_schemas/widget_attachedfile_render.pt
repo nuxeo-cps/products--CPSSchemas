@@ -49,6 +49,48 @@
   </div>
 
   <tal:block condition="python: mode == 'edit'">
+    <tal:block define="allowed_suffixes python:here.allowed_suffixes;"
+      condition="allowed_suffixes">
+      <p i18n:translate="">
+        cpsschemas_allowed_file_suffixes
+        <tal:block tal:replace="python:', '.join(allowed_suffixes)"
+          i18n:name="allowed_file_suffixes">
+          .html, .sxw
+        </tal:block>
+      </p>
+    </tal:block>
+    <tal:block define="size_max python:here.size_max;"
+      condition="python:size_max > 0">
+      <p tal:define="
+        b python:size_max < 1024;
+        m python:size_max > 1048576;
+        k python:not b and not m;
+        cpsmcat nocall:here/Localizer/default;
+        ">
+        <tal:block condition="b" i18n:translate="">
+          cpsschemas_size_max
+          <tal:block i18n:name="size_max">1</tal:block>
+          <tal:block i18n:name="storage_unit"
+            content="python:cpsmcat('cpsschemas_unit_kilo_bytes')"/>
+        </tal:block>
+        <tal:block condition="m" i18n:translate="">
+          cpsschemas_size_max
+          <tal:block i18n:name="size_max"
+            content="python:'%.02f' % float(size_max / 1048576.0)">4
+          </tal:block>
+          <tal:block i18n:name="storage_unit"
+            content="python:cpsmcat('cpsschemas_unit_mega_bytes')"/>
+        </tal:block>
+        <tal:block condition="k" i18n:translate="">
+          cpsschemas_size_max
+          <tal:block i18n:name="size_max"
+            content="python:'%s' % (size_max / 1024)">400
+          </tal:block>
+          <tal:block i18n:name="storage_unit"
+            content="python:cpsmcat('cpsschemas_unit_kilo_bytes')"/>
+        </tal:block>
+      </p>
+    </tal:block>
     <metal:block define-macro="file_title_edit">
 
       <table cellpadding="0" cellspacing="0" border="0" 

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-18 16:25default\n"
-"PO-Revision-Date: 2004-10-18 16:29+0200\n"
+"POT-Creation-Date: 2004-10-18 17:04default\n"
+"PO-Revision-Date: 2004-10-18 17:06+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,6 +75,16 @@ msgstr "(printable version)"
 msgid "cpsschema_minute"
 msgstr "mn"
 
+#.   <p>
+#.           cpsschemas_allowed_file_suffixes
+#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
+#.         </p>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
+msgstr ""
+"Allowed files must have one of the following suffixes: "
+"${allowed_file_suffixes}."
+
 #.   <span>resize</span>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
@@ -124,21 +134,21 @@ msgid "cpsschemas_render_position"
 msgstr "Position: "
 
 #.   <block condition="b">
-#.                   cpsschemas_size_max
-#.                   ${size_max}
-#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.                 </block>
+#.             cpsschemas_size_max
+#.             ${size_max}
+#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.           </block>
 #.   <block condition="m">
-#.                   cpsschemas_size_max
-#.                   ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
-#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
-#.                 </block>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
+#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
+#.           </block>
 #.   <block condition="k">
-#.                   cpsschemas_size_max
-#.                   ${size_max (tal content="python:'%s' % (size_max / 1024)")}
-#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.                 </block>
-#: from ../skins/cps_schemas/widget_image_render.pt
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="python:'%s' % (size_max / 1024)")}
+#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.           </block>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
 msgstr "Maximal size: ${size_max} ${storage_unit}."
 
@@ -280,10 +290,10 @@ msgstr "Invalid date"
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
 
-msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
 "This file has not an allowed suffix, the allowed suffixes are: "
-"${allowed_suffixes}."
+"${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Invalid file"

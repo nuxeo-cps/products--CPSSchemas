@@ -58,7 +58,7 @@ msgstr ""
 msgid "cpsschemas_err_file"
 msgstr ""
 
-msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
 
 msgid "cpsschemas_err_file_empty"

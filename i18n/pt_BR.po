@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-10-18 16:25default\n"
+"POT-Creation-Date: 2004-10-18 17:04default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -71,6 +71,15 @@ msgstr "Previsão"
 msgid "cpsschema_minute"
 msgstr "min"
 
+#.   <p>
+#.           cpsschemas_allowed_file_suffixes
+#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
+#.         </p>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#, fuzzy
+msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
+msgstr "Arquivo inválido."
+
 #.   <span>resize</span>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
@@ -120,21 +129,21 @@ msgid "cpsschemas_render_position"
 msgstr "Posição de renderização"
 
 #.   <block condition="b">
-#.                   cpsschemas_size_max
-#.                   ${size_max}
-#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.                 </block>
+#.             cpsschemas_size_max
+#.             ${size_max}
+#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.           </block>
 #.   <block condition="m">
-#.                   cpsschemas_size_max
-#.                   ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
-#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
-#.                 </block>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
+#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
+#.           </block>
 #.   <block condition="k">
-#.                   cpsschemas_size_max
-#.                   ${size_max (tal content="python:'%s' % (size_max / 1024)")}
-#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.                 </block>
-#: from ../skins/cps_schemas/widget_image_render.pt
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="python:'%s' % (size_max / 1024)")}
+#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.           </block>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
 msgstr "Redimensiona"
@@ -282,7 +291,7 @@ msgid "cpsschemas_err_file"
 msgstr "Arquivo inválido."
 
 #, fuzzy
-msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr "Arquivo inválido."
 
 msgid "cpsschemas_err_file_empty"
