@@ -234,14 +234,14 @@ class CPSLayout(Layout):
     manage_addCPSWidgetForm = DTMLFile('zmi/widget_addform', globals())
 
     security.declareProtected(ManagePortal, 'getUnstrippedWidgetTypeId')
-    def getUnstrippedWidgetTypeId(self, wtid):
+    def getUnstrippedWidgetTypeId(self, swtid):
         """Get an unstripped version of a widget type id."""
         wtool = getToolByName(self, 'portal_widget_types')
-        swtid = wtid.replace(' ', '')
+        twtid = swtid.replace(' ', '')
         for wtid in wtool.objectIds():
-            if wtid.replace(' ', '') == swtid:
+            if wtid.replace(' ', '') == twtid:
                 return wtid
-        raise ValueError(wtid)
+        raise ValueError(swtid)
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidget')
     def manage_addCPSWidget(self, id, swtid, REQUEST=None, **kw):
