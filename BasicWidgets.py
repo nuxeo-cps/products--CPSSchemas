@@ -33,7 +33,7 @@ from types import StringType, ListType, TupleType
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 from OFS.PropertyManager import PropertyManager
-from Products.PythonScripts.standard import structured_text
+from Products.PythonScripts.standard import structured_text, newline_to_br
 
 from Products.CMFCore.CMFCorePermissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
@@ -412,8 +412,8 @@ class CPSTextAreaWidget(CPSWidget):
                 return '<pre>'+escape(value)+'</pre>'
             elif render_mode == 'stx':
                 return structured_text(value)
-            else:
-                return escape(value)
+            else: # render_mode == 'text'
+                return '<div>'+newline_to_br(value)+'</div>'
         elif mode == 'edit':
             return renderHtmlTag('textarea',
                                  name=self.getHtmlWidgetId(),
