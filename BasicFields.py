@@ -555,7 +555,6 @@ class CPSRangeListField(CPSListField):
     validation_error_msg = 'Not a range list: '
 
     def validate(self, value):
-        LOG('##################', DEBUG, repr(value))
         if isinstance(value, ListType):
             for v in value:
                 if not isinstance(v, TupleType):
