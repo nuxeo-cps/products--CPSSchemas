@@ -2,10 +2,6 @@
                    id here/getWidgetId;
                    content_url options/content_url;
                    image_tag options/image_tag;
-                   datastructure options/datastructure;
-                   datamodel datastructure/getDataModel;
-                   ctx datamodel/getContext;
-                   rurl python:ctx.getContextUrl()+'/';
                    current_name options/current_name;
                    empty_file options/empty_file;
                    mimetype options/mimetype;
