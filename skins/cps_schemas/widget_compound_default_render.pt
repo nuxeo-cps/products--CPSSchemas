@@ -1,0 +1,60 @@
+<tal:block define="cells options/cells;
+                   mode options/mode;
+                   ds options/datastructure;">
+  <tal:block condition="python: mode == 'view'">
+      <tal:block repeat="cell cells">
+        <tal:block define="widget cell/widget">
+          <div tal:attributes="class widget/css_class|nothing">
+            <tal:block condition="widget/label">
+              <span class="label" tal:content="widget/label">label</span>
+            </tal:block>
+            <tal:block replace="structure cell/widget_rendered" />
+          </div>
+        </tal:block>
+      </tal:block>
+  </tal:block>
+
+  <tal:block condition="python: mode == 'edit'">
+    <tal:block repeat="cell cells">
+      <tal:block define="widget cell/widget;
+                         wid widget/getWidgetId;
+                         err python:ds.getError(wid);
+                         is_required widget/is_required|nothing;
+                         tooltip_id python:wid + '_help';
+                         css_class python:test(err, 'row error', 'row')">
+        <div tal:attributes="class css_class">
+          <div class="label" tal:condition="widget/label_edit"
+            tal:attributes="class python:test(is_required, 'label required',
+                                              'label')">
+            <span i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/label_edit">label</span>
+            <span tal:condition="not:widget/is_i18n"
+              tal:content="widget/label_edit">label</span>
+          </div>
+          <button type="button" class="tooltipControl"
+                tal:condition="widget/help"
+		tal:attributes="onclick python:'toggleElementVisibility(\'%s\')' % tooltip_id;"
+          > ? </button>
+          <div class="field">
+            <div tal:replace="structure cell/widget_rendered"/>
+          </div>
+          <div class="tooltipArea" style="visibility: hidden;"
+               tal:condition="widget/help"
+               tal:attributes="
+               id tooltip_id;
+               onclick python:'showElement(false, \'%s\')' % tooltip_id;
+            ">
+            <span i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/help">i18_key-help_for_this_field</span>
+            <span tal:condition="not:widget/is_i18n"
+              tal:content="widget/help">This is the help for this field</span>
+          </div>
+          <tal:block condition="err">
+            <em style="color: red"
+                i18n:translate="" tal:content="err">err</em><br>
+          </tal:block>
+        </div>
+      </tal:block>
+    </tal:block>
+  </tal:block>
+</tal:block>
