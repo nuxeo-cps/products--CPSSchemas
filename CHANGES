@@ -15,6 +15,7 @@ Bug fixes:
   in edit mode)
 - Fixed error when saving changes on layout properties in the ZMI.
 - Better decoration for the CPSDocumentLanguageSelectWidget through CSS.
+- Fixed the BMP bug (#305)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
