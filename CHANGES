@@ -9,6 +9,7 @@ Bug fixes:
 ~~~~~~~~~~
 - do not raise exception if 2 schemas have a field in common
   this case is possible when you change your schema definition
+- Fix lines widget to deal with Zope bug where it returns [''] instead of [].
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Pass the datamodel as argument to postCommitHook as it is sometimes
