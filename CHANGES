@@ -4,6 +4,8 @@ ZODB Requires:
 New features:
 ~~~~~~~~~~~~~
 - Italian translation.
+- A password widget can compare its value with another one so that you can have
+  a confirm password.
 -
 Bug fixes:
 ~~~~~~~~~~

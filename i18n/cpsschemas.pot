@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-12-22 12:44default\n"
+"POT-Creation-Date: 2004-01-15 17:23default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
-#.   <input value="button_add" name="vocab_addkey:method" type="submit">
-#.   </input>
 #.   <input value="button_add" type="submit">
 #.         </input>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
-#: ../skins/cps_schemas/vocab_manage_form.pt
+#.   <input value="button_add" name="vocabulary_addkey:method" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "button_add"
 msgstr ""
 
@@ -45,22 +45,22 @@ msgstr ""
 msgid "button_cancel"
 msgstr ""
 
-#.   <input value="button_delete" name="vocab_delkeys:method" type="submit">
-#.   </input>
 #.   <input value="button_delete" type="submit">
 #.         </input>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
-#: ../skins/cps_schemas/vocab_manage_form.pt
+#.   <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "button_delete"
 msgstr ""
 
-#.   <input value="button_edit" name="vocab_update:method" type="submit">
-#.     <input value="button_delete" name="vocab_delkeys:method" type="submit">
-#.   </input></input>
 #.   <input value="button_edit" type="submit">
 #.         </input>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
-#: ../skins/cps_schemas/vocab_manage_form.pt
+#.   <input value="button_edit" name="vocabulary_update:method" type="submit">
+#.     <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
+#.   </input></input>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "button_edit"
 msgstr ""
 
@@ -159,59 +159,59 @@ msgid "cpsschemas_render_position"
 msgstr ""
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
-#: from ../skins/cps_schemas/vocab_manage_form.pt
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
 msgstr ""
 
 #.   <h2>cpsschemas_vocabulary_available</h2>
-#: from ../skins/cps_schemas/vocab_manage_form.pt
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_available"
 msgstr ""
 
 #.   <span class="description">cpsschemas_vocabulary_contains
 #.     ${voc_entries (tal replace="python:len(keys)")}
 #.     entry(ies)</span>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
 msgstr ""
 
 #.   <h2>cpsschemas_vocabulary_delete</h2>
-#: from ../skins/cps_schemas/vocab_manage_form.pt
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_delete"
 msgstr ""
 
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
 msgstr ""
 
 #.   <h1>cpsschemas_vocabulary_entry_add</h1>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
 msgstr ""
 
 #.   <th>Id:</th>
-#: from ../skins/cps_schemas/vocab_manage_form.pt
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
 msgstr ""
 
 #.   <th>Key:</th>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
 msgstr ""
 
 #.   <h1>cpsschemas_vocabulary_manage</h1>
-#: from ../skins/cps_schemas/vocab_manage_form.pt
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_manage"
 msgstr ""
 
 #.   <th>MsgId:</th>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
 msgstr ""
 
 #.   <th>Value:</th>
-#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
 msgstr ""
 
@@ -290,6 +290,9 @@ msgid "cpsschemas_err_float_range"
 msgstr ""
 
 msgid "cpsschemas_err_float"
+msgstr ""
+
+msgid "cpsschemas_err_password_mismatch"
 msgstr ""
 
 msgid "jscalendar_date_fmt"

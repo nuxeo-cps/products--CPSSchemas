@@ -376,8 +376,13 @@ class CPSPasswordWidget(CPSStringWidget):
     """
 
     meta_type = "CPS Password Widget"
+    _properties = CPSStringWidget._properties + (
+        {'id': 'password_widget', 'type': 'string', 'mode': 'w',
+         'label': 'Password widget to compare with'},)
 
     field_types = ('CPS Password Field',)
+    
+    password_widget = ''
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -421,6 +426,12 @@ class CPSPasswordWidget(CPSStringWidget):
                 err = 'cpsschemas_err_required'
             elif self.size_max and len(v) > self.size_max:
                 err = 'cpsschemas_err_string_too_long'
+            elif self.password_widget:
+                pwidget_id = self.password_widget
+                pvalue = datastructure[pwidget_id]
+                pv = str(pvalue).strip()
+                if v != pv:
+                    err = 'cpsschemas_err_password_mismatch'
 
         if err:
             datastructure.setError(widget_id, err)

@@ -73,6 +73,9 @@ msgstr ""
 msgid "cpsschemas_err_float"
 msgstr ""
 
+msgid "cpsschemas_err_password_mismatch"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""
 
