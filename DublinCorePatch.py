@@ -22,7 +22,7 @@
 
 from Products.CMFCore.interfaces.DublinCore import DublinCore, MutableDublinCore
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
-from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
+from Products.CMFCore.permissions import ModifyPortalContent
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 

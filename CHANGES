@@ -33,3 +33,4 @@ New internal features:
   compliant), widget_css_class renamed into css_class_expr, and
   getCssClassForDatamodel method was renamed into getCssClass: if expression is
   specified, the basic property css_class is ignored.
+- Use CMFCore.permissions instead of CMFCore.CMFCorePermissions to avoid warnings

@@ -48,7 +48,7 @@ from AccessControl import ClassSecurityInfo, Unauthorized
 from AccessControl import getSecurityManager
 
 from Products.CMFCore.utils import _checkPermission
-from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
+from Products.CMFCore.permissions import ModifyPortalContent
 
 
 try:

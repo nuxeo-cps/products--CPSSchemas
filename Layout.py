@@ -29,9 +29,9 @@ from AccessControl import ClassSecurityInfo
 
 from OFS.Folder import Folder
 
-from Products.CMFCore.CMFCorePermissions import View
-from Products.CMFCore.CMFCorePermissions import ManagePortal
-from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
+from Products.CMFCore.permissions import View
+from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.permissions import ViewManagementScreens
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 

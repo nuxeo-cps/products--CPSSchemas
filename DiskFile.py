@@ -32,7 +32,7 @@ from AccessControl import ClassSecurityInfo
 from OFS.Image import File
 from TM import VTM
 
-from Products.CMFCore.CMFCorePermissions import View
+from Products.CMFCore.permissions import View
 
 class DiskFile(File, VTM):
     """Stores the data of a file object into a file on the disk

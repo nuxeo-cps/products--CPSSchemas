@@ -25,7 +25,7 @@ from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Acquisition import Implicit
 
-from Products.CMFCore.CMFCorePermissions import View, ManagePortal
+from Products.CMFCore.permissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 class MethodVocabulary(SimpleItemWithProperties):

@@ -25,7 +25,7 @@ from ExtensionClass import Base
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
-from Products.CMFCore.CMFCorePermissions import ManageProperties
+from Products.CMFCore.permissions import ManageProperties
 from Products.CMFCore.Expression import Expression
 
 

@@ -37,7 +37,7 @@ except ImportError:
 
 import Products.CMFCore
 from Products.CMFCore.DirectoryView import registerDirectory
-from Products.CMFCore.CMFCorePermissions import ManagePortal
+from Products.CMFCore.permissions import ManagePortal
 
 import Field
 import Schema

@@ -48,7 +48,7 @@ from OFS.Image import cookId, File, Image
 from OFS.PropertyManager import PropertyManager
 from Products.PythonScripts.standard import structured_text, newline_to_br
 
-from Products.CMFCore.CMFCorePermissions import ManageProperties
+from Products.CMFCore.permissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.Widget import CPSWidget

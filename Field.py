@@ -33,7 +33,7 @@ from AccessControl.PermissionRole import rolesForPermissionOn
 
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
-from Products.CMFCore.CMFCorePermissions import View
+from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 

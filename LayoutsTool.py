@@ -24,7 +24,7 @@ The Layouts Tool manages layouts.
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
-from Products.CMFCore.CMFCorePermissions import View
+from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
 

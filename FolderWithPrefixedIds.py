@@ -24,7 +24,7 @@ they can be arbitrary.
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
-from Products.CMFCore.CMFCorePermissions import AccessContentsInformation
+from Products.CMFCore.permissions import AccessContentsInformation
 
 
 class FolderWithPrefixedIds(Folder):
