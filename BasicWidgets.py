@@ -70,9 +70,13 @@ def renderHtmlTag(tagname, **kw):
             value = key
         if key in ('value', ) or value != '':
             attrs.append('%s="%s"' % (key, escape(str(value))))
-    res = '<%s %s>' % (tagname, ' '.join(attrs))
+    res = '<%s %s' % (tagname, ' '.join(attrs))
     if contents is not None:
-        res += contents + '</%s>' % tagname
+        res += '>%s</%s>' % (contents, tagname)
+    elif tagname in ('input', 'img', 'br', 'hr'):
+        res += ' />'
+    else:
+        res += '>'
     return res
 
 
