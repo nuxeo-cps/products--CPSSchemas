@@ -1620,6 +1620,9 @@ class CPSFileWidget(CPSWidget):
         # It would be better to use a centralized translation mechanism, that
         # exists for example in CPSCore, but CPSSchemas is supposed to be
         # independent of CPSCore :-(
+        current_name = current_name.replace('Æ', 'AE')
+        current_name = current_name.replace('æ', 'ae')
+        current_name = current_name.replace('ß', 'ss')
         translation_table = string.maketrans(
             r"'\;/ &:ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ",
             r"_______AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")

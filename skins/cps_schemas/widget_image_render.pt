@@ -21,8 +21,9 @@
      Alternative text
     </td>
     <td>
-        <input style="margin-left: 5px" type="text" tal:attributes="name title_name;
-                                           value current_title">
+        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
+              tal:attributes="name title_name;
+              value current_title">
     </td>
   </tr>
 </table>
