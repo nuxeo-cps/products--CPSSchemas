@@ -171,9 +171,15 @@ class CPSDateTimeWidget(CPSWidget):
          'label': 'View format (short, medium or long)'},
         {'id': 'time_setting', 'type': 'boolean', 'mode': 'w',
          'label': 'Enabling the setting of time of the day'},
+        {'id': 'time_hour_default', 'type': 'string', 'mode': 'w',
+         'label': 'default hour for time'},
+        {'id': 'time_minutes_default', 'type': 'string', 'mode': 'w',
+         'label': 'default minutes for time'},
         )
     view_format = 'medium'
     time_setting = 1
+    time_hour_default = '12'
+    time_minutes_default = '00'
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -203,8 +209,9 @@ class CPSDateTimeWidget(CPSWidget):
 
         datastructure[widget_id] = v
         datastructure[widget_id+'_date'] = date
-        datastructure[widget_id+'_hour'] = hour or '12'
-        datastructure[widget_id+'_minute'] = minute or '00'
+        datastructure[widget_id+'_hour'] = hour or self.time_hour_default
+        datastructure[widget_id+'_minute'] = minute or \
+                                             self.time_minutes_default
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -213,8 +220,10 @@ class CPSDateTimeWidget(CPSWidget):
         widget_id = self.getWidgetId()
 
         date = datastructure[widget_id+'_date'].strip()
-        hour = datastructure[widget_id+'_hour'].strip() or '12'
-        minute = datastructure[widget_id+'_minute'].strip() or '00'
+        hour = datastructure[widget_id+'_hour'].strip() or \
+               self.time_hour_default
+        minute = datastructure[widget_id+'_minute'].strip() or \
+                 self.time_minutes_default
 
         if not (date):
             if self.is_required:
