@@ -69,7 +69,8 @@ class DataModel(UserDict):
         # self.data initialized by UserDict
         self._ob = ob
         self._fields = {}
-        self._schemas = {}
+        self._schemas = ()
+        self._adapters = ()
         for schema in schemas:
             self._addSchema(schema)
 
@@ -92,11 +93,12 @@ class DataModel(UserDict):
                 self._fields[fieldid] = schema[fieldid]
         # XXX Adapter type isn't fixed.
         adapter = AttributeStorageAdapter(schema, self._ob)
-        self._schemas[schema.id] = schema, adapter
+        self._schemas = self._schemas + (schema,)
+        self._adapters = self._adapters + (adapter,)
 
     def _fetch(self):
         """Fetch the data into local dict for user access."""
-        for schema, adapter in self._schemas.values():
+        for adapter in self._adapters:
             self.data.update(adapter.getData())
 
     def _setEditableFromProxy(self, proxy):
@@ -124,7 +126,7 @@ class DataModel(UserDict):
         if ob is not old_ob:
             # Switch to the new object for the DataModel and the adapters.
             self._ob = ob
-            for schema, adapter in self._schemas.values():
+            for adapter in self._adapters:
                 adapter.setContextObject(ob)
 
     def _commit(self, proxy=None, check_perms=1):
@@ -147,12 +149,12 @@ class DataModel(UserDict):
 
         # Compute dependant fields.
         data = self.data
-        for schema, adapter in self._schemas.values():
+        for schema in self._schemas:
             for field_id, field in schema.items():
                 field.computeDependantFields(schema, data)
 
         # Call the adapters to store the data.
-        for schema, adapter in self._schemas.values():
+        for adapter in self._adapters:
             adapter.setData(data)
 
         # XXX temporary until we have a better API for this
@@ -165,7 +167,7 @@ class DataModel(UserDict):
         """Export the datamodel as XML string."""
         res = []
         data = self.data
-        for schema, adapter in self._schemas.values():
+        for schema in self._schemas:
             for field_id, field in schema.items():
                 value = data[field_id]
                 svalue, info = field._exportValue(value)
