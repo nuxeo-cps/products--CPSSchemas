@@ -357,6 +357,24 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         """Validate a value."""
         raise NotImplementedError
 
+    # Conversion
+
+    security.declarePublic('convertToLDAP')
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values.
+
+        Returns a list of strings.
+        """
+        raise NotImplementedError
+
+    security.declarePublic('convertFromLDAP')
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values.
+
+        Returns the converted value or raises an error.
+        """
+        raise NotImplementedError
+
 InitializeClass(Field)
 
 

@@ -21,7 +21,8 @@
 Definition of standard field types.
 """
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, WARNING
+import sys
 from types import IntType, StringType, ListType, FloatType, LongType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
@@ -31,6 +32,7 @@ from OFS.Image import cookId, File, Image
 from Products.CMFCore.Expression import Expression
 
 from Products.CPSSchemas.Field import CPSField, FieldRegistry
+from Products.CPSSchemas.Field import ValidationError
 from Products.CPSSchemas.FileUtils import convertFileToHtml
 from Products.CPSSchemas.FileUtils import convertFileToText
 
@@ -43,9 +45,19 @@ def _isinstance(ob, cls):
         # instead of returning 0 for ExtensionClasses.
         return 0
 
+#
+# UTF-8
+#
 
-class ValidationError(ValueError):
-    pass
+default_encoding = sys.getdefaultencoding()
+if default_encoding == 'ascii':
+    default_encoding = 'latin1'
+
+def toUTF8(s):
+    return unicode(s).encode('utf-8')
+
+def fromUTF8(s):
+    return unicode(s, 'utf-8').encode(default_encoding)
 
 
 class CPSIntField(CPSField):
@@ -60,6 +72,20 @@ class CPSIntField(CPSField):
         if isinstance(value, IntType):
             return value
         raise ValidationError('Not an integer: %s' % repr(value))
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        return [str(value)]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        try:
+            if len(values) != 1:
+                raise ValueError
+            return int(values[0])
+        except (ValueError, TypeError):
+            raise ValidationError("Incorrect Int value from LDAP: %s"
+                                  % `values`)
 
 InitializeClass(CPSIntField)
 
@@ -77,6 +103,20 @@ class CPSLongField(CPSField):
             return value
         raise ValidationError('Not an long integer: %s' % repr(value))
 
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        return [str(value)]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        try:
+            if len(values) != 1:
+                raise ValueError
+            return long(values[0])
+        except (ValueError, TypeError):
+            raise ValidationError("Incorrect Long value from LDAP: %s"
+                                  % `values`)
+
 InitializeClass(CPSLongField)
 
 
@@ -92,6 +132,20 @@ class CPSFloatField(CPSField):
         if isinstance(value, FloatType):
             return value
         raise ValidationError('Not an real number: %s' % repr(value))
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        return [str(value)]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        try:
+            if len(values) != 1:
+                raise ValueError
+            return float(values[0])
+        except (ValueError, TypeError):
+            raise ValidationError("Incorrect Float value from LDAP: %s"
+                                  % `values`)
 
 InitializeClass(CPSFloatField)
 
@@ -109,20 +163,35 @@ class CPSStringField(CPSField):
             return value
         raise ValidationError('Not a string: %s' % repr(value))
 
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        if not value:
+            return []
+        return [toUTF8(value)]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        if not values:
+            return ''
+        if len(values) != 1:
+            LOG('CPSStringField.convertFromLDAP', WARNING,
+                'Multi-valued field, cutting: %s' % `values`)
+            values = values[:1]
+        value = values[0]
+        try:
+            value = fromUTF8(value)
+        except UnicodeError:
+            LOG('CPSStringField.convertFromLDAP', WARNING,
+                'Problem recoding %s' % `value`)
+            pass
+        return value
+
 InitializeClass(CPSStringField)
 
-class CPSPasswordField(CPSField):
+
+class CPSPasswordField(CPSStringField):
     """Password field."""
     meta_type = "CPS Password Field"
-
-    default_expr = 'string:'
-    default_expr_c = Expression(default_expr)
-
-    # XXX this is never called yet.
-    def validate(self, value):
-        if isinstance(value, StringType):
-            return value
-        raise ValidationError('Not a string: %s' % repr(value))
 
 InitializeClass(CPSPasswordField)
 
@@ -147,6 +216,24 @@ class CPSStringListField(CPSField):
                 return value
         raise ValidationError('Not a string list: %s' % repr(value))
 
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        # Empty values are not allowed in LDAP
+        return [toUTF8(v) for v in value if v]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        res = []
+        for v in values:
+            try:
+                v = fromUTF8(v)
+            except UnicodeError:
+                LOG('CPSStringListField.convertFromLDAP', WARNING,
+                    'problem recoding %s' % `v`)
+                pass
+            res.append(v)
+        return res
+
 InitializeClass(CPSStringListField)
 
 
@@ -164,6 +251,57 @@ class CPSDateTimeField(CPSField):
         if isinstance(value, DateTime):
             return value
         raise ValidationError('Not a datetime: %s' % repr(value))
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        if not value:
+            return []
+        # The recommended time format for LDAP is
+        # "Generalized Time", see rfc2252.
+        if value.Time() == "00:00:00":
+            # If a date without time is stored, ignore the timezone XXX
+            pass
+        else:
+            # GMT is strongly recommended
+            value = value.toZone('GMT')
+        v = '%04d%02d%02d%02d%02d%02dZ' % (
+            value.year(), value.month(), value.day(),
+            value.hour(), value.minute(), value.second())
+        return [v]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        if not values:
+            return None
+        try:
+            if len(values) != 1:
+                raise ValueError
+            v = values[0]
+            # strptime is not available on Windows, so do this the
+            # hard way:
+            year = int(v[0:4])
+            month = int(v[4:6])
+            day = int(v[6:8])
+            hour = int(v[8:10])
+            minute = int(v[10:12])
+            second = int(v[12:14])
+            # Timezones are in ISO spec. Examples:
+            # GMT: 'Z'
+            # CET: '+0100'
+            # EST: '-0600'
+            tz = v[14:]
+            if tz[0] in ('+', '-'): # There is a timezone specified.
+                tz = 'GMT' + tz
+            else:
+                tz = 'GMT'
+            value = DateTime(year, month, day, hour, minute, second, tz)
+            # Convert to local zone if there is a time XXX
+            if v[8:14] != '000000':
+                value = value.toZone(value.localZone())
+            return  value
+        except (ValueError, TypeError):
+            raise ValidationError("Incorrect DateTime value from LDAP: %s" %
+                                  `values`)
 
 InitializeClass(CPSDateTimeField)
 
@@ -225,6 +363,21 @@ class CPSFileField(CPSField):
             return value
         raise ValidationError('Not a file: %s' % repr(value))
 
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        if not value:
+            return []
+        return [str(value)]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        if not values:
+            return None
+        if len(values) != 1:
+            raise ValidationError("Incorrect File value from LDAP: "
+                                  "(%d-element list)" % len(values))
+        return File(self.getFieldId(), '', values[0])
+
 InitializeClass(CPSFileField)
 
 
@@ -242,6 +395,15 @@ class CPSImageField(CPSField):
         if _isinstance(value, Image):
             return value
         raise ValidationError('Not an image: %s' % repr(value))
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        if not values:
+            return None
+        if len(values) != 1:
+            raise ValidationError("Incorrect Image value from LDAP: "
+                                  "(%d-element list)" % len(values))
+        return Image(self.getFieldId(), '', values[0])
 
 InitializeClass(CPSImageField)
 
