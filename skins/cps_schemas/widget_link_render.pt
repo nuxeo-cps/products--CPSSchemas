@@ -28,8 +28,8 @@ tal:content="href" /></div>
       css_class python:test(err, 'row error', nothing);"
       tal:attributes="class css_class">
       <tal:block replace="structure cell/widget_rendered" />
-      <div >
-        <em tal:condition="err" style="color: red" i18n:translate="" tal:content="err">err</em>
+      <div tal:condition="err">
+        <em style="color: red" i18n:translate="" tal:content="err">err</em>
       </div>
     </td>
   </tr>
