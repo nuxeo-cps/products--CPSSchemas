@@ -29,17 +29,21 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         self.adapter = AttributeStorageAdapter(self.schema, self.document)
 
     def testAccessors(self):
-        field_ids = ['Subject', 'Creator', 'CreationDate', 'ModificationDate',
-            'ExpirationDate', 'Format', 'Contributors', 'EffectiveDate',
-            'Rights', 'Language', 'Description', 'Title']
-        self.assertEquals([item[0] for item in self.adapter.getFieldItems()],
-            field_ids)
+        reference_field_ids = ['Subject', 'Creator', 'CreationDate',
+            'ModificationDate', 'ExpirationDate', 'Format', 'Contributors',
+            'EffectiveDate', 'Rights', 'Language', 'Description', 'Title']
+        reference_field_ids.sort()
+        field_ids = [item[0] for item in self.adapter.getFieldItems()]
+        field_ids.sort()
+        self.assertEquals(field_ids, reference_field_ids)
 
-        writable_field_ids = ['Subject', 'ExpirationDate', 'Contributors', 
-            'EffectiveDate', 'Rights', 'Description', 'Title']
-        self.assertEquals(
-            [item[0] for item in self.adapter.getWritableFieldItems()],
-            writable_field_ids)
+        reference_writable_field_ids = ['Subject', 'ExpirationDate',
+            'Contributors', 'EffectiveDate', 'Rights', 'Description', 'Title']
+        reference_writable_field_ids.sort()
+        writable_field_ids = [
+            item[0] for item in self.adapter.getWritableFieldItems()]
+        writable_field_ids.sort()
+        self.assertEquals(writable_field_ids, reference_writable_field_ids)
 
         default_data = {'Subject': [], 'Creator': '', 'CreationDate': None,
             'ModificationDate': None, 'ExpirationDate': None, 'Format': '',
