@@ -33,7 +33,7 @@ from urlparse import urlparse
 from zLOG import LOG, INFO, DEBUG, PROBLEM
 from TAL.TALDefs import attrEscape
 import string
-from Products.CPSSchemas.utils import getHRSize
+from Products.CPSSchemas.utils import getHumanReadableSize
 
 try:
     import PIL.Image
@@ -1690,15 +1690,13 @@ class CPSFileWidget(CPSWidget):
     deletable = 1
     size_max = 4*1024*1024
 
-    def getHRSize(self, size):
+    def getHumanReadableSize(self, size):
         """ get human readable size
         """
-        hr = getHRSize(size)
+        hr = getHumanReadableSize(size)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default
-        hrs = hr.split(' ')
-        hrs[1] = cpsmcat(hrs[1])
-        return ' '.join(hrs)
+        return str(hr[0]) + ' ' + cpsmcat(hr[1])
 
     def getFileInfo(self, datastructure):
         """Get the file info from the datastructure."""

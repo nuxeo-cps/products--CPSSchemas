@@ -390,7 +390,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
             read_size = len(fileUpload.read(ms + 1))
             if ms and read_size > ms:
                 # Size is expressed in human readable value
-                max_size_str = self.getHRSize(ms)
+                max_size_str = self.getHumanReadableSize(ms)
                 err = 'cpsschemas_err_file_too_big ${max_size}'
                 err_mapping = {'max_size': max_size_str}
                 return self.doesNotValidate(err, err_mapping,
