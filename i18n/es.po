@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2004-10-06 13:30default\n"
+"POT-Creation-Date: 2004-10-07 17:19default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -250,6 +250,7 @@ msgstr ""
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
+#.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 msgid "label"
@@ -293,11 +294,15 @@ msgid "cpsschemas_err_file"
 msgstr "Fichero no válido"
 
 #, fuzzy
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Lo sentimos, este fichero es demasiado grande"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgstr "Fichero no válido"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "fichero vacío"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr "Lo sentimos, este fichero es demasiado grande"
 
 msgid "cpsschemas_err_image"
 msgstr "Imagen no válida"

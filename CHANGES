@@ -3,7 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added a new "allowed_suffixes" properties to the CPSAttachedFileWidget. This
+  makes it now possible to control a bit more what files a user can upload in
+  this widget, which is most useful for example for OpenOffice.org to DocBook
+  transformations.
 Bug fixes:
 ~~~~~~~~~~
 -

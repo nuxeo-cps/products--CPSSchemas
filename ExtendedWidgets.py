@@ -21,7 +21,6 @@
 Definition of extended widget types.
 """
 
-from zLOG import LOG, DEBUG, TRACE
 from cgi import escape
 from re import match
 from Globals import InitializeClass
@@ -30,6 +29,8 @@ from types import ListType, TupleType, StringType
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File
+import os.path
+from zLOG import LOG, DEBUG, TRACE
 
 from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
@@ -300,9 +301,12 @@ class CPSAttachedFileWidget(CPSFileWidget):
          'label': 'Deletable'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Maximum file size'},
+        {'id': 'allowed_suffixes', 'type': 'tokens', 'mode': 'w',
+         'label': 'Allowed file suffixes (for example: .html .sxw)'},
         )
     deletable = 1
     size_max = 4*1024*1024
+    allowed_suffixes = []
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -345,45 +349,52 @@ class CPSAttachedFileWidget(CPSFileWidget):
         elif choice == 'change' and datastructure.get(widget_id):
             fileUpload = datastructure[widget_id]
             if not _isinstance(fileUpload, FileUpload):
-                err = 'cpsschemas_err_file'
-            else:
-                ms = self.size_max
-                if fileUpload.read(1) == '':
-                    err = 'cpsschemas_err_file_empty'
-                    read_size = 0
-                else:
-                    fileUpload.seek(0)
-                    read_size = len(fileUpload.read(ms + 1))
-                if ms and read_size > ms:
-                    # Size is expressed in Mb
-                    max_size = ms / (1024*1024)
-                    err = 'cpsschemas_err_file_too_big ${max_size}'
-                    err_mapping = {'max_size': max_size}
-                else:
-                    fileUpload.seek(0)
-                    # ignore title value from form;
-                    # re-initialize title with fileid value
-                    fileid = cookId('', '', fileUpload)[0]
-                    file = File(fileid, fileid, fileUpload)
-                    registry = getToolByName(self, 'mimetypes_registry')
-                    mimetype = registry.lookupExtension(fileid.lower())
-                    if mimetype and file.content_type != mimetype.normalized():
-                        LOG('CPSAttachedFileWidget', DEBUG,
-                            'Fixing mimetype from %s to %s' % (
-                            file.content_type, mimetype.normalized()))
-                        file.manage_changeProperties(
-                            content_type=mimetype.normalized())
-                    LOG('CPSAttachedFileWidget', DEBUG,
-                        'validate change set %s' % `file`)
-                    datamodel[field_id] = file
-        if err:
-            LOG('CPSAttachedFileWidget', DEBUG,
-                'error %s on %s' % (err, `file`))
-            datastructure.setError(widget_id, err, err_mapping)
-        else:
+                return self.doesNotValidate('cpsschemas_err_file',
+                                            None, file, datastructure)
+            file_base, file_suffix = os.path.splitext(fileUpload.filename) 
+            if (self.allowed_suffixes
+                and file_suffix not in self.allowed_suffixes):
+                err = 'cpsschemas_err_file_bad_suffix ${allowed_suffixes}'
+                err_mapping = {'allowed_suffixes':
+                               ' '.join(self.allowed_suffixes)}
+                return self.doesNotValidate(err, err_mapping,
+                                            file, datastructure)
+            ms = self.size_max
+            if fileUpload.read(1) == '':
+                return self.doesNotValidate('cpsschemas_err_file_empty',
+                                            None, file, datastructure)
+            fileUpload.seek(0)
+            read_size = len(fileUpload.read(ms + 1))
+            if ms and read_size > ms:
+                # Size is expressed in Mb
+                max_size = ms / (1024*1024)
+                err = 'cpsschemas_err_file_too_big ${max_size}'
+                err_mapping = {'max_size': max_size}
+                return self.doesNotValidate(err, err_mapping,
+                                            file, datastructure)
+            fileUpload.seek(0)
+            # Ignore title value from form;
+            # re-initialize title with fileid value
+            fileid = cookId('', '', fileUpload)[0]
+            file = File(fileid, fileid, fileUpload)
+            registry = getToolByName(self, 'mimetypes_registry')
+            mimetype = registry.lookupExtension(fileid.lower())
+            if mimetype and file.content_type != mimetype.normalized():
+                LOG('CPSAttachedFileWidget', DEBUG,
+                    'Fixing mimetype from %s to %s' % (
+                    file.content_type, mimetype.normalized()))
+                file.manage_changeProperties(
+                    content_type=mimetype.normalized())
+                LOG('CPSAttachedFileWidget', DEBUG,
+                    'validate change set %s' % `file`)
+            datamodel[field_id] = file
             self.prepare(datastructure)
+        return 1
 
-        return not err
+    def doesNotValidate(self, err, err_mapping, file, datastructure):
+        LOG('CPSAttachedFileWidget', DEBUG, 'error %s on %s' % (err, `file`))
+        datastructure.setError(self.getWidgetId(), err, err_mapping)
+        return 0
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""

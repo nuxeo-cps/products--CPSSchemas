@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-06 13:30default\n"
+"POT-Creation-Date: 2004-10-07 17:19default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -215,6 +215,7 @@ msgstr "Gaat een termijn van onderzoek in&nbsp;:"
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
+#.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 msgid "label"
@@ -258,11 +259,15 @@ msgid "cpsschemas_err_file"
 msgstr "Invalid file"
 
 #, fuzzy
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "te omvangrijk bestand"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgstr "Invalid file"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "leeg bestand"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr "te omvangrijk bestand"
 
 msgid "cpsschemas_err_image"
 msgstr "Invalid image"

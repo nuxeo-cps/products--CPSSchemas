@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
-"POT-Creation-Date: 2004-10-06 13:30default\n"
+"POT-Creation-Date: 2004-10-07 17:19default\n"
 "PO-Revision-Date: 2004-09-30 16:26+0100\n"
 "Last-Translator: Fabio Nosari <fabnos@fastwebnet.it>\n"
 "Language-Team: Fabio Nosari <fabnos@fastwebnet.it>\n"
@@ -211,6 +211,7 @@ msgstr "Inserisci un termine di ricerca:"
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
+#.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 msgid "label"
@@ -253,13 +254,17 @@ msgstr "Il formato della data non è valido."
 msgid "cpsschemas_err_file"
 msgstr "File non valido."
 
+#, fuzzy
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgstr "File non valido."
+
+msgid "cpsschemas_err_file_empty"
+msgstr "Il file è vuoto."
+
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
 "Le dimensioni del file sono eccessive. La grandezza massima consentita è di: "
 "${max_size}Mb."
-
-msgid "cpsschemas_err_file_empty"
-msgstr "Il file è vuoto."
 
 msgid "cpsschemas_err_image"
 msgstr "Immagine non valida."

@@ -46,10 +46,13 @@ msgstr ""
 msgid "cpsschemas_err_file"
 msgstr ""
 
-msgid "cpsschemas_err_file_too_big ${max_size}"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
 msgstr ""
 
 msgid "cpsschemas_err_file_empty"
+msgstr ""
+
+msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
 
 msgid "cpsschemas_err_image"

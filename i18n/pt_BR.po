@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-10-06 13:30default\n"
+"POT-Creation-Date: 2004-10-07 17:19default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -211,6 +211,7 @@ msgstr "Entre um termo de busca:"
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
+#.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 msgid "label"
@@ -253,12 +254,16 @@ msgstr "Data inválida."
 msgid "cpsschemas_err_file"
 msgstr "Arquivo inválido."
 
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr ""
-"Este arquivo é muito grande, o tamanho máximo permitido é ${max_size}Mb."
+#, fuzzy
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgstr "Arquivo inválido."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Arquivo inválido (vazio)."
+
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr ""
+"Este arquivo é muito grande, o tamanho máximo permitido é ${max_size}Mb."
 
 msgid "cpsschemas_err_image"
 msgstr "Imagem inválida."

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-06 13:30default\n"
+"POT-Creation-Date: 2004-10-07 17:19default\n"
 "PO-Revision-Date: 2004-07-12 18:00+0200\n"
 "Last-Translator: <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
@@ -208,6 +208,7 @@ msgstr "Eingabe Suchgegriff:"
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
+#.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 msgid "label"
@@ -251,11 +252,15 @@ msgid "cpsschemas_err_file"
 msgstr "Ungültige Datei"
 
 #, fuzzy
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Sorry diese Datei ist zu groß"
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgstr "Ungültige Datei"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Leere Datei"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr "Sorry diese Datei ist zu groß"
 
 msgid "cpsschemas_err_image"
 msgstr "Ungültiges Bild"

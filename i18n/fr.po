@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-06 13:30default\n"
-"PO-Revision-Date: 2004-10-06 13:32+0200\n"
+"POT-Creation-Date: 2004-10-07 17:19default\n"
+"PO-Revision-Date: 2004-10-07 17:20+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,6 +214,7 @@ msgstr "Entrez un terme de recherche&nbsp;:"
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
+#.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 msgid "label"
@@ -256,11 +257,14 @@ msgstr "Format de date invalide"
 msgid "cpsschemas_err_file"
 msgstr "Fichier invalide"
 
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Ce fichier est trop volumineux, la taille max autorisée est ${max_size}Mo."
+msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
+msgstr "Ce fichier n'a pas un suffixe autorisé, les suffixes autorisés sont : ${allowed_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "fichier vide"
+
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr "Ce fichier est trop volumineux, la taille max autorisée est ${max_size}Mo."
 
 msgid "cpsschemas_err_image"
 msgstr "Image invalide"
