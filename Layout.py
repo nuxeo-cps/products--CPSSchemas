@@ -167,18 +167,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         Removes empty rows, normalize last cells so all widths are
         equal, recomputes ncols, removing duplicate widgets.
         """
-        used_widgets = []
         rows = layoutdef['rows']
         # Find max width.
         maxw = 1
         for row in rows:
             w = 0
             for cell in row:
-                wid = cell['widget_id']
-                if wid in used_widgets:
-                    cell['widget_id'] = ''
-                else:
-                    used_widgets.append(wid)
                 ncols = cell.get('ncols', 1)
                 cell['ncols'] = ncols
                 w += ncols
@@ -464,16 +458,25 @@ class CPSLayout(Layout):
         layoutdef = self.getLayoutDefinition()
         nrow = 0
         rows = layoutdef['rows']
+        used_widgets = []
+        duplicate_widgets = []
         for row in rows:
             nrow += 1
             ncell = 0
             somedel, somesplit = 0, 0
             for cell in row:
                 ncell += 1
-                cell['widget_id'] = kw.get('cell_%d_%d' % (nrow, ncell), '')
+                widget_id = kw.get('cell_%d_%d' % (nrow, ncell), '')
+                if widget_id in used_widgets:
+                    duplicate_widgets.append(widget_id)
+                else:
+                    used_widgets.append(widget_id)
+                cell['widget_id'] = widget_id
                 if kw.get('check_%d_%d' % (nrow, ncell)):
                     if delcell:
                         cell['del'] = 1
+                        if cell['widget_id'] in duplicate_widgets:
+                            duplicate_widgets.remove(cell['widget_id'])
                         somedel = 1
                     if splitcell:
                         cell['split'] = 1
@@ -498,9 +501,13 @@ class CPSLayout(Layout):
             rows.append([{'ncols': 1, 'widget_id': ''}])
         layoutdef['rows'] = rows
         self.setLayoutDefinition(layoutdef)
+        if duplicate_widgets:
+            message = 'Warning: Duplicate widgets: ' + ', '.join(duplicate_widgets)
+        else:
+            message = 'Changed.'
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_editLayout'
-                                      '?manage_tabs_message=Changed.')
+                                      '?manage_tabs_message='+message)
 
     security.declareProtected(ManagePortal, 'manage_addLayoutRow')
     def manage_addLayoutRow(self, REQUEST=None, **kw):
