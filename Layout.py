@@ -196,14 +196,17 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         This has actuel widget instances.
         """
         layoutdata = self.getLayoutDefinition() # get a copy
+        widgets = {}
         for row in layoutdata['rows']:
             for cell in row:
                 widget_id = cell['widget_id']
                 widget = self[widget_id]
                 cell['widget'] = widget
+                widgets[widget_id] = widget
                 # XXX here filtering according to permissions ?
                 widget.prepare(datastructure, datamodel)
         layoutdata['id'] = self.getId()
+        layoutdata['widgets'] = widgets
         return layoutdata
 
     security.declarePrivate('validateLayout')
