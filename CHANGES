@@ -5,6 +5,8 @@ New features:
 ~~~~~~~~~~~~~
 - Add a range list field
 - A DiskFile field, that stores the file on disk.
+- Add an 'other' option where free input is accepted in Generic Select widget
+  (ignored if render format is 'select')
 Bug fixes:
 ~~~~~~~~~~
 - Small bug in CPSSubObjectsField when deleting fields.
