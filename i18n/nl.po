@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-26 12:52default\n"
+"POT-Creation-Date: 2004-03-04 16:46default\n"
 "PO-Revision-Date: 2004-02-05 11:33+0100\n"
 "Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
 "Language-Team: francais <fr@li.org>\n"
@@ -19,16 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.0.2\n"
-
-#.   <input value="button_edit" type="submit">
-#.         </input>
-#.   <input value="button_edit" name="vocabulary_update:method" type="submit">
-#.     <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
-#.   </input></input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_edit"
-msgstr "Wijzig"
 
 #.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
@@ -336,6 +326,9 @@ msgstr "Link naam"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Beschrijving"
+
+#~ msgid "button_edit"
+#~ msgstr "Wijzig"
 
 #~ msgid "button_add"
 #~ msgstr "Invalide Email"

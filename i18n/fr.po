@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-26 12:52default\n"
+"POT-Creation-Date: 2004-03-04 16:46default\n"
 "PO-Revision-Date: 2004-03-03 15:46+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
@@ -19,16 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.0.1\n"
-
-#.   <input value="button_edit" type="submit">
-#.         </input>
-#.   <input value="button_edit" name="vocabulary_update:method" type="submit">
-#.     <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
-#.   </input></input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_edit"
-msgstr "Modifier"
 
 #.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
@@ -333,6 +323,9 @@ msgstr "Nom du lien"
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
 
+#~ msgid "button_edit"
+#~ msgstr "Modifier"
+
 #~ msgid "button_add"
 #~ msgstr "Retour"
 
@@ -399,4 +392,3 @@ msgstr "Description"
 #, fuzzy
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Format de date invalide"
-

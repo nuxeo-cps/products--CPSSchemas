@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-02-26 12:52default\n"
+"POT-Creation-Date: 2004-03-04 16:46default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -18,16 +18,6 @@ msgstr ""
 "Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
-
-#.   <input value="button_edit" type="submit">
-#.         </input>
-#.   <input value="button_edit" name="vocabulary_update:method" type="submit">
-#.     <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
-#.   </input></input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_edit"
-msgstr ""
 
 #.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
