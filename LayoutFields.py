@@ -24,7 +24,7 @@ class LayoutField:
         Uses skins in one way or another. Setting edit to 1 renders the
         field to accept data input.
         """
-        return None
+        raise NotImplementedError
 
     def validate(self, data):
         """Makes sure the data to be set is acceptable for the field
@@ -32,13 +32,13 @@ class LayoutField:
         Data is a dictionary of all the data for the document, so that
         validation can take place over multiple fields.
         """
-        return None
+        raise NotImplementedError
 
     def setValidationMethod(self, method):
-        return None
+        raise NotImplementedError
 
     def getValidationMethod(self):
-        return None
+        raise NotImplementedError
 
 
 class TextLayoutField(LayoutField):
