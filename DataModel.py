@@ -284,7 +284,7 @@ class DataModel(UserDict):
         for schema in self._schemas:
             for field_id, field in schema.items():
                 if self.dirty_fields_map.get(field_id):
-                    LOG("DataModel", DEBUG, "COMPUTING field = %s..." % (field_id,))
+                    LOG("DataModel", DEBUG, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
 
