@@ -3,7 +3,6 @@
   <body>
 
     <div metal:fill-slot="main">
-      <tal:block replace="python:'>'+str(doc.SearchableText())+'<'" />
       <table bgcolor="#EEEEEE">
         <tr>
           <td>
