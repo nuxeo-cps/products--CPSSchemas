@@ -17,3 +17,4 @@ New internal features:
   - '+' is allowed in email addresses.
 - Vocabularies are now preferrably initialized using the
   syntax (('foo': "Foo"), ('bar': "Bar")).
+- i18n using CPSDefault as black list pot
