@@ -577,6 +577,54 @@ InitializeClass(CPSIntWidgetType)
 
 ##################################################
 
+class CPSFloatWidget(CPSWidget):
+    """Float number widget."""
+    meta_type = "CPS Float Widget"
+
+    field_types = ('CPS Float Field',)
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        value = datastructure[self.getWidgetId()]
+        try:
+            v = float(value)
+        except (ValueError, TypeError):
+            datastructure.setError(self.getWidgetId(),
+                                   "cpsschemas_err_float")
+            ok = 0
+        else:
+            datamodel[self.fields[0]] = v
+            ok = 1
+        return ok
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            return escape(value)
+        elif mode == 'edit':
+            return renderHtmlTag('input',
+                                 type='text',
+                                 name=self.getHtmlWidgetId(),
+                                 value=value)
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSFloatWidget)
+
+
+class CPSFloatWidgetType(CPSWidgetType):
+    """Float widget type."""
+    meta_type = "CPS Float Widget Type"
+    cls = CPSFloatWidget
+
+InitializeClass(CPSFloatWidgetType)
+
+##################################################
+
 class CPSCustomizableWidget(CPSWidget):
     """Widget with customizable logic and presentation."""
     meta_type = "CPS Customizable Widget"
@@ -1095,6 +1143,7 @@ WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
+WidgetTypeRegistry.register(CPSFloatWidgetType, CPSFloatWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
