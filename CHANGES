@@ -7,7 +7,7 @@ New features:
 - A DiskFile field, that stores the file on disk.
 Bug fixes:
 ~~~~~~~~~~
--
+- Small bug in CPSSubObjectsField when deleting fields.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
