@@ -5,7 +5,7 @@
                    cpsmcat nocall:here/Localizer/default;
                    utool nocall:here/portal_url;
                    base_url python:here.getBaseUrl(utool=utool);
-                   items python:context.getObjectsFromPath(values);
+                   items python:here.getObjectsFromPath(values);
                    format string:simple;
                    display_description python:1;
                    item_per_page python:10666
