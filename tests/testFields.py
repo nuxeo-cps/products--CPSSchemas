@@ -87,6 +87,16 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
         self.assertEquals(field.validate('bimbo'), 'bimbo')
         self.assertRaises(ValueError, field.validate, None)
 
+    def testListField(self):
+        field = BasicFields.CPSListField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), [])
+        self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, (1))
+
     def testStringListField(self):
         field = BasicFields.CPSStringListField('the_id')
         self.fields._setObject('the_id', field)
@@ -96,6 +106,29 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
         self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
         self.assertRaises(ValueError, field.validate, None)
         self.assertRaises(ValueError, field.validate, [1])
+
+    def testListListField(self):
+        field = BasicFields.CPSListListField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), [])
+        self.assertEquals(field.validate([['a', 'b'], [1,3]]), [['a', 'b'], [1,3]])
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, [1])
+        self.assertRaises(ValueError, field.validate, [(1)])
+
+    def testIntListListField(self):
+        field = BasicFields.CPSIntListListField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), [])
+        self.assertEquals(field.validate([[1, 3], [2, 4]]), [[1, 3], [2, 4]])
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, [1])
+        self.assertRaises(ValueError, field.validate, [(1)])
+        self.assertRaises(ValueError, field.validate, [['a']])
 
     def testDateTimeField(self):
         field = BasicFields.CPSDateTimeField('the_id')

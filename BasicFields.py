@@ -23,7 +23,8 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG, WARNING
 import sys
-from types import IntType, StringType, ListType, FloatType, LongType, DictType, UnicodeType
+from types import IntType, StringType, ListType, FloatType, LongType, DictType, \
+                  UnicodeType, TupleType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -207,13 +208,11 @@ class CPSListField(CPSField):
 
     def validate(self, value):
         if isinstance(value, ListType):
-            ok = 1
             for v in value:
                 if not self.verifyType(v):
-                    ok = 0
-                    break
-            if ok:
-                return value
+                    raise ValidationError(self.validation_error_msg +
+                                          repr(value) + "=>" + repr(v))
+            return value
         raise ValidationError(self.validation_error_msg + repr(value))
 
     def verifyType(self, value):
@@ -234,25 +233,15 @@ class CPSListField(CPSField):
     
 InitializeClass(CPSListField)
 
-class CPSStringListField(CPSField):
+class CPSStringListField(CPSListField):
     """String List field."""
     meta_type = "CPS String List Field"
 
-    default_expr = 'python:[]'
-    default_expr_c = Expression(default_expr)
+    validation_error_msg = 'Not a string list: '
 
-    # XXX this is never called yet.
-    def validate(self, value):
-        if isinstance(value, ListType):
-            ok = 1
-            for v in value:
-                # XXX Deal with Unicode.
-                if not isinstance(v, StringType):
-                    ok = 0
-                    break
-            if ok:
-                return value
-        raise ValidationError('Not a string list: %s' % repr(value))
+    def verifyType(self, value):
+        """Verify the type of the value"""
+        return isinstance(value, StringType)
 
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
@@ -282,15 +271,16 @@ class CPSListListField(CPSListField):
 
     def validate(self, value):
         if isinstance(value, ListType):
-            ok = 1
             for list in value:
-                if isinstance(list, ListType) and ok:
+                if isinstance(list, ListType):
                     for e in list:
                         if not self.verifyType(e):
-                            ok = 0
-                            break
-            if ok:
-                return value
+                            raise ValidationError(self.validation_error_msg +
+                                            repr(value) + '=>' + repr(e))
+                else:
+                    raise ValidationError(self.validation_error_msg +
+                                          repr(value) + '=>' + repr(list))
+            return value
         raise ValidationError(self.validation_error_msg + repr(value))
 
     def convertToLDAP(self, value):
@@ -305,7 +295,7 @@ class CPSListListField(CPSListField):
     
 InitializeClass(CPSListListField)
 
-class CPSIntListListField(CPSListField):
+class CPSIntListListField(CPSListListField):
     """List of List field."""
     meta_type = "CPS Int List List Field"
 
