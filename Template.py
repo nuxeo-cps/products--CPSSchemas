@@ -7,6 +7,7 @@ from ZODB.PersistentMapping import PersistentMapping
 
 from Layout import HtmlLayout
 from Schema import Schema
+from DataModel import DataModel
 from OrderedDictionary import OrderedDictionary
 
 
@@ -98,7 +99,7 @@ class Template:
     def getSchema(self, schema_id):
         return self._schemas[schema_id]
 
-    def getDatamodel(self):
+    def getDataModel(self):
         # TODO: fetch the global schemas too.
         schemas = self.getSchemaIds()
         dm = DataModel()
@@ -108,3 +109,26 @@ class Template:
             dm.update(self.getSchema(schema))
         # TODO: Also get global schemas.
         return dm
+
+    def getSchemaForFieldId(self, fieldid):
+        for schemaid, schema in self._schemas.items():
+            if schema.has_key(fieldid):
+                return schema
+        raise KeyError('No field named %s found' % str(fieldid))
+
+    def setData(self, document, fieldid, data):
+        schema = self.getSchemaForFieldId(fieldid)
+        return schema.setData(document, fieldid, data)
+
+    def getData(self, document, fieldid):
+        schema = self.getSchemaForFieldId(fieldid)
+        return schema.getData(document, fieldid)
+
+    def hasData(self, document, fieldid):
+        schema = self.getSchemaForFieldId(fieldid)
+        return schema.hasData(document, fieldid)
+
+    def delData(self, document, fieldid):
+        schema = self.getSchemaForFieldId(fieldid)
+        return schema.delData(document, fieldid)
+
