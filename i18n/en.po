@@ -77,6 +77,12 @@ msgstr "Invalid selection"
 msgid "cpsschemas_err_int"
 msgstr "invalid integer"
 
+msgid "cpsschemas_err_long"
+msgstr "invalid long integer"
+
+msgid "cpsschemas_err_long_out_of_limits"
+msgstr "long integer out of limits"
+
 msgid "cpsschemas_err_date"
 msgstr "invalid date"
 

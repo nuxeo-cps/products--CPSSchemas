@@ -77,6 +77,12 @@ msgstr "Selection invalide"
 msgid "cpsschemas_err_int"
 msgstr "Entier non valide"
 
+msgid "cpsschemas_err_long"
+msgstr "Entier long non valide"
+
+msgid "cpsschemas_err_long_out_of_limits"
+msgstr "Entier long en dehors des limites"
+
 msgid "cpsschemas_err_date"
 msgstr "Format de date invalide"
 
