@@ -973,13 +973,11 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
-        datamodel = datastructure.getDataModel()
-        value = datamodel[self.fields[0]]
         if _isinstance(value, StringType):
             LOG('CPSGenericMultiSelectWidget.prepare', TRACE,
                 'expected List got String %s converting into list' % value)
             if value:
-                value = ['value',]
+                value = [value,]
             else:
                 value = []
         datastructure[self.getWidgetId()] = value
