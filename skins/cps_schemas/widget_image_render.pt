@@ -32,12 +32,12 @@
 
     <metal:block define-macro="image_edit">
       <tal:block define="allow_resize here/allow_resize|nothing;
-                         keep_fullsize here/keep_fullsize|nothing;
-                         fullsize_image_field here/fullsize_image_field|nothing;
-                         can_keep_fullsize python:allow_resize and keep_fullsize and fullsize_image_field.strip() and fullsize_image_field in fields">
+                         keep_original here/keep_original|nothing;
+                         original_image_field here/original_image_field|nothing;
+                         can_keep_original python:allow_resize and keep_original and original_image_field.strip() and original_image_field in fields">
       <metal:block use-macro="here/widget_file_render/macros/file_edit">
         <metal:block fill-slot="edit_file_action"
-          tal:condition="python:not empty_file and can_keep_fullsize">
+          tal:condition="python:not empty_file and can_keep_original">
           <li>
             <input type="radio" class="noborder" name="." value="resize"
                    tal:attributes="name radio_name;

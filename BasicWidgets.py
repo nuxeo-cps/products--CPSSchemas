@@ -1875,12 +1875,12 @@ class CPSImageWidget(CPSFileWidget):
     field_types = ('CPS Image Field',)
 
     _properties = CPSFileWidget._properties[0:2] + (
-        # property to keep fullsize image field
+        # property to keep original image field
         # AT: It was difficult to play with the number of
         #     this field in the fields list because the photo
         #     widget already plays with it => I put it apart
-        {'id': 'fullsize_image_field', 'type': 'string', 'mode': 'w',
-         'label': 'Field for fullsize image'},
+        {'id': 'original_image_field', 'type': 'string', 'mode': 'w',
+         'label': 'Field for original image'},
         ) + CPSFileWidget._properties[2:] + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
@@ -1888,15 +1888,15 @@ class CPSImageWidget(CPSFileWidget):
          'label': 'Display height'},
         {'id': 'allow_resize', 'type': 'boolean', 'mode': 'w',
          'label': 'Enable to resize img to lower size'},
-        {'id': 'keep_fullsize', 'type': 'boolean', 'mode': 'w',
-         'label': 'Enable to keep original full size image'},
+        {'id': 'keep_original', 'type': 'boolean', 'mode': 'w',
+         'label': 'Enable to keep original image'},
         )
 
-    fullsize_image_field = ''
+    original_image_field = ''
     display_height = 0
     display_width = 0
     allow_resize = 0
-    keep_fullsize = 0
+    keep_original = 0
 
     def getImageInfo(self, datastructure):
         """Get the image info from the datastructure."""
@@ -1950,7 +1950,7 @@ class CPSImageWidget(CPSFileWidget):
         widget_id = self.getWidgetId()
         if self.allow_resize:
             datastructure[widget_id + '_resize'] = ''
-        if self.keep_fullsize:
+        if self.keep_original:
             datastructure[widget_id + '_resize_kept'] = ''
 
     def validate(self, datastructure, **kw):
@@ -1990,33 +1990,33 @@ class CPSImageWidget(CPSFileWidget):
                     file.manage_changeProperties(title=filetitle)
                     datamodel[field_id] = file
         elif choice == 'resize':
-            fullsize_field_id = self.fullsize_image_field
-            can_keep_fullsize = self.keep_fullsize and \
+            original_field_id = self.original_image_field
+            can_keep_original = self.keep_original and \
                                 self.allow_resize and \
-                                fullsize_field_id and \
-                                fullsize_field_id in self.fields
-            # figure out if the full size image can be kept
-            if can_keep_fullsize:
-                fullsize_image = datamodel[fullsize_field_id]
+                                original_field_id and \
+                                original_field_id in self.fields
+            # figure out if the original size image can be kept
+            if can_keep_original:
+                original_image = datamodel[original_field_id]
                 file = datamodel[field_id]
-                if fullsize_image is None and file is None:
+                if original_image is None and file is None:
                     if self.is_required:
                         err = 'cpsschemas_err_required'
                     # else ignore, this should not happen anyway
                 else:
-                    # file or fullsize_image is not None.
+                    # file or original_image is not None.
                     # if original file is not set (upgrade for instance),
                     # actual file becomes original file
-                    if fullsize_image is None:
-                        fullsize_image = file
-                        datamodel[fullsize_field_id] = fullsize_image
+                    if original_image is None:
+                        original_image = file
+                        datamodel[original_field_id] = original_image
                     # do not allow empty title: it is used as link text
                     if not filetitle:
                         filetitle = datastructure[widget_id + '_filename']
                     # get resized image
-                    fileid = fullsize_image.getId()
+                    fileid = original_image.getId()
                     resize_op = datastructure[widget_id + '_resize_kept']
-                    file = self.getResizedImage(fullsize_image, fileid,
+                    file = self.getResizedImage(original_image, fileid,
                                                 filetitle, resize_op)
                     datamodel[field_id] = file
         elif choice == 'change' and datastructure.get(widget_id):
@@ -2040,21 +2040,21 @@ class CPSImageWidget(CPSFileWidget):
                         not mimetype.normalized().startswith('image')):
                         err = 'cpsschemas_err_image'
                     else:
-                        fullsize_field_id = self.fullsize_image_field.strip()
-                        can_keep_fullsize = self.keep_fullsize and \
+                        original_field_id = self.original_image_field.strip()
+                        can_keep_original = self.keep_original and \
                                             self.allow_resize and \
-                                            fullsize_field_id and \
-                                            fullsize_field_id in self.fields
-                        fullsize_image = Image(fileid, filetitle, file)
+                                            original_field_id and \
+                                            original_field_id in self.fields
+                        original_image = Image(fileid, filetitle, file)
                         if not self.allow_resize:
-                            file = fullsize_image
+                            file = original_image
                         else:
-                            if can_keep_fullsize:
-                                # set fullsize image
-                                datamodel[fullsize_field_id] = fullsize_image
+                            if can_keep_original:
+                                # set original image
+                                datamodel[original_field_id] = original_image
                             # get resized image
                             resize_op = datastructure[widget_id + '_resize']
-                            file = self.getResizedImage(fullsize_image, fileid,
+                            file = self.getResizedImage(original_image, fileid,
                                                         filetitle, resize_op)
                         LOG('CPSImageWidget', DEBUG,
                             'validate change set %s' % `file`)
