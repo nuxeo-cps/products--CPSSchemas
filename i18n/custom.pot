@@ -52,5 +52,8 @@ msgstr ""
 msgid "cpsschemas_err_image"
 msgstr ""
 
+msgid "cpsschemas_err_url"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""
