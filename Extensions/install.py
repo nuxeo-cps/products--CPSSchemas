@@ -43,7 +43,7 @@ def install(self):
     def portalhas(id, portal=portal):
         return id in portal.objectIds()
 
-       
+
     # skins
     skins = ('cps_document',)
     paths = {
@@ -216,6 +216,13 @@ def install(self):
                 },
             'image': {
                 'type': 'CPS Image Field',
+                'data': {
+                    'default': '',
+                    'is_indexed': 0,
+                    },
+                },
+            'newsdate': {
+                'type': 'CPS DateTime Field',
                 'data': {
                     'default': '',
                     'is_indexed': 0,
@@ -415,7 +422,7 @@ def install(self):
                 },
             },
         }
-    
+
     ltool = portal.portal_layouts
     for id, info in layouts.items():
         pr(" Layout %s" % id)
@@ -442,7 +449,7 @@ def install(self):
     for ptype in newptypes:
         if ptype not in  workspaceACT:
             workspaceACT.append(ptype)
-    
+
     flextypes = {
         'FAQ': {
             'title': 'portal_type_FAQ_title',
@@ -466,7 +473,7 @@ def install(self):
     allowed_content_type = {
                             'Workspace' : workspaceACT,
                             }
-    
+
     ptypes_installed = ttool.objectIds()
 
     for ptype, data in flextypes.items():
@@ -477,31 +484,31 @@ def install(self):
         ti = ttool.addFlexibleTypeInformation(id=ptype)
         ti.manage_changeProperties(**data)
         pr("   Installation")
-    
+
 
     # check site and workspaces proxies
     sections_id = 'sections'
     workspaces_id = 'workspaces'
-    
+
     # check workflow association
     pr("Verifying local workflow association")
     if not '.cps_workflow_configuration' in portal[workspaces_id].objectIds():
         raise DependanceError, 'no .cps_workflow_configuration in Workspace'
     else:
         wfc = getattr(portal[workspaces_id], '.cps_workflow_configuration')
-    
+
     for ptype in newptypes:
         pr("  Add %s chain to portal type %s in %s of %s" %('workspace_content_wf',
-             ptype, '.cps_workflow_configuration', workspaces_id)) 
+             ptype, '.cps_workflow_configuration', workspaces_id))
         wfc.manage_addChain(portal_type=ptype,
                             chain='workspace_content_wf')
-    
+
     if not '.cps_workflow_configuration' in portal[sections_id].objectIds():
         raise DependanceError, 'no .cps_workflow_configuration in Section'
     else:
         wfc = getattr(portal[sections_id], '.cps_workflow_configuration')
-    
-    for ptype in newptypes:    
+
+    for ptype in newptypes:
         pr("  Add %s chain to portal type %s in %s of %s" %('section_content_wf',
              ptype, '.cps_workflow_configuration', sections_id))
         wfc.manage_addChain(portal_type=ptype,
