@@ -7,10 +7,12 @@
 <tal:block condition="python: mode == 'view' and not empty_file">
   <tal:block define="preview_id python:options['datastructure'][id+'_preview']">
     <a target="_blank" tal:attributes="href python:here.fields[0]">
-    <tal:block condition="mimetype"
-      replace="structure python:here.getImgTag(mimetype.icon_path,
-      title=mimetype.name())" />
-    <tal:block replace="current_name" />
+      <tal:block condition="mimetype"
+        replace="structure python:here.getImgTag(mimetype.icon_path,
+        title=mimetype.name())" />
+    </a>
+    <a tal:attributes="href python:here.fields[0]">
+      <tal:block replace="current_name" />
     </a>
     <span tal:condition="preview_id">
       <a href="http://url..." target="_blank"
