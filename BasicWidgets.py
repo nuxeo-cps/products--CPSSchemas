@@ -632,7 +632,7 @@ class CPSLongWidget(CPSWidget):
         else:
             if self.is_limited and (v < self.minimum or v > self.maximum):
                 datastructure.setError(widget_id,
-                                       "cpsschemas_err_long_out_off_limits")
+                                       "cpsschemas_err_long_out_of_limits")
                 ok = 0
             else:
                 datamodel[self.fields[0]] = v
