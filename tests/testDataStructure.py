@@ -6,7 +6,7 @@ from Testing.ZopeTestCase import ZopeLite
 
 from Products.CPSDocument.DataStructure import DataStructure
 from Products.CPSDocument.DataModel import DataModel
-from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Schema import CPSSchema
 from Products.CPSDocument.Fields.BasicField import BasicField
 from Products.CPSDocument.Fields.TextField import TextField
 from Products.CPSDocument.Fields.SelectionField import SelectionField
@@ -15,9 +15,10 @@ class DataStructureTests(unittest.TestCase):
     """Tests the DataStructure
 
     Also depends on some fields for testing"""
+
     def makeDatamodel(self):
         dm = DataModel()
-        schema = Schema('schema', 'Schema')
+        schema = CPSSchema('schema', 'Schema')
         f1 = TextField('f1', 'Field1')
         f2 = TextField('f2', 'Field2')
         f3 = SelectionField('f3', 'Field3')
@@ -50,7 +51,6 @@ class DataStructureTests(unittest.TestCase):
             'setError or geError failed')
         ds.delError('f2')
         self.failIf(ds.hasError('f2'), 'dasError failed')
-
 
     def test_10_Clear(self):
         """Testing clear()"""

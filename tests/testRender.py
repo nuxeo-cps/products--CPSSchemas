@@ -8,7 +8,7 @@ from Products.CPSDocument.Layout import BasicLayout
 #from Products.CPSDocument.CPSDocument import CPSDocument
 #from Products.CPSDocument.Template import Template
 from Products.CPSDocument.DataModel import DataModel
-from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Schema import CPSSchema
 from Products.CPSDocument.DataStructure import DataStructure
 from Products.CPSDocument.Renderer import BasicRenderer
 from Products.CPSDocument.Fields.BasicField import BasicField, BasicFieldWidget
@@ -64,7 +64,7 @@ class RenderingTests(unittest.TestCase):
     # The 50 to 99 test: Tests rendering of complete layouts and documents
     def test_50_LayoutRendering(self):
         layout = BasicLayout('id', 'title')
-        schema = Schema('schema', 'Schema')
+        schema = CPSSchema('schema', 'Schema')
         f1 = TextField('f1', 'Field1')
         f2 = TextField('f2', 'Field2')
         f3 = SelectionField('f3', 'Field3')

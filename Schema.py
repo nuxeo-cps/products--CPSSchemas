@@ -94,7 +94,9 @@ class Schema(FolderWithPrefixedIds):
 
     id = None
 
-    def __init__(self):
+    def __init__(self, id='', title=''):
+        self.id = id
+        self.title = title
         self._clear()
         # XXX
 
@@ -129,9 +131,7 @@ class CPSSchema(Schema):
         )
 
     manage_options = (
-        {'label': 'Schema',
-         'action': 'manage_editSchema',
-         },
+        {'label': 'Schema', 'action': 'manage_editSchema', },
         ) + FolderWithPrefixedIds.manage_options[1:]
 
     security.declareProtected(ManagePortal, 'manage_editSchema')

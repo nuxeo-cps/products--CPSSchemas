@@ -5,7 +5,7 @@ import unittest
 from Testing.ZopeTestCase import ZopeLite
 
 from Products.CPSDocument.Template import Template
-from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Schema import CPSSchema
 from Products.CPSDocument.Layout import HtmlLayout
 from Products.CPSDocument.Fields.BasicField import BasicField
 from Products.CPSDocument.Fields.TextField import TextField
@@ -20,12 +20,15 @@ class TemplateTests(unittest.TestCase):
     def testCreation(self):
         """Check that the template sets up reasonable defaults"""
         template = Template('template', 'Template')
-        self.failUnless(template.id == 'template', 'Template Id not set correctly')
-        self.failUnless(template.title == 'Template', 'Template Title not set correctly')
+        self.failUnless(template.id == 'template', 
+            'Template Id not set correctly')
+        self.failUnless(template.title == 'Template', 
+            'Template Title not set correctly')
         views = template.getLayoutIds()
-        self.failUnless('view' in views and 'edit' in views, \
+        self.failUnless('view' in views and 'edit' in views,
                         'Default layout creation failed')
-        self.failUnless(template.isFixedValidation(), 'Fixed validation is not default')
+        self.failUnless(template.isFixedValidation(), 
+            'Fixed validation is not default')
         schemas = template.getSchemaIds()
         self.failUnless(schemas == ['default'], 'Default schema not created')
 
@@ -33,20 +36,23 @@ class TemplateTests(unittest.TestCase):
         """Add a layout"""
         template = Template('template', 'Template')
         template.addLayout(HtmlLayout('new', 'New'))
-        self.failUnless('new' in template.getLayoutIds(), 'Could not add new layout')
+        self.failUnless('new' in template.getLayoutIds(), 
+            'Could not add new layout')
 
     def testRemoveLayout(self):
         """Remove a layout"""
         template = Template('template', 'Template')
         template.removeLayout('view')
-        self.failIf('view' in template.getLayoutIds(), 'Could not remove layout')
+        self.failIf('view' in template.getLayoutIds(), 
+            'Could not remove layout')
 
     def testGetLayout(self):
         """Retreive the layout object"""
         template = Template('template', 'Template')
         layout = template.getLayout('view')
         self.failUnless(isinstance(layout, HtmlLayout), 'getLayout() Failed')
-        self.failUnless(layout.id == 'view', 'getLayout retreived the wrong layout')
+        self.failUnless(layout.id == 'view', 
+            'getLayout retreived the wrong layout')
 
     def testGetNoLayout(self):
         """Retreiving non-existing layouts should fail"""
@@ -56,14 +62,16 @@ class TemplateTests(unittest.TestCase):
     def testAddSchema(self):
         """Add a schema"""
         template = Template('template', 'Template')
-        template.addSchema(Schema('new', 'New'))
-        self.failUnless('new' in template.getSchemaIds(), 'Could not add new layout')
+        template.addSchema(CPSSchema('new', 'New'))
+        self.failUnless('new' in template.getSchemaIds(), 
+            'Could not add new layout')
 
     def testRemoveSchema(self):
         """Remove a schema"""
         template = Template('template', 'Template')
         template.removeSchema('default')
-        self.failIf('default' in template.getSchemaIds(), 'Could not remove schema')
+        self.failIf('default' in template.getSchemaIds(), 
+            'Could not remove schema')
 
     def testGetSchema(self):
         template = Template('template', 'Template')
@@ -74,7 +82,7 @@ class TemplateTests(unittest.TestCase):
     def testGetSchemaForFieldId(self):
         template = Template('template', 'Template')
         # Create an extra schema to test merging of schemas:
-        template.addSchema(Schema('new', 'New'))
+        template.addSchema(CPSSchema('new', 'New'))
         # Add a bunch of fields
         template.getSchema('default')['f1'] = TextField('f1', 'Field1')
         template.getSchema('default')['f2'] = TextField('f2', 'Field2')
@@ -89,7 +97,7 @@ class TemplateTests(unittest.TestCase):
         """Retreive the DataModel"""
         template = Template('template', 'Template')
         # Create an extra schema to test merging of schemas:
-        template.addSchema(Schema('new', 'New'))
+        template.addSchema(CPSSchema('new', 'New'))
         # Add a bunch of fields
         template.getSchema('default')['f1'] = TextField('f1', 'Field1')
         template.getSchema('default')['f2'] = TextField('f2', 'Field2')

@@ -4,7 +4,7 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Schema import CPSSchema
 from Products.CPSDocument.AttributeStorageAdapter import \
     AttributeStorageAdapterFactory
 from Products.CPSDocument.Fields.TextField import TextField
@@ -17,12 +17,12 @@ class SchemaTests(unittest.TestCase):
 
     def testCreation(self):
         """Check that the schems sets up reasonable defaults"""
-        schema = Schema('schema', 'Schema')
+        schema = CPSSchema('schema', 'Schema')
         self.failUnless(isinstance(schema.getStorageAdapterFactory(), AttributeStorageAdapterFactory),
                         'Default adapter is not AttributeAdapter')
 
     def testSetGetAdapter(self):
-        schema = Schema('schema', 'Schema')
+        schema = CPSSchema('schema', 'Schema')
         adapter = AttributeStorageAdapterFactory()
         schema.setStorageAdapterFactory(adapter)
         self.failUnless(schema.getStorageAdapterFactory() == adapter,
