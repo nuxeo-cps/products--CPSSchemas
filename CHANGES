@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- new CPSDocumentLanguageSelectWidget, require CPSCore > 3.18
 Bug fixes:
 ~~~~~~~~~~
 -
