@@ -103,5 +103,8 @@ class Template:
         schemas = self.getSchemaIds()
         dm = DataModel()
         for schema in schemas:
-            dm[schema] = self.getSchema(schema)
+            # The schemas can appear in any order, meaning this if there is
+            # colliding field names, which field will "win" is completely random.
+            dm.update(self.getSchema(schema))
+        # TODO: Also get global schemas.
         return dm

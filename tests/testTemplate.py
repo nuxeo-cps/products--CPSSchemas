@@ -45,6 +45,7 @@ class TemplateTests(unittest.TestCase):
         """Retreiving non-existing layouts should fail"""
         template = Template('template', 'Template')
         self.failUnlessRaises(KeyError, template.getLayout, 'notalayout' )
+
     def testAddSchema(self):
         """Add a schema"""
         template = Template('template', 'Template')
@@ -60,6 +61,8 @@ class TemplateTests(unittest.TestCase):
     def testGetSchema(self):
         template = Template('template', 'Template')
         self.failUnlessRaises(KeyError, template.getSchema, 'notaschema')
+        self.failUnless(isinstance(template.getSchema('default'), Schema))
+        self.failUnless(template.getSchema('default').id == 'default')
 
     #def testGetModel(self):
     #def testGetData(self):
