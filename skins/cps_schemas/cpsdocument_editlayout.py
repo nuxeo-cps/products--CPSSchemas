@@ -31,4 +31,4 @@ if kw.has_key('addwidget_button'):
 
 
 if REQUEST is not None:
-    REQUEST.RESPONSE.redirect(context.absolute_url()+'/cpsdocument_flex_form')
+    REQUEST.RESPONSE.redirect(context.absolute_url()+'/cpsdocument_editlayout_form')

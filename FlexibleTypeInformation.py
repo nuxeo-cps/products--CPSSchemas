@@ -62,6 +62,12 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
                      # XXX CMF 1.4: condition,
                      ModifyPortalContent,
                      'object')
+    flexti.addAction('edit_layout',
+                     'Edit Layout',
+                     'cpsdocument_editlayout_form',
+                     # XXX CMF 1.4: condition,
+                     ModifyPortalContent,
+                     'object')
     if REQUEST is not None:
         REQUEST.RESPONSE.redirect(container.absolute_url() + "/manage_main")
     else:

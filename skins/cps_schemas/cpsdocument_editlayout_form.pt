@@ -5,7 +5,7 @@
       <table bgcolor="#FFCCCC">
         <tr>
           <td>
-            <div tal:replace="structure python:doc.render(mode='flex')" />
+            <div tal:replace="structure python:doc.render(mode='editlayout')" />
           </td>
         </tr>
       </table>
