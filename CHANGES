@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- A bug in the cut-copy-pasting of DiskFiles that appeared when working
+  with revisions was fixed.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -163,11 +163,10 @@ class DiskFile(File, VTM):
                     self.getFullFilename())
 
     def manage_afterClone(self, item):
-        filename = self.getFullFilename()
         # This is a copy-paste operation, so duplicate the data!
         data = self.getData()
-        del self._filename
-        filename = self.getFullFilename() # XXX Doesn't this fail?
+        self._filename = self.getNewFilename(self._filename)
+        filename = self.getFullFilename()
         file = open(filename, 'wb')
         file.write(data)
 
