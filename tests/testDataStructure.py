@@ -157,10 +157,10 @@ class DataStructureTests(unittest.TestCase):
     def test_50_UpdateFromRequest(self):
         """Update from request, with missing values"""
         # Make a 'fake' REQUEST from a dict:
-        ds = DataStructure()
-        dm = self.makeDatamodel()
+        ds = DataStructure({ 'f1': 'it was', 'f2': 'a', 'f3': 'Value3'})
         rq = { 'field_f1': 'Value1', 'f2': 'Value2', }
-        ds.updateFromRequest(dm, rq)
+        ds.updateFromRequest(rq)
+        print ds.data
         isequal = ds.data['f1'] == 'Value1' and \
                   ds.data['f2'] == 'Value2' and \
                   ds.data['f3'] == 'Value3'

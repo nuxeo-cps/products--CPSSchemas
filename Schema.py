@@ -18,11 +18,15 @@ class Schema(OrderedDictionary):
             self._adapter = AttributeStorageAdapterFactory()
         self._namespace = ''
 
-    def setAdapter(self, adapter):
+    def setStorageAdapterFactory(self, adapter):
         self._adapter = adapter
 
-    def getAdapter(self):
+    def getStorageAdapterFactory(self):
         return self._adapter
+
+    def makeStorageAdapter(self, document):
+        return self._adapter.makeStorageAdapter(document, \
+                                 self.getFieldDictionary, self._namespace)
 
     def setNamespace(self, namespace):
         self._namespace = namespace
@@ -37,23 +41,6 @@ class Schema(OrderedDictionary):
             ns = ''
         return ns + self[fieldid].getStorageId()
 
-    def setData(self, document, fieldid, data):
-        adapter = self.getAdapter()
-        storageid = self.getFieldStorageId(fieldid)
-        return adapter.setData(document, storageid, data)
-
-    def getData(self, document, fieldid):
-        adapter = self.getAdapter()
-        storageid = self.getFieldStorageId(fieldid)
-        return adapter.getData(document, storageid)
-
-    def hasData(self, document, fieldid):
-        adapter = self.getAdapter()
-        storageid = self.getFieldStorageId(fieldid)
-        return adapter.hasData(document, storageid)
-
-    def delData(self, document, fieldid):
-        adapter = self.getAdapter()
-        storageid = self.getFieldStorageId(fieldid)
-        return adapter.delData(document, storageid)
-
+    def getFieldDictionary(self):
+        """Returns all the fields as a dictionary"""
+        return self.data

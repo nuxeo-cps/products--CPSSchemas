@@ -3,27 +3,9 @@
 
 import unittest
 from Products.NuxCPS3Document.AttributeStorageAdapter import AttributeStorageAdapter
-from Products.NuxCPS3Document.DataStructure import DataStructure
-from Products.NuxCPS3Document.DataModel import DataModel
-from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.Fields.BasicField import BasicField
 from Products.NuxCPS3Document.Fields.TextField import TextField
 from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
 
-
-def makeDataModel():
-    dm = DataModel()
-    schema = Schema('schema', 'Schema')
-    f1 = TextField('f1', 'Field1')
-    f2 = TextField('f2', 'Field2')
-    f3 = SelectionField('f3', 'Field3')
-    f3.setOptions( ['Value1', 'Value2', 'Value3'])
-    f3.setDefaultValue('Value3')
-    schema['f1'] = f1
-    schema['f2'] = f2
-    schema['f3'] = f3
-    dm.addSchema(schema)
-    return dm
 
 class AttributeHolder:
     pass
@@ -32,56 +14,49 @@ class AttributeHolder:
 
 class AttributeAdapterTests(unittest.TestCase):
 
+    def setUp(self):
+        self.h = AttributeHolder()
+        f1 = TextField('f1', 'Field1')
+        f2 = TextField('f2', 'Field2')
+        f3 = SelectionField('f3', 'Field3')
+        f3.setOptions( ['Value1', 'Value2', 'Value3'])
+        f3.setDefaultValue('Value3')
+        fielddict = {}
+        fielddict['f1'] = f1
+        fielddict['f2'] = f2
+        fielddict['f3'] = f3
+        self.a = AttributeStorageAdapter(self.h, fielddict)
+
+
     def testSet(self):
         """Set Data"""
-        h = AttributeHolder()
-        a = AttributeStorageAdapter(h)
-        a.set('data', 'value')
-        self.failUnless(h.data == 'value', 'Set failed')
+        self.a.set('f1', 'value')
+        self.failUnless(self.h.f1 == 'value', 'Set failed')
 
     def testGet(self):
         """Get Data"""
-        h = AttributeHolder()
-        a = AttributeStorageAdapter(h)
-        a.set('data', 'value')
-        self.failUnless(a.get('data') == 'value', 'Get failed')
-        self.failUnless(a.get('nodata') is None, 'Get default failed')
+        self.a.set('f1', 'value')
+        self.failUnless(self.a.get('f1') == 'value', 'Get failed')
+        self.failUnlessRaises(KeyError, self.a.get, 'nodata')
 
     def testDel(self):
         """Delete Data"""
-        h = AttributeHolder()
-        a = AttributeStorageAdapter(h)
-        a.set('data', 'value')
-        a.del_key('data')
-        self.failUnlessRaises(AttributeError, getattr, a, 'data')
+        self.a.set('f1', 'value')
+        self.a.delete('f1')
+        self.failUnlessRaises(AttributeError, getattr, self.a, 'data')
 
     def testHas(self):
         """Has Data"""
-        h = AttributeHolder()
-        a = AttributeStorageAdapter(h)
-        a.set('data', 'value')
-        self.failUnless(a.has_key('data'), 'HasData failed')
-        self.failIf(a.has_key('nodata'), 'HasData did not fail when it should')
+        self.a.set('f1', 'value')
+        self.failUnless(self.a.has_data('f1'), 'HasData failed')
+        self.a.delete('f1')
+        self.failIf(self.a.has_data('f1'), 'HasData failed')
 
-    def testMakeStructure(self):
-        """Tests the creation of a DataStructure"""
-        h = AttributeHolder()
-        a = AttributeStorageAdapter(h)
-        h.f1 = 'Value1'
-        h.f2 = 'Value2'
-        h.f3 = 'Value3'
-        dm = makeDataModel()
-        ds = a.makeDataStructure(dm)
-        self.failUnless( ds.data == {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3' })
+    def testReadWriteData(self):
+        self.failUnless(self.a.readData() == {'f1': None, 'f2': None, 'f3': None})
+        self.a.writeData({'f1': 'Value1', 'f2': 'Value2', 'f3': None})
+        self.failUnless(self.a.readData() == {'f1': 'Value1', 'f2': 'Value2', 'f3': None})
 
-    def testWriteStructure(self):
-        h = AttributeHolder()
-        a = AttributeStorageAdapter(h)
-        dm = makeDataModel()
-        ds = a.makeDataStructure(dm)
-        ds.update({'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3' })
-        a.writeDataStructure(ds)
-        self.failUnless( h.f1 == 'Value1' and h.f2 == 'Value2' and h.f3 == 'Value3')
 
 
 def test_suite():

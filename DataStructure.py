@@ -65,7 +65,7 @@ class DataStructure(UserDict):
     while the error dictionary is exposed through a set of methods.
     Bugs/features:
     - comparisons will not take errors into account
-   -  __setitem__ only updates the data, the errors will stay unchanged"""
+    - __setitem__ only updates the data, the errors will stay unchanged"""
 
     def __init__(self, data={}, errors={}):
         self.data = {}
@@ -106,7 +106,6 @@ class DataStructure(UserDict):
             del self.errors[key]
         return key, val
 
-    # update methods.
     def update(self, dict):
         if isinstance(dict, UserDict):
             self.data.update(dict.data)
@@ -119,32 +118,21 @@ class DataStructure(UserDict):
                 self.data[k] = v
                 self.setModifiedKey(k)
 
-    def updateFromDictionaries(self, data, errors):
-        self.update(data)
-        self.errors = errors
+    def updateFromRequest(self, REQUEST):
+        """Updates and validates field data from a REQUEST object
 
-    def updateFromRequest(self, datamodel, REQUEST):
-        """Updates and validates field data from a REQUEST object"""
-        self.clear()
-        for fieldid in datamodel.getFieldIds():
-            field = datamodel.getField(fieldid)
+        This method (unlike the standard update method) will only update
+        existing fields. It is used to set the data from request (or indeed
+        any other object with a mapping-interface). No validation is done,
+        the validation is instead done when storing the data via the DataModel.
+        """
+        for fieldid in self.keys():
             if REQUEST.has_key('field_'+fieldid): # The field_ syntax is used by formulator etc.
                 data = REQUEST['field_'+fieldid]
             else:
                 data = REQUEST.get(fieldid) # Will return None if it doesn't exist
-            try:
-                self[fieldid] = field.validate(data)
-                self.errors[fieldid] = None
-            except (TypeError, ValueError), errormsg:
-                self.errors[fieldid] = errormsg
+            if data != self[fieldid]: # Only change if it actually is different
                 self[fieldid] = data
-
-    def updateFromDocument(self, template, document):
-        self.clear()
-        datamodel = template.getDatamodel()
-        for fieldid in datamodel.keys():
-            self.errors[fieldid] = None #  the data to be validated.
-            self[fieldid] = template.getFieldValue(fieldid)
 
     # Expose the errors dictionary.
     def getError(self, key):

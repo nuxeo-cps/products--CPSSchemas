@@ -3,7 +3,7 @@
 
 import unittest
 from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.Adapter import AttributeAdapter
+from Products.NuxCPS3Document.AttributeStorageAdapter import AttributeStorageAdapterFactory
 from Products.NuxCPS3Document.Fields.TextField import TextField
 
 class AttributeHolder:
@@ -15,26 +15,14 @@ class SchemaTests(unittest.TestCase):
     def testCreation(self):
         """Check that the schems sets up reasonable defaults"""
         schema = Schema('schema', 'Schema')
-        self.failUnless(isinstance(schema.getAdapter(), AttributeAdapter), \
+        self.failUnless(isinstance(schema.getStorageAdapterFactory(), AttributeStorageAdapterFactory), \
                         'Default adapter is not AttributeAdapter')
 
     def testSetGetAdapter(self):
         schema = Schema('schema', 'Schema')
-        adapter = AttributeAdapter()
-        schema.setAdapter(adapter)
-        self.failUnless(schema.getAdapter() == adapter, 'Set or get adapter failed')
-
-    def testSetGetData(self):
-        schema = Schema('schema', 'Schema')
-        schema['f1'] = TextField('f1', 'Field1')
-        doc = AttributeHolder()
-        schema.setData(doc, 'f1', 'Spam')
-        data = schema.getData(doc, 'f1')
-        self.failUnless(data == 'Spam', 'GetData or setData failed')
-        self.failUnless(schema.hasData(doc, 'f1'), 'HasData failed')
-        schema.delData(doc, 'f1')
-        self.failIf(schema.hasData(doc, 'f1'), 'DelData failed')
-
+        adapter = AttributeStorageAdapterFactory()
+        schema.setStorageAdapterFactory(adapter)
+        self.failUnless(schema.getStorageAdapterFactory() == adapter, 'Set or get adapter failed')
 
 def test_suite():
     return unittest.makeSuite(SchemaTests)
