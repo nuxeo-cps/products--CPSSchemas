@@ -208,7 +208,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             return 'hidden'
         if self.hidden_if_expr_c:
             # Creating the context for evaluating the TAL expression
-            expr_context = self._createExpressionContext(datamodel)
+            expr_context = self._createExpressionContext(datamodel, layout_mode)
             if self.hidden_if_expr_c(expr_context):
                 return 'hidden'
         if self.widget_mode_expr_c:
