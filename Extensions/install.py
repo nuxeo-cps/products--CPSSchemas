@@ -67,6 +67,26 @@ def install(self):
         portal.portal_skins.addSkinSelection(skin_name, npath)
         pr(" Fixup of skin %s" % skin_name)
 
+    if portalhas('portal_schemas'):
+        prok()
+    else:
+        pr(" Creating portal_schemas")
+        portal.manage_addProduct["CPSDocument"].manage_addTool(
+            'CPS Schemas Tool')
+    if portalhas('portal_widgets'):
+        prok()
+    else:
+        pr(" Creating portal_widgets")
+        portal.manage_addProduct["CPSDocument"].manage_addTool(
+            'CPS Widgets Tool')
+    if portalhas('portal_layouts'):
+        prok()
+    else:
+        pr(" Creating portal_layouts")
+        portal.manage_addProduct["CPSDocument"].manage_addTool(
+            'CPS Layouts Tool')
+
+
 # widgets
     pr("Verifiying widgets")
     widgets = {
