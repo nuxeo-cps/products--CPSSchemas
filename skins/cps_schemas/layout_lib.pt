@@ -9,7 +9,8 @@
 <table width="100%" cellpadding="2" cellspacing="2" border="0">
   <tr tal:repeat="row layout/rows">
     <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
-      <tal:block define="widget cell/widget">
+      <tal:block define="widget cell/widget"
+        condition="not:widget/hidden_view">
       <div tal:attributes="class widget/css_class|nothing">
         <tal:block condition="widget/title_view">
           <span i18n:translate="" tal:condition="widget/is_i18n"
@@ -31,8 +32,9 @@
               ds options/datastructure;
               dm options/datamodel;">
   <tal:block repeat="row layout/rows">
-    <tal:block repeat="cell row" >
-      <tal:block define="widget cell/widget">
+    <tal:block repeat="cell row">
+      <tal:block define="widget cell/widget"
+        condition="not:widget/hidden_view">
       <div tal:attributes="class widget/css_class|nothing">
         <tal:block condition="widget/title_view">
           <span i18n:translate="" tal:condition="widget/is_i18n"
@@ -65,7 +67,8 @@
       tal:attributes="colspan cell/ncols">
       <tal:block define="widget cell/widget;
                          wid widget/getWidgetId;
-                         err python:ds.getError(wid);">
+                         err python:ds.getError(wid);"
+        condition="not:widget/hidden_edit">
         <div tal:attributes="class python:test(err, 'row error', 'row')">
           <div class="label" tal:condition="widget/title">
             <span i18n:translate="" tal:condition="widget/is_i18n"
