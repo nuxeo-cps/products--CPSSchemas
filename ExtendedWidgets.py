@@ -1102,8 +1102,6 @@ class CPSGenericMultiSelectWidget(CPSWidget):
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
-        # Provide an 'other' option where free input is accepted
-        # (ignored if render format is 'select')
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format'},
