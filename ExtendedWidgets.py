@@ -244,7 +244,6 @@ class CPSDateTimeWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        value = datastructure[self.getWidgetId()]
         return meth(mode=mode, datastructure=datastructure)
 
 
@@ -424,6 +423,7 @@ class CPSRichTextEditorWidget(CPSWidget):
                 current_name = '-'
             return meth(mode=mode, datastructure=datastructure,
                         current_name=current_name)
+        raise RuntimeError("unknown mode %s" % mode)
 
 InitializeClass(CPSRichTextEditorWidget)
 
