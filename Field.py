@@ -50,6 +50,7 @@ class Field(SimpleItemWithProperties):
     security = ClassSecurityInfo()
 
     default = ''
+    allow_none = 0
     is_indexed = 0
     #is_subschema = 0
     #is_multi_valued = 0
@@ -62,6 +63,8 @@ class Field(SimpleItemWithProperties):
         self.id = id
         if kw.has_key('default'):
             self.default = kw['default']
+        if kw.has_key('allow_none'):
+            self.allow_none = kw['allow_none']
         if kw.has_key('is_indexed'):
             self.is_indexed = kw['is_indexed']
         #if kw.has_key('is_subschema'):
@@ -128,6 +131,8 @@ class CPSField(Field):
          'label': 'Id'},
         {'id': 'default', 'type': 'string', 'mode': 'w',
          'label': 'Default'},
+        {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
+         'label': 'Allow None'},
         {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
          'label': 'Is Indexed'},
         #{'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
