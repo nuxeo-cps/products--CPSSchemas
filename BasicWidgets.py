@@ -643,6 +643,12 @@ class CPSIntWidget(CPSWidget):
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
         value = datastructure[self.getWidgetId()]
+
+        #put value back in a python-parsable state as thousands
+        #separator might not be std representations understood by python
+        if self.thousands_separator:
+            value = value.replace(self.thousands_separator,'')
+        
         try:
             v = int(value)
         except (ValueError, TypeError):
@@ -662,14 +668,16 @@ class CPSIntWidget(CPSWidget):
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
-        value = datastructure[self.getWidgetId()]
+        value = str(datastructure.getDataModel()[self.getWidgetId()])
+        #format number according to widget prefs
+        if self.thousands_separator:
+            thousands = []
+            while value:
+                thousands.insert(0, value[-3:])
+                value = value[:-3]
+            value = self.thousands_separator.join(thousands)
+        
         if mode == 'view':
-            if self.thousands_separator:
-                thousands = []
-                while value:
-                    thousands.insert(0, value[-3:])
-                    value = value[:-3]
-                value = self.thousands_separator.join(thousands)
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -722,6 +730,12 @@ class CPSLongWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        
+        #put value back in a python-parsable state as thousands
+        #separator might not be std representations understood by python
+        if self.thousands_separator:
+            value = value.replace(self.thousands_separator,'')
+        
         if not value and self.is_required:
             datastructure[widget_id] = 0
             datastructure.setError(widget_id, "cpsschemas_err_required")
@@ -743,15 +757,15 @@ class CPSLongWidget(CPSWidget):
 
     def render(self, mode, datastructure):
         """Render this widget from the datastructure or datamodel."""
-        datamodel = datastructure.getDataModel()
-        value = datastructure[self.getWidgetId()]
+        value = str(datastructure.getDataModel()[self.getWidgetId()])
+        #format number according to widget prefs
+        if self.thousands_separator:
+            thousands = []
+            while value:
+                thousands.insert(0, value[-3:])
+                value = value[:-3]
+            value = self.thousands_separator.join(thousands)
         if mode == 'view':
-            if self.thousands_separator:
-                thousands = []
-                while value:
-                    thousands.insert(0, value[-3:])
-                    value = value[:-3]
-                value = self.thousands_separator.join(thousands)
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -809,6 +823,14 @@ class CPSFloatWidget(CPSWidget):
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
         value = datastructure[self.getWidgetId()]
+
+        #put value back in a python-parsable state as decimal/thousands
+        #separators might not be std representations understood by python
+        if self.thousands_separator:
+            value = value.replace(self.thousands_separator,'')
+        if self.decimals_separator:
+            value = value.replace(self.decimals_separator,'.')
+
         try:
             v = float(value)
         except (ValueError, TypeError):
@@ -828,21 +850,23 @@ class CPSFloatWidget(CPSWidget):
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
-        value = datastructure[self.getWidgetId()]
-        if mode == 'view':
+        value = str(datastructure.getDataModel()[self.getWidgetId()])
+        #format number according to widget prefs
+        if self.decimals_number:
             v = float(value)
-            if self.decimals_number:
-                value = ("%0." + str(self.decimals_number) + "f") % v
-            if self.thousands_separator:
-                intpart, decpart = value.split('.')
-                thousands = []
-                while intpart:
-                    thousands.insert(0, intpart[-3:])
-                    intpart = intpart[:-3]
-                value = self.thousands_separator.join(thousands)
-                value = ''.join([value, '.', decpart])
-            if self.decimals_separator:
-                value = value.replace('.', self.decimals_separator)
+            value = ("%0." + str(self.decimals_number) + "f") % v
+        if self.thousands_separator:
+            intpart, decpart = value.split('.')
+            thousands = []
+            while intpart:
+                thousands.insert(0, intpart[-3:])
+                intpart = intpart[:-3]
+            value = self.thousands_separator.join(thousands)
+            value = ''.join([value, '.', decpart])
+        if self.decimals_separator:
+            value = value.replace('.', self.decimals_separator)
+        
+        if mode == 'view':
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
