@@ -279,23 +279,6 @@ class FlexibleTypeInformation(TypeInformation):
         return self._renderLayoutStyle(ob, mode, layout=layoutdata,
                                        datastructure=ds, datamodel=dm, ok=ok)
 
-    security.declareProtected(View, 'getDataStructure')
-    def getDataStructure(self, ob):
-        """Get the datastructure for an object of our type."""
-        pass
-
-
-
-    #
-    # Management
-    #
-
-    def addSchema(self, schema):
-        """Add a schema."""
-        pass
-
-
-
 InitializeClass(FlexibleTypeInformation)
 
 
