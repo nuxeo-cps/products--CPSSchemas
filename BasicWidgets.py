@@ -2187,7 +2187,7 @@ class CPSCompoundWidget(CPSWidget):
             cell['widget_rendered'] = rendered
             cells.append(cell)
         return render(mode=mode, datastructure=datastructure,
-                      cells=cells)
+                      cells=cells, **kw)
 
 InitializeClass(CPSCompoundWidget)
 
