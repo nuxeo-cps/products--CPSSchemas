@@ -9,6 +9,8 @@ Bug fixes:
 ~~~~~~~~~~
 - Made the Layout.renderLayoutStyle() method more generic so that it can deal
   with any mode.
+- Fixed HTML errors in Boolean Widget render method (invalid id, invalid label
+  in edit mode)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
