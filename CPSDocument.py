@@ -3,10 +3,10 @@
 
 from ZODB.PersistentMapping import PersistentMapping
 
-from Template import Template
-from DataStructure import DataStructure
+from Products.CPSDocument.Template import Template
+from Products.CPSDocument.DataStructure import DataStructure
 
-class NuxCPS3Document:
+class CPSDocument:
     """A document with a flexible data structure"""
 
     def __init__(self, id, title, template):
