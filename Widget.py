@@ -103,13 +103,13 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'CSS class for view'},
         {'id': 'widget_mode_expr', 'type': 'text', 'mode': 'w',
          'label': 'Get the widget mode from the given TAL expression'},
-        {'id': 'group_id', 'type': 'string', 'mode': 'w',
+        {'id': 'widget_group_id', 'type': 'string', 'mode': 'w',
          'label': 'Group id for Javascript switching (if empty widget id is used)'},
-        {'id': 'depends_on_id', 'type': 'string', 'mode': 'w',
+        {'id': 'depends_on_field_id', 'type': 'string', 'mode': 'w',
          'label': 'Depends on id for Javascript switching'},
-        {'id': 'depends_on_value', 'type': 'string', 'mode': 'w',
+        {'id': 'depends_on_field_value', 'type': 'string', 'mode': 'w',
          'label': 'Depends on value for Javascript switching'},
-        {'id': 'depends_on_value_xor', 'type': 'boolean', 'mode': 'w',
+        {'id': 'display_if_depends_equals', 'type': 'boolean', 'mode': 'w',
          'label': 'Depends on value display widget'},
         )
 
@@ -121,10 +121,10 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     help = ''
     is_i18n = 0
     css_class = ''
-    group_id = ''
-    depends_on_id = ''
-    depends_on_value = ''
-    depends_on_value_xor = True
+    widget_group_id = ''
+    depends_on_field_id = ''
+    depends_on_field_value = ''
+    display_if_depends_equals = True
     readonly_layout_modes = []
     hidden_layout_modes = []
     hidden_readonly_layout_modes = []
