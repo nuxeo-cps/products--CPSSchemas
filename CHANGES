@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Widget attribute widget_display_expr wasn't working
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Layout structure cells have widget_css_class key
+-

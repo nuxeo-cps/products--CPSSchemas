@@ -1,4 +1,36 @@
 *******************************************
+** CPSSchemas V0.36.2 [R1 build 2004/12/13-20:51 by edegoute]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.36.1 [R1 build 2004/12/13-20:41 by edegoute]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Widget attribute widget_display_expr wasn't working
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Layout structure cells have widget_css_class key
+
+*******************************************
 ** CPSSchemas V0.36.0 [R1 build 2004/12/13-09:09 by edegoute]
 
 Requires:
