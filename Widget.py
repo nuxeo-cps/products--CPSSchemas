@@ -1,5 +1,8 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
+# Authors:
+# Florent Guillaume <fg@nuxeo.com>
+# Encolpe DEGOUTE <edegoute@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -248,22 +251,33 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     security.declarePrivate('getCssClassFromDatamodel')
     def getCssClassFromDatamodel(self, layout_mode, datamodel):
-        """ Get the default widget css class
+        """Compute and return the css class, as it is specified in the datamodel.
 
-        It returns 'visible' if nothing being computed
+        The returned css class is to be used in the HTML rendering of a widget.
+
+        If no css class is specified, this is the default "visible" class that
+        is returned.
+
+        In edit mode if a css class is specified, this is the class name
+        suffixed by "_edit" that is returned. This is because in edit mode
+        one usually doesn't want the widgets to have the same appearance that
+        they have in view mode. Actually in edit mode one prefers to have all
+        the widgets with the same neutral presentation.
         """
-        css_class = self.css_class or 'visible'
-
+        css_class = self.css_class
         if self.widget_css_class_expr_c:
             # Creating the context for evaluating the TAL expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
             css_class_computed = self.widget_css_class_expr_c(expr_context)
             if css_class_computed:
-                return css_class_computed
-            else:
-                return css_class
+                css_class = css_class_computed
+
+        if css_class and layout_mode == 'edit':
+            css_class = css_class + '_edit'
         else:
-            return css_class
+            css_class = css_class or 'visible'
+
+        return css_class
 
     #
     # May be overloaded.

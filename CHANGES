@@ -9,6 +9,11 @@ Bug fixes:
 ~~~~~~~~~~
 - Generic select widget did not refuse validation of empty values when required
   if vocabulary did not hold blank values
+- Made that in edit mode if a css class is specified, this is the class name
+  suffixed by "_edit" that is returned. This is because in edit mode one usually
+  doesn't want the widgets to have the same appearance that they have in view
+  mode. Actually in edit mode one prefers to have all the widgets with the same
+  neutral presentation.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
