@@ -31,6 +31,51 @@ def install(self):
     def portalhas(id, portal=portal):
         return id in portal.objectIds()
 
+# widgets
+    pr("Verifiying widgets")
+    widgets = {
+        'Int Widget': {
+            'type': 'CPS Int Widget Type',
+            'data': {},
+            },
+        'String Widget': {
+            'type': 'CPS String Widget Type',
+            'data': {},
+            },
+        'TextArea Widget': {
+            'type': 'CPS TextArea Widget Type',
+            'data': {},
+            },
+        'Date Widget': {
+            'type': 'CPS Date Widget Type',
+            'data': {},
+            },
+        'File Widget': {
+            'type': 'CPS File Widget Type',
+            'data': {},
+            },
+        'Image Widget': {
+            'type': 'CPS Image Widget Type',
+            'data': {},
+            },
+        'Dummy Widget': {
+            'type': 'CPS Customizable Widget Type',
+            'data': {
+                'prepare_validate_method': 'widget_dummy_prepare_validate',
+                'render_method': 'widget_dummy_render',
+                },
+            },
+        }
+    wtool = portal.portal_widgets
+    for id, info in widgets.items():
+        pr(" Widget %s" % id)
+        if id in wtool.objectIds():
+            pr("  Deleting.")
+            wtool.manage_delObjects([id])
+        pr("  Installing.")
+        widget = wtool.manage_addCPSWidgetType(id, info['type'])
+        widget.manage_changeProperties(**info['data'])
+
 
     # setup portal_type: CPS Proxy Document, CPS Proxy Folder
     # CPS Folder
