@@ -62,6 +62,14 @@ class FloatWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({'decimals_separator': ','}, '12345.803')
         self.assert_(ret, err)
 
+    def test_widget_ok_required_1(self):
+        ret, err, ds = self._validate({'is_required': 0}, '0.0')
+        self.assertEquals(err, None)
+
+    def test_widget_nok_required_1(self):
+        ret, err, ds = self._validate({'is_required': 1}, '')
+        self.assertEquals(err, 'cpsschemas_err_required')
+
 
 class StringWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSStringWidget
