@@ -32,6 +32,8 @@ from Interface import Interface
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
+builtins_list = list
+
 
 class IVocabulary(Interface):
     """Interface for Vocabulary."""
@@ -51,8 +53,14 @@ class Vocabulary(Persistent):
     security.setDefaultAccess('allow')
 
     def __init__(self, dict=None, list=None):
+        # XXX improve
         self.clear()
-        # XXX
+        if dict is not None:
+            self._dict = dict.copy()
+            if list is not None:
+                self._list = builtins_list(list)
+            else:
+                self._list = dict.keys()
 
     def __repr__(self):
         return '<Vocabulary %s>' % repr(self._dict)
@@ -99,7 +107,7 @@ class Vocabulary(Persistent):
 
     def items(self):
         """Get the ordered list of (key, value)."""
-        raise NotImplementedError
+        return [(key, self._dict.get(key)) for key in self._list]
 
     def orderKeys(self, keys):
         """Set the order of keys."""
@@ -154,6 +162,10 @@ class CPSVocabulary(SimpleItemWithProperties):
     security.declareProtected(View, 'keys')
     def keys(self):
         return self._vocab.keys()
+
+    security.declareProtected(View, 'items')
+    def items(self):
+        return self._vocab.items()
 
     #
     # ZMI
