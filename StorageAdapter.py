@@ -132,3 +132,55 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         """Set data to the object, from a mapping."""
         for field_id in self._schema.keys():
             setattr(self._ob, field_id, data[field_id])
+
+
+class MetaDataStorageAdapter(BaseStorageAdapter):
+    """MetaData Storage Adapter
+
+    This adapter simply gets and sets metadata using X() and setX() methods
+    """
+
+    def __init__(self, schema, ob):
+        self._ob = ob
+        BaseStorageAdapter.__init__(self, schema)
+
+    def setContextObject(self, ob):
+        """Set a new underlying object for this adapter."""
+        self._ob = ob
+
+    def _delete(self, field_id):
+        raise NotImplementedError
+
+    def getData(self):
+        """Get data from the object, returns a mapping."""
+        data = {}
+        ob = self._ob
+        for field_id, field in self._schema.items():
+            if not hasattr(aq_base(ob), field_id):
+                # Use default from field.
+                value = field.getDefault()
+            else:
+                meth = getattr(ob, field_id)
+                if not callable(meth):
+                    raise RuntimeError(
+                        "invalid MetaData field, %s not callable" % field_id)
+                value = meth()
+            data[field_id] = value
+
+        return data
+
+    def setData(self, data):
+        """Set data to the object, from a mapping."""
+        ob = self._ob
+        for field_id in self._schema.keys():
+            meth_name = 'set' + field_id
+            if not hasattr(aq_base(ob), meth_name):
+                # skip metadata without setter method
+                LOG('MetaDataStorageAdapter.setData', DEBUG,
+                    "Warning no method %s() field is not save" % meth_name)
+                continue
+            meth = getattr(ob, meth_name)
+            if not callable(meth):
+                raise RuntimeError(
+                    "invalid MetaData field, %s not callable" % meth_name)
+            meth(data[field_id])
