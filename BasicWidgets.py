@@ -651,10 +651,6 @@ class CPSCustomizableWidget(CPSWidget):
         )
     widget_type = ''
 
-    def __init__(self, id, widget_type, **kw):
-        self.widget_type = widget_type
-        CPSWidget.__init__(self, id, **kw)
-
     security.declarePrivate('_getType')
     def _getType(self):
         """Get the type object for this widget."""
@@ -683,6 +679,7 @@ InitializeClass(CPSCustomizableWidget)
 class CPSCustomizableWidgetType(CPSWidgetType):
     """Customizable widget type."""
     meta_type = "CPS Customizable Widget Type"
+    cls = CPSCustomizableWidget
 
     security = ClassSecurityInfo()
 

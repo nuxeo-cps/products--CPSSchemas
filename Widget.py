@@ -64,8 +64,9 @@ class Widget(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, id, **kw):
+    def __init__(self, id, widget_type, **kw):
         self._setId(id)
+        self.widget_type = widget_type
         self.manage_changeProperties(**kw)
 
     security.declarePublic('getWidgetId')
@@ -102,9 +103,9 @@ class CPSWidget(Widget):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, id, **kw):
+    def __init__(self, id, widget_type, **kw):
         self.fields = [id]
-        Widget.__init__(self, id, **kw)
+        Widget.__init__(self, id, widget_type, **kw)
 
     fields = []
     label = ''
@@ -169,7 +170,7 @@ class CPSWidgetType(SimpleItemWithProperties):
     security.declarePrivate('makeInstance')
     def makeInstance(self, id, **kw):
         """Create an instance of this widget type."""
-        return self.cls(id, **kw)
+        return self.cls(id, self.getId(), **kw)
 
     #
     # ZMI
