@@ -29,6 +29,7 @@ from types import ListType, TupleType, StringType
 from cgi import escape
 from re import compile, search
 from zLOG import LOG, DEBUG, PROBLEM
+from TAL.TALDefs import attrEscape
 
 try:
     import PIL.Image
@@ -69,7 +70,7 @@ def renderHtmlTag(tagname, **kw):
         if value is None:
             value = key
         if key in ('value', ) or value != '':
-            attrs.append('%s="%s"' % (key, escape(str(value))))
+            attrs.append('%s="%s"' % (key, attrEscape(str(value))))
     res = '<%s %s' % (tagname, ' '.join(attrs))
     if contents is not None:
         res += '>%s</%s>' % (contents, tagname)
@@ -251,7 +252,7 @@ class CPSStringWidget(CPSWidget):
             kw = {'type': 'text',
                   'id'  : self.getHtmlWidgetId(),
                   'name': self.getHtmlWidgetId(),
-                  'value': value,
+                  'value': escape(value),
                   'size': self.display_width,
                   }
             if self.size_max:
