@@ -32,7 +32,7 @@
           selector_window = window.open(base_url + 'popup_internallinks_form'+
           '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
           'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,' +
-          'dependent=1,width=400,height=300');
+          'dependent=1,width=500,height=300');
           if (! selector_window.opener)
             selector_window.opener = window
         }
