@@ -1,12 +1,16 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
+                   datastructure options/datastructure;
+                   datamodel datastructure/getDataModel;
+                   ctx datamodel/getContext;
+                   rurl python:ctx.getContextUrl()+'/';
                    current_name options/current_name;
                    empty_file python:current_name == '-';
                    mimetype options/mimetype;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
   <img tal:replace="structure python:here.getImgTag(here.fields[0],
-    base_url='', height=here.display_height, width=here.display_width,
+    base_url=rurl, height=here.display_height, width=here.display_width,
     keep_ratio=1)" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'" tal:define="img_resize python:1">
