@@ -5,6 +5,7 @@
                    current_title options/current_title;
                    content_url options/content_url;
                    image_tag options/image_tag;
+                   image_width options/width;
                    empty_file options/empty_file;
                    mimetype options/mimetype;
                    subtitle options/subtitle;
@@ -17,7 +18,10 @@
                                         test(rposition == 'center',
                                              'dcenter', 'dleft'))">
     <img tal:replace="structure image_tag" />
-    <div tal:condition="subtitle"><small tal:content="subtitle" /></div>
+    <div tal:condition="subtitle"
+         style="width: 100px;" tal:attributes="style python:'width: %spx;;' % image_width">
+      <small tal:content="subtitle" />
+    </div>
   </div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
@@ -42,7 +46,7 @@
   <div class="label">
     <span i18n:translate="">cpsschemas_photo_subtitle</span></div>
   <div class="field">
-    <input type="text" size="30" maxlength="50"
+    <input type="text" size="30"
       tal:attributes="name string:${value_name}_subtitle;
                       value subtitle" />
   </td></tr></table>

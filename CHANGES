@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Allowing unlimited size for image caption of PhotoWidget, with the caption
+  text nicely wrapped at the bottom of the corresponding image.
 Bug fixes:
 ~~~~~~~~~~
 - Fixed the naming problems that were causing in the log file the alerts

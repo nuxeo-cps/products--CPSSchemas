@@ -1957,6 +1957,8 @@ class CPSImageWidget(CPSFileWidget):
                     width=str(width), height=str(height), border='0',
                     alt=title, title=title)
 
+        image_info['height'] = height
+        image_info['width'] = width
         image_info['image_tag'] = tag
         return image_info
 
