@@ -1,4 +1,32 @@
 *******************************************
+** CPSSchemas V0.34.0 [R1 build 2004/12/02-10:33 by regebro]
+
+Requires:
+~~~~~~~~~
+- Disk File Fields dependant _html field must now be a standard File Field,
+  not a Disk File Field.
+New features:
+~~~~~~~~~~~~~
+- new CPSDocumentLanguageSelectWidget, require CPSCore > 3.18
+- Possible to resize image within a Photo widget, and not anymore
+  within an Image widget
+- Add an HTML id on each widget: group_id
+- Add 'depends on' attributes for javascript display toggle
+- Malagasy language
+Bug fixes:
+~~~~~~~~~~
+- Date widget use nn/nn/nnnn instead of n/n/n for rendering
+- The Internal Links widget does not perform a permission check
+  before displaying links.
+- Corrected the <head>...</head> declarations in main_template_popup.pt
+- Disk File Field now works better with external editor.
+- Disk File would fail when trying to calculate the size before the file
+  was uploaded.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Malagasy javascript camendar (to translate)
+
+*******************************************
 ** CPSSchemas V0.33.0 [R1 build 2004/11/08-09:49 by ben]
 
 Requires:
