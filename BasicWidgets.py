@@ -75,6 +75,49 @@ def renderHtmlTag(tagname, **kw):
 
 ##################################################
 
+class CPSHtmlWidget(CPSWidget):
+    """Html widget."""
+    meta_type = "CPS Html Widget"
+
+    field_types = ()
+
+    _properties = CPSWidget._properties + (
+        {'id': 'html_view', 'type': 'text', 'mode': 'w',
+         'label': 'Html for view'},
+        {'id': 'html_edit', 'type': 'text', 'mode': 'w',
+         'label': 'Html for edit'},
+        )
+    html_view = ''
+    html_edit = ''
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        pass
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        return 1
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        if mode == 'view':
+            return self.html_view
+        elif mode == 'edit':
+            return self.html_edit
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSHtmlWidget)
+
+
+class CPSHtmlWidgetType(CPSWidgetType):
+    """Html widget type."""
+    meta_type = "CPS Html Widget Type"
+    cls = CPSHtmlWidget
+
+InitializeClass(CPSHtmlWidgetType)
+
+##################################################
+
 class CPSStringWidget(CPSWidget):
     """String widget."""
     meta_type = "CPS String Widget"
@@ -645,3 +688,4 @@ WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
+WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
