@@ -23,8 +23,6 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG
 from types import IntType, StringType, ListType, FloatType, LongType
-from random import randint
-from time import time
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 

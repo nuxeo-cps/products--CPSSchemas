@@ -38,10 +38,6 @@ ZMI.
 from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
 
-from Products.CMFCore.Expression import Expression
-from Products.CMFCore.Expression import getEngine
-
-
 class BaseStorageAdapter:
     """Base Storage Adapter
 

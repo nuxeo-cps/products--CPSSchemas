@@ -29,7 +29,7 @@ from Acquisition import aq_base
 from types import StringType
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
-from OFS.Image import cookId, File, Image
+from OFS.Image import cookId, File
 
 from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
