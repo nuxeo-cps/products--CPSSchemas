@@ -191,7 +191,7 @@ class CPSWidget(Widget):
     security = ClassSecurityInfo()
 
     def __init__(self, id, widget_type, **kw):
-        self.fields = [id]
+        #self.fields = [id]
         Widget.__init__(self, id, widget_type, **kw)
 
     security.declarePrivate('isHidden')
