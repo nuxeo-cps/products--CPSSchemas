@@ -3,7 +3,7 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- CPSDefault layout (layout_default_)
 Bug fixes:
 ~~~~~~~~~~
 - fixing bad portal type icon init
@@ -11,3 +11,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - move CPSDocument[Schemas|Layers|Types|Widgets] to getDocument* 
   document can be define in the application skin using getCustomDocument*
+- i18n of widgets error messages
