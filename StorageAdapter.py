@@ -197,8 +197,9 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         """Set data for one field."""
         setattr(self._ob, field_id, value)
 
-    def _getContentUrl(self, object, field_id):
-        return '%s/%s' % (object.absolute_url(), field_id)
+    def _getContentUrl(self, object, field_id, file_name):
+        return '%s/downloadFile/%s/%s' % (
+            object.absolute_url(), field_id, file_name)
 
 
 ACCESSOR = []
@@ -279,7 +280,3 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
             raise ValueError("Field %s is read-only" % field_id)
         else:
             setattr(ob, attr, value)
-
-    # XXX MetaDataStorageAdapter doesn't store files, this is useless.
-    def _getContentUrl(self, object, field_id):
-        return '%s/%s' % (object.absolute_url(), field_id)
