@@ -15,3 +15,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - getLayoutData now takes a widget mode chooser as argument, and renders
   all the widgets.
+- adding style_prefix property to Layout
