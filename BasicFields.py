@@ -62,7 +62,7 @@ InitializeClass(CPSIntField)
 
 
 class CPSLongField(CPSField):
-    """Integer field."""
+    """Long field."""
     meta_type = "CPS Long Field"
     _properties = propertiesWithType(CPSField._properties, 'default', 'long')
     default = 0
@@ -72,11 +72,11 @@ class CPSLongField(CPSField):
             return value
         raise ValidationError('Not an long integer: %s' % repr(value))
 
-InitializeClass(CPSIntField)
+InitializeClass(CPSLongField)
 
 
 class CPSFloatField(CPSField):
-    """Integer field."""
+    """Float field."""
     meta_type = "CPS Float Field"
     _properties = propertiesWithType(CPSField._properties, 'default', 'float')
     default = 0.0
