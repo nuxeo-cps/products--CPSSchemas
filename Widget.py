@@ -29,8 +29,6 @@ from zLOG import LOG, DEBUG
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 
-from OFS.Folder import Folder
-
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 
