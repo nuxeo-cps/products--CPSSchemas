@@ -10,11 +10,6 @@ from OFS.Image import Image, File
 from Products.CPSSchemas import BasicFields
 from Products.CPSSchemas.Field import FieldRegistry
 
-class NotAString:
-    """A class can't be converted to a string"""
-    def __str__(self):
-        raise TypeError('This can not be converted to a string')
-
 
 class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
 
@@ -124,7 +119,7 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
 
         self.assertEquals(field.getDefault(), None)
 
-        # XXX: A bit strange. Do we really want that one ?
+        # XXX: A bit strange. Do we really want this behaviour ?
         self.assertEquals(field.validate(""), None)
 
         self.assertEquals(field.validate(None), None)
@@ -133,6 +128,9 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
         self.assertEquals(field.validate(file), file)
         self.assertRaises(ValueError, field.validate, [1])
 
+        # TODO: add test for "dependant fields" there.
+
+
     def testImageField(self):
         field = BasicFields.CPSImageField('the_id')
         self.fields._setObject('the_id', field)
@@ -140,7 +138,7 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
 
         self.assertEquals(field.getDefault(), None)
 
-        # XXX: A bit strange. Do we really want that one ?
+        # XXX: A bit strange. Do we really want is behaviour ?
         self.assertEquals(field.validate(""), None)
 
         self.assertEquals(field.validate(None), None)
