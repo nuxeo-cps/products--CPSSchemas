@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Optimized the validate() method of the CPSAttachedFileWidget
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

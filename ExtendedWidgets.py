@@ -336,9 +336,10 @@ class CPSAttachedFileWidget(CPSFileWidget):
                 # do not allow empty title: it is used as link text
                 if not filetitle:
                     filetitle = datastructure[widget_id + '_filename']
-                file.manage_changeProperties(title=filetitle)
-                datamodel[field_id] = file
-        if choice == 'delete':
+                if filetitle != file.title:
+                    file.manage_changeProperties(title=filetitle)
+                    datamodel[field_id] = file
+        elif choice == 'delete':
             datamodel[field_id] = None
         elif choice == 'change' and datastructure.get(widget_id):
             fileUpload = datastructure[widget_id]
