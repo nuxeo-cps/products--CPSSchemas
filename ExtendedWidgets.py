@@ -317,6 +317,8 @@ class CPSAttachedFileWidget(CPSFileWidget):
         datastructure[widget_id + '_preview'] = preview_id
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
+        datastructure[widget_id + '_title'] = ''
+        datastructure[widget_id + '_filename'] = ''
 
 
     def validate(self, datastructure, **kw):
@@ -325,8 +327,17 @@ class CPSAttachedFileWidget(CPSFileWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
+        filetitle = datastructure[widget_id + '_title']
         file = None
         err = 0
+        if choice == 'keep':
+            file = datamodel[field_id]
+            if file is not None:
+                # do not allow empty title: it is used as link text
+                if not filetitle:
+                    filetitle = datastructure[widget_id + '_filename']
+                file.manage_changeProperties(title=filetitle)
+                datamodel[field_id] = file
         if choice == 'delete':
             datamodel[field_id] = None
         elif choice == 'change' and datastructure.get(widget_id):
@@ -344,6 +355,8 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     fileUpload.seek(0)
+                    # ignore title value from form;
+                    # re-initialize title with fileid value
                     fileid = cookId('', '', fileUpload)[0]
                     file = File(fileid, fileid, fileUpload)
                     registry = getToolByName(self, 'mimetypes_registry')
@@ -378,6 +391,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
             file_info = {'empty_file': 1,
                          'content_url': '',
                          'current_name': '-',
+                         'current_title': '',
                          'mimetype': '',
                          'last_modified': '',
                         }

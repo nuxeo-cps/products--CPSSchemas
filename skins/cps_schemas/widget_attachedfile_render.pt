@@ -1,6 +1,7 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    current_name options/current_name;
+                   current_title options/current_title;
                    empty_file options/empty_file;
                    mimetype options/mimetype;
                    size options/size;
@@ -17,7 +18,7 @@
         title=mimetype.name())" /></a>
     <a class="strong"
       tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <tal:block replace="current_name" /></a>
+      <tal:block replace="current_title" /></a>
 
     <span tal:condition="size" class="note"
           tal:define="b python:size < 1024;
@@ -40,6 +41,24 @@
 </tal:block>
 
 <tal:block condition="python: mode == 'edit'">
+<metal:block define-macro="file_title_edit">
+
+<table cellpadding="0" cellspacing="0" border="0" 
+    summary="file title edit" tal:define="name here/getHtmlWidgetId;
+                title_name string:${name}_title;"> 
+  <tr>
+    <td align="left" i18n:translate="label_title">
+     The title
+    </td>
+    <td>
+        <input style="margin-left: 5px" type="text" tal:attributes="name title_name;
+                                           value current_title">
+        <input type="hidden" tal:attributes="name string:${name}_filename;
+                                           value current_name">
+    </td>
+  </tr>
+</table>
+</metal:block>
   <metal:block use-macro="here/widget_image_render/macros/file_edit" />
 </tal:block>
 
