@@ -174,6 +174,10 @@ class DataModel(UserDict):
         self.data[key] = item
         self.dirty[key] = 1
 
+    def isDirty(self, key):
+        """Is the item marked dirty ?"""
+        return self.dirty.get(key)
+
     # Expose setter as method for restricted code.
     def set(self, key, item):
         self.checkWriteAccess(key)
@@ -284,7 +288,7 @@ class DataModel(UserDict):
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
-                if self.dirty.get(field_id):
+                if self.isDirty(field_id):
                     LOG("DataModel", DEBUG, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
