@@ -1,6 +1,6 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
--
+- CPSSchemas requires Epoz-0.5.1
 New features:
 ~~~~~~~~~~~~~
 - Split off from CPSDocument into a separate package CPSSchemas.
