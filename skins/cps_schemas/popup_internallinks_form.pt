@@ -1,5 +1,4 @@
 <metal:html tal:define="emptybody python:1;
-                        vtool here/portal_vocabularies;
                         textarea request/textarea|string:;
                         searching python:request.has_key('Title');
                        ">
