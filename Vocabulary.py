@@ -77,7 +77,12 @@ class Vocabulary(Persistent):
     def __delitem__(self, key):
         self._p_changed = 1
         del self._dict[key]
-        del self._msgids[key]
+        try:
+            del self._msgids[key]
+        except KeyError:
+            # __init__ doesn't initialize _msgids so this can't be
+            # *del*eted directly
+            pass
         self._list.remove(key)
 
     def set(self, key, label, msgid=None):
