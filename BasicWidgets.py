@@ -488,7 +488,7 @@ class CPSLinesWidget(CPSWidget):
     field_types = ('CPS String List Field',)
     field_inits = ({'is_indexed': 1,},)
 
-    width = 30
+    width = 40
     height = 5
     format_empty = ''
 
