@@ -117,6 +117,45 @@ InitializeClass(CPSHtmlWidgetType)
 
 ##################################################
 
+class CPSZPTWidget(CPSWidget):
+    """ZPT widget."""
+    meta_type = "CPS ZPT Widget"
+
+    _properties = CPSWidget._properties + (
+        {'id': 'render_method', 'type': 'text', 'mode': 'w',
+         'label': 'ZPT filename'},)
+    render_method = ''
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        pass
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        meth = getattr(self, self.render_method, None)
+        if meth is None:
+            msg = "Unknown Render Method %s for widget type %s. " \
+            + "Please set or change the 'render_method' attribute on " \
+            + "your widget declaration."
+            raise RuntimeError(msg % (self.render_method, self.getId()))
+        return meth(mode=mode, datastructure=datastructure)
+
+InitializeClass(CPSZPTWidget)
+
+
+class CPSZPTWidgetType(CPSWidgetType):
+    """ZPT widget type."""
+    meta_type = "CPS ZPT Widget Type"
+    cls = CPSZPTWidget
+
+InitializeClass(CPSZPTWidgetType)
+
+##################################################
+
 class CPSStringWidget(CPSWidget):
     """String widget."""
     meta_type = "CPS String Widget"
@@ -1716,6 +1755,7 @@ WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
 WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
+WidgetTypeRegistry.register(CPSZPTWidgetType, CPSZPTWidget)
 WidgetTypeRegistry.register(CPSRichTextEditorWidgetType,
                             CPSRichTextEditorWidget)
 WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
