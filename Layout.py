@@ -119,12 +119,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     _properties = (
         {'id': 'style_prefix', 'type': 'string', 'mode': 'w',
          'label': 'Prefix for zpt'},
-        {'id': 'allowed_widgets', 'type': 'tokens', 'mode': 'w',
+        {'id': 'flexible_widgets', 'type': 'tokens', 'mode': 'w',
          'label': 'Allowed widgets in flexible'},
         )
 
     style_prefix = ''
-    allowed_widgets = []
+    flexible_widgets = []
 
     prefix = 'w__'
     id = None
@@ -138,11 +138,11 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         self.setLayoutDefinition(layoutdef)
         self.manage_changeProperties(**kw)
 
-    security.declarePrivate('_getAllowedWidgetsInfo')
-    def _getAllowedWidgetsInfo(self, n=0):
+    security.declarePrivate('_getFlexibleWidgetsInfo')
+    def _getFlexibleWidgetsInfo(self, n=0):
         """Return allowed widgets information."""
         items = []
-        for item in self.allowed_widgets:
+        for item in self.flexible_widgets:
             v = item.split(':')
             if len(v) > n and v[n]:
                 items.append(v[n])
@@ -150,17 +150,17 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 items.append(None)
         return items
 
-    security.declarePrivate('getAllowedWidgetIds')
-    def getAllowedWidgetIds(self):
-        """Return allowed widget ids."""
-        return self._getAllowedWidgetsInfo()
+    security.declarePrivate('getFlexibleWidgetIds')
+    def getFlexibleWidgetIds(self):
+        """Return allowed flexible widget ids."""
+        return self._getFlexibleWidgetsInfo()
 
-    security.declarePrivate('getAllowedWidgetOccurences')
-    def getAllowedWidgetOccurences(self):
-        """Return a list of maximum number of allowed widgets.
+    security.declarePrivate('getFlexibleWidgetOccurences')
+    def getFlexibleWidgetOccurences(self):
+        """Return a list of maximum number of flexible widgets.
 
         0 is no limit."""
-        return self._getAllowedWidgetsInfo(n=1)
+        return self._getFlexibleWidgetsInfo(n=1)
 
     security.declarePrivate('normalizeLayoutDefinition')
     def normalizeLayoutDefinition(self, layoutdef):
@@ -356,19 +356,19 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         if layout_style is None:
             raise ValueError("No layout method '%s' for layout '%s'" %
                              (layout_meth, self.getId()))
-        # compute the allowed_widgets list
-        allowed_widgets = []
+        # compute the flexible_widgets list
+        flexible_widgets = []
         if layout_mode == 'edit':
             widget_ids = []
             for widget_id, widget in self.items():
                 if not widget.isTemplate():
                     widget_ids.append(widget_id)
-            allowed_widget_ids = self.getAllowedWidgetIds()
-            allowed_occurences = self.getAllowedWidgetOccurences()
-            allowed_widgets = []
+            flexible_widget_ids = self.getFlexibleWidgetIds()
+            flexible_occurences = self.getFlexibleWidgetOccurences()
+            flexible_widgets = []
             i = 0
-            for wid in allowed_widget_ids:
-                max_widget = allowed_occurences[i]
+            for wid in flexible_widget_ids:
+                max_widget = flexible_occurences[i]
                 i += 1
                 if max_widget:
                     nb_widget = 0
@@ -378,11 +378,11 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                     if nb_widget >= int(max_widget):
                         continue
 
-                allowed_widgets.append(self[wid])
+                flexible_widgets.append(self[wid])
 
         rendered = layout_style(layout=layout_structure,
                                 datastructure=datastructure,
-                                allowed_widgets=allowed_widgets,
+                                flexible_widgets=flexible_widgets,
                                 **kw)
         return rendered
 
