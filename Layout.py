@@ -95,6 +95,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     A layout describes how to render the basic fields of a schema.
     """
 
+    _properties = (
+        {'id': 'style_prefix', 'type': 'string', 'mode': 'w',
+         'label': 'Prefix for zpt'},
+        )
+
+    style_prefix = ''
     prefix = 'w__'
 
     security = ClassSecurityInfo()
@@ -105,6 +111,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     def __init__(self, **kw):
         layoutdef = {'ncols': 1, 'rows': []}
         self.setLayoutDefinition(layoutdef)
+        self.manage_changeProperties(**kw)
 
     security.declarePrivate('normalizeLayoutDefinition')
     def normalizeLayoutDefinition(self, layoutdef):
@@ -231,6 +238,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         # its space contributed to the left or right cell.
         # Re-normalize after removed cells.
         self.normalizeLayoutDefinition(layoutdata)
+        layoutdata['style_prefix'] = self.style_prefix
         return layoutdata
 
     security.declarePrivate('validateLayout')
