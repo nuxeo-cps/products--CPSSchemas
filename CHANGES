@@ -1,51 +1,12 @@
 Requires:
 ~~~~~~~~~
-- Now using CPSUtil.integration.isProductPresent method.
+-
 New features:
 ~~~~~~~~~~~~~
-- Added the SubjectWidget and made the MultiSelectWidget, from which it
-  inherits, easier to derive from.
-- Added keysSortedBy method to Vocabulary. Criterium available and well tested
-  are 'id', 'label', 'i18n'. You can also sort keys with a sort_function which
-  take the following list as an element (key, label, msgid, translated_msgid).
-- Try to implement sorted vocabularies. Now Vocabulary() can take an extra
-  argument: sort_function. It permits to insert a new key at good place on set.
-  Three methods are added: getSortFunction, setSortFunction, sortKeys.
-  The last one is not called 'sort' because it must not implement the list.sort
-  API. It will only help when a portal manager change Vocabulary sort function.
-- Possible to add JavaScript code in a widget rendering information
-- Made the Text Image Widget be able to handle either 1 block or 2 blocks of
-  text.
-- Added three properties to layouts: "layout_create_method",
-  "layout_edit_method" and "layout_view_method". Those properties provide more
-  flexibility than the already existing "style_prefix" property which needs
-  three ZPT files to be defined. Those three new properties take precedence over
-  the "style_prefix" property.
+-
 Bug fixes:
 ~~~~~~~~~~
-- Generic select widget did not refuse validation of empty values when required
-  if vocabulary did not hold blank values
-- Generic select widget generated multiple "selected" attributes when the same
-  key was repeated (typically blank keys)
-- Made that in edit mode if a css class is specified, this is the class name
-  suffixed by "Edit" that is returned. This is because in edit mode one usually
-  doesn't want the widgets to have the same appearance that they have in view
-  mode. Actually in edit mode one prefers to have all the widgets with the same
-  neutral presentation.
-- Removed some needless <span> elements used for i18n.
-- Fixed the English translation telling the maximum size of an attached file.
-- Correct commit when a proxy is present in a datamodel for a new document.
-- Don't do properties post-processing in Layout every time it's called.
-- The URL Widget returned an empty tag (<a class="url"></a>) when there was
-  no value to display which made the 'hidden if empty' option ineffective.
-- The Email Widget returned an empty tag (<a ...></a>) when there was
-  no value to display which made the 'hidden if empty' option ineffective.
-- Generic (Multi) Select widgets used value taken from datamodel instead of
-  datastructure for rendering
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Widget properties: widget_group_id was removed (not used ans not XHTML
-  compliant), widget_css_class renamed into css_class_expr, and
-  getCssClassForDatamodel method was renamed into getCssClass: if expression is
-  specified, the basic property css_class is ignored.
-- Use CMFCore.permissions instead of CMFCore.CMFCorePermissions to avoid warnings
+-
