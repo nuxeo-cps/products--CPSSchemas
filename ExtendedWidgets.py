@@ -31,7 +31,7 @@ from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 import os.path
 from zLOG import LOG, DEBUG, TRACE
-
+from zipfile import ZipFile, BadZipfile
 from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
@@ -450,6 +450,84 @@ class CPSAttachedFileWidgetType(CPSWidgetType):
     cls = CPSAttachedFileWidget
 
 InitializeClass(CPSAttachedFileWidgetType)
+
+
+##################################################
+class CPSZippedHtmlWidget(CPSAttachedFileWidget):
+    """ZippedHtml widget.
+
+    A zip file that contains html which can be viewed online.
+    Use index.html or any html file from the zip as preview page.
+    """
+    meta_type = "CPS ZippedHtml Widget"
+    size_max = 1024*1024
+
+    # XXX don't knwo why this does not work ?
+    # allowed_suffixes = ['zip']
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        choice = datastructure[widget_id+'_choice']
+        if choice == 'change':
+            # looking for an html index
+            file_upload = datastructure.get(widget_id)
+            if _isinstance(file_upload, FileUpload):
+                try:
+                    zf = ZipFile(file_upload, 'r')
+                except BadZipfile:
+                    return self.doesNotValidate(
+                        'cpsschemas_err_zippedhtml_invalid_zip',
+                        None, file_upload, datastructure)
+                all_files = [info.filename for info in zf.infolist()]
+                html_files = [f for f in all_files
+                              if (f.lower().endswith('.html') or
+                                  f.lower().endswith('.htm'))]
+                index_files = [f for f in html_files
+                               if f.lower().find('index.htm') >= 0]
+                index_path = None
+                if index_files:
+                    index_path = index_files[0]
+                elif html_files:
+                    index_path = html_files[0]
+                if not index_path:
+                    return self.doesNotValidate(
+                        'cpsschemas_err_zippedhtml_html_not_found',
+                        None, file_upload, datastructure)
+        # std attached file validation
+        ret = CPSAttachedFileWidget.validate(self, datastructure, **kw)
+        if ret and choice == 'change':
+            field_id = self.fields[0]
+            datamodel = datastructure.getDataModel()
+            # adding attribute to file ofs
+            file = datamodel[field_id]
+            file._zip_index_path = index_path
+            datamodel[field_id] = file
+        return ret
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_zippedhtml_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        file_info = self.getFileInfo(datastructure)
+        file_info['index_path'] = getattr(datastructure[self.getWidgetId()],
+                                          '_zip_index_path', '')
+        return meth(mode=mode, datastructure=datastructure, **file_info)
+
+InitializeClass(CPSZippedHtmlWidget)
+
+
+class CPSZippedHtmlWidgetType(CPSWidgetType):
+    """ZippedHtml widget type."""
+    meta_type = "CPS ZippedHtml Widget Type"
+    cls = CPSZippedHtmlWidget
+
+InitializeClass(CPSZippedHtmlWidgetType)
+
+
 
 #################################################
 
@@ -1544,6 +1622,7 @@ InitializeClass(CPSSubjectWidgetType)
 WidgetTypeRegistry.register(CPSTextWidgetType)
 WidgetTypeRegistry.register(CPSDateTimeWidgetType)
 WidgetTypeRegistry.register(CPSAttachedFileWidgetType)
+WidgetTypeRegistry.register(CPSZippedHtmlWidgetType)
 WidgetTypeRegistry.register(CPSRichTextEditorWidgetType)
 WidgetTypeRegistry.register(CPSExtendedSelectWidgetType)
 WidgetTypeRegistry.register(CPSInternalLinksWidgetType)
