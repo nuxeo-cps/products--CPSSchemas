@@ -1,5 +1,5 @@
 <tal:block define="mode options/mode;
-                   values options/values;
+                   value options/value;
                    selected options/selected;
                    widget_id here/getHtmlWidgetId;
                    widget_selected_id string:${widget_id}_selected;
@@ -43,6 +43,7 @@ function checkLanguageSelected(form){
            onclick="checkLanguageSelected(this.form)"
            tal:attributes="name widget_id;
                            id string:${widget_id}_${lang};
+                           checked python:test(lang in value, 'checked', nothing);
                            value lang" />
     <label tal:attributes="for string:${widget_id}_${lang}"
            tal:content="python: vocabulary.getMsgid(lang)"
