@@ -26,6 +26,7 @@ Bug fixes:
 - Removed some needless <span> elements used for i18n.
 - Fixed the English translation telling the maximum size of an attached file.
 - Correct commit when a proxy is present in a datamodel for a new document.
+- Don't do properties post-processing in Layout every time it's called.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Widget properties: widget_group_id was removed (not used ans not XHTML
