@@ -16,7 +16,7 @@
 </tal:checkbox>
 <tal:radio condition="python:render_format == 'radio'">
 <input type="radio" value="1"
-       tal:attributes="checked python:test(value, 'checked', nothing);
+       tal:attributes="checked python:test(value and value != '0', 'checked', nothing);
                        id string:{here/getHtmlWidgetId}_true;
                        name here/getHtmlWidgetId;" />
   <label tal:content="here/label_true"
@@ -33,11 +33,11 @@
 <tal:select condition="python:render_format == 'select'">
 <select tal:attributes="name here/getHtmlWidgetId;">
   <option value="1"
-          tal:attributes="selected python:test(value, 'selected', nothing);"
+          tal:attributes="selected python:test(value and value != '0', 'selected', nothing);"
           tal:content="here/label_true"
           i18n:translate="" />
   <option value="0"
-          tal:attributes="selected python:test(not value or value=='0', 'selected', nothing);"
+          tal:attributes="selected python:test(not value or value == '0', 'selected', nothing);"
           tal:content="here/label_false"
           i18n:translate="" />
 </select>
