@@ -1,14 +1,16 @@
-##Script Python "CPSDocumentLayouts"
-##parameters=
 #$Id$
 
 """
-List of layouts to be registered
+Here are defined the list of layouts to be registred
+Please, follow the same pattern to add new layouts
 """
 
-layouts = {
-        'faq': {
-            'widgets': {
+#########################################################
+# FAQ LAYOUT
+#########################################################
+
+faq_layout = {
+               'widgets': {
                 'title': {
                     'type': 'String Widget',
                     'data': {
@@ -74,8 +76,12 @@ layouts = {
                     ],
                    ],
                 },
-            },
-        'dummy_form': {
+               }
+#########################################################
+# DUMMY FORM LAYOUT
+#########################################################
+
+dummy_form_layout = {
             'widgets': {
                 'title': {
                     'type': 'String Widget',
@@ -112,8 +118,13 @@ layouts = {
                     ],
                    ],
                 },
-            },
-        'news': {
+            }
+
+#########################################################
+# NEWS LAYOUT
+#########################################################
+
+news_layout = {
             'widgets': {
                 'newsdate': {
                     'type': 'Date Widget',
@@ -218,5 +229,18 @@ layouts = {
                     ],
                    ],
                 },
-            },
-        }
+            }
+
+###########################################################
+# END OF LAYOUTS DEFINITIONS
+###########################################################
+
+layouts = {}
+
+#
+# Building the dictionnary of layouts for the installer
+#
+
+layouts['faq'] = faq_layout
+layouts['dummy_form'] = dummy_form_layout
+layouts['news'] = news_layout
