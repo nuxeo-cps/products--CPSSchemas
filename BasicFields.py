@@ -683,6 +683,38 @@ class CPSRangeListField(CPSListField):
 
 InitializeClass(CPSRangeListField)
 
+class CPSCoupleField(CPSListField):
+    """CPS Couple Field
+
+    Holds two integer values within a list
+    The values of a couple are ordered
+    """
+
+    meta_type = "CPS Couple Field"
+
+    validation_error_message = "Not a couple : "
+
+    def _getValidationErrorMessage(self, value):
+        return self.validation_error_message + repr(value)
+
+    # XXX not called yet but should be done...
+    def validate(self, value):
+        """Validate the value
+
+        Has to be a list of 2 integer values within a list
+        """
+
+        if (isinstance(value, ListType) and
+            len(value) == 2):
+            return value
+
+        # Default case
+        elif (isinstance(value, ListType) and
+              len(value) == 0):
+            return value
+
+        raise ValidationError(self._getValidationErrorMessage(value))
+
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
@@ -698,3 +730,4 @@ FieldRegistry.register(CPSDiskFileField)
 FieldRegistry.register(CPSSubObjectsField)
 FieldRegistry.register(CPSImageField)
 FieldRegistry.register(CPSRangeListField)
+FieldRegistry.register(CPSCoupleField)
