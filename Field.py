@@ -60,20 +60,7 @@ class Field(SimpleItemWithProperties):
 
     def __init__(self, id, **kw):
         self.id = id
-        if kw.has_key('default'):
-            self.default = kw['default']
-        if kw.has_key('is_indexed'):
-            self.is_indexed = kw['is_indexed']
-        #if kw.has_key('is_subschema'):
-        #    self.is_subschema = kw['is_subschema']
-        #if kw.has_key('is_multi_valued'):
-        #    self.is_multi_valued = kw['is_multi_valued']
-        #if kw.has_key('vocabulary'):
-        #    self.vocabulary = kw['vocabulary']
-        #if kw.has_key('read_permission'):
-        #    self.read_permission = kw['read_permission']
-        #if kw.has_key('write_permission'):
-        #    self.write_permission = kw['write_permission']
+        self.manage_changeProperties(**kw)
 
     security.declarePrivate('getDefault')
     def getDefault(self):
