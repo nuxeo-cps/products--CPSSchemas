@@ -51,6 +51,13 @@ class FolderWithPrefixedIds(Folder):
         self._setObject(id, ob)
         return self._getOb(id)
 
+    security.declarePrivate('delSubObject')
+    def delSubObject(self, id):
+        """Delete a subobject, with a correctly prefixed id."""
+        if not id.startswith(self.prefix):
+            id = self.prefix + id
+        self._delObject(id)
+
     security.declarePublic('getIdUnprefixed')
     def getIdUnprefixed(self, id):
         """ """
