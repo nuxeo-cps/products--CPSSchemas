@@ -5,7 +5,7 @@ from zLOG import LOG, DEBUG
 
 log_key = 'getExternalEditorPath'
 
-LOG(log_key, DEBUG, "fileName = %s, widgetId = %s" % (fileName, widgetId))
+LOG(log_key, DEBUG, "proxy=%s, fileName = %s, widgetId = %s" % (proxy, fileName, widgetId))
 
 portal = context.portal_url.getPortalObject()
 portalAbsoluteUrl = portal.absolute_url()
