@@ -8,10 +8,11 @@ New features:
 - TextWidget has size_max property
 - new 'help' attribute for widgets to store information related to filling the
   widgets. This information can be displayed in UI as tooltips.
-
 Bug fixes:
 ~~~~~~~~~~
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- renaming properties that ending with '_str' and using '_c' for computed attribute
+  _expression_str -> _expr, _expression -> _expr_c
+  whatever_str -> whatever, whatever -> whatever_c

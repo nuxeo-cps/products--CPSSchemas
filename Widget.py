@@ -98,7 +98,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Hidden if readonly in layout modes'},
         {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
          'label': 'Hidden if empty'},
-        {'id': 'hidden_if_expression_str', 'type': 'text', 'mode': 'w',
+        {'id': 'hidden_if_expr', 'type': 'text', 'mode': 'w',
          'label': 'Hide the widget if the given TAL expression returns true'},
         #
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
@@ -117,17 +117,17 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     hidden_layout_modes = []
     hidden_readonly_layout_modes = []
     hidden_empty = 0
-    hidden_if_expression_str = ''
+    hidden_if_expr = ''
 
     widget_type = '' # Not a property by default
     field_types = []
     field_inits = [] # default settings for fields created in flexible mode
                      # using the same order as in field_types
 
-    hidden_if_expression = None
+    hidden_if_expr_c = None
 
     _properties_post_process_tales = (
-        ('hidden_if_expression_str', 'hidden_if_expression'),
+        ('hidden_if_expr', 'hidden_if_expr_c'),
         )
 
     def __init__(self, id, widget_type, **kw):
@@ -203,10 +203,10 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         """Get the mode for this widget."""
         if layout_mode in self.hidden_layout_modes:
             return 'hidden'
-        if self.hidden_if_expression:
+        if self.hidden_if_expr_c:
             # Creating the context for evaluating the TAL expression
             expr_context = self._createHiddenExpressionContext(datamodel)
-            if self.hidden_if_expression(expr_context):
+            if self.hidden_if_expr_c(expr_context):
                 return 'hidden'
         readonly = None
         if layout_mode in self.hidden_readonly_layout_modes:

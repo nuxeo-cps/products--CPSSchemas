@@ -146,19 +146,19 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Title msgid'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
          'label':'Description'},
-        {'id': 'acl_write_roles_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_write_roles', 'type': 'string', 'mode': 'w',
          'label':'ACL: write roles'},
         )
 
     title = ''
     title_msgid = ''
     description = ''
-    acl_write_roles_str = 'Manager'
+    acl_write_roles = 'Manager'
 
-    acl_write_roles = ['Manager']
+    acl_write_roles_c = ['Manager']
 
     _properties_post_process_split = (
-        ('acl_write_roles_str', 'acl_write_roles', ',; '),
+        ('acl_write_roles', 'acl_write_roles_c', ',; '),
         )
 
     def __init__(self, id, title='', dict={}, list=[], **kw):

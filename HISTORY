@@ -73,7 +73,7 @@ New features:
   Title() and setTitle()
 - Fields can now be computed/processed on read and write.
 - Don't initialize fields with the widget name by default.
-- Widgets now have a hidden_if_expression_str property to hide the widget if
+- Widgets now have a hidden_if_expr property to hide the widget if
   the given TAL expression returns true.
 - Compound widget have customisable prepare_validate method
 - Added fields.txt documentation in doc.

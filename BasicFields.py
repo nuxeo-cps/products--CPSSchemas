@@ -52,8 +52,8 @@ class CPSIntField(CPSField):
     """Integer field."""
     meta_type = "CPS Int Field"
 
-    default_expression_str = 'python:0'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'python:0'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if isinstance(value, IntType):
@@ -67,8 +67,8 @@ class CPSLongField(CPSField):
     """Long field."""
     meta_type = "CPS Long Field"
 
-    default_expression_str = 'python:0L'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'python:0L'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if isinstance(value, LongType):
@@ -82,8 +82,8 @@ class CPSFloatField(CPSField):
     """Float field."""
     meta_type = "CPS Float Field"
 
-    default_expression_str = 'python:0.0'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'python:0.0'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if isinstance(value, FloatType):
@@ -97,8 +97,8 @@ class CPSStringField(CPSField):
     """String field."""
     meta_type = "CPS String Field"
 
-    default_expression_str = 'string:'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'string:'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if isinstance(value, StringType):
@@ -111,8 +111,8 @@ class CPSPasswordField(CPSField):
     """Password field."""
     meta_type = "CPS Password Field"
 
-    default_expression_str = 'string:'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'string:'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if isinstance(value, StringType):
@@ -126,8 +126,8 @@ class CPSStringListField(CPSField):
     """String List field."""
     meta_type = "CPS String List Field"
 
-    default_expression_str = 'python:[]'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'python:[]'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if isinstance(value, ListType):
@@ -148,8 +148,8 @@ class CPSDateTimeField(CPSField):
     """DateTime field."""
     meta_type = "CPS DateTime Field"
 
-    default_expression_str = 'nothing'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'nothing'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if not value:
@@ -165,8 +165,8 @@ class CPSFileField(CPSField):
     """File field."""
     meta_type = "CPS File Field"
 
-    default_expression_str = 'nothing'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'nothing'
+    default_expr_c = Expression(default_expr)
 
     _properties = CPSField._properties + (
         {'id': 'suffix_text', 'type': 'string', 'mode': 'w',
@@ -224,8 +224,8 @@ class CPSImageField(CPSField):
     """Image field."""
     meta_type = "CPS Image Field"
 
-    default_expression_str = 'nothing'
-    default_expression = Expression(default_expression_str)
+    default_expr = 'nothing'
+    default_expr_c = Expression(default_expr)
 
     def validate(self, value):
         if not value:

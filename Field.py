@@ -78,21 +78,21 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     _properties = (
         {'id': 'getFieldIdProperty', 'type': 'string', 'mode': '',
          'label': "Id"},
-        {'id': 'default_expression_str', 'type': 'string', 'mode': 'w',
+        {'id': 'default_expr', 'type': 'string', 'mode': 'w',
          'label': "Default value expression"},
         {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
          'label': "Indexed in SearchableText"},
-        {'id': 'acl_read_permissions_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_read_permissions', 'type': 'string', 'mode': 'w',
          'label': "ACL: read permissions"},
-        {'id': 'acl_read_roles_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_read_roles', 'type': 'string', 'mode': 'w',
          'label': "ACL: read roles"},
-        {'id': 'acl_read_expression_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_read_expr', 'type': 'string', 'mode': 'w',
          'label': "ACL: read expression"},
-        {'id': 'acl_write_permissions_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_write_permissions', 'type': 'string', 'mode': 'w',
          'label': "ACL: write permission"},
-        {'id': 'acl_write_roles_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_write_roles', 'type': 'string', 'mode': 'w',
          'label': "ACL: write roles"},
-        {'id': 'acl_write_expression_str', 'type': 'string', 'mode': 'w',
+        {'id': 'acl_write_expr', 'type': 'string', 'mode': 'w',
          'label': "ACL: write expression"},
         #{'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
         # 'label': 'Is Subschema'},
@@ -102,56 +102,56 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         # 'label': 'Vocabulary'},
         {'id': 'read_ignore_storage', 'type': 'boolean', 'mode': 'w',
          'label': "Read: ignore storage"},
-        {'id': 'read_process_expression_str', 'type': 'string', 'mode': 'w',
+        {'id': 'read_process_expr', 'type': 'string', 'mode': 'w',
          'label': "Read: expression"},
         {'id': 'read_process_dependent_fields', 'type': 'tokens', 'mode': 'w',
          'label': "Read: expression dependent fields"},
         {'id': 'write_ignore_storage', 'type': 'boolean', 'mode': 'w',
          'label': "Write: ignore storage"},
-        {'id': 'write_process_expression_str', 'type': 'string', 'mode': 'w',
+        {'id': 'write_process_expr', 'type': 'string', 'mode': 'w',
          'label': "Write: expression"},
         )
 
-    default_expression_str = 'string:'
+    default_expr = 'string:'
     is_indexed = 0
-    acl_read_permissions_str = ''
-    acl_read_roles_str = ''
-    acl_read_expression_str = ''
-    acl_write_permissions_str = ''
-    acl_write_roles_str = ''
-    acl_write_expression_str = ''
+    acl_read_permissions = ''
+    acl_read_roles = ''
+    acl_read_expr = ''
+    acl_write_permissions = ''
+    acl_write_roles = ''
+    acl_write_expr = ''
     #is_subschema = 0
     #is_multi_valued = 0
     #vocabulary = None
     read_ignore_storage = 0
-    read_process_expression_str = ''
+    read_process_expr = ''
     read_process_dependent_fields = []
     write_ignore_storage = 0
-    write_process_expression_str = ''
+    write_process_expr = ''
 
-    default_expression = Expression(default_expression_str)
-    acl_read_permissions = []
-    acl_read_roles = []
-    acl_read_expression = None
-    acl_write_permissions = []
-    acl_write_roles = []
-    acl_write_expression = None
-    read_process_expression = None
-    write_process_expression = None
+    default_expr_c = Expression(default_expr)
+    acl_read_permissions_c = []
+    acl_read_roles_c = []
+    acl_read_expr_c = None
+    acl_write_permissions_c = []
+    acl_write_roles_c = []
+    acl_write_expr_c = None
+    read_process_expr_c = None
+    write_process_expr_c = None
 
     _properties_post_process_split = (
-        ('acl_read_permissions_str', 'acl_read_permissions', ',;'),
-        ('acl_read_roles_str', 'acl_read_roles', ',; '),
-        ('acl_write_permissions_str', 'acl_write_permissions', ',;'),
-        ('acl_write_roles_str', 'acl_write_roles', ',; '),
+        ('acl_read_permissions', 'acl_read_permissions_c', ',;'),
+        ('acl_read_roles', 'acl_read_roles_c', ',; '),
+        ('acl_write_permissions', 'acl_write_permissions_c', ',;'),
+        ('acl_write_roles', 'acl_write_roles_c', ',; '),
         )
 
     _properties_post_process_tales = (
-        ('default_expression_str', 'default_expression'),
-        ('acl_read_expression_str', 'acl_read_expression'),
-        ('acl_write_expression_str', 'acl_write_expression'),
-        ('read_process_expression_str', 'read_process_expression'),
-        ('write_process_expression_str', 'write_process_expression'),
+        ('default_expr', 'default_expr_c'),
+        ('acl_read_expr', 'acl_read_expr_c'),
+        ('acl_write_expr', 'acl_write_expr_c'),
+        ('read_process_expr', 'read_process_expr_c'),
+        ('write_process_expr', 'write_process_expr_c'),
         )
 
     def __init__(self, id, **kw):
@@ -161,10 +161,10 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declarePrivate('getDefault')
     def getDefault(self):
         """Get the default value for this field."""
-        if not self.default_expression:
+        if not self.default_expr_c:
             return None
         expr_context = self._createDefaultExpressionContext()
-        return self.default_expression(expr_context)
+        return self.default_expr_c(expr_context)
 
     def _createDefaultExpressionContext(self):
         """Create an expression context for default value evaluation."""
@@ -255,18 +255,18 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declarePrivate('processValueAfterRead')
     def processValueAfterRead(self, value, data):
         """Process value after read from storage."""
-        if not self.read_process_expression:
+        if not self.read_process_expr_c:
             return value
         expr_context = self._createStorageExpressionContext(value, data)
-        return self.read_process_expression(expr_context)
+        return self.read_process_expr_c(expr_context)
 
     security.declarePrivate('processValueBeforeWrite')
     def processValueBeforeWrite(self, value, data):
         """Process value before write to storage."""
-        if not self.write_process_expression:
+        if not self.write_process_expr_c:
             return value
         expr_context = self._createStorageExpressionContext(value, data)
-        return self.write_process_expression(expr_context)
+        return self.write_process_expr_c(expr_context)
 
     #
     # ACLs
@@ -290,7 +290,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         return getEngine().getContext(mapping)
 
     def _checkAccess(self, datamodel, context,
-                     acl_permissions, acl_roles, acl_expression,
+                     acl_permissions, acl_roles, acl_expr_c,
                      exception,
                      StringType=type('')):
         """Check that field can be accesed.
@@ -324,9 +324,9 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
                     break
             if not ok:
                 raise exception(self.getFieldId(), 'roles')
-        if acl_expression:
+        if acl_expr_c:
             expr_context = self._createAclExpressionContext(datamodel)
-            if not acl_expression(expr_context):
+            if not acl_expr_c(expr_context):
                 raise exception(self.getFieldId(), 'expression')
 
     def checkReadAccess(self, datamodel, context):
@@ -337,8 +337,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         The datamodel is used to cache often used things.
         """
         self._checkAccess(datamodel, context,
-                          self.acl_read_permissions, self.acl_read_roles,
-                          self.acl_read_expression, ReadAccessError)
+                          self.acl_read_permissions_c, self.acl_read_roles,
+                          self.acl_read_expr_c, ReadAccessError)
 
     def checkWriteAccess(self, datamodel, context):
         """Check that field can be written.
@@ -347,7 +347,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         """
         self._checkAccess(datamodel, context,
                           self.acl_write_permissions, self.acl_write_roles,
-                          self.acl_write_expression, WriteAccessError)
+                          self.acl_write_expr_c, WriteAccessError)
 
     #
     # Validation
