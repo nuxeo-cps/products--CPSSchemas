@@ -274,8 +274,11 @@ class DataModel(UserDict):
             lang = ob.Language()
         else:
             lang = None
+        if not lang:
+            # If object is unitialized, Language comes from the datamodel.
+            lang = self.get('Language')
         ob = proxy.getEditableContent(lang=lang)
-        if ob is not old_ob:
+        if ob is not None and ob is not old_ob:
             self._setObject(ob, proxy=proxy)
 
     def _setObject(self, ob, proxy=None):

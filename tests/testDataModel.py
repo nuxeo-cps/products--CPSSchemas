@@ -39,15 +39,26 @@ fakePortal.portal_url = fakeUrlTool
 
 class FakeDocument:
     f1 = 'f1class'
+    def Language(self):
+        return ''
+
+class FakeProxy:
+    def __init__(self, default='en', **kw):
+        self.docs = kw
+        self.default = default
+    def getEditableContent(self, lang=None):
+        if not lang: # includes '' and None
+            lang = self.default
+        return self.docs.get(lang)
 
 
-# XXX: All these tests must be repared.
 class TestDataModel(unittest.TestCase):
 
     def setUp(self):
         unittest.TestCase.setUp(self)
 
-        doc = FakeDocument()
+    def makeOne(self, with_language=False):
+        doc = self.doc = FakeDocument()
         doc.f2 = 'f2inst'
         # Acquisition is needed for expression context computation during fetch
         schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
@@ -60,13 +71,14 @@ class TestDataModel(unittest.TestCase):
                         read_process_expr='python: f2+"_yo"',
                         read_process_dependent_fields='f2',
                         )
+        if with_language:
+            schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
         dm = DataModel(doc, (adapter,))
-        self.doc = doc
-        self.dm = dm
+        return dm
 
     def testAPI(self):
-        dm = self.dm
+        dm = self.makeOne()
         dm._fetch()
         dm['f4'] = 'f4changed'
         ok = {'f1': 'f1class',
@@ -85,7 +97,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.getProxy(), None)
 
     def testCreation(self):
-        dm = self.dm
+        dm = self.makeOne()
         dm._setObject(None) # What we have for creation
         dm._fetch()
         ok = {'f1': '',
@@ -104,7 +116,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.getProxy(), None)
 
     def testCommitDirty(self):
-        dm = self.dm
+        dm = self.makeOne()
         doc = self.doc
         dm._fetch()
         dm['f2'] = 'f2changed'
@@ -136,7 +148,35 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.isDirty('f4'), False)
         self.assertEquals(dm.isDirty('f5'), False)
 
-    def testFieldProcessing(self):
+    def test_commit_with_proxy(self):
+        # Test that editable content is correctly retrieved.
+        # Modern object creation in FlexibleTypeInformation > 1.120
+        # set the proxy in the datamodel before commit.
+        # In this case an editable version can be retrieved.
+        dm = self.makeOne()
+        doc = self.doc
+        dm._setObject(doc, proxy=FakeProxy(en=doc))
+        dm._fetch()
+        dm['f2'] = 'batman'
+        dm._commit(check_perms=0)
+
+    def test_commit_with_language(self):
+        # Test that commit's editable content gets the correct language.
+        # On first commit, language comes from the datamodel itself.
+        #
+        # Simulate committing a 'fr' datamodel on a new proxy that
+        # holds two languages, 'en' being the default.
+        dm = self.makeOne(with_language=True)
+        doc = self.doc
+        doc_en = FakeDocument()
+        proxy = FakeProxy(fr=doc, en=doc_en, default='en')
+        dm._setObject(doc, proxy=proxy)
+        dm._fetch()
+        dm['Language'] = 'fr'
+        dm._commit(check_perms=0)
+        self.assertEquals(dm.getObject(), doc)
+
+    def TODO_testFieldProcessing(self):
         pass
 
 
