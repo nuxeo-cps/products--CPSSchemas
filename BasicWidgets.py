@@ -946,8 +946,7 @@ class CPSFileWidget(CPSWidget):
             current_name = '-'
         mimetype = None
         registry = getToolByName(self, 'mimetypes_registry')
-        if registry:
-            mimetype = registry.lookupExtension(current_name)
+        mimetype = registry.lookupExtension(current_name)
         return meth(mode=mode, datastructure=datastructure,
                     current_name=current_name, mimetype=mimetype)
 
@@ -1019,11 +1018,16 @@ class CPSImageWidget(CPSWidget):
                 else:
                     file.seek(0)
                     fileid, filetitle = cookId('', '', file)
-
-                    file = Image(fileid, filetitle, file)
-                    LOG('CPSImageWidget', DEBUG,
-                        'validate change set %s' % `file`)
-                    datamodel[field_id] = file
+                    registry = getToolByName(self, 'mimetypes_registry')
+                    mimetype = registry.lookupExtension(filetitle)
+                    if (not mimetype or
+                        not mimetype.normalized().startswith('image')):
+                        err = 'cpsschemas_err_image'
+                    else:
+                        file = Image(fileid, filetitle, file)
+                        LOG('CPSImageWidget', DEBUG,
+                            'validate change set %s' % `file`)
+                        datamodel[field_id] = file
 
         if err:
             datastructure.setError(widget_id, err)
