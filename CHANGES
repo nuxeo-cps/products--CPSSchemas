@@ -3,6 +3,7 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
+- rewrite Link widget into Compound widget
 - new MetaData storage adaptater a metadata use getter/setter method like
   Title() and setTitle()
 - Fields can now be computed/processed on read and write.
