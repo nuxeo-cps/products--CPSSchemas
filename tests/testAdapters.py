@@ -10,7 +10,7 @@ from Products.CPSSchemas.Schema import CPSSchema
 from testdata import metadata_schema
 
 class FakeDocument:
-    pass
+    Description = 'fakedescription'
 
 class TestStorageAdapter(CPSSchemasTestCase.CPSSchemasTestCase):
     def afterSetUp(self):
@@ -49,8 +49,17 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
             'ModificationDate': None, 'ExpirationDate': None, 'Format': '',
             'Contributors': [], 'EffectiveDate': None, 'Rights': '', 
             'Language': '', 'Description': '', 'Title': ''}
-        self.assertEquals(self.adapter.getDefaultData(), default_data)
-        self.assertEquals(self.adapter.getData(), default_data)
+        data = self.adapter.getDefaultData()
+        self.adapter.finalizeDefaults(data)
+        self.assertEquals(data, default_data)
+
+        ok_data = {'Subject': [], 'Creator': '', 'CreationDate': None,
+            'ModificationDate': None, 'ExpirationDate': None, 'Format': '',
+            'Contributors': [], 'EffectiveDate': None, 'Rights': '', 
+            'Language': '', 'Description': 'fakedescription', 'Title': ''}
+        data = self.adapter.getData()
+        self.adapter.finalizeDefaults(data)
+        self.assertEquals(data, ok_data)
 
     def testMutators(self):
         data = {}

@@ -52,6 +52,12 @@ from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 
 from Products.CPSSchemas.Field import ReadAccessError
 
+class DefaultValue:
+    def __str__(self):
+        return "<DefaultValue for field>"
+
+DEFAULT_VALUE_MARKER = DefaultValue()
+
 
 class ValidationError(Exception):
     """Validation error during field storage."""
@@ -82,6 +88,11 @@ class DataModel(UserDict):
         self._ob = ob
         self._adapters = adapters
         self._proxy = proxy
+
+        # This structure is a dictionary of field ids associated with a boolean that
+        # tells wether the given field is dirty (has been modified) or not.
+        self.dirty_fields_map = {}
+
         if context is None:
             if proxy is not None:
                 context = proxy
@@ -158,8 +169,10 @@ class DataModel(UserDict):
         return self.data.pop(key)
 
     def __setitem__(self, key, item):
+        LOG("DataModel", DEBUG, "__setitem__ key/item = %s / %s" % (key, item))
         self.checkWriteAccess(key)
         self.data[key] = item
+        self.dirty_fields_map[key] = 1
 
     # Expose setter as method for restricted code.
     def set(self, key, item):
@@ -199,8 +212,15 @@ class DataModel(UserDict):
     #
     def _fetch(self):
         """Fetch the data into local dict for user access."""
+        data = self.data
+        fields = self._fields
         for adapter in self._adapters:
-            self.data.update(adapter.getData())
+            data.update(adapter.getData())
+        for field_id, value in data.items():
+            if value is DEFAULT_VALUE_MARKER:
+                field = fields[field_id]
+                data[field_id] = field.getDefault()
+                self.dirty_fields_map[field_id] = 1
 
     def _setEditable(self):
         """Set the editable object for this DataModel.
@@ -264,8 +284,10 @@ class DataModel(UserDict):
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
-                field.computeDependantFields(self._schemas, data,
-                                             context=self._context)
+                if self.dirty_fields_map.get(field_id):
+                    LOG("DataModel", DEBUG, "COMPUTING field = %s..." % (field_id,))
+                    field.computeDependantFields(self._schemas, data,
+                                                 context=self._context)
 
         # Call the adapters to store the data.
         for adapter in self._adapters:
@@ -274,6 +296,9 @@ class DataModel(UserDict):
         # XXX temporary until we have a better API for this
         if hasattr(aq_base(ob), 'postCommitHook'):
             ob.postCommitHook(datamodel=self)
+
+        for field_id in self._fields.keys():
+            self.dirty_fields_map[field_id] = 0
 
         return ob
 

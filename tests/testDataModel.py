@@ -5,12 +5,23 @@ import unittest
 from Testing.ZopeTestCase import ZopeLite
 
 from Products.CPSSchemas.DataModel import DataModel, ValidationError
+from Products.CPSSchemas.StorageAdapter import BaseStorageAdapter
+from Products.CPSSchemas.Schema import CPSSchema
+from Products.CPSSchemas.BasicFields import CPSStringField
 #from Products.CPSSchemas.Schema import Schema
 #from Products.CPSSchemas.Fields.TextField import TextField
 #from Products.CPSSchemas.Fields.SelectionField import SelectionField
 
 class FakeDocument:
-    pass
+    f1 = CPSStringField('f1')
+    f2 = CPSStringField('f2')
+    f3 = CPSStringField('f3')
+    _fields = {'f1': f1, 'f2': f2, 'f3': f3}
+    schema = CPSSchema('s1', 'Schema1')
+    for field_id, field in _fields.items():
+        schema.addField(field_id, field.meta_type)
+    adapter = BaseStorageAdapter(schema, _fields.keys())
+    
 
 # XXX: All these tests must be repared.
 class TestDataModel(unittest.TestCase):
@@ -35,6 +46,19 @@ class TestDataModel(unittest.TestCase):
 
     def test1(self):
         dm = DataModel(FakeDocument())
+
+    def testDirtyFields(self):
+        """Test the dirty_fields_map attribute of the DataModel"""
+        doc = FakeDocument()
+        dm = DataModel(doc, (doc.adapter,))
+        field_ids = ['f1', 'f2', 'f3']
+        for field_id in field_ids:
+            dm[field_id] = 'XXX'
+        dirty_fields_map = dm.dirty_fields_map
+
+        # Test that after setting values in the datamodel,
+        # each field is marked as dirty.
+        self.failUnless(dirty_fields_map.values() == len(field_ids) * [1])
 
     def _testFieldIds(self):
         fields = self.dm.getFieldIds()

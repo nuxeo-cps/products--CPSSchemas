@@ -39,6 +39,7 @@ from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
+from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
 
 def _isinstance(ob, cls):
     try:
@@ -105,10 +106,15 @@ class BaseStorageAdapter:
         Returns a mapping.
         """
         data = {}
-        for field_id, field in self.getFieldItems():
-            data[field_id] = field.getDefault()
+        for field_id in self.getFieldIds():
+            data[field_id] = DEFAULT_VALUE_MARKER
         return data
 
+    def finalizeDefaults(self, data):
+        for field_id, v in data.items():
+            if v is DEFAULT_VALUE_MARKER:
+                data[field_id] = self._schema[field_id].getDefault()
+        
     #
     # API called by DataModel
     #
@@ -128,7 +134,7 @@ class BaseStorageAdapter:
         data = {}
         for field_id, field in self.getFieldItems():
             if field.read_ignore_storage:
-                value = field.getDefault()
+                value = DEFAULT_VALUE_MARKER
             else:
                 value = self._getFieldData(field_id, field, **kw)
             data[field_id] = value
@@ -191,7 +197,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         ob = self._ob
         if not hasattr(aq_base(ob), field_id):
             # Use default from field.
-            return field.getDefault()
+            return DEFAULT_VALUE_MARKER
         if _isinstance(field, CPSSubObjectsField):
             return field.getFromAttribute(ob, field_id)
         else:
@@ -257,7 +263,7 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         ob = self._ob
         if ob is None:
             # Creation
-            return field.getDefault()
+            return DEFAULT_VALUE_MARKER
         attr = self._field_attributes.get(field_id, field_id)
         if attr is ACCESSOR or attr is ACCESSOR_READ_ONLY:
             return getattr(ob, field_id)()
@@ -265,7 +271,7 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
             return getattr(ob, attr)
         else:
             # Use default from field.
-            return field.getDefault()
+            return DEFAULT_VALUE_MARKER
 
     def _setFieldData(self, field_id, value):
         """Set data for one field.
@@ -303,7 +309,7 @@ class MappingStorageAdapter(BaseStorageAdapter):
 
     def _getFieldData(self, field_id, field):
         """Get data from one field."""
-        return self._ob.get(field_id, field.getDefault())
+        return self._ob.get(field_id, DEFAULT_VALUE_MARKER)
 
     def _setFieldData(self, field_id, value):
         """Set data for one field."""

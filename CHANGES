@@ -1,9 +1,18 @@
 Requires:
 ~~~~~~~~~
--
+- Code calling getDefaultData() on the adapter should now also call a new
+  method afterward
+  data = adapter.getDefaultData()
+  adapter.finalizeDefaults(data)
+ 
 New features:
 ~~~~~~~~~~~~~
--
+- Optimization: added a dirty_fields_map attribute to the DataModel to keep
+  track of which field should be committed to the storage adapter. At the moment
+  this optimization has the effect of computing dependent fields only when
+  necessary and thus avoid unneeded plain text generation (for indexation) and
+  html preview.
+
 Bug fixes:
 ~~~~~~~~~~
 - Optimized the validate() method of the CPSAttachedFileWidget
