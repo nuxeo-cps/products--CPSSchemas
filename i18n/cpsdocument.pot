@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-04 15:28default\n"
+"POT-Creation-Date: 2003-09-04 17:58default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
-#.   <h1>Edit ${title}</h1>
+#.   <h1>Edit ${title (tal content="here/title_or_id")}</h1>
 #: from ../skins/cps_document/cpsdocument_edit_form.pt
 msgid "Edit ${title}"
 msgstr ""
@@ -65,6 +65,13 @@ msgstr ""
 msgid "err"
 msgstr ""
 
+#.   <span condition="widget/is_i18n" content="widget/title">label</span>
+#.   <span condition="widget/is_i18n" content="widget/title_view">label</span>
+#: from ../skins/cps_document/layout_default_edit.pt
+#: ../skins/cps_document/layout_default_view.pt
+msgid "label"
+msgstr ""
+
 # default doc types
 msgid "portal_type_FAQ_title"
 msgstr ""
@@ -95,4 +102,32 @@ msgid "cpsdoc_err_file"
 msgstr ""
 
 msgid "cpsdoc_err_image"
+msgstr ""
+
+# News demo
+msgid "cpsdoc_News_newsdate_title"
+msgstr ""
+
+msgid "cpsdoc_News_newsdate_title_view"
+msgstr ""
+
+msgid "cpsdoc_News_title_title"
+msgstr ""
+
+msgid "cpsdoc_News_description_title"
+msgstr ""
+
+msgid "cpsdoc_News_longTitle_title"
+msgstr ""
+
+msgid "cpsdoc_News_content_title"
+msgstr ""
+
+msgid "cpsdoc_News_photo_title"
+msgstr ""
+
+msgid "cpsdoc_News_photo_title_view"
+msgstr ""
+
+msgid "cpsdoc_News_preview_title"
 msgstr ""
