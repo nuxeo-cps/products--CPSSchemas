@@ -26,3 +26,4 @@ New internal features:
   when one is modified. Will be used for file preview/indexing for instance
 - All fields can have allow_none now.
 - Renamed portal_widgets to portal_widget_types.
+- Don't pass both datastructure and datamodel around.
