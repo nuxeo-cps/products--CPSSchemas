@@ -18,12 +18,23 @@ class AttributeStorageAdapter(BasicStorageAdapter):
         setattr(self._document, fsid, data)
 
     def get(self, field_id):
+        field = self._fields[field_id]
         fsid = self._namespace + self.getFieldStorageId(field_id)
-        return getattr(self._document, fsid, None)
+        if self._document is None:
+            if field.isRequired():
+                return field.getDefaultValue()
+            else:
+                return None
+        data = getattr(self._document, fsid, None)
+        if data is None:
+            if field.isRequired():
+                return field.getDefaultValue()
+        return data
 
     def delete(self, field_id):
         fsid = self._namespace + self.getFieldStorageId(field_id)
-        delattr(self._document, fsid)
+        if hasattr(self._document, fsid):
+            delattr(self._document, fsid)
 
 
 class AttributeStorageAdapterFactory:

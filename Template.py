@@ -116,19 +116,3 @@ class Template:
                 return schema
         raise KeyError('No field named %s found' % str(fieldid))
 
-    def setData(self, document, fieldid, data):
-        schema = self.getSchemaForFieldId(fieldid)
-        return schema.setData(document, fieldid, data)
-
-    def getData(self, document, fieldid):
-        schema = self.getSchemaForFieldId(fieldid)
-        return schema.getData(document, fieldid)
-
-    def hasData(self, document, fieldid):
-        schema = self.getSchemaForFieldId(fieldid)
-        return schema.hasData(document, fieldid)
-
-    def delData(self, document, fieldid):
-        schema = self.getSchemaForFieldId(fieldid)
-        return schema.delData(document, fieldid)
-

@@ -91,7 +91,7 @@ class BasicField:
         return self._field_widget(self)
 
     def getDefaultValue(self):
-        return self._default
+       return self._default
 
     def setDefaultValue(self, default):
         self._default = self._validate(default) # Make sure the default is an acceptable value.
@@ -111,6 +111,6 @@ class BasicField:
     def setNotRequired(self):
         self._required = 0
 
-    def setIsRequired(self):
+    def isRequired(self):
         return self._required
 

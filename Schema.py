@@ -26,7 +26,7 @@ class Schema(OrderedDictionary):
 
     def makeStorageAdapter(self, document):
         return self._adapter.makeStorageAdapter(document, \
-                                 self.getFieldDictionary, self._namespace)
+                                 self.getFieldDictionary(), self._namespace)
 
     def setNamespace(self, namespace):
         self._namespace = namespace

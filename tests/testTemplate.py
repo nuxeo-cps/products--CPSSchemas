@@ -100,27 +100,6 @@ class TemplateTests(unittest.TestCase):
         fields.sort()
         self.failUnless(fields == ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'])
 
-    def testSetGetData(self):
-        template = Template('template', 'Template')
-        # Create an extra schema to test merging of schemas:
-        template.addSchema(Schema('new', 'New'))
-        # Add a bunch of fields
-        template.getSchema('default')['f1'] = TextField('f1', 'Field1')
-        template.getSchema('default')['f2'] = TextField('f2', 'Field2')
-        template.getSchema('default')['f3'] = SelectionField('f3', 'Field3')
-        template.getSchema('new')['f4'] = TextField('f4', 'Field4')
-        template.getSchema('new')['f5'] = SelectionField('f5', 'Field5')
-        template.getSchema('new')['f6'] = TextField('f6', 'Field6')
-        dm = template.getDataModel()
-        doc = AttributeHolder()
-        for fieldid in dm.getFieldIds():
-            template.setData(doc, fieldid, fieldid + '_data')
-            data = template.getData(doc, fieldid)
-            self.failUnless(data == fieldid + '_data', 'SetData or getData failed')
-            self.failUnless(template.hasData(doc, fieldid), 'hasData failed')
-            template.delData(doc, fieldid)
-            self.failIf(template.hasData(doc, fieldid), 'delData failed')
-
 
     # Tests TODO:
     # Structure verification

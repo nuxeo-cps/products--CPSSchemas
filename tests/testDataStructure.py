@@ -134,6 +134,10 @@ class DataStructureTests(unittest.TestCase):
         m = ds.getModifiedFlags()
         m.sort()
         self.failUnless( m == ['f1', 'f2'])
+        ds['f3'] = 'Value3'
+        self.failUnless( m == ['f1', 'f2'], 'Modified flag set even though new data \
+                                            is equal to old data')
+
 
     def test_42_NoMultipleFlags(self):
         ds = DataStructure( {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'}, \
@@ -157,27 +161,13 @@ class DataStructureTests(unittest.TestCase):
     def test_50_UpdateFromRequest(self):
         """Update from request, with missing values"""
         # Make a 'fake' REQUEST from a dict:
-        ds = DataStructure({ 'f1': 'it was', 'f2': 'a', 'f3': 'Value3'})
+        ds = DataStructure( { 'f1': 'it was', 'f2': 'a', 'f3': 'Value3'})
         rq = { 'field_f1': 'Value1', 'f2': 'Value2', }
         ds.updateFromRequest(rq)
-        print ds.data
         isequal = ds.data['f1'] == 'Value1' and \
                   ds.data['f2'] == 'Value2' and \
                   ds.data['f3'] == 'Value3'
         self.failUnless(isequal, 'Update from REQUEST failed')
-
-    def test_51_UpdateFromRequestWithError(self):
-        """Update from request with invalid values"""
-        # Make a 'fake' REQUEST from a dict:
-        ds = DataStructure()
-        dm = self.makeDatamodel()
-        rq = { 'field_f1': 'Value1', 'f2': 'Value2', 'f3': 'Invalid' }
-        ds.updateFromRequest(dm, rq)
-        isequal = ds.data['f1'] == 'Value1' and \
-                  ds.data['f2'] == 'Value2' and \
-                  ds.data['f3'] == 'Invalid'
-        self.failUnless(isequal, 'Update from REQUEST failed')
-        self.failUnless(ds.getError('f3') != None, 'Failed to set error')
 
 
 def test_suite():

@@ -27,7 +27,6 @@ class AttributeAdapterTests(unittest.TestCase):
         fielddict['f3'] = f3
         self.a = AttributeStorageAdapter(self.h, fielddict)
 
-
     def testSet(self):
         """Set Data"""
         self.a.set('f1', 'value')
@@ -38,6 +37,9 @@ class AttributeAdapterTests(unittest.TestCase):
         self.a.set('f1', 'value')
         self.failUnless(self.a.get('f1') == 'value', 'Get failed')
         self.failUnlessRaises(KeyError, self.a.get, 'nodata')
+
+    def testGetWithDefaults(self):
+        self.failUnless(self.a.get('f3') == 'Value3')
 
     def testDel(self):
         """Delete Data"""
@@ -53,11 +55,30 @@ class AttributeAdapterTests(unittest.TestCase):
         self.failIf(self.a.has_data('f1'), 'HasData failed')
 
     def testReadWriteData(self):
-        self.failUnless(self.a.readData() == {'f1': None, 'f2': None, 'f3': None})
+        self.failUnless(self.a.readData() == {'f1': None, 'f2': None, 'f3': 'Value3'})
         self.a.writeData({'f1': 'Value1', 'f2': 'Value2', 'f3': None})
-        self.failUnless(self.a.readData() == {'f1': 'Value1', 'f2': 'Value2', 'f3': None})
+        self.failUnless(self.a.readData() == {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'})
 
+    def testFieldStorageId(self):
+        self.failUnless(self.a.getFieldStorageId('f1') == 'f1')
 
+    def testPythonBehavior(self):
+        """Make sure it really is the real references that are stored"""
+        h = AttributeHolder()
+        f1 = TextField('f1', 'Field1')
+        f2 = TextField('f2', 'Field2')
+        f3 = SelectionField('f3', 'Field3')
+        f3.setOptions( ['Value1', 'Value2', 'Value3'])
+        f3.setDefaultValue('Value3')
+        fielddict = {}
+        fielddict['f1'] = f1
+        fielddict['f2'] = f2
+        fielddict['f3'] = f3
+        a = AttributeStorageAdapter(h, fielddict)
+        self.failUnless(a._fields['f1'] is f1)
+        self.failUnless(a._fields['f3'].getDefaultValue() == 'Value3')
+
+    # TODO: Tests for None document
 
 def test_suite():
     return unittest.makeSuite(AttributeAdapterTests)

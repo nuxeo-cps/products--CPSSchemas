@@ -3,18 +3,8 @@
 
 # Data structures are classes that hold the content of a document while it is
 # being used. It is NOT a storage, it's not persistent at all. It's purpose is:
-# - Acting as a cache (read and write) for data that is not stored in the ZODB
-# - Being one single point of access for data of different schemas and
-#   different storage
-# - Validating data before storage
 # - Keeping track of which fields have changed, so that StorageAdapters only
 #   need to update fields/tables that have been modified.
-#
-# The "caching" of the data is completely explicit. That is that you can change
-# the data of a DataStructure as much as you like, nothing will be written to
-# the storage until the StorageAdapter is called with the DataStructure to store
-# the data.
-#
 #
 # Required vs non-required fields and default data behaviour
 # ==========================================================
@@ -65,7 +55,10 @@ class DataStructure(UserDict):
     while the error dictionary is exposed through a set of methods.
     Bugs/features:
     - comparisons will not take errors into account
-    - __setitem__ only updates the data, the errors will stay unchanged"""
+    - __setitem__ only updates the data, the errors will stay unchanged,
+      no validation will occur. We COULD change this so validation occurs
+      with setitem, and to set without validation you operate directly on
+      DataStructure.data. It's mostly a matter of tatse, and I can't decide. :)"""
 
     def __init__(self, data={}, errors={}):
         self.data = {}
@@ -84,8 +77,9 @@ class DataStructure(UserDict):
         self.errors.clear()
 
     def __setitem__(self, key, item):
-        self.data[key] = item
-        self.setModifiedFlag(key)
+        if item != self.data[key]: # Only change if it actually is different
+            self.data[key] = item
+            self.setModifiedFlag(key)
 
     def __delitem__(self, key):
         del self.data[key]
@@ -128,11 +122,9 @@ class DataStructure(UserDict):
         """
         for fieldid in self.keys():
             if REQUEST.has_key('field_'+fieldid): # The field_ syntax is used by formulator etc.
-                data = REQUEST['field_'+fieldid]
-            else:
-                data = REQUEST.get(fieldid) # Will return None if it doesn't exist
-            if data != self[fieldid]: # Only change if it actually is different
-                self[fieldid] = data
+                self[fieldid] = REQUEST['field_'+fieldid]
+            elif REQUEST.has_key(fieldid):
+                self[fieldid] = REQUEST[fieldid] # Will return None if it doesn't exist
 
     # Expose the errors dictionary.
     def getError(self, key):
@@ -154,16 +146,6 @@ class DataStructure(UserDict):
 
     def getErrors(self):
         return errors # TODO: Should it return the original or a copy?
-
-    # Other methods
-    def makeDefault(self, datamodel):
-        """Creates a DataStructure with the defaults from the data model"""
-        self.clear(clear_modified_flags=1)
-        for fieldid in datamodel.keys():
-            data = datamodel[fieldid].getDefaultValue()
-            if data is not None:
-                self[fieldid] = data
-
 
     def setModifiedFlag(self, key):
         if key not in self.modified_fields:

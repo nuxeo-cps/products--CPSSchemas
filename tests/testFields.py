@@ -24,8 +24,17 @@ class FieldTests(unittest.TestCase):
         field.setNotRequired()
         self.failUnless(field.validate(None) == None)
 
+    def testDefaultValues(self):
+        field = BasicField('the_id', 'the_title')
+        self.failUnlessRaises(ValueError, field.validate, None)
+        field.setNotRequired()
+        self.failUnless(field.validate(None) is None)
+        field.setDefaultValue('The Default Value')
+        self.failUnless(field.getDefaultValue() == 'The Default Value')
+        field.setRequired()
+        self.failUnless(field.validate(None) == 'The Default Value')
 
-    # test default value handling
+    # test required set/is
 
 def test_suite():
     return unittest.makeSuite(FieldTests)

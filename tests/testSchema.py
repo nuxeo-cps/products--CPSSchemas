@@ -24,6 +24,11 @@ class SchemaTests(unittest.TestCase):
         schema.setStorageAdapterFactory(adapter)
         self.failUnless(schema.getStorageAdapterFactory() == adapter, 'Set or get adapter failed')
 
+    #def testgetAllData(def):
+    #   """Tests data retrieval"""
+    #def testgetAllData(def):
+    #   """Tests data retrieval"""
+
 def test_suite():
     return unittest.makeSuite(SchemaTests)
 

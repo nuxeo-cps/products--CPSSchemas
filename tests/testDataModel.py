@@ -13,20 +13,20 @@ class FakeDocument:
 class DataModelTests(unittest.TestCase):
 
     def setUp(self):
-        self.dm = DataModel(FakeDocument())
-        s1 = Schema('s1', 'Schema1')
-        s1['f1'] = TextField('f1', 'Field1')
-        s1['f2'] = TextField('f2', 'Field2')
-        s1['f3'] = SelectionField('f3', 'Field3')
-        s2 = Schema('s2', 'Schema2')
-        s2['f4'] = TextField('f4', 'Field4')
+        self.s1 = Schema('s1', 'Schema1')
+        self.s1['f1'] = TextField('f1', 'Field1')
+        f2 = TextField('f2', 'Field2')
+        f2.setDefaultValue('Value2')
+        self.s1['f2'] = f2
+        self.s1['f3'] = SelectionField('f3', 'Field3')
+        self.s2 = Schema('s2', 'Schema2')
+        self.s2['f4'] = TextField('f4', 'Field4')
         f5 = SelectionField('f5', 'Field5')
         f5.setOptions(('Value1', 'Value5', 'Value3'))
         f5.setNotRequired()
-        s2['f5'] = f5
-        s2['f6'] = TextField('f6', 'Field6')
-        self.dm.addSchema(s1)
-        self.dm.addSchema(s2)
+        self.s2['f5'] = f5
+        self.s2['f6'] = TextField('f6', 'Field6')
+        self.dm = DataModel((self.s1, self.s2), None)
 
     def testFieldIds(self):
         fields = self.dm.getFieldIds()
@@ -51,6 +51,34 @@ class DataModelTests(unittest.TestCase):
         field = self.dm.getField('f2')
         self.failUnless(isinstance(field, TextField))
         field = self.dm.getField('f2')
+
+    #def testGetAdapters(self):
+
+    def testAccessData(self):
+#        self.failUnless(self.dm['f1'] == 'Value1')
+        self.failUnless(self.dm['f2'] == 'Value2', 'Default value not used when use with no document')
+
+    def testInitwithDoc(self):
+        doc = FakeDocument()
+        doc.f1 = 'Value1'
+        doc.f5 = 'Value5'
+        dm = DataModel((self.s1, self.s2), doc)
+        self.failUnless(dm['f1'] == 'Value1')
+        self.failUnless(dm['f2'] == 'Value2', 'Default value not used when loading from document')
+        self.failUnless(dm['f5'] == 'Value5')
+
+    def testSetInvalidData(self):
+        # Can't use failUnlessRaises with subscription, so I have to use the
+        # uglier method of catching the exeption myself.
+        try:
+            self.dm['f5'] = 'invalid'
+        except Exception, x:
+            self.failUnless(isinstance(x, ValueError))
+        self.failUnlessRaises(ValueError, self.dm.update, {'f5': 'invalid'})
+
+    #def testCreateDoc(self):
+    #    dm[f1] = 'Value1'
+    # Saving with invalid data should fail.
 
 def test_suite():
     return unittest.makeSuite(DataModelTests)
