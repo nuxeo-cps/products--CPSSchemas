@@ -29,20 +29,15 @@ from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
 from AccessControl import Unauthorized
 from Persistence import Persistent
-from Interface import Interface
 
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
+from IVocabulary import IVocabulary
+
 builtins_list = list
-
-
-class IVocabulary(Interface):
-    """Interface for Vocabulary."""
-    # XXX TODO
-    pass
 
 
 class Vocabulary(Persistent):
@@ -123,6 +118,10 @@ class Vocabulary(Persistent):
         """Get the ordered list of (key, value)."""
         return [(key, self._dict.get(key)) for key in self._list]
 
+    def values(self):
+        """Get the ordered list of values."""
+        return [self._dict.get(key) for key in self._list]
+
     def orderKeys(self, keys):
         """Set the order of keys."""
         raise NotImplementedError
@@ -132,6 +131,8 @@ InitializeClass(Vocabulary)
 
 class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     """Persistent Vocabulary."""
+
+    __implements__ = IVocabulary
 
     meta_type = "CPS Vocabulary"
 
@@ -199,6 +200,10 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declareProtected(View, 'items')
     def items(self):
         return self._vocab.items()
+
+    security.declareProtected(View, 'values')
+    def values(self):
+        return self._vocab.values()
 
     security.declareProtected(View, 'has_key')
     def has_key(self, key):
