@@ -1,4 +1,19 @@
 *******************************************
+** CPSSchemas V0.3.1 [R1 build 2003-10/06-08:43 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- temporary fix for 'unhashable type' in vocabulary.get
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+*******************************************
 ** CPSSchema V0.3.0 [R1 build 2003-10/03-15:05 by ben]
 
 ZODB Requires:
