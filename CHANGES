@@ -15,6 +15,7 @@ New features:
 - String widget handle size_max property
 - P2 #110: Improve basic Date widget, fully i18n/l10n using jscalendar
 - P3 #145: Check file or image maximum size property
+- P3 #190: Mime type restriction for images
 Bug fixes:
 ~~~~~~~~~~
 - P1 #144: Versioning is not incremental while editing the document
