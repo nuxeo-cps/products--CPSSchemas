@@ -394,7 +394,7 @@ class Layout(PropertiesPostProcessor,
         layout_style = getattr(context, layout_method, None)
         if layout_style is None:
             raise ValueError("No layout method '%s' for layout '%s'" %
-                             (layout_meth, self.getId()))
+                             (layout_method, self.getId()))
         # compute the flexible_widgets list
         flexible_widgets = []
         if layout_mode == 'edit':
