@@ -1,12 +1,10 @@
 # Copyright (c) 2003 Nuxeo SARL <http://nuxeo.com>
-# $Id $
+# $Id$
 
 import unittest
 from CPSSchemasTestCase import CPSSchemasTestCase
 
-from DateTime.DateTime import DateTime
 from OFS.Folder import Folder
-from OFS.Image import Image, File
 from Interface.Verify import verifyClass
 from Products.CPSSchemas import Vocabulary
 from Products.CPSSchemas.IVocabulary import IVocabulary
