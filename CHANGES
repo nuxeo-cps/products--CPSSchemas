@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- LinkWidget convert url in lowercase
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
