@@ -332,12 +332,14 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         # compute the flexible_widgets list
         flexible_widgets = []
         if layout_mode == 'edit':
+            ltool = getToolByName(self, 'portal_layouts')
+            layout_global = ltool[self.getId()]
             widget_ids = []
             for widget_id, widget in self.items():
                 if not widget.isHidden():
                     widget_ids.append(widget_id)
-            flexible_widget_ids = self.getFlexibleWidgetIds()
-            flexible_occurences = self.getFlexibleWidgetOccurences()
+            flexible_widget_ids = layout_global.getFlexibleWidgetIds()
+            flexible_occurences = layout_global.getFlexibleWidgetOccurences()
             flexible_widgets = []
             i = 0
             for wid in flexible_widget_ids:
@@ -351,7 +353,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                     if nb_widget >= int(max_widget):
                         continue
 
-                flexible_widgets.append(self[wid])
+                flexible_widgets.append(layout_global[wid])
 
         rendered = layout_style(layout=layout_structure,
                                 datastructure=datastructure,
