@@ -35,10 +35,17 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.assertEquals(v.keys(), ['fyy', 'bro'])
         self.assertEquals(v.values(), ['F', 'B'])
         v = Vocabulary.CPSVocabulary(
-            'someid',
+            'tuples',
             tuples=(('fyy', 'F'), ('bro', 'B')))
         self.assertEquals(v.keys(), ['fyy', 'bro'])
         self.assertEquals(v.values(), ['F', 'B'])
+        v = Vocabulary.CPSVocabulary(
+            'tuples2',
+            tuples=(('fyy', 'F', 'label_F'), ('bro', 'B', 'label_B')))
+        self.assertEquals(v.keys(), ['fyy', 'bro'])
+        self.assertEquals(v.values(), ['F', 'B'])
+        self.assertEquals(v.getMsgid('fyy'), 'label_F')
+        self.assertEquals(v.getMsgid('bro'), 'label_B')
         v = Vocabulary.CPSVocabulary(
             'someid',
             list=('fyy', 'bro'), dict={'fyy': 'F', 'bro': 'B'})
@@ -93,12 +100,13 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.makeOne()
         v = self.vocabs.the_id
         nv = Vocabulary.Vocabulary()
-        nv.set('one', '1')
-        nv.set('two', '2')
+        nv.set('one', '1', 'label_one')
+        nv.set('two', '2', 'label_two')
         v.setVocabulary(nv)
         self.assertEquals(v.get('foo'), None)
         self.assertEquals(v['one'], '1')
         self.assertEquals(v.get('two'), '2')
+        self.assertEquals(v.getMsgid('two'), 'label_two')
         self.assertEquals(v.keys(), ['one', 'two'])
         self.assertEquals(v.items(), [('one', '1'), ('two', '2')])
         self.assertEquals(v.values(), ['1', '2'])
