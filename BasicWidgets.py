@@ -434,9 +434,10 @@ class CPSPasswordWidget(CPSStringWidget):
         else:
             if self.password_widget:
                 # here we only check that that our confirm match the pwd
-                datastructure[widget_id] = ''
                 pwidget_id = self.password_widget
                 pvalue = datastructure[pwidget_id]
+                datastructure[widget_id] = ''
+                datastructure[pwidget_id] = ''
                 pv = str(pvalue).strip()
                 if pv and v != pv:
                     err = 'cpsschemas_err_password_mismatch'
