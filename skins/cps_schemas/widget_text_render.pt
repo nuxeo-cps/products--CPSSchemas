@@ -8,8 +8,9 @@
 <tal:block condition="python: mode == 'view'">
  <div tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
                                         test(rposition == 'col_right',
-                                             'dcolright', 'dflush'))"
+                                             'dcolright', 'ddefault'))"
     tal:content="structure value" />
+ <div class="dflush" tal:condition="python: rposition == 'col_right'"></div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
   <div>
