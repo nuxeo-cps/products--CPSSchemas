@@ -1,51 +1,153 @@
 <tal:block define="mode options/mode;
   id here/getWidgetId;
   current_name options/current_name;
+  current_title options/current_title;
+  empty_file options/empty_file;
+  mimetype options/mimetype;
+  size options/size;
   content_url options/content_url;
+  last_modified options/last_modified;
   ">
-  <tal:block condition="python: mode == 'view' and current_name != '-'">
-    <a href="url..."
-      tal:attributes="href content_url"
-      tal:content="current_name"
-      >
-      filename.pdf
-    </a>
+
+  <tal:block condition="python: mode == 'view' and not empty_file">
+    <metal:block define-macro="file_view">
+      <a target="_blank" tal:condition="mimetype"
+        tal:attributes="href string:${content_url}?nocache=${last_modified}">
+        <img tal:replace="structure python:here.getImgTag(mimetype.icon_path,
+          title=mimetype.name())" /></a>
+      <a class="strong"
+        tal:attributes="href string:${content_url}?nocache=${last_modified}">
+        <tal:block replace="current_title" /></a>
+      <span tal:condition="size" class="note"
+        tal:define="b python:size < 1024;
+        m python:size > 1048576;
+        k python:not b and not m;">
+        -
+        <tal:block condition="b" content="string:1 K"/>
+        <tal:block condition="m" content="python:'%.02f M' % float(size / 1048576.0)"/>
+        <tal:block condition="k" content="python:'%s K' % (size / 1024)"/>
+      </span>
+    </metal:block>
   </tal:block>
-  <metal:block define-macro="file_edit"
-    tal:condition="python: mode == 'edit'">
-    <table cellpadding="0" cellspacing="0" border="0"
-      summary="file edition layout"
-      tal:define="name here/getHtmlWidgetId;
-      radio_name string:${name}_choice;"
-      >
-      <tr>
-        <td valign="middle">
-          <input type="radio" class="noborder" name="." value="keep"
-            checked="checked" tal:attributes="name radio_name" />
-          <label i18n:translate="cpsschemas_label_file_keep">Keep</label>
-        </td>
-        <td valign="middle">
-          <span tal:replace="current_name">filename.pdf</span>
-        </td>
-      </tr>
-      <tr>
-        <td valign="middle">
-          <input type="radio" class="noborder"  name="." value="change"
-            tal:attributes="name radio_name" />
-          <label i18n:translate="cpsschemas_label_file_change">Change</label>&nbsp;
-        </td>
-        <td valign="middle">
-          <input type="file" name="."
-            tal:attributes="name name" />
-        </td>
-      </tr>
-      <tr>
-        <td valign="middle" colspan="2">
-          <input type="radio" class="noborder" name="." value="delete"
-            tal:attributes="name radio_name" />
-          <label i18n:translate="cpsschemas_label_file_delete">Delete</label>
-        </td>
-      </tr>
-    </table>
-  </metal:block>
+
+  <tal:block condition="python: mode == 'edit'">
+
+    <metal:block define-macro="file_size_max_view">
+      <tal:block define="size_max python:here.size_max;"
+        condition="python:size_max > 0">
+        <p tal:define="
+          b python:size_max < 1024;
+          m python:size_max > 1048576;
+          k python:not b and not m;
+          cpsmcat nocall:here/Localizer/default;
+          ">
+          <tal:block condition="b" i18n:translate="">
+            cpsschemas_size_max
+            <tal:block i18n:name="size_max">1</tal:block>
+            <tal:block i18n:name="storage_unit"
+              content="python:cpsmcat('cpsschemas_unit_kilo_bytes')"/>
+          </tal:block>
+          <tal:block condition="m" i18n:translate="">
+            cpsschemas_size_max
+            <tal:block i18n:name="size_max"
+              content="python:'%.02f' % float(size_max / 1048576.0)">4
+            </tal:block>
+            <tal:block i18n:name="storage_unit"
+              content="python:cpsmcat('cpsschemas_unit_mega_bytes')"/>
+          </tal:block>
+          <tal:block condition="k" i18n:translate="">
+            cpsschemas_size_max
+            <tal:block i18n:name="size_max"
+              content="python:'%s' % (size_max / 1024)">400
+            </tal:block>
+            <tal:block i18n:name="storage_unit"
+              content="python:cpsmcat('cpsschemas_unit_kilo_bytes')"/>
+          </tal:block>
+        </p>
+      </tal:block>
+    </metal:block>
+
+    <metal:block define-macro="file_title_edit">
+      <p tal:define="name here/getHtmlWidgetId;
+                     title_name string:${name}_title;">
+        <metal:block define-slot="label_title">
+        <span i18n:translate="label_title">
+          The title
+        </span>
+        </metal:block>
+        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
+               tal:attributes="name title_name;
+                               value current_title" />
+        <input type="hidden" tal:attributes="name string:${name}_filename;
+                                             value current_name" />
+      </p>
+    </metal:block>
+
+    <metal:block define-macro="file_edit">
+
+      <ul class="noBullet"
+          tal:define="name here/getHtmlWidgetId;
+                      radio_name string:${name}_choice;">
+        <li>
+          <metal:block define-slot="keep_file">
+            <input type="radio" class="noborder" name="." value="keep"
+                   checked="checked"
+                   tal:attributes="name radio_name;
+                                   id string:${radio_name}_keep;"/>
+            <label i18n:translate="cpsschemas_label_file_none"
+                   tal:condition="empty_file"
+                   tal:attributes="for string:${radio_name}_keep">None</label>
+            <label i18n:translate="cpsschemas_label_file_keep"
+                   tal:condition="not:empty_file"
+                   tal:attributes="for string:${radio_name}_keep">Keep</label>
+            <a href="http://url..." target="_blank"
+               tal:condition="not:empty_file"
+               tal:attributes="href string:${content_url}?nocache=${last_modified}">
+              <tal:block condition="mimetype"
+                replace="structure python:here.getImgTag(mimetype.icon_path,
+                  title=mimetype.name())" />
+              <tal:block replace="current_name" />
+            </a>
+            <tal:block condition="python:not empty_file and modules['Products.CPSSchemas.utils'].isProductPresent('Products.ExternalEditor')">
+              -
+              <a href="http://url..."
+                 i18n:translate="cpsschemas_label_file_edit_online"
+                 tal:define="ds options/datastructure;
+                             dm ds/getDataModel;
+                             proxy dm/getProxy;
+                             portal here/portal_url/getPortalObject;
+                             field_id python:here.fields[0]"
+                 tal:attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+                Edit file online
+              </a>
+            </tal:block>
+          </metal:block>
+        </li>
+        <metal:block define-slot="edit_file_action" />
+        <li>
+          <metal:block define-slot="change_file">
+            <input type="radio" class="noborder"  name="." value="change"
+                   tal:attributes="name radio_name;
+                                   id string:${radio_name}_change" />
+            <label i18n:translate="cpsschemas_label_file_change"
+                   tal:attributes="for string:${radio_name}_change">Change</label>
+            <input type="file" name="." size="24"
+                   tal:attributes="name name;
+              onclick string:document.getElementById('${radio_name}_change').checked='checked'" />
+          </metal:block>
+        </li>
+        <li tal:condition="python:here.deletable and not empty_file">
+          <metal:block define-slot="delete_file">
+            <input type="radio" class="noborder" name="." value="delete"
+                   tal:attributes="name radio_name;
+                                   id string:${radio_name}_delete" />
+            <label i18n:translate="cpsschemas_label_file_delete"
+                   tal:attributes="for string:${radio_name}_delete">Delete</label>
+          </metal:block>
+        </li>
+      </ul>
+    </metal:block>
+
+  </tal:block>
+
 </tal:block>
