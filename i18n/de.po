@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2005-03-14 11:08+0100\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -490,6 +490,30 @@ msgstr "Beschreibung"
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
 msgstr "Datei online bearbeiten"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_0"
+msgstr "Keine"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_1"
+msgstr "Keine"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_30"
+msgstr "Keine"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_91"
+msgstr "Keine"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_182"
+msgstr "Keine"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_365"
+msgstr "Keine"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id existiert schon, wählen Sie eine andere."

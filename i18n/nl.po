@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -516,6 +516,30 @@ msgstr "Beschrijving"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
+msgstr "Niemand"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_0"
+msgstr "Niemand"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_1"
+msgstr "Niemand"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_30"
+msgstr "Niemand"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_91"
+msgstr "Niemand"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_182"
+msgstr "Niemand"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_365"
 msgstr "Niemand"
 
 #, fuzzy

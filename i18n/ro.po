@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -482,6 +482,25 @@ msgid "cpsschemas_label_zctext_field_Title"
 msgstr ""
 
 msgid "cpsschemas_label_zctext_field_Description"
+msgstr ""
+
+# modified
+msgid "cpsschemas_label_modified_since_0"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_1"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_30"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_91"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_182"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_365"
 msgstr ""
 
 msgid "cpsschemas_psm_vocabulary_id_exists"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2005-02-10 10:30+0100\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -493,6 +493,24 @@ msgstr "in the title"
 
 msgid "cpsschemas_label_zctext_field_Description"
 msgstr "in the description"
+
+msgid "cpsschemas_label_modified_since_0"
+msgstr "anytime"
+
+msgid "cpsschemas_label_modified_since_1"
+msgstr "since yesterday"
+
+msgid "cpsschemas_label_modified_since_30"
+msgstr "within the past month"
+
+msgid "cpsschemas_label_modified_since_91"
+msgstr "within the past 3 months"
+
+msgid "cpsschemas_label_modified_since_182"
+msgstr "within the past 6 months"
+
+msgid "cpsschemas_label_modified_since_365"
+msgstr "within a year"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id already exist, choose another one."

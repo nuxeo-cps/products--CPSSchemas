@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2004-09-30 16:26+0100\n"
 "Last-Translator: Fabio Nosari <fabnos@fastwebnet.it>\n"
 "Language-Team: Fabio Nosari <fabnos@fastwebnet.it>\n"
@@ -511,6 +511,30 @@ msgstr "Descrizione:"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
+msgstr "Non sostituire"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_0"
+msgstr "Non sostituire"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_1"
+msgstr "Non sostituire"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_30"
+msgstr "Non sostituire"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_91"
+msgstr "Non sostituire"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_182"
+msgstr "Non sostituire"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_365"
 msgstr "Non sostituire"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"

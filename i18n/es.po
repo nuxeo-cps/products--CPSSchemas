@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -550,6 +550,36 @@ msgstr "Descripción"
 #    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
+msgstr "Ninguno"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#, fuzzy
+msgid "cpsschemas_label_modified_since_0"
+msgstr "Ninguno"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#, fuzzy
+msgid "cpsschemas_label_modified_since_1"
+msgstr "Ninguno"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#, fuzzy
+msgid "cpsschemas_label_modified_since_30"
+msgstr "Ninguno"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#, fuzzy
+msgid "cpsschemas_label_modified_since_91"
+msgstr "Ninguno"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#, fuzzy
+msgid "cpsschemas_label_modified_since_182"
+msgstr "Ninguno"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#, fuzzy
+msgid "cpsschemas_label_modified_since_365"
 msgstr "Ninguno"
 
 #    <th>Id:</th>

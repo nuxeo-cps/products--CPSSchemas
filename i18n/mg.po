@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -507,6 +507,30 @@ msgstr "Fanazavana"
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
 msgstr "Ovaina eo anivon'ny tranonkala"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_0"
+msgstr "Tsy misy"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_1"
+msgstr "Tsy misy"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_30"
+msgstr "Tsy misy"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_91"
+msgstr "Tsy misy"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_182"
+msgstr "Tsy misy"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_365"
+msgstr "Tsy misy"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Efa misy mampiasa an'io anarana famantarana io. Mifidiana hafa."

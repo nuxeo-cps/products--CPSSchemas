@@ -230,6 +230,25 @@ msgstr ""
 msgid "cpsschemas_label_zctext_field_Description"
 msgstr ""
 
+# modified
+msgid "cpsschemas_label_modified_since_0"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_1"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_30"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_91"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_182"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_365"
+msgstr ""
+
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr ""
 

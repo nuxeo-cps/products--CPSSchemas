@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2005-04-01 15:09default\n"
+"POT-Creation-Date: 2005-04-01 16:08default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -506,6 +506,30 @@ msgstr "Descrição"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
+msgstr "Nenhum"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_0"
+msgstr "Nenhum"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_1"
+msgstr "Nenhum"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_30"
+msgstr "Nenhum"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_91"
+msgstr "Nenhum"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_182"
+msgstr "Nenhum"
+
+#, fuzzy
+msgid "cpsschemas_label_modified_since_365"
 msgstr "Nenhum"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
