@@ -72,7 +72,7 @@ class CPSTextWidget(CPSWidget):
     height = 5
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
-    configurable = 'position'
+    configurable = 'nothing'
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
