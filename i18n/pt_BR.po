@@ -17,6 +17,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Domain: default\n"
+"Language-Code: pt_BR \n"
 
 #.   <button type="button" attributes="
 #.           id button_rte_id;
