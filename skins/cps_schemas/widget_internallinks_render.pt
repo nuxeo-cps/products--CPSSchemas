@@ -90,47 +90,128 @@
           }
         }
 
-        function update_links(links) {
-          links_html = ''
+
+        function getSelectedItems() {
+           selected = document.form.elements
+           selected_items = new Array()
+           for (i = 0; i < selected.length; i++) {
+             checkbox = selected[i];
+             if (checkbox.checked) {
+               selected_items.push(checkbox.value)
+             }
+           }
+           return selected_items
           
+        }
+        
+        function getExistingItems() {
+           textareaElement = document.getElementById(intlinks_w_id)
+           existing_items = textareaElement.value.split('\n')
+           return existing_items
+        }
+
+        function setExistingItems(items) {
+          // put items in textare form cache if value not ''
           textareaElement = document.getElementById(intlinks_w_id)
-
-          existing_links = textareaElement.value.split('\n')
-          for(i=0;i<links.length;i++) {
-            link = links[i]
-            exist = 0
-            if(!is_in(link, existing_links)) {
-              textareaElement.value += link + '\n'
-            } 
+          value = ''
+          for(i=0; i<items.length; i++) {
+            item = items[i]
+            if(item.length) {
+              value += item + '\n'
+            }
           }
-
-          update_results()
-          
+          textareaElement.value = value
         }
 
         function delete_items() {
           selected = document.form.elements
-          textareaElement = document.getElementById(intlinks_w_id)
-          old_value = textareaElement.value.split('\n')
+          links = getExistingItems()
+          deleted_links = getSelectedItems()
 
-          deleted_links = new Array()
-          for (i = 0; i < selected.length; i++) {
-            checkbox = selected[i];
-            if (checkbox.checked) {
-              deleted_links.push(checkbox.value)
-            }
-          }
-          new_value =''
-          for(i=0;i<old_value.length;i++) {
-            value = old_value[i]
+
+          for(i=0;i<links.length;i++) {
+            value = links[i]
             if(!is_in(value, deleted_links)) {
-              new_value += value + '\n'
+              links[i] = ''
             }
           }
 
-          textareaElement.value = new_value
-          
+          setExistingItems(links)
           update_results()
+        }
+
+        function getIndex(item, list) {
+          for(i=0;i<list.length;i++) {
+            value = list[i]
+            if(item == value) {
+              return i
+            }
+          }
+          return -1
+        }
+
+        function canMove(index, shift, max) {
+          if(shift == -1) {
+            if(index > 0) {
+              return true
+            }
+          } else {
+            if(index < max) {
+              return true
+            }
+          }
+          return false
+        }
+
+        function move_items(direction) {
+
+          if(direction=='up') {
+            shift = -1
+          } else {
+            shift = 1
+          }
+          move_links  = getSelectedItems()       
+          links = getExistingItems()
+          changed = false
+          for(i=0;i<move_links.length;i++) {
+            value = move_links[i]
+            index = getIndex(value, links)
+            if( canMove(index, shift,links.length) ) {
+              tmp = links[index+shift]
+              links[index+shift] = value
+              links[index] = tmp
+              changed = true
+            }
+          }          
+
+          if(changed) {
+            setExistingItems(links)
+            update_results()
+          }
+        }
+
+        function move_up_items() {
+          move_items('up')
+        }
+
+         function move_down_items() {
+          move_items('down')
+        }
+
+        function update_links(added_links) {
+
+          links = getExistingItems()
+          alert(links)          
+          for(i=0;i<added_links.length;i++) {
+            value = added_links[i]
+            if(!is_in(value, links)) {
+              links.push(value)
+              alert(value)
+            } 
+          }
+          alert(links)
+          setExistingItems(links)
+          update_results()          
         }
 
         -->">
