@@ -167,6 +167,10 @@ class CPSVocabulary(SimpleItemWithProperties):
     def items(self):
         return self._vocab.items()
 
+    security.declareProtected(View, 'has_key')
+    def has_key(self, key):
+        return self._vocab.has_key(key)
+
     #
     # ZMI
     #
