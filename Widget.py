@@ -33,10 +33,8 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.Field import WriteAccessError
-
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
-from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
 
 
