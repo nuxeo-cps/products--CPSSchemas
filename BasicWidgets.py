@@ -643,7 +643,7 @@ class CPSCheckBoxWidget(CPSWidget):
                   'name': html_widget_id,
                   }
             if value:
-                kw['checked'] = None
+                kw['checked'] = 'checked'
             tag = renderHtmlTag('input', **kw)
             default_tag = renderHtmlTag('input',
                                         type='hidden',
@@ -954,12 +954,12 @@ class CPSSelectWidget(CPSWidget):
             for k, v in vocabulary.items():
                 kw = {'value': k, 'contents': v}
                 if value == k:
-                    kw['selected'] = None
+                    kw['selected'] = 'selected'
                     in_selection = 1
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
                 kw = {'value': value, 'contents': 'invalid: '+value,
-                      'selected': None}
+                      'selected': 'selected'}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
             return res
@@ -1057,7 +1057,7 @@ class CPSMultiSelectWidget(CPSWidget):
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id+':list',
-                  'multiple': None,
+                  'multiple': 'multiple',
                   }
             if self.size:
                 kw['size'] = self.size
@@ -1065,7 +1065,7 @@ class CPSMultiSelectWidget(CPSWidget):
             for k, v in vocabulary.items():
                 kw = {'value': k, 'contents': v}
                 if k in value:
-                    kw['selected'] = None
+                    kw['selected'] = 'selected'
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
             default_tag = renderHtmlTag('input',
