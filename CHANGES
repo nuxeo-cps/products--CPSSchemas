@@ -17,3 +17,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Possibility to define different render modes such as edit and 
   edit_metadata for instance.
+- attached file are open in a new window
