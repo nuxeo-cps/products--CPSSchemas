@@ -14,7 +14,7 @@
         replace="structure python:here.getImgTag(mimetype.icon_path,
         title=mimetype.name())" />
     </a>
-    <a tal:attributes="href content_url">
+    <a tal:attributes="href string:${content_url}?nocache">
       <tal:block replace="current_name" />
     </a>
 

@@ -31,7 +31,7 @@
       <td valign="middle">
         <a href="http://url..." target="_blank"
           tal:condition="python: not empty_file"
-          tal:attributes="href content_url">
+          tal:attributes="href string:${content_url}?nocache">
         <tal:block condition="mimetype"
           replace="structure python:here.getImgTag(mimetype.icon_path,
           title=mimetype.name())" />
