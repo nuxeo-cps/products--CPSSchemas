@@ -175,6 +175,9 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         """Set data for one field."""
         setattr(self._ob, field_id, value)
 
+    def _getContentUrl(self, object, field_id):
+        return '%s/%s' % (object.absolute_url(), field_id)
+
 
 class MetaDataStorageAdapter(BaseStorageAdapter):
     """MetaData Storage Adapter
@@ -225,3 +228,6 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
             raise ValueError(
                 "Invalid MetaData field, %s not callable" % meth_name)
         meth(value)
+
+    def _getContentUrl(self, object, field_id):
+        return '%s/%s' % (object.absolute_url(), field_id)

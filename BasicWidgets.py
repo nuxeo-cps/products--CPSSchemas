@@ -27,7 +27,7 @@ from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
-from types import ListType, TupleType
+from types import ListType, TupleType, StringType
 try:
     import PIL.Image
 except ImportError:
@@ -1241,7 +1241,9 @@ class CPSImageWidget(CPSWidget):
             datamodel[field_id] = None
         elif choice == 'change' or datastructure.get(widget_id):
             file = datastructure[widget_id]
-            if not _isinstance(file, FileUpload):
+            if type(file) is StringType:
+                file = Image('-', '', file)
+            elif not _isinstance(file, FileUpload):
                 err = 'cpsschemas_err_file'
             else:
                 ms = self.size_max
@@ -1300,21 +1302,38 @@ class CPSImageWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
+        if kw['layout_mode'] == 'create':
+            content_url = ''
+            empty_file = 1
+        else:
+            dm = datastructure.getDataModel()
+            ob = dm.getObject()
+            if ob is None: # Not stored in the ZODB.
+                id_field = dm.getContext().id_field
+                ob = datastructure[id_field]
+            field_id = self.fields[0]
+
+            for adapter in dm._adapters:
+                if adapter.getSchema().has_key(field_id):
+                    content_url = adapter._getContentUrl(ob, field_id)
+                    break
+            empty_file = 0
+
         render_method = 'widget_image_render'
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
         value = datastructure[self.getWidgetId()]
+        current_name = '-'
         if hasattr(aq_base(value), 'getId'):
             current_name = value.getId()
-        else:
-            current_name = '-'
         mimetype = None
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = registry.lookupExtension(current_name)
         return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name, mimetype=mimetype)
+                    current_name=current_name, mimetype=mimetype,
+                    content_url=content_url, empty_file=empty_file)
 
 InitializeClass(CPSImageWidget)
 
