@@ -18,7 +18,10 @@
                          err python:ds.getError(wid);">
         <div tal:attributes="class python:test(err, 'row error', 'row')">
           <div class="label" tal:condition="widget/title">
-            <span tal:content="widget/title">label</span>
+            <span i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/title">label</span>
+            <span tal:condition="not:widget/is_i18n"
+              tal:content="widget/title">label</span>
           </div>
           <div class="field">
             <div tal:replace="structure python:widget.render('edit', ds, dm)"/>
