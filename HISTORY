@@ -1,4 +1,21 @@
 *******************************************
+** CPSDocument V0.1.3 [R1 build 2003-09/02-09:19 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Bug fixed : Redirection to the portal_repository  while editing the layouts. Adding an arguments proxy= in the render method signature. 
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Moving schemas/widgets/layouts declations from the CPSDocument installer.
+  Now in : CPSDocumentSchemas.py CPSDocumentLayouts.py and CPSDocumentWidgets.py
+- Comming back to Florent form example.
+*******************************************
 ** CPSDocument V0.1.2 [R1 build 2003-08/25-10:42 by anguenot]
 
 ZODB Requires:
