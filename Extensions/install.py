@@ -130,6 +130,10 @@ def install(self):
             'type': 'CPS Image Widget Type',
             'data': {},
             },
+        'Html Widget': {
+            'type': 'CPS Html Widget Type',
+            'data': {},
+            },
         'Dummy Widget': {
             'type': 'CPS Customizable Widget Type',
             'data': {
