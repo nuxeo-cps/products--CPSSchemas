@@ -58,6 +58,12 @@ class BasicVocabularyTests(CPSSchemasTestCase):
                                       ('meuh', 'M')])
         self.assertEquals(v.values(), ['F', 'B', 'M'])
 
+    def test_pairs(self):
+        v = Vocabulary.CPSVocabulary(
+            'someid', ('bidi', 'bulle'))
+        self.assertEquals(v.keys(), ['bidi', 'bulle'])
+        self.assertEquals(v.values(), ['bidi', 'bulle'])
+
     def test_modify(self):
         self.makeOne()
         v = self.vocabs.the_id
