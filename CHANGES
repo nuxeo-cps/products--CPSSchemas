@@ -13,6 +13,7 @@ Bug fixes:
 - Date widget use nn/nn/nnnn instead of n/n/n for rendering
 - The Internal Links widget does not perform a permission check
   before displaying links.
+- Corrected the <head>...</head> declarations in main_template_popup.pt
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Malagasy javascript camendar (to translate)

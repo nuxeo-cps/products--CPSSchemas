@@ -23,15 +23,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
   tal:attributes="lang locale; xml:lang locale">
 <head>
-   <metal:block define-slot="base"><base
-    href="" tal:attributes="href string:${here_url}/" />
-    </metal:block>
-  <metal:block define-slot="head_slot"
-    />
-  <metal:block define-slot="css_slot"
-    />
-  <metal:block define-slot="javascript_head_slot"
-    />
+<metal:block use-macro="here/header_lib/macros/header">
+  <metal:block fill-slot="base"><metal:block define-slot="base"><base
+    href="" tal:attributes="href string:${here_url}/"
+    /></metal:block></metal:block>
+  <metal:block fill-slot="head_slot"><metal:block define-slot="head_slot"
+    /></metal:block>
+  <metal:block fill-slot="css_slot"><metal:block define-slot="css_slot"
+    /></metal:block>
+  <metal:block fill-slot="javascript_head_slot"><metal:block
+    define-slot="javascript_head_slot"
+    /></metal:block>
+</metal:block>
 </head>
 <body OnLoad="setFocus()" tal:condition="emptybody">
   <metal:block define-slot="body" />
