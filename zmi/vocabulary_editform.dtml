@@ -9,6 +9,7 @@
 
 <dtml-let keys=keys>
 <dtml-if keys>
+<em><dtml-var "_.len(keys)"> entries in this vocabulary.</em>
 <table cellspacing="0" cellpadding="2" border="0" width="100%">
   <tr class="list-header">
     <td align="left" valign="top">

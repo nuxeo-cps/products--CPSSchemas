@@ -225,10 +225,17 @@ class CPSLayout(Layout):
         {'label': 'Layout',
          'action': 'manage_editLayout',
          },
-        ) + SimpleItemWithProperties.manage_options
+        ) + SimpleItemWithProperties.manage_options + (
+        {'label': 'Export',
+         'action': 'manage_export',
+         },
+        )
 
     security.declareProtected(ManagePortal, 'manage_editLayout')
     manage_editLayout = DTMLFile('zmi/layout_editform', globals())
+
+    security.declareProtected(ManagePortal, 'manage_export')
+    manage_export = DTMLFile('zmi/layout_export', globals())
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidgetForm')
     manage_addCPSWidgetForm = DTMLFile('zmi/widget_addform', globals())

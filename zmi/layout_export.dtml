@@ -1,0 +1,48 @@
+<dtml-var manage_page_header>
+<dtml-let management_view="'Export'">
+<dtml-var manage_tabs>
+</dtml-let>
+
+<p>You will find below what the Python dictionnary used to create the current
+layout should look like.</p>
+
+<dtml-let layoutdef=getLayoutDefinition
+          ncols="layoutdef['ncols']"
+          rows="layoutdef['rows']"
+         >
+<pre>
+<dtml-var id>_layout = {
+    'widgets': {
+<dtml-in objectValues>
+        '<dtml-var getWidgetId>': {
+            'type': '<dtml-var widget_type>',
+            'data': {
+<dtml-in propertyItems>
+<dtml-if "_.same_type(_['sequence-item'], '')">
+                '<dtml-var sequence-key>': '<dtml-var sequence-item>',
+<dtml-else>
+                '<dtml-var sequence-key>': <dtml-var sequence-item>,
+</dtml-if>
+</dtml-in>
+            },
+        },
+</dtml-in>
+    },
+    'layout': {
+        'ncols': <dtml-var ncols>
+        'rows': [
+<dtml-in rows>
+<dtml-in sequence-item>
+            <dtml-if sequence-start>[</dtml-if><dtml-var sequence-item>,
+                <dtml-if sequence-end>],
+</dtml-if>
+</dtml-in>
+</dtml-in>
+            ],
+        },
+    }
+</pre>
+
+</dtml-let>
+
+<dtml-var manage_page_footer>
