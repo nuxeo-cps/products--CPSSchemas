@@ -19,6 +19,7 @@
 # $Id$
 
 from zLOG import LOG, DEBUG
+from types import ListType, TupleType
 import ExtensionClass
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
@@ -170,8 +171,20 @@ class CPSDocumentMixin(ExtensionClass.Base):
 
         Indexes all fields marked as indexable.
         """
-        ti = self.getTypeInfo()
-        # XXX ...
+        strings = []
+        dm = self.getTypeInfo().getDataModel(self)
+        # XXX uses internal knowledge of DataModel
+        for fieldid, field in dm._fields.items():
+            if not field.is_indexed:
+                continue
+            value = dm[fieldid]
+            if (not isinstance(value, ListType) and
+                not isinstance(value, TupleType)):
+                value = (value,)
+            for v in value:
+                strings.append(str(v)) # XXX Use ustr ?
+        # XXX Deal with Unicode properly...
+        return ' '.join(strings)
 
 
 InitializeClass(CPSDocumentMixin)
