@@ -336,6 +336,14 @@ class CPSAttachedFileWidget(CPSFileWidget):
         err = 0
         err_mapping = None
         if choice == 'keep':
+            if datastructure.has_key('restored_items') and \
+                   widget_id in datastructure['restored_items']:
+                # the file is restored from the session after an invalid layout
+                datamodel[field_id] = datastructure[widget_id]
+                if not datastructure.has_key('backup_items'):
+                    # we may have again an invalid layout
+                    datastructure['backup_items'] = {}
+                datastructure['backup_items'][widget_id] = field_id
             file = datamodel[field_id]
             if file is None:
                 if self.is_required:
@@ -358,7 +366,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
             if not _isinstance(fileUpload, FileUpload):
                 return self.doesNotValidate('cpsschemas_err_file',
                                             None, file, datastructure)
-            file_base, file_suffix = os.path.splitext(fileUpload.filename) 
+            file_base, file_suffix = os.path.splitext(fileUpload.filename)
             if (self.allowed_suffixes
                 and file_suffix not in self.allowed_suffixes):
                 err = 'cpsschemas_err_file_bad_suffix ${allowed_suffixes}'
@@ -395,6 +403,11 @@ class CPSAttachedFileWidget(CPSFileWidget):
                 LOG('CPSAttachedFileWidget', DEBUG,
                     'validate change set %s' % `file`)
             datamodel[field_id] = file
+            # here we ask to backup our file
+            # in case of invalid layout
+            if not datastructure.has_key('backup_items'):
+                datastructure['backup_items'] = {}
+            datastructure['backup_items'][widget_id] = field_id
         self.prepare(datastructure)
         return 1
 
@@ -410,18 +423,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-
-        if kw.get('layout_mode') == 'create':
-            file_info = {'empty_file': 1,
-                         'content_url': '',
-                         'current_name': '-',
-                         'current_title': '',
-                         'mimetype': '',
-                         'size': 0,
-                         'last_modified': '',
-                        }
-        else:
-            file_info = self.getFileInfo(datastructure)
+        file_info = self.getFileInfo(datastructure)
 
         return meth(mode=mode, datastructure=datastructure,
                     **file_info)
