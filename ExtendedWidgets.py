@@ -955,7 +955,8 @@ class CPSGenericSelectWidget(CPSWidget):
                     v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                 if render_format == 'select':
                     kw = {'value': k, 'contents': v}
-                    if value == k:
+                    # do not add a selected option if it is already set
+                    if value == k and not in_selection:
                         kw['selected'] = 'selected'
                         in_selection = 1
                     res += renderHtmlTag('option', **kw)
@@ -966,7 +967,8 @@ class CPSGenericSelectWidget(CPSWidget):
                           'name': html_widget_id,
                           'value': k,
                           }
-                    if value == k:
+                    # do not add a selected option if it is already set
+                    if value == k and not in_selection:
                         kw['checked'] = 'checked'
                         in_selection = 1
                     res += renderHtmlTag('input', **kw)
