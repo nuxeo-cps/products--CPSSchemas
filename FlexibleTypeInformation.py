@@ -119,15 +119,20 @@ class FlexibleTypeInformation(TypeInformation):
          ) +
         TypeInformation._advanced_properties +
         (
-         {'id': 'schemas', 'type': 'tokens', 'mode': 'w', 'label': 'Schemas'},
-         {'id': 'layout', 'type': 'string', 'mode': 'w', 'label': 'Default Layout'},
+         {'id': 'schemas', 'type': 'tokens', 'mode': 'w',
+          'label': 'Schemas'},
+         {'id': 'default_layout', 'type': 'string', 'mode': 'w',
+          'label': 'Default layout'},
+         {'id': 'layout_style_prefix', 'type': 'string', 'mode': 'w',
+          'label': 'Layout style prefix'},
          )
         )
     content_meta_type = 'CPS Document'
     permission = 'Add portal content'
     schemas = []
     # XXX assume fixed storage adapters for now
-    layout = ''
+    default_layout = ''
+    layout_style_prefix = ''
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
@@ -219,7 +224,7 @@ class FlexibleTypeInformation(TypeInformation):
         """Get the layout for our type."""
         ltool = getToolByName(self, 'portal_layouts')
         if not layout_id:
-            layout_id = self.layout
+            layout_id = self.default_layout
         layout = ltool._getOb(layout_id, None)
         if layout is None:
             raise ValueError("No layout '%s'" % layout_id)
@@ -227,7 +232,10 @@ class FlexibleTypeInformation(TypeInformation):
 
     security.declarePrivate('_renderLayoutStyle')
     def _renderLayoutStyle(self, ob, mode, **kw):
-        layout_style = getattr(ob, 'layout_flex_'+mode) # XXX make customizable
+        layout_meth = self.layout_style_prefix + mode
+        layout_style = getattr(ob, layout_meth, None)
+        if layout_style is None:
+            raise RuntimeError("No layout method '%s'" % layout_meth)
         return layout_style(mode=mode, **kw)
 
     security.declarePrivate('renderObject')
