@@ -64,6 +64,9 @@ msgstr ""
 msgid "cpsschemas_err_file_empty"
 msgstr ""
 
+msgid "cpsschemas_err_file_too_big"
+msgstr ""
+
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
 

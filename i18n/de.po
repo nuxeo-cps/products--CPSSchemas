@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-18 17:04default\n"
+"POT-Creation-Date: 2004-11-05 13:30default\n"
 "PO-Revision-Date: 2004-07-12 18:00+0200\n"
 "Last-Translator: <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
@@ -37,18 +37,18 @@ msgstr ""
 msgid "button_rte"
 msgstr "Layout"
 
-#.   <span>at</span>
+#.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
 msgstr "um"
 
-#.   <span>h</span>
+#.   <label attributes="for elt_hour_id">h</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_hour"
 msgstr "h"
 
 #.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:fields[2]">
+#.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -63,7 +63,7 @@ msgstr "(Vorabansicht)"
 msgid "cpsschema_link_printable_version"
 msgstr "(Vorabansicht)"
 
-#.   <span>mn</span>
+#.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
 msgstr "m"
@@ -77,38 +77,54 @@ msgstr "m"
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr "Ungültige Datei"
 
-#.   <span>resize</span>
+#.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "und Größe ändern zu "
 
-#.   <label>Change</label>
+#.   <label attributes="for string:${radio_name}_change">Change</label>
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr "Ändern"
 
-#.   <label>Delete</label>
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
-#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Löschen"
 
-#.   <label>Keep</label>
-#.   <label attributes="for string:${radio_name}_keep" condition="not: empty_file">Keep</label>
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" define="ds options/datastructure;
+#.                                dm ds/getDataModel;
+#.                                proxy dm/getProxy;
+#.                                portal here/portal_url/getPortalObject;
+#.                                field_id python:here.fields[0]">
+#.                   Edit file online
+#.                 </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
-#: ../skins/cps_schemas/widget_image_render.pt
+#, fuzzy
+msgid "cpsschemas_label_file_edit_online"
+msgstr "Keine"
+
+#.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Behalten"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
-#: from ../skins/cps_schemas/widget_image_render.pt
+#: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Keine"
 
-#.   <span>cpsschemas_photo_subtitle</span>
+#.   <label attributes="for string:${radio_name}_resize">resize</label>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#, fuzzy
+msgid "cpsschemas_label_image_resize"
+msgstr "und Größe ändern zu "
+
+#.   <span>
+#.           Photo subtitle
+#.         </span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Überschrift: "
@@ -118,7 +134,9 @@ msgstr "Überschrift: "
 msgid "cpsschemas_render_format"
 msgstr "Format: "
 
-#.   <div class="label">cpsschemas_render_position</div>
+#.   <span>
+#.             Render position
+#.           </span>
 #.   <span>cpsschemas_render_position</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
@@ -126,21 +144,21 @@ msgid "cpsschemas_render_position"
 msgstr "Position: "
 
 #.   <block condition="b">
-#.             cpsschemas_size_max
-#.             ${size_max}
-#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.           </block>
+#.               cpsschemas_size_max
+#.               ${size_max}
+#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.             </block>
 #.   <block condition="m">
-#.             cpsschemas_size_max
-#.             ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
-#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
-#.           </block>
+#.               cpsschemas_size_max
+#.               ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
+#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
+#.             </block>
 #.   <block condition="k">
-#.             cpsschemas_size_max
-#.             ${size_max (tal content="python:'%s' % (size_max / 1024)")}
-#.             ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.           </block>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#.               cpsschemas_size_max
+#.               ${size_max (tal content="python:'%s' % (size_max / 1024)")}
+#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.             </block>
+#: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
 msgstr "und Größe ändern zu "
@@ -178,10 +196,13 @@ msgid "cpsschemas_vocabulary_entry_add"
 msgstr "Hinzufügen eines Eintrags"
 
 #.   <th>Id:</th>
+#.   <th>Id:</th>
+#.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
 msgstr "Id:"
 
+#.   <th>Key:</th>
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
@@ -193,15 +214,19 @@ msgid "cpsschemas_vocabulary_manage"
 msgstr "Wörterbuch Management"
 
 #.   <th>MsgId:</th>
+#.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
 msgstr "Nachrichten Id:"
 
 #.   <th>Value:</th>
+#.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
 msgstr "Wert:"
 
+#.   <em style="color: red" content="err">err</em>
+#.   <em style="color: red" content="err">err</em>
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -234,9 +259,9 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#.   <td align="left">
-#.               Alternative text
-#.             </td>
+#.   <span>
+#.               The alternative text
+#.             </span>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Titel"
@@ -293,6 +318,10 @@ msgstr "Ungültige Datei"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Leere Datei"
+
+#, fuzzy
+msgid "cpsschemas_err_file_too_big"
+msgstr "Ungültige Datei"
 
 #, fuzzy
 msgid "cpsschemas_err_file_too_big ${max_size}"
