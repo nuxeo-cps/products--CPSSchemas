@@ -7,7 +7,7 @@ New features:
   DateTimeWidget cf. http://www.w3.org/TR/NOTE-datetime
 Bug fixes:
 ~~~~~~~~~~
--
+- Removed some "nowrap" attribute to clean the HTML.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -70,7 +70,7 @@
         tal:define="name here/getHtmlWidgetId;
         radio_name string:${name}_choice;">
         <tr>
-          <td valign="middle" nowrap="nowrap">
+          <td valign="middle">
             <input type="radio" class="noborder" name="." value="keep"
               checked="checked"
               tal:attributes="name radio_name;
@@ -94,7 +94,7 @@
           </td>
         </tr>
         <tr>
-          <td valign="middle" nowrap="nowrap">
+          <td valign="middle">
             <input type="radio" class="noborder"  name="." value="change"
               tal:attributes="name radio_name;
               id string:${radio_name}_change" />
@@ -119,7 +119,7 @@
           </td>
         </tr>
         <tr tal:condition="python:here.deletable and not empty_file">
-          <td valign="middle" colspan="2" nowrap="nowrap">
+          <td valign="middle" colspan="2">
             <input type="radio" class="noborder" name="." value="delete"
               tal:attributes="name radio_name;
               id string:${radio_name}_delete" />
