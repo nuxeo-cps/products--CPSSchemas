@@ -54,7 +54,7 @@ if default_encoding == 'ascii':
     default_encoding = 'latin1'
 
 def toUTF8(s):
-    return unicode(s).encode('utf-8')
+    return unicode(s, default_encoding).encode('utf-8')
 
 def fromUTF8(s):
     return unicode(s, 'utf-8').encode(default_encoding)
