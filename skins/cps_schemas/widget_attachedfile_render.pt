@@ -1,35 +1,34 @@
 <tal:block define="mode options/mode;
-                   id here/getWidgetId;
-                   fields here/fields;
-                   current_name options/current_name;
-                   current_title options/current_title;
-                   empty_file options/empty_file;
-                   mimetype options/mimetype;
-                   size options/size;
-                   content_url options/content_url;
-                   last_modified options/last_modified;
-                  ">
-<tal:block condition="python: mode == 'view' and not empty_file">
-  <div
-    tal:define="preview_id python:options['datastructure'][id+'_preview']">
-    <a target="_blank" tal:condition="mimetype"
-      tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <tal:block
-        replace="structure python:here.getImgTag(mimetype.icon_path,
-        title=mimetype.name())" /></a>
-    <a class="strong"
-      tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <tal:block replace="current_title" /></a>
+  id here/getWidgetId;
+  fields here/fields;
+  current_name options/current_name;
+  current_title options/current_title;
+  empty_file options/empty_file;
+  mimetype options/mimetype;
+  size options/size;
+  content_url options/content_url;
+  last_modified options/last_modified;
+  ">
+  <tal:block condition="python: mode == 'view' and not empty_file">
+    <div tal:define="preview_id python:options['datastructure'][id+'_preview']">
+      <a target="_blank" tal:condition="mimetype"
+        tal:attributes="href string:${content_url}?nocache=${last_modified}">
+        <tal:block
+          replace="structure python:here.getImgTag(mimetype.icon_path,
+          title=mimetype.name())" /></a>
+      <a class="strong"
+        tal:attributes="href string:${content_url}?nocache=${last_modified}">
+        <tal:block replace="current_title" /></a>
 
-    <span tal:condition="size" class="note"
-          tal:define="b python:size < 1024;
-                      m python:size > 1048576;
-                      k python:not b and not m;">
-            -
-      <tal:block condition="b" content="string:1 K"/>
-      <tal:block condition="m" content="python:'%.02f M' % float(size / 1048576.0)"/>
-      <tal:block condition="k" content="python:'%s K' % (size / 1024)"/>
-    </span>
+      <span tal:condition="size" class="note"
+        tal:define="b python:size < 1024;
+        m python:size > 1048576;
+        k python:not b and not m;">
+        -
+        <tal:block condition="b" content="string:1 K"/>
+        <tal:block condition="m" content="python:'%.02f M' % float(size / 1048576.0)"/>
+        <tal:block condition="k" content="python:'%s K' % (size / 1024)"/>
+      </span>
       <span tal:condition="preview_id">
         <a href="http://url..."
           tal:attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
@@ -37,32 +36,36 @@
           i18n:translate="cpsschema_link_preview">
           (preview)
         </a>
+        <a href="http://url..." target="_blank"
+          tal:attributes="href preview_id"
+          i18n:translate="cpsschema_link_printable_version">
+          (printable version)
+        </a>
       </span>
-  </div>
+    </div>
+  </tal:block>
 
-</tal:block>
+  <tal:block condition="python: mode == 'edit'">
+    <metal:block define-macro="file_title_edit">
 
-<tal:block condition="python: mode == 'edit'">
-<metal:block define-macro="file_title_edit">
-
-<table cellpadding="0" cellspacing="0" border="0" 
-    summary="file title edit" tal:define="name here/getHtmlWidgetId;
-                title_name string:${name}_title;"> 
-  <tr>
-    <td align="left" i18n:translate="label_title">
-     The title
-    </td>
-    <td>
-        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
+      <table cellpadding="0" cellspacing="0" border="0" 
+        summary="file title edit" tal:define="name here/getHtmlWidgetId;
+        title_name string:${name}_title;"> 
+        <tr>
+          <td align="left" i18n:translate="label_title">
+            The title
+          </td>
+          <td>
+            <input style="margin-left: 5px" type="text" size="30" maxlength="80"
               tal:attributes="name title_name;
               value current_title" />
-        <input type="hidden" tal:attributes="name string:${name}_filename;
-                                           value current_name" />
-    </td>
-  </tr>
-</table>
-</metal:block>
-  <metal:block use-macro="here/widget_image_render/macros/file_edit" />
-</tal:block>
+            <input type="hidden" tal:attributes="name string:${name}_filename;
+              value current_name" />
+          </td>
+        </tr>
+      </table>
+    </metal:block>
+    <metal:block use-macro="here/widget_image_render/macros/file_edit" />
+  </tal:block>
 
 </tal:block>
