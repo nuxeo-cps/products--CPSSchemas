@@ -161,7 +161,6 @@ class CPSStringWidget(CPSWidget):
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
-                  'css_class': self.css_class,
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
@@ -198,7 +197,6 @@ class CPSPwdWidget(CPSStringWidget):
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
-                  'css_class': self.css_class,
                   }
             if self.display_maxwidth:
                 kw['maxlength'] = self.display_maxwidth
@@ -335,8 +333,7 @@ class CPSTextAreaWidget(CPSWidget):
                                  name=self.getHtmlWidgetId(),
                                  cols=self.width,
                                  rows=self.height,
-                                 contents=value,
-                                 css_class=self.css_class)
+                                 contents=value)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSTextAreaWidget)
@@ -384,8 +381,7 @@ class CPSIntWidget(CPSWidget):
             return renderHtmlTag('input',
                                  type='text',
                                  name=self.getHtmlWidgetId(),
-                                 value=value,
-                                 css_class=self.css_class)
+                                 value=value)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSIntWidget)
@@ -600,22 +596,19 @@ class CPSDateWidget(CPSWidget):
                                  name=html_widget_id+'_d',
                                  value=d,
                                  size=2,
-                                 maxlength=2,
-                                 css_class=self.css_class)
+                                 maxlength=2)
             mtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_m',
                                  value=m,
                                  size=2,
-                                 maxlength=2,
-                                 css_class=self.css_class)
+                                 maxlength=2)
             ytag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_y',
                                  value=y,
                                  size=6,
-                                 maxlength=6,
-                                 css_class=self.css_class)
+                                 maxlength=6)
             # XXX customize format
             return dtag + '/' + mtag + '/' + ytag
         raise RuntimeError('unknown mode %s' % mode)
