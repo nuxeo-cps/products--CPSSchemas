@@ -19,12 +19,12 @@
                               rows here/height;"
       tal:content="value" />
     <button type="button" style="float: right;"
-      tal:condition="python:rformat=='html' or here.configurable"
+      tal:condition="python:rformat=='html' or configurable.find('format')>=0"
       tal:attributes="onclick
         string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
       >...</button><br>
   </div>
-   <tal:block condition="python: configurable.find('position')>=0">
+  <tal:block condition="python: configurable.find('position')>=0">
    <span i18n:translate="">cpsschemas_render_position</span>
    <select tal:attributes="name string:${value_name}_rposition">
      <option tal:repeat="op here/all_render_positions"
@@ -32,8 +32,8 @@
                        value op"
        tal:content="string:cpsschemas_rposition_${op}" i18n:translate="" />
    </select>
-   </tal:block>
-   <tal:block condition="python: configurable.find('format')>=0">
+  </tal:block>
+  <tal:block condition="python: configurable.find('format')>=0">
    <span i18n:translate="">cpsschemas_render_format</span>
    <select tal:attributes="name string:${value_name}_rformat">
      <option tal:repeat="op here/all_render_formats"
@@ -41,7 +41,7 @@
                        value op"
        tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
    </select>
-   </tal:block>
-   <br><br>
+  </tal:block>
+  <br><br>
 </tal:block>
 </tal:block>
