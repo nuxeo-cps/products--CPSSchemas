@@ -332,6 +332,14 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     file.seek(0)
                     fileid = cookId('', '', file)[0]
                     file = File(fileid, fileid, file)
+                    registry = getToolByName(self, 'mimetypes_registry')
+                    mimetype = registry.lookupExtension(fileid.lower())
+                    if file.content_type != mimetype.normalized():
+                        LOG('CPSAttachedFileWidget', DEBUG,
+                            'Fixing mimetype from %s to %s' % (
+                            file.content_type, mimetype.normalized()))
+                        file.manage_changeProperties(
+                            content_type=mimetype.normalized())
                     LOG('CPSAttachedFileWidget', DEBUG,
                         'validate change set %s' % `file`)
                     datamodel[field_id] = file
@@ -356,7 +364,8 @@ class CPSAttachedFileWidget(CPSFileWidget):
             file_info = {'empty_file': 1,
                          'content_url': '',
                          'current_name': '-',
-                         'mimetype': ''
+                         'mimetype': '',
+                         'last_modified': '',
                         }
         else:
             file_info = self.getFileInfo(datastructure)
