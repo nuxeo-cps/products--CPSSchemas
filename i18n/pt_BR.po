@@ -1,6 +1,6 @@
 # translation of pt-BR.po to Português do Brasil
-# translation of pt-br.po to Português do Brasil
-# translation of cpsschemas.po to Português do Brasil
+# translation of pt-br.po to PortuguÃªs do Brasil
+# translation of cpsschemas.po to PortuguÃªs do Brasil
 # ##########################################################
 # ################# DON'T EDIT THIS FILE! ##################
 # ##########################################################
@@ -10,14 +10,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-09-06 15:41default\n"
-"PO-Revision-Date: 2004-06-08 16:42-0300\n"
+"POT-Creation-Date: 2004-08-23 17:39default\n"
+"PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
-"Language-Team: Português do Brasil <pt@li.org>\n"
+"Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
 
 #.   <button type="button" attributes="
 #.           id button_rte_id;
@@ -40,19 +39,18 @@ msgstr "às"
 msgid "cpsschema_hour"
 msgstr "hora"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:fields[2]">
-#.           (preview)
-#.         </a>
+#.   <a href="http://url..." attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
+#.             + '/preview_html?file=' + fields[0] + '&file_html=' + fields[2]">
+#.             (preview)
+#.           </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_preview"
 msgstr "Previsão"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
-#.           (printable version)
-#.         </a>
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
+#.             (printable version)
+#.           </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#, fuzzy
 msgid "cpsschema_link_printable_version"
 msgstr "Previsão"
 
@@ -108,15 +106,6 @@ msgstr "Formato de renderização"
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Posição de renderização"
-
-#.   <block define="size_max python:here.size_max / (1024*1024)">
-#.                 cpsschemas_size_max
-#.                 ${size_max (tal replace="size_max")}
-#.               </block>
-#: from ../skins/cps_schemas/widget_image_render.pt
-#, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
-msgstr "Redimensiona"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -214,150 +203,148 @@ msgid "label_alt_text"
 msgstr "Texto alternativo"
 
 msgid "cpsschemas_err_string"
-msgstr "cpsschemas_err_string"
+msgstr "Cadeia de caracteres inválida."
 
 msgid "cpsschemas_err_string_too_long"
-msgstr "cpsschemas_err_string_too_long"
+msgstr "Cadeia de caracteres muito longa."
 
 msgid "cpsschemas_err_required"
-msgstr "cpsschemas_err_required"
+msgstr "Campo requerido."
 
 msgid "cpsschemas_err_textarea"
-msgstr "cpsschemas_err_textarea"
+msgstr "Texto inválido."
 
 msgid "cpsschemas_err_select"
-msgstr "cpsschemas_err_select"
+msgstr "Seleção inválida."
 
 msgid "cpsschemas_err_multiselect"
-msgstr "cpsschemas_err_multiselect"
+msgstr "Seleção múltipla inválida."
 
 msgid "cpsschemas_err_boolean"
-msgstr "cpsschemas_err_boolean"
+msgstr "Booleano inválido."
 
 msgid "cpsschemas_err_int"
-msgstr "cpsschemas_err_int"
+msgstr "Inteiro inválido."
 
 msgid "cpsschemas_err_date"
-msgstr "cpsschemas_err_date"
+msgstr "Data inválida."
 
 msgid "cpsschemas_err_file"
-msgstr "cpsschemas_err_file"
+msgstr "Arquivo inválido."
 
-#, fuzzy
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "cpsschemas_err_file_too_big"
+msgstr "Este arquivo é muito grande, o tamanho máximo permitido é ${max_size}Mb."
 
 msgid "cpsschemas_err_file_empty"
-msgstr "cpsschemas_err_file_empty"
+msgstr "Arquivo inválido (vazio)."
 
 msgid "cpsschemas_err_image"
-msgstr "cpsschemas_err_image"
+msgstr "Imagem inválida."
 
 msgid "cpsschemas_err_url"
-msgstr "cpsschemas_err_url"
+msgstr "URL inválida."
 
 msgid "cpsschemas_err_long"
-msgstr "cpsschemas_err_long"
+msgstr "Inteiro longo inválido."
 
 msgid "cpsschemas_err_long_range"
-msgstr "cpsschemas_err_long_range"
+msgstr "Inteiro longo fora da faixa."
 
 msgid "cpsschemas_err_float_positive"
-msgstr "cpsschemas_err_float_positive"
+msgstr "Este ponto flutuante deve ser positivo."
 
 msgid "cpsschemas_err_float_range"
-msgstr "cpsschemas_err_float_range"
+msgstr "Ponto flutuante fora da faixa."
 
 msgid "cpsschemas_err_float"
-msgstr "cpsschemas_err_float"
+msgstr "Ponto flutuante inválido."
 
 msgid "cpsschemas_err_password_mismatch"
-msgstr "cpsschemas_err_password_mismatch"
+msgstr "Sua senha e a confirmação não coincidem."
 
 msgid "cpsschemas_err_password_size_min"
-msgstr "cpsschemas_err_password_size_min"
+msgstr "Desculpe, sua senha é muito curta."
 
 msgid "cpsschemas_err_password_lower"
-msgstr "cpsschemas_err_password_lower"
+msgstr "Desculpe, sua senha deve conter alguma letra minúscula."
 
 msgid "cpsschemas_err_password_upper"
-msgstr "cpsschemas_err_password_upper"
+msgstr "Desculpe, sua senha deve conter alguma letra maiúscula."
 
 msgid "cpsschemas_err_password_digit"
-msgstr "cpsschemas_err_password_digit"
+msgstr "Desculpe, sua senha deve conter um dígito."
 
 msgid "cpsschemas_err_password_extra"
-msgstr "cpsschemas_err_password_extra"
+msgstr "Desculpe, sua senha deve conter um caracter especial diferente de letra e dígito."
 
 msgid "cpsschemas_err_identifier"
-msgstr "cpsschemas_err_identifier"
+msgstr "Identificador inválido."
 
 msgid "cpsschemas_err_email"
-msgstr "cpsschemas_err_email"
+msgstr "Email inválido."
 
 msgid "cpsschemas_err_readonly"
-msgstr "cpsschemas_err_readonly"
+msgstr "Campo somente para leitura."
 
-#, fuzzy
 msgid "cpsschemas_err_rangelist"
-msgstr "cpsschemas_err_image"
+msgstr "Faixa de lista inválida"
 
 msgid "jscalendar_date_fmt"
-msgstr "%d/%m/%Y %T %Z"
+msgstr "d/m/y"
 
 msgid "cpsschemas_rposition_normal"
-msgstr ""
+msgstr "Largura da página"
 
 msgid "cpsschemas_rposition_col_right"
-msgstr ""
+msgstr "Coluna da direita"
 
 msgid "cpsschemas_rposition_col_left"
-msgstr ""
+msgstr "Coluna da esquerda"
 
 msgid "cpsschemas_rposition_left"
-msgstr ""
+msgstr "Esquerda"
 
 msgid "cpsschemas_rposition_right"
-msgstr ""
+msgstr "Direita"
 
 msgid "cpsschemas_rposition_center"
-msgstr ""
+msgstr "Centro"
 
 msgid "cpsschemas_rformat_text"
-msgstr ""
+msgstr "Texto"
 
 msgid "cpsschemas_rformat_html"
-msgstr ""
+msgstr "HTML"
 
 msgid "cpsschemas_rformat_stx"
-msgstr ""
+msgstr "Texto Estruturado Zope"
 
 msgid "cpsschemas_rformat_pre"
-msgstr ""
+msgstr "HTML preformatado"
 
 msgid "cpsschemas_rformat_original"
-msgstr ""
+msgstr "Original"
 
 msgid "img_auto_size"
-msgstr ""
+msgstr "Automático"
 
 msgid "img_icon"
 msgstr "Ícone"
 
 msgid "img_xsmall"
-msgstr ""
+msgstr "Extra pequeno"
 
 msgid "img_small"
-msgstr ""
+msgstr "Pequeno"
 
 msgid "img_medium"
-msgstr ""
+msgstr "Médio"
 
 msgid "img_large"
-msgstr ""
+msgstr "Grande"
 
 msgid "img_xlarge"
-msgstr ""
+msgstr "Extra grande"
 
 msgid "cpsschemas_label_false"
 msgstr "Não"
@@ -366,54 +353,46 @@ msgid "cpsschemas_label_true"
 msgstr "Sim"
 
 msgid "cpsschema_label_on"
-msgstr ""
+msgstr "Habilitado"
 
 msgid "cpsschema_label_off"
-msgstr ""
+msgstr "Desabilitado"
 
 msgid "cpsschemas_label_link_href"
-msgstr ""
+msgstr "URL"
 
 msgid "cpsschemas_label_link_content"
-msgstr ""
+msgstr "Nome do Link"
 
 msgid "cpsschemas_label_link_title"
-msgstr ""
+msgstr "Descrição"
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Id:"
+msgstr "Id já existe, escolha outro."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Adicionar vocabulário"
+msgstr "Vocabulário criado."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "Id:"
+msgstr "Escolha um id."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Remover vocabulário"
+msgstr "Vocabulário removido."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr "Adicionar entrada de vocabulário"
+msgstr "Entrada adicionada."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Remover vocabulário"
+msgstr "Entradas de vocabulário removidas."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr "Remover vocabulário"
+msgstr "Nenhuma entrada selecionada. Escolha uma."
 
-#, fuzzy
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Adicionar vocabulário"
+msgstr "Vocabulário atualizado."
 
 msgid "label_none_selection"
-msgstr ""
+msgstr " -- Vazio --"
 
 msgid "label_other_selection"
-msgstr ""
+msgstr "Outra, por favor específica: "
