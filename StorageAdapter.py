@@ -234,6 +234,7 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         ob = self._ob
         if field_id in ('Coverage', 'Source', 'Relation'):
             # finish the CMF Dublin Core implementation
+            # storing these metadata as attributes
             setattr(ob, field_id, value)
             return
         meth_name = 'set' + field_id
