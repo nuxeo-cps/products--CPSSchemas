@@ -889,6 +889,12 @@ class CPSFileWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         datastructure[widget_id] = datamodel[self.fields[0]]
+        # Compute preview info for widget.
+        if len(self.fields) > 1 and datamodel.get(self.fields[1]) is not None:
+            preview_id = self.fields[1]
+        else:
+            preview_id = None
+        datastructure[widget_id + '_preview'] = preview_id
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
 
