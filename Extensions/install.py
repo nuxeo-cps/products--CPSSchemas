@@ -62,7 +62,7 @@ def install(self):
     paths = {
         'cps_document': 'Products/CPSDocument/skins/cps_document',
     }
-
+    skin_installed = 0
     for skin in skins:
         path = paths[skin]
         path = path.replace('/', os.sep)
@@ -76,24 +76,26 @@ def install(self):
                 pr("  Correctly installed, correcting path")
                 dv.manage_properties(dirpath=path)
         else:
+            skin_installed = 1
             portal.portal_skins.manage_addProduct['CMFCore'].manage_addDirectoryView(filepath=path, id=skin)
             pr("  Creating skin")
-    allskins = portal.portal_skins.getSkinPaths()
-    for skin_name, skin_path in allskins:
-        if skin_name != 'Basic':
-            continue
-        path = [x.strip() for x in skin_path.split(',')]
-        path = [x for x in path if x not in skins] # strip all
-        if path and path[0] == 'custom':
-            path = path[:1] + list(skins) + path[1:]
-        else:
-            path = list(skins) + path
-        npath = ', '.join(path)
-        portal.portal_skins.addSkinSelection(skin_name, npath)
-        pr(" Fixup of skin %s" % skin_name)
-    pr(" Resetting skin cache")
-    portal._v_skindata = None
-    portal.setupCurrentSkin()
+    if skin_installed:
+        allskins = portal.portal_skins.getSkinPaths()
+        for skin_name, skin_path in allskins:
+            if skin_name != 'Basic':
+                continue
+            path = [x.strip() for x in skin_path.split(',')]
+            path = [x for x in path if x not in skins] # strip all
+            if path and path[0] == 'custom':
+                path = path[:1] + list(skins) + path[1:]
+            else:
+                path = list(skins) + path
+            npath = ', '.join(path)
+            portal.portal_skins.addSkinSelection(skin_name, npath)
+            pr(" Fixup of skin %s" % skin_name)
+        pr(" Resetting skin cache")
+        portal._v_skindata = None
+        portal.setupCurrentSkin()
 
     if portalhas('portal_schemas'):
         prok()
