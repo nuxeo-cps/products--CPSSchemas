@@ -12,7 +12,7 @@ New features:
 - adding hidden_empty properties 
 Bug fixes:
 ~~~~~~~~~~
--
+- #125: File/Image Widget must be able to not display anything if no file
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - sf code cleaning
