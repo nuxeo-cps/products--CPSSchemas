@@ -224,6 +224,78 @@ InitializeClass(CPSPasswordWidgetType)
 
 ##################################################
 
+class CPSLinkWidget(CPSWidget):
+    """Link widget."""
+    meta_type = "CPS Link Widget"
+
+    field_types = ('CPS String Field', 'CPS String Field', 'CPS String Field')
+
+    def prepare(self, datastructure):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        datastructure[widget_id+'_content'] =datamodel[self.fields[1]]
+        datastructure[widget_id+'_title'] = datamodel[self.fields[2]]
+
+    def validate(self, datastructure):
+        """Update datamodel from user data in datastructure."""
+        widget_id = self.getWidgetId()
+        href = datastructure[widget_id]
+        content = datastructure[widget_id + '_content']
+        title = datastructure[widget_id + '_title']
+        err = 0
+        try:
+            href = str(href).strip().lower()
+            content = str(content).strip()
+            title = str(title).strip()
+        except ValueError:
+            err = 'cpsschemas_err_string'
+        else:
+            if not href and self.is_required:
+                datastructure[widget_id] = ''
+                err = 'cpsschemas_err_required'
+            elif href and not match(
+                r'^((http://)|/)?([\w\~](\:|\.|\-|\/|\?|\=)?){2,}$', href):
+                err = 'cpsschemas_err_url'
+        if err:
+            datastructure.setError(widget_id, err)
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = href
+            datamodel[self.fields[1]] = content
+            datamodel[self.fields[2]] = title
+
+        return not err
+
+    def render(self, mode, datastructure, OLDdatamodel=None):
+        """Render this widget from the datastructure or datamodel."""
+        href = datastructure[self.getWidgetId()]
+        content = datastructure[self.getWidgetId() + '_content']
+        title = datastructure[self.getWidgetId() + '_title']
+        render_method = 'widget_link_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        if mode in ('view', 'edit'):
+            return meth(mode=mode, datastructure=datastructure,
+                        href=href, content=content, title=title)
+
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSLinkWidget)
+
+
+class CPSLinkWidgetType(CPSStringWidgetType):
+    """Link widget type."""
+    meta_type = "CPS Link Widget Type"
+    cls = CPSLinkWidget
+
+InitializeClass(CPSLinkWidgetType)
+
+##################################################
+
 class CPSCheckBoxWidget(CPSWidget):
     """CheckBox widget."""
     meta_type = "CPS CheckBox Widget"
@@ -1264,6 +1336,7 @@ InitializeClass(CPSRichTextEditorWidgetType)
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
+WidgetTypeRegistry.register(CPSLinkWidgetType, CPSLinkWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
