@@ -99,14 +99,14 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
          'label': 'Hidden if empty'},
         {'id': 'hidden_if_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Hide the widget if the given TALES expression returns true'},
+         'label': "Hidden if (TALES)"},
         {'id': 'widget_mode_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Get the widget mode from the given TALES expression'},
+         'label': "Widget mode (TALES)"},
         # CSS
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
          'label': 'CSS class for view'},
         {'id': 'css_class_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Get the CSS class from the given TALES expression'},
+         'label': "CSS class (TALES)"},
         # Javascript
         # TALES expressions can be used. A expression type using the
         # 'javascript:' prefix is also supported to ease bare Javascript code
