@@ -475,9 +475,9 @@ class CPSLayout(Layout):
                 if kw.get('check_%d_%d' % (nrow, ncell)):
                     if delcell:
                         cell['del'] = 1
+                        somedel = 1
                         if cell['widget_id'] in duplicate_widgets:
                             duplicate_widgets.remove(cell['widget_id'])
-                        somedel = 1
                     if splitcell:
                         cell['split'] = 1
                         somesplit = 1
