@@ -1,3 +1,4 @@
+# -*- coding: iso-8859-15 -*-
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
 
@@ -8,22 +9,33 @@ from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
      CPSBooleanWidget, CPSURLWidget, CPSEmailWidget, CPSPasswordWidget, \
      CPSIdentifierWidget
-from Products.CPSSchemas.ExtendedWidgets import CPSTextWidget
+from Products.CPSSchemas.ExtendedWidgets import CPSRangeListWidget, \
+     CPSTextWidget
 
 class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
+    widget_type = None
+    default_value = None
 
     def _validate(self, properties, value):
         id = 'ff'
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,)})
-        widget = self.widget_type(id, '')
+        widget = self.widget_type(id, self.default_value)
         widget.manage_changeProperties(**properties)
 
         ret = widget.validate(ds)
         err = ds.getError(id)
         return ret, err, ds
+
+    def test_widget_ok_required_1(self):
+        ret, err, ds = self._validate({'is_required': 0}, self.default_value)
+        self.assertEquals(err, None)
+
+    def test_widget_nok_required_1(self):
+        ret, err, ds = self._validate({'is_required': 1}, self.default_value)
+        self.assertEquals(err, 'cpsschemas_err_required')
 
 class StringWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSStringWidget
@@ -84,6 +96,10 @@ class StringWidgetValidationTest(WidgetValidationTest):
 
 class BooleanWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSBooleanWidget
+    default_value = 0
+
+    def test_widget_nok_required_1(self):
+        pass
 
     def test_boolean_ok_1(self):
         ret, err, ds = self._validate({}, 0)
@@ -352,6 +368,10 @@ class IdentifierWidgetValidationTest(WidgetValidationTest):
 
 class PasswordWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSPasswordWidget
+    default_value = 'xxxxx'
+
+    def test_widget_nok_required_1(self):
+        pass
 
     def test_password_ok_required_1(self):
         ret, err, ds = self._validate({'is_required': 0}, '')
@@ -401,13 +421,55 @@ class PasswordWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({'check_extra': 1}, 'aze12')
         self.assertEquals(err, 'cpsschemas_err_password_extra')
 
+class RangeListWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSRangeListWidget
+    default_value = []
+
+    def test_rangelist_ok_0(self):
+        ret, err, ds = self._validate({}, [])
+        self.assert_(ret, err)
+        # check convertion
+        self.assertEquals(ds.getDataModel().values()[0], [])
+
+    def test_rangelist_ok_1(self):
+        ret, err, ds = self._validate({}, ['1', '2-3'])
+        self.assert_(ret, err)
+        # check convertion
+        self.assertEquals(ds.getDataModel().values()[0], [(1,), (2,3)])
+
+    def test_rangelist_nok_0(self):
+        ret, err, ds = self._validate({}, '')
+        self.assertEquals(err, 'cpsschemas_err_rangelist')
+
+    def test_rangelist_nok_1(self):
+        ret, err, ds = self._validate({}, ['1', '2,3'])
+        self.assertEquals(err, 'cpsschemas_err_rangelist')
+
+    def test_rangelist_nok_2(self):
+        ret, err, ds = self._validate({}, ['1', 'a'])
+        self.assertEquals(err, 'cpsschemas_err_rangelist')
+
+    def test_rangelist_nok_3(self):
+        ret, err, ds = self._validate({}, ['a'])
+        self.assertEquals(err, 'cpsschemas_err_rangelist')
+
+    def test_rangelist_nok_4(self):
+        ret, err, ds = self._validate({}, ('1', '2-3'))
+        self.assertEquals(err, 'cpsschemas_err_rangelist')
+
 # XXX: test more widget types here
 
 def test_suite():
+    from inspect import isclass
     from types import ClassType
     tests = []
     for obj in globals().values():
         if type(obj) is ClassType and issubclass(obj, WidgetValidationTest):
+            # python 2.1
+            tests.append(unittest.makeSuite(obj))
+        elif (isclass(obj) and issubclass(obj, WidgetValidationTest) and \
+            obj is not WidgetValidationTest):
+            # python 2.3
             tests.append(unittest.makeSuite(obj))
     return unittest.TestSuite(tests)
 
