@@ -1,4 +1,5 @@
 ##parameters=mode, datastructure
+# $Id$
 
 datamodel = datastructure.getDataModel()
 
