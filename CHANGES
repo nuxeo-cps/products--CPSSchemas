@@ -6,13 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Initializing img_info dict with 'height' and 'width' for Image and Photo
-  widgets. The lack of initialization was problematic in some cases.
-- Fixed problem of default values markers appearing in field expressions.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Refactoring of unit tests.
-- Adding the clear method to CPSVocabulary, as it was in the base Vocabulary.
-- Added datamodel to the namespace of default value expressions in fields. This
-  is safe because the argument defaults to None. Only documents provide their
-  DataModel, it is too complicated for directories and lack use cases.
+-
