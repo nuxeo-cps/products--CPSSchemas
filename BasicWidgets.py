@@ -375,7 +375,7 @@ class CPSEmailWidget(CPSStringWidget):
     css_class = "url"
     display_width = 72
     size_max = 256
-    email_pat = compile(r"^([-\w_.+])+@(([-\w])+\.)+([\w]{2,4})$")
+    email_pat = compile(r"^([-\w_.'+])+@(([-\w])+\.)+([\w]{2,4})$")
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
