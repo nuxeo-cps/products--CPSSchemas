@@ -21,12 +21,12 @@
 Definition of extended widget types.
 """
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, TRACE
 from cgi import escape
 from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base
-from types import StringType
+from types import ListType, TupleType, StringType
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File
@@ -36,7 +36,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance, CPSStringWidget, CPSImageWidget, CPSNoneWidget, CPSFileWidget
+     _isinstance, CPSStringWidget, CPSImageWidget, CPSNoneWidget, CPSFileWidget,\
+     renderHtmlTag
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -673,6 +674,366 @@ InitializeClass(CPSLinkWidget)
 
 ##################################################
 
+class CPSGenericSelectWidget(CPSWidget):
+    """Generic Select widget."""
+    meta_type = "CPS Generic Select Widget"
+
+    field_types = ('CPS String Field',)
+    field_inits = ({'is_searchabletext': 1,},)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
+         'label': 'Vocabulary'},
+        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'render_types',
+         'label': 'Render format : select menu (default) or radio buttons'},
+        )
+    render_formats = ['select', 'radio']
+
+    # XXX make a menu for the vocabulary.
+    vocabulary = ''
+    render_format = render_formats[0]
+
+    def _getVocabulary(self, datastructure=None):
+        """Get the vocabulary object for this widget."""
+        vtool = getToolByName(self, 'portal_vocabularies')
+        try:
+            vocabulary = getattr(vtool, self.vocabulary)
+        except AttributeError:
+            raise ValueError("Missing vocabulary '%s' for widget '%s'" %
+                             (self.vocabulary, self.getWidgetId()))
+        return vocabulary
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        value = datamodel[self.fields[0]]
+        if (_isinstance(value, ListType) or
+            _isinstance(value, TupleType)):
+            LOG('CPSGenericSelectWidget.prepare', TRACE,
+                'expected String got Typle %s use first element' % value)
+            if len(value):
+                value = value[0]
+            else:
+                value = ''
+        datastructure[self.getWidgetId()] = value
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        try:
+            v = str(value)
+        except ValueError:
+            datastructure.setError(widget_id, "cpsschemas_err_select")
+            return 0
+        vocabulary = self._getVocabulary(datastructure)
+        if len(value)>0:
+            if not vocabulary.has_key(value):
+                datastructure.setError(widget_id, "cpsschemas_err_select")
+                return 0
+        else:
+            if self.is_required and not vocabulary.has_key(value):
+                datastructure.setError(widget_id, "cpsschemas_err_required")
+                return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = datastructure[self.getWidgetId()]
+        vocabulary = self._getVocabulary(datastructure)
+        if mode == 'view':
+            return escape(vocabulary.get(value, value))
+        elif mode == 'edit':
+            in_selection = 0
+            res = ''
+            html_widget_id = self.getHtmlWidgetId()
+            render_format = self.render_format
+            if render_format not in self.render_formats:
+                raise RuntimeError('unknown render format %s' % render_format)
+            if render_format == 'select':
+                res = renderHtmlTag('select', name=html_widget_id)
+            # vocabulary options
+            for k, v in vocabulary.items():
+                if render_format == 'select':
+                    kw = {'value': k, 'contents': v}
+                    if value == k:
+                        kw['selected'] = None
+                        in_selection = 1
+                    res += renderHtmlTag('option', **kw)
+                    res += '\n'
+                else:
+                    kw = {'id': html_widget_id+'_'+k,
+                          'type': render_format,
+                          'name': html_widget_id,
+                          'value': k,
+                          }
+                    if value == k:
+                        kw['checked'] = None
+                        in_selection = 1
+                    res += renderHtmlTag('input', **kw)
+                    kw = {'for': html_widget_id+'_'+k,
+                          'contents': v,
+                          }
+                    res += renderHtmlTag('label', **kw)
+                    res += '<br/>\n'
+            # invalid selections
+            if value and not in_selection:
+                if render_format == 'select':
+                    kw = {'value': value, 'contents': 'invalid: '+value,
+                          'selected': None}
+                    res += renderHtmlTag('option', **kw)
+                    res += '\n'
+                else:
+                    kw = {'id': html_widget_id+'_'+value,
+                          'type': render_format,
+                          'name': html_widget_id,
+                          'value': k,
+                          'disabled': None,
+                          }
+                    res += renderHtmlTag('input', **kw)
+                    kw = {'for': html_widget_id+'_'+value,
+                          'contents': 'invalid: '+value,
+                          }
+                    res += renderHtmlTag('label', **kw)
+                    res += '<br/>\n'
+            # default option
+            if not self.is_required and not vocabulary.has_key(''):
+                if render_format == 'select':
+                    kw = {'value': '', 'contents': 'None'}
+                    if not in_selection:
+                        kw['selected'] = None
+                    res += renderHtmlTag('option', **kw)
+                    res += '\n'
+                else:
+                    kw = {'id': html_widget_id+'_empty',
+                          'type': render_format,
+                          'name': html_widget_id,
+                          'value': '',
+                          }
+                    if not in_selection:
+                        kw['checked'] = None
+                    res += renderHtmlTag('input', **kw)
+                    kw = {'for': html_widget_id+'_empty',
+                          'contents': 'None',
+                          }
+                    res += renderHtmlTag('label', **kw)
+                    res += '<br/>\n'
+            if render_format == 'select':
+                res += '</select>'
+            return res
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSGenericSelectWidget)
+
+
+class CPSGenericSelectWidgetType(CPSWidgetType):
+    """Generic Select widget type."""
+    meta_type = "CPS Generic Select Widget Type"
+    cls = CPSGenericSelectWidget
+
+InitializeClass(CPSGenericSelectWidgetType)
+
+
+##################################################
+
+class CPSGenericMultiSelectWidget(CPSWidget):
+    """Generic MultiSelect widget."""
+    meta_type = "CPS Generic MultiSelect Widget"
+
+    field_types = ('CPS String List Field',)
+    field_inits = ({'is_searchabletext': 1,},)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
+         'label': 'Vocabulary'},
+        {'id': 'size', 'type': 'int', 'mode': 'w',
+         'label': 'Size'},
+        {'id': 'format_empty', 'type': 'string', 'mode': 'w',
+         'label': 'Format for empty list'},
+        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'render_types',
+         'label': 'Render format : select menu (default), radio buttons or checkboxes'},
+        )
+    render_formats = ['select', 'radio', 'checkbox']
+    # XXX make a menu for the vocabulary.
+
+    vocabulary = ''
+    vocabulary = ''
+    size = 0
+    format_empty = ''
+    render_format = render_formats[0]
+
+    def _getVocabulary(self, datastructure=None):
+        """Get the vocabulary object for this widget."""
+        vtool = getToolByName(self, 'portal_vocabularies')
+        try:
+            vocabulary = getattr(vtool, self.vocabulary)
+        except AttributeError:
+            raise ValueError("Missing vocabulary '%s' for widget '%s'" %
+                             (self.vocabulary, self.getWidgetId()))
+        return vocabulary
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        value = datamodel[self.fields[0]]
+        datamodel = datastructure.getDataModel()
+        value = datamodel[self.fields[0]]
+        if _isinstance(value, StringType):
+            LOG('CPSGenericMultiSelectWidget.prepare', TRACE,
+                'expected List got String %s converting into list' % value)
+            if value:
+                value = ['value',]
+            else:
+                value = []
+        datastructure[self.getWidgetId()] = value
+
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        if (not _isinstance(value, ListType) and
+            not _isinstance(value, TupleType)):
+            datastructure.setError(widget_id, "cpsschemas_err_multiselect")
+            return 0
+        vocabulary = self._getVocabulary(datastructure)
+        v = []
+        for i in value:
+            if i != '':
+                try:
+                    i = str(i)
+                except ValueError:
+                    datastructure.setError(widget_id, "cpsschemas_err_multiselect")
+                    return 0
+                if not vocabulary.has_key(i):
+                    datastructure.setError(widget_id, "cpsschemas_err_multiselect")
+                    return 0
+                v.append(i)
+        if self.is_required and not len(v):
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = datastructure[self.getWidgetId()]
+        vocabulary = self._getVocabulary(datastructure)
+        if mode == 'view':
+            if not value:
+                # XXX L10N empty format may be subject to i18n.
+                return self.format_empty
+            # XXX customize view mode, lots of displays are possible
+            return ', '.join([escape(vocabulary.get(i, i)) for i in value])
+        elif mode == 'edit':
+            in_selection = 0
+            res = ''
+            html_widget_id = self.getHtmlWidgetId()
+            render_format = self.render_format
+            if render_format not in self.render_formats:
+                raise RuntimeError('unknown render format %s' % render_format)
+            if render_format == 'select':
+                kw = {'name': html_widget_id+':list',
+                      'multiple': None,
+                      }
+                if self.size:
+                    kw['size'] = self.size
+                res = renderHtmlTag('select', **kw)
+            # vocabulary options
+            for k, v in vocabulary.items():
+                if render_format == 'select':
+                    kw = {'value': k,
+                          'contents': v}
+                    if k in value:
+                        kw['selected'] = None
+                        in_selection = 1
+                    res += renderHtmlTag('option', **kw)
+                    res += '\n'
+                else:
+                    kw = {'id': html_widget_id+'_'+k,
+                          'type': render_format,
+                          'name': html_widget_id+':list',
+                          'value': k,
+                          }
+                    if k in value:
+                        kw['checked'] = None
+                        in_selection = 1
+                    res += renderHtmlTag('input', **kw)
+                    kw = {'for': html_widget_id+'_'+k,
+                          'contents': v,
+                          }
+                    res += renderHtmlTag('label', **kw)
+                    res += '<br/>\n'
+            # invalid selections
+            for value_item in value:
+                if value_item and value_item not in vocabulary.keys():
+                    if render_format == 'select':
+                        kw = {'value': value_item,
+                              'contents': 'invalid: '+value_item,
+                              'selected': None}
+                        res += renderHtmlTag('option', **kw)
+                        res += '\n'
+                    else:
+                        kw = {'id': html_widget_id+'_'+value_item,
+                              'type': render_format,
+                              'name': html_widget_id+':list',
+                              'value': value_item,
+                              'disabled': None,
+                              }
+                        res += renderHtmlTag('input', **kw)
+                        kw = {'for': html_widget_id+'_'+value,
+                              'contents': 'invalid: '+value,
+                              }
+                        res += renderHtmlTag('label', **kw)
+                        res += '<br/>\n'
+            # default option
+            if not self.is_required and not vocabulary.has_key(''):
+                if render_format == 'select':
+                    kw = {'value': '', 'contents': 'None'}
+                    if not in_selection:
+                        kw['selected'] = None
+                    res += renderHtmlTag('option', **kw)
+                    res += '\n'
+                # not interesting to have a default choice for checkboxes
+                elif render_format == 'radio':
+                    kw = {'id': html_widget_id+'_empty',
+                          'type': render_format,
+                          'name': html_widget_id+':list',
+                          'value': '',
+                          }
+                    if not in_selection:
+                        kw['checked'] = None
+                    res += renderHtmlTag('input', **kw)
+                    kw = {'for': html_widget_id+'_empty',
+                          'contents': 'None',
+                          }
+                    res += renderHtmlTag('label', **kw)
+                    res += '<br/>\n'
+            if render_format == 'select':
+                res += '</select>'
+            default_tag = renderHtmlTag('input',
+                                        type='hidden',
+                                        name=html_widget_id+':tokens:default',
+                                        value='')
+            return default_tag+res
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSGenericMultiSelectWidget)
+
+
+class CPSGenericMultiSelectWidgetType(CPSWidgetType):
+    """Generic MultiSelect widget type."""
+    meta_type = "CPS Generic MultiSelect Widget Type"
+    cls = CPSGenericMultiSelectWidget
+
+InitializeClass(CPSGenericMultiSelectWidgetType)
+
+##################################################
 #
 # Register widget types.
 #
@@ -684,4 +1045,6 @@ WidgetTypeRegistry.register(CPSRichTextEditorWidgetType)
 WidgetTypeRegistry.register(CPSExtendedSelectWidgetType)
 WidgetTypeRegistry.register(CPSInternalLinksWidgetType)
 WidgetTypeRegistry.register(CPSPhotoWidgetType)
+WidgetTypeRegistry.register(CPSGenericSelectWidgetType)
+WidgetTypeRegistry.register(CPSGenericMultiSelectWidgetType)
 
