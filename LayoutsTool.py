@@ -31,7 +31,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.Layout import LayoutContainer
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.DataModel import DataModel
-from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
+from Products.CPSSchemas.StorageAdapter import MappingStorageAdapter
 
 
 class LayoutsTool(UniqueObject, LayoutContainer):
@@ -50,7 +50,7 @@ class LayoutsTool(UniqueObject, LayoutContainer):
 
     security.declareProtected(View, 'renderLayout')
     def renderLayout(self, layout_id, schema_id, context, mapping=None,
-                     layout_mode='edit', **kw):
+                     layout_mode='edit', ob=None, **kw):
         """Render a layout/schema.
 
         Return rendered, msg, ds
@@ -58,6 +58,7 @@ class LayoutsTool(UniqueObject, LayoutContainer):
 
         if mapping is not none then the layout is validate
         and msg is either 'valid' or 'invalid',
+        if valid the ob is commited ob use a mapping storage
 
         you can add kw like style_prefix."""
         msg = ''
@@ -65,8 +66,8 @@ class LayoutsTool(UniqueObject, LayoutContainer):
         ltool = getToolByName(self, 'portal_layouts')
         schema = stool._getOb(schema_id)
         layout = ltool._getOb(layout_id)
-        adapters = [AttributeStorageAdapter(schema, None)]
-        dm = DataModel(None, adapters, proxy=context, context=context)
+        adapters = [MappingStorageAdapter(schema, ob)]
+        dm = DataModel(ob, adapters, proxy=context, context=context)
         dm._fetch()
         dm._check_acls = 0 # this is needed to shortcut directory acl
         ds = DataStructure(datamodel=dm)
@@ -83,8 +84,12 @@ class LayoutsTool(UniqueObject, LayoutContainer):
             if layout.validateLayoutStructure(layout_structure,
                                               ds, layout_mode=layout_mode):
                 msg = 'valid'
+                ob = dm._commit(check_perms=0)
             else:
                 msg = 'invalid'
+        elif not len(ob):
+            # init empty mapping
+            ob = dm._commit(check_perms=0)
 
         layout.renderLayoutStructure(layout_structure, ds,
                                      layout_mode=layout_mode)
