@@ -35,6 +35,7 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
+from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
@@ -245,6 +246,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'data': data,
             'field_id': self.getId(),
             'user': getSecurityManager().getUser(),
+            'portal': getToolByName(self, 'portal_url').getPortalObject(),
             'getDateTime': lambda: DateTime(),
             'nothing': None,
             })
