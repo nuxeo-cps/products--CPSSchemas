@@ -53,6 +53,16 @@ class BaseStorageAdapter:
         """Get schema this adapter is about."""
         return self._schema
 
+    def getDefaultData(self):
+        """Get the default data from the fields' default values.
+
+        Returns a mapping.
+        """
+        data = {}
+        for fieldid, field in self._schema.items():
+            data[fieldid] = field.getDefault()
+        return data
+
     #
     # API called by DataModel
     #
