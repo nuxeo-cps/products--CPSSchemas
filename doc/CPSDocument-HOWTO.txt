@@ -1,0 +1,19 @@
+For a CPSDocument documentType:
+
+portal_schema:
+  create your fields.
+  title is required and description highly recommanded.
+  description can be used like a resume.
+  
+portal_layout:
+  create your widgets and your layout.
+  
+create layout_documentType_:
+  layout_documentType_edit and layout_documentType_view.
+
+portal_types:
+  create CPS Flexible Type Information and give schema, layout and layout style
+  prefix for your documentType.
+
+.cps_workflow_configuration
+  add the workflow_content_wf where it's necessary.
