@@ -26,8 +26,8 @@ from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 
 
-def convertFileToText(file, context=None):
-    """Convert a file to text.
+def _convertFileToMimeType(file, mime_type, context=None):
+    """Convert a file to a new mime type.
 
     The file argument may be a Zope File object or None.
 
@@ -45,13 +45,20 @@ def convertFileToText(file, context=None):
     if not raw:
         return None
     LOG('convertFileToText', DEBUG, 'File is %s' % repr(file))
-    data = transformer.convertTo('text/plain',
+    data = transformer.convertTo(mime_type,
                                  raw,
                                  mimetype=file.content_type,
-                                 filename='fooXXX',
+                                 # filename='fooXXX',
                                  # encoding='',
                                  )
     return data.getData()
+
+def convertFileToText(file, context=None):
+    """Convert a file to text.
+
+    Returns a string, or None if no conversion is possible.
+    """
+    return _convertFileToMimeType(file, 'text/plain', context=context)
 
 
 def convertFileToHtml(file, context=None):
@@ -59,6 +66,4 @@ def convertFileToHtml(file, context=None):
 
     Returns a string, or None if no conversion is possible.
     """
-    if file is None:
-        return None
-    return '<b>Some html here...</b>'
+    return _convertFileToMimeType(file, 'text/html', context=context)
