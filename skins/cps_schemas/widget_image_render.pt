@@ -31,28 +31,10 @@
       tal:replace="structure image_tag" />
 
     <metal:block define-macro="image_edit">
-      <tal:block define="allow_resize here/allow_resize|nothing;
-                         keep_original here/keep_original|nothing;
-                         original_image_field here/original_image_field|nothing;
-                         can_keep_original python:allow_resize and keep_original and original_image_field.strip() and original_image_field in fields">
+      <tal:block define="allow_resize here/allow_resize|nothing">
       <metal:block use-macro="here/widget_file_render/macros/file_edit">
-        <metal:block fill-slot="edit_file_action"
-          tal:condition="python:not empty_file and can_keep_original">
-          <li>
-            <input type="radio" class="noborder" name="." value="resize"
-                   tal:attributes="name radio_name;
-                                   id string:${radio_name}_resize" />
-            <label i18n:translate="cpsschemas_label_image_resize"
-                   tal:attributes="for string:${radio_name}_resize">resize</label>
-            <select tal:attributes="name string:${name}_resize_kept;
-              onchange string:document.getElementById('${radio_name}_resize').checked='checked';"
-              tal:define="wid_size python:(here.display_width, here.display_height);
-              sizes python:[s for s in here.getImgSizes() if not wid_size[0] or s['size'] < wid_size]">
-              <option tal:repeat="op sizes"
-                      tal:attributes="value op/id"
-                      tal:content="op/id" i18n:translate="" />
-            </select>
-          </li>
+        <metal:block fill-slot="edit_file_action">
+          <metal:block define-slot="edit_file_action" />
         </metal:block>
         <metal:block fill-slot="change_file">
           <input type="radio" class="noborder"  name="." value="change"
