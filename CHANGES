@@ -1,18 +1,15 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
+
 New features:
 ~~~~~~~~~~~~~
-- new URLWidget
-- new EmailWidget
-- TextWidget has size_max property
-- new 'help' attribute for widgets to store information related to filling the
-  widgets. This information can be displayed in UI as tooltips.
+-
+
 Bug fixes:
 ~~~~~~~~~~
 -
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- renaming properties '*_str' and used '*_c' for computed attribute
-  foo_expression_str -> foo_expr, foo_expression -> foo_expr_c
-  foo_str -> foo, foo -> foo_c
+-
