@@ -21,7 +21,8 @@
 from AccessControl import allow_type, allow_class
 from AccessControl import ModuleSecurityInfo
 from zLOG import LOG, INFO, DEBUG
-
+from cStringIO import StringIO
+from OFS.Image import File
 
 # Allowing the methods of this file to be imported in restricted code
 ModuleSecurityInfo('Products.CPSSchemas.utils').declarePublic('isProductPresent')
@@ -45,3 +46,15 @@ def isProductPresent(product_name):
         present = 0
     LOG(log_key, DEBUG, "present = %s" % present)
     return present
+
+def copyFile(file_src):
+    """Return a copy of a file object."""
+    if type(file_src) is not File:
+        LOG('CPSSchemas.utils:copyFile', DEBUG,
+            'file_src %s is not a File object' % str(file_src))
+        return
+    # we use a StringIO for performance
+    data = StringIO(str(file_src.data))
+    file_dest = File(file_src.id(), file_src.title, data)
+    file_dest.manage_changeProperties(content_type=file_src.content_type)
+    return file_dest
