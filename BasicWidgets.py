@@ -69,7 +69,7 @@ def renderHtmlTag(tagname, **kw):
     for key, value in kw.items():
         if value is None:
             value = key
-        if value != '':
+        if key in ('value', ) or value != '':
             attrs.append('%s="%s"' % (key, escape(str(value))))
     res = '<%s %s>' % (tagname, ' '.join(attrs))
     if contents is not None:
@@ -810,7 +810,8 @@ class CPSSelectWidget(CPSWidget):
                     in_selection = 1
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
-                kw = {'value': value, 'contents': value, 'selected': None}
+                kw = {'value': value, 'contents': 'invalid: '+value,
+                      'selected': None}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
             return res
