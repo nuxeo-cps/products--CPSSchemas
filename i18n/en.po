@@ -475,7 +475,3 @@ msgstr "Other, please specify: "
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Edit online"
-
-#~ msgid "action_search"
-#~ msgstr "Search"
-

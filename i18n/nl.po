@@ -33,12 +33,6 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button onclick="window.close()">Fermer</button>
-#: from ../skins/cps_schemas/popup_photo.pt
-#, fuzzy
-msgid "button_close"
-msgstr "..."
-
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
@@ -57,27 +51,10 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(Versie HTML)"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
-#.           (printable version)
-#.         </a>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#, fuzzy
-msgid "cpsschema_link_printable_version"
-msgstr "(Versie HTML)"
-
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
 msgstr "mn"
-
-#.   <p>
-#.           cpsschemas_allowed_file_suffixes
-#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
-#.         </p>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#, fuzzy
-msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr "Invalid file"
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -95,14 +72,6 @@ msgstr "Laden"
 msgid "cpsschemas_label_file_delete"
 msgstr "Afschaffen"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
-#.                     Edit file online
-#.                   </a>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_label_file_edit_online"
-msgstr "Niemand"
-
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
@@ -112,12 +81,6 @@ msgstr "Bewaren"
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Niemand"
-
-#.   <label attributes="for string:${radio_name}_resize">resize</label>
-#: from ../skins/cps_schemas/widget_photo_render.pt
-#, fuzzy
-msgid "cpsschemas_label_image_resize"
-msgstr "Formaat&nbsp;: "
 
 #.   <span>
 #.           Photo subtitle
@@ -139,15 +102,6 @@ msgstr "Formaat&nbsp;: "
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Positie&nbsp;: "
-
-#.   <p>
-#.             cpsschemas_size_max
-#.             ${size_max (tal content="str_sizeMax")}
-#.           </p>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
-msgstr "Formaat&nbsp;: "
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -206,12 +160,6 @@ msgstr "MsgId&nbsp;:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Waarde&nbsp;:"
 
-#.   <p>description_vocabulary_manage_form</p>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
-msgid "description_vocabulary_manage_form"
-msgstr "Beleid van het woordenlijst"
-
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -256,22 +204,6 @@ msgstr ""
 msgid "label_alt_text"
 msgstr "Alternatieve tekst"
 
-#, fuzzy
-msgid "cpsschemas_unit_bytes"
-msgstr "mn"
-
-#, fuzzy
-msgid "cpsschemas_unit_kilo_bytes"
-msgstr "In het centrum"
-
-#, fuzzy
-msgid "cpsschemas_unit_mega_bytes"
-msgstr "Formaat&nbsp;: "
-
-#, fuzzy
-msgid "cpsschemas_unit_giga_bytes"
-msgstr "Formaat van invalide datum"
-
 msgid "cpsschemas_err_string"
 msgstr "Keten van invalide karakter"
 
@@ -299,27 +231,11 @@ msgstr "Invalid int "
 msgid "cpsschemas_err_date"
 msgstr "Formaat van invalide datum"
 
-#, fuzzy
-msgid "cpsschemas_err_bad_date"
-msgstr "Formaat van invalide datum"
-
 msgid "cpsschemas_err_file"
-msgstr "Invalid file"
-
-#, fuzzy
-msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr "Invalid file"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "leeg bestand"
-
-#, fuzzy
-msgid "cpsschemas_err_file_too_big"
-msgstr "Invalid file"
-
-#, fuzzy
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "te omvangrijk bestand"
 
 msgid "cpsschemas_err_image"
 msgstr "Invalid image"
@@ -345,40 +261,8 @@ msgstr "Invalid float"
 msgid "cpsschemas_err_password_mismatch"
 msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
 
-#, fuzzy
-msgid "cpsschemas_err_password_size_min"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
-
-#, fuzzy
-msgid "cpsschemas_err_password_lower"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
-
-#, fuzzy
-msgid "cpsschemas_err_password_upper"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
-
-#, fuzzy
-msgid "cpsschemas_err_password_digit"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
-
-#, fuzzy
-msgid "cpsschemas_err_password_extra"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
-
-#, fuzzy
-msgid "cpsschemas_err_identifier"
-msgstr "Invalid int "
-
 msgid "cpsschemas_err_email"
 msgstr "Invalide Email"
-
-#, fuzzy
-msgid "cpsschemas_err_readonly"
-msgstr "Invalide Email"
-
-#, fuzzy
-msgid "cpsschemas_err_rangelist"
-msgstr "Invalid image"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -443,14 +327,6 @@ msgstr "Nee"
 msgid "cpsschemas_label_true"
 msgstr "Ja"
 
-#, fuzzy
-msgid "cpsschema_label_on"
-msgstr "Ja"
-
-#, fuzzy
-msgid "cpsschema_label_off"
-msgstr "Nee"
-
 msgid "cpsschemas_label_link_href"
 msgstr "URL"
 
@@ -459,38 +335,6 @@ msgstr "Link naam"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Beschrijving"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Identificatie&nbsp;:"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Toevoegen een woordenlijst"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "Identificatie&nbsp;:"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Afschaffen"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr "Een toegang toevoegen"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Afschaffen"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr "Afschaffen"
-
-#, fuzzy
-msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Toevoegen een woordenlijst"
 
 msgid "label_none_selection"
 msgstr ""

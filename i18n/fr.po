@@ -309,7 +309,8 @@ msgid "cpsschemas_err_file_too_big"
 msgstr "Fichier trop volumineux"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Ce fichier est trop volumineux, la taille max autorisée est ${max_size}."
+msgstr ""
+"Ce fichier est trop volumineux, la taille max autorisée est ${max_size}."
 
 msgid "cpsschemas_err_image"
 msgstr "Image invalide"
@@ -475,7 +476,3 @@ msgstr "Autre, précisez : "
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Modifier en ligne"
-
-#~ msgid "action_search"
-#~ msgstr "Rechercher"
-

@@ -35,12 +35,6 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button onclick="window.close()">Fermer</button>
-#: from ../skins/cps_schemas/popup_photo.pt
-#, fuzzy
-msgid "button_close"
-msgstr "Fanomezana endrika"
-
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
@@ -140,15 +134,6 @@ msgstr "Format&nbsp;: "
 msgid "cpsschemas_render_position"
 msgstr "Toerana&nbsp;: "
 
-#.   <p>
-#.             cpsschemas_size_max
-#.             ${size_max (tal content="str_sizeMax")}
-#.           </p>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
-msgstr "Alehibeazo ekena farany : ${size_max} ${storage_unit}."
-
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
@@ -205,12 +190,6 @@ msgstr "MsgId&nbsp;:"
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
 msgstr "Isany&nbsp;:"
-
-#.   <p>description_vocabulary_manage_form</p>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
-msgid "description_vocabulary_manage_form"
-msgstr "Fandrindrana ireo voambolana"
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -293,10 +272,6 @@ msgid "cpsschemas_err_int"
 msgstr "Tsy mety ny 'entier'"
 
 msgid "cpsschemas_err_date"
-msgstr "Tsy mety ny daty"
-
-#, fuzzy
-msgid "cpsschemas_err_bad_date"
 msgstr "Tsy mety ny daty"
 
 msgid "cpsschemas_err_file"

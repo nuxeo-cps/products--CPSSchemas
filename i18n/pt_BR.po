@@ -30,12 +30,6 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button onclick="window.close()">Fermer</button>
-#: from ../skins/cps_schemas/popup_photo.pt
-#, fuzzy
-msgid "button_close"
-msgstr "Retorna"
-
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
@@ -66,15 +60,6 @@ msgstr "Previsão"
 msgid "cpsschema_minute"
 msgstr "min"
 
-#.   <p>
-#.           cpsschemas_allowed_file_suffixes
-#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
-#.         </p>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#, fuzzy
-msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr "Arquivo inválido."
-
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
@@ -91,14 +76,6 @@ msgstr "Mudar"
 msgid "cpsschemas_label_file_delete"
 msgstr "Remover"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
-#.                     Edit file online
-#.                   </a>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_label_file_edit_online"
-msgstr "Nenhum"
-
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
@@ -108,12 +85,6 @@ msgstr "Manter"
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Nenhum"
-
-#.   <label attributes="for string:${radio_name}_resize">resize</label>
-#: from ../skins/cps_schemas/widget_photo_render.pt
-#, fuzzy
-msgid "cpsschemas_label_image_resize"
-msgstr "Redimensiona"
 
 #.   <span>
 #.           Photo subtitle
@@ -135,15 +106,6 @@ msgstr "Formato de renderização"
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Posição de renderização"
-
-#.   <p>
-#.             cpsschemas_size_max
-#.             ${size_max (tal content="str_sizeMax")}
-#.           </p>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
-msgstr "Redimensiona"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -202,12 +164,6 @@ msgstr "MsgId"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Valor:"
 
-#.   <p>description_vocabulary_manage_form</p>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
-msgid "description_vocabulary_manage_form"
-msgstr "Administrar vocabulário"
-
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -252,22 +208,6 @@ msgstr ""
 msgid "label_alt_text"
 msgstr "Texto alternativo"
 
-#, fuzzy
-msgid "cpsschemas_unit_bytes"
-msgstr "min"
-
-#, fuzzy
-msgid "cpsschemas_unit_kilo_bytes"
-msgstr "Centro"
-
-#, fuzzy
-msgid "cpsschemas_unit_mega_bytes"
-msgstr "Redimensiona"
-
-#, fuzzy
-msgid "cpsschemas_unit_giga_bytes"
-msgstr "Data inválida."
-
 msgid "cpsschemas_err_string"
 msgstr "Cadeia de caracteres inválida."
 
@@ -295,23 +235,11 @@ msgstr "Inteiro inválido."
 msgid "cpsschemas_err_date"
 msgstr "Data inválida."
 
-#, fuzzy
-msgid "cpsschemas_err_bad_date"
-msgstr "Data inválida."
-
 msgid "cpsschemas_err_file"
-msgstr "Arquivo inválido."
-
-#, fuzzy
-msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr "Arquivo inválido."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Arquivo inválido (vazio)."
-
-#, fuzzy
-msgid "cpsschemas_err_file_too_big"
-msgstr "Arquivo inválido."
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""

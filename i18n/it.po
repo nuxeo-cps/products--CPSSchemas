@@ -31,12 +31,6 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button onclick="window.close()">Fermer</button>
-#: from ../skins/cps_schemas/popup_photo.pt
-#, fuzzy
-msgid "button_close"
-msgstr "Usa Editor (EPOZ)"
-
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
@@ -67,15 +61,6 @@ msgstr "(versione stampabile)"
 msgid "cpsschema_minute"
 msgstr "mn"
 
-#.   <p>
-#.           cpsschemas_allowed_file_suffixes
-#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
-#.         </p>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#, fuzzy
-msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr "File non valido."
-
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
@@ -92,14 +77,6 @@ msgstr "Sostituisci con:"
 msgid "cpsschemas_label_file_delete"
 msgstr "Elimina"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
-#.                     Edit file online
-#.                   </a>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_label_file_edit_online"
-msgstr "Non sostituire"
-
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
@@ -109,12 +86,6 @@ msgstr "Non sostituire"
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Non sostituire"
-
-#.   <label attributes="for string:${radio_name}_resize">resize</label>
-#: from ../skins/cps_schemas/widget_photo_render.pt
-#, fuzzy
-msgid "cpsschemas_label_image_resize"
-msgstr "Ridimensiona"
 
 #.   <span>
 #.           Photo subtitle
@@ -136,15 +107,6 @@ msgstr "Formato: "
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Posizione: "
-
-#.   <p>
-#.             cpsschemas_size_max
-#.             ${size_max (tal content="str_sizeMax")}
-#.           </p>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
-msgstr "Grandezza massima: ${size_max}"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -203,12 +165,6 @@ msgstr "Id messaggio:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Valore:"
 
-#.   <p>description_vocabulary_manage_form</p>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
-msgid "description_vocabulary_manage_form"
-msgstr "Configura i dizionari"
-
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -253,22 +209,6 @@ msgstr "etichetta"
 msgid "label_alt_text"
 msgstr "Testo alternativo:"
 
-#, fuzzy
-msgid "cpsschemas_unit_bytes"
-msgstr "mn"
-
-#, fuzzy
-msgid "cpsschemas_unit_kilo_bytes"
-msgstr "Al centro"
-
-#, fuzzy
-msgid "cpsschemas_unit_mega_bytes"
-msgstr "Ridimensiona"
-
-#, fuzzy
-msgid "cpsschemas_unit_giga_bytes"
-msgstr "Il formato della data non è valido."
-
 msgid "cpsschemas_err_string"
 msgstr "Il valore immesso non è valido."
 
@@ -296,23 +236,11 @@ msgstr "Numero intero non valido."
 msgid "cpsschemas_err_date"
 msgstr "Il formato della data non è valido."
 
-#, fuzzy
-msgid "cpsschemas_err_bad_date"
-msgstr "Il formato della data non è valido."
-
 msgid "cpsschemas_err_file"
-msgstr "File non valido."
-
-#, fuzzy
-msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr "File non valido."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Il file è vuoto."
-
-#, fuzzy
-msgid "cpsschemas_err_file_too_big"
-msgstr "File non valido."
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
