@@ -448,7 +448,7 @@ def install(self):
                 'image': {
                     'type': 'Image Widget',
                     'data': {
-                        'fields': ['sticker'],
+                        'fields': ['image'],
                         'title': 'News image',
                         'title_msgid': 'News image',
                         'descrition': 'News image',
