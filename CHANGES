@@ -6,6 +6,7 @@ New features:
 - new MetaData storage adaptater a metadata use getter/setter method like
   Title() and setTitle()
 - Fields can now be computed/processed on read and write.
+- Don't initialize fields with the widget name by default.
 Bug fixes:
 ~~~~~~~~~~
 - do not raise exception if 2 schemas have a field in common
