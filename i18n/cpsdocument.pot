@@ -1,0 +1,39 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2003-09-04 13:02default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: default\n"
+
+
+#: from ../skins/cps_document/layout_dummy_editlayout.pt
+#.   <input value="button_add" name="addwidget_button" type="submit" />
+#: from ../skins/cps_document/layout_fancy_editlayout.pt
+#: from ../skins/cps_document/layout_form_editlayout.pt
+msgid "button_add"
+msgstr ""
+
+#: from ../skins/cps_document/layout_default_edit.pt
+#.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
+#: from ../skins/cps_document/layout_dummy_edit.pt
+#.   <input value="button_change" name="cpsdocument_edit_button" type="submit" />
+#: from ../skins/cps_document/layout_fancy_edit.pt
+#: from ../skins/cps_document/layout_form_edit.pt
+msgid "button_change"
+msgstr ""
+
+#: from ../skins/cps_document/layout_default_edit.pt
+#.   <span>Form error.</span>
+msgid "cpsdoc_form_error"
+msgstr ""
