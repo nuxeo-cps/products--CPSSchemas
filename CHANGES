@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- The open() calls in DiskFile now specifies binary mode, for windows
+  compatibility.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -112,13 +112,13 @@ class DiskFile(File, VTM):
         self.size = size
         self._new_filename = self.getNewFilename(self._filename + '.new')
         filename = self.getFullFilename(self._new_filename)
-        file = open(filename, 'w')
+        file = open(filename, 'wb')
         file.write(str(data))
     
     security.declareProtected(View, 'getData')
     def getData(self):
         filename = self.getFullFilename()
-        file = open(filename)
+        file = open(filename, 'rb')
         data = file.read()
         return data
 
@@ -139,7 +139,7 @@ class DiskFile(File, VTM):
         """Stores internal data into the external storage"""
         # Clear the _storage_id to force the use of a new object
         filename = self.getFullFilename()
-        file = open(filename, 'w')
+        file = open(filename, 'wb')
         file.write(self._copy_data)
         del self._copy_data
 
@@ -158,7 +158,7 @@ class DiskFile(File, VTM):
         data = self.getData()
         del self._filename
         filename = self.getFullFilename() # XXX Doesn't this fail?
-        file = open(filename, 'w')
+        file = open(filename, 'wb')
         file.write(data)
 
     def manage_afterAdd(self, item, container):
