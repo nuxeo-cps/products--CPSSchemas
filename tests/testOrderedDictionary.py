@@ -152,6 +152,16 @@ class OrderedDictionaryTests(unittest.TestCase):
         dict['k6'] = 'i5'
         self.failIf(dict == copy, 'Copy was too shallow')
 
+    def testEq(self):
+        d1 = OrderedDictionary({'k1': 'i1'})
+        d2 = OrderedDictionary({'k1': 'i1'})
+        self.assertEqual(d1 == d2, not not 1)
+        d3 = OrderedDictionary({'k2': 'i1'})
+        self.assertEqual(d1 == d3, not not 0)
+        d4 = {'k2': 'i1'}
+        self.assertEqual(d1 == d4, not not 0)
+        d5 = {'k1': 'i1'}
+        self.assertEqual(d1 == d5, not not 0)
 
 def test_suite():
     return unittest.makeSuite(OrderedDictionaryTests)
