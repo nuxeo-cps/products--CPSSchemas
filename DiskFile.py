@@ -23,7 +23,7 @@
 
 __version__ = '$Revision$'[11:-2]
 
-import os
+import os, stat
 
 from zLOG import LOG, DEBUG, ERROR, WARNING
 from Globals import InitializeClass, DTMLFile
@@ -71,7 +71,7 @@ class DiskFile(File, VTM):
             theint += 1
             newid = suggested_id + str(theint)
         return newid
-      
+
     #
     # Transaction support
     #
@@ -82,7 +82,7 @@ class DiskFile(File, VTM):
             except OSError:
                 LOG('DiskFile', WARNING, 'Error during transaction commit',
                     'Removing file %s failed. \nStray files may linger.\n' %
-                        self.getFullFilename())        
+                        self.getFullFilename())
         self._is_new_file = 0
         os.rename(self.getFullFilename(self._new_filename),
                   self.getFullFilename())
@@ -93,28 +93,28 @@ class DiskFile(File, VTM):
         except OSError:
             LOG('DiskFile', WARNING, 'Error during transaction abort',
                 'Removing file %s failed. \nStray files may linger.\n' %
-                    self.getFullFilename(self._new_filename))        
-   
+                    self.getFullFilename(self._new_filename))
+
     #
     # API
     #
     def update_data(self, data, content_type=None, size=None):
         self._register()
-        if content_type is not None: 
+        if content_type is not None:
             self.content_type = content_type
         elif not self.content_type:
             # Neither new nor old contentype specified.
             # Try to figure it out:
-            self.content_type = self._get_content_type('', data, 
+            self.content_type = self._get_content_type('', data,
                                 self._filename, None)
-        if size is None: 
+        if size is None:
             size = len(data)
         self.size = size
         self._new_filename = self.getNewFilename(self._filename + '.new')
         filename = self.getFullFilename(self._new_filename)
         file = open(filename, 'wb')
         file.write(str(data))
-    
+
     security.declareProtected(View, 'getData')
     def getData(self):
         filename = self.getFullFilename()
@@ -124,7 +124,7 @@ class DiskFile(File, VTM):
 
     security.declareProtected(View, 'data')
     data = ComputedAttribute(getData, 1)
-        
+
     #
     # cut/copy/paste/delete support
     #
@@ -150,8 +150,8 @@ class DiskFile(File, VTM):
         except OSError:
             LOG('DiskFile', WARNING, 'manage_beforeDelete',
                 'Removing file %s failed. \nStray files may linger.\n' %
-                    self.getFullFilename())        
-        
+                    self.getFullFilename())
+
     def manage_afterClone(self, item):
         filename = self.getFullFilename()
         # This is a copy-paste operation, so duplicate the data!
@@ -167,6 +167,16 @@ class DiskFile(File, VTM):
             # in manage_beforeDelete!
             self.storeData()
 
+    def get_size(self):
+        """Get the size of a file or image.
+
+        Returns the size of the file or image.
+        """
+        if getattr(self, 'size', None) is not None:
+            return self.size
+        return 0
+
+    getSize = get_size #getSize is supposed to be deprecated
 
 InitializeClass(DiskFile)
 
