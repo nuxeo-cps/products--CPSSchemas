@@ -162,9 +162,12 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         ('acl_write_roles', 'acl_write_roles_c', ',; '),
         )
 
+    user_modified = 0
+
     def __init__(self, id, title='', dict={}, list=[], **kw):
         self.id = id
         self.title = title
+        self.user_modified = 0
         vocab = Vocabulary(dict=dict, list=list)
         self.setVocabulary(vocab)
 
@@ -219,6 +222,12 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         return getSecurityManager().getUser().has_role(
             self.acl_write_roles)
 
+    security.declareProtected(ManagePortal, 'isUserModified')
+    def isUserModified(self):
+        """Tell if the vocabulary has been modified by a user.
+        """
+        return self.user_modified
+    
     #
     # ZMI
     #
@@ -254,6 +263,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         """Add a vocabulary item."""
         self._checkWriteAllowed()
         self.set(new_key, new_label, new_msgid)
+        self.user_modified = 1
         if REQUEST is not None:
             return self.manage_main(REQUEST, manage_tabs_message='Added.')
 
@@ -277,6 +287,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
                 break
             vocab.set(form[k], form['label_%d' % i], form['msgid_%d' % i])
         self.setVocabulary(vocab)
+        self.user_modified = 1
         if REQUEST is not None:
             return self.manage_main(REQUEST, manage_tabs_message='Changed.')
 
@@ -286,6 +297,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         self._checkWriteAllowed()
         for key in keys:
             del self[key]
+        self.user_modified = 1
         if REQUEST is not None:
             return self.manage_main(REQUEST, manage_tabs_message='Deleted.')
 

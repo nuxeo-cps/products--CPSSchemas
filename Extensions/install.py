@@ -203,12 +203,19 @@ def install(self):
     vtool = portal.portal_vocabularies
     for id, info in vocabularies.items():
         pr(" Vocabulary %s" % id)
+        kept = 0
         if id in vtool.objectIds():
-            pr("  Deleting.")
-            vtool.manage_delObjects([id])
-        pr("  Installing.")
-        type = info.get('type', 'CPS Vocabulary')
-        vtool.manage_addCPSVocabulary(id, type, **info['data'])
+            if getattr(vtool, id).isUserModified():
+                pr("  Keeping, as it has been modified.")
+                pr("  Delete it manually if needed.")
+                kept = 1
+            else:
+                pr("  Deleting.")
+                vtool.manage_delObjects([id])
+        if not kept:
+            pr("  Installing.")
+            type = info.get('type', 'CPS Vocabulary')
+            vtool.manage_addCPSVocabulary(id, type, **info['data'])
 
     # importing .po files
     mcat = portal['Localizer']['default']
