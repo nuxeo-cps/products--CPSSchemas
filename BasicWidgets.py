@@ -927,6 +927,8 @@ class CPSSelectWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
+        {'id': 'is_translated', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
 
@@ -967,14 +969,24 @@ class CPSSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        cpsmcat = portal.Localizer.default
         if mode == 'view':
-            return escape(vocabulary.get(value, value))
+            if getattr(self, 'is_translated', False):
+                return escape(cpsmcat(vocabulary.get(value, value)).encode('ISO-8859-15', 'ignore'))
+            else:
+                return escape(vocabulary.get(value, value))
         elif mode == 'edit':
             res = renderHtmlTag('select',
                                 name=self.getHtmlWidgetId())
             in_selection = 0
             for k, v in vocabulary.items():
-                kw = {'value': k, 'contents': v}
+                if getattr(self, 'is_translated', False):
+                    kw = {'value': k,
+                          'contents': cpsmcat(vocabulary.getMsgid(k)).encode('ISO-8859-15', 'ignore')
+                          }
+                else:
+                    kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = 'selected'
                     in_selection = 1
@@ -1013,6 +1025,8 @@ class CPSMultiSelectWidget(CPSWidget):
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
+        {'id': 'is_translated', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
     vocabulary = ''
@@ -1070,12 +1084,17 @@ class CPSMultiSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        cpsmcat = portal.Localizer.default
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            return ', '.join([escape(vocabulary.get(i, i)) for i in value])
+            elif getattr(self, 'is_translated', False):
+                return ', '.join([escape(cpsmcat(vocabulary.get(i, i))) for i in value])
+            else:
+                return ', '.join([escape(vocabulary.get(i, i)) for i in value])
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id+':list',
@@ -1085,7 +1104,12 @@ class CPSMultiSelectWidget(CPSWidget):
                 kw['size'] = self.size
             res = renderHtmlTag('select', **kw)
             for k, v in vocabulary.items():
-                kw = {'value': k, 'contents': v}
+                if getattr(self, 'is_translated', False):
+                    kw = {'value': k,
+                          'contents': cpsmcat(vocabulary.getMsgid(k)).encode('ISO-8859-15', 'ignore')
+                          }
+                else:
+                    kw = {'value': k, 'contents': v}
                 if k in value:
                     kw['selected'] = 'selected'
                 res += renderHtmlTag('option', **kw)
