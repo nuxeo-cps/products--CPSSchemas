@@ -1,0 +1,105 @@
+How to write a widget
+
+  $Id$
+
+  This document describes how to write a new widget in a python class.
+  Simple examples of existing widgets can be found in BasicWidgets.py
+
+  Overview
+
+    A widget is a component describing how to render one (or several)
+    fields. Rendering can be done in several modes, usually at 'view'
+    and 'edit'.
+
+    There are two important concepts regarding the data associated with
+    a widget: the datamodel and the datastructure.
+
+    'datamodel'
+
+      The datamodel is a representation of what is stored in the object.
+      It is basically a dictionnary. The keys are defined by the fields
+      of the schema for the document, and the type of the values is
+      constrained by what the fields allow.
+
+      The datamodel must only contain "valid" data.
+
+    'datastructure'
+
+      The datastructure is a representation that is equivalent to what
+      the user would enter in 'edit' mode. This means that it is
+      widget-oriented (and not field-oriented like the datamodel), and
+      that the values are usually strings.
+
+      The datastructure may contain "canonical" data computed from the
+      datamodel, for instance when first rendering an object for
+      edition, but it may also contain "erroneous" data typed by the
+      user and that must be redisplayed with an error message.
+
+      If a widget has to deal with several HTML input zones, then
+      different keys in the datastrucure must be used. They must all be
+      based on self.getWidgetId() plus some suffix.
+
+  Methods
+
+    'prepare'
+
+      Must build a datastructure from the datamodel. It has to compute
+      all the strings that would appear in the datastructure.
+
+      ...
+
+    'validate'
+
+      Validate data entererd by the user from the dastructure, and if
+      everything is ok update the datamodel to reflect the changes made
+      by the user. If there is an error, then the datastrucure should be
+      updated to reflect it (using the setError method).
+
+      ...
+
+      Must return 1 if everything was ok, or 0 if there was an error.
+
+      After validation, whether there was an error or not, the document
+      will be redisplayed in some mode (usually 'view' or 'edit') using
+      the current datastructure.
+
+        Note: If the 'validate' method modifies the datamodel in such a
+        way that a subsequent rendering would be different than the
+        existing one (where the user entered his values), then the
+        datastructure also has to be modified to reflect those changes.
+        This is because the next rendering is done from the existing
+        datastructure, not from another request.
+
+        The easiest way to ensure this is to call 'prepare' at the end
+        of the 'validate' method, to re-prepare the datastructure.
+
+    'render'
+
+      Rendering is done from the datastructure. It has to be based on
+      the datastructure only (not the datamodel), because in case of
+      error from the user input (detected during validation), this input
+      has to be redisplayed with an error message asking to correct it.
+
+      Rendering must be careful to always escape user-data to avoid the
+      possibility of breaking the display if the user enters HTML code
+      in a field designed to receive simple text for instance.
+
+      Rendering must always return a string.
+
+  Gotchas
+
+    - To get the unique id of a widget, use self.getWidgetId(). To get a
+      unique id for the widget suitable for inclusing in HTML code (in
+      the rendering), use self.getHtmlWidgetId() (or
+      here/getHtmlWidgetId from Page Templates).
+
+      The conversion between from HTML input field ids into the
+      datastructure ids is done by DataStructure.updateFromMapping().
+
+    - A widget has a 'field_types' attribute. It is used by the flexible
+      layout code to decide what types of fields should be created if
+      there is a need to create a new widget of this type.
+
+    - A widget is not always called in the context of an existing
+      document. During creation, a datamodel and datastrucure are
+      constructed, but don't (yet) have an object behind them.
