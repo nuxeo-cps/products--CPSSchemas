@@ -215,14 +215,15 @@ class FlexibleTypeInformation(TypeInformation):
         return dm
 
     security.declarePrivate('getLayout')
-    def getLayout(self):
+    def getLayout(self, layout_id=None):
         """Get the layout for our type."""
         ltool = getToolByName(self, 'portal_layouts')
-        layout = ltool._getOb(self.layout, None)
+        if not layout_id:
+            layout_id = self.layout
+        layout = ltool._getOb(layout_id, None)
         if layout is None:
-            raise ValueError("No layout '%s'" % self.layout)
+            raise ValueError("No layout '%s'" % layout_id)
         return layout
-
 
     security.declarePrivate('_renderLayoutStyle')
     def _renderLayoutStyle(self, ob, mode, **kw):
@@ -230,22 +231,22 @@ class FlexibleTypeInformation(TypeInformation):
         return layout_style(mode=mode, **kw)
 
     security.declarePrivate('renderObject')
-    def renderObject(self, ob, mode='view'):
+    def renderObject(self, ob, mode='view', layout_id=None):
         """Render the object."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
-        layoutob = self.getLayout()
+        layoutob = self.getLayout(layout_id)
         layout = layoutob.getLayoutData(ds, dm)
         return self._renderLayoutStyle(ob, mode, layout=layout,
                                        datastructure=ds, datamodel=dm)
 
     security.declarePrivate('renderEditObject')
-    def renderEditObject(self, ob, request=None, errmode='edit',
-                         okmode='edit'):
+    def renderEditObject(self, ob, request=None, layout_id=None,
+                         errmode='edit', okmode='edit'):
         """Maybe modify the object from request, and renders to new mode."""
         dm = self.getDataModel(ob)
         ds = DataStructure()
-        layoutob = self.getLayout()
+        layoutob = self.getLayout(layout_id)
         layoutdata = layoutob.getLayoutData(ds, dm)
         if (request is not None
             and request.has_key('cpsdocument_edit_button')): # XXX customizable
