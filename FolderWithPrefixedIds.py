@@ -99,4 +99,11 @@ class FolderWithPrefixedIds(Folder):
                 items.append((id[prefixlen:], value))
         return items
 
+    security.declareProtected(AccessContentsInformation, 'has_key')
+    def has_key(self, key):
+        """Test if key is present."""
+        if not key.startswith(self.prefix):
+            key = self.prefix + key
+        return key in self.objectIds()
+
 InitializeClass(FolderWithPrefixedIds)
