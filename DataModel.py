@@ -64,15 +64,20 @@ class DataModel(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, ob, schemas=[], context=None):
+    def __init__(self, ob, schemas=[], proxy=None):
+        """Constructor.
+
+        Proxy must be passed, if different than the object, so that
+        widgets or fields can do some placeful computations, and that
+        an editable content can be created at commit time.
+        """
         UserDict.__init__(self)
         # self.data initialized by UserDict
         self._ob = ob
         self._fields = {}
         self._schemas = ()
         self._adapters = ()
-        # context is used to get to portal_transforms using getToolByName.
-        self._context = context
+        self._proxy = proxy
         for schema in schemas:
             self._addSchema(schema)
 
@@ -80,6 +85,10 @@ class DataModel(UserDict):
         """Get the object this DataModel is about."""
         # XXX used by what ???
         return self._ob
+
+    def getProxy(self):
+        """Get the proxy of the object for this DataModel."""
+        return self._proxy
 
     # Expose setter as method for restricted code.
     def set(self, key, value):
@@ -103,8 +112,10 @@ class DataModel(UserDict):
         for adapter in self._adapters:
             self.data.update(adapter.getData())
 
-    def _setEditableFromProxy(self, proxy):
-        """Set the editable object for this DataModel from a proxy.
+    def _setEditable(self):
+        """Set the editable object for this DataModel.
+
+        Uses the proxy passed to the constructor.
 
         Future uses of the DataModel will refer to the editable object.
 
@@ -112,6 +123,7 @@ class DataModel(UserDict):
         on the proxy before the object is ready for modification (CPS
         uses this to provide "freezing", a lazy unsharing of objects).
         """
+        proxy = self._proxy
         if proxy is None:
             return
         if not hasattr(aq_base(proxy), 'getEditableContent'):
@@ -131,16 +143,15 @@ class DataModel(UserDict):
             for adapter in self._adapters:
                 adapter.setContextObject(ob)
 
-    def _commit(self, proxy=None, check_perms=1):
+    def _commit(self, check_perms=1):
         """Commit modified data into object.
 
         Returns the resulting object.
 
-        If a proxy is passed, try to re-get an editable version of the
-        object before modifying it. This is needed by CPS for frozen
-        objects.
+        Try to re-get an editable version of the object before modifying
+        it. This is needed by CPS for frozen objects.
         """
-        self._setEditableFromProxy(proxy)
+        self._setEditable()
         ob = self._ob
 
         # Check permission on the object.
@@ -151,10 +162,11 @@ class DataModel(UserDict):
 
         # Compute dependant fields.
         data = self.data
+        context = self._proxy or self._ob
         for schema in self._schemas:
             for field_id, field in schema.items():
                 field.computeDependantFields(self._schemas, data,
-                                             context=self._context)
+                                             context=context)
 
         # Call the adapters to store the data.
         for adapter in self._adapters:

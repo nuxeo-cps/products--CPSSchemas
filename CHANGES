@@ -9,4 +9,5 @@ Bug fixes:
 - LinkWidget convert url in lowercase
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- DataModel constructor now takes a proxy argument to be able to provide
+  it to fields or widgets that need to do placeful stuff.
