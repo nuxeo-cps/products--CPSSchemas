@@ -321,12 +321,13 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
 
     security.declarePrivate('_createExpressionContext')
     def _createExpressionContext(self, datastructure, **kw):
-        """ creates an expression contect for script execution
+        """ creates an expression context for script execution
         """
         portal = getToolByName(self, 'portal_url').getPortalObject()
         data = {
             'layout': self,
             'datastructure': datastructure,
+            'datamodel' : datastructure.getDataModel(),
             'kw': kw,
             'nothing': None,
             'portal': portal,
