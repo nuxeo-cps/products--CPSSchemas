@@ -19,6 +19,9 @@ msgstr ""
 msgid "cpsschemas_err_string"
 msgstr ""
 
+msgid "cpsschemas_err_string_too_long"
+msgstr ""
+
 msgid "cpsschemas_err_required"
 msgstr ""
 
@@ -48,3 +51,4 @@ msgstr ""
 
 msgid "cpsschema_err_image"
 msgstr ""
+

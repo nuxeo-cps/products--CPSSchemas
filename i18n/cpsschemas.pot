@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-22 16:28default\n"
+"POT-Creation-Date: 2003-09-22 17:41default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -35,6 +35,9 @@ msgid "cpsschemas_label_file_keep"
 msgstr ""
 
 msgid "cpsschemas_err_string"
+msgstr ""
+
+msgid "cpsschemas_err_string_too_long"
 msgstr ""
 
 msgid "cpsschemas_err_required"
