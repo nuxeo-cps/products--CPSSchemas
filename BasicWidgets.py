@@ -491,9 +491,11 @@ class CPSLinesWidget(CPSWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        if value == ['']:
+            # Buggy Zope :lines prop may give us [''] instead of []
+            value = []
         v = value # Zope handle :lines automagically
-        if self.is_required and (not v or v == ['']):
-            # Empty textarea is returned as ['']
+        if self.is_required and not v:
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
