@@ -773,7 +773,7 @@ class CPSGenericSelectWidget(CPSWidget):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default
         if mode == 'view':
-            if getattr(self, 'translated', False):
+            if getattr(self, 'translated', None):
                 return escape(cpsmcat(vocabulary.get(value, value)).encode('ISO-8859-15', 'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
@@ -789,7 +789,7 @@ class CPSGenericSelectWidget(CPSWidget):
             # vocabulary options
             for k, v in vocabulary.items():
                 if render_format == 'select':
-                    if getattr(self, 'translated', False):
+                    if getattr(self, 'translated', None):
                         kw = {'value': k,
                               'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
                               }
@@ -969,7 +969,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            elif getattr(self, 'translated', False):
+            elif getattr(self, 'translated', None):
                 return ', '.join([escape(cpsmcat(vocabulary.get(i, i))) for i in value])
             else:
                 return ', '.join([escape(vocabulary.get(i, i)) for i in value])
@@ -990,7 +990,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
             # vocabulary options
             for k, v in vocabulary.items():
                 if render_format == 'select':
-                    if getattr(self, 'translated', False):
+                    if getattr(self, 'translated', None):
                         kw = {'value': k,
                               'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
                               }
