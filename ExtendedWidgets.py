@@ -1461,14 +1461,17 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
         for language in languages:
             language_title = mcat('label_language_%s'% language).encode(
                 'ISO-8859-15', 'ignore')
-            contents = renderHtmlTag('abbr', title=language_title,
-                                     contents=language)
+            contents = language
             if current_language != language:
-                contents = renderHtmlTag('a', href='%s/switchLanguage/%s' % (
-                    proxy_url, language), title=language_title,
-                                         contents=contents)
+                contents = renderHtmlTag('a', href='%s/switchLanguage/%s' %
+                                         (proxy_url, language),
+                                         title=language_title,
+                                         contents=contents,
+                                         css_class='availableLang')
             else:
-                contents = '[%s]' % contents
+                contents = renderHtmlTag('span', contents=contents,
+                                         title=language_title,
+                                         css_class='selectedLang')
             contents += ' '
             res += renderHtmlTag('li', contents=contents)
         res = renderHtmlTag('ul', contents=res)

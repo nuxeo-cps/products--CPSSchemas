@@ -12,6 +12,7 @@ Bug fixes:
 - Fixed HTML errors in Boolean Widget render method (invalid id, invalid label
   in edit mode)
 - Fixed error when saving changes on layout properties in the ZMI.
+- Better decoration for the CPSDocumentLanguageSelectWidget through CSS.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
