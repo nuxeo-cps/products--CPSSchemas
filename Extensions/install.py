@@ -47,9 +47,10 @@ def install(self):
 
 
     # skins
-    skins = ('cps_schemas',)
+    skins = ('cps_schemas', 'cps_jscalendar')
     paths = {
         'cps_schemas': 'Products/CPSSchemas/skins/cps_schemas',
+        'cps_jscalendar': 'Products/CPSSchemas/skins/cps_jscalendar',
     }
     skin_installed = 0
     for skin in skins:
