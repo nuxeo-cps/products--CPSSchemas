@@ -138,7 +138,7 @@ class CPSImageField(CPSField):
             return None
         if _isinstance(value, Image):
             return value
-        raise ValidationError('Not a file: %s' % repr(value))
+        raise ValidationError('Not an image: %s' % repr(value))
 
 InitializeClass(CPSImageField)
 
