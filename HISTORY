@@ -1,4 +1,26 @@
 *******************************************
+** CPSSchemas V0.28.0 [R1 build 2004/08/12-14:21 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Adding a default render method for compound widgets, displaying the rendered
+  structure for each widget in the compound widget: providing a render method
+  when defining a compound widget is not mandatory anymore.
+- Added the new "context" variable to be used with the storage expressions.
+Bug fixes:
+~~~~~~~~~~
+- Generic Select Widget: when widget is required and other option is accepted,
+  an empty entry in the text input was accepted when validating the widget.
+- Don't fail widget expression computation if the proxy does not have
+  a review_state.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.27.1 [R1 build 2004/07/28-15:39 by guillaum]
 
 Requires:
