@@ -131,7 +131,7 @@ class CPSWidget(Widget):
         {'id': 'description', 'type': 'text', 'mode': 'w',
          'label': 'Description'},
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
-         'label': 'CSS class'},
+         'label': 'CSS class for view'},
         )
 
 InitializeClass(CPSWidget)
