@@ -6,8 +6,10 @@
   rposition options/render_position;
   rformat options/render_format;
   configurable options/configurable;
-  button_text_editor_popup_id python:'widget__%s_button' % id;
   file_upload_id python:'widget__%s_fileupload' % id;
+  position_selector_id string:${value_name}_rposition;
+  format_selector_id string:${value_name}_rformat;
+  button_text_editor_popup_id python:'widget__%s_button' % id;
   ">
   <tal:block condition="python: mode == 'view'">
     <div tal:condition="value"
@@ -24,14 +26,17 @@
         tal:content="value" />
     <p>
       <tal:block condition="file_uploader">
-        <label tal:attributes="for file_upload_id" i18n:translate="label_file_upload">
-          File to use to fill the text area</label>
+        <label tal:attributes="for file_upload_id"
+          i18n:translate="label_file_upload">
+          File to use to fill the text area:</label>
         <input type="file"
           tal:attributes="id file_upload_id; name file_upload_id"/><br/>
       </tal:block>
       <tal:block condition="python: configurable.find('position') >= 0">
-        <tal:block i18n:translate="">cpsschemas_render_position</tal:block>
-        <select tal:attributes="name string:${value_name}_rposition">
+        <label tal:attributes="for position_selector_id"
+          i18n:translate="cpsschemas_render_position">Position:</label>
+        <select tal:attributes="id position_selector_id;
+                                name position_selector_id">
           <option tal:repeat="op here/all_render_positions"
             tal:attributes="selected python:op == rposition;
             value op"
@@ -39,9 +44,10 @@
         </select>
       </tal:block>
       <tal:block condition="python: configurable.find('format') >= 0">
-        <tal:block i18n:translate="">cpsschemas_render_format</tal:block>
-        <select tal:attributes="name string:${value_name}_rformat;
-          id string:${value_name}_rformat;
+        <label tal:attributes="for format_selector_id"
+          i18n:translate="cpsschemas_render_format">Format:</label>
+        <select tal:attributes="id format_selector_id;
+                                name format_selector_id;
           onchange python:'showElement(this.value == \'html\',\'%s\')' % button_text_editor_popup_id
           ">
           <option tal:repeat="op here/all_render_formats"
