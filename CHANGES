@@ -3,8 +3,14 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Add a script to make available vocabulary keys sorted by label or by 
-  translated msgid
+- Add keysSortedBy method to Vocabulary. Criterium available and well tested 
+  are 'id', 'label', 'i18n'. You can also sort keys with a sort_function which 
+  take the following list as an element (key, label, msgid, translated_msgid).
+- Try to implement sorted vocabularies. Now Vocabulary() can take an extra 
+  argument: sort_function. It permits to insert a new key at good place on set.
+  Three methods are added: getSortFunction, setSortFunction, sortKeys.
+  The last one is not called 'sort' because it must not implement the list.sort
+  API. It will only help when a portal manager change Vocabulary sort function.
 Bug fixes:
 ~~~~~~~~~~
 - Generic select widget did not refuse validation of empty values when required
