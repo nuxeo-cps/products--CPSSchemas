@@ -21,7 +21,7 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- #108: Searchable and previewable files like in NuxDocument
 Bug fixes:
 ~~~~~~~~~~
 - temporary fix for 'unhashable type' in vocabulary.get
