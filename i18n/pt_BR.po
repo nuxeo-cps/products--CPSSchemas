@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-06-23 16:33default\n"
+"POT-Creation-Date: 2004-07-08 08:36default\n"
 "PO-Revision-Date: 2004-06-08 16:42-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: Português do Brasil <pt@li.org>\n"
@@ -276,6 +276,10 @@ msgstr "cpsschemas_err_email"
 
 msgid "cpsschemas_err_readonly"
 msgstr "cpsschemas_err_readonly"
+
+#, fuzzy
+msgid "cpsschemas_err_rangelist"
+msgstr "cpsschemas_err_image"
 
 msgid "jscalendar_date_fmt"
 msgstr "%d/%m/%Y %T %Z"

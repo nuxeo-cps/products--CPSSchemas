@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2004-06-23 16:33default\n"
+"POT-Creation-Date: 2004-07-08 08:36default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -315,6 +315,10 @@ msgstr "Correo-e no válido"
 #, fuzzy
 msgid "cpsschemas_err_readonly"
 msgstr "Correo-e no válido"
+
+#, fuzzy
+msgid "cpsschemas_err_rangelist"
+msgstr "Imagen no válida"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"

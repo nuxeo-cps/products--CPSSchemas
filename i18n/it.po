@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"POT-Creation-Date: 2004-06-23 16:33default\n"
+"POT-Creation-Date: 2004-07-08 08:36default\n"
 "PO-Revision-Date: 2004-05-21 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -294,6 +294,10 @@ msgstr "Email non valida"
 
 msgid "cpsschemas_err_readonly"
 msgstr "Campo in sola lettura"
+
+#, fuzzy
+msgid "cpsschemas_err_rangelist"
+msgstr "Immagine non valida"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-23 16:33default\n"
+"POT-Creation-Date: 2004-07-08 08:36default\n"
 "PO-Revision-Date: 2004-06-18 19:59+0200\n"
 "Last-Translator: Encolpe DEGOUTE <ed@nuxeo.com>\n"
 "Language-Team: French <cantact@nuxeo.com>\n"
@@ -282,6 +282,9 @@ msgstr "Courriel invalide"
 
 msgid "cpsschemas_err_readonly"
 msgstr "Champs en lecture seule"
+
+msgid "cpsschemas_err_rangelist"
+msgstr "Liste d'intervales invalide"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"

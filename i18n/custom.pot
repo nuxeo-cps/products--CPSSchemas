@@ -100,6 +100,9 @@ msgstr ""
 msgid "cpsschemas_err_readonly"
 msgstr ""
 
+msgid "cpsschemas_err_rangelist"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""
 
