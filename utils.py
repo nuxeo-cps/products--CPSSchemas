@@ -22,7 +22,7 @@ from AccessControl import allow_type, allow_class
 from AccessControl import ModuleSecurityInfo
 from zLOG import LOG, INFO, DEBUG
 from cStringIO import StringIO
-from OFS.Image import File
+from OFS.Image import File, Image
 
 # Allowing the methods of this file to be imported in restricted code
 ModuleSecurityInfo('Products.CPSSchemas.utils').declarePublic('isProductPresent')
@@ -56,5 +56,17 @@ def copyFile(file_src):
     # we use a StringIO for performance
     data = StringIO(str(file_src.data))
     file_dest = File(file_src.id(), file_src.title, data)
+    file_dest.manage_changeProperties(content_type=file_src.content_type)
+    return file_dest
+
+def copyImage(file_src):
+    """Return a copy of an image object."""
+    if type(file_src) is not Image:
+        LOG('CPSSchemas.utils:copyImage', DEBUG,
+            'file_src %s is not an Image object' % str(file_src))
+        return
+    # we use a StringIO for performance
+    data = StringIO(str(file_src.data))
+    file_dest = Image(file_src.id(), file_src.title, data)
     file_dest.manage_changeProperties(content_type=file_src.content_type)
     return file_dest
