@@ -4,7 +4,8 @@ ZODB Requires:
 
 New features:
 ~~~~~~~~~~~~~
--
+- Fields now have a read_process_dependent_fields property to specify which
+  fields the depend on.
 
 Bug fixes:
 ~~~~~~~~~~
@@ -12,4 +13,4 @@ Bug fixes:
 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Added the possibility to restrict the fields managed by a storage adapter.
