@@ -128,9 +128,14 @@ Fields
 
         - portal: the portal
 
+        - context: the context object
+
         - DateTime: a DateTime constructor
 
         - nothing: None
+
+      Note that the context object is the object on which the read is
+      being done, it is not the proxy (in the case of attribute storage).
 
     read_process_dependent_fields -- Read: expression dependent fields
 
