@@ -1,15 +1,13 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
-
 New features:
 ~~~~~~~~~~~~~
--
-
+- new MetaData storage adaptater a metadata use  getter/setter method like
+  Title() and setTitle()
 Bug fixes:
 ~~~~~~~~~~
 -
-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Pass the datamodel as argument to postCommitHook as it is sometimes
