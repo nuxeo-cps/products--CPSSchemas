@@ -1,5 +1,4 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -31,7 +30,7 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 class MethodVocabulary(SimpleItemWithProperties):
     """Method Vocabulary
 
-    this enable to define dynamic vocabulary using a method
+    Define a dynamic vocabulary using a method
     the method have to return a list of tuples like this
     (('foo', "Foo"), ('bar', "Bar"))
 
