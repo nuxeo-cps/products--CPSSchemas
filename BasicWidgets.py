@@ -124,12 +124,9 @@ class CPSStringWidget(CPSWidget):
 
     field_types = ('CPS String Field',)
 
-    is_required = 0
     display_width = 20
     display_maxwidth = 0
     _properties = CPSWidget._properties + (
-        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
-         'label': 'Mandatory field'},
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
         {'id': 'display_maxwidth', 'type': 'int', 'mode': 'w',
@@ -288,13 +285,10 @@ class CPSTextAreaWidget(CPSWidget):
 
     field_types = ('CPS String Field',)
 
-    is_required = 0
     width = 40
     height = 5
     render_mode = 'pre'
     _properties = CPSWidget._properties + (
-        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
-         'label': 'Mandatory field'},
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
@@ -768,14 +762,11 @@ class CPSDateWidget(CPSWidget):
     field_types = ('CPS DateTime Field',)
 
     _properties = CPSWidget._properties + (
-        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
-         'label': 'Mandatory field'},
         {'id': 'view_format', 'type': 'string', 'mode': 'w',
          'label': 'View format'},
         {'id': 'view_format_none', 'type': 'string', 'mode': 'w',
          'label': 'View format empty'},
         )
-    is_required = 0
     view_format = "%d/%m/%Y" # XXX unused for now
     view_format_none = "-"
 
@@ -880,15 +871,20 @@ class CPSFileWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
          'label': 'Deletable'},
+        {'id': 'size_max', 'type': 'int', 'mode': 'w',
+         'label': 'Maximum file size'},
         )
     deletable = 1
+    size_max = 4*1024*1024
 
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         datastructure[widget_id] = datamodel[self.fields[0]]
-        datastructure[widget_id+'_choice'] = '' # make update from request work
+        # make update from request work
+        datastructure[widget_id + '_choice'] = ''
+
 
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
@@ -896,27 +892,37 @@ class CPSFileWidget(CPSWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
+        err = 0
         if choice == 'keep':
             # XXX check SESSION
-            ok = 1
+            pass
         elif choice == 'delete':
             datamodel[field_id] = None
-            ok = 1
         else: # 'change'
             file = datastructure[widget_id]
-            if _isinstance(file, FileUpload):
-                fileid, filetitle = cookId('', '', file)
-                file = File(fileid, filetitle, file)
-                LOG('CPSFileWidget', DEBUG, 'validate change set %s' % `file`)
-                datamodel[field_id] = file
-                ok = 1
+            if not _isinstance(file, FileUpload):
+                err = 'cpsschemas_err_file'
             else:
-                LOG('CPSFileWidget', DEBUG, 'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, 'cpsschemas_err_file')
-                ok = 0
-        if ok:
+                ms = self.size_max
+                if file.read(1) == '':
+                    err = 'cpsschemas_err_file_empty'
+                elif ms and len(file.read(ms)) == ms:
+                    err = 'cpsschemas_err_file_too_big'
+                else:
+                    file.seek(0)
+                    fileid, filetitle = cookId('', '', file)
+                    file = File(fileid, filetitle, file)
+                    LOG('CPSFileWidget', DEBUG,
+                        'validate change set %s' % `file`)
+                    datamodel[field_id] = file
+        if err:
+            datastructure.setError(widget_id, err)
+            LOG('CPSFileWidget', DEBUG,
+                'error %s on %s' % (err, `file`))
+        else:
             self.prepare(datastructure)
-        return ok
+
+        return not err
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
@@ -954,7 +960,7 @@ class CPSImageWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
          'label': 'Deletable'},
-        {'id': 'maxsize', 'type': 'int', 'mode': 'w',
+        {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'maximum image size'},
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
@@ -963,7 +969,7 @@ class CPSImageWidget(CPSWidget):
         )
 
     deletable = 1
-    maxsize = 2*1024*1024
+    size_max = 2*1024*1024
     display_height = 0
     display_width = 0
 
@@ -972,38 +978,50 @@ class CPSImageWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         datastructure[widget_id] = datamodel[self.fields[0]]
-        datastructure[widget_id + '_choice'] = '' # make update from request work
+        # make update from request work
+        datastructure[widget_id + '_choice'] = ''
+
 
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
-
         choice = datastructure[widget_id+'_choice']
+        err = 0
         if choice == 'keep':
             # XXX check SESSION
-            ok = 1
+            pass
         elif choice == 'delete':
             datamodel[field_id] = None
-            ok = 1
         else: # 'change'
-            # XXX handle maxsize
             file = datastructure[widget_id]
-            if _isinstance(file, FileUpload):
-                fileid, filetitle = cookId('', '', file)
-                file = Image(fileid, filetitle, file)
-                LOG('CPSImageWidget', DEBUG, 'validate change set %s' % `file`)
-                datamodel[field_id] = file
-                ok = 1
+            if not _isinstance(file, FileUpload):
+                err = 'cpsschemas_err_file'
             else:
-                LOG('CPSImageWidget', DEBUG,
-                    'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, 'cpsschemas_err_image')
-                ok = 0
-        if ok:
+                ms = self.size_max
+                if file.read(1) == '':
+                    err = 'cpsschemas_err_file_empty'
+                elif ms and len(file.read(ms)) == ms:
+                    err = 'cpsschemas_err_file_too_big'
+                else:
+                    file.seek(0)
+                    fileid, filetitle = cookId('', '', file)
+
+                    file = Image(fileid, filetitle, file)
+                    LOG('CPSImageWidget', DEBUG,
+                        'validate change set %s' % `file`)
+                    datamodel[field_id] = file
+
+        if err:
+            datastructure.setError(widget_id, err)
+            LOG('CPSImageWidget', DEBUG,
+                'error %s on %s' % (err, `file`))
+        else:
             self.prepare(datastructure)
-        return ok
+
+        return not err
+
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""

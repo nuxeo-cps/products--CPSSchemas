@@ -110,6 +110,7 @@ class CPSWidget(Widget):
         Widget.__init__(self, id, widget_type, **kw)
 
     fields = []
+    is_required = 0
     label = ''
     label_edit = ''
     is_i18n = 0
@@ -126,6 +127,8 @@ class CPSWidget(Widget):
     _properties = (
         {'id': 'fields', 'type': 'tokens', 'mode': 'w',
          'label': 'Fields'},
+        {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
+         'label': 'Mandatory field'},
         {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
          'label': 'i18n widget'},
         {'id': 'label_edit', 'type': 'string', 'mode': 'w',
