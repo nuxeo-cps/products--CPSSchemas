@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.35.3 [R1 build 2004/12/07-14:53 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- DiskFile now overrides __str__ to use getData directly.
+- If the newly uploaded version of a file doesn't exist on disk,
+  DiskFile now falls back to the old one.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.35.2 [R1 build 2004/12/07-13:22 by regebro]
 
 Requires:
