@@ -1,5 +1,6 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
+
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
@@ -9,148 +10,126 @@ from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
      CPSIdentifierWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSTextWidget
 
-class TestWidgetsValidation(unittest.TestCase):
+class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
 
-    def _makeStringWidget(self, id, properties):
-        widget = CPSStringWidget(id, "String Widget")
-        widget.manage_changeProperties(**properties)
-        return widget
-
-    def _makeDataStructure(self, data):
-        return DataStructure(data, datamodel=data)
-
-    def _validate(self, type, properties, value):
+    def _validate(self, properties, value):
         id = 'f'
-        ds = self._makeDataStructure({id: value})
+        data = {id: value}
+        ds = DataStructure(data, datamodel=data)
         properties.update({'fields': id})
-        if type == 'String':
-            widget = CPSStringWidget(id, '')
-        elif type == 'Boolean':
-            widget = CPSBooleanWidget(id, '')
-        elif type == 'Text':
-            widget = CPSTextWidget(id, '')
-        elif type == 'URL':
-            widget = CPSURLWidget(id, '')
-        elif type == 'Email':
-            widget = CPSEmailWidget(id, '')
-        elif type == 'Identifier':
-            widget = CPSIdentifierWidget(id, '')
-        elif type == 'Password':
-            widget = CPSPasswordWidget(id, '')
+        widget = self.widget_type(id, '')
         widget.manage_changeProperties(**properties)
 
         ret = widget.validate(ds)
         err = ds.getError(id)
         return ret, err, ds
 
-
-    ############################################################
-    # StringWidget
+class StringWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSStringWidget
 
     def test_string_ok_1(self):
-        ret, err, ds = self._validate('String', {}, '12345')
+        ret, err, ds = self._validate({}, '12345')
         self.failUnless(ret, err)
 
     def test_string_ok_2(self):
-        ret, err, ds = self._validate('String', {}, '')
+        ret, err, ds = self._validate({}, '')
         self.failUnless(ret, err)
 
     def test_string_ok_3(self):
-        ret, err, ds = self._validate('String', {}, None)
+        ret, err, ds = self._validate({}, None)
         self.failUnless(ret, err)
         # check convertion None into ''
         self.failUnless(ds.getDataModel().values()[0] == '')
 
     def test_string_nok_1(self):
-        ret, err, ds = self._validate('String', {}, {'a':1} )
+        ret, err, ds = self._validate({}, {'a': 1} )
         self.failUnless(err == 'cpsschemas_err_string')
 
     def test_string_size_max_ok_1(self):
-        ret, err, ds = self._validate('String', {'size_max': 10}, '12345')
+        ret, err, ds = self._validate({'size_max': 10}, '12345')
         self.failUnless(ret)
 
     def test_string_size_max_ok_2(self):
-        ret, err, ds = self._validate('String', {'size_max': 10}, None)
+        ret, err, ds = self._validate({'size_max': 10}, None)
         self.failUnless(ret, err)
 
     def test_string_size_max_ok_3(self):
-        ret, err, ds = self._validate('String', {'size_max': 10}, '')
+        ret, err, ds = self._validate({'size_max': 10}, '')
         self.failUnless(ret)
 
     def test_string_size_max_ok_4(self):
-        ret, err, ds = self._validate('String', {'size_max': 10}, '1234567890')
+        ret, err, ds = self._validate({'size_max': 10}, '1234567890')
         self.failUnless(ret)
 
     def test_string_size_max_nok_1(self):
-        ret, err, ds = self._validate('String', {'size_max': 10}, '12345678901')
+        ret, err, ds = self._validate({'size_max': 10}, '12345678901')
         self.failUnless(err=='cpsschemas_err_string_too_long')
 
     def test_string_size_max_nok_2(self):
-        ret, err, ds  = self._validate('String', {'size_max': 10},
-                                             '1234567890azerz')
+        ret, err, ds = self._validate({'size_max': 10}, '1234567890azerz')
         self.failUnless(err == 'cpsschemas_err_string_too_long')
 
     def test_string_required_ok_1(self):
-        ret, err, ds = self._validate('String', {'is_required': 1}, '123')
+        ret, err, ds = self._validate({'is_required': 1}, '123')
         self.failUnless(ret)
 
     def test_string_required_nok_1(self):
-        ret, err, ds = self._validate('String', {'is_required': 1}, '')
+        ret, err, ds = self._validate({'is_required': 1}, '')
         self.failUnless(err == 'cpsschemas_err_required')
 
     def test_string_required_nok_2(self):
-        ret, err, ds = self._validate('String', {'is_required': 1}, None)
+        ret, err, ds = self._validate({'is_required': 1}, None)
         self.failUnless(err == 'cpsschemas_err_required', err)
 
-    ############################################################
-    # BooleanWidget
+class BooleanWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSBooleanWidget
 
     def test_boolean_ok_1(self):
-        ret, err, ds = self._validate('Boolean', {}, 0)
+        ret, err, ds = self._validate({}, 0)
         self.failUnless(ret, err)
 
     def test_boolean_ok_2(self):
-        ret, err, ds = self._validate('Boolean', {}, 1)
+        ret, err, ds = self._validate({}, 1)
         self.failUnless(ret, err)
 
     def test_boolean_nok_1(self):
-        ret, err, ds = self._validate('Boolean', {}, 2)
+        ret, err, ds = self._validate({}, 2)
         self.failUnless(err == 'cpsschemas_err_boolean')
 
     def test_boolean_nok_2(self):
-        ret, err, ds = self._validate('Boolean', {}, -1)
+        ret, err, ds = self._validate({}, -1)
         self.failUnless(err == 'cpsschemas_err_boolean')
 
     def test_boolean_nok_3(self):
-        ret, err, ds = self._validate('Boolean', {}, '')
+        ret, err, ds = self._validate({}, '')
         self.failUnless(err == 'cpsschemas_err_boolean')
 
     def test_boolean_nok_4(self):
-        ret, err, ds = self._validate('Boolean', {}, None)
+        ret, err, ds = self._validate({}, None)
         self.failUnless(err == 'cpsschemas_err_boolean')
 
     def test_boolean_nok_5(self):
-        ret, err, ds = self._validate('Boolean', {}, 'foo')
+        ret, err, ds = self._validate({}, 'foo')
         self.failUnless(err == 'cpsschemas_err_boolean')
 
     def test_boolean_nok_5(self):
-        ret, err, ds = self._validate('Boolean', {}, {'foo': 'sk'})
+        ret, err, ds = self._validate({}, {'foo': 'sk'})
         self.failUnless(err == 'cpsschemas_err_boolean')
 
-    ############################################################
-    # TextWidget
+class TextWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSTextWidget
 
     def test_text_ok_1(self):
-        ret, err, ds = self._validate('Text', {}, '12345')
+        ret, err, ds = self._validate({}, '12345')
         self.failUnless(ret, err)
 
     def test_text_ok_2(self):
-        ret, err, ds = self._validate('Text', {}, '')
+        ret, err, ds = self._validate({}, '')
         self.failUnless(ret, err)
 
     def test_text_ok_3(self):
-        ret, err, ds = self._validate('Text', {}, None)
+        ret, err, ds = self._validate({}, None)
         self.failUnless(ret, err)
         # check convertion None into ''
         self.failUnless(ds.getDataModel().values()[0] == '')
@@ -168,94 +147,91 @@ class TestWidgetsValidation(unittest.TestCase):
 )	\\\\\\\&piséoçç_sd)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\r\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\nmqslk\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\']"]\\\\\\\\\\\\\\\',
 	\\\\\\\\\\\\\\\'["[\\\\\\\\\\\\\\\\\\\\\\\
     """
-        ret, err, ds = self._validate('Text', {}, text)
+        ret, err, ds = self._validate({}, text)
         self.failUnless(ret, err)
 
     def test_text_nok_1(self):
-        ret, err, ds = self._validate('Text', {}, {'a':1} )
+        ret, err, ds = self._validate({}, {'a':1} )
         self.failUnless(err == 'cpsschemas_err_string', err)
 
     def test_text_size_max_ok_1(self):
-        ret, err, ds = self._validate('Text', {'size_max': 10}, '12345')
+        ret, err, ds = self._validate({'size_max': 10}, '12345')
         self.failUnless(ret)
 
     def test_text_size_max_ok_2(self):
-        ret, err, ds = self._validate('Text', {'size_max': 10}, None)
+        ret, err, ds = self._validate({'size_max': 10}, None)
         self.failUnless(ret)
 
     def test_text_size_max_ok_3(self):
-        ret, err, ds = self._validate('Text', {'size_max': 10}, '')
+        ret, err, ds = self._validate({'size_max': 10}, '')
         self.failUnless(ret)
 
     def test_text_size_max_ok_4(self):
-        ret, err, ds = self._validate('Text', {'size_max': 10}, '1234567890')
+        ret, err, ds = self._validate({'size_max': 10}, '1234567890')
         self.failUnless(ret)
 
     def test_text_size_max_nok_1(self):
-        ret, err, ds = self._validate('Text', {'size_max': 10}, '12345678901')
+        ret, err, ds = self._validate({'size_max': 10}, '12345678901')
         self.failUnless(err=='cpsschemas_err_string_too_long', err)
 
-    ############################################################
-    # URLWidget
+
+class URLWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSURLWidget
 
     def test_url_ok_1(self):
-        ret, err, ds = self._validate('URL', {},
-                                      'http://www.nuxeo.com/')
+        ret, err, ds = self._validate({}, 'http://www.nuxeo.com/')
         self.failUnless(ret, err)
 
     def test_url_ok_2(self):
-        ret, err, ds = self._validate('URL', {},
-                                      'http://www.nuxeo.com')
+        ret, err, ds = self._validate({}, 'http://www.nuxeo.com')
         self.failUnless(ret, err)
     def test_url_ok_3(self):
-        ret, err, ds = self._validate('URL', {},
-                                      'http://www.nuxeo.com/index.html')
+        ret, err, ds = self._validate({}, 'http://www.nuxeo.com/index.html')
         self.failUnless(ret, err)
 
     def test_url_ok_4(self):
-        ret, err, ds = self._validate('URL', {}, '/foo')
+        ret, err, ds = self._validate({}, '/foo')
         self.failUnless(ret, err)
 
     def test_url_ok_5(self):
-        ret, err, ds = self._validate('URL', {}, '/foo#AZE')
+        ret, err, ds = self._validate({}, '/foo#AZE')
         self.failUnless(ret, err)
 
     def test_url_ok_6(self):
-        ret, err, ds = self._validate('URL', {}, 'HTtp://foo/#AZE')
+        ret, err, ds = self._validate({}, 'HTtp://foo/#AZE')
         self.failUnless(ret, err)
 
     def test_url_ok_7(self):
-        ret, err, ds = self._validate('URL', {},
+        ret, err, ds = self._validate({},
                                       'http://www.google.fr/search?hl=fr&ie=UTF-8&oe=UTF-8&q=%40%5E%C3%A7%C3%A9%C3%A0%29%3F&btnG=Recherche+Google&meta=')
         self.failUnless(ret, err)
 
     def test_url_ok_8(self):
-        ret, err, ds = self._validate('URL', {},
-                                      '../index.html')
+        ret, err, ds = self._validate({}, '../index.html')
         self.failUnless(ret, err)
 
     def test_url_ok_9(self):
-        ret, err, ds = self._validate('URL', {}, '')
+        ret, err, ds = self._validate({}, '')
         self.failUnless(ret, err)
 
     def test_url_ok_10(self):
-        ret, err, ds = self._validate('URL', {}, 'tooo-%20oo')
+        ret, err, ds = self._validate({}, 'tooo-%20oo')
         self.failUnless(ret, err)
 
     def test_url_nok_1(self):
-        ret, err, ds = self._validate('URL', {}, 'a space')
+        ret, err, ds = self._validate({}, 'a space')
         self.failUnless(err == 'cpsschemas_err_url')
 
     def test_url_nok_2(self):
-        ret, err, ds = self._validate('URL', {}, '[abraket')
+        ret, err, ds = self._validate({}, '[abraket')
         self.failUnless(err == 'cpsschemas_err_url')
 
     def test_url_nok_3(self):
-        ret, err, ds = self._validate('URL', {}, 'a??dlk')
+        ret, err, ds = self._validate({}, 'a??dlk')
         self.failUnless(err == 'cpsschemas_err_url')
 
     def test_url_nok_4(self):
-        ret, err, ds = self._validate('URL', {}, 'http://www./')
+        ret, err, ds = self._validate({}, 'http://www./')
         self.failUnless(err == 'cpsschemas_err_url')
 
 # XXX make it pass !
@@ -264,53 +240,51 @@ class TestWidgetsValidation(unittest.TestCase):
 #        self.failUnless(err == 'cpsschemas_err_url')
 
 
-    ############################################################
-    # EmailWidget
+class EmailWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSEmailWidget
 
     def test_email_ok_1(self):
-        ret, err, ds = self._validate('Email', {}, 'root@nuxeo.com')
+        ret, err, ds = self._validate({}, 'root@nuxeo.com')
         self.failUnless(ret, err)
 
     def test_email_ok_2(self):
-        ret, err, ds = self._validate('Email', {},
-                                      'r0Ot-me@nuxeo.foo-bar.fr')
+        ret, err, ds = self._validate({}, 'r0Ot-me@nuxeo.foo-bar.fr')
         self.failUnless(ret, err)
 
     def test_email_ok_3(self):
-        ret, err, ds = self._validate('Email', {},
-                                      'r-12@1.gouv')
+        ret, err, ds = self._validate({}, 'r-12@1.gouv')
         self.failUnless(ret, err)
 
     def test_email_ok_4(self):
-        ret, err, ds = self._validate('Email', {}, 'f+bar@be.bo.ba')
+        ret, err, ds = self._validate({}, 'f+bar@be.bo.ba')
         self.failUnless(ret, err)
 
     def test_email_nok_1(self):
-        ret, err, ds = self._validate('Email', {}, 'root')
+        ret, err, ds = self._validate({}, 'root')
         self.failUnless(err == 'cpsschemas_err_email')
 
     def test_email_nok_2(self):
-        ret, err, ds = self._validate('Email', {}, 'root@azer')
+        ret, err, ds = self._validate({}, 'root@azer')
         self.failUnless(err == 'cpsschemas_err_email', err)
 
     def test_email_nok_3(self):
-        ret, err, ds = self._validate('Email', {}, 'root@foo--')
+        ret, err, ds = self._validate({}, 'root@foo--')
         self.failUnless(err == 'cpsschemas_err_email', err)
 
     def test_email_nok_4(self):
-        ret, err, ds = self._validate('Email', {}, '@foo')
+        ret, err, ds = self._validate({}, '@foo')
         self.failUnless(err == 'cpsschemas_err_email', err)
 
     def test_email_nok_5(self):
-        ret, err, ds = self._validate('Email', {}, 'foo bar@foo.com')
+        ret, err, ds = self._validate({}, 'foo bar@foo.com')
         self.failUnless(err == 'cpsschemas_err_email', err)
 
     def test_email_nok_6(self):
-        ret, err, ds = self._validate('Email', {}, 'é@à.fr')
+        ret, err, ds = self._validate({}, 'é@à.fr')
         self.failUnless(err == 'cpsschemas_err_email', err)
 
     def test_email_nok_7(self):
-        ret, err, ds = self._validate('Email', {}, 'a@foo..fr')
+        ret, err, ds = self._validate({}, 'a@foo..fr')
         self.failUnless(err == 'cpsschemas_err_email', err)
 
 #  XXX should fail
@@ -318,135 +292,117 @@ class TestWidgetsValidation(unittest.TestCase):
 #        ret, err, ds = self._validate('Email', {}, 'a@foo.france')
 #        self.failUnless(err == 'cpsschemas_err_email', err)
 
-    ############################################################
-    # IdentifierWidget
+class IdentifierWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSIdentifierWidget
 
     def test_identifier_ok_1(self):
-        ret, err, ds = self._validate('Identifier', {}, 'POM')
+        ret, err, ds = self._validate({}, 'POM')
         self.failUnless(ret, err)
 
     def test_identifier_ok_2(self):
-        ret, err, ds = self._validate('Identifier', {},
+        ret, err, ds = self._validate({},
                                       'azermaozeiurpoiuwmfvljwxcvn12345678790')
         self.failUnless(ret, err)
 
     def test_identifier_ok_3(self):
-        ret, err, ds = self._validate('Identifier', {},
-                                      'a_1234@12.zz')
+        ret, err, ds = self._validate({}, 'a_1234@12.zz')
         self.failUnless(ret, err)
 
     def test_identifier_ok_4(self):
-        ret, err, ds = self._validate('Identifier', {}, 'a_1.2')
+        ret, err, ds = self._validate({}, 'a_1.2')
         self.failUnless(ret, err)
 
     def test_identifier_ok_5(self):
-        ret, err, ds = self._validate('Identifier', {}, 'fbar@be.bo.ba')
+        ret, err, ds = self._validate({}, 'fbar@be.bo.ba')
         self.failUnless(ret, err)
 
     def test_identifier_ok_5(self):
-        ret, err, ds = self._validate('Identifier', {}, 'foo-bar')
+        ret, err, ds = self._validate({}, 'foo-bar')
         self.failUnless(ret, err)
 
     def test_identifier_nok_1(self):
-        ret, err, ds = self._validate('Identifier', {}, '1234')
+        ret, err, ds = self._validate({}, '1234')
         self.failUnless(err == 'cpsschemas_err_identifier')
 
     def test_identifier_nok_2(self):
-        ret, err, ds = self._validate('Identifier', {}, 'élskjd')
+        ret, err, ds = self._validate({}, 'élskjd')
         self.failUnless(err == 'cpsschemas_err_identifier', err)
 
     def test_identifier_nok_3(self):
-        ret, err, ds = self._validate('Identifier', {}, 'boaz mlskjr ')
+        ret, err, ds = self._validate({}, 'boaz mlskjr ')
         self.failUnless(err == 'cpsschemas_err_identifier', err)
 
     def test_identifier_nok_4(self):
-        ret, err, ds = self._validate('Identifier', {}, 'foo\tzie')
+        ret, err, ds = self._validate({}, 'foo\tzie')
         self.failUnless(err == 'cpsschemas_err_identifier', err)
 
     def test_identifier_nok_5(self):
-        ret, err, ds = self._validate('Identifier', {}, '_foo')
+        ret, err, ds = self._validate({}, '_foo')
         self.failUnless(err == 'cpsschemas_err_identifier', err)
 
     ############################################################
     # PasswordWidget
 
+class PasswordWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSPasswordWidget
+
     def test_password_ok_required_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'is_required': 0,
-                                       }, '')
+        ret, err, ds = self._validate({'is_required': 0}, '')
         self.assertEqual(err, None, err)
 
     def test_password_nok_required_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'is_required': 1,
-                                       }, '')
+        ret, err, ds = self._validate({'is_required': 1}, '')
         self.assertEqual(err, 'cpsschemas_err_required', err)
 
     def test_password_ok_size_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'size_min': 5,
-                                       }, 'fooba')
+        ret, err, ds = self._validate({'size_min': 5}, 'fooba')
         self.assertEqual(err, None, err)
 
     def test_password_ok_size_2(self):
-        ret, err, ds = self._validate('Password',
-                                      {'size_max': 8,
-                                       }, 'foobarfo')
+        ret, err, ds = self._validate({'size_max': 8}, 'foobarfo')
         self.assertEqual(err, None, err)
 
     def test_password_nok_size_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'size_min': 5,
-                                       }, 'foob')
+        ret, err, ds = self._validate({'size_min': 5}, 'foob')
         self.assertEqual(err, 'cpsschemas_err_password_size_min', err)
 
     def test_password_nok_size_2(self):
-        ret, err, ds = self._validate('Password',
-                                      {'size_max': 8,
-                                       }, 'foobarfoo')
+        ret, err, ds = self._validate({'size_max': 8}, 'foobarfoo')
         self.assertEqual(err, 'cpsschemas_err_string_too_long', err)
 
     def test_password_ok_lower_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'check_lower': 1,
-                                       }, 'FoE1.A')
+        ret, err, ds = self._validate({'check_lower': 1}, 'FoE1.A')
         self.assertEqual(err, None, err)
 
     def test_password_nok_lower_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'check_lower': 1,
-                                       }, 'FFFFF')
+        ret, err, ds = self._validate({'check_lower': 1}, 'FFFFF')
         self.assertEqual(err, 'cpsschemas_err_password_lower', err)
 
     def test_password_ok_upper_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'check_upper': 1,
-                                       }, 'F....')
+        ret, err, ds = self._validate({'check_upper': 1}, 'F....')
         self.assertEqual(err, None, err)
 
     def test_password_nok_upper_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'check_upper': 1,
-                                       }, 'azert')
+        ret, err, ds = self._validate({'check_upper': 1}, 'azert')
         self.assertEqual(err, 'cpsschemas_err_password_upper', err)
 
-
     def test_password_ok_extra_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'check_extra': 1,
-                                       }, 'azert*')
+        ret, err, ds = self._validate({'check_extra': 1}, 'azert*')
         self.assertEqual(err, None, err)
 
     def test_password_nok_extra_1(self):
-        ret, err, ds = self._validate('Password',
-                                      {'check_extra': 1,
-                                       }, 'aze12')
+        ret, err, ds = self._validate({'check_extra': 1}, 'aze12')
         self.assertEqual(err, 'cpsschemas_err_password_extra', err)
 
-
+# XXX: test more widget types here
 
 def test_suite():
-    return unittest.makeSuite(TestWidgetsValidation)
+    from types import ClassType
+    tests = []
+    for obj in globals().values():
+        if type(obj) is ClassType and issubclass(obj, WidgetValidationTest):
+            tests.append(unittest.makeSuite(obj))
+    return unittest.TestSuite(tests)
 
 if __name__ == "__main__":
     unittest.main(defaultTest='test_suite')
