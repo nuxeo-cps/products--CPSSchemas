@@ -97,7 +97,7 @@ class CPSIntWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         try:
             v = int(value)
-        except ValueError:
+        except (ValueError, TypeError):
             datastructure.setError(self.getWidgetId(),
                                    "Bad int received")
             ok = 0
@@ -113,7 +113,7 @@ class CPSIntWidget(CPSWidget):
             return escape(value)
         elif mode == 'edit':
             return ('<input type="text" name="%s" value="%s" />'
-                    % (escape(self.getHtmlWidgetId()), escape(value)))
+                    % (escape(self.getHtmlWidgetId()), escape(str(value))))
         else:
             return '[XXX unknown mode %s]' % mode
 
