@@ -9,4 +9,5 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Changed the widget_type parameter in __init__ to widgettype to avoid
+  clashes with the widget_type keyword.
