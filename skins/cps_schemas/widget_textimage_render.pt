@@ -4,10 +4,11 @@
 <tal:block condition="python: mode == 'view'">
 <div
   tal:define="photo python: cells[0]['widget_rendered'];
-              content python: cells[1]['widget_rendered'];
-              content_right python: cells[2]['widget_rendered'];">
+              has_content_right python:len(cells) == 3;
+              content python:cells[1]['widget_rendered'];
+              content_right python: has_content_right and cells[2]['widget_rendered'];">
   <tal:block replace="structure photo" />
-  <tal:block replace="structure content_right" />
+  <tal:block tal:condition="has_content_right" replace="structure content_right" />
   <tal:block replace="structure content" />
   <div class="dflush"></div>
 </div>

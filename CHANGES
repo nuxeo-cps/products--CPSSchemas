@@ -12,6 +12,8 @@ New features:
   The last one is not called 'sort' because it must not implement the list.sort
   API. It will only help when a portal manager change Vocabulary sort function.
 - Possible to add JavaScript code in a widget rendering information
+- Made the Text Image Widget be able to handle either 1 block or 2 blocks of
+  text.
 Bug fixes:
 ~~~~~~~~~~
 - Generic select widget did not refuse validation of empty values when required
