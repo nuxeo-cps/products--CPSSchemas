@@ -21,18 +21,17 @@ class BasicLayout(OrderedDictionary):
         renderer = self._renderer
         rendering = ""
 
-        for key, widget in self.items():
-            field = model.get(key)
-            if field is None:
-                continue # This field has been removed from the datamodel, skip rendering.
+        for fieldid, widget in self.items():
+
             # TODO:
             # Fields that aren't reqired may have no data in the document, and
             # they will then have no data in the DataStructure.
             # The question is then, what to do with these fields?
             # Currently they are rendered with None, which may not be
             # the correct behaviour. Skip them completely?
-            content = data.data.get(key)
-            error = data.errors.get(key) # Both '' or None are acceptable as meaning no error
+            content = data.data.get(fieldid)
+            error = data.errors.get(fieldid) # Both '' or None are acceptable as meaning no error
+            field = model.getField(fieldid)
             rendering = rendering + widget.render(renderer, field, content, error)
 
         return rendering

@@ -97,8 +97,8 @@ class DataStructure(UserDict):
     def updateFromRequest(self, datamodel, REQUEST):
         """Updates and validates field data from a REQUEST object"""
         self.clear()
-        for fieldid in datamodel.keys():
-            field = datamodel[fieldid]
+        for fieldid in datamodel.getFieldIds():
+            field = datamodel.getField(fieldid)
             if REQUEST.has_key('field_'+fieldid): # The field_ syntax is used by formulator etc.
                 data = REQUEST['field_'+fieldid]
             else:

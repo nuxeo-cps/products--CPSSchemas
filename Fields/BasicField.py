@@ -62,12 +62,17 @@ class BasicField:
 
     def validate(self, data):
         """Convert and validate data"""
-        if data is None and self._required:
-            if self._default == None:
-                raise ValueError('This field is required')
-            # Use the default. Instead of just returning it, validate it.
-            # The requirements may have changed since the default was set.
-            data = self._default
+        if data is None:
+            if self._required:
+                if self._default == None:
+                    raise ValueError('This field is required')
+                # Use the default. Instead of just returning it, validate it.
+                # The requirements may have changed since the default was set.
+                data = self._default
+            else:
+                # Data is None, and the field is not required.
+                # Accept the empty data by returning None
+                return None
         return self._validate(data)
 
     def _validate(self, data):
@@ -99,3 +104,13 @@ class BasicField:
 
     def setStorageId(self, id):
         self._storage_id = id
+
+    def setRequired(self):
+        self._required = 1
+
+    def setNotRequired(self):
+        self._required = 0
+
+    def setIsRequired(self):
+        return self._required
+
