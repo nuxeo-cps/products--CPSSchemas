@@ -1420,7 +1420,7 @@ class CPSDateWidget(CPSWidget):
                                  maxlength=2,
                                  onKeyPress=js_onKeyPress,
                                  onKeyUp=js_onKeyUp % {
-                                    'max_value': '21',
+                                    'max_value': '31',
                                     'max_size': '2',
                                     'low_trigger': '4',
                                     'next_widget': 'widget__swamBirthday_m',
