@@ -22,7 +22,7 @@ Definition of standard field types.
 """
 
 from zLOG import LOG, DEBUG
-from types import IntType, StringType, ListType, FloatType
+from types import IntType, StringType, ListType, FloatType, LongType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -57,6 +57,20 @@ class CPSIntField(CPSField):
         if isinstance(value, IntType):
             return value
         raise ValidationError('Not an integer: %s' % repr(value))
+
+InitializeClass(CPSIntField)
+
+
+class CPSLongField(CPSField):
+    """Integer field."""
+    meta_type = "CPS Long Field"
+    _properties = propertiesWithType(CPSField._properties, 'default', 'long')
+    default = 0
+
+    def validate(self, value):
+        if isinstance(value, LongType):
+            return value
+        raise ValidationError('Not an long integer: %s' % repr(value))
 
 InitializeClass(CPSIntField)
 
@@ -228,6 +242,7 @@ FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
 FieldRegistry.register(CPSStringListField)
 FieldRegistry.register(CPSIntField)
+FieldRegistry.register(CPSLongField)
 FieldRegistry.register(CPSFloatField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
