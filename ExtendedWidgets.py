@@ -1477,7 +1477,12 @@ InitializeClass(CPSDocumentLanguageSelectWidgetType)
 ##################################################
 
 class CPSSubjectWidget(CPSMultiSelectWidget):
-    """Subject widget."""
+    """A widget featuring links to items by subject.
+
+    The CPS Subject Widget is like the CPS MultiSelect Widget from which it
+    derives, except in "view" mode where the listed entries have link on them
+    to other documents on the portal which have the same subjects.
+    """
     meta_type = "CPS Subject Widget"
 
     def getEntriesHtml(self, entries, vocabulary, translated=False):
@@ -1499,7 +1504,10 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
                    escape(subject_label)))
 
     def getSubjectSearchUrl(self, subject_name):
-        """Return the subject search URL"""
+        """Return the subject search URL.
+
+        The provided links are actually requests to the portal search engine.
+        """
         return "%s/search_form?Subject=%s" % (self.portal_url(), subject_name)
 
 
