@@ -7,7 +7,7 @@ from Products.NuxCPS3Document.Fields.TextField import TextField, TextFieldWidget
 from Products.NuxCPS3Document.Renderer import BasicRenderer
 
 
-class FieldTests(unittest.TestCase):
+class BasicFieldTests(unittest.TestCase):
 
     def testCreation(self):
         """Test field creation"""
@@ -34,11 +34,35 @@ class FieldTests(unittest.TestCase):
         field.setRequired()
         self.failUnless(field.validate(None) == 'The Default Value')
 
-    # test required set/is
-    # test data conversion (can only be tested for string fields)
+    def testRequired(self):
+        field = BasicField('the_id', 'the_title')
+        self.failIf(not field.isRequired())
+        field.setNotRequired()
+        self.failIf(field.isRequired())
+        field.setRequired()
+        self.failIf(not field.isRequired())
+
+
+
+class NotAString:
+    """A class can't be converted to a string"""
+    def __str__(self):
+        raise TypeError('This can not be converted to a string')
+
+class TextFieldTests(unittest.TestCase):
+
+    def testConversion(self):
+        field = TextField('the_id', 'the_title')
+        self.failUnless(field.validate('four') == 'four')
+        self.failUnless(field.validate(4) == '4')
+        four = NotAString()
+        self.failUnlessRaises(TypeError, field.validate, four)
+
 
 def test_suite():
-    return unittest.makeSuite(FieldTests)
+    suites = [unittest.makeSuite(BasicFieldTests), \
+              unittest.makeSuite(TextFieldTests)]
+    return unittest.TestSuite(suites)
 
 if __name__=="__main__":
     unittest.main(defaultTest='test_suite')

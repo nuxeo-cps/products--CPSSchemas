@@ -21,6 +21,8 @@ class TextFieldWidget(BasicFieldWidget):
 class TextField(BasicField):
     _field_widget = TextFieldWidget
 
+    def _validate(self, data):
+        return str(data)
 
 
 
