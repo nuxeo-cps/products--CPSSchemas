@@ -34,7 +34,7 @@ class Template:
     def __init__(self, id, title):
         self.id = id
         self.title = title
-        self._fields = OrderedDictionary()
+        self._model = OrderedDictionary()
         self._layouts = PersistentMapping()
         self.addLayout(HtmlLayout('view', 'View'))
         self.addLayout(HtmlLayout('edit', 'Edit'))
@@ -81,5 +81,5 @@ class Template:
     def getLayoutIds(self):
         return self._layouts.keys()
 
-    def getStructure(self):
-        return self._fields
+    def getDatamodel(self):
+        return self._model

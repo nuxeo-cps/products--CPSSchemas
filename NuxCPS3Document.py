@@ -55,7 +55,9 @@ class NuxCPS3Document:
     def render(self, layout_id):
         """Returns the rendrition of the document"""
         layout = self.getLayout(layout_id)
-        return layout.render(self)
+        template = self.getTemplate()
+        data = template.getData(self)
+        return layout.render(template, data)
 
     def setData(self, dict):
         """Sets the data of the object from a dictionary or dictionary-like object"""
