@@ -622,17 +622,17 @@ class CPSIntWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
          'label': 'Value must be in range'},
-        {'id': 'min', 'type': 'float', 'mode': 'w',
+        {'id': 'min_value', 'type': 'float', 'mode': 'w',
          'label': 'Range minimum value'},
-        {'id': 'max', 'type': 'float', 'mode': 'w',
+        {'id': 'max_value', 'type': 'float', 'mode': 'w',
          'label': 'Range maximum value'},
         {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
          'label': 'Thousands separator'},
         )
 
     is_limited = 0
-    min = 0
-    max = 0
+    min_value = 0
+    max_value = 0
     thousands_separator = ''
 
     def prepare(self, datastructure):
@@ -657,7 +657,7 @@ class CPSIntWidget(CPSWidget):
             return 0
 
         if self.is_limited:
-            if (v < self.min) or (v > self.max):
+            if (v < self.min_value) or (v > self.max_value):
                 datastructure.setError(self.getWidgetId(),
                                        "cpsschemas_err_int_range")
                 return 0
@@ -707,17 +707,17 @@ class CPSLongWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
          'label': 'Value must be in range'},
-        {'id': 'minimum', 'type': 'int', 'mode': 'w',
+        {'id': 'min_value', 'type': 'int', 'mode': 'w',
          'label': 'Range minimum value'},
-        {'id': 'maximum', 'type': 'int', 'mode': 'w',
+        {'id': 'max_value', 'type': 'int', 'mode': 'w',
          'label': 'Range maximum  value'},
         {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
          'label': 'Thousands separator'},
         )
     
     is_limited = 0
-    minimum = 0
-    maximum = 0
+    min_value = 0
+    max_value = 0
     thousands_separator = ''
 
     def prepare(self, datastructure):
@@ -746,7 +746,7 @@ class CPSLongWidget(CPSWidget):
             datastructure.setError(widget_id, "cpsschemas_err_int")
             ok = 0
         else:
-            if self.is_limited and (v < self.minimum or v > self.maximum):
+            if self.is_limited and (v < self.min_value or v > self.max_value):
                 datastructure.setError(widget_id,
                                        "cpsschemas_err_long_range")
                 ok = 0
@@ -796,9 +796,9 @@ class CPSFloatWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
          'label': 'Value must be in range'},
-        {'id': 'min', 'type': 'float', 'mode': 'w',
+        {'id': 'min_value', 'type': 'float', 'mode': 'w',
          'label': 'Range minimum value'},
-        {'id': 'max', 'type': 'float', 'mode': 'w',
+        {'id': 'max_value', 'type': 'float', 'mode': 'w',
          'label': 'Range maximum value'},
         {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
          'label': 'Thousands separator'},
@@ -809,8 +809,8 @@ class CPSFloatWidget(CPSWidget):
             )
 
     is_limited = 0
-    min = 0.0
-    max = 0.0
+    min_value = 0.0
+    max_value = 0.0
     thousands_separator = ''
     decimals_separator = ','
     decimals_number = 0
@@ -839,7 +839,7 @@ class CPSFloatWidget(CPSWidget):
             return 0
 
         if self.is_limited:
-           if (v < self.min) or (v > self.max):
+           if (v < self.min_value) or (v > self.max_value):
                datastructure.setError(self.getWidgetId(),
                                       "cpsschemas_err_float_range")
                return 0
