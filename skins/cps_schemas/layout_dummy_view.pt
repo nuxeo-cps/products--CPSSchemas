@@ -3,11 +3,6 @@
                ds options/datastructure;
                dm options/datamodel;
              ">
-  <tr>
-    <td tal:attributes="colspan layout/ncols">
-      This is layout_flex_view.pt
-    </td>
-  </tr>
   <tr tal:repeat="row layout/rows">
     <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
       <tal:block define="widget cell/widget">
