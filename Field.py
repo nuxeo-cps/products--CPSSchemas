@@ -141,17 +141,18 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         self.manage_changeProperties(**kw)
 
     security.declarePrivate('getDefault')
-    def getDefault(self):
+    def getDefault(self, datamodel=None):
         """Get the default value for this field."""
         if not self.default_expr_c:
             return None
-        expr_context = self._createDefaultExpressionContext()
+        expr_context = self._createDefaultExpressionContext(datamodel)
         return self.default_expr_c(expr_context)
 
-    def _createDefaultExpressionContext(self):
+    def _createDefaultExpressionContext(self, datamodel):
         """Create an expression context for default value evaluation."""
         mapping = {
             'field': self,
+            'datamodel': datamodel,
             'user': getSecurityManager().getUser(),
             'portal': getToolByName(self, 'portal_url').getPortalObject(),
             'DateTime': DateTime,

@@ -248,7 +248,7 @@ class DataModel(UserDict):
                 # to be considered changed by the user
                 # (and written, and used for dependent computations)
                 field = fields[field_id]
-                data[field_id] = field.getDefault()
+                data[field_id] = field.getDefault(self)
                 self.dirty[field_id] = 1
 
     def _setEditable(self):
