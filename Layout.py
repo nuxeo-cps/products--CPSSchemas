@@ -207,7 +207,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 elif (layout_mode in widget.hidden_readonly_layout_modes
                       and self.isReadOnly()):
                     mode = 'hidden'
-                elif layout_mode == 'view':
+                elif layout_mode.startswith('view'):
                     mode = 'view'
                 elif layout_mode in ('edit', 'create', 'search'):
                     if self.isReadOnly():
