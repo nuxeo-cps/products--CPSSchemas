@@ -175,11 +175,11 @@ class BaseStorageAdapter:
         for field_id, field in self.getFieldItems():
             # XXX we want here to pursue even if
             # writing storage is ignored
-            #if field.write_ignore_storage:
-            #    continue
             value = data[field_id]
-            new_data[field_id] = field.processValueBeforeWrite(value, data,
-                                                               self.getContextObject())
+            result = field.processValueBeforeWrite(value,
+                                data,self.getContextObject())
+            if not field.write_ignore_storage:
+                new_data[field_id] = result
         return new_data
 
     def _setFieldData(self, field_id, value):
