@@ -337,7 +337,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         The datamodel is used to cache often used things.
         """
         self._checkAccess(datamodel, context,
-                          self.acl_read_permissions_c, self.acl_read_roles,
+                          self.acl_read_permissions_c, self.acl_read_roles_c,
                           self.acl_read_expr_c, ReadAccessError)
 
     def checkWriteAccess(self, datamodel, context):
@@ -346,7 +346,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         Raises an exception if not.
         """
         self._checkAccess(datamodel, context,
-                          self.acl_write_permissions, self.acl_write_roles,
+                          self.acl_write_permissions, self.acl_write_roles_c,
                           self.acl_write_expr_c, WriteAccessError)
 
     #
