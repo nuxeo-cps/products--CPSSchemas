@@ -27,11 +27,10 @@ from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 
-from OFS.Folder import Folder
-
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
+from Products.CPSDocument.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 from Products.CPSDocument.AttributeStorageAdapter import AttributeStorageAdapterFactory
 
@@ -82,14 +81,18 @@ class OLDSchema(OrderedDictionary):
 ######################################################################
 ######################################################################
 
-class Schema(Folder):
+class Schema(FolderWithPrefixedIds):
     """Schema
 
     Base class for schemas, that contain fields.
     """
 
+    prefix = 'f__'
+
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
+
+    id = None
 
     def __init__(self):
         self._clear()
@@ -99,18 +102,8 @@ class Schema(Folder):
         """Clear the schema."""
         pass
 
-    # Dict-like access.
+InitializeClass(Schema)
 
-    def keys(self):
-        """Get the field ids."""
-        return self.objectIds()
-
-    def __getitem__(self, key):
-        """Get a field."""
-        try:
-            return self._getOb(key)
-        except AttributeError:
-            raise KeyError, key
 
 class CPSSchema(Schema):
     """Persistent Schema."""
@@ -126,13 +119,6 @@ class CPSSchema(Schema):
         #    schema = Schema()
         #self.setSchema(schema)
 
-    security.declarePrivate('addField')
-    def addField(self, id, field):
-        """Add a field."""
-        self._setObject(id, field)
-        return self._getOb(id)
-
-
     #
     # ZMI
     #
@@ -146,7 +132,7 @@ class CPSSchema(Schema):
         {'label': 'Schema',
          'action': 'manage_editSchema',
          },
-        ) + Folder.manage_options[1:]
+        ) + FolderWithPrefixedIds.manage_options[1:]
 
     security.declareProtected(ManagePortal, 'manage_editSchema')
     manage_editSchema = DTMLFile('zmi/schema_editform', globals())
@@ -161,7 +147,7 @@ class CPSSchema(Schema):
         del kw['id']
         del kw['field_type']
         field = FieldRegistry.makeField(field_type, id, **kw)
-        field = self.addField(id, field)
+        field = self.addSubObject(field)
         REQUEST.RESPONSE.redirect(field.absolute_url()+'/manage_workspace'
                                   '?manage_tabs_message=Added.')
 
@@ -178,7 +164,6 @@ class CPSSchema(Schema):
         """List all field types."""
         return FieldRegistry.listFieldTypes()
 
-
 InitializeClass(CPSSchema)
 
 
@@ -191,4 +176,3 @@ def addCPSSchema(container, id, REQUEST=None):
     ob = container._getOb(id)
     if REQUEST is not None:
         REQUEST.RESPONSE.redirect(ob.absolute_url() + "/manage_main")
-

@@ -23,6 +23,7 @@ Base classes for fields, the individual parts of a schema.
 
 from zLOG import LOG, DEBUG
 from copy import deepcopy
+from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
@@ -51,8 +52,8 @@ class Field(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
-    type = ''
     default = ''
+    is_indexed = 0
     is_subschema = 0
     is_multi_valued = 0
     vocabulary = None
@@ -60,11 +61,12 @@ class Field(SimpleItemWithProperties):
     write_permission = 'Modify portal content'
     # append_permission = 'Modify portal content'
 
-    def __init__(self, **kw):
-        if kw.has_key('type'):
-            self.type = kw['type']
+    def __init__(self, id, **kw):
+        self.id = id
         if kw.has_key('default'):
             self.default = kw['default']
+        if kw.has_key('is_indexed'):
+            self.is_indexed = kw['is_indexed']
         if kw.has_key('is_subschema'):
             self.is_subschema = kw['is_subschema']
         if kw.has_key('is_multi_valued'):
@@ -75,6 +77,17 @@ class Field(SimpleItemWithProperties):
             self.read_permission = kw['read_permission']
         if kw.has_key('write_permission'):
             self.write_permission = kw['write_permission']
+
+    security.declarePublic('getFieldId')
+    def getFieldId(self):
+        """Get this field's id."""
+        id = self.getId()
+        if hasattr(self, 'getIdUnprefixed'):
+            # Inside a FolderWithPrefixedIds.
+            return self.getIdUnprefixed(id)
+        else:
+            # Standalone field.
+            return id
 
     security.declarePublic('validate')
     def validate(self, value):
@@ -90,31 +103,34 @@ class CPSField(Field):
     meta_type = "CPS Field"
 
     security = ClassSecurityInfo()
-
-    def __init__(self, id, **kw):
-        self.id = id
-        Field.__init__(self, **kw)
+    security.declareObjectProtected(View) # XXX correct ?
 
     #
     # ZMI
     #
 
     _properties = (
-        {'id': 'type', 'type': 'string', 'mode': 'w',
-         'label': 'Type'},
+        {'id': 'getFieldIdProperty', 'type': 'string', 'mode': '',
+         'label': 'Id'},
         {'id': 'default', 'type': 'string', 'mode': 'w',
          'label': 'Default'},
-        {'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is Subschema'},
+        {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is Indexed'},
+        #{'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
+        # 'label': 'Is Subschema'},
         {'id': 'is_multi_valued', 'type': 'boolean', 'mode': 'w',
          'label': 'Is Multi-Valued'},
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
-        {'id': 'read_permission', 'type': 'string', 'mode': 'w',
-         'label': 'Read Permission'},
-        {'id': 'write_permission', 'type': 'string', 'mode': 'w',
-         'label': 'Write Permission'},
+        #{'id': 'read_permission', 'type': 'string', 'mode': 'w',
+        # 'label': 'Read Permission'},
+        #{'id': 'write_permission', 'type': 'string', 'mode': 'w',
+        # 'label': 'Write Permission'},
         )
+
+    def _getFieldIdMethod(self):
+        return self.getFieldId()
+    getFieldIdProperty = ComputedAttribute(_getFieldIdMethod, 1)
 
     manage_options = (
 #        {'label': 'Field',

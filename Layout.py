@@ -28,13 +28,12 @@ from copy import deepcopy
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 
-from OFS.Folder import Folder
-
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
 from Products.CMFCore.utils import SimpleItemWithProperties
 
+from Products.CPSDocument.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 from Products.CPSDocument.Renderer import BasicRenderer, HtmlRenderer
 
@@ -86,13 +85,16 @@ class HtmlLayout(BasicLayout):
 ######################################################################
 
 
-class Layout(Folder, SimpleItemWithProperties):
+class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     """Basic Layout.
 
     A layout describes how to render the basic fields of a schema.
     """
 
+    prefix = 'w__'
+
     security = ClassSecurityInfo()
+    security.setDefaultAccess('allow')
 
     id = None
 
@@ -115,7 +117,7 @@ class Layout(Folder, SimpleItemWithProperties):
             }
         self.setLayoutDefinition(layoutdef)
 
-
+    security.declarePrivate('_normalizeLayoutDefinition')
     def _normalizeLayoutDefinition(self, layoutdef):
         """Normalize a layout definition."""
         rows = layoutdef['rows']
@@ -160,7 +162,7 @@ class Layout(Folder, SimpleItemWithProperties):
         for row in layoutdata['rows']:
             for cell in row:
                 widget_id = cell['widget_id']
-                widget = self.getWidget(widget_id)
+                widget = self[widget_id]
                 cell['widget'] = widget
                 # XXX here filtering according to permissions ?
                 widget.prepare(datastructure, datamodel)
@@ -193,28 +195,6 @@ class CPSLayout(Layout):
     def __init__(self, id, **kw):
         self.id = id
         Layout.__init__(self, **kw)
-
-    security.declarePrivate('addWidget')
-    def addWidget(self, id, widget):
-        """Add a widget."""
-        self._setObject(id, widget)
-        return self._getOb(id)
-
-    security.declarePrivate('getWidget')
-    def getWidget(self, id):
-        """Get a widget."""
-        try:
-            return self._getOb(id)
-        except AttributeError:
-            return ValueError("No widget '%s' in layout '%s'" %
-                              (id, self.id))
-
-    security.declareProtected(ViewManagementScreens, 'listWidgets')
-    def listWidgets(self):
-        """Get the list of widget ids."""
-        ids = self.objectIds()
-        ids.sort()
-        return ids
 
     #
     # ZMI
@@ -256,7 +236,7 @@ class CPSLayout(Layout):
         """Add a widget, called from the ZMI."""
         widget_type = self.get_unstripped_widget_type(widget_type_stripped)
         widget = WidgetRegistry.makeWidget(widget_type, id)
-        widget = self.addWidget(id, widget)
+        widget = self.addSubObject(widget)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(widget.absolute_url()+
                                       '/manage_workspace')

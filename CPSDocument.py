@@ -163,6 +163,15 @@ class CPSDocumentMixin(ExtensionClass.Base):
         return ti.renderEditObject(self, REQUEST,
                                    errmode='edit', okmode='edit')
 
+    security.declareProtected(View, 'SearchableText')
+    def SearchableText(self):
+        """Searchable text for CMF full-text indexing.
+
+        Indexes all fields marked as indexable.
+        """
+        ti = self.getTypeInfo()
+        # XXX ...
+
 
 InitializeClass(CPSDocumentMixin)
 

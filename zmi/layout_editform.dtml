@@ -7,7 +7,7 @@
 
 <br>
 
-<dtml-let widgetids=listWidgets
+<dtml-let widgetids=keys
           layoutdef=getLayoutDefinition
           totcols="layoutdef['ncols']"
           rows="layoutdef['rows']"

@@ -38,11 +38,11 @@ class CPSStringWidget(CPSWidget):
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
-        datastructure[self.id] = datamodel[self.field]
+        datastructure[self.getWidgetId()] = datamodel[self.field]
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        id = self.id
+        id = self.getWidgetId()
         value = datastructure.get(id, '')
         try:
             v = str(value)
@@ -56,7 +56,7 @@ class CPSStringWidget(CPSWidget):
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
-        id = self.id
+        id = self.getWidgetId()
         value = datastructure[id]
         if mode == 'view':
             return escape(value)
@@ -73,11 +73,11 @@ class CPSIntWidget(CPSWidget):
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
-        datastructure[self.id] = str(datamodel[self.field])
+        datastructure[self.getWidgetId()] = str(datamodel[self.field])
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        id = self.id
+        id = self.getWidgetId()
         value = datastructure.get(id, '')
         try:
             v = int(value)
@@ -91,7 +91,7 @@ class CPSIntWidget(CPSWidget):
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
-        id = self.id
+        id = self.getWidgetId()
         value = datastructure[id]
         if mode == 'view':
             return escape(value)

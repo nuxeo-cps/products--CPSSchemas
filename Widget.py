@@ -70,8 +70,19 @@ class Widget(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, **kw):
-        pass
+    def __init__(self, id, **kw):
+        self._setId(id)
+
+    security.declarePublic('getWidgetId')
+    def getWidgetId(self):
+        """Get this widget's id."""
+        id = self.getId()
+        if hasattr(self, 'getIdUnprefixed'):
+            # Inside a FolderWithPrefixedIds.
+            return self.getIdUnprefixed(id)
+        else:
+            # Standalone field.
+            return id
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget in a given mode."""
@@ -88,8 +99,7 @@ class CPSWidget(Widget):
     security = ClassSecurityInfo()
 
     def __init__(self, id, **kw):
-        Widget.__init__(self, **kw)
-        self.id = id
+        Widget.__init__(self, id, **kw)
         if self.hasProperty('field'):
             self.field = id
 
