@@ -16,9 +16,9 @@ class TestStorageAdapter(CPSSchemasTestCase.CPSSchemasTestCase):
     def afterSetUp(self):
         stool = self.portal.portal_schemas
         stool.manage_delObjects(ids=list(stool.objectIds()))
-        schema = stool.manage_addCPSSchema('metadata')
+        self.schema = stool.manage_addCPSSchema('metadata')
         for field_id, field_info in metadata_schema.items():
-            schema.manage_addField(
+            self.schema.manage_addField(
                 field_id, field_info['type'], **field_info['data'])
         self.document = FakeDocument()
 
@@ -26,7 +26,7 @@ class TestStorageAdapter(CPSSchemasTestCase.CPSSchemasTestCase):
 class TestAttributeStorageAdapter(TestStorageAdapter):
     def afterSetUp(self):
         TestStorageAdapter.afterSetUp(self)
-        self.adapter = AttributeStorageAdapter(schema, self.document)
+        self.adapter = AttributeStorageAdapter(self.schema, self.document)
 
     def testAccessors(self):
         field_ids = ['Subject', 'Creator', 'CreationDate', 'ModificationDate',
@@ -45,8 +45,8 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
             'ModificationDate': None, 'ExpirationDate': None, 'Format': '',
             'Contributors': [], 'EffectiveDate': None, 'Rights': '', 
             'Language': '', 'Description': '', 'Title': ''}
-        self.assertEquals(self.adapter.getData(), default_data)
         self.assertEquals(self.adapter.getDefaultData(), default_data)
+        self.assertEquals(self.adapter.getData(), default_data)
 
     def testMutators(self):
         data = {}
@@ -60,7 +60,7 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
 class TestMetadataStorageAdapter(TestStorageAdapter):
     def afterSetUp(self):
         TestStorageAdapter.afterSetUp(self)
-        self.adapter = MetadataStorageAdapter(schema, self.document)
+        self.adapter = MetadataStorageAdapter(self.schema, self.document)
 
     def testAccessors(self):
         # TODO: Later
