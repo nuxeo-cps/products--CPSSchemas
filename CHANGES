@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Renamed the preview template -> preview_html so that it doesn't collide with
+  the preview attribute of the image widget.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

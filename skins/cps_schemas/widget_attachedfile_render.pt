@@ -33,7 +33,7 @@
       <span tal:condition="preview_id">
         <a href="http://url..."
           tal:attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
-          + '/preview?file=' + fields[0] + '&amp;file_html=' + fields[2]"
+          + '/preview_html?file=' + fields[0] + '&amp;file_html=' + fields[2]"
           i18n:translate="cpsschema_link_preview">
           (preview)
         </a>
