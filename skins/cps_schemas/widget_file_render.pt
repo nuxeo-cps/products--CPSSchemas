@@ -14,6 +14,7 @@
 <metal:block define-macro="file_edit"
   tal:condition="python: mode == 'edit'">
   <table cellpadding="0" cellspacing="0" border="0"
+    summary="file edition layout"
     tal:define="name here/getHtmlWidgetId;
                 radio_name string:${name}_choice;"
   >

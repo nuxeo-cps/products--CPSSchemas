@@ -24,7 +24,8 @@
        tal:replace="structure image_tag" />
   <metal:block use-macro="here/widget_image_render/macros/file_edit"
 />
-  <table><tr><td tal:condition="python: configurable.find('position')>=0">
+  <table summary="photo layout">
+    <tr><td tal:condition="python: configurable.find('position')>=0">
    <div class="label" i18n:translate="">cpsschemas_render_position</div>
    <div class="field">
    <select tal:attributes="name string:${value_name}_rposition">
