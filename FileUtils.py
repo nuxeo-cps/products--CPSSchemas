@@ -21,18 +21,39 @@
 Utilities to deal with files: conversion to HTML, or text.
 """
 
+from zLOG import LOG, DEBUG
+from Acquisition import aq_base
+from Products.CMFCore.utils import getToolByName
 
-def convertFileToText(file):
+
+def convertFileToText(file, context=None):
     """Convert a file to text.
+
+    The file argument may be a Zope File object or None.
+
+    The context argument is used to find placeful tools.
 
     Returns a string, or None if no conversion is possible.
     """
     if file is None:
         return None
-    return 'Some text here...'
+    transformer = getToolByName(context, 'portal_transforms', None)
+    if transformer is None:
+        LOG('convertFileToText', DEBUG, 'No portal_transforms')
+        return None
+    raw = str(file)
+    if not raw:
+        return None
+    data = transformer.convertTo('text/plain',
+                                 raw,
+                                 mimetype=file.content_type,
+                                 filename=file.filename,
+                                 # encoding='',
+                                 )
+    return data.getData()
 
 
-def convertFileToHtml(file):
+def convertFileToHtml(file, context=None):
     """Convert a file to HTML.
 
     Returns a string, or None if no conversion is possible.
