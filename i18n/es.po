@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2004-08-23 17:39default\n"
+"POT-Creation-Date: 2004-09-06 15:41default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -45,10 +45,10 @@ msgstr "h"
 #    <a attributes="href preview_id" href="http://url..." target="_blank">
 #           (preview)
 #          </a>
-#.   <a href="http://url..." attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
-#.             + '/preview_html?file=' + fields[0] + '&file_html=' + fields[2]">
-#.             (preview)
-#.           </a>
+#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:fields[2]">
+#.           (preview)
+#.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #, fuzzy
 msgid "cpsschema_link_preview"
@@ -57,9 +57,9 @@ msgstr "(Versión HTML)"
 #    <a attributes="href preview_id" href="http://url..." target="_blank">
 #           (preview)
 #          </a>
-#.   <a href="http://url..." target="_blank" attributes="href preview_id">
-#.             (printable version)
-#.           </a>
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.           (printable version)
+#.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #, fuzzy
 msgid "cpsschema_link_printable_version"
@@ -130,6 +130,16 @@ msgstr "Formato: "
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Posición: "
+
+#    <span>resize</span>
+#.   <block define="size_max python:here.size_max / (1024*1024)">
+#.                 cpsschemas_size_max
+#.                 ${size_max (tal replace="size_max")}
+#.               </block>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#, fuzzy
+msgid "cpsschemas_size_max ${size_max}"
+msgstr "y redimensionar: "
 
 #    <h2>cpsschemas_vocabulary_add</h2>
 #.   <h2>cpsschemas_vocabulary_add</h2>

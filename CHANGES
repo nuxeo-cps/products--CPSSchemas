@@ -4,6 +4,8 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - CPS Couple Field
+- CPSAttachedFileWidget and CPSImageWidget in edition mode now display the
+  maximal size they that is allowed.
 Bug fixes:
 ~~~~~~~~~~
 -

@@ -67,11 +67,10 @@
               tal:attributes="name radio_name;
               id string:${radio_name}_change" />
             <label i18n:translate="cpsschemas_label_file_change"
-              tal:attributes="for string:${radio_name}_change">Change</label>
-            &nbsp;
+              tal:attributes="for string:${radio_name}_change">Change</label>&nbsp;
           </td>
           <td valign="middle">
-            <input type="file" name="."
+            <input type="file" name="." size="24"
               tal:attributes="name name;
               onclick string:document.getElementById('${radio_name}_change').checked='checked'
               " />
@@ -84,6 +83,11 @@
                   tal:attributes="value op/id"
                   tal:content="op/id" i18n:translate="" />
               </select>
+            </tal:block>
+            <tal:block define="size_max python:here.size_max / (1024*1024)"
+              i18n:translate="">
+              cpsschemas_size_max
+              <span tal:replace="size_max" i18n:name="size_max">Item</span>
             </tal:block>
           </td>
         </tr>
