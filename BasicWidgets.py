@@ -711,7 +711,7 @@ class CPSCustomizableWidgetType(CPSWidgetType):
     security.declarePrivate('makeInstance')
     def makeInstance(self, id, **kw):
         """Create an instance of this widget type."""
-        ob = CPSCustomizableWidget(id, self.getId(), **kw)
+        ob = CPSWidgetType.makeInstance(self, id, **kw)
         # Copy user-added properties to the instance.
         for prop in self._properties:
             id = prop['id']
