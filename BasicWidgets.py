@@ -25,7 +25,7 @@ from zLOG import LOG, DEBUG, PROBLEM
 from cgi import escape
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
-from Acquisition import aq_base, aq_parent, aq_inner
+from Acquisition import aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
 from types import ListType, TupleType, StringType
 from re import compile, search
@@ -684,8 +684,8 @@ class CPSTextAreaWidget(CPSWidget):
             elif rformat == 'html':
                 ret = value
             else:
-                RuntimeError("unknown render_format '%s' for '%s'" %
-                             (render_format, self.getId()))
+                raise RuntimeError("unknown render_format '%s' for '%s'" %
+                                   (render_format, self.getId()))
         else:
             raise RuntimeError('unknown mode %s' % mode)
 
@@ -793,8 +793,9 @@ class CPSListWidget(CPSLinesWidget):
         value = datastructure[self.getWidgetId()]
         meth = getattr(self, 'widget_list_render', None)
         if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                                   % (render_method, self.getId()))
+            raise RuntimeError(
+                "Unknown Render Method widget_list_render for widget type %s"
+                    % self.getId())
         return meth(mode=mode, value=value)
 
 InitializeClass(CPSListWidget)
