@@ -94,6 +94,7 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
         return flexti
 
 # XXX add this at construction above
+# this does nothing...
 factory_type_information = (
     {'id': 'CPS Document',
      'title': "CPS Document",
@@ -120,6 +121,8 @@ factory_type_information = (
                   'permissions': (ModifyPortalContent,),
                   },
                  ),
+##     'cps_is_searchable': 1,
+##     'cps_proxytype': 'document',
      },
     )
 
@@ -145,7 +148,7 @@ class FlexibleTypeInformation(TypeInformation):
         (
          {'id':'cps_is_searchable', 'type': 'boolean', 'mode':'w',
           'label':'CPS Searchable'},
-         {'id':'cps_is_proxytype', 'type': 'boolean', 'mode':'w',
+         {'id':'cps_proxytype', 'type': 'string', 'mode':'w',
           'label':'CPS Proxytype'},
          {'id': 'schemas', 'type': 'tokens', 'mode': 'w',
           'label': 'Schemas'},
@@ -165,7 +168,7 @@ class FlexibleTypeInformation(TypeInformation):
     layout_style_prefix = ''
     flexible_layouts = []
     cps_is_searchable = 1
-    cps_is_proxytype = 1
+    cps_proxytype = 'document'
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
