@@ -55,5 +55,11 @@ msgstr ""
 msgid "cpsschemas_err_url"
 msgstr ""
 
+msgid "cpsschemas_err_long"
+msgstr ""
+
+msgid "cpsschemas_err_long_out_of_limits"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-10-01 14:59default\n"
+"POT-Creation-Date: 2003-10-07 10:36default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -56,6 +56,21 @@ msgstr ""
 msgid "cpsschemas_label_file_keep"
 msgstr ""
 
+#.   <td>name</td>
+#: from ../skins/cps_schemas/widget_link_render.pt
+msgid "cpsschemas_label_link_content"
+msgstr ""
+
+#.   <td>url</td>
+#: from ../skins/cps_schemas/widget_link_render.pt
+msgid "cpsschemas_label_link_href"
+msgstr ""
+
+#.   <td>description</td>
+#: from ../skins/cps_schemas/widget_link_render.pt
+msgid "cpsschemas_label_link_title"
+msgstr ""
+
 msgid "cpsschemas_err_string"
 msgstr ""
 
@@ -90,6 +105,15 @@ msgid "cpsschemas_err_file_empty"
 msgstr ""
 
 msgid "cpsschemas_err_image"
+msgstr ""
+
+msgid "cpsschemas_err_url"
+msgstr ""
+
+msgid "cpsschemas_err_long"
+msgstr ""
+
+msgid "cpsschemas_err_long_out_of_limits"
 msgstr ""
 
 msgid "jscalendar_date_fmt"

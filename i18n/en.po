@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-10-01 14:59default\n"
-"PO-Revision-Date: 2003-10-01 14:59+0200\n"
+"POT-Creation-Date: 2003-10-07 10:36default\n"
+"PO-Revision-Date: 2003-10-07 10:40+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -56,6 +56,21 @@ msgstr "Delete"
 msgid "cpsschemas_label_file_keep"
 msgstr "Keep"
 
+#.   <td>name</td>
+#: from ../skins/cps_schemas/widget_link_render.pt
+msgid "cpsschemas_label_link_content"
+msgstr "Name of the link"
+
+#.   <td>url</td>
+#: from ../skins/cps_schemas/widget_link_render.pt
+msgid "cpsschemas_label_link_href"
+msgstr "URL"
+
+#.   <td>description</td>
+#: from ../skins/cps_schemas/widget_link_render.pt
+msgid "cpsschemas_label_link_title"
+msgstr "Description"
+
 msgid "cpsschemas_err_string"
 msgstr "Invalid string"
 
@@ -77,12 +92,6 @@ msgstr "Invalid selection"
 msgid "cpsschemas_err_int"
 msgstr "invalid integer"
 
-msgid "cpsschemas_err_long"
-msgstr "invalid long integer"
-
-msgid "cpsschemas_err_long_out_of_limits"
-msgstr "long integer out of limits"
-
 msgid "cpsschemas_err_date"
 msgstr "invalid date"
 
@@ -97,6 +106,15 @@ msgstr "invalid file"
 
 msgid "cpsschemas_err_image"
 msgstr "invalid image"
+
+msgid "cpsschemas_err_url"
+msgstr "invalid URL"
+
+msgid "cpsschemas_err_long"
+msgstr "invalid integer"
+
+msgid "cpsschemas_err_long_out_of_limits"
+msgstr "long integer out of limits"
 
 msgid "jscalendar_date_fmt"
 msgstr "m/d/y"
