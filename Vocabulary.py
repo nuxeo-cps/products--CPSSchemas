@@ -91,7 +91,13 @@ class Vocabulary(Persistent):
 
     def get(self, key, default=None):
         """Get a label for a key, default to None."""
-        return self._dict.get(key, default)
+        try:
+            v = self._dict.get(key, default)
+        except TypeError:
+            # XXX temporary fix, don't know why sometime rendering try to do
+            # get([]) that returning a typeError
+            return ''
+        return v
 
     def getMsgid(self, key, default=None):
         """Get a msgid for a key, default to None."""
