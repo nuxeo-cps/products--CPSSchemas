@@ -618,8 +618,15 @@ class CPSPhotoWidget(CPSImageWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
+        
         datastructure[widget_id] = datamodel[self.fields[0]]
-        datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
+        
+        if len(self.fields) > 1:
+            datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
+        else:
+            datastructure[widget_id + '_subtitle'] = ''
+
+            
         rposition = self.render_position
         if self.configurable != 'nothing':
             if len(self.fields) > 2:
@@ -640,7 +647,9 @@ class CPSPhotoWidget(CPSImageWidget):
         widget_id = self.getWidgetId()
         ret = CPSImageWidget.validate(self, datastructure, **kw)
         if ret and datamodel[field_id]:
-            datamodel[self.fields[1]] = datastructure[widget_id + '_subtitle']
+            if len(self.fields) > 1:
+                datamodel[self.fields[1]] = datastructure[widget_id +
+                    '_subtitle']
             if self.configurable != 'nothing':
                 if len(self.fields) > 2:
                     rposition = datastructure[widget_id + '_rposition']
