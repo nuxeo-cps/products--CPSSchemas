@@ -1082,6 +1082,103 @@ class CPSGenericMultiSelectWidgetType(CPSWidgetType):
 
 InitializeClass(CPSGenericMultiSelectWidgetType)
 
+
+##################################################
+
+class CPSRangeListWidget(CPSWidget):
+    """Range List widget."""
+    meta_type = "CPS Range List Widget"
+
+    field_types = ('CPS Range List Field',)
+    field_inits = ({'is_searchabletext': 1,},)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'display_width', 'type': 'int', 'mode': 'w',
+         'label': 'Display width'},
+        {'id': 'format_empty', 'type': 'string', 'mode': 'w',
+         'label': 'Format for empty list'},
+        )
+
+    display_width = 0
+    format_empty = ''
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        value = datamodel[self.fields[0]]
+        datastructure[self.getWidgetId()] = value
+
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        if not _isinstance(value, ListType):
+            datastructure.setError(widget_id, "cpsschemas_err_rangelist")
+            return 0
+        v = []
+        for i in value:
+            i = i.split('-')
+            if len(i) == 1:
+                try:
+                    i[0] = int(i[0])
+                except ValueError:
+                    datastructure.setError(widget_id, "cpsschemas_err_rangelist")
+                    return 0
+                v.append((i[0],))
+            elif len(i) == 2:
+                try:
+                    i[0] = int(i[0])
+                    i[1] = int(i[1])
+                except ValueError:
+                    datastructure.setError(widget_id, "cpsschemas_err_rangelist")
+                    return 0
+                v.append((i[0], i[1]))
+            else:
+                datastructure.setError(widget_id, "cpsschemas_err_rangelist")
+                return 0
+        if self.is_required and not len(v):
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = datastructure[self.getWidgetId()]
+        res = ''
+
+        for i in value:
+            if isinstance(i, StringType):
+                res += i + ' '
+            elif len(i) == 1:
+                res += str(i[0]) + ' '
+            else:
+                res += str(i[0]) + '-' + str(i[1]) + ' '
+
+        if mode == 'view':
+            return escape(res)
+        elif mode == 'edit':
+            return renderHtmlTag('input', 
+                                 type='text',
+                                 id=self.getHtmlWidgetId(),
+                                 name=self.getHtmlWidgetId()+":tokens",
+                                 value=escape(res),
+                                 size=self.display_width,
+                                 )
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSRangeListWidget)
+
+
+class CPSRangeListWidgetType(CPSWidgetType):
+    """Range List widget type."""
+    meta_type = "CPS Range List Widget Type"
+    cls = CPSRangeListWidget
+
+InitializeClass(CPSRangeListWidgetType)
+
 ##################################################
 #
 # Register widget types.
@@ -1096,4 +1193,5 @@ WidgetTypeRegistry.register(CPSInternalLinksWidgetType)
 WidgetTypeRegistry.register(CPSPhotoWidgetType)
 WidgetTypeRegistry.register(CPSGenericSelectWidgetType)
 WidgetTypeRegistry.register(CPSGenericMultiSelectWidgetType)
+WidgetTypeRegistry.register(CPSRangeListWidgetType)
 
