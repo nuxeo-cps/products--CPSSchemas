@@ -64,7 +64,9 @@
       </td>
       <td valign="middle">
         <input type="file" name="."
-               tal:attributes="name name">
+               tal:attributes="name name;
+		               onclick string:document.getElementById('${radio_name}_change').checked='checked'
+		">
       </td>
     </tr>
     <tr tal:condition="python:here.deletable and not empty_file">
