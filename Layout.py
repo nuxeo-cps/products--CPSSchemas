@@ -288,10 +288,15 @@ class CPSLayout(Layout):
         raise ValueError(wtid)
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidget')
-    def manage_addCPSWidget(self, id, swtid, REQUEST=None):
+    def manage_addCPSWidget(self, id, swtid, REQUEST=None, **kw):
         """Add a widget, called from the ZMI."""
+        if REQUEST is not None:
+            kw.update(REQUEST.form)
+            for key in ('id', 'swtid'):
+                if kw.has_key(key):
+                    del kw[key]
         wtid = self.getUnstrippedWidgetTypeId(swtid)
-        widget = self.addWidget(id, wtid)
+        widget = self.addWidget(id, wtid, **kw)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(widget.absolute_url()+
                                       '/manage_workspace')

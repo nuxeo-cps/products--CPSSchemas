@@ -189,9 +189,14 @@ class CPSSchema(Schema):
     manage_main = manage_editSchema
 
     security.declareProtected(ManagePortal, 'manage_addField')
-    def manage_addField(self, id, field_type, REQUEST=None):
+    def manage_addField(self, id, field_type, REQUEST=None, **kw):
         """Add a field TTW."""
-        field = self.addField(id, field_type)
+        if REQUEST is not None:
+            kw.update(REQUEST.form)
+            for key in ('id', 'field_type'):
+                if kw.has_key(key):
+                    del kw[key]
+        field = self.addField(id, field_type, **kw)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(field.absolute_url()+'/manage_workspace'
                                       '?manage_tabs_message=Added.')
