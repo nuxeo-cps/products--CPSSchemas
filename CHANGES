@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- 197: FileWidget download link is badly cached
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Storage adapters always propagate **kw arguments to the base adapter.
