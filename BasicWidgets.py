@@ -268,7 +268,12 @@ InitializeClass(CPSStringWidgetType)
 class CPSURLWidget(CPSStringWidget):
     """URL widget."""
     meta_type = "CPS URL Widget"
-    css_class = "url"
+    _properties = CPSStringWidget._properties + (
+        {'id': 'target', 'type': 'string', 'mode': 'w',
+         'label': 'Target for the link'},)
+
+    target = ''
+    css_class = 'url'
     display_width = 72
     size_max = 4096
     # XXX should find a better one or check for invalid may be ?
@@ -291,6 +296,20 @@ class CPSURLWidget(CPSStringWidget):
             datamodel[self.fields[0]] = v
 
         return not err
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = escape(datastructure[self.getWidgetId()])
+        if mode == 'view':
+            target = self.target
+            if not target and value.lower().startswith('http'):
+                target = 'CPS Link'
+            kw = {'href': value, 'contents': value,
+                  'css_class': self.css_class,
+                  'target': target}
+            return renderHtmlTag('a', **kw )
+        return CPSStringWidget.render(self, mode, datastructure, **kw)
+
 
 InitializeClass(CPSURLWidget)
 
@@ -324,6 +343,15 @@ class CPSEmailWidget(CPSStringWidget):
             datamodel[self.fields[0]] = v
 
         return not err
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = escape(datastructure[self.getWidgetId()])
+        if mode == 'view':
+            kw = {'href': 'mailto:' + value,
+                  'contents': value}
+            return renderHtmlTag('a', **kw)
+        return CPSStringWidget.render(self, mode, datastructure, **kw)
 
 InitializeClass(CPSEmailWidget)
 
