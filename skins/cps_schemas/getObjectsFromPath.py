@@ -1,5 +1,4 @@
 ##parameters=path_list=[]
-
 portal_url = context.portal_url
 portal = portal_url.getPortalObject()
 

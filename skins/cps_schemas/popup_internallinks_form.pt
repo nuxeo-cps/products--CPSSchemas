@@ -6,23 +6,20 @@
 <metal:head fill-slot="head_slot">
   <script type="text/javascript" tal:condition="searching">
   <!--
+     
     function set_parent_value(parent_id) {
-      links = ''
+      var links = new Array()
+      links_html = ''
+      params = ''
+
       selected = document.resultsform.elements
       for (i = 0; i < selected.length; i++) {
         checkbox = selected[i];
         if (checkbox.checked) {
-          links += checkbox.value + '\n'
+	  links.push(checkbox.value)
         }
       }
-      if (links) {
-        parent_input = opener.document.getElementById(parent_id)
-        value = parent_input.value
-        if (value && value.substr(value.length - 1) != '\n') {
-          parent_input.value += '\n'
-        }
-        parent_input.value += links
-      }
+      opener.update_links(links)
       self.close()
     }
   -->

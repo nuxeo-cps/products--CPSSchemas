@@ -14,8 +14,121 @@
   <tal:block condition="python:mode == 'edit'">
     <tal:block define="base_url here/getBaseUrl">
       <script type="text/javascript" tal:content="structure string:<!--
+        var xmlhttp,alerted
+        /*@cc_on @*/
+        /*@if (@_jscript_version >= 5)
+        // JScript gives us Conditional compilation, we can cope with old IE versions.
+        try {
+          xmlhttp=new ActiveXObject('Msxml2.XMLHTTP')
+        } catch (e) {
+        try {
+          xmlhttp=new ActiveXObject('Microsoft.XMLHTTP')
+        } catch (E) {
+          alert('You must have Microsofts XML parsers available')
+        }
+        }
+        @else
+          xmlhttp=false
+          alerted=true
+        @end @*/
+
+        if (!xmlhttp && !alerted) {
+          // Non ECMAScript Ed. 3 will error here (IE<5 ok), nothing I can
+          // realistically do about it, blame the w3c or ECMA for not
+          // having a working versioning capability in  <SCRIPT> or
+          // ECMAScript.
+          try { 
+            xmlhttp = new XMLHttpRequest();
+          } catch (e) {
+         //   alert('Veuillez mettre à jour votre navigateur si vous désirez accéder à toutes les fonctionnalités de cette page')
+          }
+        }
+         
         var base_url = '${base_url}'
         var intlinks_w_id = '${id}'
+        var links_div_id = 'div_${id}'
+        var all_div_id = 'div_all_${id}'  
+
+        function is_in(item, list) {
+         exist = false
+         for(j=0;j<list.length;j++) {
+           list_item = list[j]
+           if(item == list_item) {
+             exist = true
+           }
+          }
+          return exist
+        }
+
+        function update_results() {
+          
+          if (xmlhttp) { 
+            textareaElement = document.getElementById(intlinks_w_id)
+            d = document;
+            params = ''
+            i = 0
+            links = textareaElement.value.split('\n')
+            for(i=0; i < links.length; i++) {
+              link = links[i]
+              if(link.length) {
+                params += 'results:list=' + link + '&'
+              }
+            }
+  
+            url = 'results_html_render?no_form:int=0&' + params
+            
+            xmlhttp.open('GET', url, false);
+            xmlhttp.send(null);
+
+            links_html = xmlhttp.responseText;
+            links_div = document.getElementById(all_div_id)
+            links_div.innerHTML = links_html
+          }
+        }
+
+        function update_links(links) {
+          links_html = ''
+          
+          textareaElement = document.getElementById(intlinks_w_id)
+
+          existing_links = textareaElement.value.split('\n')
+          for(i=0;i<links.length;i++) {
+            link = links[i]
+            exist = 0
+            if(!is_in(link, existing_links)) {
+              textareaElement.value += link + '\n'
+            } 
+          }
+
+          update_results()
+          
+        }
+
+        function delete_items() {
+          selected = document.form.elements
+          textareaElement = document.getElementById(intlinks_w_id)
+          old_value = textareaElement.value.split('\n')
+
+          deleted_links = new Array()
+          for (i = 0; i < selected.length; i++) {
+            checkbox = selected[i];
+            if (checkbox.checked) {
+              deleted_links.push(checkbox.value)
+            }
+          }
+          new_value =''
+          for(i=0;i<old_value.length;i++) {
+            value = old_value[i]
+            if(!is_in(value, deleted_links)) {
+              new_value += value + '\n'
+            }
+          }
+
+          textareaElement.value = new_value
+          
+          update_results()
+        }
+
         -->">
       </script>
       <script type="text/javascript">
@@ -30,17 +143,23 @@
         }
         -->
       </script>
-      <textarea style="width: 90%"
+
+      <div tal:attributes="id string:div_all_${id}">
+        <tal:block content="structure python:here.results_html_render(results=here.getContent().results, no_form=0)" />
+        <div tal:attributes="id string:div_${id}"></div>
+      </div>
+
+      <input type="button" name="del_item" value="action_delete" i18n:attributes="value"
+        onClick="delete_items()"> 
+      <input type="button" name="search_item" value="action_search" i18n:attributes="value"
+        onClick="open_search_dialog()"><br>
+      <textarea style="width: 90%;visibility:hidden"
                 tal:define="html_id here/getHtmlWidgetId;
                             links python:'\n'.join(values)"
                 tal:attributes="name string:${html_id}:lines;
                                 id id;
                                 rows python:test(here.size, here.size, None)"
                 tal:content="links"></textarea>
-      <a href="javascript:open_search_dialog()">
-        <img tal:replace="structure python:here.getImgTag('link_popup.gif',
-                                       base_url=base_url, width=48, height=48)">
-      </a>
     </tal:block>
   </tal:block>
 </tal:block>
