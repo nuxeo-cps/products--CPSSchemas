@@ -63,12 +63,13 @@ class SchemasTool(UniqueObject, Folder):
     manage_addCPSSchemaForm = DTMLFile('zmi/schema_addform', globals())
 
     security.declareProtected(ManagePortal, 'manage_addCPSSchema')
-    def manage_addCPSSchema(self, id, REQUEST):
+    def manage_addCPSSchema(self, id, REQUEST=None):
         """Add a schema, called from the ZMI."""
         schema = CPSSchema(id)
         schema = self.addSchema(id, schema)
-        REQUEST.RESPONSE.redirect(schema.absolute_url()+'/manage_main'
-                                  '?psm=Added.')
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(schema.absolute_url()+'/manage_main'
+                                      '?manage_tabs_message=Added.')
 
 
 
