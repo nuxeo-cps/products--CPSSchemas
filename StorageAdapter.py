@@ -123,17 +123,17 @@ class BaseStorageAdapter:
         """Set data to the object, from a mapping."""
         data = self._setDataDoProcess(data, **kw)
         for field_id, field in self.getFieldItems():
-            if field.write_ignore_storage:
-                continue
             self._setFieldData(field_id, field, data[field_id], **kw)
 
     def _setDataDoProcess(self, data, **kw):
         """Process data before write.
 
-        Returns a copy.
+        Returns a copy, without the fields that are not stored.
         """
         new_data = {}
         for field_id, field in self.getFieldItems():
+            if field.write_ignore_storage:
+                continue
             value = data[field_id]
             new_data[field_id] = field.processValueBeforeWrite(value, data)
         return new_data
