@@ -87,17 +87,24 @@ class Vocabulary(Persistent):
         self.clear()
         l = []
         d = {}
+        m = {}
         if tuples is not None:
             if tuples and isinstance(tuples[0], StringType):
                 # Vocabulary(('foo', 'bar'))
                 l = builtins_list(tuples)
                 for k in l:
                     d[k] = k
-            else:
+            elif len(tuples[0]) == 2:
                 # Vocabulary((('foo', "Foo"), ('bar', "Bar")))
                 for k, v in tuples:
                     l.append(k)
                     d[k] = v
+            else:
+                # Vocabulary((('foo', "Foo", 'label_foo'), ('bar', "Bar", 'label_bar')))
+                for k, v, msgid in tuples:
+                    l.append(k)
+                    d[k] = v
+                    m[k] = msgid
         elif dict is not None:
             d = dict.copy()
             if list is not None:
@@ -116,6 +123,7 @@ class Vocabulary(Persistent):
             pass
         self._list = l
         self._dict = d
+        self._msgids = m
 
     def __repr__(self):
         return '<Vocabulary %s>' % repr(self._dict)
