@@ -22,17 +22,17 @@
         /*@if (@_jscript_version >= 5)
         // JScript gives us Conditional compilation, we can cope with old IE versions.
         try {
-          xmlhttp=new ActiveXObject('Msxml2.XMLHTTP')
+          xmlhttp=new ActiveXObject('Msxml2.XMLHTTP');
         } catch (e) {
         try {
-          xmlhttp=new ActiveXObject('Microsoft.XMLHTTP')
+          xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
         } catch (E) {
-          alert('You must have Microsofts XML parsers available')
+          alert('You must have Microsofts XML parsers available');
         }
         }
         @else
-          xmlhttp=false
-          alerted=true
+          xmlhttp=false;
+          alerted=true;
         @end @*/
 
         if (!xmlhttp && !alerted) {
@@ -47,173 +47,181 @@
           }
         }
          
-        var base_url = '${base_url}'
-        var intlinks_w_id = '${id}'
-        var links_div_id = 'div_${id}'
-        var all_div_id = 'div_all_${id}'  
-        var info_div_id = 'info_div_${id}'
+        var base_url = '${base_url}';
+        var intlinks_w_id = '${id}';
+        var links_div_id = 'div_${id}';
+        var all_div_id = 'div_all_${id}';
+        var info_div_id = 'info_div_${id}';
 
         function is_in(item, list) {
-         exist = false
+         exist = false;
          for(j=0;j<list.length;j++) {
-           list_item = list[j]
+           list_item = list[j];
            if(item == list_item) {
-             exist = true
+             exist = true;
            }
           }
-          return exist
+          return exist;
         }
 
         function update_results() {
-          
           if (xmlhttp) { 
-            textareaElement = document.getElementById(intlinks_w_id)
-         
-            links_div = document.getElementById(all_div_id)
-            
+            var textareaElement = document.getElementById(intlinks_w_id);
+            var links_div = document.getElementById(all_div_id);
             d = document;
-            params = ''
-            i = 0
-            links = textareaElement.value.split('\n')
+            var params = '';
+            var links = textareaElement.value.split('\n');
+
             for(i=0; i < links.length; i++) {
-              link = links[i]
+              var link = links[i];
               if(link.length) {
-                params += 'results:list=' + link + '&'
+                params += 'results:list=' + link + '&';
               }
             }
 
-            url = 'results_html_render?no_form:int=0&' + params
-            
+            var url = 'results_html_render?no_form:int=0&' + params;
+
             xmlhttp.open('GET', url, false);
             xmlhttp.send(null);
 
-            links_html = xmlhttp.responseText;
+            var links_html = xmlhttp.responseText;
 
-            links_div.innerHTML = links_html
+            links_div.innerHTML = links_html;
 
           }
         }
 
 
         function getSelectedItems() {
-           selected = document.form.elements
-           selected_items = new Array()
+           var selected = document.form.elements;
+           var selected_items = new Array();
            for (i = 0; i < selected.length; i++) {
-             checkbox = selected[i];
+             var checkbox = selected[i];
              if (checkbox.checked) {
-               selected_items.push(checkbox.value)
+               selected_items.push(checkbox.value);
              }
            }
-           return selected_items
+           return selected_items;
           
         }
         
         function getExistingItems() {
-           textareaElement = document.getElementById(intlinks_w_id)
-           existing_items = textareaElement.value.split('\n')
-           return existing_items
+           textareaElement = document.getElementById(intlinks_w_id);
+           var existing_items = textareaElement.value.split('\n');
+           var reg=new RegExp('\n', 'g');
+
+           for(i=0; i<existing_items.length;i++) {
+             var value = existing_items[i];
+             lf_index = value.indexOf('\r',0);
+             if(lf_index != -1) {
+               existing_items[i] = value.substring(0, lf_index);
+             }
+           }
+           return existing_items;
         }
 
         function setExistingItems(items) {
           // put items in textare form cache if value not ''
-          textareaElement = document.getElementById(intlinks_w_id)
-          value = ''
+          textareaElement = document.getElementById(intlinks_w_id);
+
+          var value = '';
           for(i=0; i<items.length; i++) {
-            item = items[i]
+            var item = items[i];
             if(item.length) {
-              value += item + '\n'
+              value += item + '\n';
             }
           }
-          textareaElement.value = value
+          textareaElement.value = value;
         }
 
         function delete_items() {
           
-          selected = document.form.elements
-          links = getExistingItems()
-          deleted_links = getSelectedItems()
-
-
+          var selected = document.form.elements;
+          var links = getExistingItems();
+          var deleted_links = getSelectedItems();
+          
           for(i=0;i<links.length;i++) {
-            value = links[i]
+            var value = links[i];
             if(is_in(value, deleted_links)) {
-              links[i] = ''
+              links[i] = '';
             }
           }
 
-          setExistingItems(links)
-          update_results()
+          setExistingItems(links);
+          update_results();
         }
 
         function getIndex(item, list) {
           for(i=0;i<list.length;i++) {
-            value = list[i]
+            var value = list[i];
             if(item == value) {
-              return i
+              return i;
             }
           }
-          return -1
+          return -1;
         }
 
         function canMove(index, shift, max) {
           if(shift == -1) {
             if(index > 0) {
-              return true
+              return true;
             }
           } else {
             if(index < max) {
-              return true
+              return true;
             }
           }
-          return false
+          return false;
         }
 
         function move_items(direction) {
 
+          var shift = 1;
+
           if(direction=='up') {
-            shift = -1
-          } else {
-            shift = 1
+            shift = -1;
           }
-          move_links  = getSelectedItems()       
-          links = getExistingItems()
-          changed = false
+
+          var move_links  = getSelectedItems();
+          var links = getExistingItems();
+          var changed = false;
+
           for(i=0;i<move_links.length;i++) {
-            value = move_links[i]
-            index = getIndex(value, links)
+            var value = move_links[i];
+            var index = getIndex(value, links);
             if( canMove(index, shift,links.length) ) {
-              tmp = links[index+shift]
-              links[index+shift] = value
-              links[index] = tmp
-              changed = true
+              var tmp = links[index+shift];
+              links[index+shift] = value;
+              links[index] = tmp;
+              changed = true;
             }
           }          
 
           if(changed) {
-            setExistingItems(links)
-            update_results()
+            setExistingItems(links);
+            update_results();
           }
         }
 
         function move_up_items() {
-          move_items('up')
+          move_items('up');
         }
 
          function move_down_items() {
-          move_items('down')
+          move_items('down');
         }
 
         function update_links(added_links) {
 
-          links = getExistingItems()
+          var links = getExistingItems()
           for(i=0;i<added_links.length;i++) {
-            value = added_links[i]
+            var value = added_links[i];
             if(!is_in(value, links)) {
-              links.push(value)
+              links.push(value);
             } 
           }
-          setExistingItems(links)
-          update_results()          
+          setExistingItems(links);
+          update_results();  
         }
 
         -->">

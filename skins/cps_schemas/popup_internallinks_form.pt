@@ -43,15 +43,14 @@
     <tal:block define="SearchableText python:request.get('SearchableText','');
                        sort_by python:request.get('sort_by', '');
                        direction python:request.get('direction', '');
-                       folder_prefix python:request.get('folder_prefix', '');
                        items python:here.search(query=request.form,
                                                 sort_by=sort_by,
-                                                direction=direction,
-                                                folder_prefix=folder_prefix);
+                                                direction=direction);
                        nav_action string:search_form;
                        no_form nothing;
                        site_wide python:1;
                        items_per_page python:10666;">
+
       <metal:block use-macro="here/content_lib/macros/display_contents" />
     </tal:block>
     <hr>
