@@ -64,7 +64,7 @@ class DataModel(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, ob, schemas=[], proxy=None, context=None):
+    def __init__(self, ob, adapters=(), proxy=None, context=None):
         """Constructor.
 
         Proxy must be passed, if different than the object, so that
@@ -77,9 +77,7 @@ class DataModel(UserDict):
         UserDict.__init__(self)
         # self.data initialized by UserDict
         self._ob = ob
-        self._fields = {}
-        self._schemas = ()
-        self._adapters = ()
+        self._adapters = adapters
         self._proxy = proxy
         if context is None:
             if proxy is not None:
@@ -87,8 +85,18 @@ class DataModel(UserDict):
             else:
                 context = ob
         self._context = context
-        for schema in schemas:
-            self._addSchema(schema)
+        fields = {}
+        schemas = []
+        for adapter in adapters:
+            schema = adapter.getSchema()
+            for fieldid, field in schema.items():
+                if fields.has_key(fieldid):
+                    raise KeyError("Two schemas have field id %s "
+                                   " but field ids must be unique" % fieldid)
+                fields[fieldid] = field
+            schemas.append(schema)
+        self._schemas = tuple(schemas)
+        self._fields = fields
 
     def getObject(self):
         """Get the object this DataModel is about."""
@@ -107,18 +115,6 @@ class DataModel(UserDict):
     def set(self, key, value):
         # XXX This should check field permission access...
         self.__setitem__(key, value)
-
-    def _addSchema(self, schema):
-        for fieldid in schema.keys():
-            if self._fields.has_key(fieldid):
-                raise KeyError("Two schemas have field id %s "
-                               " but field ids must be unique" % fieldid)
-            else:
-                self._fields[fieldid] = schema[fieldid]
-        # XXX Adapter type isn't fixed.
-        adapter = AttributeStorageAdapter(schema, self._ob)
-        self._schemas = self._schemas + (schema,)
-        self._adapters = self._adapters + (adapter,)
 
     def _fetch(self):
         """Fetch the data into local dict for user access."""
