@@ -11,6 +11,8 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Date widget use nn/nn/nnnn instead of n/n/n for rendering
+- The Internal Links widget does not perform a permission check
+  before displaying links.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Malagasy javascript camendar (to translate)
