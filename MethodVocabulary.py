@@ -23,6 +23,7 @@ Vocabulary referencing a method.
 from zLOG import LOG, DEBUG
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
+from Acquisition import Implicit
 
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
@@ -35,7 +36,10 @@ class MethodVocabulary(SimpleItemWithProperties):
     (('foo', "Foo"), ('bar', "Bar"))
 
     the method should handle a 'key' argument
-    if the key is not None then the method must return the value
+    if the key is not None then the method must return the value.
+    The method should also handle the 'is_i18n' boolean argument
+    if it's not False and return msgid corresponsding to the passed
+    'key' argument
     """
 
     meta_type = "CPS Method Vocabulary"
@@ -58,6 +62,8 @@ class MethodVocabulary(SimpleItemWithProperties):
          'label':'Empty key position'},
         {'id': 'empty_key_value', 'type': 'string', 'mode': 'w',
          'label':'Empty key value'},
+        {'id': 'empty_key_value_i18n', 'type': 'string', 'mode': 'w',
+         'label':'Empty key i18n value'},
         )
 
     title = ''
@@ -68,6 +74,7 @@ class MethodVocabulary(SimpleItemWithProperties):
     empty_key_pos_select = ('first', 'last')
     empty_key_pos = empty_key_pos_select[0]
     empty_key_value = ''
+    empty_key_value_i18n = ''
 
     def __init__(self, id, **kw):
         self.id = id
@@ -149,3 +156,92 @@ class MethodVocabulary(SimpleItemWithProperties):
         return 0
 
 InitializeClass(MethodVocabulary)
+
+
+class MethodVocabularyWithContext(Implicit):
+    """MethodVocabulary with context support."""
+
+    security = ClassSecurityInfo()
+
+    def __init__(self, vocabulary, context):
+        self.vocabulary = vocabulary
+        self.context = context
+
+    def _getMethod(self):
+        meth = getattr(self.context,
+                       self.vocabulary.get_vocabulary_method,
+                       None)
+        if meth is None:
+            msg = "Unknown Vocabulary Method %s. " \
+            + "Please set or change the 'get_vocabulary_method' attribute " \
+            + "on your Method Vocabulary declaration for %s."
+            raise RuntimeError(msg % (self.vocabulary.get_vocabulary_method,
+                                      self.vocabulary.getId()))
+        return meth
+
+    security.declareProtected(View, '__getitem__')
+    def __getitem__(self, key):
+        if self.vocabulary.add_empty_key and key == '':
+            return self.vocabulary.empty_key_value
+        meth = self._getMethod()
+        return meth(key=key)
+
+    security.declareProtected(View, 'get')
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except (KeyError, AttributeError):
+            return default
+
+    security.declareProtected(View, 'getMsgid')
+    def getMsgid(self, key, default=None):
+        if self.vocabulary.add_empty_key and key == '':
+            return self.vocabulary.empty_key_value_i18n
+        meth = self._getMethod()
+        return meth(key=key, is_i18n=True)
+
+    security.declareProtected(View, 'keys')
+    def keys(self):
+        meth = self._getMethod()
+        res = meth()
+        res = [item[0] for item in res]
+        if self.vocabulary.add_empty_key:
+            v = ''
+            res = list(res)
+            if self.vocabulary.empty_key_pos == 'first':
+                res.insert(0, v)
+            else:
+                res.append(v)
+        return res
+
+    security.declareProtected(View, 'items')
+    def items(self):
+        meth = self._getMethod()
+        res = meth()
+        if self.vocabulary.add_empty_key:
+            v = ('', self.vocabulary.empty_key_value)
+            res = list(res)
+            if self.vocabulary.empty_key_pos == 'first':
+                res.insert(0, v)
+            else:
+                res.append(v)
+        return res
+
+    security.declareProtected(View, 'values')
+    def values(self):
+        return [t[1] for t in self.items()]
+
+    security.declareProtected(View, 'has_key')
+    def has_key(self, key):
+        _marker = []
+        value = self.get(key, _marker)
+        if value is _marker:
+            return 0
+        return 1
+
+    security.declareProtected(ManagePortal, 'isUserModified')
+    def isUserModified(self):
+        """Tell if the vocabulary has been modified by a user."""
+        return 0
+
+InitializeClass(MethodVocabularyWithContext)

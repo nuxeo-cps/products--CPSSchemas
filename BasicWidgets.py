@@ -55,6 +55,8 @@ from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import CPSWidgetType
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 
+from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
+
 def _isinstance(ob, cls):
     try:
         return isinstance(ob, cls)
@@ -976,6 +978,9 @@ class CPSSelectWidget(CPSWidget):
             except AttributeError:
                 raise ValueError("Missing vocabulary '%s' for widget '%s'" %
                                 (self.vocabulary, self.getWidgetId()))
+        if vocabulary.meta_type == 'CPS Method Vocabulary':
+            context = datastructure.getDataModel().getContext()
+            vocabulary = MethodVocabularyWithContext(vocabulary, context)
         return vocabulary
 
     def prepare(self, datastructure, **kw):
@@ -1078,6 +1083,9 @@ class CPSMultiSelectWidget(CPSWidget):
         except AttributeError:
             raise ValueError("Missing vocabulary '%s' for widget '%s'" %
                              (self.vocabulary, self.getWidgetId()))
+        if vocabulary.meta_type == 'CPS Method Vocabulary':
+            context = datastructure.getDataModel().getContext()
+            vocabulary = MethodVocabularyWithContext(vocabulary, context)
         return vocabulary
 
     def prepare(self, datastructure, **kw):
