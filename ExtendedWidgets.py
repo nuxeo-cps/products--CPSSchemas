@@ -318,7 +318,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
         err = 0
         if choice == 'delete':
             datamodel[field_id] = None
-        elif choice == 'change' or datastructure.get(widget_id):
+        elif choice == 'change' and datastructure.get(widget_id):
             file = datastructure[widget_id]
             if not _isinstance(file, FileUpload):
                 err = 'cpsschemas_err_file'

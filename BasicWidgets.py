@@ -1585,12 +1585,10 @@ class CPSFileWidget(CPSWidget):
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
         err = 0
-        if choice == 'keep':
-            # XXX check SESSION
-            pass
-        elif choice == 'delete':
+
+        if choice == 'delete':
             datamodel[field_id] = None
-        else: # 'change'
+        elif choice == 'change' and datastructure.get(widget_id):
             file = datastructure[widget_id]
             if not _isinstance(file, FileUpload):
                 err = 'cpsschemas_err_file'
@@ -1693,7 +1691,7 @@ class CPSImageWidget(CPSFileWidget):
         err = None
         if choice == 'delete':
             datamodel[field_id] = None
-        elif choice == 'change' or datastructure.get(widget_id):
+        elif choice == 'change' and datastructure.get(widget_id):
             file = datastructure[widget_id]
             if type(file) is StringType:
                 file = Image('-', '', file)
