@@ -2,13 +2,7 @@
   <body>
 
     <div metal:fill-slot="main">
-      <table bgcolor="#FFCCCC">
-        <tr>
-          <td>
-            <div tal:replace="structure python:doc.render(mode='editlayout')" />
-          </td>
-        </tr>
-      </table>
+      <div tal:replace="structure python:doc.render(mode='editlayout')" />
     </div>
 
   <body>

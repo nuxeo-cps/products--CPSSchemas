@@ -6,7 +6,7 @@
   tal:attributes="action string:${here/absolute_url}/cpsdocument_editlayout">
 <input type="hidden" name="layout_id" value="."
   tal:attributes="value layout/id">
-<table border="1"
+<table cellpadding="2" cellspacing="2" border="1"
   tal:define="ncols layout/ncols">
   <tr tal:repeat="row layout/rows">
     <td>
@@ -40,6 +40,7 @@ Ajouter:
     tal:attributes="value wtid"
     tal:content="wtid">Type</option>
 </select>
-<input type="submit" name="addwidget_button" value="Ajouter" />
+<input type="submit" name="addwidget_button" value="button_add"
+  i18n:attributes="value" />
 </form>
 </tal:block>

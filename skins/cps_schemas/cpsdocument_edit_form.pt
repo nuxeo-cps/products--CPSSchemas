@@ -3,13 +3,7 @@
   <body>
 
     <div metal:fill-slot="main">
-      <table bgcolor="#EEEEEE">
-        <tr>
-          <td>
-            <div tal:replace="structure python:doc.renderEdit(request=edit_request)" />
-          </td>
-        </tr>
-      </table>
+      <div tal:replace="structure python:doc.renderEdit(request=edit_request)" />
     </div>
 
   <body>

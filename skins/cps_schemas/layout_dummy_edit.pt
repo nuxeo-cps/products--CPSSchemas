@@ -5,7 +5,7 @@
                   ">
 <form action="." method="POST" enctype="multipart/form-data"
   tal:attributes="action string:${here/absolute_url}/cpsdocument_edit_form">
-<table border="1">
+<table width="100%" cellpadding="2" cellspacing="2" border="0">
   <tr tal:condition="not:ok">
     <td tal:attributes="colspan layout/ncols">
       <b style="color: red">Please correct the errors.</b>
@@ -18,12 +18,13 @@
              tal:condition="err">
           <b style="color: red" tal:content="err">err</b>
         </div>
-        <span tal:replace="widget/title">label</span>:
+        <strong tal:content="widget/title">label</strong>:
         <div tal:replace="structure python:widget.render('edit', ds, dm)" />
       </tal:block>
     </td>
   </tr>
 </table>
-<input type="submit" name="cpsdocument_edit_button" value="Change" />
+<input type="submit" name="cpsdocument_edit_button" value="button_change"
+  i18n:attributes="value" />
 </form>
 </tal:block>
