@@ -873,7 +873,8 @@ class CPSFileWidget(CPSWidget):
     """File widget."""
     meta_type = "CPS File Widget"
 
-    field_types = ('CPS File Field',)
+    # XXX The second and third fields are actually optional...
+    field_types = ('CPS File Field', 'CPS String Field', 'CPS File Field')
 
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
@@ -890,8 +891,8 @@ class CPSFileWidget(CPSWidget):
         widget_id = self.getWidgetId()
         datastructure[widget_id] = datamodel[self.fields[0]]
         # Compute preview info for widget.
-        if len(self.fields) > 1 and datamodel.get(self.fields[1]) is not None:
-            preview_id = self.fields[1]
+        if len(self.fields) > 2 and datamodel.get(self.fields[2]) is not None:
+            preview_id = self.fields[2]
         else:
             preview_id = None
         datastructure[widget_id + '_preview'] = preview_id
