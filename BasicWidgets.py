@@ -74,7 +74,7 @@ def renderHtmlTag(tagname, **kw):
     for key, value in kw.items():
         if value is None:
             continue
-        if key in ('value', ) or value != '':
+        if key in ('value', 'alt') or value != '':
             attrs.append('%s="%s"' % (key, attrEscape(str(value))))
     res = '<%s %s' % (tagname, ' '.join(attrs))
     if contents is not None:
@@ -1976,9 +1976,10 @@ class CPSImageWidget(CPSFileWidget):
                     height = int(zoom * height)
 
             title = getattr(image, 'title', None)
+            alt = title or ''
             tag = renderHtmlTag('img', src=image_info['content_url'],
                     width=str(width), height=str(height), border='0',
-                    alt=title, title=title)
+                    alt=alt, title=title)
 
         image_info['height'] = height
         image_info['width'] = width
