@@ -19,7 +19,7 @@ types = {
              'immediate_view': 'cpsdocument_edit_form',
              'schemas': ['news'],
              'default_layout': 'news',
-             'layout_style_prefix': 'layout_dummy_',
+             'layout_style_prefix': 'layout_default_',
              },
     'Dummy Form': {'title': 'portal_type_Dummy_Form',
                    'description': 'portal_type_Dummy_description',
