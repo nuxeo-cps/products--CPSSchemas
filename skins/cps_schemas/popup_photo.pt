@@ -17,7 +17,7 @@
         <button onclick="window.close()" i18n:translate="button_close">Fermer</button>
       </div>
       <div class="popupImg">
-        <img tal:replace="structure python:here.getImgTag(id + '_f3', base_url='')" />
+        <img tal:replace="structure python:here.getImgTag(id, base_url='')" />
       </div>
     </metal:main>
   </metal:body>

@@ -14,16 +14,17 @@
   rposition options/render_position;
   configurable options/configurable;
   last_modified options/last_modified;
+  original_photo_field python:len(fields)>2 and fields[3] or 'photo_original'
   ">
   <tal:block condition="python: mode == 'view' and not empty_file" 
-             define="original_photo python:getattr(here,id+'_f3', None)">
+             define="original_photo python:getattr(here,original_photo_field, None)">
     <div tal:attributes="class python:test(rposition == 'right', 'dright',
                                       test(rposition == 'center', 'dcenter', 'dleft'))">
       <tal:block condition="python: original_photo">
         <a href="#" 
           tal:define="original_width python:original_photo.width; 
                       original_height python:original_photo.height"
-          tal:attributes="onClick python:'window.open(\'popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(id,str(int(original_width)+20)) +
+          tal:attributes="onClick python:'window.open(\'popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(original_photo_field,str(int(original_width)+20)) +
                          ',innerheight=%s'%str(int(original_height) + 40) + 
                          ',location=no,menubar=no' +
                          ',personalbar=no,toolbar=no,status=no' +
