@@ -278,7 +278,7 @@ InitializeClass(CPSPasswordWidgetType)
 #
 #InitializeClass(CPSCheckBoxWidgetType)
 
-#############################################################
+##################################################
 
 class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
@@ -355,6 +355,80 @@ class CPSTextAreaWidgetType(CPSWidgetType):
     cls = CPSTextAreaWidget
 
 InitializeClass(CPSTextAreaWidgetType)
+
+##################################################
+
+class CPSSelectWidget(CPSWidget):
+    """Select widget."""
+    meta_type = "CPS Select Widget"
+
+    field_types = ('CPS String Field',)
+
+    vocabulary = ''
+    _properties = CPSWidget._properties + (
+        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
+         'label': 'Vocabulary'},
+        )
+    # XXX make a menu for the vocabulary.
+
+    def _getVocabulary(self):
+        """Get the vocabulary object for this widget."""
+        vtool = getToolByName(self, 'portal_vocabularies')
+        try:
+            vocabulary = getattr(vtool, self.vocabulary)
+        except AttributeError:
+            raise ValueError("Missing vocabulary %s" % self.vocabulary)
+        return vocabulary
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        try:
+            v = str(value)
+        except ValueError:
+            datastructure.setError(widget_id, "cpsdoc_err_select")
+            return 0
+        vocabulary = self._getVocabulary()
+        if not vocabulary.has_key(value):
+            datastructure.setError(widget_id, "cpsdoc_err_select")
+            return 0
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        vocabulary = self._getVocabulary()
+        if mode == 'view':
+            return escape(vocabulary.get(value, value))
+        elif mode == 'edit':
+            res = renderHtmlTag('select',
+                                name=self.getHtmlWidgetId())
+            LOG('render', DEBUG, 'voc=%s' % repr(vocabulary))
+            for k, v in vocabulary.items():
+                LOG('render', DEBUG, 'k=%s v=%s' % (k, v))
+                kw = {'value': k, 'contents': v}
+                if value == k:
+                    kw['selected'] = None
+                res += renderHtmlTag('option', **kw)
+            res += '</select>'
+            return res
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSSelectWidget)
+
+
+class CPSSelectWidgetType(CPSWidgetType):
+    """Select widget type."""
+    meta_type = "CPS Select Widget Type"
+    cls = CPSSelectWidget
+
+InitializeClass(CPSSelectWidgetType)
 
 ##################################################
 
@@ -811,3 +885,4 @@ WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
 WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
+WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)

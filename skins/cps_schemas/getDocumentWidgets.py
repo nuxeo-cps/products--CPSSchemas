@@ -40,6 +40,10 @@ widgets = {
             'type': 'CPS Html Widget Type',
             'data': {},
             },
+        'Select Widget': {
+            'type': 'CPS Select Widget Type',
+            'data': {},
+            },
         'Dummy Widget': {
             'type': 'CPS Customizable Widget Type',
             'data': {
