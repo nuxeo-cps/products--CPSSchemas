@@ -46,7 +46,6 @@ def Relation(self):
 DublinCore.Coverage = Coverage
 DublinCore.Source = Source
 DublinCore.Relation = Relation
-InitializeClass(DublinCore)
 
 
 def setCoverage(self, coverage):
@@ -64,7 +63,6 @@ def setRelation(self, relation):
 MutableDublinCore.setCoverage = setCoverage
 MutableDublinCore.setSource = setSource
 MutableDublinCore.setRelation = setRelation
-InitializeClass(MutableDublinCore)
 
 
 security = ClassSecurityInfo()
