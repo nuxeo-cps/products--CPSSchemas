@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2004-10-07 17:19default\n"
+"POT-Creation-Date: 2004-10-18 16:25default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -144,13 +144,24 @@ msgid "cpsschemas_render_position"
 msgstr "Posición: "
 
 #    <span>resize</span>
-#.   <block define="size_max python:here.size_max / (1024*1024)">
-#.                 cpsschemas_size_max
-#.                 ${size_max (tal replace="size_max")}
-#.               </block>
+#.   <block condition="b">
+#.                   cpsschemas_size_max
+#.                   ${size_max}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.                 </block>
+#.   <block condition="m">
+#.                   cpsschemas_size_max
+#.                   ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
+#.                 </block>
+#.   <block condition="k">
+#.                   cpsschemas_size_max
+#.                   ${size_max (tal content="python:'%s' % (size_max / 1024)")}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
+msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
 msgstr "y redimensionar: "
 
 #    <h2>cpsschemas_vocabulary_add</h2>
@@ -262,6 +273,24 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Texto alternativo"
+
+#    <span>mn</span>
+#, fuzzy
+msgid "cpsschemas_unit_bytes"
+msgstr "mn"
+
+#, fuzzy
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr "En el centro"
+
+#    <span>resize</span>
+#, fuzzy
+msgid "cpsschemas_unit_mega_bytes"
+msgstr "y redimensionar: "
+
+#, fuzzy
+msgid "cpsschemas_unit_giga_bytes"
+msgstr "Formato de fecha no válido"
 
 msgid "cpsschemas_err_string"
 msgstr "Cadena de caracteres no válida"

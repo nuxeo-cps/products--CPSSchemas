@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-10-07 17:19default\n"
+"POT-Creation-Date: 2004-10-18 16:25default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -119,13 +119,24 @@ msgstr "Formato de renderização"
 msgid "cpsschemas_render_position"
 msgstr "Posição de renderização"
 
-#.   <block define="size_max python:here.size_max / (1024*1024)">
-#.                 cpsschemas_size_max
-#.                 ${size_max (tal replace="size_max")}
-#.               </block>
+#.   <block condition="b">
+#.                   cpsschemas_size_max
+#.                   ${size_max}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.                 </block>
+#.   <block condition="m">
+#.                   cpsschemas_size_max
+#.                   ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
+#.                 </block>
+#.   <block condition="k">
+#.                   cpsschemas_size_max
+#.                   ${size_max (tal content="python:'%s' % (size_max / 1024)")}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #, fuzzy
-msgid "cpsschemas_size_max ${size_max}"
+msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
 msgstr "Redimensiona"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
@@ -223,6 +234,22 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Texto alternativo"
+
+#, fuzzy
+msgid "cpsschemas_unit_bytes"
+msgstr "min"
+
+#, fuzzy
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr "Centro"
+
+#, fuzzy
+msgid "cpsschemas_unit_mega_bytes"
+msgstr "Redimensiona"
+
+#, fuzzy
+msgid "cpsschemas_unit_giga_bytes"
+msgstr "Data inválida."
 
 msgid "cpsschemas_err_string"
 msgstr "Cadeia de caracteres inválida."

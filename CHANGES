@@ -7,6 +7,8 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Fixed the problem that an attached file "to keep" was not saved anymore.
+- Better display and i18n of the maximum allowed size, before size was only
+  described in Mb.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

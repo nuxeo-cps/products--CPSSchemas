@@ -16,6 +16,18 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
+msgid "cpsschemas_unit_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_mega_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_giga_bytes"
+msgstr ""
+
 msgid "cpsschemas_err_string"
 msgstr ""
 

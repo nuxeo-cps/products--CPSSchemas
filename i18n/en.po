@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-07 17:19default\n"
-"PO-Revision-Date: 2004-10-07 17:20+0200\n"
+"POT-Creation-Date: 2004-10-18 16:25default\n"
+"PO-Revision-Date: 2004-10-18 16:29+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,13 +123,24 @@ msgstr "Format: "
 msgid "cpsschemas_render_position"
 msgstr "Position: "
 
-#.   <block define="size_max python:here.size_max / (1024*1024)">
-#.                 cpsschemas_size_max
-#.                 ${size_max (tal replace="size_max")}
-#.               </block>
+#.   <block condition="b">
+#.                   cpsschemas_size_max
+#.                   ${size_max}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.                 </block>
+#.   <block condition="m">
+#.                   cpsschemas_size_max
+#.                   ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
+#.                 </block>
+#.   <block condition="k">
+#.                   cpsschemas_size_max
+#.                   ${size_max (tal content="python:'%s' % (size_max / 1024)")}
+#.                   ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
-msgid "cpsschemas_size_max ${size_max}"
-msgstr "Maximal size: ${size_max} Mb"
+msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
+msgstr "Maximal size: ${size_max} ${storage_unit}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -227,6 +238,18 @@ msgstr ""
 msgid "label_alt_text"
 msgstr "Alternative text"
 
+msgid "cpsschemas_unit_bytes"
+msgstr "bytes"
+
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr "Kb"
+
+msgid "cpsschemas_unit_mega_bytes"
+msgstr "Mb"
+
+msgid "cpsschemas_unit_giga_bytes"
+msgstr "Gb"
+
 msgid "cpsschemas_err_string"
 msgstr "Invalid string"
 
@@ -258,7 +281,9 @@ msgid "cpsschemas_err_file"
 msgstr "Invalid file"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_suffixes}"
-msgstr "This file has not an allowed suffix, the allowed suffixes are: ${allowed_suffixes}."
+msgstr ""
+"This file has not an allowed suffix, the allowed suffixes are: "
+"${allowed_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Invalid file"
