@@ -8,6 +8,7 @@ Bug fixes:
 ~~~~~~~~~~
 - fixing bad portal type icon init
 - fixing non i18n action name
+- fixing search on is_indexed field (install bug)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - move CPSDocument[Schemas|Layers|Types|Widgets] to getDocument* 
