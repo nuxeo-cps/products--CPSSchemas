@@ -21,3 +21,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Pass the datamodel as argument to postCommitHook as it is sometimes
   needed.
+- computeLayoutStructure has a simpler API without the need for a chooser.
