@@ -49,9 +49,6 @@
   </dtml-in>
   <tr>
     <td align="left" colspan="3">
-      <input type="submit" name="manage_changeField:method" value=" Change " />
-      <input type="submit" name="manage_moveFieldItemsUp:method" value=" Move up " />
-      <input type="submit" name="manage_moveFieldItemsDown:method" value=" Move down " />
       <input type="submit" name="manage_delFieldItems:method" value=" Delete " />
     </td>
   </tr>
