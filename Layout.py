@@ -257,7 +257,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
         Cells in a row have additionnal keys:
          - widget
          - widget_mode
-         - widget_css_class
+         - css_class
          - widget_rendered
         (In addition to widget_id and ncols of the standard data.)
         """
@@ -269,11 +269,11 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
         for widget_id, widget in self.items():
             if not widget.isHidden():
                 mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
-                css_class = widget.getCssClassFromDatamodel(layout_mode, datamodel)
+                css_class = widget.getCssClass(layout_mode, datamodel)
                 widgets[widget_id] = {
                     'widget': widget,
                     'widget_mode': mode,
-                    'widget_css_class': css_class,
+                    'css_class': css_class,
                     }
         layout_structure['widgets'] = widgets
         # Store computed widget info in row/cell structure.
