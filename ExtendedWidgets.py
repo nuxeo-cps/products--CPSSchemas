@@ -26,6 +26,7 @@ from cgi import escape
 from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base
+from types import StringType
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
@@ -166,7 +167,7 @@ class CPSDateTimeWidget(CPSWidget):
         {'id': 'view_format', 'type': 'string', 'mode': 'w',
          'label': 'View format (short, medium or long)'},
         {'id': 'time_setting', 'type': 'boolean', 'mode': 'w',
-         'label': 'enable time setting'},
+         'label': 'Enabling the setting of time of the day'},
         )
     view_format = 'medium'
     time_setting = 1
@@ -180,7 +181,12 @@ class CPSDateTimeWidget(CPSWidget):
         widget_id = self.getWidgetId()
         date = ''
         hour = minute = ''
-        if v is not None:
+
+        if v == 'None':
+            v = None
+        if v:
+            if type(v) is StringType:
+                v = DateTime(v)
             d = str(v.day())
             m = str(v.month())
             y = str(v.year())
