@@ -89,9 +89,10 @@ class DataModel(UserDict):
         self._adapters = adapters
         self._proxy = proxy
 
-        # This structure is a dictionary of field ids associated with a boolean that
-        # tells wether the given field is dirty (has been modified) or not.
-        self.dirty_fields_map = {}
+        # This structure is a dictionary of field ids associated with
+        # a boolean that tells wether the given field is dirty
+        # (has been modified) or not.
+        self.dirty = {}
 
         if context is None:
             if proxy is not None:
@@ -171,7 +172,7 @@ class DataModel(UserDict):
     def __setitem__(self, key, item):
         self.checkWriteAccess(key)
         self.data[key] = item
-        self.dirty_fields_map[key] = 1
+        self.dirty[key] = 1
 
     # Expose setter as method for restricted code.
     def set(self, key, item):
@@ -219,7 +220,7 @@ class DataModel(UserDict):
             if value is DEFAULT_VALUE_MARKER:
                 field = fields[field_id]
                 data[field_id] = field.getDefault()
-                self.dirty_fields_map[field_id] = 1
+                self.dirty[field_id] = 1
 
     def _setEditable(self):
         """Set the editable object for this DataModel.
@@ -283,7 +284,7 @@ class DataModel(UserDict):
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
-                if self.dirty_fields_map.get(field_id):
+                if self.dirty.get(field_id):
                     LOG("DataModel", DEBUG, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
@@ -297,7 +298,7 @@ class DataModel(UserDict):
             ob.postCommitHook(datamodel=self)
 
         for field_id in self._fields.keys():
-            self.dirty_fields_map[field_id] = 0
+            self.dirty[field_id] = 0
 
         return ob
 
