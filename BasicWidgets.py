@@ -1199,12 +1199,15 @@ class CPSImageWidget(CPSWidget):
          'label': 'Display width'},
         {'id': 'display_height', 'type': 'int', 'mode': 'w',
          'label': 'Display height'},
+        {'id': 'allow_resize', 'type': 'boolean', 'mode': 'w',
+         'label': 'Enable to resize img to lower size'},
         )
 
     deletable = 1
     size_max = 2*1024*1024
     display_height = 0
     display_width = 0
+    allow_resize = 0
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -1213,7 +1216,8 @@ class CPSImageWidget(CPSWidget):
         datastructure[widget_id] = datamodel[self.fields[0]]
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
-
+        if self.allow_resize:
+            datastructure[widget_id + '_resize'] = ''
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -1245,6 +1249,14 @@ class CPSImageWidget(CPSWidget):
                     else:
                         size = (self.display_width,
                                 self.display_height)
+                        if self.allow_resize:
+                            resize_op = datastructure[widget_id + '_resize']
+                            resize = None
+                            for s in self.getImgSizes():
+                                if s['id'] == resize_op:
+                                    resize = s['size']
+                            if resize and resize < size:
+                                size = resize
                         if size[0] and size[1]:
                             try:
                                 img = PIL.Image.open(file)
@@ -1269,6 +1281,8 @@ class CPSImageWidget(CPSWidget):
         else:
             datastructure[widget_id] = datamodel[self.fields[0]]
             datastructure[widget_id + '_choice'] = ''
+            if self.allow_resize:
+                datastructure[widget_id + '_resize'] = ''
 
         return not err
 
