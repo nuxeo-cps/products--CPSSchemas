@@ -169,7 +169,6 @@ class DataModel(UserDict):
         return self.data.pop(key)
 
     def __setitem__(self, key, item):
-        LOG("DataModel", DEBUG, "__setitem__ key/item = %s / %s" % (key, item))
         self.checkWriteAccess(key)
         self.data[key] = item
         self.dirty_fields_map[key] = 1
