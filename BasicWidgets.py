@@ -514,6 +514,7 @@ class CPSLinesWidget(CPSWidget):
             return ', '.join([escape(i) for i in value])
         elif mode == 'edit':
             return renderHtmlTag('textarea',
+                                 id=self.getHtmlWidgetId(),
                                  name=self.getHtmlWidgetId()+":lines",
                                  cols=self.width,
                                  rows=self.height,
