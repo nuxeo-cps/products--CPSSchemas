@@ -205,6 +205,7 @@ class CPSSearchLanguageWidget(CPSWidget):
         for value in values:
             if value in languages:
                 v.append(value)
+        datastructure[widget_id] = v
         datamodel[self.fields[0]] = v
         return 1
 
@@ -213,13 +214,13 @@ class CPSSearchLanguageWidget(CPSWidget):
         """Render in mode from datastructure."""
         render_method = 'widget_searchlanguage_render'
         widget_id = self.getWidgetId()
-        values = datastructure[widget_id]
+        value = datastructure[widget_id]
         selected = escape(datastructure[widget_id + '_selected'])
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        return meth(mode=mode, values=values,
+        return meth(mode=mode, value=value,
                     selected=selected,
                     vocabulary=self._getLanguageVoc())
 
