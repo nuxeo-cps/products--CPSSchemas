@@ -173,17 +173,18 @@ class DataModel(UserDict):
 
         # Check permission on the object.
         # This is global and in addition to field-level checks.
-        if check_perms and not _checkPermission(ModifyPortalContent, ob):
+        # XXX This should somehow be checked by the adapters.
+        if (ob is not None and check_perms and
+            not _checkPermission(ModifyPortalContent, ob)):
             LOG("_commit", DEBUG, "Unauthorized to modify object %s" % (ob,))
             raise Unauthorized("Cannot modify object")
 
         # Compute dependant fields.
         data = self.data
-        context = self._proxy or self._ob
         for schema in self._schemas:
             for field_id, field in schema.items():
                 field.computeDependantFields(self._schemas, data,
-                                             context=context)
+                                             context=self._context)
 
         # Call the adapters to store the data.
         for adapter in self._adapters:
