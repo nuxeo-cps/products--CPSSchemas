@@ -5,9 +5,12 @@
       <tal:block repeat="cell cells">
         <tal:block define="widget cell/widget">
           <div tal:attributes="class widget/css_class|nothing">
-            <tal:block condition="widget/label">
-              <span class="label" tal:content="widget/label">label</span>
-            </tal:block>
+            <div class="label" tal:condition="widget/label">
+              <span i18n:translate="" tal:condition="widget/is_i18n"
+                    tal:content="widget/label">label</span>
+              <span tal:condition="not:widget/is_i18n"
+                    tal:content="widget/label">label</span>
+          </div>
             <tal:block replace="structure cell/widget_rendered" />
           </div>
         </tal:block>
@@ -24,7 +27,7 @@
                          css_class python:test(err, 'row error', 'row')">
         <div tal:attributes="class css_class">
           <div class="label" tal:condition="widget/label_edit"
-            tal:attributes="class python:test(is_required, 'label required',
+                             tal:attributes="class python:test(is_required, 'label required',
                                               'label')">
             <span i18n:translate="" tal:condition="widget/is_i18n"
               tal:content="widget/label_edit">label</span>
@@ -32,8 +35,8 @@
               tal:content="widget/label_edit">label</span>
           </div>
           <button type="button" class="tooltipControl"
-                tal:condition="widget/help"
-		tal:attributes="onclick python:'toggleElementVisibility(\'%s\')' % tooltip_id;"
+                  tal:condition="widget/help"
+                  tal:attributes="onclick python:'toggleElementVisibility(\'%s\')' % tooltip_id;"
           > ? </button>
           <div class="field">
             <div tal:replace="structure cell/widget_rendered"/>
