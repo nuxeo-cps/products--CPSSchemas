@@ -105,7 +105,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Get the widget mode from the given TAL expression'},
         {'id': 'widget_group_id', 'type': 'string', 'mode': 'w',
          'label': 'Group id for Javascript switching (if empty widget id is used)'},
-        {'id': 'widget_display_expr', 'type': 'text', 'mode': 'w',
+        {'id': 'widget_css_class_expr', 'type': 'text', 'mode': 'w',
          'label': 'Return the css class given by the TAL expressions'},
         )
 
@@ -124,7 +124,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     hidden_if_expr = ''
     widget_mode_expr = ''
     widget_group_id = ''
-    widget_display_expr = 'string:visible'
+    widget_css_class_expr = ''
 
     widget_type = '' # Not a property by default
     field_types = []
@@ -133,12 +133,12 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     hidden_if_expr_c = None
     widget_mode_expr_c = None
-    widget_display_expr_c = None
+    widget_css_class_expr_c = None
 
     _properties_post_process_tales = (
         ('hidden_if_expr', 'hidden_if_expr_c'),
         ('widget_mode_expr', 'widget_mode_expr_c'),
-        ('widget_display_expr', 'widget_display_expr_c'),
+        ('widget_css_class_expr', 'widget_css_class_expr_c'),
         )
 
     def __init__(self, id, widgettype, **kw):
@@ -246,18 +246,18 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
                 return 'edit'
         raise ValueError("Unknown layout mode '%s'" % layout_mode)
 
-    security.declarePrivate('getModeFromLayoutMode')
-    def getDisplayClassFromDatamodel(self, layout_mode, datamodel):
-        """ Get the default diplay css class"""
-        if self.css_class != '':
-            css_class = 'visible'
-        else:
-            css_class = self.css_class
+    security.declarePrivate('getCssClassFromDatamodel')
+    def getCssClassFromDatamodel(self, layout_mode, datamodel):
+        """ Get the default widget css class
 
-        if self.widget_display_expr_c:
+        It returns 'visible' if nothing being computed
+        """
+        css_class = self.css_class or 'visible'
+
+        if self.widget_css_class_expr_c:
             # Creating the context for evaluating the TAL expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
-            css_class_computed = self.widget_display_expr_c(expr_context)
+            css_class_computed = self.widget_css_class_expr_c(expr_context)
             if css_class_computed:
                 return css_class_computed
             else:
