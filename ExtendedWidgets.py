@@ -907,8 +907,14 @@ class CPSGenericSelectWidget(CPSWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_select")
                     return 0
         else:
-            if self.is_required and vocabulary.has_key(value):
-                if not self.blank_value_ok_if_required:
+            if self.is_required:
+                # set error unless vocabulary holds blank values and
+                # blank_value_ok_if_required is set to 1
+                if vocabulary.has_key(value):
+                    if not self.blank_value_ok_if_required:
+                        datastructure.setError(widget_id, "cpsschemas_err_required")
+                        return 0
+                else:
                     datastructure.setError(widget_id, "cpsschemas_err_required")
                     return 0
         datamodel = datastructure.getDataModel()
