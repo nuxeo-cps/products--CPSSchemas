@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2005-04-01 16:08default\n"
+"POT-Creation-Date: 2005-04-05 15:20default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -150,6 +150,24 @@ msgstr "Formato de renderização"
 msgid "cpsschemas_render_position"
 msgstr "Posição de renderização"
 
+#.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_all_languages"
+msgstr "Inteiro longo fora da faixa."
+
+#.   <strong>or</strong>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_language_or"
+msgstr "Inteiro longo fora da faixa."
+
+#.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_languages"
+msgstr "Inteiro longo fora da faixa."
+
 #.   <p>
 #.             cpsschemas_size_max
 #.             ${size_max (tal content="str_sizeMax")}
@@ -222,15 +240,6 @@ msgstr "Valor:"
 msgid "description_vocabulary_manage_form"
 msgstr "Administrar vocabulário"
 
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
-
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -274,6 +283,12 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Texto alternativo"
+
+#.   <label attributes="for file_upload_id">
+#.             File to use to fill the text area</label>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "label_file_upload"
+msgstr ""
 
 #, fuzzy
 msgid "cpsschemas_unit_bytes"

@@ -23,6 +23,12 @@
         rows here/height;"
         tal:content="value" />
     <p>
+      <tal:block condition="file_uploader">
+        <label tal:attributes="for file_upload_id" i18n:translate="label_file_upload">
+          File to use to fill the text area</label>
+        <input type="file"
+          tal:attributes="id file_upload_id; name file_upload_id"/><br/>
+      </tal:block>
       <tal:block condition="python: configurable.find('position') >= 0">
         <tal:block i18n:translate="">cpsschemas_render_position</tal:block>
         <select tal:attributes="name string:${value_name}_rposition">
@@ -32,7 +38,6 @@
             tal:content="string:cpsschemas_rposition_${op}" i18n:translate="" />
         </select>
       </tal:block>
-
       <tal:block condition="python: configurable.find('format') >= 0">
         <tal:block i18n:translate="">cpsschemas_render_format</tal:block>
         <select tal:attributes="name string:${value_name}_rformat;
@@ -55,9 +60,6 @@
         string:javascript:popup_rte('${value_name}', '${here/label_edit}')
         "
         >Layout</button>
-      <tal:block condition="file_uploader">
-        <input type="file" tal:attributes="name file_upload_id"/>
-      </tal:block>
     </p>
 
   </tal:block>

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2005-04-01 16:08default\n"
+"POT-Creation-Date: 2005-04-05 15:20default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -169,6 +169,24 @@ msgstr "Formato: "
 msgid "cpsschemas_render_position"
 msgstr "Posición: "
 
+#.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_all_languages"
+msgstr "Entero largo fuera de límites"
+
+#.   <strong>or</strong>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_language_or"
+msgstr "Entero largo fuera de límites"
+
+#.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_languages"
+msgstr "Entero largo fuera de límites"
+
 #    <span>resize</span>
 #.   <p>
 #.             cpsschemas_size_max
@@ -256,15 +274,6 @@ msgstr "Valor: "
 msgid "description_vocabulary_manage_form"
 msgstr "Gestión de vocabularios"
 
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
-
 #    <em content="err" style="color: red">err</em>
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -309,6 +318,12 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Texto alternativo"
+
+#.   <label attributes="for file_upload_id">
+#.             File to use to fill the text area</label>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "label_file_upload"
+msgstr ""
 
 #    <span>mn</span>
 #, fuzzy

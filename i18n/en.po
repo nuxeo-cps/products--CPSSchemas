@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 16:08default\n"
+"POT-Creation-Date: 2005-04-05 15:20default\n"
 "PO-Revision-Date: 2005-02-10 10:30+0100\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -154,6 +154,24 @@ msgstr "Format: "
 msgid "cpsschemas_render_position"
 msgstr "Position: "
 
+#.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_all_languages"
+msgstr "Long integer out of range"
+
+#.   <strong>or</strong>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_language_or"
+msgstr "Long integer out of range"
+
+#.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+#, fuzzy
+msgid "cpsschemas_search_languages"
+msgstr "Long integer out of range"
+
 #.   <p>
 #.             cpsschemas_size_max
 #.             ${size_max (tal content="str_sizeMax")}
@@ -224,15 +242,6 @@ msgstr "Value:"
 msgid "description_vocabulary_manage_form"
 msgstr "This page allow you to manage vocabularies and their entries."
 
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
-
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -276,6 +285,12 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Alternative text"
+
+#.   <label attributes="for file_upload_id">
+#.             File to use to fill the text area</label>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "label_file_upload"
+msgstr "File to use to fill the text area:"
 
 msgid "cpsschemas_unit_bytes"
 msgstr "bytes"
