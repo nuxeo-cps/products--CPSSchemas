@@ -40,6 +40,7 @@
   <form name="resultsform" onsubmit="javascript:set_parent_value"
     tal:attributes="onsubmit string:javascript:set_parent_value('${textarea}');;
                    ">
+    
     <tal:block define="SearchableText python:request.get('SearchableText','');
                        sort_by python:request.get('sort_by', '');
                        direction python:request.get('direction', '');
@@ -50,7 +51,10 @@
                        no_form nothing;
                        site_wide python:1;
                        items_per_page python:10666;">
-
+      <div 
+        tal:condition="not:items" 
+        i18n:translate="legend_no_search_result"
+        style="margin: 10px 0 0 5px;">No items found.</div>                   
       <metal:block use-macro="here/content_lib/macros/display_contents" />
     </tal:block>
     <hr>
