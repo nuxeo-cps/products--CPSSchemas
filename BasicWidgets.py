@@ -665,6 +665,73 @@ class CPSLinesWidgetType(CPSWidgetType):
 
 InitializeClass(CPSLinesWidgetType)
 
+
+##################################################
+
+class CPSListWidget(CPSLinesWidget):
+    """Abstract list widget"""
+    meta_type = "CPS List Widget"
+    display = None
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        if not self.display:
+            raise NotImplementedError
+        value = datastructure[self.getWidgetId()]
+        meth = getattr(self, 'widget_list_render', None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                                   % (render_method, self.getId()))
+        return meth(mode=mode, value=value)
+
+InitializeClass(CPSListWidget)
+
+
+class CPSListWidgetType(CPSLinesWidgetType):
+    """Abstract list widget type."""
+    meta_type = "CPS List Widget Type"
+    cls = CPSListWidget
+
+InitializeClass(CPSListWidgetType)
+
+
+##################################################
+
+class CPSOrderedListWidget(CPSListWidget):
+    """Ordered list widget"""
+    meta_type = "CPS Ordered List Widget"
+    display = 'ordered'
+
+InitializeClass(CPSOrderedListWidget)
+
+
+class CPSOrderedListWidgetType(CPSListWidgetType):
+    """Ordered list widget type"""
+    meta_type = "CPS Ordered List Widget Type"
+    cls = CPSOrderedListWidget
+
+InitializeClass(CPSOrderedListWidgetType)
+
+
+##################################################
+
+class CPSUnorderedListWidget(CPSListWidget):
+    """Unordered list widget"""
+    meta_type = "CPS Unordered List Widget"
+    display = 'unordered'
+
+InitializeClass(CPSOrderedListWidget)
+
+
+class CPSUnorderedListWidgetType(CPSListWidgetType):
+    """Unordered list widget type"""
+    meta_type = "CPS Unordered List Widget Type"
+    cls = CPSUnorderedListWidget
+
+InitializeClass(CPSUnorderedListWidgetType)
+
+
+
 ##################################################
 
 class CPSSelectWidget(CPSWidget):
@@ -1900,3 +1967,5 @@ WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
 WidgetTypeRegistry.register(CPSMethodWidgetType, CPSMethodWidget)
 WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
 WidgetTypeRegistry.register(CPSMultiSelectWidgetType, CPSMultiSelectWidget)
+WidgetTypeRegistry.register(CPSOrderedListWidgetType, CPSOrderedListWidget)
+WidgetTypeRegistry.register(CPSUnorderedListWidgetType, CPSUnorderedListWidget)

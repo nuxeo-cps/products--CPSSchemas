@@ -4,6 +4,7 @@ ZODB Requires:
 
 New features:
 ~~~~~~~~~~~~~
+- Ordered List and Unordered List widgets
 -
 
 Bug fixes:

@@ -1,0 +1,31 @@
+<tal:block define="mode options/mode;
+                   value options/value;
+                   display context/display;
+                  ">
+
+<tal:block condition="python: mode == 'view'">
+  <ol tal:condition="python: value and display == 'ordered'">
+    <li tal:repeat="line value" tal:content="line">
+      Content
+    </li>
+  </ol>
+  <ul tal:condition="python: value and display == 'unordered'">
+    <li tal:repeat="line value" tal:content="line">
+      Content
+    </li>
+  </ul>
+  <div tal:condition="not:value" tal:content="context/format_empty" />
+</tal:block>
+
+<tal:block condition="python: mode == 'edit'">
+  <textarea tal:define="wid context/getHtmlWidgetId"
+            tal:attributes="id wid;
+                            name string:${wid}:lines;
+                            cols context/width;
+                            rows context/height"
+            tal:content="python:'\n'.join(value)"> 
+    Content
+  </textarea>
+</tal:block>
+
+</tal:block>
