@@ -137,7 +137,7 @@ class CPSStringWidget(CPSWidget):
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
@@ -384,7 +384,7 @@ class CPSTextAreaWidget(CPSWidget):
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
