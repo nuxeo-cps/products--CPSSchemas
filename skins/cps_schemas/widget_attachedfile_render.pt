@@ -3,9 +3,11 @@
                    current_name options/current_name;
                    empty_file options/empty_file;
                    mimetype options/mimetype;
+                   size options/size;
                    content_url options/content_url;
                   ">
 <tal:block condition="python: mode == 'view' and not empty_file">
+
   <tal:block define="preview_id python:options['datastructure'][id+'_preview']">
     <a target="_blank" tal:attributes="href content_url">
       <tal:block condition="mimetype"
@@ -15,6 +17,17 @@
     <a tal:attributes="href content_url">
       <tal:block replace="current_name" />
     </a>
+
+    <span tal:condition="size" class="note"
+          tal:define="b python:size < 1024;
+                      m python:size > 1048576;
+                      k python:not b and not m;">
+            -
+      <tal:block condition="b" content="string:1 K"/>
+      <tal:block condition="m" content="python:'%.02f M' % float(size / 1048576.0)"/>
+      <tal:block condition="k" content="python:'%s K' % (size / 1024)"/>
+    </span>
+
     <span tal:condition="preview_id">
       <a href="http://url..." target="_blank"
          tal:attributes="href preview_id"
@@ -23,8 +36,11 @@
       </a>
     </span>
   </tal:block>
+
 </tal:block>
+
 <tal:block condition="python: mode == 'edit'">
   <metal:block use-macro="here/widget_image_render/macros/file_edit" />
 </tal:block>
+
 </tal:block>
