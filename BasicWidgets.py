@@ -469,7 +469,8 @@ class CPSLinesWidget(CPSTextAreaWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         v = value # Zope handle :lines automagically
-        if self.is_required and not v:
+        if self.is_required and (not v or v == ['']):
+            # Empty textarea is returned as ['']
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
