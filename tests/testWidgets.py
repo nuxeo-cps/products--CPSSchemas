@@ -21,6 +21,8 @@ import unittest
 import CPSSchemasTestCase
 
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
+from Products.CPSSchemas.Widget import Widget
+from Products.CPSSchemas.DataModel import DataModel
 
 class TestWidgetTypesTool(CPSSchemasTestCase.CPSSchemasTestCase):
 
@@ -37,7 +39,60 @@ class TestWidgetTypesTool(CPSSchemasTestCase.CPSSchemasTestCase):
             widget_type = d['name']
             swt = widget_type.replace(" ", "")
             id = widget_type[len("CPS "):-len(" Type")]
+            # XXX AT: tests fail using zopectl. It seems like all_meta_types
+            # returns the meta_type list twice. Did not investigate further to
+            # see if this is because widget types are registered twice.
             self.tool.manage_addCPSWidgetType(id, swt)
+
+
+    def test_getCssClass(self):
+        # create a bare widget, and set it in the portal to be able to create
+        # the expression namespace
+        widget = Widget('widget_id', widgettype='dummy_type')
+        self.portal._setOb('widget_id', widget)
+        widget = self.portal._getOb('widget_id')
+        # dummy datamodel to be passed to the expression
+        dm = DataModel(ob=self.portal, proxy=None)
+        layout_mode = 'view'
+
+        # just use css_class
+        self.assertEquals(widget.getCssClass('view', dm), '')
+        kw = {'css_class': 'stringClass'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'stringClass')
+        self.assertEquals(widget.getCssClass('create', dm), 'stringClassEdit')
+        self.assertEquals(widget.getCssClass('edit', dm), 'stringClassEdit')
+
+        # just use css_class_expr
+        kw = {'css_class': '', 'css_class_expr': 'string:exprClass'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
+        self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
+
+        # use both properties
+        kw = {'css_class': 'stringClass', 'css_class_expr': 'string:exprClass'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
+        self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
+
+        kw = {'css_class': 'stringClass', 'css_class_expr': 'nothing'}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), '')
+        self.assertEquals(widget.getCssClass('edit', dm), '')
+
+        # use non dummy expressions :)
+        kw = {'css_class': 'stringClass',
+              'css_class_expr': "python:layout_mode == 'view' and 'viewExprClass' or nothing"}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), 'viewExprClass')
+        self.assertEquals(widget.getCssClass('edit', dm), '')
+
+        kw = {'css_class': 'stringClass',
+              'css_class_expr': "python:layout_mode == 'search' and 'searchExprClass' or nothing"}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.getCssClass('view', dm), '')
+        self.assertEquals(widget.getCssClass('edit', dm), '')
+        self.assertEquals(widget.getCssClass('search', dm), 'searchExprClass')
 
 
     def testRegistry(self):
