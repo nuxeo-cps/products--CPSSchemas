@@ -1624,6 +1624,13 @@ class CPSFileWidget(CPSWidget):
             r"'\;/ &:ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ",
             r"_______AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")
         current_name = current_name.translate(translation_table)
+        acceptedChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_.'
+        current_name = ''.join([c for c in current_name if c in acceptedChars])
+        while current_name.startswith('_') or current_name.startswith('.'):
+            current_name = current_name[1:]
+
+        while current_name.endswith('_'):
+            current_name = current_name[:-1]
 
         # XXX This is a total mess, it needs refactoring.
 
