@@ -56,7 +56,6 @@ class SchemaContainer(Folder):
     #
     # ZMI
     #
-
     def all_meta_types(self):
         return ({'name': 'CPS Schema',
                  'action': 'manage_addCPSSchemaForm',
@@ -89,13 +88,9 @@ class CPSSchema(FolderWithPrefixedIds):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, id, title='', schema=None, **kw):
+    def __init__(self, id, title=''):
         self.id = id
         self.title = title
-        # XXX: can we remove this + the schema and **kw parameters ?
-        #if schema is None:
-        #    schema = Schema()
-        #self.setSchema(schema)
 
     security.declarePrivate('addField')
     def addField(self, id, field_type, **kw):
