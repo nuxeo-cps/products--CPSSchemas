@@ -29,13 +29,15 @@ from types import ListType, TupleType, StringType
 from cgi import escape
 from re import compile, search
 from urlparse import urlparse
-from zLOG import LOG, DEBUG, PROBLEM
+from zLOG import LOG, INFO, DEBUG, PROBLEM
 from TAL.TALDefs import attrEscape
 
 try:
     import PIL.Image
 except ImportError:
-    pass
+    LOG('CPSSchemas', INFO, "No PIL library found so no image resizing will "
+                            "be done")
+
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 from OFS.PropertyManager import PropertyManager
