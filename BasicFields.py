@@ -206,6 +206,7 @@ class CPSListField(CPSField):
     default_expr_c = Expression(default_expr)
     validation_error_msg = 'Not a list: '
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, ListType):
             for v in value:
@@ -269,6 +270,7 @@ class CPSListListField(CPSListField):
 
     validation_error_msg = 'Not a list of list: '
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, ListType):
             for list in value:
@@ -554,6 +556,7 @@ class CPSRangeListField(CPSListField):
 
     validation_error_msg = 'Not a range list: '
 
+    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, ListType):
             for v in value:
