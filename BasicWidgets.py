@@ -24,8 +24,7 @@ Definition of standard widget types.
 from zLOG import LOG, DEBUG
 from cgi import escape
 from types import IntType, StringType, UnicodeType
-from string import split
-from time import asctime
+from DateTime.DateTime import DateTime
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from OFS.PropertyManager import PropertyManager
@@ -364,37 +363,89 @@ class CPSDateWidget(CPSWidget):
     """Date widget."""
     meta_type = "CPS Date Widget"
 
+    _properties = CPSWidget._properties + (
+        {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
+         'label': 'Allow empty date'},
+        {'id': 'view_format', 'type': 'string', 'mode': 'w',
+         'label': 'View format'},
+        {'id': 'view_format_none', 'type': 'string', 'mode': 'w',
+         'label': 'View format empty'},
+        )
+    allow_none = 0
+    view_format = "%d/%m/%Y"
+    view_format_none = "-"
+
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        v = datamodel[self.fields[0]]
+        widget_id = self.getWidgetId()
+        if v is not None:
+            d = str(v.day())
+            m = str(v.month())
+            y = str(v.year())
+        else:
+            d = m = y = ''
+        datastructure[widget_id+'_d'] = d
+        datastructure[widget_id+'_m'] = m
+        datastructure[widget_id+'_y'] = y
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        value = datastructure[self.getWidgetId()]
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+
+        d = datastructure[widget_id+'_d'].strip()
+        m = datastructure[widget_id+'_m'].strip()
+        y = datastructure[widget_id+'_y'].strip()
+
+        if self.allow_none and not (d+m+y):
+            datamodel[field_id] = None
+            return 1
+
         try:
-            [day,month,year] = split(value, '/')
-            v = asctime( (year, month, date,'0','0','0','0','0','0') )
-        except (ValueError, TypeError):
-            datastructure.setError(self.getWidgetId(),
-                                   "Bad date received")
-            ok = 0
+            v = DateTime(int(y), int(m), int(d))
+        except (ValueError, TypeError, DateTime.DateTimeError,
+                DateTime.SyntaxError, DateTime.DateError):
+            datastructure.setError(widget_id, "Bad date received")
+            return 0
         else:
-            datamodel[self.fields[0]] = v
-            ok = 1
-        return ok
+            datamodel[field_id] = v
+            return 1
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
-        value = datastructure[self.getWidgetId()]
+        widget_id = self.getWidgetId()
+        d = datastructure[widget_id+'_d']
+        m = datastructure[widget_id+'_m']
+        y = datastructure[widget_id+'_y']
         if mode == 'view':
-            return escape(value)
+            if not (d+m+y):
+                return escape(self.view_format_none)
+            else:
+                # XXX customize format
+                return escape(d+'/'+m+'/'+y)
         elif mode == 'edit':
-            return renderHtmlTag('input',
+            html_widget_id = self.getHtmlWidgetId()
+            dtag = renderHtmlTag('input',
                                  type='text',
-                                 name=self.getHtmlWidgetId(),
-                                 value=value,
+                                 name=html_widget_id+'_d',
+                                 value=d,
                                  css_class=self.css_class,
                                  )
+            mtag = renderHtmlTag('input',
+                                 type='text',
+                                 name=html_widget_id+'_m',
+                                 value=m,
+                                 css_class=self.css_class,
+                                 )
+            ytag = renderHtmlTag('input',
+                                 type='text',
+                                 name=html_widget_id+'_y',
+                                 value=y,
+                                 css_class=self.css_class,
+                                 )
+            # XXX customize format
+            return dtag+'/'+mtag+'/'+ytag
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSDateWidget)
