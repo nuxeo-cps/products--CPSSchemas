@@ -707,6 +707,8 @@ class CPSGenericSelectWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
+        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is vocabulary translated on display'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format : select menu (default) or radio buttons'},
@@ -715,6 +717,7 @@ class CPSGenericSelectWidget(CPSWidget):
 
     # XXX make a menu for the vocabulary.
     vocabulary = ''
+    translated = False
     render_format = render_formats[0]
 
     def _getVocabulary(self, datastructure=None):
@@ -767,8 +770,13 @@ class CPSGenericSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        cpsmcat = portal.Localizer.default
         if mode == 'view':
-            return escape(vocabulary.get(value, value))
+            if getattr(self, 'translated', False):
+                return escape(cpsmcat(vocabulary.get(value, value)).encode('ISO-8859-15', 'ignore'))
+            else:
+                return escape(vocabulary.get(value, value))
         elif mode == 'edit':
             in_selection = 0
             res = ''
@@ -781,7 +789,12 @@ class CPSGenericSelectWidget(CPSWidget):
             # vocabulary options
             for k, v in vocabulary.items():
                 if render_format == 'select':
-                    kw = {'value': k, 'contents': v}
+                    if getattr(self, 'translated', False):
+                        kw = {'value': k,
+                              'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
+                              }
+                    else:
+                        kw = {'value': k, 'contents': v}
                     if value == k:
                         kw['selected'] = 'selected'
                         in_selection = 1
@@ -874,6 +887,8 @@ class CPSGenericMultiSelectWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
+        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is vocabulary translated on display'},
         {'id': 'size', 'type': 'int', 'mode': 'w',
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
@@ -886,7 +901,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
     # XXX make a menu for the vocabulary.
 
     vocabulary = ''
-    vocabulary = ''
+    translated = False
     size = 0
     format_empty = ''
     render_format = render_formats[0]
@@ -954,7 +969,10 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            return ', '.join([escape(vocabulary.get(i, i)) for i in value])
+            elif getattr(self, 'translated', False):
+                return ', '.join([escape(cpsmcat(vocabulary.get(i, i))) for i in value])
+            else:
+                return ', '.join([escape(vocabulary.get(i, i)) for i in value])
         elif mode == 'edit':
             in_selection = 0
             res = ''
@@ -972,8 +990,12 @@ class CPSGenericMultiSelectWidget(CPSWidget):
             # vocabulary options
             for k, v in vocabulary.items():
                 if render_format == 'select':
-                    kw = {'value': k,
-                          'contents': v}
+                    if getattr(self, 'translated', False):
+                        kw = {'value': k,
+                              'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
+                              }
+                    else:
+                        kw = {'value': k, 'contents': v}
                     if k in value:
                         kw['selected'] = 'selected'
                         in_selection = 1
