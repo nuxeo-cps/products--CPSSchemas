@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Made the Layout.renderLayoutStyle() method more generic so that it can deal
+  with any mode.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

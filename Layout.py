@@ -376,16 +376,14 @@ class Layout(PropertiesPostProcessor,
 
         Returns the rendered string. The rendered string is computed according
         to the following properties and in decreasing order of precedence:
-        "layout_create_method", "layout_create_method", "layout_create_method"
+        "layout_create_method", "layout_edit_method", "layout_view_method"
         and "style_prefix" found in the document layout definitions.
         """
         layout_mode = kw['layout_mode']
-        if self.layout_create_method is not None and layout_mode == 'create':
-            layout_method = self.layout_create_method
-        elif self.layout_edit_method is not None and layout_mode == 'edit':
-            layout_method = self.layout_edit_method
-        elif self.layout_view_method is not None and layout_mode == 'view':
-            layout_method = self.layout_view_method
+        layout_method_property = self.getProperty('layout_%s_method'
+                                                  % layout_mode)
+        if layout_method_property is not None:
+            layout_method = layout_method_property
         else:
             style_prefix = kw.get('style_prefix')
             if not style_prefix:
