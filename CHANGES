@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- indent error on generic select widget validation
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
