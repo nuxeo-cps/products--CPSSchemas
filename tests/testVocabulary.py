@@ -1,8 +1,24 @@
-# Copyright (c) 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
+# Author: Florent Guillaume <fg@nuxeo.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
 # $Id$
 
 import unittest
-from CPSSchemasTestCase import CPSSchemasTestCase
+#from CPSSchemasTestCase import CPSSchemasTestCase
 
 from OFS.Folder import Folder
 from Interface.Verify import verifyClass
@@ -10,20 +26,13 @@ from Products.CPSSchemas import Vocabulary
 from Products.CPSSchemas.IVocabulary import IVocabulary
 
 
-class BasicVocabularyTests(CPSSchemasTestCase):
-
-    def afterSetUp(self):
-        vocabs = Folder('vocabs')
-        self.portal._setObject('vocabs', vocabs)
-        self.vocabs = self.portal.vocabs
+class BasicVocabularyTests(unittest.TestCase):
 
     def makeOne(self):
-        vocab = Vocabulary.CPSVocabulary(
+        return Vocabulary.CPSVocabulary(
             'the_id', (('foo', 'F'), ('bar', 'B'), ('meuh', 'M')))
-        self.vocabs._setObject('the_id', vocab)
-        vocab = getattr(self.vocabs, 'the_id')
 
-    def test_interface(self):
+    def testInterface(self):
         verifyClass(IVocabulary, Vocabulary.Vocabulary)
         verifyClass(IVocabulary, Vocabulary.CPSVocabulary)
 
@@ -52,14 +61,13 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.assertEquals(v.keys(), ['fyy', 'bro'])
         self.assertEquals(v.values(), ['F', 'B'])
 
-    def test_empty(self):
+    def testEmpty(self):
         v = Vocabulary.CPSVocabulary('someid')
         self.assertEquals(v.keys(), [])
         self.assertEquals(v.values(), [])
 
-    def test_simple(self):
-        self.makeOne()
-        v = self.vocabs.the_id
+    def testSimple(self):
+        v = self.makeOne()
         self.assertEquals(v['bar'], 'B')
         self.assertRaises(KeyError, v.__getitem__, 'blah')
         self.assertEquals(v.get('foo'), 'F')
@@ -85,8 +93,7 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.assertEquals(v.values(), ['bidi', 'bulle'])
 
     def test_modify(self):
-        self.makeOne()
-        v = self.vocabs.the_id
+        v = self.makeOne()
         v.set('bar', 'hm')
         self.assertEquals(v['bar'], 'hm')
         self.assertEquals(v.get('bar'), 'hm')
@@ -97,8 +104,7 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.assertEquals(v.values(), ['F', 'hm', 'M'])
 
     def test_reset(self):
-        self.makeOne()
-        v = self.vocabs.the_id
+        v = self.makeOne()
         nv = Vocabulary.Vocabulary()
         nv.set('one', '1', 'label_one')
         nv.set('two', '2', 'label_two')

@@ -38,28 +38,10 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
-
-
-class AccessError(ValueError):
-    """Raised by a field when access is denied."""
-    def __init__(self, field, message=''):
-        self.field = field
-        self.message = message
-    def __str__(self):
-        s = "%s access to %s denied" % (self.type, self.field)
-        if self.message:
-            s += " ("+self.message+") "
-        return s
-
-class ReadAccessError(AccessError):
-    type = "Read"
-
-class WriteAccessError(AccessError):
-    type = "Write"
-
-class ValidationError(ValueError):
-    """Raised by a widget or a field when user input is incorrect."""
-    pass
+from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
+from Products.CPSSchemas.DataModel import ReadAccessError
+from Products.CPSSchemas.DataModel import WriteAccessError
+from Products.CPSSchemas.DataModel import ValidationError # used by cpsdir
 
 
 class Field(PropertiesPostProcessor, SimpleItemWithProperties):
@@ -239,7 +221,11 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     def _createStorageExpressionContext(self, value, data, context):
         """Create an expression context for field storage process."""
         # Put all the names in the data in the namespace.
-        mapping = data.copy()
+        mapping = data.copy() # XXX there may be DEFAULT_VALUE_MARKER here
+        # XXX hack replace DEFAULT_VALUE_MARKER
+        for key, value in mapping.items():
+            if value is DEFAULT_VALUE_MARKER:
+                mapping[key] = '' # XXX should be field's default
         mapping.update({
             'value': value,
             'data': data,

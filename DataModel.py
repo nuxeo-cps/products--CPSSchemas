@@ -50,7 +50,12 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 
-from Products.CPSSchemas.Field import ReadAccessError
+
+try:
+    True
+except NameError:
+    True = 1
+    False = 0
 
 class DefaultValue:
     def __str__(self):
@@ -59,8 +64,25 @@ class DefaultValue:
 DEFAULT_VALUE_MARKER = DefaultValue()
 
 
-class ValidationError(Exception):
-    """Validation error during field storage."""
+class AccessError(ValueError):
+    """Raised by a field when access is denied."""
+    def __init__(self, field, message=''):
+        self.field = field
+        self.message = message
+    def __str__(self):
+        s = "%s access to %s denied" % (self.type, self.field)
+        if self.message:
+            s += " ("+self.message+") "
+        return s
+
+class ReadAccessError(AccessError):
+    type = "Read"
+
+class WriteAccessError(AccessError):
+    type = "Write"
+
+class ValidationError(ValueError):
+    """Raised by a widget or a field when user input is incorrect."""
     pass
 
 
@@ -176,7 +198,7 @@ class DataModel(UserDict):
 
     def isDirty(self, key):
         """Is the item marked dirty ?"""
-        return self.dirty.get(key)
+        return self.dirty.get(key, False)
 
     # Expose setter as method for restricted code.
     def set(self, key, item):
@@ -222,6 +244,9 @@ class DataModel(UserDict):
             data.update(adapter.getData())
         for field_id, value in data.items():
             if value is DEFAULT_VALUE_MARKER:
+                # Default values are dirty because they have
+                # to be considered changed by the user
+                # (and written, and used for dependent computations)
                 field = fields[field_id]
                 data[field_id] = field.getDefault()
                 self.dirty[field_id] = 1

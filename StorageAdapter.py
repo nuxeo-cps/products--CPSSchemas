@@ -120,6 +120,8 @@ class BaseStorageAdapter:
         return data
 
     def finalizeDefaults(self, data):
+        """This has to be called after getData to finalize default values.
+        """
         for field_id, v in data.items():
             if v is DEFAULT_VALUE_MARKER:
                 data[field_id] = self._schema[field_id].getDefault()
@@ -165,6 +167,8 @@ class BaseStorageAdapter:
         """Set data to the object, from a mapping."""
         data = self._setDataDoProcess(data)
         for field_id, field in self.getWritableFieldItems():
+            if not data.has_key(field_id):
+                continue
             self._setFieldData(field_id, data[field_id])
 
     def _setDataDoProcess(self, data):

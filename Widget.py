@@ -32,7 +32,7 @@ from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 
-from Products.CPSSchemas.Field import WriteAccessError
+from Products.CPSSchemas.DataModel import WriteAccessError
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
 from Products.CMFCore.Expression import getEngine

@@ -1,47 +1,48 @@
-# Copyright (c) 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
+# Author: Florent Guillaume <fg@nuxeo.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
 # $Id$
 
 import unittest
-import CPSSchemasTestCase
 
-from testdata import metadata_schema
+from Products.CPSSchemas.SchemasTool import SchemasTool
+from Products.CPSSchemas.Schema import CPSSchema
 
 
-class TestSchemas(CPSSchemasTestCase.CPSSchemasTestCase):
-
-    def afterSetUp(self):
-        self.tool = self.portal.portal_schemas
-
-        # Delete widget types that has already been set up by the CPSDocument
-        # installer.
-        self.tool.manage_delObjects(ids=list(self.tool.objectIds()))
-
-        # Refill the tool with only the metadata schema.
-        schema = self.tool.manage_addCPSSchema('metadata')
-        self.assert_(self.tool.metadata)
-        for field_id, field_info in metadata_schema.items():
-            schema.manage_addField(
-                field_id, field_info['type'], **field_info['data'])
+class TestSchemas(unittest.TestCase):
 
     def testTool(self):
-        tool = self.tool
-        d = tool.all_meta_types()[0]
-        self.assertEquals(d['name'], 'CPS Schema')
-
-        self.assertEquals(len(tool.objectIds()), 1)
-
-        # ZMI
-        self.assert_(tool.manage_addCPSSchemaForm)
+        tool = SchemasTool()
+        schema1 = CPSSchema('s1', 'Schema1')
+        tool.addSchema('s1', schema1)
+        schema2 = CPSSchema('s2', 'Schema2')
+        tool.addSchema('s2', schema2)
+        self.assertEquals(tool.objectIds(), ['s1', 's2'])
+        self.assertEquals(tool['s1'], schema1)
+        self.assertEquals(tool['s2'], schema2)
 
     def testSchema(self):
-        schema = self.tool.metadata
-        self.assertEquals(schema.getId(), 'metadata')
-
-        # ZMI
-        self.assert_(schema.manage_editSchema)
-        self.assert_(schema.manage_main)
-        self.assert_(schema.manage_addField)
-
+        schema = CPSSchema('s1', 'Schema1')
+        self.assertEquals(schema.getId(), 's1')
+        schema.addField('f1', 'CPS String Field')
+        schema.addField('f2', 'CPS Int Field')
+        self.assertEquals(schema.keys(), ['f1', 'f2'])
+        self.assertEquals(schema['f1'].getFieldId(), 'f1')
+        self.assertEquals(schema['f2'].getFieldId(), 'f2')
 
 def test_suite():
     suites = [unittest.makeSuite(TestSchemas)]
