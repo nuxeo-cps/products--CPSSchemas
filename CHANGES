@@ -3,11 +3,12 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- new MetaData storage adaptater a metadata use  getter/setter method like
+- new MetaData storage adaptater a metadata use getter/setter method like
   Title() and setTitle()
 Bug fixes:
 ~~~~~~~~~~
--
+- do not raise exception if 2 schemas have a field in common
+  this case is possible when you change your schema definition
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Pass the datamodel as argument to postCommitHook as it is sometimes
