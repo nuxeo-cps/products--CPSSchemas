@@ -80,43 +80,12 @@ class SchemaContainer(Folder):
 InitializeClass(SchemaContainer)
 
 
-# XXX: this class (at least, its two methods) is useless. This
-# should be refactored.
-class Schema(FolderWithPrefixedIds):
-    """Schema
-
-    Base class for schemas, that contain fields.
-    """
-
-    prefix = 'f__'
-
-    security = ClassSecurityInfo()
-    security.setDefaultAccess('allow')
-
-    id = None
-
-    def __init__(self, id='', title=''):
-        raise "XXX: Should not be called"
-        print "Schema.__init__() called (I thought it would not be)"
-        self.id = id
-        self.title = title
-        self._clear()
-        # XXX
-
-    def _clear(self):
-        raise "XXX: Should not be called"
-        """Clear the schema."""
-        print "Schema.clear() called (I thought it would not be)"
-        pass
-
-InitializeClass(Schema)
-
-
-class CPSSchema(Schema):
+class CPSSchema(FolderWithPrefixedIds):
     # XXX: the Schema class is already persistent.
     """Persistent Schema."""
 
     meta_type = "CPS Schema"
+    prefix = 'f__'
 
     security = ClassSecurityInfo()
 
@@ -137,8 +106,7 @@ class CPSSchema(Schema):
     #
     # ZMI
     #
-    _properties = (
-        )
+    _properties = ()
 
     manage_options = (
         {'label': 'Schema', 'action': 'manage_editSchema', },
