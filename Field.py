@@ -49,6 +49,25 @@ class Field(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
+    _properties = (
+        {'id': 'getFieldIdProperty', 'type': 'string', 'mode': '',
+         'label': 'Id'},
+        {'id': 'default', 'type': 'string', 'mode': 'w',
+         'label': 'Default'},
+        {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is Indexed'},
+        #{'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
+        # 'label': 'Is Subschema'},
+        #{'id': 'is_multi_valued', 'type': 'boolean', 'mode': 'w',
+        # 'label': 'Is Multi-Valued'},
+        #{'id': 'vocabulary', 'type': 'string', 'mode': 'w',
+        # 'label': 'Vocabulary'},
+        #{'id': 'read_permission', 'type': 'string', 'mode': 'w',
+        # 'label': 'Read Permission'},
+        #{'id': 'write_permission', 'type': 'string', 'mode': 'w',
+        # 'label': 'Write Permission'},
+        )
+
     default = ''
     is_indexed = 0
     #is_subschema = 0
@@ -92,6 +111,8 @@ class Field(SimpleItemWithProperties):
             # Standalone field.
             return id
 
+    getFieldIdProperty = ComputedAttribute(getFieldId, 1)
+
     def _exportValue(self, value):
         """Export this field's value as a string.
 
@@ -132,45 +153,6 @@ class CPSField(Field):
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(View) # XXX correct ?
-
-    #
-    # ZMI
-    #
-
-    _properties = (
-        {'id': 'getFieldIdProperty', 'type': 'string', 'mode': '',
-         'label': 'Id'},
-        {'id': 'default', 'type': 'string', 'mode': 'w',
-         'label': 'Default'},
-        {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is Indexed'},
-        #{'id': 'is_subschema', 'type': 'boolean', 'mode': 'w',
-        # 'label': 'Is Subschema'},
-        #{'id': 'is_multi_valued', 'type': 'boolean', 'mode': 'w',
-        # 'label': 'Is Multi-Valued'},
-        #{'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-        # 'label': 'Vocabulary'},
-        #{'id': 'read_permission', 'type': 'string', 'mode': 'w',
-        # 'label': 'Read Permission'},
-        #{'id': 'write_permission', 'type': 'string', 'mode': 'w',
-        # 'label': 'Write Permission'},
-        )
-
-    def _getFieldIdMethod(self):
-        return self.getFieldId()
-    getFieldIdProperty = ComputedAttribute(_getFieldIdMethod, 1)
-
-    manage_options = (
-#        {'label': 'Field',
-#         'action': 'manage_editField',
-#         },
-        ) + SimpleItemWithProperties.manage_options
-
-#    security.declareProtected(ManagePortal, 'manage_editField')
-#    manage_editField = DTMLFile('zmi/field_editform', globals())
-
-#    security.declareProtected(ManagePortal, 'manage_main')
-#    manage_main = manage_propertiesForm
 
 InitializeClass(CPSField)
 
