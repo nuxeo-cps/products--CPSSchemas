@@ -270,9 +270,9 @@ class CPSAutoIndexField(CPSField):
     def validate(self, value):
         if not value:
             return None
-        if _isinstance(value, int):
+        if _isinstance(value, IntType) or _isinstance(value, LongType):
             return value
-        raise ValidationError('Not an int: %s' % repr(value))
+        raise ValidationError("Not a long: %s" % repr(value))
 
 InitializeClass(CPSAutoIndexField)
 
