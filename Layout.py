@@ -259,21 +259,24 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
          - widget_mode
          - widget_css_class
          - widget_rendered
+         - widget_js
         (In addition to widget_id and ncols of the standard data.)
         """
         layout_structure = self.getLayoutDefinition() # get a copy
         layout_structure['layout'] = self
         layout_structure['layout_id'] = self.getId() # XXX FIXME remove
-        # Choose the mode for all the widgets.
+        # Set the mode, CSS class and JavaScript code for all the widgets.
         widgets = {}
         for widget_id, widget in self.items():
             if not widget.isHidden():
                 mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
                 css_class = widget.getCssClass(layout_mode, datamodel)
+                js_code = widget.getJavaScriptCode(layout_mode, datamodel)
                 widgets[widget_id] = {
                     'widget': widget,
                     'widget_mode': mode,
                     'widget_css_class': css_class,
+                    'widget_javascript': js_code,
                     }
         layout_structure['widgets'] = widgets
         # Store computed widget info in row/cell structure.
