@@ -8,7 +8,8 @@
   button_rte_id python:'widget__%s_button' % id;
   ">
   <tal:block condition="python: mode == 'view'">
-    <div tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
+    <div tal:condition="value"
+      tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
       test(rposition == 'col_right',
       'dcolright', 'ddefault'))"
       tal:content="structure value" />
