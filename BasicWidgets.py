@@ -1963,9 +1963,6 @@ class CPSImageWidget(CPSFileWidget):
                 LOG('CPSImageWidget', PROBLEM,
                     "Failed to resize file %s keep original" \
                     % fileid)
-                LOG('CPSImageWidget', DEBUG,
-                    "Failed to resize file %s keep original" \
-                    % fileid)
         image = Image(fileid, filetitle, file)
         return image
 
