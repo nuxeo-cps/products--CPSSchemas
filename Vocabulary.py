@@ -153,6 +153,7 @@ class Vocabulary(Persistent, Implicit):
         self._p_changed = 1
         if not self._dict.has_key(key):
             if self._sort_fonction is not None:
+                # XXX find a better algorithm
                 cpsmcat = getToolByName(self, 'portal_url').getPortalObject().translation_service
                 l = [ ((x[0], x[1], self.getMsgid(x[0]), cpsmcat(self.getMsgid(x[0]))), x[0]) for x in self.items()]
                 self._list.insert(0, (key, label, msgid, cpsmcat(msgid)))
@@ -197,9 +198,24 @@ class Vocabulary(Persistent, Implicit):
         """Get the ordered list of values."""
         return [self._dict.get(key) for key in self._list]
 
-    def orderKeys(self, keys):
-        """Set the order of keys."""
-        raise NotImplementedError
+    def getSortFunction(self):
+        """@summary: Get Vocabulary sort function, None is list.append"""
+        return self._sort_fonction
+
+    def setSortFunction(self, sort_function):
+        """@summary: Set Vocabulary sort function, None is list.append"""
+        # make test to be sure that's a vocabulary sort function
+        if self.keysSortedBy('funct', sort_function) is not None:
+            self._sort_fonction = sort_function
+
+    def sortKeys(self):
+        """@summary: Sort keys with vocabulary sort function"""
+        self._p_changed = 1
+        if self._sort_fonction is not None:
+            cpsmcat = getToolByName(self, 'portal_url').getPortalObject().translation_service
+            l = [ ((x[0], x[1], self.getMsgid(x[0]), cpsmcat(self.getMsgid(x[0]))), x[0]) for x in self.items()]
+            l.sort(self._sort_function)
+            self._list = [x[0] for x in l]
 
     def keysSortedBy(self, crit='id', sort_function=None):
         """@summary: Return a keys list sorted on a criterium
@@ -207,7 +223,7 @@ class Vocabulary(Persistent, Implicit):
         @summary: If criterium is not know, self.keys() is used.
 
         @summary: If criterium is 'funct' ans sortFunct is not None sortFunct
-        @summary: will sort keys on ((key, label, msgid, translated msgid), key).
+        @summary: will sort keys on (key, label, msgid, translated msgid).
 
         @param crit: known criterium 'id', 'label', 'i18n', 'funct'
         @type crit: @String
@@ -231,8 +247,11 @@ class Vocabulary(Persistent, Implicit):
         elif crit == 'funct' and (sort_function is not None or
                                   self._sort_fonction is not None):
             sort_function = sort_function or self._sort_fonction
-            l = [ ((x[0], x[1], self.getMsgid(x[0]), cpsmcat(self.getMsgid(x[0]))), x[0]) for x in self.items()]
-            l.sort(sort_function)
+            l = [ (x[0], x[1], self.getMsgid(x[0]), cpsmcat(self.getMsgid(x[0]))) for x in self.items()]
+            try:
+                l.sort(sort_function)
+            except IndexError:
+                return None
             return [x[0] for x in l]
         else:
             return self.keys()
@@ -331,6 +350,18 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declareProtected(View, 'has_key')
     def has_key(self, key):
         return self._vocab.has_key(key)
+
+    security.declareProtected(ManagePortal, 'getSortFunction')
+    def getSortFunction(self):
+        return self._vocab.getSortFunction()
+
+    security.declareProtected(ManagePortal, 'setSortFunction')
+    def setSortFunction(self, sort_function):
+        return self._vocab.setSortFunction(sort_function)
+
+    security.declareProtected(ManagePortal, 'sortKeys')
+    def sortKeys(self):
+        return self._vocab.sortKeys()
 
     security.declareProtected(View, 'keysSortedBy')
     def keysSortedBy(self, crit, sort_function=None):
