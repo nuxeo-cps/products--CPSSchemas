@@ -9,7 +9,7 @@
           title python: cells[2]['widget_rendered'];">
 <img tal:replace="structure python:here.getImgTag('link_icon.gif')" />
 <a href="" tal:attributes="href href_url;title title|nothing;
-  target python: test(href_url.startswith('http'), 'CPS Link', nothing);">
+  target python: test(href_url.startswith('http'), 'CPS_Link', nothing);">
   <b tal:content="python: test(content, content, href_url)" />
 </a>
 <div style="padding-left: 1.5em;"><span tal:condition="title" tal:content="structure title" />

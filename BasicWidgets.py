@@ -305,7 +305,7 @@ class CPSURLWidget(CPSStringWidget):
         if mode == 'view':
             target = self.target
             if not target and value.lower().startswith('http'):
-                target = 'CPS Link'
+                target = 'CPS_Link'
             kw = {'href': value, 'contents': value,
                   'css_class': self.css_class,
                   'target': target}
