@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- string value was not correctly changed into list in Generic Multi Select Widget
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
