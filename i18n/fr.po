@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-05 16:15default\n"
+"POT-Creation-Date: 2004-04-19 08:36default\n"
 "PO-Revision-Date: 2004-03-24 17:21+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
@@ -255,6 +255,9 @@ msgstr "Identifiant invalide"
 
 msgid "cpsschemas_err_email"
 msgstr "Courriel invalide"
+
+msgid "cpsschemas_err_readonly"
+msgstr "Champs en lecture seule"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-05 16:15default\n"
+"POT-Creation-Date: 2004-04-19 08:36default\n"
 "PO-Revision-Date: 2004-02-05 11:33+0100\n"
 "Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
 "Language-Team: francais <fr@li.org>\n"
@@ -258,6 +258,10 @@ msgid "cpsschemas_err_identifier"
 msgstr "Invalid int "
 
 msgid "cpsschemas_err_email"
+msgstr "Invalide Email"
+
+#, fuzzy
+msgid "cpsschemas_err_readonly"
 msgstr "Invalide Email"
 
 msgid "jscalendar_date_fmt"

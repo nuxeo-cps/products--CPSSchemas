@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"POT-Creation-Date: 2004-04-05 16:15default\n"
+"POT-Creation-Date: 2004-04-19 08:36default\n"
 "PO-Revision-Date: 2004-02-27 15:27+0100\n"
 "Last-Translator: Paolo Dina <paolo@php3.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -251,6 +251,10 @@ msgid "cpsschemas_err_identifier"
 msgstr "Numero intero non valido"
 
 msgid "cpsschemas_err_email"
+msgstr "Email non valida"
+
+#, fuzzy
+msgid "cpsschemas_err_readonly"
 msgstr "Email non valida"
 
 msgid "jscalendar_date_fmt"

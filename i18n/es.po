@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es-CPSSchemas\n"
-"POT-Creation-Date: 2004-04-05 16:15default\n"
+"POT-Creation-Date: 2004-04-19 08:36default\n"
 "PO-Revision-Date: 2004-03-27 20:56+0100\n"
 "Last-Translator: ¡lvaro Tejero Cantero <alvaro@antalia.com>\n"
 "Language-Team: Espa√±ol <es@li.org>\n"
@@ -285,6 +285,10 @@ msgid "cpsschemas_err_identifier"
 msgstr "Identificador no v·lido"
 
 msgid "cpsschemas_err_email"
+msgstr "Correo-e no v·lido"
+
+#, fuzzy
+msgid "cpsschemas_err_readonly"
 msgstr "Correo-e no v·lido"
 
 msgid "jscalendar_date_fmt"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-04-05 16:15default\n"
+"POT-Creation-Date: 2004-04-19 08:36default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -251,6 +251,9 @@ msgid "cpsschemas_err_identifier"
 msgstr ""
 
 msgid "cpsschemas_err_email"
+msgstr ""
+
+msgid "cpsschemas_err_readonly"
 msgstr ""
 
 msgid "jscalendar_date_fmt"

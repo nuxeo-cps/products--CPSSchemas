@@ -97,6 +97,9 @@ msgstr ""
 msgid "cpsschemas_err_email"
 msgstr ""
 
+msgid "cpsschemas_err_readonly"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""
 
