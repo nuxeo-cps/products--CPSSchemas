@@ -234,11 +234,11 @@ class CPSLayout(Layout):
         Layout.__init__(self, **kw)
 
     security.declarePrivate('addWidget')
-    def addWidget(self, id, wtid):
+    def addWidget(self, id, wtid, **kw):
         """Add a new widget instance."""
         wtool = getToolByName(self, 'portal_widgets')
         widget_type = wtool[wtid]
-        widget = widget_type.makeInstance(id)
+        widget = widget_type.makeInstance(id, **kw)
         return self.addSubObject(widget)
 
     #
