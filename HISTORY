@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.35.0 [R1 build 2004/12/02-15:38 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Disk File Field stored new files in ZODB.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.34.0 [R1 build 2004/12/02-10:33 by regebro]
 
 Requires:

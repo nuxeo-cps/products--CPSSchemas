@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Disk File Field stored new files in ZODB.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
