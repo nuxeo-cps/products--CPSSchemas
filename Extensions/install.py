@@ -418,7 +418,7 @@ def install(self):
             'immediate_view': 'cpsdocument_edit_form',
             'schemas': ['faq'],
             'default_layout': 'faq',
-            'layout_style_prefix': 'layout_faq_',
+            'layout_style_prefix': 'layout_dummy_',
             },
         'News': {
             'title': 'portal_type_News_title',
@@ -427,7 +427,7 @@ def install(self):
             'immediate_view': 'cpsdocument_edit_form',
             'schemas': ['news'],
             'default_layout': 'news',
-            'layout_style_prefix': 'layout_news_',
+            'layout_style_prefix': 'layout_dummy_',
             }
         }
     allowed_content_type = {
