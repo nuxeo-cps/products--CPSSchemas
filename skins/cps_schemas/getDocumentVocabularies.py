@@ -6,7 +6,7 @@ Please, follow the same pattern to add new ones.
 """
 
 vocabularies = {
-        'dummy_voc ': {
+        'dummy_voc': {
             'data': {'dict': {'foo': "Foo",
                               'bar': "Bar",
                               'baz123': "Baz123",
