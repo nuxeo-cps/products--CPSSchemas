@@ -97,6 +97,7 @@ def install(self):
         'Dummy Widget': {
             'type': 'CPS Customizable Widget Type',
             'data': {
+                'field_types': ['CPS String Field'],
                 'prepare_validate_method': 'widget_dummy_prepare_validate',
                 'render_method': 'widget_dummy_render',
                 },
