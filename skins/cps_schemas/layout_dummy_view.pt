@@ -6,7 +6,9 @@
   <tr tal:repeat="row layout/rows">
     <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
       <tal:block define="widget cell/widget">
-        <strong tal:content="widget/title">label</strong>:
+        <tal:block condition="widget/title">
+          <strong tal:content="widget/title">label</strong>:
+        </tal:block>
         <div tal:replace="structure python:widget.render('view', ds, dm)" />
       </tal:block>
     </td>
