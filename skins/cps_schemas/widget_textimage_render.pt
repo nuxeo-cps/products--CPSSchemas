@@ -13,7 +13,7 @@
 </div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
-<br>
+<br />
 <tal:block repeat="cell cells">
 <div  tal:define="err python:ds.getError(cell['widget'].getWidgetId());
                   css_class python:test(err, 'row error', 'row');">
@@ -23,7 +23,7 @@
     <em style="color: red" i18n:translate="" tal:content="err">err</em>
   </div>
 </div>
-<br>
+<br />
 </tal:block>
 </tal:block>
 </tal:block>

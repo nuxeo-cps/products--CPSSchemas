@@ -23,7 +23,7 @@
       tal:condition="python:rformat=='html' or configurable.find('format')>=0"
       tal:attributes="onclick
         string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
-      >...</button><br>
+      >...</button><br />
   </div>
   <tal:block condition="python: configurable.find('position')>=0">
    <span i18n:translate="">cpsschemas_render_position</span>
