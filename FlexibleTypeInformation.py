@@ -197,24 +197,26 @@ class FlexibleTypeInformation(TypeInformation):
     # Flexible behavior
     #
 
-    security.declarePrivate('getSchemaIds')
-    def getSchemaIds(self):
-        """Get the schema ids for our type."""
-        return self.schemas
+    security.declarePrivate('getSchemas')
+    def getSchemas(self):
+        """Get the schemas for our type.
+
+        Returns a sequence of Schema objects.
+        """
+        stool = getToolByName(self, 'portal_schemas')
+        schemas = []
+        for schema_id in self.schemas:
+            schema = stool._getOb(schema_id, None)
+            if schema is None:
+                raise RuntimeError("Missing schema '%s' in portal_type '%s'"
+                                   % (schema_id, self.getId()))
+            schemas.append(schema)
+        return schemas
 
     security.declarePrivate('getDataModel')
     def getDataModel(self, ob):
         """Get the datamodel for an object of our type."""
-        stool = getToolByName(self, 'portal_schemas')
-        schemas = []
-        for schema_id in self.getSchemaIds():
-            schema = stool._getOb(schema_id, None)
-            if schema is None:
-                LOG('FlexibleTypeInformation', ERROR,
-                    'getDataModel: missing schema %s' % schema_id)
-                # XXX raise exception
-                continue
-            schemas.append(schema)
+        schemas = self.getSchemas()
         dm = DataModel(ob, schemas)
         dm._fetch()
         return dm
@@ -263,6 +265,8 @@ class FlexibleTypeInformation(TypeInformation):
             if ok:
                 # Update the object from dm.
                 dm._commit()
+                ob.reindexObject()
+                # XXX notify CPS event tool
                 mode = okmode
             else:
                 mode = errmode
@@ -278,14 +282,6 @@ class FlexibleTypeInformation(TypeInformation):
         pass
 
 
-
-    security.declarePublic('getSchemas')
-    def getSchemas(self):
-        """Get the sequence of schemas describing our type.
-
-        Returns a sequence of Schema objects.
-        """
-        return []
 
     #
     # Management
