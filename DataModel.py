@@ -223,7 +223,7 @@ class DataModel(UserDict):
             lang = None
         ob = proxy.getEditableContent(lang=lang)
         if ob is not old_ob:
-            self._setObject(ob)
+            self._setObject(ob, proxy=proxy)
 
     def _setObject(self, ob, proxy=None):
         """Set the object (and proxy) this datamodel is about.
