@@ -72,6 +72,18 @@ class CPSStringField(CPSField):
 
 InitializeClass(CPSStringField)
 
+class CPSPwdField(CPSField):
+    """Password field."""
+    meta_type = "CPS Password Field"
+    #_properties = propertiesWithType(CPSField._properties, 'default', 'string')
+
+    def validate(self, value):
+        if isinstance(value, StringType):
+            return value
+        raise ValidationError('Not a string: %s' % repr(value))
+
+InitializeClass(CPSPwdField)
+
 
 class CPSDateTimeField(CPSField):
     """DateTime field."""
@@ -143,6 +155,7 @@ InitializeClass(CPSImageField)
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
+FieldRegistry.register(CPSPwdField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
