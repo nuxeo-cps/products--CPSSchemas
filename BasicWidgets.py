@@ -1170,7 +1170,7 @@ class CPSFileWidget(CPSWidget):
                 empty_file = 0
         else:
             content_url = adapter._getContentUrl(ob, field_id)
-            file = self.restrictedTraverse(content_url)
+            file = datastructure[self.getWidgetId()]
             if file:
                 empty_file = 0
 
@@ -1394,7 +1394,7 @@ class CPSImageWidget(CPSWidget):
                 empty_file = 0
         else:
             content_url = adapter._getContentUrl(ob, field_id)
-            image = self.restrictedTraverse(content_url)
+            image = datastructure[self.getWidgetId()]
             if image:
                 empty_file = 0
 
