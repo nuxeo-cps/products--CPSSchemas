@@ -54,7 +54,7 @@
           </div>
           <tal:block condition="err">
             <em style="color: red"
-                i18n:translate="" tal:content="err">err</em><br>
+                i18n:translate="" tal:content="err">err</em><br/>
           </tal:block>
         </div>
       </tal:block>

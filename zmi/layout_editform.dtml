@@ -5,7 +5,7 @@
 
 <form action="&dtml-URL1;" method="POST">
 
-<br>
+<br />
 
 <dtml-let widgetids=keys
           layoutdef=getLayoutDefinition

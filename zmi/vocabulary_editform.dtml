@@ -5,7 +5,7 @@
 
 <form action="&dtml-URL1;" method="POST">
 
-<br>
+<br />
 
 <dtml-let keys=keys>
 <dtml-if keys>
