@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-11-21 16:19default\n"
+"POT-Creation-Date: 2003-12-16 10:55default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -107,21 +107,6 @@ msgstr ""
 msgid "cpsschemas_label_file_none"
 msgstr ""
 
-#.   <td>name</td>
-#: from ../skins/cps_schemas/widget_link_render.pt
-msgid "cpsschemas_label_link_content"
-msgstr ""
-
-#.   <td>url</td>
-#: from ../skins/cps_schemas/widget_link_render.pt
-msgid "cpsschemas_label_link_href"
-msgstr ""
-
-#.   <td>description</td>
-#: from ../skins/cps_schemas/widget_link_render.pt
-msgid "cpsschemas_label_link_title"
-msgstr ""
-
 #.   <span>cpsschemas_photo_subtitle</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
@@ -132,10 +117,17 @@ msgstr ""
 msgid "cpsschemas_render_format"
 msgstr ""
 
+#.   <div class="label">cpsschemas_render_position</div>
 #.   <span>cpsschemas_render_position</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
+msgstr ""
+
+#.   <em content="err" style="color: red">err</em>
+#: from ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_textimage_render.pt
+msgid "err"
 msgstr ""
 
 #.   <th>
@@ -168,6 +160,9 @@ msgid "cpsschemas_err_select"
 msgstr ""
 
 msgid "cpsschemas_err_multiselect"
+msgstr ""
+
+msgid "cpsschemas_err_boolean"
 msgstr ""
 
 msgid "cpsschemas_err_int"
@@ -261,4 +256,10 @@ msgid "img_large"
 msgstr ""
 
 msgid "img_xlarge"
+msgstr ""
+
+msgid "cpsschema_label_false"
+msgstr ""
+
+msgid "cpsschema_label_true"
 msgstr ""

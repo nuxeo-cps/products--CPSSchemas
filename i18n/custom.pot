@@ -34,6 +34,9 @@ msgstr ""
 msgid "cpsschemas_err_multiselect"
 msgstr ""
 
+msgid "cpsschemas_err_boolean"
+msgstr ""
+
 msgid "cpsschemas_err_int"
 msgstr ""
 
@@ -125,5 +128,11 @@ msgid "img_large"
 msgstr ""
 
 msgid "img_xlarge"
+msgstr ""
+
+msgid "cpsschema_label_false"
+msgstr ""
+
+msgid "cpsschema_label_true"
 msgstr ""
 
