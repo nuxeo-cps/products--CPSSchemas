@@ -67,7 +67,7 @@ class WidgetTypesTool(UniqueObject, Folder):
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidgetType')
     def manage_addCPSWidgetType(self, id, swt, REQUEST=None):
-        """Add a widget type instance, called from the ZMI."""
+        """Add a widget type instance."""
         wt = self.getUnstrippedWidgetType(swt)
         widget_type_instance = WidgetTypeRegistry.makeWidgetTypeInstance(wt, id)
         self._setObject(widget_type_instance.getId(), widget_type_instance)
