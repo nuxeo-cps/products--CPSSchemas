@@ -37,8 +37,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance, CPSStringWidget, CPSImageWidget, CPSNoneWidget, CPSFileWidget,\
-     renderHtmlTag
+     _isinstance, CPSStringWidget, CPSImageWidget, CPSNoneWidget, \
+     CPSFileWidget, renderHtmlTag
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -585,7 +585,7 @@ class CPSInternalLinksWidget(CPSWidget):
             datamodel = datastructure.getDataModel()
             datamodel[self.fields[0]] = v
             self.prepare(datastructure)
-            
+
         return not err
 
     def render(self, mode, datastructure, **kw):
@@ -637,15 +637,14 @@ class CPSPhotoWidget(CPSImageWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
-        
+
         datastructure[widget_id] = datamodel[self.fields[0]]
-        
+
         if len(self.fields) > 1:
             datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
         else:
             datastructure[widget_id + '_subtitle'] = ''
 
-            
         rposition = self.render_position
         if self.configurable != 'nothing':
             if len(self.fields) > 2:
@@ -1249,7 +1248,7 @@ class CPSRangeListWidget(CPSWidget):
         if mode == 'view':
             return escape(res)
         elif mode == 'edit':
-            return renderHtmlTag('input', 
+            return renderHtmlTag('input',
                                  type='text',
                                  id=self.getHtmlWidgetId(),
                                  name=self.getHtmlWidgetId()+":tokens",
