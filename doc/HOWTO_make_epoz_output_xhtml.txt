@@ -1,16 +1,21 @@
 $Id$
 
-this doc describe how to configure Epoz editor 
-used by Text and RichText widgets
-to produce valid xhtml instead of dirty browser html code
+This doc describe how to configure Epoz editor used by Text and RichText widgets
+to produce valid xhtml instead of dirty browser html code.
 
-you need to install utidylib
-this requires the following steps:
+The installation described here works at least with Epoz 0.8.1 to Epoz 0.8.5.
+For more information see Epoz doc.
 
-apt-get install tidy
-apt-get install python2.3-ctypes
-wget http://download.berlios.de/utidylib/uTidylib-0.2.zip
-unzip and 'python setup.py install'
+You need to install utidylib this requires the following steps::
 
-this works for Epoz 0.8.1
-for more information see Epoz doc
+  apt-get install tidy
+  apt-get install python2.3-ctypes
+  wget http://download.berlios.de/utidylib/uTidylib-0.2.zip
+  unzip and 'python setup.py install'
+
+
+The content produced by Epoz is tidied up using XML-RPC cf. __init__ and
+skins/epoz/epoz_script_main.js.dtml
+
+An EpozPostTidy-Hook is also available to post process the valid XHTML produce
+by utidylib.
