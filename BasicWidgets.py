@@ -447,7 +447,7 @@ class CPSSelectWidget(CPSWidget):
         )
     # XXX make a menu for the vocabulary.
 
-    def _getVocabulary(self):
+    def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         vtool = getToolByName(self, 'portal_vocabularies')
         try:
@@ -470,7 +470,7 @@ class CPSSelectWidget(CPSWidget):
         except ValueError:
             datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
-        vocabulary = self._getVocabulary()
+        vocabulary = self._getVocabulary(datastructure)
         if not vocabulary.has_key(value):
             datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
@@ -481,7 +481,7 @@ class CPSSelectWidget(CPSWidget):
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
-        vocabulary = self._getVocabulary()
+        vocabulary = self._getVocabulary(datastructure)
         if mode == 'view':
             return escape(vocabulary.get(value, value))
         elif mode == 'edit':
@@ -527,7 +527,7 @@ class CPSMultiSelectWidget(CPSWidget):
     size = 0
     format_empty = ''
 
-    def _getVocabulary(self):
+    def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         vtool = getToolByName(self, 'portal_vocabularies')
         try:
@@ -554,7 +554,7 @@ class CPSMultiSelectWidget(CPSWidget):
             not _isinstance(value, TupleType)):
             datastructure.setError(widget_id, "cpsschemas_err_multiselect")
             return 0
-        vocabulary = self._getVocabulary()
+        vocabulary = self._getVocabulary(datastructure)
         v = []
         for i in value:
             try:
@@ -573,7 +573,7 @@ class CPSMultiSelectWidget(CPSWidget):
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
-        vocabulary = self._getVocabulary()
+        vocabulary = self._getVocabulary(datastructure)
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
