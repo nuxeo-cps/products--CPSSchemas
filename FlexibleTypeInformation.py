@@ -122,7 +122,7 @@ factory_type_information = (
                   },
                  ),
 ##     'cps_is_searchable': 1,
-##     'cps_proxytype': 'document',
+##     'cps_proxy_type': 'document',
      },
     )
 
@@ -148,7 +148,7 @@ class FlexibleTypeInformation(TypeInformation):
         (
          {'id':'cps_is_searchable', 'type': 'boolean', 'mode':'w',
           'label':'CPS Searchable'},
-        {'id':'cps_proxytype', 'type': 'selection', 'mode':'w',
+        {'id':'cps_proxy_type', 'type': 'selection', 'mode':'w',
          'select_variable': 'getProxyTypesAllowed', 'label':'CPS Proxytype'},
          {'id': 'schemas', 'type': 'tokens', 'mode': 'w',
           'label': 'Schemas'},
@@ -168,15 +168,10 @@ class FlexibleTypeInformation(TypeInformation):
     layout_style_prefix = ''
     flexible_layouts = []
     cps_is_searchable = 1
-    cps_proxytype = 'document'
+    cps_proxy_type = 'document'
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
-
-    security.declarePublic('getProxyRolesAllowed')
-    def getProxyTypesAllowed(self):
-        """return the list of allowed strings"""
-        return ['', 'document', 'folder', 'folderishdocument']
 
     #
     # ZMI
