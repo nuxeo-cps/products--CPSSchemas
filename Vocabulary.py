@@ -198,6 +198,7 @@ class Vocabulary(Persistent, Implicit):
         """Get the ordered list of values."""
         return [self._dict.get(key) for key in self._list]
 
+    # XXX these two are implementation details, change their name
     def getSortFunction(self):
         """Get Vocabulary sort function, None is list.append"""
         return self._sort_fonction
