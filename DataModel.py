@@ -119,7 +119,7 @@ class DataModel(UserDict):
             return
         if not hasattr(aq_base(proxy), 'getEditableContent'):
             return
-        ob = self._ob
+        ob = old_ob = self._ob
         if ob is None:
             return
         # Get the language from the doc to be sure we have the correct one.
@@ -128,7 +128,11 @@ class DataModel(UserDict):
         else:
             lang = None
         ob = proxy.getEditableContent(lang=lang)
-        self._ob = ob
+        if ob is not old_ob:
+            # Switch to the new object for the DataModel and the adapters.
+            self._ob = ob
+            for schema, adapter in self._schemas.values():
+                adapter.setContextObject(ob)
 
     def _commit(self, proxy=None, check_perms=1):
         """Commit modified data into object.
