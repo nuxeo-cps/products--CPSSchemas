@@ -49,25 +49,46 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
     flexti = FlexibleTypeInformation(id)
     container._setObject(id, flexti)
     flexti = container._getOb(id)
-    # XXX not CMF 1.4 compatible
-    flexti.addAction('view',
-                     'View',
-                     'cpsdocument_view',
-                     # XXX CMF 1.4: condition,
-                     View,
-                     'object')
-    flexti.addAction('edit',
-                     'Edit',
-                     'cpsdocument_edit_form',
-                     # XXX CMF 1.4: condition,
-                     ModifyPortalContent,
-                     'object')
-    flexti.addAction('edit_layout',
-                     'Edit Layout',
-                     'cpsdocument_editlayout_form',
-                     # XXX CMF 1.4: condition,
-                     ModifyPortalContent,
-                     'object')
+    errorType = 'addAction() takes at least 7 arguments (6 given)'
+    try:
+        flexti.addAction('view',
+                         'View',
+                         'cpsdocument_view',
+                         # condition: only for CMF 1.4 and above
+                         View,
+                         'object')
+        flexti.addAction('edit',
+                         'Edit',
+                         'cpsdocument_edit_form',
+                         # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
+        flexti.addAction('edit_layout',
+                         'Edit Layout',
+                         'cpsdocument_editlayout_form',
+                         # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
+    except TypeError, errorType:
+        # CMF 1.4 compatible
+        flexti.addAction('view',
+                         'View',
+                         'cpsdocument_view',
+                         '', # condition: only for CMF 1.4 and above
+                         View,
+                         'object')
+        flexti.addAction('edit',
+                         'Edit',
+                         'cpsdocument_edit_form',
+                         '', # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
+        flexti.addAction('edit_layout',
+                         'Edit Layout',
+                         'cpsdocument_editlayout_form',
+                         '', # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
     if REQUEST is not None:
         REQUEST.RESPONSE.redirect(container.absolute_url() + "/manage_main")
     else:
