@@ -1302,8 +1302,8 @@ class CPSImageWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
+        content_url = ''
         if kw['layout_mode'] == 'create':
-            content_url = ''
             empty_file = 1
         else:
             dm = datastructure.getDataModel()
