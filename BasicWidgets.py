@@ -1710,7 +1710,7 @@ class CPSFileWidget(CPSWidget):
                 entry_id = None
             if entry_id:
                 # some adapters does not have _getContentUrl
-                if getattr(adapter,'_getContentUrl',None):
+                if getattr(adapter, '_getContentUrl', None) is not None:
                     content_url = adapter._getContentUrl(entry_id, field_id)
                 else:
                     content_url = None
