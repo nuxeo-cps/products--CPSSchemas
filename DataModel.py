@@ -240,6 +240,8 @@ class DataModel(UserDict):
             # XXX use storage adapters for each schema
             for fieldid in schema.keys():
                 setattr(self._ob, fieldid, self.data[fieldid])
+        if hasattr(aq_base(self._ob), 'postCommitHook' ):
+            self._ob.postCommitHook()
 
 
     def __repr__(self):
