@@ -106,10 +106,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'CSS class for view'},
         {'id': 'widget_mode_expr', 'type': 'text', 'mode': 'w',
          'label': 'Get the widget mode from the given TAL expression'},
-        {'id': 'widget_group_id', 'type': 'string', 'mode': 'w',
-         'label': 'Group id for Javascript switching (if empty widget id is used)'},
-        {'id': 'widget_css_class_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Return the css class given by the TAL expressions'},
+        {'id': 'css_class_expr', 'type': 'text', 'mode': 'w',
+         'label': 'Get the css class from the given TAL expression'},
         )
 
     fields = []
@@ -126,8 +124,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     hidden_empty = 0
     hidden_if_expr = ''
     widget_mode_expr = ''
-    widget_group_id = ''
-    widget_css_class_expr = ''
+    css_class_expr = ''
 
     widget_type = '' # Not a property by default
     field_types = []
@@ -136,12 +133,12 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     hidden_if_expr_c = None
     widget_mode_expr_c = None
-    widget_css_class_expr_c = None
+    css_class_expr_c = None
 
     _properties_post_process_tales = (
         ('hidden_if_expr', 'hidden_if_expr_c'),
         ('widget_mode_expr', 'widget_mode_expr_c'),
-        ('widget_css_class_expr', 'widget_css_class_expr_c'),
+        ('css_class_expr', 'css_class_expr_c'),
         )
 
     def __init__(self, id, widgettype, **kw):
@@ -171,7 +168,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     def _createExpressionContext(self, datamodel, layout_mode):
         """Create an expression context for expression evaluation.
 
-        Used for hidden_if_expr and widget_mode_expr.
+        Used for hidden_if_expr, widget_mode_expr and css_class_expr.
         """
         wftool = getToolByName(self, 'portal_workflow')
         portal = getToolByName(self, 'portal_url').getPortalObject()
@@ -249,33 +246,46 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
                 return 'edit'
         raise ValueError("Unknown layout mode '%s'" % layout_mode)
 
-    security.declarePrivate('getCssClassFromDatamodel')
-    def getCssClassFromDatamodel(self, layout_mode, datamodel):
-        """Compute and return the css class, as it is specified in the datamodel.
+    security.declarePrivate('getCssClass')
+    def getCssClass(self, layout_mode, datamodel):
+        """Get the css class for this widget.
 
         The returned css class is to be used in the HTML rendering of a widget.
 
-        If no css class is specified, this is the default "visible" class that
-        is returned.
+        A widget handles two properties, named css_class and
+        css_class_expr. css_class is simply the name of the class to
+        use. css_class_expr is an expression that can be used to generate a
+        dynamic css class. If css_class_expr is used, css_class property is
+        ignored.
 
-        In create and edit mode if a css class is specified, this is the class
-        name suffixed by "Edit" that is returned. This is because in create and
-        edit mode one usually doesn't want the widgets to have the same
-        appearance that they have in view mode. Actually in create and edit mode
-        one prefers to have all the widgets with the same neutral presentation.
+        If none of these properties is specified, or if the expression returns
+        None, no class is returned.
+
+        In create or edit mode, if the css_class property is used, the class
+        returned is the class name suffixed by 'Edit'.
+        This is because in create and edit mode one usually doesn't want the
+        widgets to have the same appearance that they have in view
+        mode. Actually in create and edit mode one prefers to have all the
+        widgets with the same neutral presentation.
+
+        The css_class_expr namespace gives access to the layout mode, so this
+        default behaviour does not apply to computed css classes.
         """
-        css_class = self.css_class
-        if self.widget_css_class_expr_c:
-            # Creating the context for evaluating the TAL expression
+        if self.css_class_expr_c:
+            # Create the context to evaluate the TAL expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
-            css_class_computed = self.widget_css_class_expr_c(expr_context)
+            css_class_computed = self.css_class_expr_c(expr_context)
             if css_class_computed:
                 css_class = css_class_computed
-
-        if css_class and layout_mode in ('create', 'edit'):
-            css_class = css_class + 'Edit'
+            else:
+                css_class = ''
         else:
-            css_class = css_class or 'visible'
+            css_class = self.css_class
+            # XXX AT: do not append 'Edit' if css class is computed because
+            # user has access to the layout mode in the namespace, and is able
+            # to control this behaviour more precisely
+            if css_class and layout_mode in ('create', 'edit'):
+                css_class = css_class + 'Edit'
 
         return css_class
 
