@@ -53,8 +53,7 @@
                                                 folder_prefix=folder_prefix);
                        nav_action string:search_form;
                        no_form nothing;
-                       site_wide python:1;
-                       items_length python:len(items);">
+                       site_wide python:1;">
       <metal:block use-macro="here/content_lib/macros/display_contents" />
     </tal:block>
     <hr>
