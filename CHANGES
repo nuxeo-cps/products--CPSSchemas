@@ -12,7 +12,7 @@ New features:
   does not yet work in flexible mode.
 Bug fixes:
 ~~~~~~~~~~
--
+- fixing TextArea render format text, pre, stx and html default is text
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Possibility to define different render modes such as edit and 
