@@ -114,6 +114,9 @@ class DiskFile(File, VTM):
         filename = self.getFullFilename(self._new_filename)
         file = open(filename, 'wb')
         file.write(str(data))
+        self.ZCacheable_invalidate()
+        self.ZCacheable_set(None)
+        self.http__refreshEtag()
 
     security.declareProtected(View, 'getData')
     def getData(self):

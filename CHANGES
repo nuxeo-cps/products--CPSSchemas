@@ -1,6 +1,7 @@
 Requires:
 ~~~~~~~~~
--
+- Disk File Fields dependant _html field must now be a standard File Field,
+  not a Disk File Field.
 New features:
 ~~~~~~~~~~~~~
 - new CPSDocumentLanguageSelectWidget, require CPSCore > 3.18
@@ -15,6 +16,9 @@ Bug fixes:
 - The Internal Links widget does not perform a permission check
   before displaying links.
 - Corrected the <head>...</head> declarations in main_template_popup.pt
+- Disk File Field now works better with external editor.
+- Disk File would fail when trying to calculate the size before the file
+  was uploaded.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Malagasy javascript camendar (to translate)
