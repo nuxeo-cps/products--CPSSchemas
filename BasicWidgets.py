@@ -2214,9 +2214,10 @@ class CPSCompoundWidgetType(CPSWidgetType):
     def getRenderMethod(self, widget):
         """Get the render method."""
         if not self.render_method:
-            raise RuntimeError("Missing Render Method in widget type %s"
-                               % self.getId())
-        meth = getattr(widget, self.render_method, None)
+            render_method = 'widget_compound_default_render'
+            meth = getattr(self, render_method, None)
+        else:
+            meth = getattr(widget, self.render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (self.render_method, self.getId()))
