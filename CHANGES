@@ -4,10 +4,17 @@ ZODB Requires:
 New features:
 ~~~~~~~~~~~~~
 - P1 #187: Create documents without creating empty object.
+- P2 #201: Extended Select widget using popup and search capabilities
+-
 Bug fixes:
 ~~~~~~~~~~
 - LinkWidget convert url in lowercase
+- 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - DataModel constructor now takes a proxy argument to be able to provide
   it to fields or widgets that need to do placeful stuff.
+- DataModel now also provides the context where the document is created or
+  edited.
+- Internal Links widget.
+-
