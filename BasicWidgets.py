@@ -1473,9 +1473,11 @@ class CPSFileWidget(CPSWidget):
             content_url = adapter._getContentUrl(ob, field_id)
 
         file = datastructure[self.getWidgetId()]
+        size = 0
         if file:
             if _isinstance(file, File):
                 current_name = file.getId()
+                size = file.get_size()
             else:
                 current_name = self.getWidgetId()
             empty_file = 0
@@ -1490,6 +1492,7 @@ class CPSFileWidget(CPSWidget):
                 'content_url': content_url,
                 'current_name': current_name,
                 'mimetype': mimetype,
+                'size': size,
                }
 
     def prepare(self, datastructure, **kw):
