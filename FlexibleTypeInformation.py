@@ -82,12 +82,12 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
                          '', # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
-        #flexti.addAction('edit_layout',
-        #                 'Edit Layout',
-        #                 'cpsdocument_editlayout_form',
-        #                 '', # condition: only for CMF 1.4 and above
-        #                 ModifyPortalContent,
-        #                 'object')
+        flexti.addAction('edit_layout',
+                         'Edit Layout',
+                         'cpsdocument_editlayout_form',
+                         'python: object.portal_types[object.getPortalTypeName()].flexible_layouts', # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
     if REQUEST is not None:
         REQUEST.RESPONSE.redirect(container.absolute_url() + "/manage_main")
     else:
