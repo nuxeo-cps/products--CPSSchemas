@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-02-26 12:52default\n"
-"PO-Revision-Date: 2004-02-26 12:53+0100\n"
+"PO-Revision-Date: 2004-03-03 15:48+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgstr "mn"
 #.   <span>resize</span>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
-msgstr "Resize as "
+msgstr "and resize as "
 
 #.   <label>Change</label>
 #.   <label attributes="for string:${radio_name}_change">Change</label>
