@@ -25,7 +25,10 @@ from zLOG import LOG, DEBUG
 from copy import deepcopy
 from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass, DTMLFile
+from DateTime.DateTime import DateTime
+
 from AccessControl import ClassSecurityInfo
+from AccessControl import getSecurityManager
 from AccessControl.PermissionRole import rolesForPermissionOn
 
 from Products.CMFCore.Expression import Expression
@@ -96,6 +99,14 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         # 'label': 'Is Multi-Valued'},
         #{'id': 'vocabulary', 'type': 'string', 'mode': 'w',
         # 'label': 'Vocabulary'},
+        {'id': 'read_ignore_storage', 'type': 'boolean', 'mode': 'w',
+         'label': "Read: ignore storage"},
+        {'id': 'read_process_expression_str', 'type': 'string', 'mode': 'w',
+         'label': "Read: expression"},
+        {'id': 'write_ignore_storage', 'type': 'boolean', 'mode': 'w',
+         'label': "Write: ignore storage"},
+        {'id': 'write_process_expression_str', 'type': 'string', 'mode': 'w',
+         'label': "Write: expression"},
         )
 
     default = ''
@@ -109,6 +120,10 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #is_subschema = 0
     #is_multi_valued = 0
     #vocabulary = None
+    read_ignore_storage = 0
+    read_process_expression_str = ''
+    write_ignore_storage = 0
+    write_process_expression_str = ''
 
     acl_read_permissions = []
     acl_read_roles = []
@@ -116,6 +131,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     acl_write_permissions = []
     acl_write_roles = []
     acl_write_expression = None
+    read_process_expression = None
+    write_process_expression = None
 
     def __init__(self, id, **kw):
         self.id = id
@@ -176,6 +193,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         for attr_str, attr in (
             ('acl_read_expression_str', 'acl_read_expression'),
             ('acl_write_expression_str', 'acl_write_expression'),
+            ('read_process_expression_str', 'read_process_expression'),
+            ('write_process_expression_str', 'write_process_expression'),
             ):
             p = getattr(self, attr_str).strip()
             if p:
@@ -214,10 +233,45 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         raise NotImplementedError
 
     #
+    # Storage interaction
+    #
+
+    def _createStorageExpressionContext(self, value, data):
+        """Create an expression context for field storage process."""
+        # Put all the names in the data in the namespace.
+        mapping = data.copy()
+        mapping.update({
+            'value': value,
+            'data': data,
+            'field_id': self.getId(),
+            'user': getSecurityManager().getUser(),
+            'getDateTime': lambda: DateTime(),
+            'nothing': None,
+            })
+        return getEngine().getContext(mapping)
+
+    security.declarePrivate('processValueAfterRead')
+    def processValueAfterRead(self, value, data):
+        """Process value after read from storage."""
+        if not self.read_process_expression:
+            return value
+        expr_context = self._createStorageExpressionContext(value, data)
+        return self.read_process_expression(expr_context)
+
+    security.declarePrivate('processValueBeforeWrite')
+    def processValueBeforeWrite(self, value, data):
+        """Process value before write to storage."""
+        if not self.write_process_expression:
+            return value
+        expr_context = self._createStorageExpressionContext(value, data)
+        return self.write_process_expression(expr_context)
+
+    #
     # ACLs
     #
 
-    def _createExpressionContext(self, datamodel):
+    def _createAclExpressionContext(self, datamodel):
+        """Create an expression context for ACL evaluation."""
         context = datamodel._context
         data = {
             'field': self,
@@ -269,7 +323,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             if not ok:
                 raise exception(self.getFieldId(), 'roles')
         if acl_expression:
-            expr_context = self._createExpressionContext(datamodel)
+            expr_context = self._createAclExpressionContext(datamodel)
             if not acl_expression(expr_context):
                 raise exception(self.getFieldId(), 'expression')
 

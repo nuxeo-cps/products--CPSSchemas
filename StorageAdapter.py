@@ -35,8 +35,11 @@ ZMI.
 
 """
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
+
+from Products.CMFCore.Expression import Expression
+from Products.CMFCore.Expression import getEngine
 
 
 class BaseStorageAdapter:
@@ -59,8 +62,8 @@ class BaseStorageAdapter:
         Returns a mapping.
         """
         data = {}
-        for fieldid, field in self._schema.items():
-            data[fieldid] = field.getDefault()
+        for field_id, field in self._schema.items():
+            data[field_id] = field.getDefault()
         return data
 
     #
@@ -69,10 +72,59 @@ class BaseStorageAdapter:
 
     def getData(self):
         """Get data from the object, returns a mapping."""
-        raise NotImplementedError
+        return self._getData()
 
     def setData(self, data):
         """Set data to the object, from a mapping."""
+        self._setData(data)
+
+    #
+    # Internal API for subclasses
+    #
+
+    def _getData(self, **kw):
+        """Get data from the object, returns a mapping."""
+        data = {}
+        for field_id, field in self._schema.items():
+            if field.read_ignore_storage:
+                value = field.getDefault()
+            else:
+                value = self._getFieldData(field_id, field, **kw)
+            data[field_id] = value
+        self._getDataDoProcess(data, **kw)
+        return data
+
+    def _getDataDoProcess(self, data, **kw):
+        """Process data after read."""
+        for field_id, field in self._schema.items():
+            value = data[field_id]
+            data[field_id] = field.processValueAfterRead(value, data)
+
+    def _getFieldData(self, field_id, field, **kw):
+        """Get data from one field."""
+        raise NotImplementedError
+
+    def _setData(self, data, **kw):
+        """Set data to the object, from a mapping."""
+        data = self._setDataDoProcess(data, **kw)
+        for field_id, field in self._schema.items():
+            if field.write_ignore_storage:
+                continue
+            self._setFieldData(field_id, field, data[field_id], **kw)
+
+    def _setDataDoProcess(self, data, **kw):
+        """Process data before write.
+
+        Returns a copy.
+        """
+        new_data = {}
+        for field_id, field in self._schema.items():
+            value = data[field_id]
+            new_data[field_id] = field.processValueBeforeWrite(value, data)
+        return new_data
+
+    def _setFieldData(self, field_id, field, value, **kw):
+        """Set data for one field."""
         raise NotImplementedError
 
 
@@ -111,27 +163,17 @@ class AttributeStorageAdapter(BaseStorageAdapter):
             LOG('AttributeStorageAdapter._delete', DEBUG,
                 'Attempting to delete %s on %s' % (field_id, ob))
 
-    def getData(self):
-        """Get data from the object, returns a mapping.
-
-        Fills default value from the field if the object has no attribute.
-        """
-        data = {}
+    def _getFieldData(self, field_id, field):
+        """Get data from one field."""
         ob = self._ob
-        base_ob = aq_base(ob)
-        for field_id, field in self._schema.items():
-            if hasattr(base_ob, field_id):
-                value = getattr(ob, field_id)
-            else:
-                # Use default from field.
-                value = field.getDefault()
-            data[field_id] = value
-        return data
+        if not hasattr(aq_base(ob), field_id):
+            # Use default from field.
+            return field.getDefault()
+        return getattr(ob, field_id)
 
-    def setData(self, data):
-        """Set data to the object, from a mapping."""
-        for field_id in self._schema.keys():
-            setattr(self._ob, field_id, data[field_id])
+    def _setFieldData(self, field_id, field, value):
+        """Set data for one field."""
+        setattr(self._ob, field_id, value)
 
 
 class MetaDataStorageAdapter(BaseStorageAdapter):
@@ -151,36 +193,35 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
     def _delete(self, field_id):
         raise NotImplementedError
 
-    def getData(self):
-        """Get data from the object, returns a mapping."""
-        data = {}
-        ob = self._ob
-        for field_id, field in self._schema.items():
-            if not hasattr(aq_base(ob), field_id):
-                # Use default from field.
-                value = field.getDefault()
-            else:
-                meth = getattr(ob, field_id)
-                if not callable(meth):
-                    raise RuntimeError(
-                        "invalid MetaData field, %s not callable" % field_id)
-                value = meth()
-            data[field_id] = value
+    def _getFieldData(self, field_id, field):
+        """Get data from one field.
 
-        return data
-
-    def setData(self, data):
-        """Set data to the object, from a mapping."""
+        Calls the getter method.
+        """
         ob = self._ob
-        for field_id in self._schema.keys():
-            meth_name = 'set' + field_id
-            if not hasattr(aq_base(ob), meth_name):
-                # skip metadata without setter method
-                LOG('MetaDataStorageAdapter.setData', DEBUG,
-                    "Warning no method %s() field is not save" % meth_name)
-                continue
-            meth = getattr(ob, meth_name)
-            if not callable(meth):
-                raise RuntimeError(
-                    "invalid MetaData field, %s not callable" % meth_name)
-            meth(data[field_id])
+        if not hasattr(aq_base(ob), field_id):
+            # Use default from field.
+            return field.getDefault()
+        meth = getattr(ob, field_id)
+        if not callable(meth):
+            raise ValueError(
+                "Invalid MetaData field, %s not callable" % field_id)
+        return meth()
+
+    def _setFieldData(self, field_id, field, value):
+        """Set data for one field.
+
+        Calls the setter method.
+        """
+        ob = self._ob
+        meth_name = 'set' + field_id
+        if not hasattr(aq_base(ob), meth_name):
+            # skip metadata without setter method
+            LOG('MetaDataStorageAdapter._setFieldData', ERROR,
+                "Warning no method %s(), field not saved" % meth_name)
+            return
+        meth = getattr(ob, meth_name)
+        if not callable(meth):
+            raise ValueError(
+                "Invalid MetaData field, %s not callable" % meth_name)
+        meth(value)
