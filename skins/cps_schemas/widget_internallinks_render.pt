@@ -145,7 +145,7 @@
       </script>
 
       <div tal:attributes="id string:div_all_${id}">
-        <tal:block content="structure python:here.results_html_render(results=here.getContent().results, no_form=0)" />
+        <tal:block content="structure python:here.results_html_render(results=values, no_form=0)" />
         <div tal:attributes="id string:div_${id}"></div>
       </div>
 
@@ -153,7 +153,7 @@
         onClick="delete_items()"> 
       <input type="button" name="search_item" value="action_search" i18n:attributes="value"
         onClick="open_search_dialog()"><br>
-      <textarea style="width: 90%;visibility:hidden"
+      <textarea cols="2" style="width: 90%;visibility:hidden"
                 tal:define="html_id here/getHtmlWidgetId;
                             links python:'\n'.join(values)"
                 tal:attributes="name string:${html_id}:lines;
