@@ -38,16 +38,16 @@
         }
         -->
       </script>
-      <textarea tal:define="html_id here/getHtmlWidgetId;
+      <textarea style="width: 90%"
+                tal:define="html_id here/getHtmlWidgetId;
                             links python:'\n'.join(values)"
                 tal:attributes="name string:${html_id}:lines;
                                 id id;
-                                cols string:100;
                                 rows python:test(here.size, here.size, None)"
                 tal:content="links"></textarea>
       <a href="javascript:open_search_dialog()">
         <img tal:replace="structure python:here.getImgTag('link_popup.gif',
-                                       base_url=base_url, width=32, height=32)">
+                                       base_url=base_url, width=48, height=48)">
       </a>
     </tal:block>
   </tal:block>
