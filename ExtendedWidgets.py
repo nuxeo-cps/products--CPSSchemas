@@ -196,6 +196,7 @@ class CPSDateTimeWidget(CPSWidget):
         if v == 'None':
             v = None
         if v:
+            # Backward compatibility, this logic is not used by the current code
             if type(v) is StringType:
                 v = DateTime(v)
             d = str(v.day())
