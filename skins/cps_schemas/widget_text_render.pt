@@ -19,6 +19,7 @@
                               rows here/height;"
       tal:content="value" />
     <button type="button"
+      i18n:translate="button_rte"
       tal:condition="python:rformat=='html' or configurable.find('format')>=0"
       tal:attributes="onclick
         string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
