@@ -27,7 +27,7 @@ from OFS.Folder import Folder
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
-from Products.CPSDocument.Vocabulary import CPSVocabulary
+from Products.CPSDocument.Vocabulary import Vocabulary, CPSVocabulary
 
 class VocabulariesTool(UniqueObject, Folder):
     """Vocabularies Tool
@@ -43,12 +43,11 @@ class VocabulariesTool(UniqueObject, Folder):
     security = ClassSecurityInfo()
 
     security.declarePrivate('addVocabulary')
-    def addVocabulary(self, id):
+    def addVocabulary(self, id, vocab=None):
         """Add a vocabulary."""
-        ob = CPSVocabulary(id)
+        ob = CPSVocabulary(id, vocab=vocab)
         self._setObject(id, ob)
-        ob = self._getOb(id)
-        return ob
+        return self._getOb(id)
 
     #
     # ZMI
@@ -70,10 +69,14 @@ class VocabulariesTool(UniqueObject, Folder):
     manage_addCPSVocabularyForm = DTMLFile('zmi/vocabulary_addform', globals())
 
     security.declareProtected(ManagePortal, 'manage_addCPSVocabulary')
-    def manage_addCPSVocabulary(self, id, REQUEST):
+    def manage_addCPSVocabulary(self, id, dict=None, list=None, REQUEST=None):
         """Add a vocabulary, called from the ZMI."""
-        vocab = self.addVocabulary(id)
-        REQUEST.RESPONSE.redirect(vocab.absolute_url()+'/manage_main'
-                                  '?psm=Added.')
+        vocab = Vocabulary(dict=dict, list=list)
+        vocabulary = self.addVocabulary(id, vocab=vocab)
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(vocabulary.absolute_url()+'/manage_main'
+                                      '?psm=Added.')
+        else:
+            return vocabulary
 
 InitializeClass(VocabulariesTool)
