@@ -25,7 +25,7 @@
 
     <div>
       <tal:block condition="python: configurable.find('position') >= 0">
-        <span i18n:translate="">cpsschemas_render_position</span>
+        <tal:block i18n:translate="">cpsschemas_render_position</tal:block>
         <select tal:attributes="name string:${value_name}_rposition">
           <option tal:repeat="op here/all_render_positions"
             tal:attributes="selected python:op == rposition;
@@ -35,7 +35,7 @@
       </tal:block>
 
       <tal:block condition="python: configurable.find('format') >= 0">
-        <span i18n:translate="">cpsschemas_render_format</span>
+        <tal:block i18n:translate="">cpsschemas_render_format</tal:block>
         <select tal:attributes="name string:${value_name}_rformat;
           id string:${value_name}_rformat;
           onchange python:'showElement(this.value == \'html\',\'%s\')' % button_rte_id

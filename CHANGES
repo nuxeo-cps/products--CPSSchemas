@@ -14,6 +14,7 @@ Bug fixes:
   doesn't want the widgets to have the same appearance that they have in view
   mode. Actually in edit mode one prefers to have all the widgets with the same
   neutral presentation.
+- Removed some needless <span> elements used for i18n.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

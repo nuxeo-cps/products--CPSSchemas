@@ -10,10 +10,10 @@
                                id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';
                                style python:cell['widget_css_class'] == 'hidden' and 'visibility: hidden;;' or 'visibility: visible;;';">
             <div class="label" tal:condition="widget/label">
-              <span i18n:translate="" tal:condition="widget/is_i18n"
-                    tal:content="widget/label">label</span>
-              <span tal:condition="not:widget/is_i18n"
-                    tal:content="widget/label">label</span>
+              <tal:block i18n:translate="" tal:condition="widget/is_i18n"
+                    tal:content="widget/label">label</tal:block>
+              <tal:block tal:condition="not:widget/is_i18n"
+                    tal:content="widget/label">label</tal:block>
           </div>
             <tal:block replace="structure cell/widget_rendered" />
           </div>
@@ -37,10 +37,10 @@
           <div class="label" tal:condition="widget/label_edit"
                              tal:attributes="class python:test(is_required, 'label required',
                                               'label')">
-            <span i18n:translate="" tal:condition="widget/is_i18n"
-              tal:content="widget/label_edit">label</span>
-            <span tal:condition="not:widget/is_i18n"
-              tal:content="widget/label_edit">label</span>
+            <tal:block i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/label_edit">label</tal:block>
+            <tal:block tal:condition="not:widget/is_i18n"
+              tal:content="widget/label_edit">label</tal:block>
           </div>
           <button type="button" class="tooltipControl"
                   tal:condition="widget/help"
@@ -55,10 +55,10 @@
                id tooltip_id;
                onclick python:'showElement(false, \'%s\')' % tooltip_id;
             ">
-            <span i18n:translate="" tal:condition="widget/is_i18n"
-              tal:content="widget/help">i18_key-help_for_this_field</span>
-            <span tal:condition="not:widget/is_i18n"
-              tal:content="widget/help">This is the help for this field</span>
+            <tal:block i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/help">i18_key-help_for_this_field</tal:block>
+            <tal:block tal:condition="not:widget/is_i18n"
+              tal:content="widget/help">This is the help for this field</tal:block>
           </div>
           <tal:block condition="err">
             <em style="color: red"
