@@ -27,6 +27,7 @@ from types import IntType, StringType, UnicodeType
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from OFS.PropertyManager import PropertyManager
+from Products.PythonScripts.standard import structured_text
 
 from Products.CMFCore.CMFCorePermissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
@@ -127,12 +128,18 @@ class CPSTextAreaWidget(CPSWidget):
 
     width = 40
     height = 5
+    render_mode = 'pre'
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
+        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_modes',
+         'label': 'Render mode'},
         )
+
+    all_render_modes = ['pre', 'stx', 'text']
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
@@ -156,7 +163,13 @@ class CPSTextAreaWidget(CPSWidget):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            return escape(value)
+            render_mode = self.render_mode
+            if render_mode == 'pre':
+                return '<pre>'+escape(value)+'</pre>'
+            elif render_mode == 'stx':
+                return structured_text(value)
+            else:
+                return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('textarea',
                                  name=self.getHtmlWidgetId(),
