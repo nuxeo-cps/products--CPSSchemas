@@ -50,6 +50,8 @@ def _convertFileToMimeType(file, mime_type, context=None):
                                  # filename='fooXXX',
                                  # encoding='',
                                  )
+    if not data:
+        return None
     return data.getData()
 
 def convertFileToText(file, context=None):
