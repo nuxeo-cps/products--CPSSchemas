@@ -1,0 +1,41 @@
+<metal:block define-macro="master" tal:define="
+  showthirdcol showthirdcol|python:1;
+  emptybody emptybody|request/emptybody|nothing;
+  utool nocall:here/portal_url;
+  atool here/portal_actions;
+  mtool here/portal_membership;
+  ttool here/portal_trees;
+  wtool here/portal_workflow;
+  btool here/portal_boxes;
+  context_url python:here.getContextUrl(utool=utool);
+  base_url python:here.getBaseUrl(utool=utool);
+  here_url python:here.absolute_url();
+  member mtool/getAuthenticatedMember;
+  isAnon mtool/isAnonymousUser;
+  actions python:atool.listFilteredActionsFor(here);
+  wf_state python:wtool.getInfoFor(here,'review_state','');
+  uname python:isAnon and 'Guest' or member.getUserName();
+  checkPerm nocall:mtool/checkPermission;
+  cpsmcat nocall:here/Localizer/default;
+  locale here/Localizer/get_selected_language;
+  in_ws here/isInWorkspace;
+  "><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  tal:attributes="lang locale; xml:lang locale">
+<head>
+   <metal:block define-slot="base"><base
+    href="" tal:attributes="href string:${here_url}/" />
+    </metal:block>
+  <metal:block define-slot="head_slot"
+    />
+  <metal:block define-slot="css_slot"
+    />
+  <metal:block define-slot="javascript_head_slot"
+    />
+</head>
+<body OnLoad="setFocus()" tal:condition="emptybody">
+  <metal:block define-slot="body" />
+  <metal:block define-slot="main" />
+</body>
+</html>
+</metal:block>
