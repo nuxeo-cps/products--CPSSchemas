@@ -158,12 +158,15 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     # Widget access control
     #
     def _createExpressionContext(self, datamodel, layout_mode):
-        """Create an expression context for hidden evaluation."""
+        """Create an expression context for expression evaluation.
+
+        Used for hidden_if_expr and widget_mode_expr.
+        """
         wftool = getToolByName(self, 'portal_workflow')
         portal = getToolByName(self, 'portal_url').getPortalObject()
         proxy = datamodel._proxy
         if proxy is not None:
-            review_state = wftool.getInfoFor(proxy, 'review_state')
+            review_state = wftool.getInfoFor(proxy, 'review_state', None)
         else:
             review_state = None
         data = {
