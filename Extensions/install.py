@@ -238,5 +238,23 @@ def install(self):
                     pr( '    Skipping not installed locale for file %s' % file)
 
 
+    ######################################################
+    # EPOZ INSTALLER
+    ######################################################
+
+    pr("")
+    pr("### Epoz Installer")
+    if not portalhas('epoz_installer'):
+        from Products.ExternalMethod.ExternalMethod import ExternalMethod
+        pr('Adding epoz installer')
+        epoz_installer = ExternalMethod('epoz_installer',
+                                               'Epoz Installer',
+                                               'Epoz.Install',
+                                               'install')
+        portal._setObject('epoz_installer', epoz_installer)
+        pr(portal.epoz_installer())
+    pr("### End of Epoz install")
+    pr("")
+
     pr("End of specific CPSSchemas install")
     return pr('flush')
