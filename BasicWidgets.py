@@ -383,19 +383,19 @@ class CPSTextAreaWidget(CPSWidget):
 
     width = 40
     height = 5
-    render_mode = 'pre'
+    render_format = 'pre'
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
-        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_modes',
-         'label': 'Render mode'},
+        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_formats',
+         'label': 'Render format'},
         )
 
 
-    all_render_modes = ['pre', 'stx', 'text']
+    all_render_formats = ['pre', 'stx', 'text']
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -423,12 +423,12 @@ class CPSTextAreaWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            render_mode = self.render_mode
-            if render_mode == 'pre':
+            render_format = self.render_format
+            if render_format == 'pre':
                 return '<pre>'+escape(value)+'</pre>'
-            elif render_mode == 'stx':
+            elif render_format == 'stx':
                 return structured_text(value)
-            else: # render_mode == 'text'
+            else: # render_format == 'text'
                 return '<div>'+newline_to_br(value)+'</div>'
         elif mode == 'edit':
             return renderHtmlTag('textarea',
@@ -459,16 +459,12 @@ class CPSLinesWidget(CPSTextAreaWidget):
 
     width = 30
 
-    render_mode = None
-
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
         )
-
-    all_render_modes = []
 
 
     def prepare(self, datastructure, **kw):
