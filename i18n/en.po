@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-18 16:57default\n"
-"PO-Revision-Date: 2003-11-18 17:00+0100\n"
+"POT-Creation-Date: 2003-11-21 16:19default\n"
+"PO-Revision-Date: 2003-11-21 16:21+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -75,29 +75,34 @@ msgstr "(preview)"
 msgid "cpsschema_minute"
 msgstr "mn"
 
-#.   <label attributes="for string:${radio_name}_change">Change</label>
+#.   <span>resize</span>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr "Resize as "
+
 #.   <label>Change</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_file_render.pt
+#.   <label attributes="for string:${radio_name}_change">Change</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr "Change"
 
-#.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #.   <label>Delete</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_file_render.pt
+#.   <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Delete"
 
-#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
 #.   <label>Keep</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_file_render.pt
+#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Keep"
 
 #.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "None"
 
@@ -116,14 +121,13 @@ msgstr "URL"
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
 
-#.   <span class="label">cpsschemas_photo_subtitle</span>
+#.   <span>cpsschemas_photo_subtitle</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Sub title: "
 
 #.   <span>cpsschemas_render_format</span>
-#: from ../skins/cps_schemas/widget_photo_render.pt
-#: ../skins/cps_schemas/widget_text_render.pt
+#: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Format: "
 
@@ -237,17 +241,38 @@ msgstr "Html preformated"
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
 
-msgid "cpsschemas_rformat_icon"
-msgstr "Icon size"
+msgid "img_auto_size"
+msgstr "Automatic"
 
-msgid "cpsschemas_rformat_small"
+msgid "img_icon"
+msgstr "Icon"
+
+msgid "img_xsmall"
+msgstr "Extra small"
+
+msgid "img_small"
 msgstr "Small"
 
-msgid "cpsschemas_rformat_medium"
+msgid "img_medium"
 msgstr "Medium"
 
-msgid "cpsschemas_rformat_large"
+msgid "img_large"
 msgstr "Large"
+
+msgid "img_xlarge"
+msgstr "Extra large"
+
+#~ msgid "cpsschemas_rformat_icon"
+#~ msgstr "Icon size"
+
+#~ msgid "cpsschemas_rformat_small"
+#~ msgstr "Small"
+
+#~ msgid "cpsschemas_rformat_medium"
+#~ msgstr "Medium"
+
+#~ msgid "cpsschemas_rformat_large"
+#~ msgstr "Large"
 
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Position :"

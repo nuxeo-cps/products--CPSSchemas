@@ -106,15 +106,24 @@ msgstr ""
 msgid "cpsschemas_rformat_original"
 msgstr ""
 
-msgid "cpsschemas_rformat_icon"
+msgid "img_auto_size"
 msgstr ""
 
-msgid "cpsschemas_rformat_small"
+msgid "img_icon"
 msgstr ""
 
-msgid "cpsschemas_rformat_medium"
+msgid "img_xsmall"
 msgstr ""
 
-msgid "cpsschemas_rformat_large"
+msgid "img_small"
+msgstr ""
+
+msgid "img_medium"
+msgstr ""
+
+msgid "img_large"
+msgstr ""
+
+msgid "img_xlarge"
 msgstr ""
 

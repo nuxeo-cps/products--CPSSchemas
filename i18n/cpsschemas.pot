@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-11-18 16:57default\n"
+"POT-Creation-Date: 2003-11-21 16:19default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -76,29 +76,34 @@ msgstr ""
 msgid "cpsschema_minute"
 msgstr ""
 
-#.   <label attributes="for string:${radio_name}_change">Change</label>
+#.   <span>resize</span>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr ""
+
 #.   <label>Change</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_file_render.pt
+#.   <label attributes="for string:${radio_name}_change">Change</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr ""
 
-#.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #.   <label>Delete</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_file_render.pt
+#.   <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr ""
 
-#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
 #.   <label>Keep</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_file_render.pt
+#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr ""
 
 #.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
-#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr ""
 
@@ -117,14 +122,13 @@ msgstr ""
 msgid "cpsschemas_label_link_title"
 msgstr ""
 
-#.   <span class="label">cpsschemas_photo_subtitle</span>
+#.   <span>cpsschemas_photo_subtitle</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr ""
 
 #.   <span>cpsschemas_render_format</span>
-#: from ../skins/cps_schemas/widget_photo_render.pt
-#: ../skins/cps_schemas/widget_text_render.pt
+#: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr ""
 
@@ -238,14 +242,23 @@ msgstr ""
 msgid "cpsschemas_rformat_original"
 msgstr ""
 
-msgid "cpsschemas_rformat_icon"
+msgid "img_auto_size"
 msgstr ""
 
-msgid "cpsschemas_rformat_small"
+msgid "img_icon"
 msgstr ""
 
-msgid "cpsschemas_rformat_medium"
+msgid "img_xsmall"
 msgstr ""
 
-msgid "cpsschemas_rformat_large"
+msgid "img_small"
+msgstr ""
+
+msgid "img_medium"
+msgstr ""
+
+msgid "img_large"
+msgstr ""
+
+msgid "img_xlarge"
 msgstr ""
