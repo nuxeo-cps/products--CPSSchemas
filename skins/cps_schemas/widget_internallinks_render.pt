@@ -9,7 +9,7 @@
         <li tal:define="tokens python:[e.strip() for e in line.split()];
                            link python:tokens[0];
                            desc python:test(len(tokens) > 1,
-                                                      ' '.join(tokens[1:]), '');
+                                                    ' '.join(tokens[1:]), link);
                            target python:test(here.new_window, '_blank', None)"
                    on-error="nothing">
           <a href="" tal:attributes="href string:${link}/;
