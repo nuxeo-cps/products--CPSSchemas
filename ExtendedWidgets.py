@@ -1131,7 +1131,8 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 if value_item and value_item not in vocabulary.keys():
                     if render_format == 'select':
                         kw = {'value': value_item,
-                              'contents': 'invalid: '+value_item,
+                              # XXX missing i18n for invalid
+                              'contents': 'invalid: ' + value_item,
                               'selected': 'selected',
                               }
                         res += renderHtmlTag('option', **kw)
@@ -1291,10 +1292,72 @@ class CPSRangeListWidgetType(CPSWidgetType):
 InitializeClass(CPSRangeListWidgetType)
 
 ##################################################
+
+class CPSDocumentLanguageSelectWidget(CPSWidget):
+    """Document Language Selection widget."""
+    meta_type = "CPS Document Language Select Widget"
+
+    field_types = ('CPS String Field',)
+    field_inits = ({'is_searchabletext': 0,},)
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        value = datamodel[self.fields[0]]
+        datastructure[self.getWidgetId()] = value
+
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        datamodel = datastructure.getDataModel()
+        proxy = datamodel.getProxy()
+        proxy_url = proxy.absolute_url()
+        languages = proxy.Languages()
+        current_language = datamodel[self.fields[0]]
+        Localizer = getToolByName(self, 'Localizer')
+        if Localizer is not None:
+            mcat = Localizer.default
+        else:
+            def mcat(msgid):
+                return msgid
+
+        res = ''
+        for language in languages:
+            language_title = mcat('label_language_%s'% language).encode(
+                'ISO-8859-15', 'ignore')
+            contents = renderHtmlTag('abbr', title=language_title,
+                                     contents=language)
+            if current_language != language:
+                contents = renderHtmlTag('a', href='%s/switchLanguage/%s' % (
+                    proxy_url, language), title=language_title,
+                                         contents=contents)
+            else:
+                contents = '[%s]' % contents
+            contents += ' '
+            res += renderHtmlTag('li', contents=contents)
+        res = renderHtmlTag('ul', contents=res)
+        res = '<div class="headerActions">%s</div>' % res
+        return res
+
+InitializeClass(CPSDocumentLanguageSelectWidget)
+
+
+class CPSDocumentLanguageSelectWidgetType(CPSWidgetType):
+    """Document Language Select widget type."""
+    meta_type = "CPS Document Language Select Widget Type"
+    cls = CPSDocumentLanguageSelectWidget
+
+InitializeClass(CPSDocumentLanguageSelectWidgetType)
+
+
+##################################################
 #
 # Register widget types.
 #
-
 WidgetTypeRegistry.register(CPSTextWidgetType)
 WidgetTypeRegistry.register(CPSDateTimeWidgetType)
 WidgetTypeRegistry.register(CPSAttachedFileWidgetType)
@@ -1305,4 +1368,5 @@ WidgetTypeRegistry.register(CPSPhotoWidgetType)
 WidgetTypeRegistry.register(CPSGenericSelectWidgetType)
 WidgetTypeRegistry.register(CPSGenericMultiSelectWidgetType)
 WidgetTypeRegistry.register(CPSRangeListWidgetType)
+WidgetTypeRegistry.register(CPSDocumentLanguageSelectWidgetType)
 
