@@ -291,7 +291,6 @@ class MappingStorageAdapter(BaseStorageAdapter):
 
     def _getFieldData(self, field_id, field):
         """Get data from one field."""
-        LOG('XXXX getFieldData', DEBUG, 'get %s' % field_id)
         return self._ob.get(field_id, field.getDefault())
 
     def _setFieldData(self, field_id, value):
