@@ -1,28 +1,15 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
+
 New features:
 ~~~~~~~~~~~~~
-- Added Lines widget, dealing with String List fields. This allows
-  filling string lists with free text entered in a textarea.
-  Each line of input text will be a string in the string list, ala
-  ZMI way of dealing with line fields.
-- image widget in edit mode display the current image
-- enhanced int, long, float widgets (better support for separators and range)
-- Vocabularies can now have write ACLs to allow user edits (no skins yet).
-- Fields can now check access rights (read and write).
-- new TextArea widget with format and postion
+-
+
 Bug fixes:
 ~~~~~~~~~~
-- 
+-
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- getLayoutData now takes a widget mode chooser as argument, and renders
-  all the widgets.
-- adding style_prefix property to Layout
-- Refactored to provide a correct set of steps to do the validation and
-  rendering.
-- New PropertiesPostProcessor mixin to allow posprocessed ZMI properties.
-- Allow any layout_mode starting with 'view' to render widgets in view mode.
-- Added an isWriteAllowed method for the skins to check vocabulary editing.
-- StorageAdapter now has a getDefaultData method to get default data.
+-
