@@ -931,6 +931,7 @@ class CPSSelectWidget(CPSWidget):
          'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
+    translated = False
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -983,7 +984,7 @@ class CPSSelectWidget(CPSWidget):
             for k, v in vocabulary.items():
                 if getattr(self, 'translated', False):
                     kw = {'value': k,
-                          'contents': cpsmcat(vocabulary.getMsgid(k)).encode('ISO-8859-15', 'ignore')
+                          'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
                           }
                 else:
                     kw = {'value': k, 'contents': v}
@@ -1021,15 +1022,16 @@ class CPSMultiSelectWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
+        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
+         'label': 'Is vocabulary translated on display'},
         {'id': 'size', 'type': 'int', 'mode': 'w',
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
-        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
     vocabulary = ''
+    translated = False
     size = 0
     format_empty = ''
 
@@ -1106,7 +1108,7 @@ class CPSMultiSelectWidget(CPSWidget):
             for k, v in vocabulary.items():
                 if getattr(self, 'translated', False):
                     kw = {'value': k,
-                          'contents': cpsmcat(vocabulary.getMsgid(k)).encode('ISO-8859-15', 'ignore')
+                          'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
                           }
                 else:
                     kw = {'value': k, 'contents': v}
