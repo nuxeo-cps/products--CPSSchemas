@@ -11,6 +11,7 @@ New features:
 - First RTE (Epoz) integration. Only one per page right now. (unstable)
 - String/Date/Text widgets has is_required properties
 - adding hidden_empty properties 
+- String widget handle size_max property
 - P3 #145: Check file or image maximum size property
 Bug fixes:
 ~~~~~~~~~~
@@ -29,3 +30,4 @@ New internal features:
 - All fields can have allow_none now.
 - Renamed portal_widgets to portal_widget_types.
 - Don't pass both datastructure and datamodel around.
+- string widget display_maxwidth is replaced with size_max
