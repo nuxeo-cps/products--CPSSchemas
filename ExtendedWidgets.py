@@ -328,19 +328,19 @@ class CPSAttachedFileWidget(CPSFileWidget):
         if choice == 'delete':
             datamodel[field_id] = None
         elif choice == 'change' and datastructure.get(widget_id):
-            file = datastructure[widget_id]
-            if not _isinstance(file, FileUpload):
+            fileUpload = datastructure[widget_id]
+            if not _isinstance(fileUpload, FileUpload):
                 err = 'cpsschemas_err_file'
             else:
                 ms = self.size_max
-                if file.read(1) == '':
+                if fileUpload.read(1) == '':
                     err = 'cpsschemas_err_file_empty'
-                elif ms and len(file.read(ms)) == ms:
+                elif ms and len(fileUpload.read(ms)) == ms:
                     err = 'cpsschemas_err_file_too_big'
                 else:
-                    file.seek(0)
-                    fileid = cookId('', '', file)[0]
-                    file = File(fileid, fileid, file)
+                    fileUpload.seek(0)
+                    fileid = cookId('', '', fileUpload)[0]
+                    file = File(fileid, fileid, fileUpload)
                     registry = getToolByName(self, 'mimetypes_registry')
                     mimetype = registry.lookupExtension(fileid.lower())
                     if mimetype and file.content_type != mimetype.normalized():
