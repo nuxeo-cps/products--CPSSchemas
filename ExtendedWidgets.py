@@ -814,7 +814,7 @@ class CPSGenericSelectWidget(CPSWidget):
                 if not self.blank_value_ok_if_required:
                     datastructure.setError(widget_id, "cpsschemas_err_required")
                     return 0
-            datamodel = datastructure.getDataModel()
+        datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         return 1
 
