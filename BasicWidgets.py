@@ -1166,6 +1166,8 @@ class CPSBooleanWidget(CPSWidget):
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         value = not not datastructure[self.getWidgetId()]
+        if not self.render_format:
+            self.render_format = 'select'
 
         try:
             v = int(value)
@@ -1190,10 +1192,13 @@ class CPSBooleanWidget(CPSWidget):
             label_value = self.label_false
         render_method = 'widget_boolean_render'
         meth = getattr(self, render_method, None)
+        render_format = self.render_format
+        if not render_format:
+            render_format = 'select'
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        return meth(mode=mode, value=value, label_value=label_value)
+        return meth(mode=mode, value=value, label_value=label_value, render_format=render_format)
 
 InitializeClass(CPSBooleanWidget)
 
