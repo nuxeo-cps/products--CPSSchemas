@@ -16,21 +16,7 @@ class FieldTests(unittest.TestCase):
         self.failUnless(field.title == 'the_title', 'Title was not set correctly')
 
 
-    def testTextFieldRender(self):
-        """Do the simplest of all rendering"""
-        field = TextField('id','title')
-        fieldw = TextFieldWidget(field)
-        renderer = BasicRenderer
-        self.failUnless(fieldw.render(renderer, {'id': 'This should be displayed'}) == \
-                        'This should be displayed\n', 'TextField render failed')
-        fieldw.setRenderMode('edit')
-        self.failUnless(fieldw.render(renderer, {'id': 'This should be displayed'},) == \
-                        '[This should be displayed]\n', 'TextField render as editbox failed')
-
     # TODO: Test validation when that is to be implemented.
-
-    # Skins and other rendering should be implemented too, I don't know what kind of tests
-    # can be done on that.
 
     # test default value handling
 

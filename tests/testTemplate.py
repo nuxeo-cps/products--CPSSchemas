@@ -34,7 +34,7 @@ class TemplateTests(unittest.TestCase):
     def testAddRemoveFields(self):
         """Make sure fields are modifiable"""
         template = Template('template', 'Template')
-        structure = template.getFieldDefinition()
+        structure = template.getStructure()
         self.failUnless(isinstance(structure, OrderedDictionary), \
                         'The returned field definition is not an OrderedDictionary')
 
@@ -44,7 +44,7 @@ class TemplateTests(unittest.TestCase):
         structure['f4'] = BasicField('f4', 'Field4')
         del structure['f3']
 
-        struct2 = template.getFieldDefinition()
+        struct2 = template.getStructure()
         self.failUnless(structure.keys() == struct2.keys(), \
                         'Update of field definition failed')
 

@@ -16,14 +16,14 @@ class BasicLayout(OrderedDictionary):
         self.id = id
         self.title = title
 
-    def render(self, data):
+    def render(self, document):
         """Renders the defined layout with data
 
         Data should have a subscriptable interface, such as a dictionary"""
         rendering = ""
 
         for key, widget in self.items():
-            rendering = rendering + widget.render(self._renderer, data)
+            rendering = rendering + widget.render(self._renderer, document)
 
         return rendering
 

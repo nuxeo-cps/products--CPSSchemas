@@ -19,10 +19,10 @@ class BasicRendererClass:
     """
 
     def text(self, content):
-        return content + '\n'
+        return str(content) + '\n'
 
     def editBox(self, name, content, height, width):
-        return '[%s]\n' % content
+        return '[%s]\n' % str(content)
 
     def radioButton(self, name, label, value, selected):
         if selected:

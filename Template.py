@@ -81,5 +81,5 @@ class Template:
     def getLayoutIds(self):
         return self._layouts.keys()
 
-    def getFieldDefinition(self):
+    def getStructure(self):
         return self._fields
