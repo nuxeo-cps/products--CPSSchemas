@@ -1,15 +1,12 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
-
 New features:
 ~~~~~~~~~~~~~
--
-
+- new Boolean Widget
 Bug fixes:
 ~~~~~~~~~~
 -
-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
