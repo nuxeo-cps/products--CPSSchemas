@@ -2,7 +2,8 @@
                    id here/getWidgetId;
                    value_name here/getHtmlWidgetId;
                    current_name options/current_name;
-                   empty_file python:current_name == '-';
+                   content_url options/content_url;
+                   empty_file options/empty_file;
                    mimetype options/mimetype;
                    subtitle options/subtitle;
                    rposition options/render_position;

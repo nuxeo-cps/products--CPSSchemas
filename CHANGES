@@ -8,7 +8,7 @@ New features:
 
 Bug fixes:
 ~~~~~~~~~~
--
+- The Image and Photo Widgets rendering assumed that the data was attributes.
 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~

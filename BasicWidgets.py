@@ -1311,12 +1311,14 @@ class CPSImageWidget(CPSWidget):
                 id_field = dm.getContext().id_field
                 ob = datastructure[id_field]
             field_id = self.fields[0]
-
-            for adapter in dm._adapters:
-                if adapter.getSchema().has_key(field_id):
-                    content_url = adapter._getContentUrl(ob, field_id)
-                    break
-            empty_file = 0
+            if not ob:
+                empty_file = 1
+            else:
+                for adapter in dm._adapters:
+                    if adapter.getSchema().has_key(field_id):
+                        content_url = adapter._getContentUrl(ob, field_id)
+                        break
+                empty_file = 0
 
         render_method = 'widget_image_render'
         meth = getattr(self, render_method, None)

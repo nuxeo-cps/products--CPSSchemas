@@ -598,6 +598,25 @@ class CPSPhotoWidget(CPSImageWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
+        content_url = ''
+        if kw['layout_mode'] == 'create':
+            empty_file = 1
+        else:
+            dm = datastructure.getDataModel()
+            ob = dm.getObject()
+            if ob is None: # Not stored in the ZODB.
+                id_field = dm.getContext().id_field
+                ob = datastructure[id_field]
+            field_id = self.fields[0]
+            if not ob:
+                empty_file = 1
+            else:
+                for adapter in dm._adapters:
+                    if adapter.getSchema().has_key(field_id):
+                        content_url = adapter._getContentUrl(ob, field_id)
+                        break
+                empty_file = 0
+
         render_method = 'widget_photo_render'
         widget_id = self.getWidgetId()
         meth = getattr(self, render_method, None)
@@ -619,7 +638,9 @@ class CPSPhotoWidget(CPSImageWidget):
                     current_name=current_name, mimetype=mimetype,
                     subtitle=subtitle,
                     render_position=rposition,
-                    configurable=str(self.configurable))
+                    configurable=str(self.configurable),
+                    content_url=content_url,
+                    empty_file=empty_file)
 
 
 InitializeClass(CPSPhotoWidget)
