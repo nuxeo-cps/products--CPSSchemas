@@ -10,4 +10,4 @@ Bug fixes:
 - UrlWidget don't check bla-%20foo url
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- boolean widget handle string value '0' as false
