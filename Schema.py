@@ -138,10 +138,7 @@ class CPSSchema(Schema):
     # ZMI
     #
     _properties = (
-        {'id': 'xxx', 'type': 'string', 'mode': 'w',
-         'label':'yyy'},
         )
-    xxx = ''
 
     manage_options = (
         {'label': 'Schema', 'action': 'manage_editSchema', },
