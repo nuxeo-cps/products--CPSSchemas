@@ -139,10 +139,15 @@ class CPSSchema(Schema):
 
     manage_options = (
         {'label': 'Schema', 'action': 'manage_editSchema', },
-        ) + FolderWithPrefixedIds.manage_options[1:]
+        ) + FolderWithPrefixedIds.manage_options[1:] + (
+        {'label': 'Export', 'action': 'manage_export', },
+        )
 
     security.declareProtected(ManagePortal, 'manage_editSchema')
     manage_editSchema = DTMLFile('zmi/schema_editform', globals())
+
+    security.declareProtected(ManagePortal, 'manage_export')
+    manage_export = DTMLFile('zmi/schema_export', globals())
 
     security.declareProtected(ManagePortal, 'manage_main')
     manage_main = manage_editSchema
