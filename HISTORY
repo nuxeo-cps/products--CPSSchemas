@@ -1,4 +1,25 @@
 *******************************************
+** CPSSchemas V0.39.0 [R1 build 2005/01/28-15:04 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added context support for MethodVocabulary via wrapper class
+  MethodVocabularyWithContext. Select and MultiSelect Widgets can
+  use method vocabularies with context.
+- Added the posibility of saving the original image for the Photo Widget
+  in case of image resizing. The saved original image will be displayed
+  in a popup.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.38.0 [R1 build 2005/01/20-11:41 by ben]
 
 Requires:

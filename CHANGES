@@ -3,12 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added context support for MethodVocabulary via wrapper class
-  MethodVocabularyWithContext. Select and MultiSelect Widgets can
-  use method vocabularies with context.
-- Added the posibility of saving the original image for the Photo Widget
-  in case of image resizing. The saved original image will be displayed
-  in a popup.
+-
 Bug fixes:
 ~~~~~~~~~~
 -
