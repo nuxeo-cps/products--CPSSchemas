@@ -6,7 +6,9 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- In the widget_text_render.pt the RTE button now appears if and only if the
+  selected render format if HTML, and not depending on whether the format is
+  configurable or not.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

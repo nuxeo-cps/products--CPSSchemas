@@ -5,6 +5,7 @@
   rposition options/render_position;
   rformat options/render_format;
   configurable options/configurable;
+  button_rte_id python:'widget__%s_button' % id;
   ">
   <tal:block condition="python: mode == 'view'">
     <div tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
@@ -22,7 +23,7 @@
     </div>
 
     <div>
-      <tal:block condition="python: configurable.find('position')>=0">
+      <tal:block condition="python: configurable.find('position') >= 0">
         <span i18n:translate="">cpsschemas_render_position</span>
         <select tal:attributes="name string:${value_name}_rposition">
           <option tal:repeat="op here/all_render_positions"
@@ -32,9 +33,7 @@
         </select>
       </tal:block>
 
-      <tal:block condition="python: configurable.find('format')>=0"
-        define="button_rte_id python:'widget__%s_button' % id"
-        >
+      <tal:block condition="python: configurable.find('format') >= 0">
         <span i18n:translate="">cpsschemas_render_format</span>
         <select tal:attributes="name string:${value_name}_rformat;
           id string:${value_name}_rformat;
@@ -45,18 +44,17 @@
             value op"
             tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
         </select>
-        <button type="button"
-          i18n:translate="button_rte"
-          tal:condition="python:configurable.find('format') >= 0"
-          tal:attributes="
-          id button_rte_id;
-          style python:test(rformat == 'html',
-          'visibility: visible;;', 'visibility: hidden;;');
-          onclick
-          string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-          "
-          >Layout</button>
       </tal:block>
+      <button type="button"
+        i18n:translate="button_rte"
+        tal:attributes="
+        id button_rte_id;
+        style python:test(rformat == 'html',
+        'visibility: visible;;', 'visibility: hidden;;');
+        onclick
+        string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+        "
+        >Layout</button>
     </div>
 
   </tal:block>
