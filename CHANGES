@@ -1,6 +1,7 @@
 Requires:
 ~~~~~~~~~
--
+- CPSCore > 3.19.0
+  api change Languages -> getProxyLanguages
 New features:
 ~~~~~~~~~~~~~
 -

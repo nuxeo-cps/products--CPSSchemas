@@ -1422,7 +1422,7 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
         if proxy is None:
             return res
         proxy_url = proxy.absolute_url()
-        languages = proxy.Languages()
+        languages = proxy.getProxyLanguages()
         if len(languages) <= 1:
             return res
         current_language = datamodel[self.fields[0]]
