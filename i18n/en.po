@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-09-09 15:29default\n"
-"PO-Revision-Date: 2003-09-09 15:32+0200\n"
+"POT-Creation-Date: 2003-09-22 16:28default\n"
+"PO-Revision-Date: 2003-09-22 16:29+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -58,5 +58,13 @@ msgstr "invalid date"
 msgid "cpsschemas_err_file"
 msgstr "invalid file"
 
-msgid "cpsschemas_err_image"
+msgid "cpsschemas_err_file_too_big"
+msgstr "sorry this file is too big"
+
+msgid "cpsschemas_err_file_empty"
+msgstr "invalid file"
+
+#, fuzzy
+msgid "cpsschema_err_image"
 msgstr "invalid image"
+
