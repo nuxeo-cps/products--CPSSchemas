@@ -6,9 +6,6 @@ New features:
 ~~~~~~~~~~~~~
 - Handling of OpenOffice.org mimetypes if this is not already provided by the
   host system
-Bug fixes:
-~~~~~~~~~~
--
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Changed the widget_type parameter in __init__ to widgettype to avoid
