@@ -6,7 +6,7 @@ New features:
 - new Identifier Widget
 Bug fixes:
 ~~~~~~~~~~
--
+- #336: File uploading fails for some extensions
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Datamodel add_roles setting split into convenience function.
