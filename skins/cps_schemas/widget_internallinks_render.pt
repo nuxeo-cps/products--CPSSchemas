@@ -2,23 +2,15 @@
                    datastructure options/datastructure;
                    id here/getWidgetId;
                    values datastructure/?id;
+                   cpsmcat nocall:here/Localizer/default;
+                   utool nocall:here/portal_url;
+                   base_url python:here.getBaseUrl(utool=utool);
+                   items python:context.getObjectsFromPath(values);
                   ">
-  <tal:block condition="python:mode == 'view'">
-    <ul tal:define="lines python:test(here.size, values[:here.size], values)">
-      <tal:block repeat="line lines">
-        <li tal:define="tokens python:[e.strip() for e in line.split()];
-                           link python:tokens[0];
-                           desc python:test(len(tokens) > 1,
-                                                    ' '.join(tokens[1:]), link);
-                           target python:test(here.new_window, '_blank', None)"
-                   on-error="nothing">
-          <a href="" tal:attributes="href string:${link}/;
-                                     target target"
-                     tal:content="desc">Document Title</a>
-        </li>
-      </tal:block>
-    </ul>
+  <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
+    <metal:items use-macro="here/content_lib/macros/display_contents"></metal:items>
   </tal:block>
+
   <tal:block condition="python:mode == 'edit'">
     <tal:block define="base_url here/getBaseUrl">
       <script type="text/javascript" tal:content="structure string:<!--
@@ -43,8 +35,7 @@
                             links python:'\n'.join(values)"
                 tal:attributes="name string:${html_id}:lines;
                                 id id;
-                                rows python:test(here.size, here.size, '4');
-                                cols string:75"
+                                rows python:test(here.size, here.size, None)"
                 tal:content="links"></textarea>
       <a href="javascript:open_search_dialog()">
         <img tal:replace="structure python:here.getImgTag('link_popup.gif',
