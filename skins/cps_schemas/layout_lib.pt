@@ -25,7 +25,7 @@
 </table>
 </metal:block>
 
-<!-- ============================================================ -->
+<!-- this layout doesn't take care of cell layout =============== -->
 <metal:block define-macro="div_view"
   tal:define="layout options/layout;
               ds options/datastructure;
