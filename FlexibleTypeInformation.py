@@ -70,6 +70,12 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
                          'python: object.portal_types[object.getPortalTypeName()].flexible_layouts', # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
+        flexti.addAction('action_metadata',
+                         'action_metadata',
+                         'metadata_edit_form',
+                         '', # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
 
     except TypeError, errorType:
         flexti.addAction('view',
@@ -87,6 +93,12 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
         flexti.addAction('edit_layout',
                          'Edit Layout',
                          'cpsdocument_editlayout_form',
+                         # condition: only for CMF 1.4 and above
+                         ModifyPortalContent,
+                         'object')
+        flexti.addAction('action_metadata',
+                         'action_metadata',
+                         'metadata_edit_form',
                          # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
