@@ -367,6 +367,40 @@ class CPSEmailWidgetType(CPSWidgetType):
 
 InitializeClass(CPSEmailWidgetType)
 
+##################################################
+
+class CPSIdentifierWidget(CPSStringWidget):
+    """Identifier widget."""
+    meta_type = "CPS Identifier Widget"
+    display_width = 30
+    size_max = 256
+    id_pat = compile(r"^[a-zA-Z][a-zA-Z0-9@\-\._]*$")
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        err, v = self._extractValue(datastructure[widget_id])
+        if not err and v and not self.id_pat.match(v.lower()):
+            err = 'cpsschemas_err_identifier'
+
+        if err:
+            datastructure.setError(widget_id, err)
+            datastructure[widget_id] = v
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+
+        return not err
+
+InitializeClass(CPSIdentifierWidget)
+
+class CPSIdentifierWidgetType(CPSWidgetType):
+    """Identifier widget type."""
+    meta_type = "CPS Identifier Widget Type"
+    cls = CPSIdentifierWidget
+
+InitializeClass(CPSIdentifierWidgetType)
+
 
 ##################################################
 
@@ -2053,6 +2087,7 @@ WidgetTypeRegistry.register(CPSCompoundWidgetType, CPSCompoundWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSURLWidgetType, CPSURLWidget)
 WidgetTypeRegistry.register(CPSEmailWidgetType, CPSEmailWidget)
+WidgetTypeRegistry.register(CPSIdentifierWidgetType, CPSIdentifierWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
