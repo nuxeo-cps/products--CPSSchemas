@@ -11,6 +11,7 @@ New features:
   Three methods are added: getSortFunction, setSortFunction, sortKeys.
   The last one is not called 'sort' because it must not implement the list.sort
   API. It will only help when a portal manager change Vocabulary sort function.
+- Possible to add JavaScript code in a widget rendering information
 Bug fixes:
 ~~~~~~~~~~
 - Generic select widget did not refuse validation of empty values when required
