@@ -56,7 +56,7 @@ class DiskFile(File, VTM):
 
     def getFullFilename(self, filename=None):
         """Returns the full path name to a file"""
-        if filename == None:
+        if filename is None:
             filename = self._filename
         return os.path.join(INSTANCE_HOME, self._file_store, filename)
 
