@@ -72,7 +72,7 @@ def renderHtmlTag(tagname, **kw):
     attrs = []
     for key, value in kw.items():
         if value is None:
-            value = key
+            continue
         if key in ('value', ) or value != '':
             attrs.append('%s="%s"' % (key, attrEscape(str(value))))
     res = '<%s %s' % (tagname, ' '.join(attrs))
@@ -1713,8 +1713,7 @@ class CPSFileWidget(CPSWidget):
                     datamodel[field_id] = file
         if err:
             datastructure.setError(widget_id, err)
-            LOG('CPSFileWidget', DEBUG,
-                'error %s on %s' % (err, `file`))
+            LOG('CPSFileWidget', DEBUG, 'error %s on %s' % (err, `file`))
         else:
             self.prepare(datastructure)
 
@@ -1729,6 +1728,7 @@ class CPSFileWidget(CPSWidget):
                                % (render_method, self.getId()))
 
         if kw['layout_mode'] == 'create':
+            # XXX getFileInfo already detects empty files
             file_info = {'empty_file': 1,
                          'content_url': '',
                          'current_name': '-',
@@ -1739,8 +1739,7 @@ class CPSFileWidget(CPSWidget):
         else:
             file_info = self.getFileInfo(datastructure)
 
-        return meth(mode=mode, datastructure=datastructure,
-                    **file_info)
+        return meth(mode=mode, datastructure=datastructure, **file_info)
 
 InitializeClass(CPSFileWidget)
 
