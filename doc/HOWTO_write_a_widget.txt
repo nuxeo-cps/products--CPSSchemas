@@ -106,7 +106,7 @@ How to write a widget
 
     - A widget has a 'widget_group_id' attribute. It makes possible to catch
       several widget in javascript with only one id. If this attribute is empty,
-      it's the unique id of the widget which used.
+      it's the unique id of the widget following by '_widget' which used.
 
     - A widget has 'depends_on_field_id', 'depends_on_field_value' and 
       'display_if_depends_equals' attributes. The main idea below is if you
