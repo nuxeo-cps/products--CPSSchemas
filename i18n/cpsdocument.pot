@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-04 14:30default\n"
+"POT-Creation-Date: 2003-09-04 15:28default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -43,6 +43,21 @@ msgstr ""
 #.   <span>Form error.</span>
 #: from ../skins/cps_document/layout_default_edit.pt
 msgid "cpsdoc_form_error"
+msgstr ""
+
+#.   <label>Change</label>
+#: from ../skins/cps_document/widget_file_render.pt
+msgid "cpsdoc_label_file_change"
+msgstr ""
+
+#.   <label>Delete</label>
+#: from ../skins/cps_document/widget_file_render.pt
+msgid "cpsdoc_label_file_delete"
+msgstr ""
+
+#.   <label>Keep</label>
+#: from ../skins/cps_document/widget_file_render.pt
+msgid "cpsdoc_label_file_keep"
 msgstr ""
 
 #.   <em content="err" style="color: red">err</em>

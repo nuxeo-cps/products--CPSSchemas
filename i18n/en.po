@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-09-04 14:30default\n"
-"PO-Revision-Date: 2003-09-04 14:30+0200\n"
+"POT-Creation-Date: 2003-09-04 15:28default\n"
+"PO-Revision-Date: 2003-09-04 15:22+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -45,6 +45,21 @@ msgstr "Change"
 msgid "cpsdoc_form_error"
 msgstr "Invalid form submit:"
 
+#.   <label>Change</label>
+#: from ../skins/cps_document/widget_file_render.pt
+msgid "cpsdoc_label_file_change"
+msgstr "Change"
+
+#.   <label>Delete</label>
+#: from ../skins/cps_document/widget_file_render.pt
+msgid "cpsdoc_label_file_delete"
+msgstr "Delete"
+
+#.   <label>Keep</label>
+#: from ../skins/cps_document/widget_file_render.pt
+msgid "cpsdoc_label_file_keep"
+msgstr "Keep"
+
 #.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_document/layout_default_edit.pt
 msgid "err"
@@ -80,4 +95,3 @@ msgstr "invalid file"
 
 msgid "cpsdoc_err_image"
 msgstr "invalid image"
-
