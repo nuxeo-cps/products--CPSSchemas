@@ -944,8 +944,12 @@ class CPSFileWidget(CPSWidget):
             current_name = value.getId()
         else:
             current_name = '-'
+        mimetype = None
+        registry = getToolByName(self, 'mimetypes_registry')
+        if registry:
+            mimetype = registry.lookupExtension(current_name)
         return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name)
+                    current_name=current_name, mimetype=mimetype)
 
 InitializeClass(CPSFileWidget)
 
