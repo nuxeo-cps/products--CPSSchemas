@@ -78,7 +78,8 @@ class WidgetsTool(UniqueObject, Folder):
         """Add a widget type, called from the ZMI."""
         wt = self.getUnstrippedWidgetType(swt)
         widget = WidgetTypeRegistry.makeWidget(wt, id)
-        widget = self._setObject(widget.getId(), widget)
+        self._setObject(widget.getId(), widget)
+        widget = self._getOb(widget.getId())
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_workspace')
         else:
