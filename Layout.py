@@ -1,8 +1,8 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
 
-from OrderedDictionary import OrderedDictionary
-from Renderer import BasicRenderer, HtmlRenderer
+from Products.CPSDocument.OrderedDictionary import OrderedDictionary
+from Products.CPSDocument.Renderer import BasicRenderer, HtmlRenderer
 
 class BasicLayout(OrderedDictionary):
     """Defines a document layout

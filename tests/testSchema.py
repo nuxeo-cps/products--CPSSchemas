@@ -2,9 +2,11 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.AttributeStorageAdapter import AttributeStorageAdapterFactory
-from Products.NuxCPS3Document.Fields.TextField import TextField
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.AttributeStorageAdapter import AttributeStorageAdapterFactory
+from Products.CPSDocument.Fields.TextField import TextField
 
 class AttributeHolder:
     pass

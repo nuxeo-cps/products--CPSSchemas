@@ -5,10 +5,10 @@ import inspect
 
 from ZODB.PersistentMapping import PersistentMapping
 
-from Layout import HtmlLayout
-from Schema import Schema
-from DataModel import DataModel
-from OrderedDictionary import OrderedDictionary
+from Products.CPSDocument.Layout import HtmlLayout
+from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.DataModel import DataModel
+from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 
 
 # Global Validation methods

@@ -2,9 +2,11 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.Fields.BasicField import BasicField, BasicFieldWidget
-from Products.NuxCPS3Document.Fields.TextField import TextField, TextFieldWidget
-from Products.NuxCPS3Document.Renderer import BasicRenderer
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.Fields.BasicField import BasicField, BasicFieldWidget
+from Products.CPSDocument.Fields.TextField import TextField, TextFieldWidget
+from Products.CPSDocument.Renderer import BasicRenderer
 
 
 class BasicFieldTests(unittest.TestCase):

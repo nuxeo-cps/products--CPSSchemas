@@ -2,9 +2,11 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.NuxCPS3Document import NuxCPS3Document
-from Products.NuxCPS3Document.Template import Template
-from Products.NuxCPS3Document.Layout import HtmlLayout
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.CPSDocument import CPSDocument
+from Products.CPSDocument.Template import Template
+from Products.CPSDocument.Layout import HtmlLayout
 
 class DocumentTests(unittest.TestCase):
     pass

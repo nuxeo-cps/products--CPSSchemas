@@ -2,10 +2,12 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.BasicStorageAdapter import BasicStorageAdapter
-from Products.NuxCPS3Document.AttributeStorageAdapter import AttributeStorageAdapter
-from Products.NuxCPS3Document.Fields.TextField import TextField
-from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.BasicStorageAdapter import BasicStorageAdapter
+from Products.CPSDocument.AttributeStorageAdapter import AttributeStorageAdapter
+from Products.CPSDocument.Fields.TextField import TextField
+from Products.CPSDocument.Fields.SelectionField import SelectionField
 
 
 class AttributeHolder:

@@ -2,7 +2,9 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.OrderedDictionary import OrderedDictionary
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 
 class OrderedDictionaryTests(unittest.TestCase):
     """Tests for OrderedDictionary"""

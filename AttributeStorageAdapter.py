@@ -1,8 +1,8 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
 
-from DataStructure import DataStructure
-from BasicStorageAdapter import BasicStorageAdapter
+from Products.CPSDocument.DataStructure import DataStructure
+from Products.CPSDocument.BasicStorageAdapter import BasicStorageAdapter
 
 class AttributeStorageAdapter(BasicStorageAdapter):
 

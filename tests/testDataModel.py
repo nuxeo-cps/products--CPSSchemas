@@ -2,10 +2,12 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.DataModel import DataModel, ValidationError
-from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.Fields.TextField import TextField
-from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.DataModel import DataModel, ValidationError
+from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Fields.TextField import TextField
+from Products.CPSDocument.Fields.SelectionField import SelectionField
 
 class FakeDocument:
     pass

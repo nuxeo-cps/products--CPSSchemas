@@ -2,16 +2,18 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.Layout import BasicLayout
-#from Products.NuxCPS3Document.NuxCPS3Document import NuxCPS3Document
-#from Products.NuxCPS3Document.Template import Template
-from Products.NuxCPS3Document.DataModel import DataModel
-from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.DataStructure import DataStructure
-from Products.NuxCPS3Document.Renderer import BasicRenderer
-from Products.NuxCPS3Document.Fields.BasicField import BasicField, BasicFieldWidget
-from Products.NuxCPS3Document.Fields.TextField import TextField, TextFieldWidget
-from Products.NuxCPS3Document.Fields.SelectionField import SelectionField, SelectionFieldWidget
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.Layout import BasicLayout
+#from Products.CPSDocument.CPSDocument import CPSDocument
+#from Products.CPSDocument.Template import Template
+from Products.CPSDocument.DataModel import DataModel
+from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.DataStructure import DataStructure
+from Products.CPSDocument.Renderer import BasicRenderer
+from Products.CPSDocument.Fields.BasicField import BasicField, BasicFieldWidget
+from Products.CPSDocument.Fields.TextField import TextField, TextFieldWidget
+from Products.CPSDocument.Fields.SelectionField import SelectionField, SelectionFieldWidget
 
 class RenderingTests(unittest.TestCase):
     """Rendering tests

@@ -23,9 +23,9 @@ from AccessControl.PermissionRole import PermissionRole
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
 
-from FlexibleTypeInformation import FlexibleTypeInformation
-from FlexibleTypeInformation import addFlexibleTypeInformationForm
-from FlexibleTypeInformation import addFlexibleTypeInformation
+from Products.CPSDocument.FlexibleTypeInformation import FlexibleTypeInformation
+from Products.CPSDocument.FlexibleTypeInformation import addFlexibleTypeInformationForm
+from Products.CPSDocument.FlexibleTypeInformation import addFlexibleTypeInformation
 
 
 #

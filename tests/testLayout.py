@@ -2,11 +2,13 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.Layout import BasicLayout
-from Products.NuxCPS3Document.NuxCPS3Document import NuxCPS3Document
-from Products.NuxCPS3Document.Template import Template
-from Products.NuxCPS3Document.Fields.TextField import TextField, TextFieldWidget
-from Products.NuxCPS3Document.Fields.SelectionField import SelectionField, SelectionFieldWidget
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.Layout import BasicLayout
+from Products.CPSDocument.CPSDocument import CPSDocument
+from Products.CPSDocument.Template import Template
+from Products.CPSDocument.Fields.TextField import TextField, TextFieldWidget
+from Products.CPSDocument.Fields.SelectionField import SelectionField, SelectionFieldWidget
 
 class LayoutTests(unittest.TestCase):
     pass

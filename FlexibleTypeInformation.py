@@ -30,8 +30,8 @@ from Products.CMFCore.TypesTool import TypeInformation
 
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
-from ZLayout import LayoutContainer
-from ZSchema import SchemaContainer
+from Products.CPSDocument.ZLayout import LayoutContainer
+from Products.CPSDocument.ZSchema import SchemaContainer
 
 
 # inserted into TypesTool by PatchTypesTool

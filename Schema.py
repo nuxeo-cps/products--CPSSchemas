@@ -1,8 +1,8 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
 
-from OrderedDictionary import OrderedDictionary
-from AttributeStorageAdapter import AttributeStorageAdapterFactory
+from Products.CPSDocument.OrderedDictionary import OrderedDictionary
+from Products.CPSDocument.AttributeStorageAdapter import AttributeStorageAdapterFactory
 
 class Schema(OrderedDictionary):
     """Defines fields used in a document"""

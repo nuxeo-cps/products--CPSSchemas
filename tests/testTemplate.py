@@ -2,13 +2,15 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.Template import Template
-from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.Layout import HtmlLayout
-from Products.NuxCPS3Document.Fields.BasicField import BasicField
-from Products.NuxCPS3Document.Fields.TextField import TextField
-from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
-from Products.NuxCPS3Document.OrderedDictionary import OrderedDictionary
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.Template import Template
+from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Layout import HtmlLayout
+from Products.CPSDocument.Fields.BasicField import BasicField
+from Products.CPSDocument.Fields.TextField import TextField
+from Products.CPSDocument.Fields.SelectionField import SelectionField
+from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 
 class AttributeHolder:
     pass

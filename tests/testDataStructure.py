@@ -2,12 +2,14 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.DataStructure import DataStructure
-from Products.NuxCPS3Document.DataModel import DataModel
-from Products.NuxCPS3Document.Schema import Schema
-from Products.NuxCPS3Document.Fields.BasicField import BasicField
-from Products.NuxCPS3Document.Fields.TextField import TextField
-from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
+from Testing.ZopeTestCase import ZopeLite
+
+from Products.CPSDocument.DataStructure import DataStructure
+from Products.CPSDocument.DataModel import DataModel
+from Products.CPSDocument.Schema import Schema
+from Products.CPSDocument.Fields.BasicField import BasicField
+from Products.CPSDocument.Fields.TextField import TextField
+from Products.CPSDocument.Fields.SelectionField import SelectionField
 
 class DataStructureTests(unittest.TestCase):
     """Tests the DataStructure

@@ -52,14 +52,14 @@
 #   def has(self, who, which)
 #   def del(self, who, which)
 
-from DataStructure import DataStructure
+from Products.CPSDocument.DataStructure import DataStructure
 
 class BasicStorageAdapter:
 
     def __init__(self, document, fields, namespace=''):
         """Creates a StorageAdapter
 
-        document is the NuxCPS3Document, namespace is a string,
+        document is the CPSDocument, namespace is a string,
         fields is a dict of fieldid's and fields.
         """
         self._document = document

@@ -18,7 +18,7 @@
 
 from UserDict import UserDict
 
-from DataStructure import DataStructure
+from Products.CPSDocument.DataStructure import DataStructure
 
 
 class ValidationError(Exception):
