@@ -1,140 +1,33 @@
-# translation of fr.po to ben
 # Gettext Message File for default.
 # Your Name <your@email>, Year
-# ben <ben@nuxeo.com>, 2003
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
-"POT-Creation-Date: 2003-09-05 17:18default\n"
-"PO-Revision-Date: 2003-09-05 17:19+0200\n"
-"Last-Translator: ben <ben@nuxeo.com>\n"
-"Language-Team: ben\n"
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2003-09-09 13:01default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-code: LL\n"
 "Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
-"X-Generator: KBabel 1.0.1\n"
 
-#.   <h1>Edit ${title (tal content="here/title_or_id")}</h1>
-#: from ../skins/cps_document/cpsdocument_edit_form.pt
-msgid "Edit ${title}"
-msgstr "Edition de \"${title}\""
 
-#.   <input value="button_add" name="addwidget_button" type="submit" />
-#: from ../skins/cps_document/layout_dummy_editlayout.pt
-#: ../skins/cps_document/layout_fancy_editlayout.pt
-#: ../skins/cps_document/layout_form_editlayout.pt
-msgid "button_add"
-msgstr "Ajouter"
-
-#.   <input value="button_change" name="cpsdocument_edit_button" type="submit" />
-#.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_dummy_edit.pt
-#: ../skins/cps_document/layout_fancy_edit.pt
-#: ../skins/cps_document/layout_form_edit.pt
-#: ../skins/cps_document/layout_lib.pt
-msgid "button_change"
-msgstr "Modifier"
-
-#.   <span>Form error.</span>
-#: from ../skins/cps_document/layout_lib.pt
-msgid "cpsdoc_form_error"
-msgstr "Entrée invalide, veuillez corriger les erreurs:"
-
+#: from ../skins/cps_schemas/widget_file_render.pt
 #.   <label>Change</label>
-#: from ../skins/cps_document/widget_file_render.pt
 msgid "cpsdoc_label_file_change"
-msgstr "Changer"
+msgstr ""
 
+#: from ../skins/cps_schemas/widget_file_render.pt
 #.   <label>Delete</label>
-#: from ../skins/cps_document/widget_file_render.pt
 msgid "cpsdoc_label_file_delete"
-msgstr "Effacer"
+msgstr ""
 
+#: from ../skins/cps_schemas/widget_file_render.pt
 #.   <label>Keep</label>
-#: from ../skins/cps_document/widget_file_render.pt
 msgid "cpsdoc_label_file_keep"
-msgstr "Garder"
-
-#.   <em content="err" style="color: red">err</em>
-#: from ../skins/cps_document/layout_lib.pt
-msgid "err"
-msgstr "Erreur"
-
-#.   <span condition="widget/is_i18n" content="widget/title_view">label</span>
-#.   <span condition="widget/is_i18n" content="widget/title">label</span>
-#: from ../skins/cps_document/layout_lib.pt
-msgid "label"
-msgstr "label"
-
-# default doc types
-msgid "portal_type_FAQ_title"
-msgstr "FAQ"
-
-msgid "portal_type_FAQ_description"
-msgstr "Foire Au Question"
-
-msgid "portal_type_News_title"
-msgstr "Nouvelle"
-
-msgid "portal_type_News_description"
-msgstr "Une nouvelle"
-
-msgid "cpsdoc_err_string"
-msgstr "Chaîne de caractère invalide"
-
-msgid "cpsdoc_err_textarea"
-msgstr "Texte invalide"
-
-msgid "cpsdoc_err_int"
-msgstr "Entier non valide"
-
-msgid "cpsdoc_err_date"
-msgstr "Format de date invalide"
-
-msgid "cpsdoc_err_file"
-msgstr "Fichier invalide"
-
-msgid "cpsdoc_err_image"
-msgstr "Image invalide"
-
-msgid "cpsdoc_err_empty"
-msgstr "Champ obligatoire"
-
-msgid "cpsdoc_News_newsdate_title"
-msgstr "Date de parution : "
-
-msgid "cpsdoc_News_newsdate_title_view"
-msgstr "Paru le "
-
-msgid "cpsdoc_News_title_title"
-msgstr "Titre court : "
-
-msgid "cpsdoc_News_description_title"
-msgstr "Description : "
-
-msgid "cpsdoc_News_longTitle_title"
-msgstr "Titre long : "
-
-msgid "cpsdoc_News_content_title"
-msgstr "Contenu de la nouvelle : "
-
-msgid "cpsdoc_News_photo_title"
-msgstr "Photo : "
-
-msgid "cpsdoc_News_photo_title_view"
-msgstr "réf 1"
-
-msgid "cpsdoc_News_preview_title"
-msgstr "Vignette : "
-
-msgid "cpsdoc_News_attachedFile_title"
-msgstr "Fichier attaché au document : "
-
-msgid "cpsdoc_News_attachedFile_title_view"
-msgstr "Fichier attaché : "
-
+msgstr ""

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-04 13:02default\n"
+"POT-Creation-Date: 2003-09-09 13:01default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -15,75 +15,4 @@ msgstr ""
 "Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
-
-# default doc types
-msgid "portal_type_FAQ_title"
-msgstr ""
-
-msgid "portal_type_FAQ_description"
-msgstr ""
-
-msgid "portal_type_News_title"
-msgstr ""
-
-msgid "portal_type_News_description"
-msgstr ""
-
-
-# Widget Error msg
-msgid "cpsdoc_err_string"
-msgstr ""
-
-msgid "cpsdoc_err_textarea"
-msgstr ""
-
-msgid "cpsdoc_err_int"
-msgstr ""
-
-msgid "cpsdoc_err_date"
-msgstr ""
-
-msgid "cpsdoc_err_file"
-msgstr ""
-
-msgid "cpsdoc_err_image"
-msgstr ""
-
-msgid "cpsdoc_err_empty"
-msgstr ""
-
-
-# News demo
-msgid "cpsdoc_News_newsdate_title"
-msgstr ""
-
-msgid "cpsdoc_News_newsdate_title_view"
-msgstr ""
-
-msgid "cpsdoc_News_title_title"
-msgstr ""
-
-msgid "cpsdoc_News_description_title"
-msgstr ""
-
-msgid "cpsdoc_News_longTitle_title"
-msgstr ""
-
-msgid "cpsdoc_News_content_title"
-msgstr ""
-
-msgid "cpsdoc_News_photo_title"
-msgstr ""
-
-msgid "cpsdoc_News_photo_title_view"
-msgstr ""
-
-msgid "cpsdoc_News_preview_title"
-msgstr ""
-
-msgid "cpsdoc_News_attachedFile_title"
-msgstr ""
-
-msgid "cpsdoc_News_attachedFile_title_view"
-msgstr ""
 
