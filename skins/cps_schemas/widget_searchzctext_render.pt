@@ -1,21 +1,25 @@
 <tal:block define="mode options/mode;
                    ds options/datastructure;
-                   widget_base_id string:${here/getHtmlWidgetId}_;
-                   field_base_id string:${here/getWidgetId}_;">
+                   widget_base_htmlid string:${here/getHtmlWidgetId}_;
+                   widget_base_id string:${here/getWidgetId}_;">
   <tal:block repeat="operator here/operators">
     <div align="right"
-         tal:define="widget_id string:${widget_base_id}${operator};
-                     field_id string:${field_base_id}${operator};">
-      <label tal:attributes="for widget_id"
+         tal:define="widget_htmlid string:${widget_base_htmlid}${operator};
+                     widget_id string:${widget_base_id}${operator};
+                     field_htmlid string:${widget_htmlid}_field;
+                     field_id string:${widget_id}_field;">
+      <label tal:attributes="for widget_htmlid"
              tal:content="string:cpsschemas_label_zctext_operator_${operator}"
              i18n:translate="" />
       <input type="text" size="28"
-             tal:attributes="id widget_id;
-                             name widget_id;
-                             value ds/?field_id" />
-      <select tal:attributes="name string:${widget_id}_field;">
+             tal:attributes="id widget_htmlid;
+                             name widget_htmlid;
+                             value ds/?widget_id" />
+      <select tal:attributes="name field_htmlid">
         <tal:block repeat="field here/fields">
-          <option tal:attributes="value field"
+          <option tal:attributes="value field;
+                                  selected python:test(field == ds[field_id],
+                                                       'selected', nothing)"
                   tal:content="string:cpsschemas_label_zctext_field_${field}"
                   i18n:translate="" />
         </tal:block>
