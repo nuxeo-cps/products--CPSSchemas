@@ -12,3 +12,5 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - splitting macro lib in progress
 - fix for #453 makes accessible javascript library
+- Use a non-empty default for the layout style prefix,
+  to avoid hard to track bugs.
