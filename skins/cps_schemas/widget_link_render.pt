@@ -1,45 +1,31 @@
-<tal:block define="mode options/mode;
-                   href_id here/getHtmlWidgetId;
-                   content_id string:${href_id}_content;
-                   title_id string:${href_id}_title;
-                   href options/href;
-                   content options/content;
-                   title options/title;
-                  ">
-<tal:block condition="python: mode == 'view'">
-<a href=""
-  tal:attributes="href href;title title|nothing;
-    target python: test(href.startswith('http'), 'CPS LINK', nothing);">
+<tal:block define="cells options/cells;
+                   mode options/mode">
+<tal:block condition="python: mode == 'view'"
+  define="href python: cells[0]['widget_rendered'];
+          content python: cells[1]['widget_rendered'];
+          title python: cells[2]['widget_rendered'];">
+<div style="margin-top: 1em;">
+<img tal:replace="structure python:here.getImgTag('link_icon.gif')" />
+<a href="" tal:attributes="href href;title title|nothing;
+  target python: test(href.startswith('http'), 'CPS LINK', nothing);">
   <b tal:content="python: test(content, content, href)" />
 </a>
-<tal:block condition="title">
-  <br><span tal:content="title" />
-</tal:block>
-<tal:block condition="content">
-  <br><a href=""
-         tal:attributes="href href;title title|nothing;
-          target python: test(href.startswith('http'), 'CPS LINK', nothing);"
-         tal:content="href" />
-</tal:block>
+<div style="padding-left: 1.5em;"><span tal:condition="title" tal:content="structure title" />
+<div><a href="" class="url"
+tal:attributes="href href;title title|nothing;
+target python: test(href.startswith('http'), 'CPS LINK', nothing);"
+tal:content="href" /></div>
+<div>
+</div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
-  <table width="100%" border="0">
-    <tr>
-      <td i18n:translate="cpsschemas_label_link_href">url</td>
-      <td><input type="text" size="72"
-            tal:attributes="name href_id;value href" /></td>
-    </tr>
-    <tr>
-      <td i18n:translate="cpsschemas_label_link_content">name</td>
-      <td><input type="text" size="72"
-            tal:attributes="name content_id;value content" /></td>
-    </tr>
-    <tr>
-      <td i18n:translate="cpsschemas_label_link_title">description</td>
-      <td><textarea cols="40" rows="5"
-            tal:attributes="name title_id;"
-            tal:content="title" /></td>
-    </tr>
-  </table>
+<table border="0" width="100%">
+<tr tal:repeat="cell cells">
+  <td valign="top" tal:content="cell/widget/label_edit"
+    i18n:translate="" />
+  <td valign="top"
+    tal:content="structure cell/widget_rendered" />
+</tr>
+</table>
 </tal:block>
 </tal:block>
