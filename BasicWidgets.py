@@ -741,6 +741,70 @@ InitializeClass(CPSMultiSelectWidgetType)
 
 ##################################################
 
+class CPSBooleanWidget(CPSWidget):
+    """Boolean widget."""
+    meta_type = "CPS Boolean Widget"
+
+    field_types = ('CPS Int Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'label_false', 'type': 'string', 'mode': 'w',
+         'label': 'False label'},
+        {'id': 'label_true', 'type': 'string', 'mode': 'w',
+         'label': 'True label'},
+        )
+    label_false = 'cpsschema_false'
+    label_true = 'cpsschema_true'
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        value = datastructure[self.getWidgetId()]
+
+        try:
+            v = int(value)
+        except (ValueError, TypeError):
+            datastructure.setError(self.getWidgetId(),
+                                   "cpsschemas_err_boolean")
+            return 0
+        if v not in (0, 1):
+            datastructure.setError(self.getWidgetId(),
+                                   "cpsschemas_err_boolean")
+            return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = datastructure.getDataModel()[self.getWidgetId()]
+        if value:
+            label_value = self.label_true
+        else:
+            label_value = self.label_false
+        render_method = 'widget_boolean_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        return meth(mode=mode, value=value, label_value=label_value)
+
+InitializeClass(CPSBooleanWidget)
+
+
+class CPSBooleanWidgetType(CPSWidgetType):
+    """Boolean widget type."""
+    meta_type = "CPS Boolean Widget Type"
+    cls = CPSBooleanWidget
+
+InitializeClass(CPSBooleanWidgetType)
+
+##################################################
+
 class CPSIntWidget(CPSWidget):
     """Integer widget."""
     meta_type = "CPS Int Widget"
@@ -1711,6 +1775,7 @@ WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSLinesWidgetType, CPSLinesWidget)
+WidgetTypeRegistry.register(CPSBooleanWidgetType, CPSBooleanWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSLongWidgetType, CPSLongWidget)
 WidgetTypeRegistry.register(CPSFloatWidgetType, CPSFloatWidget)
