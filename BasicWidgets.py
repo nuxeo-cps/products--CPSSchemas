@@ -126,6 +126,7 @@ class CPSHtmlWidget(CPSWidget):
         )
     html_view = ''
     html_edit = ''
+    field_types = ('CPS String Field',)
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
