@@ -36,11 +36,6 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
 
-class ValidationError(ValueError):
-    """Raised by a widget or a field when user input is incorrect."""
-    pass
-
-
 class AccessError(ValueError):
     """Raised by a field when access is denied."""
     def __init__(self, field, message=''):
