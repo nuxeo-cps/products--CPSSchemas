@@ -23,7 +23,7 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG, WARNING
 import sys
-from types import IntType, StringType, ListType, FloatType, LongType, DictType
+from types import IntType, StringType, ListType, FloatType, LongType, DictType, UnicodeType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -54,7 +54,9 @@ if default_encoding == 'ascii':
     default_encoding = 'latin1'
 
 def toUTF8(s):
-    return unicode(s, default_encoding).encode('utf-8')
+    if not isinstance(s, UnicodeType):
+        s = unicode(s, default_encoding)
+    return s.encode('utf-8')
 
 def fromUTF8(s):
     return unicode(s, 'utf-8').encode(default_encoding)
