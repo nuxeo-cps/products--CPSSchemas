@@ -84,9 +84,13 @@ class CPSTextWidget(CPSWidget):
         rformat = self.render_format
         if self.configurable != 'nothing':
             if len(self.fields) > 1:
-                rposition = datamodel[self.fields[1]]
+                v  = datamodel[self.fields[1]]
+                if v in self.all_render_positions:
+                    rposition = v
             if len(self.fields) > 2:
-                rformat = datamodel[self.fields[2]]
+                v = datamodel[self.fields[2]]
+                if v in self.all_render_formats:
+                    rformat = v
         datastructure[widget_id + '_rposition'] = rposition
         datastructure[widget_id + '_rformat'] = rformat
 
@@ -574,7 +578,9 @@ class CPSPhotoWidget(CPSImageWidget):
         rposition = self.render_position
         if self.configurable != 'nothing':
             if len(self.fields) > 2:
-                rposition = datamodel[self.fields[2]]
+                v = datamodel[self.fields[2]]
+                if v in self.all_render_positions:
+                    rposition = v
         datastructure[widget_id + '_rposition'] = rposition
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
