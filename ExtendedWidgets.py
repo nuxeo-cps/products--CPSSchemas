@@ -668,14 +668,11 @@ InitializeClass(CPSLinkWidget)
 # Register widget types.
 #
 
-WidgetTypeRegistry.register(CPSTextWidgetType, CPSTextWidget)
-WidgetTypeRegistry.register(CPSDateTimeWidgetType, CPSDateTimeWidget)
-WidgetTypeRegistry.register(CPSAttachedFileWidgetType, CPSAttachedFileWidget)
-WidgetTypeRegistry.register(CPSRichTextEditorWidgetType,
-                            CPSRichTextEditorWidget)
-WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
-                            CPSExtendedSelectWidget)
-WidgetTypeRegistry.register(CPSInternalLinksWidgetType,
-                            CPSInternalLinksWidget)
-WidgetTypeRegistry.register(CPSPhotoWidgetType, CPSPhotoWidget)
+WidgetTypeRegistry.register(CPSTextWidgetType)
+WidgetTypeRegistry.register(CPSDateTimeWidgetType)
+WidgetTypeRegistry.register(CPSAttachedFileWidgetType)
+WidgetTypeRegistry.register(CPSRichTextEditorWidgetType)
+WidgetTypeRegistry.register(CPSExtendedSelectWidgetType)
+WidgetTypeRegistry.register(CPSInternalLinksWidgetType)
+WidgetTypeRegistry.register(CPSPhotoWidgetType)
 

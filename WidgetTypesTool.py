@@ -96,11 +96,13 @@ class WidgetTypeRegistry:
         self._widget_type_classes = {}
         self._widget_classes = {}
 
-    def register(self, mcls, cls):
+    def register(self, mcls, cls=None):
         """Register a class for a widget type."""
         widget_type = mcls.meta_type
         self._widget_types.append(widget_type)
         self._widget_type_classes[widget_type] = mcls
+        if not cls:
+            cls = mcls.cls
         self._widget_classes[widget_type] = cls
 
     def listWidgetTypes(self):
