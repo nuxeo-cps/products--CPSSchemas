@@ -102,6 +102,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
 
     def _delete(self, field_id):
         raise NotImplementedError
+        # TODO: implement something
         ob = self._ob
         if ob.__dict__.has_key(field_id):
             # Only delete attributes that have been set on the instance.

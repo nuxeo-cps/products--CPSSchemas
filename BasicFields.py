@@ -124,7 +124,7 @@ class CPSStringListField(CPSField):
             ok = 1
             for v in value:
                 # XXX Deal with Unicode.
-                if not isinstance(value, StringType):
+                if not isinstance(v, StringType):
                     ok = 0
                     break
             if ok:
