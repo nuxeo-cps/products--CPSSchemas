@@ -23,8 +23,9 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG, WARNING
 import sys
-from types import IntType, StringType, ListType, FloatType, LongType, DictType, \
-                  UnicodeType, TupleType
+from types import IntType, StringType, ListType, FloatType, LongType, \
+     DictType, UnicodeType, TupleType
+
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -233,7 +234,7 @@ class CPSListField(CPSField):
         for v in values:
             res.append(v)
         return res
-    
+
 InitializeClass(CPSListField)
 
 class CPSStringListField(CPSListField):
@@ -296,7 +297,7 @@ class CPSListListField(CPSListField):
     def convertFromLDAP(self, value):
         """Convert a value from LDAP attribute values."""
         return value
-    
+
 InitializeClass(CPSListListField)
 
 class CPSIntListListField(CPSListListField):
@@ -308,7 +309,7 @@ class CPSIntListListField(CPSListListField):
     def verifyType(self, value):
         """Verify the type of the value"""
         return isinstance(value, IntType)
-    
+
 InitializeClass(CPSIntListListField)
 
 class CPSDateTimeField(CPSField):
@@ -424,8 +425,9 @@ class CPSFileField(CPSField):
             data[text_field_id] = convertFileToText(file, context=context)
 
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
-        html_subfiles_field_id = self._getDependantFieldId(schemas,
-                                                           self.suffix_html_subfiles)
+        html_subfiles_field_id = self._getDependantFieldId(
+            schemas,
+            self.suffix_html_subfiles)
         if html_field_id is not None:
             html_conversion = convertFileToHtml(file, context=context)
             if html_conversion is not None:
@@ -516,8 +518,9 @@ class CPSDiskFileField(CPSFileField):
             data[text_field_id] = convertFileToText(file, context=context)
 
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
-        html_subfiles_field_id = self._getDependantFieldId(schemas,
-                                                           self.suffix_html_subfiles)
+        html_subfiles_field_id = self._getDependantFieldId(
+            schemas,
+            self.suffix_html_subfiles)
         if html_field_id is not None:
             html_conversion = convertFileToHtml(file, context=context)
             if html_conversion is not None:
@@ -657,21 +660,27 @@ class CPSRangeListField(CPSListField):
             for v in value:
                 if not isinstance(v, TupleType):
                     raise ValidationError(self.validation_error_msg +
-                                          "%s is not a tuple in %s" % (repr(v), repr(value)))
+                                          "%s is not a tuple in %s" %
+                                          (repr(v),
+                                           repr(value)))
                 if len(v) not in (1, 2):
                     raise ValidationError(self.validation_error_msg +
-                                          "bad length for %s in %s" % (repr(v), repr(value)))
+                                          "bad length for %s in %s" %
+                                          (repr(v),
+                                           repr(value)))
                 for e in v:
                     if not self.verifyType(e):
                         raise ValidationError(self.validation_error_msg +
-                                              "%s is not an integer in %s" % (repr(e), repr(value)))
+                                              "%s is not an integer in %s" %
+                                              (repr(e),
+                                               repr(value)))
             return value
         raise ValidationError(self.validation_error_msg + repr(value))
 
     def verifyType(self, value):
         """Verify the type of the value"""
         return isinstance(value, IntType)
-    
+
 InitializeClass(CPSRangeListField)
 
 # Register field classes
