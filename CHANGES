@@ -7,7 +7,7 @@ New features:
   is if it has been exceeded.
 Bug fixes:
 ~~~~~~~~~~
--
+- Allow for "file:///xxx" URLs
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added variable mapping to errors stored in datastructure.

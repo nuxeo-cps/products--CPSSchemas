@@ -338,7 +338,7 @@ class CPSURLWidget(CPSStringWidget):
         if netloc and not self.netloc_pat.match(netloc):
             return 0
 
-        if scheme in ('http', 'ftp', 'file', 'gopher', 'telnet',
+        if scheme in ('http', 'ftp', 'gopher', 'telnet',
                       'nttp', 'wais', 'prospero') and not netloc:
             return 0
             
