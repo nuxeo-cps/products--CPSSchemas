@@ -1646,6 +1646,7 @@ class CPSCompoundWidget(CPSWidget):
         """Validate the underlying widgets."""
         layout = aq_parent(aq_inner(self))
         ret = 1
+        self._getType().validate(self, datastructure, post_validate=0)
         for widget_id in self.widget_ids:
             widget = layout[widget_id]
             ret = widget.validate(datastructure, **kw) and ret
@@ -1711,12 +1712,12 @@ class CPSCompoundWidgetType(CPSWidgetType):
         raise RuntimeError("Unknown Validate Method %s for widget type %s"
                            % (self.prepare_validate_method, self.getId()))
 
-    def validate(self, widget, datastructure):
+    def validate(self, widget, datastructure, post_validate=1):
         if not self.prepare_validate_method:
             return 1
         meth = getattr(widget, self.prepare_validate_method, None)
         if meth:
-            return meth('validate', datastructure)
+            return meth('validate', datastructure, post_validate)
         raise RuntimeError("Unknown Validate Method %s for widget type %s"
                            % (self.prepare_validate_method, self.getId()))
 
