@@ -244,6 +244,7 @@ class CPSStringWidget(CPSWidget):
             return escape(value)
         elif mode == 'edit':
             kw = {'type': 'text',
+                  'id'  : self.getHtmlWidgetId(),
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
