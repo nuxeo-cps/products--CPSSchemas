@@ -5,7 +5,7 @@ import inspect
 
 from ZODB.PersistentMapping import PersistentMapping
 
-from Layout import Layout
+from Layout import HtmlLayout
 from OrderedDictionary import OrderedDictionary
 
 
@@ -36,8 +36,8 @@ class Template:
         self.title = title
         self._fields = OrderedDictionary()
         self._layouts = PersistentMapping()
-        self.addLayout(Layout('view', 'View'))
-        self.addLayout(Layout('edit', 'Edit'))
+        self.addLayout(HtmlLayout('view', 'View'))
+        self.addLayout(HtmlLayout('edit', 'Edit'))
 
     def setValidationMethod(self, validation_method):
         """Sets a method that validates the layout of a document

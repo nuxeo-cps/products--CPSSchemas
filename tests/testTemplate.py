@@ -3,7 +3,7 @@
 
 import unittest
 from Products.NuxCPS3Document.Template import Template
-from Products.NuxCPS3Document.Layout import Layout
+from Products.NuxCPS3Document.Layout import HtmlLayout
 from Products.NuxCPS3Document.Fields.BasicField import BasicField
 from Products.NuxCPS3Document.OrderedDictionary import OrderedDictionary
 
@@ -22,7 +22,7 @@ class TemplateTests(unittest.TestCase):
     def testAddLayout(self):
         """Add a layout"""
         template = Template('template', 'Template')
-        template.addLayout(Layout('new', 'New'))
+        template.addLayout(HtmlLayout('new', 'New'))
         self.failUnless('new' in template.getLayoutIds(), 'Could not add new layout')
 
     def testRemoveLayout(self):

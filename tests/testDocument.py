@@ -4,7 +4,7 @@
 import unittest
 from Products.NuxCPS3Document.NuxCPS3Document import NuxCPS3Document
 from Products.NuxCPS3Document.Template import Template
-from Products.NuxCPS3Document.Layout import Layout
+from Products.NuxCPS3Document.Layout import HtmlLayout
 
 class DocumentTests(unittest.TestCase):
 

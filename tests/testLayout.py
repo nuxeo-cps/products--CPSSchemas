@@ -2,7 +2,7 @@
 # $Id$
 
 import unittest
-from Products.NuxCPS3Document.Layout import Layout
+from Products.NuxCPS3Document.Layout import HtmlLayout
 
 
 class LayoutTests(unittest.TestCase):
