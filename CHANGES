@@ -1,16 +1,13 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
-
 New features:
 ~~~~~~~~~~~~~
 - Fields now have a read_process_dependent_fields property to specify which
   fields the depend on.
-
 Bug fixes:
 ~~~~~~~~~~
--
-
+- old CPSDocument using deprecated CPSLinkWidget (not the compound) can be viewed
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added the possibility to restrict the fields managed by a storage adapter.
