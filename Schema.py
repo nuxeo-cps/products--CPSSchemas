@@ -33,8 +33,6 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.OrderedDictionary import OrderedDictionary
-from Products.CPSSchemas.AttributeStorageAdapter import AttributeStorageAdapterFactory
-
 from Products.CPSSchemas.Field import FieldRegistry
 
 
