@@ -1467,6 +1467,7 @@ class CPSFloatWidget(CPSWidget):
     is_limited = 0
     min_value = 0.0
     max_value = 0.0
+    # XXX: find a way to localized thousands_separator and decimals_separator
     thousands_separator = ''
     decimals_separator = ','
     decimals_number = 0
