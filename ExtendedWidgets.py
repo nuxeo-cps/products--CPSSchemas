@@ -852,6 +852,7 @@ class CPSGenericSelectWidget(CPSWidget):
                               'name': html_widget_id+'_other',
                               'value': value,
                               'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value",
+                              'onclick': "document.getElementById('"+html_widget_id+"_other_selection').checked='checked'",
                               }
                         res += renderHtmlTag('input', **kw)
                         res += '<br/>\n'
@@ -874,7 +875,7 @@ class CPSGenericSelectWidget(CPSWidget):
                     kw = {'id': html_widget_id+'_other_selection',
                           'type': render_format,
                           'name': html_widget_id,
-                          'value': 'other',
+                          'value': '',
                           }
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_other_selection',
@@ -885,6 +886,7 @@ class CPSGenericSelectWidget(CPSWidget):
                           'name': html_widget_id+'_other',
                           'value': "",
                           'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value",
+                          'onclick': "document.getElementById('"+html_widget_id+"_other_selection').checked='checked'",
                           }
                     res += renderHtmlTag('input', **kw)
                     res += '<br/>\n'
