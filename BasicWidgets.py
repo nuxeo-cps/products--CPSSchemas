@@ -1933,15 +1933,26 @@ class CPSImageWidget(CPSFileWidget):
             if image:
                 if not _isinstance(image, Image):
                     image = Image(self.getWidgetId(), '', image)
-            try:
-                height = int(getattr(image, 'height', 0))
-            except ValueError:
-                height = 0
-            try:
-                width = int(getattr(image,'width', 0))
-            except ValueError:
-                width = 0
-            if self.allow_resize:
+
+            # Fix the BMP bug (#305): Zope is unable to detect height and
+            # width for BMP images and thus these properties are valued to the
+            # empty string for BMP files
+
+            height = image.getProperty('height', '')
+            if height == '':
+                height = None
+            else:
+                height = int(height)
+
+            width = image.getProperty('width', '')
+            if width == '':
+                width = None
+            else:
+                width = int(width)
+
+            if ( self.allow_resize
+                 and height is not None
+                 and width  is not None ):
                 z_w = z_h = 1
                 h = int(self.display_height)
                 w = int(self.display_width)
@@ -1956,9 +1967,13 @@ class CPSImageWidget(CPSFileWidget):
 
             title = getattr(image, 'title', None)
             alt = title or ''
-            tag = renderHtmlTag('img', src=image_info['content_url'],
-                    width=str(width), height=str(height), border='0',
-                    alt=alt, title=title)
+            if ( height is None ) or ( width is None ):
+                tag = renderHtmlTag('img', src=image_info['content_url'],
+                        alt=alt, title=title)
+            else:
+                tag = renderHtmlTag('img', src=image_info['content_url'],
+                        width=str(width), height=str(height),
+                        alt=alt, title=title)
 
         image_info['height'] = height
         image_info['width'] = width
