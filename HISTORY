@@ -1,4 +1,34 @@
 *******************************************
+** CPSSchemas V0.9.0 [R1 build 2003/11/27-22:41 by fermigier]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- Image widget resize require PIL library
+  read CPSDefault/doc/HOWTO.install_CPS3 to know how to install PIL
+
+New features:
+~~~~~~~~~~~~~
+- if PIL is installed ImageWidget resize image bigger than
+  display_widhtxdisplay_height if allow_resize is set then user can choose a
+  smaller format, list of size format is defined in getImgSizes.py, the
+  imported image will be resized if bigger.
+- P2 #104: New Compound Widget Type, enabling the creation of compound widgets
+  by defining a render skin in the type, and the subwidget ids in the widget,
+  does not yet work in flexible mode.
+
+Bug fixes:
+~~~~~~~~~~
+- fixing TextArea render format text, pre, stx and html default is text
+- If you forgot to set a vocabulary for a select widget, you got a very
+  unhelpful error message.
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Possibility to define different render modes such as edit and 
+  edit_metadata for instance.
+- attached file are open in a new window if you click on the mimetype icon
+
+*******************************************
 ** CPSSchemas V0.8.0 [R1 build 2003/11/19-17:50 by ben]
 
 ZODB Requires:
