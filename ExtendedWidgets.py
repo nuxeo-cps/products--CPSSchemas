@@ -783,7 +783,7 @@ class CPSGenericSelectWidget(CPSWidget):
                 if render_format == 'select':
                     kw = {'value': k, 'contents': v}
                     if value == k:
-                        kw['selected'] = None
+                        kw['selected'] = 'selected'
                         in_selection = 1
                     res += renderHtmlTag('option', **kw)
                     res += '\n'
@@ -794,7 +794,7 @@ class CPSGenericSelectWidget(CPSWidget):
                           'value': k,
                           }
                     if value == k:
-                        kw['checked'] = None
+                        kw['checked'] = 'checked'
                         in_selection = 1
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_'+k,
@@ -805,8 +805,10 @@ class CPSGenericSelectWidget(CPSWidget):
             # invalid selections
             if value and not in_selection:
                 if render_format == 'select':
-                    kw = {'value': value, 'contents': 'invalid: '+value,
-                          'selected': None}
+                    kw = {'value': value,
+                          'contents': 'invalid: '+value,
+                          'selected': 'selected',
+                          }
                     res += renderHtmlTag('option', **kw)
                     res += '\n'
                 else:
@@ -814,7 +816,7 @@ class CPSGenericSelectWidget(CPSWidget):
                           'type': render_format,
                           'name': html_widget_id,
                           'value': k,
-                          'disabled': None,
+                          'disabled': 'disabled',
                           }
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_'+value,
@@ -827,7 +829,7 @@ class CPSGenericSelectWidget(CPSWidget):
                 if render_format == 'select':
                     kw = {'value': '', 'contents': 'None'}
                     if not in_selection:
-                        kw['selected'] = None
+                        kw['selected'] = 'selected'
                     res += renderHtmlTag('option', **kw)
                     res += '\n'
                 else:
@@ -837,7 +839,7 @@ class CPSGenericSelectWidget(CPSWidget):
                           'value': '',
                           }
                     if not in_selection:
-                        kw['checked'] = None
+                        kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
                           'contents': 'None',
@@ -962,7 +964,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 raise RuntimeError('unknown render format %s' % render_format)
             if render_format == 'select':
                 kw = {'name': html_widget_id+':list',
-                      'multiple': None,
+                      'multiple': 'multiple',
                       }
                 if self.size:
                     kw['size'] = self.size
@@ -973,7 +975,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                     kw = {'value': k,
                           'contents': v}
                     if k in value:
-                        kw['selected'] = None
+                        kw['selected'] = 'selected'
                         in_selection = 1
                     res += renderHtmlTag('option', **kw)
                     res += '\n'
@@ -984,7 +986,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                           'value': k,
                           }
                     if k in value:
-                        kw['checked'] = None
+                        kw['checked'] = 'checked'
                         in_selection = 1
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_'+k,
@@ -998,7 +1000,8 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                     if render_format == 'select':
                         kw = {'value': value_item,
                               'contents': 'invalid: '+value_item,
-                              'selected': None}
+                              'selected': 'selected',
+                              }
                         res += renderHtmlTag('option', **kw)
                         res += '\n'
                     else:
@@ -1006,7 +1009,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                               'type': render_format,
                               'name': html_widget_id+':list',
                               'value': value_item,
-                              'disabled': None,
+                              'disabled': 'disabled',
                               }
                         res += renderHtmlTag('input', **kw)
                         kw = {'for': html_widget_id+'_'+value,
@@ -1019,7 +1022,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 if render_format == 'select':
                     kw = {'value': '', 'contents': 'None'}
                     if not in_selection:
-                        kw['selected'] = None
+                        kw['selected'] = 'selected'
                     res += renderHtmlTag('option', **kw)
                     res += '\n'
                 # not interesting to have a default choice for checkboxes
@@ -1030,7 +1033,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                           'value': '',
                           }
                     if not in_selection:
-                        kw['checked'] = None
+                        kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
                           'contents': 'None',
