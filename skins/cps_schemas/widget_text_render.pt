@@ -11,8 +11,13 @@
     tal:content="structure value" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
+   <button type="button" style="float: right;"
+    tal:condition="here/configurable" tal:attributes="onclick
+    string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
+    >...</button>
   <textarea
-    tal:attributes="name value_name;
+    tal:attributes="id value_name;
+                    name value_name;
                     cols here/width;
                     rows here/height;"
     tal:content="value" />
@@ -32,7 +37,8 @@
        tal:attributes="selected python:op == rposition;
                        value op"
        tal:content="string:cpsschemas_rposition_${op}" i18n:translate=""  />
-   </select><br><br>
+   </select>
+   <br><br>
   </div>
 </tal:block>
 </tal:block>
