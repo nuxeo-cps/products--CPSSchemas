@@ -28,14 +28,14 @@ from Globals import InitializeClass
 from Acquisition import aq_base
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
-from OFS.Image import cookId, File
+from OFS.Image import cookId, File, Image
 
 from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance
+     _isinstance, CPSImageWidget
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -72,7 +72,7 @@ class CPSTextWidget(CPSWidget):
     height = 5
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
-    configurable = 0
+    configurable = 'position'
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -81,7 +81,7 @@ class CPSTextWidget(CPSWidget):
         datastructure[widget_id] = str(datamodel[self.fields[0]])
         rposition = self.render_position
         rformat = self.render_format
-        if self.configurable:
+        if self.configurable != 'nothing':
             if len(self.fields) > 1:
                 rposition = datamodel[self.fields[1]]
             if len(self.fields) > 2:
@@ -104,7 +104,7 @@ class CPSTextWidget(CPSWidget):
             return 0
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
-        if self.configurable:
+        if self.configurable != 'nothing':
             if len(self.fields) > 1:
                 rposition = datastructure[widget_id + '_rposition']
                 if rposition and rposition in self.all_render_positions:
@@ -615,6 +615,117 @@ InitializeClass(CPSInternalLinksWidgetType)
 
 ##################################################
 
+class CPSPhotoWidget(CPSImageWidget):
+    """Photo widget."""
+    meta_type = "CPS Photo Widget"
+
+    field_types = ('CPS Image Field',   # Image
+                   'CPS String Field',  # Sub title
+                   'CPS String Field',  # render_position if configurable
+                   'CPS String Field')  # render_format if configurable
+    field_inits = ({}, {'is_indexed': 1,}, {}, {})
+
+    _properties = CPSImageWidget._properties + (
+        {'id': 'render_position', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_positions',
+         'label': 'Render position'},
+        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_formats',
+         'label': 'Render format'},
+        {'id': 'configurable', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_configurable',
+         'label': 'What is user configurable, require extra fields'},
+        )
+    all_configurable = ['nothing', 'position', 'format', 'position and format']
+    all_render_positions = ['left', 'center', 'right']
+    all_render_formats = ['original', 'icon', 'medium', 'large']
+
+    configurable = 'position'
+    render_position = all_render_positions[0]
+    render_format = all_render_formats[0]
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
+        rposition = self.render_position
+        rformat = self.render_format
+        if self.configurable != 'nothing':
+            if len(self.fields) > 2:
+                rposition = datamodel[self.fields[2]]
+            if len(self.fields) > 3:
+                rformat = datamodel[self.fields[3]]
+        datastructure[widget_id + '_rposition'] = rposition
+        datastructure[widget_id + '_rformat'] = rformat
+        # make update from request work
+        datastructure[widget_id + '_choice'] = ''
+
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        datamodel = datastructure.getDataModel()
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+        ret = CPSImageWidget.validate(self, datastructure, **kw)
+        if ret and datamodel[field_id]:
+            datamodel[self.fields[1]] = datastructure[widget_id + '_subtitle']
+            if self.configurable != 'nothing':
+                if len(self.fields) > 2:
+                    rposition = datastructure[widget_id + '_rposition']
+                    if rposition and rposition in self.all_render_positions:
+                        datamodel[self.fields[2]] = rposition
+                if len(self.fields) > 3:
+                    rformat = datastructure[widget_id + '_rformat']
+                    if rformat and rformat in self.all_render_formats:
+                        datamodel[self.fields[3]] = rformat
+
+        return ret
+
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_photo_render'
+        widget_id = self.getWidgetId()
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        value = datastructure[widget_id]
+        if hasattr(aq_base(value), 'getId'):
+            current_name = value.getId()
+        else:
+            current_name = '-'
+        mimetype = None
+        registry = getToolByName(self, 'mimetypes_registry')
+        mimetype = registry.lookupExtension(current_name)
+        rposition = datastructure[widget_id + '_rposition']
+        rformat = datastructure[widget_id + '_rformat']
+        subtitle = datastructure[widget_id + '_subtitle']
+
+        return meth(mode=mode, datastructure=datastructure,
+                    current_name=current_name, mimetype=mimetype,
+                    subtitle=subtitle,
+                    render_position=rposition, render_format=rformat,
+                    configurable=str(self.configurable))
+
+
+InitializeClass(CPSPhotoWidget)
+
+
+class CPSPhotoWidgetType(CPSWidgetType):
+    """Photo widget type."""
+    meta_type = "CPS Photo Widget Type"
+    cls = CPSPhotoWidget
+
+    # XXX: TBD
+
+InitializeClass(CPSPhotoWidgetType)
+
+
+##################################################
+
 #
 # Register widget types.
 #
@@ -629,3 +740,4 @@ WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
 WidgetTypeRegistry.register(CPSLinkWidgetType, CPSLinkWidget)
 WidgetTypeRegistry.register(CPSInternalLinksWidgetType,
                             CPSInternalLinksWidget)
+WidgetTypeRegistry.register(CPSPhotoWidgetType, CPSPhotoWidget)
