@@ -3,7 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added context support for MethodVocabulary via wrapper class
+  MethodVocabularyWithContext. Select and MultiSelect Widgets can
+  use method vocabularies with context.
+
 Bug fixes:
 ~~~~~~~~~~
 -
