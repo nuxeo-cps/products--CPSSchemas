@@ -107,13 +107,14 @@ class CPSWidget(Widget):
         Widget.__init__(self, id, **kw)
 
     fields = []
-    title = ''
-    title_view = ''
+    label = ''
+    label_edit = ''
     is_i18n = 0
     description = ''
     css_class = ''
     hidden_view = 0
     hidden_edit = 0
+    hidden_empty = 0
 
     #
     # ZMI
@@ -122,16 +123,18 @@ class CPSWidget(Widget):
     _properties = (
         {'id': 'fields', 'type': 'tokens', 'mode': 'w',
          'label': 'Fields'},
-        {'id': 'title', 'type': 'string', 'mode': 'w',
+        {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
+         'label': 'i18n widget'},
+        {'id': 'label_edit', 'type': 'string', 'mode': 'w',
          'label': 'the label on edit mode'},
-        {'id': 'title_view', 'type': 'string', 'mode': 'w',
+        {'id': 'label', 'type': 'string', 'mode': 'w',
          'label': 'the label on view mode'},
         {'id': 'hidden_view', 'type': 'boolean', 'mode': 'w',
          'label': 'hidden field in view mode'},
         {'id': 'hidden_edit', 'type': 'boolean', 'mode': 'w',
          'label': 'hidden field in edit mode'},
-        {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
-         'label': 'does the title and description use msgid ?'},
+        {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
+         'label': 'hidden field if empty in view mode'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
          'label': 'Description'},
         {'id': 'css_class', 'type': 'string', 'mode': 'w',

@@ -8,6 +8,8 @@ New features:
 - CheckBox Widget (displays a checkbox to choose true/false)
 - MultiSelect Widget (display a select multiple to choose a list of strings)
 - First RTE (Epoz) integration. Only one per page right now. (unstable)
+- String/Date/Text widgets has is_required properties
+- adding hidden_empty properties 
 Bug fixes:
 ~~~~~~~~~~
 -
@@ -15,4 +17,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - sf code cleaning
 - Vocabularies are now used for all "choice" widgets.
-- String/Date/Text as is_required properties
+- renaming widget properties: 'title' to 'label_edit' and 'title_view' into 'label'
