@@ -22,6 +22,7 @@ Bug fixes:
   neutral presentation.
 - Removed some needless <span> elements used for i18n.
 - Fixed the English translation telling the maximum size of an attached file.
+- Correct commit when a proxy is present in a datamodel for a new document.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
