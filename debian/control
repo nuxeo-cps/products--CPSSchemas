@@ -1,0 +1,20 @@
+Source: zope-cpsschemas
+Section: web
+Priority: extra
+Maintainer: Encolpe DEGOUTE <encolpe@colpi.info>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.0
+
+Package: zope-cpsschemas
+Architecture: all
+Depends: debconf, zope
+Suggests: zope-cmfcps
+Description: Framework dealing with all data using by an object
+ This package adds a framework to deal with fields,
+ schemas, widgets, layouts and vocabularies, the way they
+ are displayed to the user and the way user input is
+ validated.
+ .
+ Schemas define what's stored in an object, at the level of
+ individual fields. A field can be an integer, a string, a
+ list of strings, a file object, etc.
