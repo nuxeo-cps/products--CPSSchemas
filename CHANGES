@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Generic Select Widget: when widget is required and other option is accepted,
+  an empty entry in the text input was accepted when validating the widget.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
