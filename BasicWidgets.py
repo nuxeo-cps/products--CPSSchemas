@@ -1766,7 +1766,8 @@ class CPSImageWidget(CPSFileWidget):
                         'content_url': '',
                         'image_tag': '',
                         'current_name': '-',
-                        'mimetype': ''
+                        'mimetype': '',
+                        'last_modified': '',
                        }
         else:
             img_info = self.getImageInfo(datastructure)
