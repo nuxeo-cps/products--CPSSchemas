@@ -426,7 +426,6 @@ InitializeClass(CPSURLWidgetType)
 class CPSEmailWidget(CPSStringWidget):
     """Email widget."""
     meta_type = "CPS Email Widget"
-    css_class = "url"
     display_width = 72
     size_max = 256
     email_pat = compile(r"^([-\w_.'+])+@(([-\w])+\.)+([\w]{2,4})$")
@@ -2283,7 +2282,8 @@ class CPSCompoundWidget(CPSWidget):
         cells = []
         for widget_id in self.widget_ids:
             cell = {}
-            cell.update(widget_infos[widget_id]) # widget, widget_mode
+            # widget, widget_mode, css_class
+            cell.update(widget_infos[widget_id])
             widget = layout[widget_id]
             widget_mode = cell['widget_mode']
             rendered = widget.render(widget_mode, datastructure, **kw)
