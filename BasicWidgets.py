@@ -1161,7 +1161,7 @@ class CPSFileWidget(CPSWidget):
             # ZODB takes the entry_id instead of object.
             # Get the entry_id from the datamodel context(typically
             # a directory).
-            id_field = getattr(dm.getContext(), 'id_field')
+            id_field = getattr(dm.getContext(), 'id_field', None)
             if id_field:
                 entry_id = datastructure[id_field]
             else:
