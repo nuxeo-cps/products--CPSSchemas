@@ -750,7 +750,6 @@ class CPSPhotoWidget(CPSImageWidget):
                             can_keep_original = self.keep_original and \
                                                 self.allow_resize and \
                                                 len(self.fields) > 3
-                            LOG("coucou", DEBUG, "can_keep_original=%s"%(can_keep_original,))
                             original_image = Image(fileid, filetitle, file)
                             if not self.allow_resize:
                                 file = original_image
