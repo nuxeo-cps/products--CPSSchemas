@@ -1460,7 +1460,7 @@ class CPSCompoundWidget(CPSWidget):
 
     _properties = (
         CPSWidget._properties[:1] + (
-        # Skip fields, which is computed.
+        # Skip fields, which is fixed.
         {'id': 'widget_ids', 'type': 'tokens', 'mode': 'w',
          'label': 'Widget ids'},
         {'id': 'widget_type', 'type': 'string', 'mode': 'w',
