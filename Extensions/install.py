@@ -127,14 +127,11 @@ def install(self):
         if not portalhas('portal_transforms_installer'):
             from Products.ExternalMethod.ExternalMethod import ExternalMethod
             pr('  Adding Portal Transforms Installer')
-            try:
-                installer = ExternalMethod('portal_transforms_installer',
-                                           'Portal Transforms Installer',
-                                           'PortalTransforxms.Install',
-                                           'install')
-                portal._setObject('portal_transforms_installer', installer)
-            except:
-                raise "Missing Product", "not foundPortalTransforms !"
+            installer = ExternalMethod('portal_transforms_installer',
+                                       'Portal Transforms Installer',
+                                       'PortalTransforms.Install',
+                                       'install')
+            portal._setObject('portal_transforms_installer', installer)
         portal.portal_transforms_installer()
         pr("   done")
 
