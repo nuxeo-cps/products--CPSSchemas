@@ -5,7 +5,6 @@
   define="href python: cells[0]['widget_rendered'];
           content python: cells[1]['widget_rendered'];
           title python: cells[2]['widget_rendered'];">
-<div style="margin-top: 1em;">
 <img tal:replace="structure python:here.getImgTag('link_icon.gif')" />
 <a href="" tal:attributes="href href;title title|nothing;
   target python: test(href.startswith('http'), 'CPS LINK', nothing);">
@@ -16,7 +15,6 @@
 tal:attributes="href href;title title|nothing;
 target python: test(href.startswith('http'), 'CPS LINK', nothing);"
 tal:content="href" /></div>
-<div>
 </div>
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
