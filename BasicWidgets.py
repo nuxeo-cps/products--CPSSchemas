@@ -1391,9 +1391,8 @@ class CPSDateWidget(CPSWidget):
                 { var key = event.which } else { var key = event.keyCode };
                 if ( key < 32 ) { return true; }
                 if ( this.value > %(max_value)s ) { return false};
-                if ( this.value >= %(low_trigger)s ) { 
-                    form.%(next_widget)s.focus() }
-                if ( this.value.length >= %(max_size)s) { 
+                if ( this.value >= %(low_trigger)s || 
+                     this.value.length >= %(max_size)s ) {
                     form.%(next_widget)s.focus() }
                  """
         else:
@@ -1443,7 +1442,9 @@ class CPSDateWidget(CPSWidget):
                                  name=html_widget_id+'_y',
                                  value=y,
                                  size=6,
-                                 maxlength=6)
+                                 maxlength=6,
+                                 onKeyPress=js_onKeyPress,
+                                 )
             # XXX customize format
             return dtag + '/' + mtag + '/' + ytag
         raise RuntimeError('unknown mode %s' % mode)
