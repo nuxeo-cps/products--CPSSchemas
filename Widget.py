@@ -30,8 +30,14 @@ from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import SimpleItemWithProperties
+from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.Field import WriteAccessError
+
+from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
+
+from Products.CMFCore.Expression import Expression
+from Products.CMFCore.Expression import getEngine
 
 
 def widgetname(id):
@@ -39,7 +45,7 @@ def widgetname(id):
     return 'widget__' + id
 
 
-class Widget(SimpleItemWithProperties):
+class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     """Basic Widget Class.
 
     A widget is used as a component of a layout, to display or receive
@@ -66,6 +72,7 @@ class Widget(SimpleItemWithProperties):
 
     security = ClassSecurityInfo()
 
+    _propertiesBaseClass = SimpleItemWithProperties
     _properties = (
         {'id': 'title', 'type': 'string', 'mode': 'w',
          'label': 'Title'},
@@ -89,6 +96,8 @@ class Widget(SimpleItemWithProperties):
          'label': 'Hidden if readonly in layout modes'},
         {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
          'label': 'Hidden if empty'},
+        {'id': 'hidden_if_expression_str', 'type': 'text', 'mode': 'w',
+         'label': 'Hide the widget if the given TAL expression returns true'},
         #
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
          'label': 'CSS class for view'},
@@ -105,11 +114,14 @@ class Widget(SimpleItemWithProperties):
     hidden_layout_modes = []
     hidden_readonly_layout_modes = []
     hidden_empty = 0
+    hidden_if_expression_str = ''
 
     widget_type = '' # Not a property by default
     field_types = []
     field_inits = [] # default settings for fields created in flexible mode
                      # using the same order as in field_types
+
+    hidden_if_expression = None
 
     def __init__(self, id, widget_type, **kw):
         self._setId(id)
@@ -132,9 +144,42 @@ class Widget(SimpleItemWithProperties):
         """Get the html-form version of this widget's id."""
         return widgetname(self.getWidgetId())
 
+    def _postProcessProperties(self):
+        """Post-processing after properties change."""
+        # TALES expression.
+        for attr_str, attr in (
+            ('hidden_if_expression_str', 'hidden_if_expression'),
+            ):
+            p = getattr(self, attr_str).strip()
+            if p:
+                v = Expression(p)
+            else:
+                v = None
+            setattr(self, attr, v)
+
     #
     # Widget accessibility.
     #
+
+    def _createHiddenExpressionContext(self, datamodel):
+        """Create an expression context for hidden evaluation."""
+        wftool = getToolByName(self, 'portal_workflow')
+        proxy = datamodel._proxy
+        if proxy is not None:
+            review_state = wftool.getInfoFor(proxy, 'review_state')
+        else:
+            review_state = None
+        data = {
+            'widget': self,
+            'datamodel': datamodel,
+            'user': datamodel._acl_cache_user,
+            'nothing': None,
+            'context': datamodel._context,
+            'proxy': proxy,
+            'portal_workflow': wftool,
+            'review_state': review_state,
+            }
+        return getEngine().getContext(data)
 
     security.declarePrivate('_isReadOnly')
     def _isReadOnly(self, datamodel):
@@ -162,6 +207,11 @@ class Widget(SimpleItemWithProperties):
         """Get the mode for this widget."""
         if layout_mode in self.hidden_layout_modes:
             return 'hidden'
+        if self.hidden_if_expression:
+            # Creating the context for evaluating the TAL expression
+            expr_context = self._createHiddenExpressionContext(datamodel)
+            if self.hidden_if_expression(expr_context):
+                return 'hidden'
         readonly = None
         if layout_mode in self.hidden_readonly_layout_modes:
             readonly = self.isReadOnly(datamodel, layout_mode)

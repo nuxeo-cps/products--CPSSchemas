@@ -8,6 +8,8 @@ New features:
   Title() and setTitle()
 - Fields can now be computed/processed on read and write.
 - Don't initialize fields with the widget name by default.
+- Widgets now have a hidden_if_expression_str property to hide the widget if the
+  given TAL expression returns true
 Bug fixes:
 ~~~~~~~~~~
 - do not raise exception if 2 schemas have a field in common
