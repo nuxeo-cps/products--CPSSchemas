@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.28.1 [R1 build 2004/08/16-14:17 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- The open() calls in DiskFile now specifies binary mode, for windows
+  compatibility.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Implemented Coverage, Source, Relation DublinCore setters and getters through
+  a patch to the CMF DublinCore classes.
+
+*******************************************
 ** CPSSchemas V0.28.0 [R1 build 2004/08/12-14:21 by madarche]
 
 Requires:

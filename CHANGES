@@ -6,9 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- The open() calls in DiskFile now specifies binary mode, for windows
-  compatibility.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Implemented Coverage, Source, Relation DublinCore setters and getters through
-  a patch to the CMF DublinCore classes.
+-
