@@ -20,6 +20,22 @@
     'style_layout_prefix': 'layout_faq_',
     'actions': {
       'replace_actions': 0,
+      'isproxytype': {
+        'name': 'isproxytype',
+        'id': 'isproxytype',
+        'action': 'document',
+        'permission': None,
+        'category': 'object',
+        'visible': 0,
+        },
+      'issearchabledocument': {
+        'name': 'issearchabledocument',
+        'id': 'issearchabledocument',
+        'action': 'document',
+        'permission': None,
+        'category': 'object',
+        'visible': 0,
+        },
       },
     },
   'schemas': {
