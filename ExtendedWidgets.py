@@ -330,8 +330,8 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     file.seek(0)
-                    fileid, filetitle = cookId('', '', file)
-                    file = File(fileid, filetitle, file)
+                    fileid = cookId('', '', file)[0]
+                    file = File(fileid, fileid, file)
                     LOG('CPSAttachedFileWidget', DEBUG,
                         'validate change set %s' % `file`)
                     datamodel[field_id] = file

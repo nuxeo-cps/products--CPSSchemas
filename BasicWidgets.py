@@ -54,7 +54,6 @@ def _isinstance(ob, cls):
         # instead of returning 0 for ExtensionClasses.
         return 0
 
-
 def renderHtmlTag(tagname, **kw):
     """Render an HTML tag."""
     if kw.get('css_class'):
@@ -1566,8 +1565,8 @@ class CPSFileWidget(CPSWidget):
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     file.seek(0)
-                    fileid, filetitle = cookId('', '', file)
-                    file = File(fileid, filetitle, file)
+                    fileid = cookId('', '', file)[0]
+                    file = File(fileid, fileid, file)
                     LOG('CPSFileWidget', DEBUG,
                         'validate change set %s' % `file`)
                     datamodel[field_id] = file
@@ -1670,7 +1669,7 @@ class CPSImageWidget(CPSFileWidget):
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     file.seek(0)
-                    fileid, filetitle = cookId('', '', file)
+                    fileid = cookId('', '', file)[0]
                     registry = getToolByName(self, 'mimetypes_registry')
                     mimetype = registry.lookupExtension(fileid.lower())
                     if (not mimetype or
@@ -1697,8 +1696,8 @@ class CPSImageWidget(CPSFileWidget):
                             except (NameError, IOError, ValueError):
                                 LOG('CPSImageWidget', PROBLEM,
                                     "Failed to resize file %s keep original" \
-                                    % filetitle)
-                        file = Image(fileid, filetitle, file)
+                                    % fileid)
+                        file = Image(fileid, fileid, file)
                         LOG('CPSImageWidget', DEBUG,
                             'validate change set %s' % `file`)
                         datamodel[field_id] = file
