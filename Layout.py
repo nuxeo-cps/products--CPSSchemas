@@ -87,7 +87,9 @@ InitializeClass(LayoutContainer)
 
 
 ######################################################################
-class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProcessor):
+class Layout(PropertiesPostProcessor,
+             FolderWithPrefixedIds,
+             SimpleItemWithProperties):
     """Basic Layout.
 
     A layout describes how to render a set of widgets.
@@ -137,6 +139,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
+    _propertiesBaseClass = SimpleItemWithProperties
     _properties_post_process_tales = (
         ('validate_values_expr', 'validate_values_expr_c'),
         )
@@ -304,21 +307,18 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
                 if cell['widget_mode'] == 'edit':
                     widget = cell['widget']
                     ok = widget.validate(datastructure, **kw) and ok
-        # validate the whole layout if necessary
-        if ok:
-            return self._validateLayout(datastructure, **kw)
-        else:
-            return ok
+        if not ok:
+            return False
+        # Now validate the whole layout
+        return self._validateLayout(datastructure, **kw)
 
     security.declarePrivate('_validateLayout')
     def _validateLayout(self, datastructure, **kw):
         """ Calls a script or an expression
             to validate the layout
         """
-        ok = 1
-        self._postProcessProperties()
-        if not self.validate_values_expr_c:
-            return ok
+        if self.validate_values_expr_c is None:
+            return True
         expr_context = self._createExpressionContext(datastructure, **kw)
         return self.validate_values_expr_c(expr_context)
 
