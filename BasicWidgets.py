@@ -170,13 +170,50 @@ class CPSStringWidget(CPSWidget):
 
 InitializeClass(CPSStringWidget)
 
-
 class CPSStringWidgetType(CPSWidgetType):
     """String widget type."""
     meta_type = "CPS String Widget Type"
     cls = CPSStringWidget
 
 InitializeClass(CPSStringWidgetType)
+
+##################################################
+
+class CPSPwdWidget(CPSStringWidget):
+    """Password widget."""
+    meta_type = "CPS Password Widget"
+
+    field_types = ('CPS Password Field',)
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            hidden = ""
+            for i in value:
+                hidden += "*"
+            return hidden
+        elif mode == 'edit':
+            kw = {'type': 'password',
+                  'name': self.getHtmlWidgetId(),
+                  'value': value,
+                  'size': self.display_width,
+                  'css_class': self.css_class,
+                  }
+            if self.display_maxwidth:
+                kw['maxlength'] = self.display_maxwidth
+
+            return renderHtmlTag('input', **kw)
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSPwdWidget)
+
+class CPSPwdWidgetType(CPSStringWidgetType):
+    """Password widget type."""
+    meta_type = "CPS Password Widget Type"
+    cls = CPSPwdWidget
+
+InitializeClass(CPSPwdWidgetType)
 
 ##################################################
 
@@ -198,6 +235,7 @@ class CPSTextAreaWidget(CPSWidget):
          'select_variable': 'all_render_modes',
          'label': 'Render mode'},
         )
+
 
     all_render_modes = ['pre', 'stx', 'text']
 
@@ -571,7 +609,7 @@ class CPSFileWidget(CPSWidget):
                 ok = 1
             else:
                 LOG('CPSFileWidget', DEBUG, 'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, "Bad file received (%s)" 
+                datastructure.setError(widget_id, "Bad file received (%s)"
                                        % repr(file))
                 ok = 0
         if ok:
@@ -644,9 +682,9 @@ class CPSImageWidget(CPSWidget):
                 datamodel[field_id] = file
                 ok = 1
             else:
-                LOG('CPSImageWidget', DEBUG, 
+                LOG('CPSImageWidget', DEBUG,
                     'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, "Bad file received (%s)" 
+                datastructure.setError(widget_id, "Bad file received (%s)"
                                        % repr(file))
                 ok = 0
         if ok:
@@ -681,6 +719,8 @@ class CPSImageWidgetType(CPSWidgetType):
 
 InitializeClass(CPSImageWidgetType)
 
+
+
 ##################################################
 
 #
@@ -689,6 +729,7 @@ InitializeClass(CPSImageWidgetType)
 
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
+WidgetTypeRegistry.register(CPSPwdWidgetType, CPSPwdWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
