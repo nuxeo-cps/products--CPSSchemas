@@ -82,6 +82,15 @@ msgstr ""
 msgid "cpsschemas_rposition_col_left"
 msgstr ""
 
+msgid "cpsschemas_rposition_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_center"
+msgstr ""
+
 msgid "cpsschemas_rformat_text"
 msgstr ""
 
@@ -93,3 +102,19 @@ msgstr ""
 
 msgid "cpsschemas_rformat_pre"
 msgstr ""
+
+msgid "cpsschemas_rformat_original"
+msgstr ""
+
+msgid "cpsschemas_rformat_icon"
+msgstr ""
+
+msgid "cpsschemas_rformat_small"
+msgstr ""
+
+msgid "cpsschemas_rformat_medium"
+msgstr ""
+
+msgid "cpsschemas_rformat_large"
+msgstr ""
+

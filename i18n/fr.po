@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-07 16:01default\n"
-"PO-Revision-Date: 2003-11-07 17:12+0100\n"
+"POT-Creation-Date: 2003-11-18 16:57default\n"
+"PO-Revision-Date: 2003-11-18 16:59+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,13 @@ msgstr ""
 msgid "button_back"
 msgstr "Retour"
 
+#.   <input onclick="window.close()" class="context" type="button" value="button_cancel">
+#.     <input value="button_update" class="standalone" type="submit">
+#.   </input></input>
+#: from ../skins/cps_schemas/popup_rte_form.pt
+msgid "button_cancel"
+msgstr "Retour"
+
 #.   <input value="button_ok" class="context" type="submit">
 #.     </input>
 #: from ../skins/cps_schemas/popup_internallinks_form.pt
@@ -40,45 +47,57 @@ msgstr "Ok"
 msgid "button_search"
 msgstr "Rechercher"
 
+#.   <input value="button_update" class="standalone" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/popup_rte_form.pt
+msgid "button_update"
+msgstr "Mettre à jour"
+
 #.   <span>at</span>
-#: from ../skins/cps_schemas/widget_date_render.pt
+#: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
 msgstr "à"
 
 #.   <span>h</span>
-#: from ../skins/cps_schemas/widget_date_render.pt
+#: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_hour"
 msgstr "h"
 
 #.   <a attributes="href preview_id" href="http://url..." target="_blank">
 #.          (preview)
 #.         </a>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_preview"
 msgstr "(Version HTML)"
 
 #.   <span>mn</span>
-#: from ../skins/cps_schemas/widget_date_render.pt
+#: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
 msgstr "mn"
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Change</label>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr "Changer"
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Delete</label>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Supprimer"
 
 #.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Keep</label>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Garder"
 
 #.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Aucun"
 
@@ -97,13 +116,20 @@ msgstr "URL"
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
 
+#.   <span class="label">cpsschemas_photo_subtitle</span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr "Sous titre : "
+
 #.   <span>cpsschemas_render_format</span>
-#: from ../skins/cps_schemas/widget_textarea_render.pt
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Format : "
 
 #.   <span>cpsschemas_render_position</span>
-#: from ../skins/cps_schemas/widget_textarea_render.pt
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Position : "
 
@@ -187,6 +213,15 @@ msgstr "Colonne à droite"
 msgid "cpsschemas_rposition_col_left"
 msgstr "Colonne à gauche"
 
+msgid "cpsschemas_rposition_left"
+msgstr "A gauche"
+
+msgid "cpsschemas_rposition_right"
+msgstr "A droite"
+
+msgid "cpsschemas_rposition_center"
+msgstr "Au centre"
+
 msgid "cpsschemas_rformat_text"
 msgstr "Text"
 
@@ -198,6 +233,21 @@ msgstr "Texte structuré zope"
 
 msgid "cpsschemas_rformat_pre"
 msgstr "Html préformaté"
+
+msgid "cpsschemas_rformat_original"
+msgstr "Original"
+
+msgid "cpsschemas_rformat_icon"
+msgstr "Vignette"
+
+msgid "cpsschemas_rformat_small"
+msgstr "Petit"
+
+msgid "cpsschemas_rformat_medium"
+msgstr "Moyen"
+
+msgid "cpsschemas_rformat_large"
+msgstr "Grand"
 
 #, fuzzy
 #~ msgid "cpsschemas_render_display"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-11-07 16:01default\n"
+"POT-Creation-Date: 2003-11-18 16:57default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -29,6 +29,13 @@ msgstr ""
 msgid "button_back"
 msgstr ""
 
+#.   <input onclick="window.close()" class="context" type="button" value="button_cancel">
+#.     <input value="button_update" class="standalone" type="submit">
+#.   </input></input>
+#: from ../skins/cps_schemas/popup_rte_form.pt
+msgid "button_cancel"
+msgstr ""
+
 #.   <input value="button_ok" class="context" type="submit">
 #.     </input>
 #: from ../skins/cps_schemas/popup_internallinks_form.pt
@@ -41,45 +48,57 @@ msgstr ""
 msgid "button_search"
 msgstr ""
 
+#.   <input value="button_update" class="standalone" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/popup_rte_form.pt
+msgid "button_update"
+msgstr ""
+
 #.   <span>at</span>
-#: from ../skins/cps_schemas/widget_date_render.pt
+#: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
 msgstr ""
 
 #.   <span>h</span>
-#: from ../skins/cps_schemas/widget_date_render.pt
+#: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_hour"
 msgstr ""
 
 #.   <a attributes="href preview_id" href="http://url..." target="_blank">
 #.          (preview)
 #.         </a>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_preview"
 msgstr ""
 
 #.   <span>mn</span>
-#: from ../skins/cps_schemas/widget_date_render.pt
+#: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
 msgstr ""
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Change</label>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr ""
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Delete</label>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr ""
 
 #.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#.   <label>Keep</label>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr ""
 
 #.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
-#: from ../skins/cps_schemas/widget_file_render.pt
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr ""
 
@@ -98,13 +117,20 @@ msgstr ""
 msgid "cpsschemas_label_link_title"
 msgstr ""
 
+#.   <span class="label">cpsschemas_photo_subtitle</span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr ""
+
 #.   <span>cpsschemas_render_format</span>
-#: from ../skins/cps_schemas/widget_textarea_render.pt
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr ""
 
 #.   <span>cpsschemas_render_position</span>
-#: from ../skins/cps_schemas/widget_textarea_render.pt
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr ""
 
@@ -188,6 +214,15 @@ msgstr ""
 msgid "cpsschemas_rposition_col_left"
 msgstr ""
 
+msgid "cpsschemas_rposition_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_center"
+msgstr ""
+
 msgid "cpsschemas_rformat_text"
 msgstr ""
 
@@ -198,4 +233,19 @@ msgid "cpsschemas_rformat_stx"
 msgstr ""
 
 msgid "cpsschemas_rformat_pre"
+msgstr ""
+
+msgid "cpsschemas_rformat_original"
+msgstr ""
+
+msgid "cpsschemas_rformat_icon"
+msgstr ""
+
+msgid "cpsschemas_rformat_small"
+msgstr ""
+
+msgid "cpsschemas_rformat_medium"
+msgstr ""
+
+msgid "cpsschemas_rformat_large"
 msgstr ""
