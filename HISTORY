@@ -1,4 +1,28 @@
 *******************************************
+** CPSDocument V0.1.1 [R1 build 2003-08/18-14:11 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Button move up/move down/change are removed the schema interface.
+- Layout Dummy : Don't display title if there is none.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Add widget for arbitrary HTML. Uses no field.
+- Added a storage_method parameter to the FlexTI.
+  Its syntax is mode1:meth1 mode2:meth2 and it specifies, for some
+  modes, what method to call to do the storage, instead of storing in
+  the object. layout_form_store.py is an example.
+  Later we'll use real storage adapters, but this works for now.
+  The layout_form* skins shows how to have a basic form skin.
+  cpsdocument_form_view is the view for a form.
+
+*******************************************
 ** CPSDocument V0.1.0 [R1 build 2003-08/04-15:26 by ben]
 
 ZODB Requires:
