@@ -84,6 +84,27 @@ class CPSPasswordField(CPSField):
 
 InitializeClass(CPSPasswordField)
 
+
+class CPSStringListField(CPSField):
+    """String List field."""
+    meta_type = "CPS String List Field"
+    _properties = propertiesWithType(CPSField._properties, 'default', 'lines')
+
+    def validate(self, value):
+        if isinstance(value, ListType):
+            ok = 1
+            for v in value:
+                # XXX Deal with Unicode.
+                if not isinstance(value, StringType):
+                    ok = 0
+                    break
+            if ok:
+                return value
+        raise ValidationError('Not a string list: %s' % repr(value))
+
+InitializeClass(CPSStringListField)
+
+
 class CPSCheckBoxField(CPSField):
     """Check Box field."""
     meta_type = "CPS CheckBox Field"
@@ -170,6 +191,7 @@ InitializeClass(CPSImageField)
 
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
+FieldRegistry.register(CPSStringListField)
 #FieldRegistry.register(CPSCheckBoxField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSDateTimeField)
