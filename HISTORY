@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.27.1 [R1 build 2004/07/28-15:39 by guillaum]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- string value was not correctly changed into list in Generic Multi Select Widget
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.27.0 [R1 build 2004/07/23-13:28 by guillaum]
 
 Requires:
