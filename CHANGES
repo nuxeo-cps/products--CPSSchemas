@@ -10,6 +10,7 @@ New features:
 - New ZippedHtmlWidget: store a zip file that contains html which can be
   viewed online. Using index.html or any html file from the zip as preview
   page.
+- Added a "file_uploader" option to the Text Widget.
 Bug fixes:
 ~~~~~~~~~~
 - Made the Layout.renderLayoutStyle() method more generic so that it can deal

@@ -60,15 +60,17 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'Height'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Max Size'},
-        {'id': 'render_position', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_positions',
-         'label': 'Render position'},
+        {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
+         'label': 'Add a file uploader to the widget UI'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_render_formats',
          'label': 'Render format'},
+        {'id': 'render_position', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_positions',
+         'label': 'Render position'},
         {'id': 'configurable', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_configurable',
-         'label': 'What is user configurable, require extra fields'},
+         'label': 'What is user configurable (require extra fields)'},
         )
     all_configurable = ['nothing', 'position', 'format', 'position and format']
     all_render_positions = ['normal', 'col_left', 'col_right']
@@ -77,7 +79,8 @@ class CPSTextWidget(CPSStringWidget):
 
     width = 40
     height = 5
-    size_max = 0
+    size_max = 2*1024*1024
+    file_uploader = 0
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
     configurable = 'nothing'
@@ -98,13 +101,32 @@ class CPSTextWidget(CPSStringWidget):
                 v = datamodel[self.fields[2]]
                 if v in self.all_render_formats:
                     rformat = v
+        datastructure[widget_id + '_fileupload'] = None
         datastructure[widget_id + '_rposition'] = rposition
         datastructure[widget_id + '_rformat'] = rformat
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
-        err, v = self._extractValue(datastructure[widget_id])
+        file_upload = datastructure.get(widget_id + '_fileupload', None)
+        file_upload_valid = False
+        if file_upload is not None:
+            ms = self.size_max
+            file_upload.seek(0)
+            read_size = len(file_upload.read(ms + 1))
+            if read_size > ms:
+                # Size is expressed in human readable value
+                max_size_str = self.getHumanReadableSize(ms)
+                err = 'cpsschemas_err_file_too_big ${max_size}'
+                err_mapping = {'max_size': max_size_str}
+                return self.doesNotValidate(err, err_mapping,
+                                            file, datastructure)
+            file_upload_valid = True
+            file_upload.seek(0)
+            value = file_upload.read()
+        if not file_upload_valid:
+            value = datastructure[widget_id]
+        err, v = self._extractValue(value)
         if err:
             datastructure.setError(widget_id, err)
             datastructure[widget_id] = v
@@ -120,6 +142,11 @@ class CPSTextWidget(CPSStringWidget):
                     rformat = datastructure[widget_id + '_rformat']
                     if rformat and rformat in self.all_render_formats:
                         datamodel[self.fields[2]] = rformat
+            if file_upload_valid:
+                # If the file_upload is valid we update the datastructure so
+                # that the immediate view after the modification has been done
+                # shows the content of the file upload instead of the old value.
+                self.prepare(datastructure)
         return not err
 
     def render(self, mode, datastructure, **kw):
@@ -146,6 +173,7 @@ class CPSTextWidget(CPSStringWidget):
                 RuntimeError("unknown render_format '%s' for '%s'" %
                              (rformat, self.getId()))
         return meth(mode=mode, datastructure=datastructure, value=value,
+                    file_uploader=self.file_uploader,
                     render_position=rposition, render_format=rformat,
                     configurable=str(self.configurable))
 

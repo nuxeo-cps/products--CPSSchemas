@@ -2,10 +2,12 @@
   id here/getWidgetId;
   value_name here/getHtmlWidgetId;
   value options/value;
+  file_uploader here/file_uploader;
   rposition options/render_position;
   rformat options/render_format;
   configurable options/configurable;
   button_text_editor_popup_id python:'widget__%s_button' % id;
+  file_upload_id python:'widget__%s_fileupload' % id;
   ">
   <tal:block condition="python: mode == 'view'">
     <div tal:condition="value"
@@ -15,15 +17,12 @@
       tal:content="structure value" />
   </tal:block>
   <tal:block condition="python: mode == 'edit'">
-    <div>
       <textarea tal:attributes="id value_name;
         name value_name;
         cols here/width;
         rows here/height;"
         tal:content="value" />
-    </div>
-
-    <div>
+    <p>
       <tal:block condition="python: configurable.find('position') >= 0">
         <tal:block i18n:translate="">cpsschemas_render_position</tal:block>
         <select tal:attributes="name string:${value_name}_rposition">
@@ -56,7 +55,10 @@
         string:javascript:popup_rte('${value_name}', '${here/label_edit}')
         "
         >Layout</button>
-    </div>
+      <tal:block condition="file_uploader">
+        <input type="file" tal:attributes="name file_upload_id"/>
+      </tal:block>
+    </p>
 
   </tal:block>
 </tal:block>
