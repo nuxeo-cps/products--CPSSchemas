@@ -37,7 +37,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.OrderedDictionary import OrderedDictionary
-from Products.CPSSchemas.WidgetsTool import WidgetTypeRegistry
+from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 
 
 class LayoutContainer(Folder):
@@ -192,7 +192,7 @@ class CPSLayout(Layout):
     security.declarePrivate('addWidget')
     def addWidget(self, id, wtid, **kw):
         """Add a new widget instance."""
-        wtool = getToolByName(self, 'portal_widgets')
+        wtool = getToolByName(self, 'portal_widget_types')
         widget_type = wtool[wtid]
         widget = widget_type.makeInstance(id, **kw)
         return self.addSubObject(widget)
@@ -211,7 +211,7 @@ class CPSLayout(Layout):
 
     def filtered_meta_types(self):
         # List of types available in Folder menu.
-        wtool = getToolByName(self, 'portal_widgets')
+        wtool = getToolByName(self, 'portal_widget_types')
         return [
             {'name': wtid,
              'action': 'manage_addCPSWidgetForm/'+wtid.replace(' ', ''),
@@ -236,7 +236,7 @@ class CPSLayout(Layout):
     security.declareProtected(ManagePortal, 'getUnstrippedWidgetTypeId')
     def getUnstrippedWidgetTypeId(self, wtid):
         """Get an unstripped version of a widget type id."""
-        wtool = getToolByName(self, 'portal_widgets')
+        wtool = getToolByName(self, 'portal_widget_types')
         swtid = wtid.replace(' ', '')
         for wtid in wtool.objectIds():
             if wtid.replace(' ', '') == swtid:

@@ -39,7 +39,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import CPSWidgetType
-from Products.CPSSchemas.WidgetsTool import WidgetTypeRegistry
+from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 
 def _isinstance(ob, cls):
     try:
@@ -644,7 +644,7 @@ class CPSCustomizableWidget(CPSWidget):
     security.declarePrivate('_getType')
     def _getType(self):
         """Get the type object for this widget."""
-        wtool = getToolByName(self, 'portal_widgets')
+        wtool = getToolByName(self, 'portal_widget_types')
         return getattr(wtool, self.widget_type)
 
     security.declarePrivate('getFieldTypes')

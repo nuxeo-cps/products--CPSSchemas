@@ -92,12 +92,12 @@ def install(self):
         pr(" Creating portal_schemas")
         portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Schemas Tool')
-    if portalhas('portal_widgets'):
+    if portalhas('portal_widget_types'):
         prok()
     else:
-        pr(" Creating portal_widgets")
+        pr(" Creating portal_widget_types")
         portal.manage_addProduct["CPSSchemas"].manage_addTool(
-            'CPS Widgets Tool')
+            'CPS Widget Types Tool')
     if portalhas('portal_layouts'):
         prok()
     else:
@@ -110,13 +110,17 @@ def install(self):
         pr(" Creating portal_vocabularies")
         portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Vocabularies Tool')
+    # Old stuff (UPGRADES)
+    if portalhas('portal_widgets'):
+        portal.manage_delObjects('portal_widgets')
+        pr(" Deleting old portal_widgets")
 
 
     # widgets
     pr("Verifiying widgets")
     widgets = self.getDocumentWidgets()
 
-    wtool = portal.portal_widgets
+    wtool = portal.portal_widget_types
     for id, info in widgets.items():
         pr(" Widget %s" % id)
         if id in wtool.objectIds():

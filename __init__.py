@@ -29,7 +29,7 @@ import Layout
 import VocabulariesTool
 import SchemasTool
 import LayoutsTool
-import WidgetsTool
+import WidgetTypesTool
 
 import BasicFields
 import BasicWidgets
@@ -38,7 +38,7 @@ tools = (
     VocabulariesTool.VocabulariesTool,
     SchemasTool.SchemasTool,
     LayoutsTool.LayoutsTool,
-    WidgetsTool.WidgetsTool,
+    WidgetTypesTool.WidgetTypesTool,
     )
 
 registerDirectory('skins/cps_schemas', globals())

@@ -16,9 +16,9 @@
 # 02111-1307, USA.
 #
 # $Id$
-"""Widgets Tool
+"""Widget Types Tool
 
-The Widgets Tool manages the available widget types.
+The Widget Types Tool manages the available widget types.
 """
 
 from zLOG import LOG, DEBUG
@@ -31,14 +31,14 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import UniqueObject
 
 
-class WidgetsTool(UniqueObject, Folder):
-    """Widgets Tool
+class WidgetTypesTool(UniqueObject, Folder):
+    """Widget Types Tool
 
     Stores the available widget types.
     """
 
-    id = 'portal_widgets'
-    meta_type = 'CPS Widgets Tool'
+    id = 'portal_widget_types'
+    meta_type = 'CPS Widget Types Tool'
 
     security = ClassSecurityInfo()
 
@@ -77,7 +77,7 @@ class WidgetsTool(UniqueObject, Folder):
         else:
             return widget
 
-InitializeClass(WidgetsTool)
+InitializeClass(WidgetTypesTool)
 
 
 class WidgetTypeRegistry:
@@ -87,7 +87,7 @@ class WidgetTypeRegistry:
     widgets.
 
     Not to be confused with the administrator-visible widget types
-    stored in portal_widgets that are actually instances of those
+    stored in portal_widget_types that are actually instances of those
     registered here.
     """
 

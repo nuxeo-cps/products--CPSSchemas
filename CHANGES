@@ -1,6 +1,7 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 - CPSSchemas requires Epoz-0.5.1
+- Recreate portal_widget_types using installer.
 New features:
 ~~~~~~~~~~~~~
 - Split off from CPSDocument into a separate package CPSSchemas.
@@ -24,3 +25,4 @@ New internal features:
 - Added a notion of dependant fields so that we can compute other fields
   when one is modified. Will be used for file preview/indexing for instance
 - All fields can have allow_none now.
+- Renamed portal_widgets to portal_widget_types.
