@@ -1,0 +1,5 @@
+<tal:block tal:define="
+             datamodel python:options['datastructure'].getDataModel();
+             cpsmcat nocall:here/Localizer/default;">
+  <div tal:content="python:cpsmcat(datamodel.getProxy().getTypeInfo().Title())"></div>
+</tal:block>
