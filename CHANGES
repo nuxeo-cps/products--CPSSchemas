@@ -15,3 +15,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Use tuples for vocabularies export
 - Clarify setContextObject use.
+- DateTime widget handle default time and minute
