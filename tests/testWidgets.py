@@ -113,31 +113,6 @@ class TestWidgets(unittest.TestCase):
         self.assertEquals(widget.getCssClass('edit', dm), '')
         self.assertEquals(widget.getCssClass('search', dm), 'searchExprClass')
 
-    def test_javascript_expr_compilation(self):
-        widget = Widget('widget_id', 'notype')
-
-        kw = {'javascript_expr': ''}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.javascript_expr_c, None)
-
-        js_code = """
-function getSelectedRadioId(buttonGroup) {
-  var i = getSelectedRadio(buttonGroup);
-  if (i == -1) {
-    return "";
-  } else {
-    if (buttonGroup[i]) {
-      return buttonGroup[i].id;
-    } else {
-      return buttonGroup.id;
-    }
-  }
-}
-"""
-        kw = {'javascript_expr': 'javascript:' + js_code}
-        widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.javascript_expr_c, js_code.strip())
-
     def test_getJavaScriptCode(self):
         # create a bare widget, and set it in the portal to be able to create
         # the expression namespace
@@ -163,9 +138,9 @@ function getSelectedRadioId(buttonGroup) {
   }
 }
 """
-        kw = {'javascript_expr': 'javascript:' + js_code}
+        kw = {'javascript_expr': 'string:' + js_code}
         widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getJavaScriptCode('view', dm),
+        self.assertEquals(widget.getJavaScriptCode('view', dm).strip(),
                           js_code.strip())
 
         js_code = """
@@ -178,7 +153,7 @@ function getLayoutMode() {
   return '${layout_mode}';
 }"""}
         widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getJavaScriptCode('view', dm),
+        self.assertEquals(widget.getJavaScriptCode('view', dm).strip(),
                           js_code.strip())
 
 def test_suite():
