@@ -10,3 +10,5 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Storage adapters always propagate **kw arguments to the base adapter.
+- Don't fail on ReadAccessError when doing datamodel.get('foo') but return
+  the default value.
