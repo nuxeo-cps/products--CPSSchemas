@@ -6,7 +6,8 @@
                    site_wide python:1;
                    no_form request/no_form|options/no_form|python:1;
                    format string:simple;
-                   display_description python:1">
+                   display_description python:1;
+                   items_per_page python:10666;">
 
 <metal:items use-macro="here/content_lib/macros/display_contents"></metal:items>
 </tal:block>
