@@ -10,6 +10,7 @@ Bug fixes:
   selected render format if HTML, and not depending on whether the format is
   configurable or not.
 - Missing conversion method for Image Field.
+- Check on file max size for AttachedFile Widget works again
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

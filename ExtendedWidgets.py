@@ -325,6 +325,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
+        file = None
         err = 0
         if choice == 'delete':
             datamodel[field_id] = None
@@ -336,7 +337,10 @@ class CPSAttachedFileWidget(CPSFileWidget):
                 ms = self.size_max
                 if fileUpload.read(1) == '':
                     err = 'cpsschemas_err_file_empty'
-                elif ms and len(fileUpload.read(ms)) == ms:
+                else:
+                    fileUpload.seek(0)
+                    fileReadLength = len(fileUpload.read(ms + 1))
+                if ms and fileReadLength > ms:
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     fileUpload.seek(0)
