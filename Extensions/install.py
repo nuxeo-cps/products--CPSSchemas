@@ -88,7 +88,12 @@ def install(self):
                          'CPS Vocabularies Tool')
 
     # portal_transforms
-    installer.installPortalTransforms()
+    try:
+        from Products import PortalTransforms
+        installer.installPortalTransforms()
+    except ImportError:
+        # Portal Transforms is not installed
+        pass
 
     # Old stuff (UPGRADES)
     if installer.portalHas('portal_widgets'):
