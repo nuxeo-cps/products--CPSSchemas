@@ -172,10 +172,21 @@ class FlexibleTypeInformation(TypeInformation):
         """
         if not self.isConstructionAllowed(container):
             raise Unauthorized
+        ob = self._constructInstance(container, id, *args, **kw)
+        return self._finishConstruction(ob)
+
+    security.declarePrivate('_constructInstance')
+    def _constructInstance(self, container, id, *args, **kw):
+        """Build a bare instance of the appropriate type.
+
+        Does not do CMF-specific checks or workflow insertions.
+
+        Returns the object.
+        """
         ob = addCPSDocument(container, id, **kw)
         # XXX fill-in defaults
         # XXX
-        return self._finishConstruction(ob)
+        return ob
 
     #
     # Flexible behavior
