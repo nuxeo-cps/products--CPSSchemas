@@ -32,8 +32,11 @@
     <tr>
       <td valign="middle" nowrap>
         <input type="radio" class="noborder" name="." value="keep"
-        checked="checked" tal:attributes="name radio_name">
-        <label i18n:translate="cpsschemas_label_file_keep">Keep</label>
+               checked="checked"
+               tal:attributes="name radio_name;
+                               id string:${radio_name}_keep">
+        <label i18n:translate="cpsschemas_label_file_keep"
+               tal:attributes="for string:${radio_name}_keep">Keep</label>
       </td>
       <td valign="middle">
         <span tal:replace="current_name">filename.pdf</span>
@@ -42,19 +45,24 @@
     <tr>
       <td valign="middle" nowrap>
         <input type="radio" class="noborder"  name="." value="change"
-          tal:attributes="name radio_name">
-        <label i18n:translate="cpsschemas_label_file_change">Change</label>&nbsp;
+               tal:attributes="name radio_name;
+                               id string:${radio_name}_change">
+        <label i18n:translate="cpsschemas_label_file_change"
+               tal:attributes="for string:${radio_name}_change">Change</label>
+        &nbsp;
       </td>
       <td valign="middle">
         <input type="file" name="."
-          tal:attributes="name name">
+               tal:attributes="name name">
       </td>
     </tr>
     <tr>
       <td valign="middle" colspan="2" nowrap>
         <input type="radio" class="noborder" name="." value="delete"
-          tal:attributes="name radio_name">
-        <label i18n:translate="cpsschemas_label_file_delete">Delete</label>
+               tal:attributes="name radio_name;
+                               id string:${radio_name}_delete">
+        <label i18n:translate="cpsschemas_label_file_delete"
+               tal:attributes="for string:${radio_name}_delete">Delete</label>
       </td>
     </tr>
   </table>
