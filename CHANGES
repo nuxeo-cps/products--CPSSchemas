@@ -6,8 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Correctly convert an image to string in convertToLDAP.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Correctly convert an image to string in convertToLDAP.
-
+-
