@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-27 19:33default\n"
+"POT-Creation-Date: 2005-04-01 15:09default\n"
 "PO-Revision-Date: 2005-02-10 10:30+0100\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -64,14 +64,10 @@ msgstr "h"
 #.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
-#.   <a href="http://url..." attributes="href string:${proxy_url}/unZip/${field_id}/${index_path}">
-#.           (preview)
-#.         </a>
-#.   <a href="http://url..." attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_zippedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
 msgstr "(preview)"
@@ -93,7 +89,6 @@ msgstr "mn"
 #.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
 #.         </p>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
-#: ../skins/cps_schemas/widget_zippedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
@@ -477,6 +472,27 @@ msgstr "Name of the link"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
+
+msgid "cpsschemas_label_zctext_operator_and"
+msgstr "all of these words"
+
+msgid "cpsschemas_label_zctext_operator_or"
+msgstr "any of these words"
+
+msgid "cpsschemas_label_zctext_operator_exact"
+msgstr "the exact phrase"
+
+msgid "cpsschemas_label_zctext_operator_not"
+msgstr "none of these words"
+
+msgid "cpsschemas_label_zctext_field_SearchableText"
+msgstr "in the document"
+
+msgid "cpsschemas_label_zctext_field_Title"
+msgstr "in the title"
+
+msgid "cpsschemas_label_zctext_field_Description"
+msgstr "in the description"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id already exist, choose another one."

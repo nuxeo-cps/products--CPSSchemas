@@ -208,6 +208,28 @@ msgstr ""
 msgid "cpsschemas_label_link_title"
 msgstr ""
 
+# zctext
+msgid "cpsschemas_label_zctext_operator_and"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_or"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_exact"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_not"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_SearchableText"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_Title"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_Description"
+msgstr ""
+
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr ""
 
