@@ -224,9 +224,9 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         # Put all the names in the data in the namespace.
         mapping = data.copy() # XXX there may be DEFAULT_VALUE_MARKER here
         # XXX hack replace DEFAULT_VALUE_MARKER
-        for key, value in mapping.items():
-            if value is DEFAULT_VALUE_MARKER:
-                mapping[key] = '' # XXX should be field's default
+        for k, v in mapping.items():
+            if v is DEFAULT_VALUE_MARKER:
+                mapping[k] = '' # XXX should be field's default
         mapping.update({
             'value': value,
             'data': data,
