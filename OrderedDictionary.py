@@ -4,15 +4,15 @@
 # $Id$
 
 from types import ListType, TupleType
-#from UserDict import UserDict
 from ZODB.PersistentMapping import PersistentMapping
+from ZODB.PersistentList import PersistentList
 
 class OrderedDictionary(PersistentMapping):
     def __init__(self, dict = None):
         if dict:
-            self._keys = dict.keys()
+            self._keys = PersistentList(dict.keys())
         else:
-            self._keys = []
+            self._keys = PersistentList()
         PersistentMapping.__init__(self, dict)
 
     def __delitem__(self, key):
@@ -31,7 +31,7 @@ class OrderedDictionary(PersistentMapping):
 
     def clear(self):
         PersistentMapping.clear(self)
-        self._keys = []
+        self._keys = PersistentList()
 
     def copy(self):
         mcopy = OrderedDictionary()
@@ -43,7 +43,8 @@ class OrderedDictionary(PersistentMapping):
         return zip(self._keys, self.values())
 
     def keys(self):
-        return self._keys[:] # This returns a copy of keys, so you can't manipulate them
+        return self._keys[:] # This returns a non-persistent copy of self._keys,
+                             # so you can manipulate the copy without manipulating self._keys
 
     def popitem(self):
         try:

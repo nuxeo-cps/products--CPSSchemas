@@ -1,3 +1,6 @@
+# (c) 2003 Nuxeo SARL <http://nuxeo.com>
+# $Id$
+
 import unittest
 from Products.NuxCPS3Document.OrderedDictionary import OrderedDictionary
 
