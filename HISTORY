@@ -1,4 +1,43 @@
 *******************************************
+** CPSDocument V0.3.0 [R1 build 2003-10/03-15:05 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- CPSSchemas requires Epoz-0.5.1
+- indexing File require PortalTransforms-1.0a3
+- Recreate portal_widget_types using installer.
+New features:
+~~~~~~~~~~~~~
+- Split off from CPSDocument into a separate package CPSSchemas.
+- Select Widget (displays a menu to choose one string)
+- CheckBox Widget (displays a checkbox to choose true/false)
+- MultiSelect Widget (display a select multiple to choose a list of strings)
+- First RTE (Epoz) integration. Only one per page right now. (unstable)
+- String/Date/Text widgets has is_required properties
+- adding hidden_empty properties 
+- String widget handle size_max property
+- P2 #110: Improve basic Date widget, fully i18n/l10n using jscalendar
+- P3 #145: Check file or image maximum size property
+- P3 #190: Mime type restriction for images
+Bug fixes:
+~~~~~~~~~~
+- P1 #144: Versioning is not incremental while editing the document
+- P1 #158: Edit page of working version after submit/publish doesn't work
+- P2 #125: File/Image Widget must be able to not display anything if no file
+- P2 #176: offer export of a document's layout and schema
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- sf code cleaning
+- Vocabularies are now used for all "choice" widgets.
+- renaming widget properties: 'title' to 'label_edit' and 'title_view' into 'label'
+- Use a first version of simple storage adapters.
+- Added a notion of dependant fields so that we can compute other fields
+  when one is modified. Will be used for file preview/indexing for instance
+- All fields can have allow_none now.
+- Renamed portal_widgets to portal_widget_types.
+- Don't pass both datastructure and datamodel around.
+- string widget display_maxwidth is replaced with size_max
+*******************************************
 ** CPSDocument V0.0.0
 
 ZODB Requires:
