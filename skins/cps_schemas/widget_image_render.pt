@@ -1,13 +1,18 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    current_name options/current_name;
+                   mimetype options/mimetype;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
-  <tal:block replace="structure python:here.getImgTag(here.fields[0],
+  <img tal:replace="structure python:here.getImgTag(here.fields[0],
     base_url='', height=here.display_height, width=here.display_width,
     keep_ratio=1)" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
+  <img tal:condition="python:current_name != '-'"
+    tal:replace="structure python:here.getImgTag(here.fields[0],
+    base_url='', height=here.display_height, width=here.display_width,
+    keep_ratio=1)">
   <metal:block use-macro="here/widget_file_render/macros/file_edit" />
 </tal:block>
 </tal:block>
