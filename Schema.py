@@ -173,6 +173,12 @@ class CPSSchema(Schema):
         #    schema = Schema()
         #self.setSchema(schema)
 
+    security.declarePrivate('addField')
+    def addField(self, id, field_type, **kw):
+        """Add a new field instance."""
+        field = FieldRegistry.makeField(field_type, id, **kw)
+        return self.addSubObject(field)
+
     #
     # ZMI
     #
@@ -193,16 +199,9 @@ class CPSSchema(Schema):
     manage_main = manage_editSchema
 
     security.declareProtected(ManagePortal, 'manage_addField')
-    def manage_addField(self, id, field_type, REQUEST=None, **kw):
+    def manage_addField(self, id, field_type, REQUEST=None):
         """Add a field TTW."""
-        if REQUEST is not None:
-            kw.update(REQUEST.form)
-        if kw.has_key('id'):
-            del kw['id']
-        if kw.has_key('field_type'):
-            del kw['field_type']
-        field = FieldRegistry.makeField(field_type, id, **kw)
-        field = self.addSubObject(field)
+        field = self.addField(id, field_type)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(field.absolute_url()+'/manage_workspace'
                                       '?manage_tabs_message=Added.')
