@@ -117,13 +117,13 @@ InitializeClass(CPSHtmlWidgetType)
 
 ##################################################
 
-class CPSZPTWidget(CPSWidget):
-    """ZPT widget."""
-    meta_type = "CPS ZPT Widget"
+class CPSMethodWidget(CPSWidget):
+    """Method widget."""
+    meta_type = "CPS Method Widget"
 
     _properties = CPSWidget._properties + (
         {'id': 'render_method', 'type': 'text', 'mode': 'w',
-         'label': 'ZPT filename'},)
+         'label': 'the zpt or py script method'},)
     render_method = ''
 
     def prepare(self, datastructure, **kw):
@@ -144,15 +144,15 @@ class CPSZPTWidget(CPSWidget):
             raise RuntimeError(msg % (self.render_method, self.getId()))
         return meth(mode=mode, datastructure=datastructure)
 
-InitializeClass(CPSZPTWidget)
+InitializeClass(CPSMethodWidget)
 
 
-class CPSZPTWidgetType(CPSWidgetType):
-    """ZPT widget type."""
-    meta_type = "CPS ZPT Widget Type"
-    cls = CPSZPTWidget
+class CPSMethodWidgetType(CPSWidgetType):
+    """Method widget type."""
+    meta_type = "CPS Method Widget Type"
+    cls = CPSMethodWidget
 
-InitializeClass(CPSZPTWidgetType)
+InitializeClass(CPSMethodWidgetType)
 
 ##################################################
 
@@ -306,81 +306,6 @@ InitializeClass(CPSPasswordWidgetType)
 
 ##################################################
 
-class CPSLinkWidget(CPSWidget):
-    """Link widget."""
-    meta_type = "CPS Link Widget"
-
-    field_types = ('CPS String Field', 'CPS String Field', 'CPS String Field')
-    field_inits = ({'is_indexed': 1,},
-                   {'is_indexed': 1,},
-                   {'is_indexed': 1,},)
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        widget_id = self.getWidgetId()
-        datastructure[widget_id] = datamodel[self.fields[0]]
-        datastructure[widget_id + '_content'] = datamodel[self.fields[1]]
-        datastructure[widget_id + '_title'] = datamodel[self.fields[2]]
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        widget_id = self.getWidgetId()
-        href = datastructure[widget_id]
-        content = datastructure[widget_id + '_content']
-        title = datastructure[widget_id + '_title']
-        err = 0
-        try:
-            href = str(href).strip()
-            content = str(content).strip()
-            title = str(title).strip()
-        except ValueError:
-            err = 'cpsschemas_err_string'
-        else:
-            if not href and self.is_required:
-                datastructure[widget_id] = ''
-                err = 'cpsschemas_err_required'
-            elif href and not match(
-                r'^((http://)|/)?([\w\~](\:|\.|\-|\/|\?|\=)?){2,}$', href):
-                err = 'cpsschemas_err_url'
-        if err:
-            datastructure.setError(widget_id, err)
-        else:
-            datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = href
-            datamodel[self.fields[1]] = content
-            datamodel[self.fields[2]] = title
-
-        return not err
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        href = datastructure[self.getWidgetId()]
-        content = datastructure[self.getWidgetId() + '_content']
-        title = datastructure[self.getWidgetId() + '_title']
-        render_method = 'widget_link_render'
-        meth = getattr(self, render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (render_method, self.getId()))
-        if mode in ('view', 'edit'):
-            return meth(mode=mode, datastructure=datastructure,
-                        href=href, content=content, title=title)
-
-        raise RuntimeError('unknown mode %s' % mode)
-
-InitializeClass(CPSLinkWidget)
-
-
-class CPSLinkWidgetType(CPSStringWidgetType):
-    """Link widget type."""
-    meta_type = "CPS Link Widget Type"
-    cls = CPSLinkWidget
-
-InitializeClass(CPSLinkWidgetType)
-
-##################################################
-
 class CPSCheckBoxWidget(CPSWidget):
     """CheckBox widget."""
     meta_type = "CPS CheckBox Widget"
@@ -443,55 +368,37 @@ class CPSCheckBoxWidgetType(CPSStringWidgetType):
 InitializeClass(CPSCheckBoxWidgetType)
 
 ##################################################
+# Warning textarea widget code is back to r1.75
+# refactored textarea with position and format is now located in
+# ExtendWidgets and named CPSTextWidget
 
 class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
     meta_type = "CPS TextArea Widget"
 
-    # Warning if configurable the widget require field[1] and field[2]
-    field_types = ('CPS String Field',  # textarea value
-                   'CPS String Field',  # render_format if configurable
-                   'CPS String Field')  # render_position if configurable
-    field_inits = ({'is_indexed': 1,}, {}, {})
+    field_types = ('CPS String Field',)
+    field_inits = ({'is_indexed': 1,},)
 
+    width = 40
+    height = 5
+    render_mode = 'pre'
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
-        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_formats',
-         'label': 'Render format'},
-        {'id': 'render_position', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_positions',
-         'label': 'Render position'},
-        {'id': 'configurable', 'type': 'boolean', 'mode': 'w',
-         'label': 'Render format and position are editable, REQUIRES 3 FIELDS'},
-
+        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_modes',
+         'label': 'Render mode'},
         )
-    all_render_formats = ['text', 'pre', 'stx', 'html']
-    all_render_positions = ['normal', 'col_left', 'col_right']
 
-    width = 40
-    height = 5
-    render_format = all_render_formats[0]
-    render_position = all_render_positions[0]
-    configurable = 0
+
+    all_render_modes = ['pre', 'stx', 'text']
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        widget_id = self.getWidgetId()
-        datastructure[widget_id] = str(datamodel[self.fields[0]])
-        if self.configurable and len(self.fields) != 3:
-            raise ValueError("Invalid textarea widget '%s' " % widget_id +
-                             "configurable textarea requires 3 fields.")
-        if self.configurable:
-            datastructure[widget_id + '_rformat'] = datamodel[self.fields[1]]
-            datastructure[widget_id + '_rposition'] = datamodel[self.fields[2]]
-        else:
-            datastructure[widget_id + '_rformat'] = self.render_format
-            datastructure[widget_id + '_rposition'] = self.render_position
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -508,43 +415,26 @@ class CPSTextAreaWidget(CPSWidget):
             return 0
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
-        if self.configurable:
-            rformat = datastructure[widget_id + '_rformat']
-            rposition = datastructure[widget_id + '_rposition']
-            if rformat and rformat in self.all_render_formats:
-                datamodel[self.fields[1]] = rformat
-                LOG('textarea', DEBUG, 'saving rformat = %s' % rformat)
-            if rposition and rposition in self.all_render_positions:
-                datamodel[self.fields[2]] = rposition
-                LOG('textarea', DEBUG, 'saving rposition = %s' % rposition)
         return 1
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        render_method = 'widget_textarea_render'
-        meth = getattr(self, render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (render_method, self.getId()))
-        widget_id = self.getWidgetId()
-        value = datastructure[widget_id]
-        rformat = datastructure[widget_id + '_rformat']
-        rposition = datastructure[widget_id + '_rposition']
+        value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            if rformat == 'pre':
-                value = '<pre>'+escape(value)+'</pre>'
-            elif rformat == 'stx':
-                value = structured_text(value)
-            elif rformat == 'text':
-                value = newline_to_br(value)
-            elif rformat == 'html':
-                pass
-            else:
-                RuntimeError("unknown render_format '%s' for '%s'" %
-                             (rformat, self.getId()))
-        return meth(mode=mode, datastructure=datastructure,
-                    value=value, render_format=rformat,
-                    render_position=rposition)
+            render_mode = self.render_mode
+            if render_mode == 'pre':
+                return '<pre>'+escape(value)+'</pre>'
+            elif render_mode == 'stx':
+                return structured_text(value)
+            else: # render_mode == 'text'
+                return '<div>'+newline_to_br(value)+'</div>'
+        elif mode == 'edit':
+            return renderHtmlTag('textarea',
+                                 name=self.getHtmlWidgetId(),
+                                 cols=self.width,
+                                 rows=self.height,
+                                 contents=value)
+        raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSTextAreaWidget)
 
@@ -1085,6 +975,317 @@ class CPSFloatWidgetType(CPSWidgetType):
 
 InitializeClass(CPSFloatWidgetType)
 
+
+##################################################
+# Warning Date widget code is back to r1.49
+# refactored date widget is now located in
+# ExtendWidgets and named CPSDateTimeWidget
+
+class CPSDateWidget(CPSWidget):
+    """Date widget."""
+    meta_type = "CPS Date Widget"
+
+    field_types = ('CPS DateTime Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'view_format', 'type': 'string', 'mode': 'w',
+         'label': 'View format'},
+        {'id': 'view_format_none', 'type': 'string', 'mode': 'w',
+         'label': 'View format empty'},
+        )
+    view_format = "%d/%m/%Y" # XXX unused for now
+    view_format_none = "-"
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        v = datamodel[self.fields[0]]
+        widget_id = self.getWidgetId()
+        if v is not None:
+            d = str(v.day())
+            m = str(v.month())
+            y = str(v.year())
+        else:
+            d = m = y = ''
+        datastructure[widget_id+'_d'] = d
+        datastructure[widget_id+'_m'] = m
+        datastructure[widget_id+'_y'] = y
+
+    def validate(self, datastructure, **kw):
+        """Update datamodel from user data in datastructure."""
+        datamodel = datastructure.getDataModel()
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+
+        d = datastructure[widget_id+'_d'].strip()
+        m = datastructure[widget_id+'_m'].strip()
+        y = datastructure[widget_id+'_y'].strip()
+
+        if not (d+m+y):
+            if self.is_required:
+                datastructure[widget_id] = ''
+                datastructure.setError(widget_id, "cpsschemas_err_required")
+                return 0
+            else:
+                datamodel[field_id] = None
+                return 1
+
+        try:
+            v = DateTime(int(y), int(m), int(d))
+        except (ValueError, TypeError, DateTime.DateTimeError,
+                DateTime.SyntaxError, DateTime.DateError):
+            datastructure.setError(widget_id, 'cpsschemas_err_date')
+            return 0
+        else:
+            datamodel[field_id] = v
+            return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render this widget from the datastructure or datamodel."""
+        widget_id = self.getWidgetId()
+        d = datastructure[widget_id+'_d']
+        m = datastructure[widget_id+'_m']
+        y = datastructure[widget_id+'_y']
+        if mode == 'view':
+            if not (d+m+y):
+                return escape(self.view_format_none)
+            else:
+                # XXX customize format
+                return escape(d+'/'+m+'/'+y)
+        elif mode == 'edit':
+            html_widget_id = self.getHtmlWidgetId()
+            dtag = renderHtmlTag('input',
+                                 type='text',
+                                 name=html_widget_id+'_d',
+                                 value=d,
+                                 size=2,
+                                 maxlength=2)
+            mtag = renderHtmlTag('input',
+                                 type='text',
+                                 name=html_widget_id+'_m',
+                                 value=m,
+                                 size=2,
+                                 maxlength=2)
+            ytag = renderHtmlTag('input',
+                                 type='text',
+                                 name=html_widget_id+'_y',
+                                 value=y,
+                                 size=6,
+                                 maxlength=6)
+            # XXX customize format
+            return dtag + '/' + mtag + '/' + ytag
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSDateWidget)
+
+
+class CPSDateWidgetType(CPSWidgetType):
+    """Date widget type."""
+    meta_type = "CPS Date Widget Type"
+    cls = CPSDateWidget
+
+InitializeClass(CPSDateWidgetType)
+
+##################################################
+# Warning File widget code is back to r1.47
+# refactored file widget with html preview and text extraction is in
+# ExtendWidgets and named CPSAttachedFileWidget
+
+##################################################
+
+class CPSFileWidget(CPSWidget):
+    """File widget."""
+    meta_type = "CPS File Widget"
+
+    field_types = ('CPS File Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
+         'label': 'Deletable'},
+        {'id': 'size_max', 'type': 'int', 'mode': 'w',
+         'label': 'Maximum file size'},
+        )
+    deletable = 1
+    size_max = 4*1024*1024
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        # make update from request work
+        datastructure[widget_id + '_choice'] = ''
+
+
+    def validate(self, datastructure, **kw):
+        """Update datamodel from user data in datastructure."""
+        datamodel = datastructure.getDataModel()
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+        choice = datastructure[widget_id+'_choice']
+        err = 0
+        if choice == 'keep':
+            # XXX check SESSION
+            pass
+        elif choice == 'delete':
+            datamodel[field_id] = None
+        else: # 'change'
+            file = datastructure[widget_id]
+            if not _isinstance(file, FileUpload):
+                err = 'cpsschemas_err_file'
+            else:
+                ms = self.size_max
+                if file.read(1) == '':
+                    err = 'cpsschemas_err_file_empty'
+                elif ms and len(file.read(ms)) == ms:
+                    err = 'cpsschemas_err_file_too_big'
+                else:
+                    file.seek(0)
+                    fileid, filetitle = cookId('', '', file)
+                    file = File(fileid, filetitle, file)
+                    LOG('CPSFileWidget', DEBUG,
+                        'validate change set %s' % `file`)
+                    datamodel[field_id] = file
+        if err:
+            datastructure.setError(widget_id, err)
+            LOG('CPSFileWidget', DEBUG,
+                'error %s on %s' % (err, `file`))
+        else:
+            self.prepare(datastructure)
+
+        return not err
+
+    def render(self, mode, datastructure, **kw):
+        """Render this widget from the datastructure or datamodel."""
+        render_method = 'widget_file_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        value = datastructure[self.getWidgetId()]
+        if hasattr(aq_base(value), 'getId'):
+            current_name = value.getId()
+        else:
+            current_name = '-'
+        return meth(mode=mode, datastructure=datastructure,
+                    current_name=current_name)
+
+InitializeClass(CPSFileWidget)
+
+
+class CPSFileWidgetType(CPSWidgetType):
+    """File widget type."""
+    meta_type = "CPS File Widget Type"
+    cls = CPSFileWidget
+
+InitializeClass(CPSFileWidgetType)
+
+##################################################
+
+class CPSImageWidget(CPSWidget):
+    """Image widget."""
+    meta_type = "CPS Image Widget"
+
+    field_types = ('CPS Image Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
+         'label': 'Deletable'},
+        {'id': 'size_max', 'type': 'int', 'mode': 'w',
+         'label': 'maximum image size'},
+        {'id': 'display_width', 'type': 'int', 'mode': 'w',
+         'label': 'Display width'},
+        {'id': 'display_height', 'type': 'int', 'mode': 'w',
+         'label': 'Display height'},
+        )
+
+    deletable = 1
+    size_max = 2*1024*1024
+    display_height = 0
+    display_width = 0
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        # make update from request work
+        datastructure[widget_id + '_choice'] = ''
+
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        datamodel = datastructure.getDataModel()
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+        choice = datastructure[widget_id+'_choice']
+        err = 0
+        if choice == 'delete':
+            datamodel[field_id] = None
+        elif choice == 'change' or datastructure.get(widget_id):
+            file = datastructure[widget_id]
+            if not _isinstance(file, FileUpload):
+                err = 'cpsschemas_err_file'
+            else:
+                ms = self.size_max
+                if file.read(1) == '':
+                    err = 'cpsschemas_err_file_empty'
+                elif ms and len(file.read(ms)) == ms:
+                    err = 'cpsschemas_err_file_too_big'
+                else:
+                    file.seek(0)
+                    fileid, filetitle = cookId('', '', file)
+                    registry = getToolByName(self, 'mimetypes_registry')
+                    mimetype = registry.lookupExtension(filetitle)
+                    if (not mimetype or
+                        not mimetype.normalized().startswith('image')):
+                        err = 'cpsschemas_err_image'
+                    else:
+                        file = Image(fileid, filetitle, file)
+                        LOG('CPSImageWidget', DEBUG,
+                            'validate change set %s' % `file`)
+                        datamodel[field_id] = file
+
+        if err:
+            datastructure.setError(widget_id, err)
+            LOG('CPSImageWidget', DEBUG,
+                'error %s on %s' % (err, `file`))
+        else:
+            self.prepare(datastructure)
+
+        return not err
+
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_image_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        value = datastructure[self.getWidgetId()]
+        if hasattr(aq_base(value), 'getId'):
+            current_name = value.getId()
+        else:
+            current_name = '-'
+        mimetype = None
+        registry = getToolByName(self, 'mimetypes_registry')
+        mimetype = registry.lookupExtension(current_name)
+        return meth(mode=mode, datastructure=datastructure,
+                    current_name=current_name, mimetype=mimetype)
+
+InitializeClass(CPSImageWidget)
+
+
+class CPSImageWidgetType(CPSWidgetType):
+    """Image widget type."""
+    meta_type = "CPS Image Widget Type"
+    cls = CPSImageWidget
+
+    # XXX: TBD
+
+InitializeClass(CPSImageWidgetType)
+
 ##################################################
 
 class CPSCustomizableWidget(CPSWidget):
@@ -1207,533 +1408,6 @@ class CPSCustomizableWidgetType(CPSWidgetType):
 
 InitializeClass(CPSCustomizableWidgetType)
 
-##################################################
-
-class CPSDateWidget(CPSWidget):
-    """Date widget."""
-    meta_type = "CPS Date Widget"
-
-    field_types = ('CPS DateTime Field',)
-
-    _properties = CPSWidget._properties + (
-        {'id': 'view_format', 'type': 'string', 'mode': 'w',
-         'label': 'View format (short, medium or long)'},
-        {'id': 'time_setting', 'type': 'boolean', 'mode': 'w',
-         'label': 'enable time setting'},
-        )
-    view_format = 'medium'
-    time_setting = 1
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        v = datamodel[self.fields[0]]
-        if not v and self.is_required:
-            v = DateTime()
-        widget_id = self.getWidgetId()
-        date = ''
-        hour = minute = ''
-        if v is not None:
-            d = str(v.day())
-            m = str(v.month())
-            y = str(v.year())
-            locale = self.Localizer.default.get_selected_language()
-            if locale in ('en', 'hu', ):
-                date = m+'/'+d+'/'+y
-            else:
-                date = d+'/'+m+'/'+y
-            hour = str(v.h_24())
-            minute = str(v.minute())
-
-        datastructure[widget_id] = v
-        datastructure[widget_id+'_date'] = date
-        datastructure[widget_id+'_hour'] = hour or '12'
-        datastructure[widget_id+'_minute'] = minute or '00'
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        datamodel = datastructure.getDataModel()
-        field_id = self.fields[0]
-        widget_id = self.getWidgetId()
-
-        date = datastructure[widget_id+'_date'].strip()
-        hour = datastructure[widget_id+'_hour'].strip() or '12'
-        minute = datastructure[widget_id+'_minute'].strip() or '00'
-
-        if not (date):
-            if self.is_required:
-                datastructure[widget_id] = ''
-                datastructure.setError(widget_id, "cpsschemas_err_required")
-                return 0
-            else:
-                datamodel[field_id] = None
-                return 1
-
-        if not match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date):
-            datastructure.setError(widget_id, 'cpsschemas_err_date')
-            return 0
-
-        locale = self.Localizer.default.get_selected_language()
-        if locale in ('en', 'hu', ):
-            m, d, y = date.split('/')
-        else:
-            d, m, y = date.split('/')
-
-        try:
-            v = DateTime(int(y), int(m), int(d), int(hour), int(minute))
-        except (ValueError, TypeError, DateTime.DateTimeError,
-                DateTime.SyntaxError, DateTime.DateError):
-            datastructure.setError(widget_id, 'cpsschemas_err_date')
-            return 0
-        else:
-            datastructure[widget_id] = v
-            datamodel[field_id] = v
-            return 1
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        render_method = 'widget_date_render'
-        meth = getattr(self, render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (render_method, self.getId()))
-        value = datastructure[self.getWidgetId()]
-        return meth(mode=mode, datastructure=datastructure)
-
-
-InitializeClass(CPSDateWidget)
-
-
-class CPSDateWidgetType(CPSWidgetType):
-    """Date widget type."""
-    meta_type = "CPS Date Widget Type"
-    cls = CPSDateWidget
-
-InitializeClass(CPSDateWidgetType)
-
-##################################################
-
-class CPSFileWidget(CPSWidget):
-    """File widget."""
-    meta_type = "CPS File Widget"
-
-    # XXX The second and third fields are actually optional...
-    field_types = ('CPS File Field', 'CPS String Field', 'CPS File Field')
-    field_inits = ({'is_indexed': 0,
-                    'suffix_text': '_f1', # _f# are autocomputed field ext
-                    'suffix_html': '_f2',
-                    },
-                   {'is_indexed': 1,
-                    },
-                   {'is_indexed': 0,
-                    },
-                   )
-
-    _properties = CPSWidget._properties + (
-        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
-         'label': 'Deletable'},
-        {'id': 'size_max', 'type': 'int', 'mode': 'w',
-         'label': 'Maximum file size'},
-        )
-    deletable = 1
-    size_max = 4*1024*1024
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        widget_id = self.getWidgetId()
-        datastructure[widget_id] = datamodel[self.fields[0]]
-        # Compute preview info for widget.
-        if len(self.fields) > 2 and datamodel.get(self.fields[2]) is not None:
-            preview_id = self.fields[2]
-        else:
-            preview_id = None
-        datastructure[widget_id + '_preview'] = preview_id
-        # make update from request work
-        datastructure[widget_id + '_choice'] = ''
-
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        datamodel = datastructure.getDataModel()
-        field_id = self.fields[0]
-        widget_id = self.getWidgetId()
-        choice = datastructure[widget_id+'_choice']
-        err = 0
-        if choice == 'delete':
-            datamodel[field_id] = None
-        elif choice == 'change' or datastructure.get(widget_id):
-            file = datastructure[widget_id]
-            if not _isinstance(file, FileUpload):
-                err = 'cpsschemas_err_file'
-            else:
-                ms = self.size_max
-                if file.read(1) == '':
-                    err = 'cpsschemas_err_file_empty'
-                elif ms and len(file.read(ms)) == ms:
-                    err = 'cpsschemas_err_file_too_big'
-                else:
-                    file.seek(0)
-                    fileid, filetitle = cookId('', '', file)
-                    file = File(fileid, filetitle, file)
-                    LOG('CPSFileWidget', DEBUG,
-                        'validate change set %s' % `file`)
-                    datamodel[field_id] = file
-        if err:
-            datastructure.setError(widget_id, err)
-            LOG('CPSFileWidget', DEBUG,
-                'error %s on %s' % (err, `file`))
-        else:
-            self.prepare(datastructure)
-
-        return not err
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        render_method = 'widget_file_render'
-        meth = getattr(self, render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (render_method, self.getId()))
-        value = datastructure[self.getWidgetId()]
-        if hasattr(aq_base(value), 'getId'):
-            current_name = value.getId()
-        else:
-            current_name = '-'
-        mimetype = None
-        registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = registry.lookupExtension(current_name)
-        return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name, mimetype=mimetype)
-
-InitializeClass(CPSFileWidget)
-
-
-class CPSFileWidgetType(CPSWidgetType):
-    """File widget type."""
-    meta_type = "CPS File Widget Type"
-    cls = CPSFileWidget
-
-InitializeClass(CPSFileWidgetType)
-
-##################################################
-
-class CPSImageWidget(CPSWidget):
-    """Image widget."""
-    meta_type = "CPS Image Widget"
-
-    field_types = ('CPS Image Field',)
-
-    _properties = CPSWidget._properties + (
-        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
-         'label': 'Deletable'},
-        {'id': 'size_max', 'type': 'int', 'mode': 'w',
-         'label': 'maximum image size'},
-        {'id': 'display_width', 'type': 'int', 'mode': 'w',
-         'label': 'Display width'},
-        {'id': 'display_height', 'type': 'int', 'mode': 'w',
-         'label': 'Display height'},
-        )
-
-    deletable = 1
-    size_max = 2*1024*1024
-    display_height = 0
-    display_width = 0
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        widget_id = self.getWidgetId()
-        datastructure[widget_id] = datamodel[self.fields[0]]
-        # make update from request work
-        datastructure[widget_id + '_choice'] = ''
-
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        datamodel = datastructure.getDataModel()
-        field_id = self.fields[0]
-        widget_id = self.getWidgetId()
-        choice = datastructure[widget_id+'_choice']
-        err = 0
-        if choice == 'delete':
-            datamodel[field_id] = None
-        elif choice == 'change' or datastructure.get(widget_id):
-            file = datastructure[widget_id]
-            if not _isinstance(file, FileUpload):
-                err = 'cpsschemas_err_file'
-            else:
-                ms = self.size_max
-                if file.read(1) == '':
-                    err = 'cpsschemas_err_file_empty'
-                elif ms and len(file.read(ms)) == ms:
-                    err = 'cpsschemas_err_file_too_big'
-                else:
-                    file.seek(0)
-                    fileid, filetitle = cookId('', '', file)
-                    registry = getToolByName(self, 'mimetypes_registry')
-                    mimetype = registry.lookupExtension(filetitle)
-                    if (not mimetype or
-                        not mimetype.normalized().startswith('image')):
-                        err = 'cpsschemas_err_image'
-                    else:
-                        file = Image(fileid, filetitle, file)
-                        LOG('CPSImageWidget', DEBUG,
-                            'validate change set %s' % `file`)
-                        datamodel[field_id] = file
-
-        if err:
-            datastructure.setError(widget_id, err)
-            LOG('CPSImageWidget', DEBUG,
-                'error %s on %s' % (err, `file`))
-        else:
-            self.prepare(datastructure)
-
-        return not err
-
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        render_method = 'widget_image_render'
-        meth = getattr(self, render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (render_method, self.getId()))
-        value = datastructure[self.getWidgetId()]
-        if hasattr(aq_base(value), 'getId'):
-            current_name = value.getId()
-        else:
-            current_name = '-'
-        mimetype = None
-        registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = registry.lookupExtension(current_name)
-        return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name, mimetype=mimetype)
-
-InitializeClass(CPSImageWidget)
-
-
-class CPSImageWidgetType(CPSWidgetType):
-    """Image widget type."""
-    meta_type = "CPS Image Widget Type"
-    cls = CPSImageWidget
-
-    # XXX: TBD
-
-InitializeClass(CPSImageWidgetType)
-
-#################################################
-
-class CPSRichTextEditorWidget(CPSTextAreaWidget):
-    """Rich Text Editor widget."""
-    meta_type = "CPS Rich Text EditorWidget"
-
-    field_types = ('CPS String Field',)
-    field_inits = ({'is_indexed': 1,},)
-
-    width = 40
-    height = 5
-    render_mode = 'pre'
-    _properties = CPSWidget._properties + (
-        {'id': 'width', 'type': 'int', 'mode': 'w',
-         'label': 'Width'},
-        {'id': 'height', 'type': 'int', 'mode': 'w',
-         'label': 'Height'},
-        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_modes',
-         'label': 'Render mode'},
-        )
-
-
-    all_render_modes = ['pre', 'stx', 'text']
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        value = datastructure[self.getWidgetId()]
-        try:
-            v = str(value)
-        except ValueError:
-            datastructure.setError(self.getWidgetId(),
-                                   "cpsschemas_err_textarea")
-            ok = 0
-        else:
-            datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = v
-            ok = 1
-        return ok
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        # XXXX
-        # Not finished !! Just for tests
-        value = datastructure[self.getWidgetId()]
-        if mode == 'view':
-            # To change
-            return structured_text(value)
-        elif mode == 'edit':
-            #
-            # XXXX : version that has to work
-            # For multiple rte within popup's
-            #
-            #return """
-            #<script language="JavaScript" type="text/javascript">
-            #<!--
-            #function change_content(to_put) {
-            #  form = document.getElementById('form') ;
-            #  w = form.getElementById('%s') ;
-            #  wt.value = to_put ;
-            #}
-            #//-->
-            #</script>
-            #
-            #<script language="JavaScript" type="text/javascript">
-            #function open_rte_edit(value, input_id) {
-            #  args='?value='+value+'&input_id='+input_id ;
-            #  selector_window = window.open('widget_rte_edit'+args, '%s', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=0, dependent=1, width=500, height=400')
-            #  if(!selector_window.opener) selector_window.opener = window
-            #}
-            #//-->
-            #</script>
-            #%s
-            #<a href="javascript:open_rte_edit('%s', '%s')">Editer</a>
-            #<a href="javascript:change_content()">Change</a>
-            #""" %(self.getHtmlWidgetId(),
-            #      self.getHtmlWidgetId(),
-            #      renderHtmlTag('textarea',
-            #                    name=self.getHtmlWidgetId(),
-            #                    cols=self.width,
-            #                    rows=self.height,
-            #                    contents=value,
-            #                    css_class=self.css_class),
-            #      str(value), self.getHtmlWidgetId() )
-
-            #
-            # Tmp dirty solution
-            #
-            render_method = 'widget_rte_render'
-            meth = getattr(self, render_method, None)
-            if meth is None:
-                raise RuntimeError("Unknown Render Method %s for widget type %s"
-                                   % (render_method, self.getId()))
-            value = datastructure[self.getWidgetId()]
-            if hasattr(aq_base(value), 'getId'):
-                current_name = value.getId()
-            else:
-                current_name = '-'
-            return meth(mode=mode, datastructure=datastructure,
-                        current_name=current_name)
-
-InitializeClass(CPSRichTextEditorWidget)
-
-class CPSRichTextEditorWidgetType(CPSWidgetType):
-    """ RTE widget type """
-    meta_type = "CPS Rich Text Editor Widget Type "
-    cls = CPSRichTextEditorWidget
-
-InitializeClass(CPSRichTextEditorWidgetType)
-
-
-##########################################
-
-class CPSExtendedSelectWidget(CPSSelectWidget):
-    """Extended Select widget."""
-    meta_type = "CPS ExtendedSelect Widget"
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-
-        if mode == 'view':
-            return CPSSelectWidget.render(self, mode, datastructure)
-
-        elif mode == 'edit':
-            render_method = 'widget_extendedselect_render'
-
-            meth = getattr(self, render_method, None)
-            if meth is None:
-                raise RuntimeError("Unknown Render Method %s for widget type %s"
-                                   % (render_method, self.getId()))
-            return meth(mode=mode, datastructure=datastructure,
-                        vocabulary=self._getVocabulary(datastructure))
-
-        else:
-            raise RuntimeError('unknown mode %s' % mode)
-
-InitializeClass(CPSExtendedSelectWidget)
-
-class CPSExtendedSelectWidgetType(CPSSelectWidgetType):
-    """Extended Select widget type."""
-    meta_type = "CPS ExtendedSelect Widget Type"
-    cls = CPSExtendedSelectWidget
-
-InitializeClass(CPSExtendedSelectWidgetType)
-
-
-##########################################
-
-class CPSInternalLinksWidget(CPSWidget):
-    """Internal Links widget."""
-    meta_type = "CPS InternalLinks Widget"
-
-    field_types = ('CPS String List Field',)
-    field_inits = ({'is_indexed': 1,},)
-
-    _properties = CPSWidget._properties + (
-        {'id': 'new_window', 'type': 'boolean', 'mode': 'w',
-         'label': 'Display in a new window'},
-        {'id': 'size', 'type': 'int', 'mode': 'w',
-         'label': 'Links displayed'},
-        )
-    new_window = 0
-    size = 0
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        widget_id = self.getWidgetId()
-        value = datastructure[widget_id]
-        err = 0
-        if self.is_required and (value == [] or value == ['']):
-            err = 'cpsschemas_err_required'
-        v = []
-        for line in value:
-            if line.strip() != '':
-                v.append(line)
-
-        if err:
-            datastructure.setError(widget_id, err)
-        else:
-            datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = v
-
-        return not err
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        if mode not in ('view', 'edit'):
-            raise RuntimeError('unknown mode %s' % mode)
-
-        render_method = 'widget_internallinks_render'
-        meth = getattr(self, render_method, None)
-
-        return meth(mode=mode, datastructure=datastructure)
-
-InitializeClass(CPSInternalLinksWidget)
-
-class CPSInternalLinksWidgetType(CPSWidgetType):
-    """Internal links widget type."""
-    meta_type = "CPS InternalLinks Widget Type"
-    cls = CPSInternalLinksWidget
-
-InitializeClass(CPSInternalLinksWidgetType)
 
 ##################################################
 
@@ -1744,7 +1418,6 @@ InitializeClass(CPSInternalLinksWidgetType)
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
-WidgetTypeRegistry.register(CPSLinkWidgetType, CPSLinkWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSLinesWidgetType, CPSLinesWidget)
@@ -1755,12 +1428,6 @@ WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
 WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
-WidgetTypeRegistry.register(CPSZPTWidgetType, CPSZPTWidget)
-WidgetTypeRegistry.register(CPSRichTextEditorWidgetType,
-                            CPSRichTextEditorWidget)
+WidgetTypeRegistry.register(CPSMethodWidgetType, CPSMethodWidget)
 WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
 WidgetTypeRegistry.register(CPSMultiSelectWidgetType, CPSMultiSelectWidget)
-WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
-                            CPSExtendedSelectWidget)
-WidgetTypeRegistry.register(CPSInternalLinksWidgetType,
-                            CPSInternalLinksWidget)
