@@ -239,17 +239,17 @@ msgid "cpsschemas_err_password_size_min"
 msgstr "Votre mot de passe est trop court"
 
 msgid "cpsschemas_err_password_lower"
-msgstr "Votre mot de passe doit contenir au moins une minuscule"
+msgstr "Votre mot de passe doit contenir au moins une lettre minuscule"
 
 msgid "cpsschemas_err_password_upper"
-msgstr "Votre mot de passe doit contenir au moins une lettre capital"
+msgstr "Votre mot de passe doit contenir au moins une lettre capitale"
 
 msgid "cpsschemas_err_password_digit"
-msgstr "Votre mot de passe doit contenir au moin un chiffre"
+msgstr "Votre mot de passe doit contenir au moins un chiffre"
 
 msgid "cpsschemas_err_password_extra"
 msgstr ""
-"Votre mot de passe doit contenir au moins un caractére special autre qu'une "
+"Votre mot de passe doit contenir au moins un caractère special autre qu'une "
 "lettre ou un chiffre"
 
 msgid "cpsschemas_err_identifier"
