@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Correctly keep the proxy in the datamodel after a commit.
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Spliting widgets into 2 files: Basic and Extended
