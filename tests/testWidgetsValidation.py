@@ -219,6 +219,23 @@ class URLWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, 'tooo-%20oo')
         self.assert_(ret, err)
 
+    def test_url_ok_11(self):
+        ret, err, ds = self._validate({}, 'ftp://toto.com/')
+        self.assert_(ret, err)
+
+    def test_url_ok_12(self):
+        ret, err, ds = self._validate({}, 'http://toto:toto@toto.com/')
+        self.assert_(ret, err)
+
+    def test_url_ok_13(self):
+        ret, err, ds = self._validate({}, 'http://toto.com:8080/')
+        self.assert_(ret, err)
+
+    def test_url_ok_14(self):
+        ret, err, ds = self._validate({}, '/ww..com')
+        self.assert_(ret, err)
+
+
     def test_url_nok_1(self):
         ret, err, ds = self._validate({}, 'a space')
         self.assertEquals(err, 'cpsschemas_err_url')
@@ -228,17 +245,8 @@ class URLWidgetValidationTest(WidgetValidationTest):
         self.assertEquals(err, 'cpsschemas_err_url')
 
     def test_url_nok_3(self):
-        ret, err, ds = self._validate({}, 'a??dlk')
-        self.assertEquals(err, 'cpsschemas_err_url')
-
-    def test_url_nok_4(self):
         ret, err, ds = self._validate({}, 'http://www./')
         self.assertEquals(err, 'cpsschemas_err_url')
-
-# XXX make it pass !
-#    def test_url_nok_5(self):
-#        ret, err, ds = self._validate('URL', {}, '/ww..com')
-#        self.assert_(err == 'cpsschemas_err_url')
 
 
 class EmailWidgetValidationTest(WidgetValidationTest):

@@ -28,6 +28,7 @@ from AccessControl import ClassSecurityInfo
 from types import ListType, TupleType, StringType
 from cgi import escape
 from re import compile, search
+from urlparse import urlparse
 from zLOG import LOG, DEBUG, PROBLEM
 from TAL.TALDefs import attrEscape
 
@@ -283,16 +284,48 @@ class CPSURLWidget(CPSStringWidget):
     css_class = 'url'
     display_width = 72
     size_max = 4096
-    # XXX should find a better one or check for invalid may be ?
-    # see test_url_nok_5
-    url_pat = compile(
-        r'^((http://)|/)?((\w|\~|\#|=|\.\.|\-)[\:\.\-\/\?\=\&\+%]?)+$')
 
+    netloc_pat = compile(
+        # username:passwd (optional)
+        r"^([a-z0-9_!.~*\'\(\)-]*:[a-z0-9_!.~*\'\(\)-]*@)?"
+        # hostname
+        r"(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\.)*"
+        r"([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])"
+        # port (optional)
+        r"(:[0-9a-z]*)?"
+        "$")
+
+    path_pat = compile(
+        r"^[a-z0-9$_.+!*'(),;:@&=%/-]*$")
+
+    # See rfc1738 and rfc2396
+    # NB: rfc1738 says that "/", ";", "?" can't appear in the query, 
+    # but that's not what we see (ex: ?file=/tmp/toto)
+    def checkUrl(self, url):
+        url = url.lower()
+        try:
+            scheme, netloc, path, parameters, query, fragment = urlparse(url)
+        except:
+            return 0
+
+        if netloc and not self.netloc_pat.match(netloc):
+            return 0
+
+        if scheme in ('http', 'ftp', 'file', 'gopher', 'telnet',
+                      'nttp', 'wais', 'prospero') and not netloc:
+            return 0
+            
+        if scheme in ('http', '', 'ftp'):
+            return self.path_pat.match(path)
+        else:
+            # TODO: match more URL schemes
+            return 1
+        
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         err, v = self._extractValue(datastructure[widget_id])
-        if not err and v and not self.url_pat.match(v.lower()):
+        if not err and v and not self.checkUrl(v):
             err = 'cpsschemas_err_url'
 
         if err:
