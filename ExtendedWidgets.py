@@ -379,7 +379,7 @@ InitializeClass(CPSAttachedFileWidgetType)
 
 class CPSRichTextEditorWidget(CPSWidget):
     """Rich Text Editor widget."""
-    meta_type = "CPS Rich Text EditorWidget"
+    meta_type = "CPS Rich Text Editor Widget"
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_indexed': 1,},)
@@ -440,8 +440,8 @@ class CPSRichTextEditorWidget(CPSWidget):
 InitializeClass(CPSRichTextEditorWidget)
 
 class CPSRichTextEditorWidgetType(CPSWidgetType):
-    """ RTE widget type """
-    meta_type = "CPS Rich Text Editor Widget Type "
+    """RTE widget type"""
+    meta_type = "CPS Rich Text Editor Widget Type"
     cls = CPSRichTextEditorWidget
 
 InitializeClass(CPSRichTextEditorWidgetType)
