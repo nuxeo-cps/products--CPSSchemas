@@ -23,6 +23,7 @@ Widget used to build search forms.
 from zLOG import LOG, DEBUG, TRACE
 from cgi import escape
 from Globals import InitializeClass
+from DateTime import DateTime
 
 from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
@@ -110,7 +111,133 @@ InitializeClass(CPSSearchZCTextWidgetType)
 
 
 
+#
+# Modified widget
+#
+class CPSSearchModifiedWidget(CPSWidget):
+    """Widget to choose last modified time in search form.
+
+    This widget should be used only on edit mode to buid search form.
+    """
+    meta_type = "CPS Search Modified Widget"
+    _properties = CPSWidget._properties
+    field_types = ('CPS String Field')
+    times = [0, 1, 30, 91, 182, 365]
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = 0
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        datamodel = datastructure.getDataModel()
+        now = DateTime()
+        value = escape(datastructure[widget_id])
+        try:
+            value = int(value)
+        except (ValueError, TypeError):
+            value = 0
+        if value and value in self.times:
+            value = now - value
+        datamodel[self.fields[0]] = value
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_searchmodified_render'
+        value = int(datastructure[self.getWidgetId()])
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        return meth(mode=mode, value=value)
+
+InitializeClass(CPSSearchModifiedWidget)
+
+
+class CPSSearchModifiedWidgetType(CPSWidgetType):
+    """Widget Type."""
+    meta_type = "CPS Search Modified Widget Type"
+    cls = CPSSearchModifiedWidget
+
+InitializeClass(CPSSearchModifiedWidgetType)
+
+#
+# Language widget
+#
+class CPSSearchLanguageWidget(CPSWidget):
+    """Widget to choose a document language in search form.
+
+    This widget should be used only on edit mode to buid search form.
+    """
+    meta_type = "CPS Search Language Widget"
+    _properties = CPSWidget._properties
+    field_types = ('CPS List Field')
+
+
+    def _getLanguageVoc(self):
+        """Return the language vocabulary."""
+        vocabularies = getToolByName(self, 'portal_vocabularies')
+        return vocabularies['language_voc']
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = []
+        datastructure[widget_id + '_select'] = 'no'
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        datamodel = datastructure.getDataModel()
+        selected = escape(datastructure[widget_id + '_selected'])
+        if selected != 'yes':
+            return 1
+        values = escape(datastructure[widget_id])
+        vocabulary = self._getLanguageVoc()
+        languages = vocabulary.keys()
+        v = []
+        for value in values:
+            if value in languages:
+                v.append(value)
+        datamodel[self.fields[0]] = v
+        return 1
+
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_searchlanguage_render'
+        widget_id = self.getWidgetId()
+        values = datastructure[widget_id]
+        selected = escape(datastructure[widget_id + '_select'])
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        return meth(mode=mode, values=values,
+                    selected=selected,
+                    vocabulary=self._getLanguageVoc())
+
+InitializeClass(CPSSearchLanguageWidget)
+
+
+class CPSSearchLanguageWidgetType(CPSWidgetType):
+    """Widget Type."""
+    meta_type = "CPS Search Language Widget Type"
+    cls = CPSSearchLanguageWidget
+
+InitializeClass(CPSSearchLanguageWidgetType)
+
+
+
+
 ##################################################
 
 WidgetTypeRegistry.register(CPSSearchZCTextWidgetType,
                             CPSSearchZCTextWidget)
+WidgetTypeRegistry.register(CPSSearchModifiedWidgetType,
+                            CPSSearchModifiedWidget)
+WidgetTypeRegistry.register(CPSSearchLanguageWidgetType,
+                            CPSSearchLanguageWidget)
