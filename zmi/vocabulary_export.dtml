@@ -9,16 +9,11 @@ vocabulary should look like.</p>
 <pre>
 <dtml-var id>_vocabulary = {
     'data': {
-        'dict': {
+        'tuples': (
 <dtml-in items>
-            '<dtml-var sequence-key>': "<dtml-var sequence-item>",
+            ("<dtml-var sequence-key>", "<dtml-var sequence-item>"),
 </dtml-in>
-            },
-        'list': [
-<dtml-in keys>
-            '<dtml-var sequence-item>',
-</dtml-in>
-            ],
+            ),
         },
     }
 </pre>
