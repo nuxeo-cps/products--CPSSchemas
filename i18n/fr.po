@@ -2,21 +2,20 @@
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 # ben <ben@nuxeo.com>, 2003
-#
-#
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-12-16 10:55default\n"
-"PO-Revision-Date: 2003-12-16 10:57+0100\n"
+"PO-Revision-Date: 2003-12-17 23:32+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.0.1\n"
+"Plural-Forms: nplurals=1; plural=0;"
 
 #.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
 #.         </input>
@@ -78,7 +77,7 @@ msgstr "mn"
 #.   <span>resize</span>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
-msgstr "Format : "
+msgstr "Format&nbsp;: "
 
 #.   <label>Change</label>
 #.   <label attributes="for string:${radio_name}_change">Change</label>
@@ -109,19 +108,19 @@ msgstr "Aucun"
 #.   <span>cpsschemas_photo_subtitle</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr "Sous titre : "
+msgstr "Légende&nbsp;: "
 
 #.   <span>cpsschemas_render_format</span>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
-msgstr "Format : "
+msgstr "Format&nbsp;: "
 
 #.   <div class="label">cpsschemas_render_position</div>
 #.   <span>cpsschemas_render_position</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
-msgstr "Position : "
+msgstr "Position&nbsp;: "
 
 #.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
@@ -156,16 +155,16 @@ msgid "cpsschemas_err_textarea"
 msgstr "Texte invalide"
 
 msgid "cpsschemas_err_select"
-msgstr "Selection invalide"
+msgstr "Sélection invalide"
 
 msgid "cpsschemas_err_multiselect"
-msgstr "Selection invalide"
+msgstr "Sélection multiple invalide"
 
 msgid "cpsschemas_err_boolean"
-msgstr "Booléen non valide"
+msgstr "Booléen invalide"
 
 msgid "cpsschemas_err_int"
-msgstr "Entier non valide"
+msgstr "Entier invalide"
 
 msgid "cpsschemas_err_date"
 msgstr "Format de date invalide"
@@ -186,19 +185,19 @@ msgid "cpsschemas_err_url"
 msgstr "URL invalide"
 
 msgid "cpsschemas_err_long"
-msgstr "Entier non valide"
+msgstr "Entier long invalide"
 
 msgid "cpsschemas_err_long_range"
-msgstr "Nombre en dehors des limites"
+msgstr "Entier long en dehors des limites"
 
 msgid "cpsschemas_err_float_positive"
-msgstr "Ce nombre doit être Positif"
+msgstr "Ce nombre flottant doit être positif"
 
 msgid "cpsschemas_err_float_range"
-msgstr "Nombre en dehors des limites"
+msgstr "Nombre flottant en dehors des limites"
 
 msgid "cpsschemas_err_float"
-msgstr "Nombre non valide"
+msgstr "Nombre flottant invalide"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -243,7 +242,7 @@ msgid "img_icon"
 msgstr "Vignette"
 
 msgid "img_xsmall"
-msgstr "Trés pitite"
+msgstr "Très petite"
 
 msgid "img_small"
 msgstr "Petite"
@@ -255,7 +254,7 @@ msgid "img_large"
 msgstr "Grande"
 
 msgid "img_xlarge"
-msgstr "Trés grande"
+msgstr "Très grande"
 
 msgid "cpsschema_label_false"
 msgstr "Non"
@@ -284,4 +283,3 @@ msgstr "Oui"
 #, fuzzy
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Format de date invalide"
-

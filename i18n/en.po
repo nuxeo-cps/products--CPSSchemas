@@ -2,21 +2,20 @@
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 # ben <ben@nuxeo.com>, 2003
-#
-#
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-12-16 10:55default\n"
-"PO-Revision-Date: 2003-12-16 10:57+0100\n"
+"PO-Revision-Date: 2003-12-17 23:34+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.0.1\n"
+"Plural-Forms: nplurals=1; plural=0;"
 
 #.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
 #.         </input>
@@ -109,7 +108,7 @@ msgstr "None"
 #.   <span>cpsschemas_photo_subtitle</span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr "Sub title: "
+msgstr "Caption: "
 
 #.   <span>cpsschemas_render_format</span>
 #: from ../skins/cps_schemas/widget_text_render.pt
@@ -147,58 +146,58 @@ msgid "cpsschemas_err_string"
 msgstr "Invalid string"
 
 msgid "cpsschemas_err_string_too_long"
-msgstr "string too long"
+msgstr "String too long"
 
 msgid "cpsschemas_err_required"
 msgstr "Field required"
 
 msgid "cpsschemas_err_textarea"
-msgstr "invalid text"
+msgstr "Invalid text"
 
 msgid "cpsschemas_err_select"
-msgstr "invalid selection"
+msgstr "Invalid selection"
 
 msgid "cpsschemas_err_multiselect"
-msgstr "Invalid selection"
+msgstr "Invalid multiple selection"
 
 msgid "cpsschemas_err_boolean"
 msgstr "Invalid boolean"
 
 msgid "cpsschemas_err_int"
-msgstr "invalid integer"
+msgstr "Invalid integer"
 
 msgid "cpsschemas_err_date"
-msgstr "invalid date"
+msgstr "Invalid date"
 
 msgid "cpsschemas_err_file"
-msgstr "invalid file"
+msgstr "Invalid file"
 
 msgid "cpsschemas_err_file_too_big"
-msgstr "sorry this file is too big"
+msgstr "Sorry this file is too big"
 
 msgid "cpsschemas_err_file_empty"
-msgstr "invalid file"
+msgstr "Invalid file"
 
 msgid "cpsschemas_err_image"
-msgstr "invalid image"
+msgstr "Invalid image"
 
 msgid "cpsschemas_err_url"
-msgstr "invalid URL"
+msgstr "Invalid URL"
 
 msgid "cpsschemas_err_long"
-msgstr "invalid integer"
+msgstr "Invalid long integer"
 
 msgid "cpsschemas_err_long_range"
-msgstr "out of range"
+msgstr "Long integer out of range"
 
 msgid "cpsschemas_err_float_positive"
-msgstr "must be positive"
+msgstr "This float must be positive"
 
 msgid "cpsschemas_err_float_range"
-msgstr "out of range"
+msgstr "Float out of range"
 
 msgid "cpsschemas_err_float"
-msgstr "invalid float"
+msgstr "Invalid float"
 
 msgid "jscalendar_date_fmt"
 msgstr "m/d/y"
@@ -225,13 +224,13 @@ msgid "cpsschemas_rformat_text"
 msgstr "Text"
 
 msgid "cpsschemas_rformat_html"
-msgstr "Html"
+msgstr "HTML"
 
 msgid "cpsschemas_rformat_stx"
-msgstr "Zope structured text"
+msgstr "Zope Structured Text"
 
 msgid "cpsschemas_rformat_pre"
-msgstr "Html preformated"
+msgstr "HTML preformated"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
@@ -283,4 +282,3 @@ msgstr "Yes"
 
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Position :"
-
