@@ -262,7 +262,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     def _createAclExpressionContext(self, datamodel):
         """Create an expression context for ACL evaluation."""
-        context = datamodel._context
+        context = datamodel.getContext()
         mapping = {
             'field': self,
             'datamodel': datamodel,
@@ -271,7 +271,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'nothing': None,
             # Useful for objects
             'context': context,
-            'proxy': datamodel._proxy,
+            'proxy': datamodel.getProxy(),
             # Useful for directories
             'dir': context,
             }
