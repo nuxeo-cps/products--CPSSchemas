@@ -30,9 +30,10 @@ from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
 from AccessControl import Unauthorized
 from Persistence import Persistent
+from Acquisition import Implicit
 
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
-from Products.CMFCore.utils import SimpleItemWithProperties
+from Products.CMFCore.utils import SimpleItemWithProperties, getToolByName
 
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
@@ -41,7 +42,7 @@ from IVocabulary import IVocabulary
 builtins_list = list
 
 
-class Vocabulary(Persistent):
+class Vocabulary(Persistent, Implicit):
     """Vocabulary
 
     Base class for explicit vocabularies.
@@ -51,7 +52,7 @@ class Vocabulary(Persistent):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, tuples=None, list=None, dict=None):
+    def __init__(self, tuples=None, list=None, dict=None, sort_function=None):
         """Initialize a vocabularies.
 
         Allowed parameter syntaxes are:
@@ -88,6 +89,7 @@ class Vocabulary(Persistent):
         l = []
         d = {}
         m = {}
+        # We suppose that initial vocabulary is sorted
         if tuples is not None:
             if tuples and isinstance(tuples[0], StringType):
                 # Vocabulary(('foo', 'bar'))
@@ -124,6 +126,7 @@ class Vocabulary(Persistent):
         self._list = l
         self._dict = d
         self._msgids = m
+        self._sort_fonction = sort_function
 
     def __repr__(self):
         return '<Vocabulary %s>' % repr(self._dict)
@@ -149,7 +152,14 @@ class Vocabulary(Persistent):
         """Set a label for a key."""
         self._p_changed = 1
         if not self._dict.has_key(key):
-            self._list.append(key)
+            if self._sort_fonction is not None:
+                cpsmcat = getToolByName(self, 'portal_url').getPortalObject().translation_service
+                l = [ ((x[0], x[1], self.getMsgid(x[0]), cpsmcat(self.getMsgid(x[0]))), x[0]) for x in self.items()]
+                self._list.insert(0, (key, label, msgid, cpsmcat(msgid)))
+                l.sort(self._sort_function)
+                self._list = [x[0] for x in l]
+            else:
+                self._list.append(key)
         self._dict[key] = label
         self._msgids[key] = msgid
 
@@ -190,6 +200,42 @@ class Vocabulary(Persistent):
     def orderKeys(self, keys):
         """Set the order of keys."""
         raise NotImplementedError
+
+    def keysSortedBy(self, crit='id', sort_function=None):
+        """@summary: Return a keys list sorted on a criterium
+
+        @summary: If criterium is not know, self.keys() is used.
+
+        @summary: If criterium is 'funct' ans sortFunct is not None sortFunct
+        @summary: will sort keys on ((key, label, msgid, translated msgid), key).
+
+        @param crit: known criterium 'id', 'label', 'i18n', 'funct'
+        @type crit: @String
+        @param sortFunct: Function to sort keys on
+        @type sortFunct: @Function
+        @rtype: @List
+        """
+
+        cpsmcat = getToolByName(self, 'portal_url').getPortalObject().translation_service
+
+        if crit == 'id':
+            return self.keys()
+        elif crit == 'label':
+            l = [ (x[1], x[0]) for x in self.items()]
+            l.sort()
+            return [x[1] for x in l]
+        elif crit == 'i18n':
+            l = [ (cpsmcat(self.getMsgid(x[0])), x[0]) for x in self.items()]
+            l.sort()
+            return [x[1] for x in l]
+        elif crit == 'funct' and (sort_function is not None or
+                                  self._sort_fonction is not None):
+            sort_function = sort_function or self._sort_fonction
+            l = [ ((x[0], x[1], self.getMsgid(x[0]), cpsmcat(self.getMsgid(x[0]))), x[0]) for x in self.items()]
+            l.sort(sort_function)
+            return [x[0] for x in l]
+        else:
+            return self.keys()
 
 InitializeClass(Vocabulary)
 
@@ -234,10 +280,10 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
 
     user_modified = 0
 
-    def __init__(self, id, tuples=None, list=None, dict=None, title='', **kw):
+    def __init__(self, id, tuples=None, list=None, dict=None, title='', sort_function=None, **kw):
         self.id = id
         self.title = title
-        vocab = Vocabulary(tuples=tuples, list=list, dict=dict)
+        vocab = Vocabulary(tuples=tuples, list=list, dict=dict, sort_function=sort_function)
         self.setVocabulary(vocab)
 
     security.declareProtected(ManagePortal, 'setVocabulary')
@@ -285,6 +331,10 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declareProtected(View, 'has_key')
     def has_key(self, key):
         return self._vocab.has_key(key)
+
+    security.declareProtected(View, 'keysSortedBy')
+    def keysSortedBy(self, crit, sort_function=None):
+        return self._vocab.keysSortedBy(crit, sort_function)
 
     #
     # Management
