@@ -12,3 +12,6 @@ New internal features:
 - move CPSDocument[Schemas|Layers|Types|Widgets] to getDocument* 
   document can be define in the application skin using getCustomDocument*
 - i18n of widgets error messages
+- Widget Image handle dipslay size
+- Widget have different title for view (title_view) and edit (title)
+- i18n of title title_view and description
