@@ -1,0 +1,25 @@
+<metal:html tal:define="emptybody python:1;
+                        doc python:here.getContent();
+			id here/REQUEST/id;
+                        info python:here.getContentInfo();
+                        ">
+    <metal:body use-macro="here/main_template/macros/master">
+        <metal:main fill-slot="javascript_head_slot">
+            <!-- make sure that the document css rules won't affect the window inner dimensions -->
+            <style type="text/css" media=screen>
+            <!--
+              body  { width: auto; height: auto;}
+             -->
+             </style>
+        </metal:main>
+        <metal:main fill-slot="body">
+	    <div style="float:right">
+		<button onclick="window.close()" i18n:translate="button_close">Fermer</button>
+	    </div>
+            <div class="popupImg">
+                <img tal:replace="structure python:here.getImgTag(id + '_f3',
+                             base_url='')" />
+            </div>
+        </metal:main>
+    </metal:body>
+</metal:html>
