@@ -28,9 +28,10 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
             self.assertEquals(field.getId(), field_id)
 
             # Default values (0, 0.0, None, ""...) all have false boolean
-            # value
+            # value except 'Auto Index Field'
             default = field.getDefault()
-            self.assert_(not default)
+            if field_type != 'CPS Auto Index Field':
+                self.assert_(not default)
 
             self.assertEquals(field.validate(default), default)
 
