@@ -36,7 +36,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance, CPSImageWidget
+     _isinstance, CPSImageWidget, CPSNoneWidget
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -655,6 +655,12 @@ class CPSPhotoWidgetType(CPSWidgetType):
 
 InitializeClass(CPSPhotoWidgetType)
 
+##################################################
+class CPSLinkWidget(CPSNoneWidget):
+    """Deprecated Link Widget now using compound widget."""
+    meta_type = "CPS Link Widget"
+
+InitializeClass(CPSLinkWidget)
 
 ##################################################
 
@@ -672,3 +678,4 @@ WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
 WidgetTypeRegistry.register(CPSInternalLinksWidgetType,
                             CPSInternalLinksWidget)
 WidgetTypeRegistry.register(CPSPhotoWidgetType, CPSPhotoWidget)
+
