@@ -18,269 +18,95 @@
 # $Id$
 
 import os
-from App.Extensions import getPath
-from re import match
 from zLOG import LOG, INFO, DEBUG
+
+# XXX I think that as long as you don't run any CPSSpecific methods,
+# this should still work under pure CMF. This needs to be tested though.
+from Products.CPSInstaller.CPSInstaller import CPSInstaller
+
+class CPSSchemasInstaller(CPSInstaller):
+
+    def installPortalTransforms(self):
+        self.log("Verifying Portal Transforms tool")
+
+        if self.portalHas('portal_transforms'):
+            pt = self.portal.portal_transforms
+            if pt.meta_type == 'Portal Transforms':
+                self.logOK()
+            else:
+                self.portal.manage_delObjects(['portal_transforms'])
+
+        if not self.portalHas('portal_transforms'):
+            self.runExternalUpdater('portal_transforms_installer',
+                                    'Portal Transforms Installer',
+                                    'PortalTransforms',
+                                    'Install',
+                                    'install')
+
+            self.log("Adding additional mime types")
+            mimetypesRegistry = self.portal.mimetypes_registry
+            for extension, mimetype in (
+                ('sxw', 'application/vnd.sun.xml.writer'),
+                ('stw', 'application/vnd.sun.xml.writer.template'),
+                ('sxg', 'application/vnd.sun.xml.writer.global'),
+                ('sxc', 'application/vnd.sun.xml.calc'),
+                ('stc', 'application/vnd.sun.xml.calc.template'),
+                ('sxi', 'application/vnd.sun.xml.impress'),
+                ('sti', 'application/vnd.sun.xml.impress.template'),
+                ('sxd', 'application/vnd.sun.xml.draw'),
+                ('std', 'application/vnd.sun.xml.draw.template'),
+                ('sxm', 'application/vnd.sun.xml.math')):
+                if not mimetypesRegistry.extensions.has_key(extension):
+                    mimetypesRegistry.manage_addMimeType(mimetype, [mimetype],
+                                                         [extension], '', 1)
+                else:
+                    self.log("We already have a registration for "
+                             "extension '%s'" % extension)
+            self.log("   done")
+
 
 def install(self):
 
-    _log = []
-    def pr(bla, zlog=1, _log=_log):
-        if bla == 'flush':
-            return '<html><head><title>CPSSchemas Update</title></head><body><pre>'+ \
-                   '\n'.join(_log) + \
-                   '</pre></body></html>'
-
-        _log.append(bla)
-        if (bla and zlog):
-            LOG('CPSSchemas install:', INFO, bla)
-
-    def prok(pr=pr):
-        pr(" Already correctly installed")
-
-    pr("Starting CPSSchemas install")
-
-    portal = self.portal_url.getPortalObject()
-
-    def portalhas(id, portal=portal):
-        return id in portal.objectIds()
-
+    installer = CPSSchemasInstaller(self, 'CPSSchemas')
+    installer.log("Starting CPSSchemas install")
 
     # skins
-    skins = ('cps_schemas', 'cps_jscalendar')
-    paths = {
+    skins = {
         'cps_schemas': 'Products/CPSSchemas/skins/cps_schemas',
         'cps_jscalendar': 'Products/CPSSchemas/skins/cps_jscalendar',
     }
-    skin_installed = 0
-    for skin in skins:
-        path = paths[skin]
-        path = path.replace('/', os.sep)
-        pr(" FS Directory View '%s'" % skin)
-        if skin in portal.portal_skins.objectIds():
-            dv = portal.portal_skins[skin]
-            oldpath = dv.getDirPath()
-            if oldpath == path:
-                prok()
-            else:
-                pr("  Correctly installed, correcting path")
-                dv.manage_properties(dirpath=path)
-        else:
-            skin_installed = 1
-            portal.portal_skins.manage_addProduct['CMFCore'].manage_addDirectoryView(filepath=path, id=skin)
-            pr("  Creating skin")
-    if skin_installed:
-        allskins = portal.portal_skins.getSkinPaths()
-        for skin_name, skin_path in allskins:
-            if skin_name != 'Basic':
-                continue
-            path = [x.strip() for x in skin_path.split(',')]
-            path = [x for x in path if x not in skins] # strip all
-            if path and path[0] == 'custom':
-                path = path[:1] + list(skins) + path[1:]
-            else:
-                path = list(skins) + path
-            npath = ', '.join(path)
-            portal.portal_skins.addSkinSelection(skin_name, npath)
-            pr(" Fixup of skin %s" % skin_name)
-        pr(" Resetting skin cache")
-        portal._v_skindata = None
-        portal.setupCurrentSkin()
+    installer.verifySkins(skins)
 
-    if portalhas('portal_schemas'):
-        prok()
-    else:
-        pr(" Creating portal_schemas")
-        portal.manage_addProduct["CPSSchemas"].manage_addTool(
-            'CPS Schemas Tool')
-    if portalhas('portal_widget_types'):
-        prok()
-    else:
-        pr(" Creating portal_widget_types")
-        portal.manage_addProduct["CPSSchemas"].manage_addTool(
-            'CPS Widget Types Tool')
-    if portalhas('portal_layouts'):
-        prok()
-    else:
-        pr(" Creating portal_layouts")
-        portal.manage_addProduct["CPSSchemas"].manage_addTool(
-            'CPS Layouts Tool')
-    if portalhas('portal_vocabularies'):
-        prok()
-    else:
-        pr(" Creating portal_vocabularies")
-        portal.manage_addProduct["CPSSchemas"].manage_addTool(
-            'CPS Vocabularies Tool')
+    # Tools
+    installer.verifyTool('portal_schemas', 'CPSSchemas',
+                         'CPS Schemas Tool')
+    installer.verifyTool('portal_widget_types', 'CPSSchemas',
+                         'CPS Widget Types Tool')
+    installer.verifyTool('portal_layouts', 'CPSSchemas',
+                         'CPS Layouts Tool')
+    installer.verifyTool('portal_vocabularies', 'CPSSchemas',
+                         'CPS Vocabularies Tool')
 
     # portal_transforms
-    pr("Verifying Portal Transforms tool")
-
-    if portalhas('portal_transforms'):
-        pt = portal.portal_transforms
-        if pt.portal_type == ' Portal Transforms':
-            prok()
-        else:
-            portal.manage_delObjects(['portal_transforms'])
-
-    if not portalhas('portal_transforms'):
-        pr(" Creating Portal Transforms Tool")
-        if not portalhas('portal_transforms_installer'):
-            from Products.ExternalMethod.ExternalMethod import ExternalMethod
-            pr('  Adding Portal Transforms Installer')
-            try:
-                installer = ExternalMethod('portal_transforms_installer',
-                                           'Portal Transforms Installer',
-                                           'PortalTransforms.Install',
-                                           'install')
-                portal._setObject('portal_transforms_installer', installer)
-            except:
-                pr(' ERROR: Missing product PortalTransforms !')
-                raise "Missing Product", "not found PortalTransforms !"
-        portal.portal_transforms_installer()
-        pr("   done")
-
-        pr("Adding additional mime types")
-        mimetypesRegistry = portal.mimetypes_registry
-        for extension, mimetype in (('sxw', 'application/vnd.sun.xml.writer'),
-                                    ('stw', 'application/vnd.sun.xml.writer.template'),
-                                    ('sxg', 'application/vnd.sun.xml.writer.global'),
-                                    ('sxc', 'application/vnd.sun.xml.calc'),
-                                    ('stc', 'application/vnd.sun.xml.calc.template'),
-                                    ('sxi', 'application/vnd.sun.xml.impress'),
-                                    ('sti', 'application/vnd.sun.xml.impress.template'),
-                                    ('sxd', 'application/vnd.sun.xml.draw'),
-                                    ('std', 'application/vnd.sun.xml.draw.template'),
-                                    ('sxm', 'application/vnd.sun.xml.math')):
-            if not mimetypesRegistry.extensions.has_key(extension):
-                mimetypesRegistry.manage_addMimeType(mimetype,
-                                                     [mimetype], [extension],
-                                                     '', 1)
-            else:
-                pr("We already have a registration for extension '%s'" % extension)
-        pr("   done")
+    installer.installPortalTransforms()
 
     # Old stuff (UPGRADES)
-    if portalhas('portal_widgets'):
-        portal.manage_delObjects('portal_widgets')
-        pr(" Deleting old portal_widgets")
-
-
-    # widgets
-    pr("Verifiying widgets")
-    widgets = self.getDocumentWidgets()
-
-    wtool = portal.portal_widget_types
-    for id, info in widgets.items():
-        pr(" Widget %s" % id)
-        if id in wtool.objectIds():
-            pr("  Deleting.")
-            wtool.manage_delObjects([id])
-        pr("  Installing.")
-        widget = wtool.manage_addCPSWidgetType(id, info['type'])
-        widget.manage_changeProperties(**info['data'])
-
-    # schemas
-    pr("Verifiying schemas")
-    schemas = self.getDocumentSchemas()
-
-    stool = portal.portal_schemas
-    for id, info in schemas.items():
-        pr(" Schema %s" % id)
-        if id in stool.objectIds():
-            pr("  Deleting.")
-            stool.manage_delObjects([id])
-        pr("  Installing.")
-        schema = stool.manage_addCPSSchema(id)
-        for field_id, fieldinfo in info.items():
-            pr("   Field %s." % field_id)
-            schema.manage_addField(field_id, fieldinfo['type'],
-                                   **fieldinfo['data'])
-
-    # layouts
-    pr("Verifiying layouts")
-    layouts = self.getDocumentLayouts()
-
-    ltool = portal.portal_layouts
-    for id, info in layouts.items():
-        pr(" Layout %s" % id)
-        if id in ltool.objectIds():
-            pr("  Deleting.")
-            ltool.manage_delObjects([id])
-        pr("  Installing.")
-        layout = ltool.manage_addCPSLayout(id)
-        for widget_id, widgetinfo in info['widgets'].items():
-            pr("   Widget %s" % widget_id)
-            widget = layout.manage_addCPSWidget(widget_id, widgetinfo['type'],
-                                                **widgetinfo['data'])
-        layout.setLayoutDefinition(info['layout'])
-        layout.manage_changeProperties(**info['layout'])
-
-    # vocabularies
-    pr("Verifiying vocabularies")
-    vocabularies = self.getDocumentVocabularies()
-
-    vtool = portal.portal_vocabularies
-    for id, info in vocabularies.items():
-        pr(" Vocabulary %s" % id)
-        kept = 0
-        if id in vtool.objectIds():
-            if getattr(vtool, id).isUserModified():
-                pr("  Keeping, as it has been modified.")
-                pr("  Delete it manually if needed.")
-                kept = 1
-            else:
-                pr("  Deleting.")
-                vtool.manage_delObjects([id])
-        if not kept:
-            pr("  Installing.")
-            type = info.get('type', 'CPS Vocabulary')
-            vtool.manage_addCPSVocabulary(id, type, **info['data'])
+    if installer.portalHas('portal_widgets'):
+        installer.portal.manage_delObjects('portal_widgets')
+        installer.log(" Deleting old portal_widgets")
 
     # importing .po files
-    mcat = portal['Localizer']['default']
-    pr(" Checking available languages")
-    podir = os.path.join('Products', 'CPSSchemas')
-    popath = getPath(podir, 'i18n')
-    if popath is None:
-        pr(" !!! Unable to find .po dir")
-    else:
-        pr("  Checking installable languages")
-        langs = []
-        avail_langs = mcat.get_languages()
-        pr("    Available languages: %s" % str(avail_langs))
-        for file in os.listdir(popath):
-            if file.endswith('.po'):
-                m = match('^.*([a-z][a-z])\.po$', file)
-                if m is None:
-                    pr( '    Skipping bad file %s' % file)
-                    continue
-                lang = m.group(1)
-                if lang in avail_langs:
-                    lang_po_path = os.path.join(popath, file)
-                    lang_file = open(lang_po_path)
-                    pr("    Importing %s into '%s' locale" % (file, lang))
-                    mcat.manage_import(lang, lang_file)
-                else:
-                    pr( '    Skipping not installed locale for file %s' % file)
+    # Non CPS installation may not have Localizer.
+    if installer.portalHas('Localizer'):
+        installer.setupTranslations()
 
+    installer.log("")
+    installer.log("### Epoz Installer")
+    installer.runExternalUpdater('epoz_installer', 'Epoz Installer',
+                                 'Epoz','Install', 'install')
+    installer.log("### End of Epoz install")
+    installer.log("")
 
-    ######################################################
-    # EPOZ INSTALLER
-    ######################################################
-
-    pr("")
-    pr("### Epoz Installer")
-    if not portalhas('epoz_installer'):
-        from Products.ExternalMethod.ExternalMethod import ExternalMethod
-        pr('Adding epoz installer')
-        epoz_installer = ExternalMethod('epoz_installer',
-                                        'Epoz Installer',
-                                        'Epoz.Install',
-                                        'install')
-        portal._setObject('epoz_installer', epoz_installer)
-    pr(portal.epoz_installer())
-    pr("### End of Epoz install")
-    pr("")
-
-    pr("End of specific CPSSchemas install")
-    return pr('flush')
+    installer.finalize()
+    installer.log("End of specific CPSSchemas install")
+    return installer.logResult()
