@@ -91,8 +91,20 @@ class Widget(SimpleItemWithProperties):
     def getFieldTypes(self):
         return self.field_types
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget in a given mode."""
+    #
+    # To be implemented by widget classes.
+    #
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        raise NotImplementedError
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        raise NotImplementedError
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         raise NotImplementedError
 
 InitializeClass(Widget)

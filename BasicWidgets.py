@@ -91,16 +91,16 @@ class CPSHtmlWidget(CPSWidget):
     html_view = ''
     html_edit = ''
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         pass
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         if mode == 'view':
             return self.html_view
         elif mode == 'edit':
@@ -134,13 +134,13 @@ class CPSStringWidget(CPSWidget):
          'label': 'Maximum input width'},
         )
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         err = 0
@@ -163,8 +163,8 @@ class CPSStringWidget(CPSWidget):
 
         return not err
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
             return escape(value)
@@ -197,8 +197,8 @@ class CPSPasswordWidget(CPSStringWidget):
 
     field_types = ('CPS Password Field',)
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
             return "********"
@@ -230,7 +230,7 @@ class CPSLinkWidget(CPSWidget):
 
     field_types = ('CPS String Field', 'CPS String Field', 'CPS String Field')
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
@@ -238,8 +238,8 @@ class CPSLinkWidget(CPSWidget):
         datastructure[widget_id + '_content'] = datamodel[self.fields[1]]
         datastructure[widget_id + '_title'] = datamodel[self.fields[2]]
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         href = datastructure[widget_id]
         content = datastructure[widget_id + '_content']
@@ -268,8 +268,8 @@ class CPSLinkWidget(CPSWidget):
 
         return not err
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         href = datastructure[self.getWidgetId()]
         content = datastructure[self.getWidgetId() + '_content']
         title = datastructure[self.getWidgetId() + '_title']
@@ -311,20 +311,20 @@ class CPSCheckBoxWidget(CPSWidget):
     display_true = "Yes"
     display_false = "No"
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = not not datamodel[self.fields[0]]
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         value = datastructure[self.getWidgetId()]
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = not not value
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
             # XXX L10N Should expand view mode to be able to do i18n.
@@ -381,13 +381,13 @@ class CPSTextAreaWidget(CPSWidget):
 
     all_render_modes = ['pre', 'stx', 'text']
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         try:
@@ -403,8 +403,8 @@ class CPSTextAreaWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
             render_mode = self.render_mode
@@ -454,7 +454,7 @@ class CPSLinesWidget(CPSTextAreaWidget):
     all_render_modes = []
 
  
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
@@ -464,8 +464,8 @@ class CPSLinesWidget(CPSTextAreaWidget):
         # XXX make a copy of the list ?
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         v = value # Zope handle :lines automagically
@@ -478,8 +478,8 @@ class CPSLinesWidget(CPSTextAreaWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
             if not value:
@@ -529,13 +529,13 @@ class CPSSelectWidget(CPSWidget):
             raise ValueError("Missing vocabulary %s" % self.vocabulary)
         return vocabulary
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         try:
@@ -551,8 +551,8 @@ class CPSSelectWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         if mode == 'view':
@@ -609,7 +609,7 @@ class CPSMultiSelectWidget(CPSWidget):
             raise ValueError("Missing vocabulary %s" % self.vocabulary)
         return vocabulary
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
@@ -619,8 +619,8 @@ class CPSMultiSelectWidget(CPSWidget):
         # XXX make a copy of the list ?
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         if (not _isinstance(value, ListType) and
@@ -643,8 +643,8 @@ class CPSMultiSelectWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         if mode == 'view':
@@ -708,13 +708,13 @@ class CPSIntWidget(CPSWidget):
     max_value = 0
     thousands_separator = ''
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         value = datastructure[self.getWidgetId()]
 
         #put value back in a python-parsable state as thousands
@@ -739,8 +739,8 @@ class CPSIntWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = str(datastructure.getDataModel()[self.getWidgetId()])
         #format number according to widget prefs
         if self.thousands_separator:
@@ -793,13 +793,13 @@ class CPSLongWidget(CPSWidget):
     max_value = 0
     thousands_separator = ''
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -828,8 +828,8 @@ class CPSLongWidget(CPSWidget):
                 ok = 1
         return ok
 
-    def render(self, mode, datastructure):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = str(datastructure.getDataModel()[self.getWidgetId()])
         #format number according to widget prefs
         if self.thousands_separator:
@@ -888,13 +888,13 @@ class CPSFloatWidget(CPSWidget):
     decimals_separator = ','
     decimals_number = 0
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         value = datastructure[self.getWidgetId()]
 
         #put value back in a python-parsable state as decimal/thousands
@@ -921,8 +921,8 @@ class CPSFloatWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         value = str(datastructure.getDataModel()[self.getWidgetId()])
         #format number according to widget prefs
         if self.decimals_number:
@@ -982,16 +982,16 @@ class CPSCustomizableWidget(CPSWidget):
     def getFieldTypes(self):
         return self._getType().field_types
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         return self._getType().prepare(self, datastructure)
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         return self._getType().validate(self, datastructure)
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         return self._getType().render(self, mode, datastructure)
 
 InitializeClass(CPSCustomizableWidget)
@@ -1056,7 +1056,7 @@ class CPSCustomizableWidgetType(CPSWidgetType):
 
     security.declarePrivate('validate')
     def validate(self, widget, datastructure):
-        """Update datamodel from user data in datastructure."""
+        """Validate datastructure and update datamodel."""
         if not self.prepare_validate_method:
             raise RuntimeError("Missing Validate Method in widget type %s"
                                % self.getId())
@@ -1097,7 +1097,7 @@ class CPSDateWidget(CPSWidget):
     view_format = 'medium'
     time_setting = 1
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         v = datamodel[self.fields[0]]
@@ -1123,8 +1123,8 @@ class CPSDateWidget(CPSWidget):
         datastructure[widget_id+'_hour'] = hour or '12'
         datastructure[widget_id+'_minute'] = minute or '00'
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
@@ -1163,8 +1163,8 @@ class CPSDateWidget(CPSWidget):
             datamodel[field_id] = v
             return 1
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         render_method = 'widget_date_render'
         meth = getattr(self, render_method, None)
         if meth is None:
@@ -1202,7 +1202,7 @@ class CPSFileWidget(CPSWidget):
     deletable = 1
     size_max = 4*1024*1024
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
@@ -1217,8 +1217,8 @@ class CPSFileWidget(CPSWidget):
         datastructure[widget_id + '_choice'] = ''
 
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
@@ -1255,8 +1255,8 @@ class CPSFileWidget(CPSWidget):
 
         return not err
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         render_method = 'widget_file_render'
         meth = getattr(self, render_method, None)
         if meth is None:
@@ -1307,7 +1307,7 @@ class CPSImageWidget(CPSWidget):
     display_height = 0
     display_width = 0
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
@@ -1316,8 +1316,8 @@ class CPSImageWidget(CPSWidget):
         datastructure[widget_id + '_choice'] = ''
 
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
@@ -1362,8 +1362,8 @@ class CPSImageWidget(CPSWidget):
         return not err
 
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         render_method = 'widget_image_render'
         meth = getattr(self, render_method, None)
         if meth is None:
@@ -1413,13 +1413,13 @@ class CPSRichTextEditorWidget(CPSTextAreaWidget):
 
     all_render_modes = ['pre', 'stx', 'text']
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         value = datastructure[self.getWidgetId()]
         try:
             v = str(value)
@@ -1433,8 +1433,8 @@ class CPSRichTextEditorWidget(CPSTextAreaWidget):
             ok = 1
         return ok
 
-    def render(self, mode, datastructure, OLDdatamodel=None):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         # XXXX
         # Not finished !! Just for tests
         value = datastructure[self.getWidgetId()]
@@ -1510,8 +1510,8 @@ class CPSExtendedSelectWidget(CPSSelectWidget):
     """Extended Select widget."""
     meta_type = "CPS ExtendedSelect Widget"
 
-    def render(self, mode, datastructure):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
 
         if mode == 'view':
             return CPSSelectWidget.render(self, mode, datastructure)
@@ -1556,13 +1556,13 @@ class CPSInternalLinksWidget(CPSWidget):
     new_window = 0
     size = 0
 
-    def prepare(self, datastructure):
+    def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
-    def validate(self, datastructure):
-        """Update datamodel from user data in datastructure."""
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         err = 0
@@ -1581,8 +1581,8 @@ class CPSInternalLinksWidget(CPSWidget):
 
         return not err
 
-    def render(self, mode, datastructure):
-        """Render this widget from the datastructure or datamodel."""
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
         if mode not in ('view', 'edit'):
             raise RuntimeError('unknown mode %s' % mode)
 
