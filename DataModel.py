@@ -140,13 +140,14 @@ class DataModel(UserDict):
         if ob is not old_ob:
             self._setObject(ob)
 
-    def _setObject(self, ob):
-        """Set the object this datamodel is about.
+    def _setObject(self, ob, proxy=None):
+        """Set the object (and proxy) this datamodel is about.
 
         Used when a datamodel is switched to a new editable content,
         or to a newly created object.
         """
         self._ob = ob
+        self._proxy = proxy
         for adapter in self._adapters:
             adapter.setContextObject(ob)
 
