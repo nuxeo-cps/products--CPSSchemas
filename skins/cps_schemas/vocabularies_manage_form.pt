@@ -23,7 +23,7 @@
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_edit" i18n:attributes="value">
+        <input type="submit" value="button_change" i18n:attributes="value">
       </td>
     </tr>
   </table>
