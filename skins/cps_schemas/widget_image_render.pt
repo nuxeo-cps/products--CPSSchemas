@@ -1,6 +1,7 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    current_name options/current_name;
+                   empty_file python:current_name == '-';
                    mimetype options/mimetype;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
