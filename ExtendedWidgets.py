@@ -418,45 +418,6 @@ class CPSRichTextEditorWidget(CPSWidget):
             # To change
             return structured_text(value)
         elif mode == 'edit':
-            #
-            # XXXX : version that has to work
-            # For multiple rte within popup's
-            #
-            #return """
-            #<script language="JavaScript" type="text/javascript">
-            #<!--
-            #function change_content(to_put) {
-            #  form = document.getElementById('form') ;
-            #  w = form.getElementById('%s') ;
-            #  wt.value = to_put ;
-            #}
-            #//-->
-            #</script>
-            #
-            #<script language="JavaScript" type="text/javascript">
-            #function open_rte_edit(value, input_id) {
-            #  args='?value='+value+'&input_id='+input_id ;
-            #  selector_window = window.open('widget_rte_edit'+args, '%s', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=0, dependent=1, width=500, height=400')
-            #  if(!selector_window.opener) selector_window.opener = window
-            #}
-            #//-->
-            #</script>
-            #%s
-            #<a href="javascript:open_rte_edit('%s', '%s')">Editer</a>
-            #<a href="javascript:change_content()">Change</a>
-            #""" %(self.getHtmlWidgetId(),
-            #      self.getHtmlWidgetId(),
-            #      renderHtmlTag('textarea',
-            #                    name=self.getHtmlWidgetId(),
-            #                    cols=self.width,
-            #                    rows=self.height,
-            #                    contents=value,
-            #                    css_class=self.css_class),
-            #      str(value), self.getHtmlWidgetId() )
-
-            #
-            # Tmp dirty solution
-            #
             render_method = 'widget_rte_render'
             meth = getattr(self, render_method, None)
             if meth is None:
