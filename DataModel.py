@@ -44,7 +44,10 @@ from UserDict import UserDict
 from Missing import MV # Missing.Value
 
 from Globals import InitializeClass
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, Unauthorized
+
+from Products.CMFCore.utils import _checkPermission
+from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 
@@ -103,9 +106,16 @@ class DataModel(UserDict):
                     value = field.getDefault()
                 self.data[field_id] = value
 
-    def _commit(self):
+    def _commit(self, check_perms=1):
         """Commit modified data into object."""
         ob = self._ob
+
+        # Check permission on the object.
+        # This is global and in addition to field-level checks.
+        if check_perms and not _checkPermission(ModifyPortalContent, ob):
+            LOG("_commit", DEBUG, "Unauthorized to modify object %s" % (ob,))
+            raise Unauthorized("Cannot modify object")
+
         for schema, adapter in self._schemas.values():
             adapter.setData(self.data)
 
