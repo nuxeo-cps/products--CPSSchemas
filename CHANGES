@@ -2,19 +2,23 @@ ZODB Requires:
 ~~~~~~~~~~~~~~
 - Image widget resize require PIL library
   read CPSDefault/doc/HOWTO.install_CPS3 to know how to install PIL
+
 New features:
 ~~~~~~~~~~~~~
-- if PIL is installed ImageWidget resize image bigger than display_widhtxdisplay_height
-  if allow_resize is set then user can choose a smaller format, list of size format
-  is defined in getImgSizes.py, the imported image will be resized if bigger.
+- if PIL is installed ImageWidget resize image bigger than
+  display_widhtxdisplay_height if allow_resize is set then user can choose a
+  smaller format, list of size format is defined in getImgSizes.py, the
+  imported image will be resized if bigger.
 - P2 #104: New Compound Widget Type, enabling the creation of compound widgets
   by defining a render skin in the type, and the subwidget ids in the widget,
   does not yet work in flexible mode.
+
 Bug fixes:
 ~~~~~~~~~~
 - fixing TextArea render format text, pre, stx and html default is text
 - If you forgot to set a vocabulary for a select widget, you got a very
   unhelpful error message.
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Possibility to define different render modes such as edit and 
