@@ -153,15 +153,16 @@ class CPSDocumentMixin(ExtensionClass.Base):
                                                layout_id=layout)
 
     security.declareProtected(ModifyPortalContent, 'renderEdit')
-    def renderEdit(self, request=None, layout=None):
-        """Attempt to modify the object from the request, and return
-        the rendering of the error form.
+    def renderEdit(self, request=None, mode='edit', errmode='edit',
+                   layout=None):
+        """Modify the object from the request (if present), and return
+        the rendering.
 
-        If not error, render the view mode.
+        Renders the mode, or the errmode if a validation error occurred.
         """
         ti = self.getTypeInfo()
         return ti.renderEditObject(self, request, layout_id=layout,
-                                   errmode='edit', okmode='edit')
+                                   mode=mode, errmode=errmode)
 
     # XXX make this a WorkflowMethod
     security.declareProtected(ModifyPortalContent, 'edit')

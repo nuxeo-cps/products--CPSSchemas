@@ -355,21 +355,27 @@ class FlexibleTypeInformation(TypeInformation):
                                        datastructure=ds, datamodel=dm)
 
     security.declarePrivate('renderEditObject')
-    def renderEditObject(self, ob, request=None, layout_id=None,
-                         errmode='edit', okmode='edit'):
-        """Maybe modify the object from request, and renders to new mode."""
+    def renderEditObject(self, ob, request=None, mode='edit', errmode='edit',
+                         layout_id=None):
+        """Modify the object from request, and renders to new mode.
+
+        If request is None, the object is not modified and is rendered
+        in the specified mode.
+
+        If request is not None, the parameters are validated and the
+        object modified, and rendered in the specified mode. If there is
+        a validation error, the object is rendered in mode errmode.
+        """
         dm = self.getDataModel(ob)
         ds = DataStructure()
         layoutob = self.getLayout(layout_id, ob)
         layoutdata = layoutob.getLayoutData(ds, dm)
-        if (request is not None
-            and request.has_key('cpsdocument_edit_button')): # XXX customizable
+        if request is not None:
             ds.updateFromMapping(request.form)
             ok = layoutob.validateLayout(layoutdata, ds, dm)
             if ok:
                 # Update the object from dm.
                 dm._commit()
-                mode = okmode
                 # CMF/CPS stuff.
                 ob.reindexObject()
                 evtool = getToolByName(self, 'portal_eventservice', None)
@@ -379,7 +385,6 @@ class FlexibleTypeInformation(TypeInformation):
                 mode = errmode
         else:
             ok = 1
-            mode = okmode
         return self._renderLayoutStyle(ob, mode, layout=layoutdata,
                                        datastructure=ds, datamodel=dm, ok=ok)
 
