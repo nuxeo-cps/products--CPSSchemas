@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-11-04 16:00default\n"
+"POT-Creation-Date: 2003-11-07 16:01default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -98,6 +98,16 @@ msgstr ""
 msgid "cpsschemas_label_link_title"
 msgstr ""
 
+#.   <span>cpsschemas_render_format</span>
+#: from ../skins/cps_schemas/widget_textarea_render.pt
+msgid "cpsschemas_render_format"
+msgstr ""
+
+#.   <span>cpsschemas_render_position</span>
+#: from ../skins/cps_schemas/widget_textarea_render.pt
+msgid "cpsschemas_render_position"
+msgstr ""
+
 #.   <th>
 #.           Click on the chosen value
 #.         </th>
@@ -167,4 +177,25 @@ msgid "cpsschemas_err_float"
 msgstr ""
 
 msgid "jscalendar_date_fmt"
+msgstr ""
+
+msgid "cpsschemas_rposition_normal"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_left"
+msgstr ""
+
+msgid "cpsschemas_rformat_text"
+msgstr ""
+
+msgid "cpsschemas_rformat_html"
+msgstr ""
+
+msgid "cpsschemas_rformat_stx"
+msgstr ""
+
+msgid "cpsschemas_rformat_pre"
 msgstr ""

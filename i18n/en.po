@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-04 16:00default\n"
-"PO-Revision-Date: 2003-11-04 16:01+0100\n"
+"POT-Creation-Date: 2003-11-07 16:01default\n"
+"PO-Revision-Date: 2003-11-07 16:03+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -97,6 +97,16 @@ msgstr "URL"
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
 
+#.   <span>cpsschemas_render_format</span>
+#: from ../skins/cps_schemas/widget_textarea_render.pt
+msgid "cpsschemas_render_format"
+msgstr "Format: "
+
+#.   <span>cpsschemas_render_position</span>
+#: from ../skins/cps_schemas/widget_textarea_render.pt
+msgid "cpsschemas_render_position"
+msgstr "Position: "
+
 #.   <th>
 #.           Click on the chosen value
 #.         </th>
@@ -167,4 +177,28 @@ msgstr "invalid float"
 
 msgid "jscalendar_date_fmt"
 msgstr "m/d/y"
+
+msgid "cpsschemas_rposition_normal"
+msgstr "Page width"
+
+msgid "cpsschemas_rposition_col_right"
+msgstr "Right column"
+
+msgid "cpsschemas_rposition_col_left"
+msgstr "Left column"
+
+msgid "cpsschemas_rformat_text"
+msgstr "Text"
+
+msgid "cpsschemas_rformat_html"
+msgstr "Html"
+
+msgid "cpsschemas_rformat_stx"
+msgstr "Zope structured text"
+
+msgid "cpsschemas_rformat_pre"
+msgstr "Html preformated"
+
+#~ msgid "cpsschemas_render_display"
+#~ msgstr "Position :"
 
