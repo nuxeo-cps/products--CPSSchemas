@@ -3,7 +3,10 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added Lines widget, dealing with String List fields. This allows
+  filling string lists with free text entered in a textarea.
+  Each line of input text will be a string in the string list, ala
+  ZMI way of dealing with line fields.
 Bug fixes:
 ~~~~~~~~~~
 -
