@@ -78,6 +78,11 @@ class Field(SimpleItemWithProperties):
         if kw.has_key('write_permission'):
             self.write_permission = kw['write_permission']
 
+    security.declarePrivate('getDefault')
+    def getDefault(self):
+        """Get the default value for this field."""
+        return self.default
+
     security.declarePublic('getFieldId')
     def getFieldId(self):
         """Get this field's id."""
