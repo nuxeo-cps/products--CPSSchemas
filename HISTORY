@@ -1,4 +1,36 @@
 *******************************************
+** CPSDocument V0.2.0 [R1 build 2003-09/05-16:24 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- CPSDefault layout (layout_default_)
+- cool News Document
+Bug fixes:
+~~~~~~~~~~
+- fixing bad portal type icon init
+- fixing non i18n action name
+- fixing search on is_indexed field (install bug)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- move CPSDocument[Schemas|Layers|Types|Widgets] to getDocument* 
+  document can be define in the application skin using getCustomDocument*
+- i18n of widgets error messages
+- Widget Image handle dipslay size
+- Widget have different title for view (title_view) and edit (title)
+- i18n of title title_view and description
+- css_class widget attribute is now used for view mode, edition use
+  default css row/fields ...
+- adding get_size method
+- adding CPSDefault hook getAdditionalContentInfo
+- adding hidden_view and hidden_edit attribute for layout
+- when creating a field/widget through the manage_add* methods, all
+  properties can be initialized directly as keyword arguments
+- renamed Pwd Widget and Field into Password
+- add the possibility for string and textarea widgets to be mandatory
+*******************************************
 ** CPSDocument V0.1.3 [R1 build 2003-09/02-09:19 by anguenot]
 
 ZODB Requires:
