@@ -395,7 +395,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
                 LOG('CPSAttachedFileWidget', DEBUG,
                     'validate change set %s' % `file`)
             datamodel[field_id] = file
-            self.prepare(datastructure)
+        self.prepare(datastructure)
         return 1
 
     def doesNotValidate(self, err, err_mapping, file, datastructure):

@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fixed the commit datastrusture problem that had been introduced during the lasts
+  CPSAttachedFileWidget modifications (it was an indentation problem).
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
