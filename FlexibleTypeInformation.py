@@ -119,20 +119,7 @@ factory_type_information = (
                   'action': 'metadata_edit_form',
                   'permissions': (ModifyPortalContent,),
                   },
-                 # CPS actions
-                 {'id': 'isproxytype',
-                  'name': 'isproxytype',
-                  'action': 'document',
-                  'permissions': (None,),
-                  'visible': 0,
-                  },
-                 {'id': 'issearchabledocument',
-                  'name': 'issearchabledocument',
-                  'action': 'document',
-                  'permissions': (None,),
-                  'visible': 0,
-                  },
-                 )
+                 ),
      },
     )
 
@@ -156,6 +143,10 @@ class FlexibleTypeInformation(TypeInformation):
          ) +
         TypeInformation._advanced_properties +
         (
+         {'id':'cps_is_searchable', 'type': 'boolean', 'mode':'w',
+          'label':'CPS Searchable'},
+         {'id':'cps_is_proxytype', 'type': 'boolean', 'mode':'w',
+          'label':'CPS Proxytype'},
          {'id': 'schemas', 'type': 'tokens', 'mode': 'w',
           'label': 'Schemas'},
          {'id': 'default_layout', 'type': 'string', 'mode': 'w',
@@ -173,6 +164,8 @@ class FlexibleTypeInformation(TypeInformation):
     default_layout = ''
     layout_style_prefix = ''
     flexible_layouts = []
+    cps_is_searchable = 1
+    cps_is_proxytype = 1
 
     def __init__(self, id, **kw):
         TypeInformation.__init__(self, id, **kw)
