@@ -203,17 +203,6 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         """Get the layout definition."""
         return deepcopy(self._layoutdef)
 
-    security.declarePrivate('getStandardWidgetModeChooser')
-    def getStandardWidgetModeChooser(self, layout_mode, datastructure):
-        """Get a function to choose the mode to render a widget.
-        """
-        datamodel = datastructure.getDataModel()
-        def chooser(widget,
-                    # The following needed for python 2.1
-                    layout_mode=layout_mode, datamodel=datamodel):
-            return widget.getModeFromLayoutMode(layout_mode, datamodel)
-        return chooser
-
     security.declarePrivate('removeHiddenWidgets')
     def removeHiddenWidgets(self, layout_structure):
         """Remove cells of hidden widgets.
@@ -241,7 +230,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 widget.prepare(datastructure)
 
     security.declarePrivate('computeLayoutStructure')
-    def computeLayoutStructure(self, datastructure, widget_mode_chooser):
+    def computeLayoutStructure(self, layout_mode, datamodel):
         """Compute the layout structure.
 
         Chooses the mode for all the widgets. Removes hidden ones.
@@ -265,7 +254,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         widgets = {}
         for widget_id, widget in self.items():
             if not widget.isHidden():
-                mode = widget_mode_chooser(widget)
+                mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
                 widgets[widget_id] = {
                     'widget': widget,
                     'widget_mode': mode,
