@@ -122,11 +122,15 @@ class DiskFile(File, VTM):
     def getData(self):
         if self.is_new_file:
             filename = self.getFullFilename(self._new_filename)
-        else:
+
+        if not self.is_new_file or not os.path.exists(filename):
             filename = self.getFullFilename()
         file = open(filename, 'rb')
         data = file.read()
         return data
+
+    def __str__(self):
+        return str(self.getData())
 
     security.declareProtected(View, 'data')
     data = ComputedAttribute(getData, 1)

@@ -6,7 +6,9 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- DiskFile now overrides __str__ to use getData directly.
+- If the newly uploaded version of a file doesn't exist on disk,
+  DiskFile now falls back to the old one.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
