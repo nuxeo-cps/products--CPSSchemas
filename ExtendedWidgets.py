@@ -184,7 +184,7 @@ class CPSDateTimeWidget(CPSWidget):
             d = str(v.day())
             m = str(v.month())
             y = str(v.year())
-            locale = self.Localizer.default.get_selected_language()
+            locale = self.Localizer.get_selected_language()
             if locale in ('en', 'hu', ):
                 date = m+'/'+d+'/'+y
             else:
@@ -220,7 +220,7 @@ class CPSDateTimeWidget(CPSWidget):
             datastructure.setError(widget_id, 'cpsschemas_err_date')
             return 0
 
-        locale = self.Localizer.default.get_selected_language()
+        locale = self.Localizer.get_selected_language()
         if locale in ('en', 'hu', ):
             m, d, y = date.split('/')
         else:
