@@ -130,9 +130,9 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         ('hidden_if_expr', 'hidden_if_expr_c'),
         )
 
-    def __init__(self, id, widget_type, **kw):
+    def __init__(self, id, widgettype, **kw):
         self._setId(id)
-        self.widget_type = widget_type
+        self.widget_type = widgettype
         self.manage_changeProperties(**kw)
 
     security.declarePublic('getWidgetId')
@@ -272,9 +272,9 @@ class CPSWidget(Widget):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, id, widget_type, **kw):
+    def __init__(self, id, widgettype, **kw):
         #self.fields = [id]
-        Widget.__init__(self, id, widget_type, **kw)
+        Widget.__init__(self, id, widgettype, **kw)
 
     security.declarePrivate('isHidden')
     def isHidden(self):
