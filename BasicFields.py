@@ -69,7 +69,6 @@ class CPSDateTimeField(CPSField):
     _properties = CPSField._properties + (
         {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
          'label': 'Allow None'},
-        },
         )
     _properties = propertiesWithType(_properties, 'default', 'date')
     allow_none = 1
