@@ -220,11 +220,11 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         if not hasattr(aq_base(ob), field_id):
             # Use default from field.
             return field.getDefault()
+
         meth = getattr(ob, field_id)
-        if not callable(meth):
-            raise ValueError(
-                "Invalid MetaData field, %s not callable" % field_id)
-        return meth()
+        if callable(meth):
+            return meth()
+        return meth
 
     def _setFieldData(self, field_id, field, value):
         """Set data for one field.
@@ -232,6 +232,10 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         Calls the setter method.
         """
         ob = self._ob
+        if field_id in ('Coverage', 'Source', 'Relation'):
+            # finish the CMF Dublin Core implementation
+            setattr(ob, field_id, value)
+            return
         meth_name = 'set' + field_id
         if not hasattr(aq_base(ob), meth_name):
             # skip metadata without setter method
