@@ -70,8 +70,7 @@ class SchemasTool(UniqueObject, Folder):
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(schema.absolute_url()+'/manage_main'
                                       '?manage_tabs_message=Added.')
-
-
-
+        else:
+            return schema
 
 InitializeClass(SchemasTool)
