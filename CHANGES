@@ -1,15 +1,12 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
-
 New features:
 ~~~~~~~~~~~~~
 -
-
 Bug fixes:
 ~~~~~~~~~~
--
-
+- renderHtmlTag unable to generate <option value=""> tag
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - '+' is allowed in email addresses.
