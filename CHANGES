@@ -17,4 +17,6 @@ New internal features:
 - DataModel now also provides the context where the document is created or
   edited.
 - Internal Links widget.
+- Float can be restricted to a range and have custom separators for thousands
+  and decimal part.
 -
