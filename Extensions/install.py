@@ -31,6 +31,8 @@
 #     pr(portal.cpsdocument_installer())
 
 import os
+from App.Extensions import getPath
+from re import match
 from zLOG import LOG, INFO, DEBUG
 
 def install(self):
@@ -225,6 +227,35 @@ def install(self):
              ptype, '.cps_workflow_configuration', sections_id))
         wfc.manage_addChain(portal_type=ptype,
                             chain='section_content_wf')
+
+
+    # importing .po files
+    mcat = portal['Localizer']['default']
+    pr(" Checking available languages")
+    podir = os.path.join('Products', 'CPSDocument')
+    popath = getPath(podir, 'i18n')
+    if popath is None:
+        pr(" !!! Unable to find .po dir")
+    else:
+        pr("  Checking installable languages")
+        langs = []
+        avail_langs = mcat.get_languages()
+        pr("    Available languages: %s" % str(avail_langs))
+        for file in os.listdir(popath):
+            if file.endswith('.po'):
+                m = match('^.*([a-z][a-z])\.po$', file)
+                if m is None:
+                    pr( '    Skipping bad file %s' % file)
+                    continue
+                lang = m.group(1)
+                if lang in avail_langs:
+                    lang_po_path = os.path.join(popath, file)
+                    lang_file = open(lang_po_path)
+                    pr("    Importing %s into '%s' locale" % (file, lang))
+                    mcat.manage_import(lang, lang_file)
+                else:
+                    pr( '    Skipping not installed locale for file %s' % file)
+
 
     pr("End of specific CPSDocument install")
     return pr('flush')
