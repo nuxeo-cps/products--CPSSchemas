@@ -121,6 +121,14 @@ class CPSWidget(Widget):
         self.fields = [id]
         Widget.__init__(self, id, widget_type, **kw)
 
+    security.declarePrivate('isTemplateWidget')
+    def isTemplate(self):
+        """Check is the widget is a template used for flexible layout
+        or if is a true widget that reference data"""
+        if len(self.fields) and self.fields[0] == '?':
+            return 1
+        return 0
+
     fields = []
     is_required = 0
     label = ''
@@ -137,6 +145,8 @@ class CPSWidget(Widget):
     #
 
     _properties = (
+        {'id': 'title', 'type': 'string', 'mode': 'w',
+         'label': 'Title'},
         {'id': 'fields', 'type': 'tokens', 'mode': 'w',
          'label': 'Fields'},
         {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
