@@ -313,6 +313,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     manage_export = DTMLFile('zmi/vocabulary_export', globals())
 
     security.declareProtected(ManagePortal, 'manage_main')
+    manage_editVocabulary._setName('manage_main')
     manage_main = manage_editVocabulary
 
     security.declarePrivate('_checkWriteAllowed')

@@ -116,6 +116,7 @@ class CPSSchema(FolderWithPrefixedIds):
     manage_export = DTMLFile('zmi/schema_export', globals())
 
     security.declareProtected(ManagePortal, 'manage_main')
+    manage_editSchema._setName('manage_main')
     manage_main = manage_editSchema
 
     security.declareProtected(ManagePortal, 'manage_addField')
