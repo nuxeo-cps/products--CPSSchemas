@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-12-18 13:10default\n"
+"POT-Creation-Date: 2003-12-18 17:38default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -18,6 +18,15 @@ msgstr ""
 "Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+
+#.   <input value="button_add" name="vocab_addkey:method" type="submit">
+#.   </input>
+#.   <input value="button_add" type="submit">
+#.         </input>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: ../skins/cps_schemas/vocab_manage_form.pt
+msgid "button_add"
+msgstr ""
 
 #.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
 #.         </input>
@@ -34,6 +43,25 @@ msgstr ""
 #.   </input></input>
 #: from ../skins/cps_schemas/popup_rte_form.pt
 msgid "button_cancel"
+msgstr ""
+
+#.   <input value="button_delete" name="vocab_delkeys:method" type="submit">
+#.   </input>
+#.   <input value="button_delete" type="submit">
+#.         </input>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: ../skins/cps_schemas/vocab_manage_form.pt
+msgid "button_delete"
+msgstr ""
+
+#.   <input value="button_edit" name="vocab_update:method" type="submit">
+#.     <input value="button_delete" name="vocab_delkeys:method" type="submit">
+#.   </input></input>
+#.   <input value="button_edit" type="submit">
+#.         </input>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+#: ../skins/cps_schemas/vocab_manage_form.pt
+msgid "button_edit"
 msgstr ""
 
 #.   <input value="button_ok" class="context" type="submit">
@@ -122,6 +150,63 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_add</h2>
+#: from ../skins/cps_schemas/vocab_manage_form.pt
+msgid "cpsschemas_vocabulary_add"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_available</h2>
+#: from ../skins/cps_schemas/vocab_manage_form.pt
+msgid "cpsschemas_vocabulary_available"
+msgstr ""
+
+#.   <span class="description">cpsschemas_vocabulary_contains
+#.     ${voc_entries (tal replace="python:len(keys)")}
+#.     entry(ies)</span>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_delete</h2>
+#: from ../skins/cps_schemas/vocab_manage_form.pt
+msgid "cpsschemas_vocabulary_delete"
+msgstr ""
+
+#.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+msgid "cpsschemas_vocabulary_edit ${voc_id}"
+msgstr ""
+
+#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+msgid "cpsschemas_vocabulary_entry_add"
+msgstr ""
+
+#.   <th>Id:</th>
+#: from ../skins/cps_schemas/vocab_manage_form.pt
+msgid "cpsschemas_vocabulary_id"
+msgstr ""
+
+#.   <th>Key:</th>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+msgid "cpsschemas_vocabulary_key"
+msgstr ""
+
+#.   <h1>cpsschemas_vocabulary_manage</h1>
+#: from ../skins/cps_schemas/vocab_manage_form.pt
+msgid "cpsschemas_vocabulary_manage"
+msgstr ""
+
+#.   <th>MsgId:</th>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+msgid "cpsschemas_vocabulary_msgid"
+msgstr ""
+
+#.   <th>Value:</th>
+#: from ../skins/cps_schemas/vocab_edit_form.pt
+msgid "cpsschemas_vocabulary_value"
 msgstr ""
 
 #.   <em content="err" style="color: red">err</em>
@@ -271,4 +356,28 @@ msgid "cpsschemas_label_link_content"
 msgstr ""
 
 msgid "cpsschemas_label_link_title"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_updated"
 msgstr ""
