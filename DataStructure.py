@@ -41,7 +41,8 @@ class DataStructure(UserDict):
     It's basically two dictionaries, one for data and one for errors.
     The data dictionary is exposed through the standard dictionary
     interface, while the error dictionary is exposed through specific
-    methods.
+    methods. There are actually two dictionaries for the errors, as
+    we may want to store a mapping of variable -> value.
     """
     # Bugs/features:
     # - __setitem__ only updates the data, the errors will stay
@@ -117,8 +118,12 @@ class DataStructure(UserDict):
     def hasError(self, key):
         return self.errors.has_key(key)
 
-    def setError(self, key, message):
+    def setError(self, key, message, mapping=None):
         self.errors[key] = message
+        self.error_mappings[key] = mapping
+
+    def getErrorMapping(self, key):
+        return self.error_mappings.get(key) or {}
 
     # XXX: Not used, seemingly
     def delError(self, key):
