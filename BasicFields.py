@@ -154,10 +154,38 @@ InitializeClass(CPSDateTimeField)
 class CPSFileField(CPSField):
     """File field."""
     meta_type = "CPS File Field"
+    _properties = CPSField._properties + (
+        {'id': 'suffix_html', 'type': 'string', 'mode': 'w',
+         'label': 'Suffix for field containing HTML conversion'},
+        {'id': 'suffix_text', 'type': 'string', 'mode': 'w',
+         'label': 'Suffix for field containing Text conversion'},
+        )
+    suffix_html = ''
+    suffix_text = ''
 
     def getDefault(self):
         """Get the default file object."""
         return None
+
+    def _getDependantFieldId(self, schema, suffix):
+        """Get a dependant field id described by the suffix."""
+        if not suffix:
+            return None
+        id = self.getFieldId() + suffix
+        if schema.has_key(id):
+            return id
+        else:
+            return None
+
+    def computeDependantFields(self, schema, data):
+        """Compute dependant fields."""
+        # XXX dummy implementation
+        html_field_id = self._getDependantFieldId(schema, self.suffix_html)
+        if html_field_id is not None:
+            data[html_field_id] = 'html...' # XXX
+        text_field_id = self._getDependantFieldId(schema, self.suffix_text)
+        if text_field_id is not None:
+            data[text_field_id] = 'text...' # XXX
 
     def validate(self, value):
         if not value:

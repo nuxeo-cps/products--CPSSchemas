@@ -21,3 +21,5 @@ New internal features:
 - Vocabularies are now used for all "choice" widgets.
 - renaming widget properties: 'title' to 'label_edit' and 'title_view' into 'label'
 - Use a first version of simple storage adapters.
+- Added a notion of dependant fields so that we can compute other fields
+  when one is modified. Will be used for file preview/indexing for instance.

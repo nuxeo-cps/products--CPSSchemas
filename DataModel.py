@@ -96,8 +96,7 @@ class DataModel(UserDict):
     def _fetch(self):
         """Fetch the data into local dict for user access."""
         for schema, adapter in self._schemas.values():
-            data = adapter.getData()
-            self.data.update(data)
+            self.data.update(adapter.getData())
 
     def _setEditableFromProxy(self, proxy):
         """Set the editable object for this DataModel from a proxy.
@@ -145,8 +144,15 @@ class DataModel(UserDict):
             LOG("_commit", DEBUG, "Unauthorized to modify object %s" % (ob,))
             raise Unauthorized("Cannot modify object")
 
+        # Compute dependant fields.
+        data = self.data
         for schema, adapter in self._schemas.values():
-            adapter.setData(self.data)
+            for field_id, field in schema.items():
+                field.computeDependantFields(schema, data)
+
+        # Call the adapters to store the data.
+        for schema, adapter in self._schemas.values():
+            adapter.setData(data)
 
         # XXX temporary until we have a better API for this
         if hasattr(aq_base(ob), 'postCommitHook'):
