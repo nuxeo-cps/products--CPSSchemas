@@ -31,7 +31,6 @@ from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
 from AccessControl.PermissionRole import rolesForPermissionOn
 
-from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
@@ -135,6 +134,20 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     read_process_expression = None
     write_process_expression = None
 
+    _properties_post_process_split = (
+        ('acl_read_permissions_str', 'acl_read_permissions', ',;'),
+        ('acl_read_roles_str', 'acl_read_roles', ',; '),
+        ('acl_write_permissions_str', 'acl_write_permissions', ',;'),
+        ('acl_write_roles_str', 'acl_write_roles', ',; '),
+        )
+
+    _properties_post_process_tales = (
+        ('acl_read_expression_str', 'acl_read_expression'),
+        ('acl_write_expression_str', 'acl_write_expression'),
+        ('read_process_expression_str', 'read_process_expression'),
+        ('write_process_expression_str', 'write_process_expression'),
+        )
+
     def __init__(self, id, **kw):
         self.id = id
         self.manage_changeProperties(**kw)
@@ -170,39 +183,6 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             return id
 
     getFieldIdProperty = ComputedAttribute(getFieldId, 1)
-
-    def _postProcessProperties(self):
-        """Post-processing after properties change."""
-        # Split on ',' or ';' (or ' ').
-        for attr_str, attr, seps in (
-            ('acl_read_permissions_str', 'acl_read_permissions', ',;'),
-            ('acl_read_roles_str', 'acl_read_roles', ',; '),
-            ('acl_write_permissions_str', 'acl_write_permissions', ',;'),
-            ('acl_write_roles_str', 'acl_write_roles', ',; '),
-            ):
-            v = [getattr(self, attr_str)]
-            for sep in seps:
-                vv = []
-                for s in v:
-                    vv.extend(s.split(sep))
-                v = vv
-            v = [s.strip() for s in v]
-            v = filter(None, v)
-            setattr(self, attr_str, '; '.join(v))
-            setattr(self, attr, v)
-        # TALES expression.
-        for attr_str, attr in (
-            ('acl_read_expression_str', 'acl_read_expression'),
-            ('acl_write_expression_str', 'acl_write_expression'),
-            ('read_process_expression_str', 'read_process_expression'),
-            ('write_process_expression_str', 'write_process_expression'),
-            ):
-            p = getattr(self, attr_str).strip()
-            if p:
-                v = Expression(p)
-            else:
-                v = None
-            setattr(self, attr, v)
 
     #
     # Import/export

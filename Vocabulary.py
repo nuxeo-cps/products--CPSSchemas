@@ -157,28 +157,15 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
 
     acl_write_roles = ['Manager']
 
+    _properties_post_process_split = (
+        ('acl_write_roles_str', 'acl_write_roles', ',; '),
+        )
+
     def __init__(self, id, title='', dict={}, list=[], **kw):
         self.id = id
         self.title = title
         vocab = Vocabulary(dict=dict, list=list)
         self.setVocabulary(vocab)
-
-    def _postProcessProperties(self):
-        """Post-processing after properties change."""
-        # Split on ',' or ';' or ' '.
-        for attr_str, attr, seps in (
-            ('acl_write_roles_str', 'acl_write_roles', ',; '),
-            ):
-            v = [getattr(self, attr_str)]
-            for sep in seps:
-                vv = []
-                for s in v:
-                    vv.extend(s.split(sep))
-                v = vv
-            v = [s.strip() for s in v]
-            v = filter(None, v)
-            setattr(self, attr_str, '; '.join(v))
-            setattr(self, attr, v)
 
     security.declareProtected(ManagePortal, 'setVocabulary')
     def setVocabulary(self, vocab):

@@ -123,6 +123,10 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     hidden_if_expression = None
 
+    _properties_post_process_split = (
+        ('hidden_if_expression_str', 'hidden_if_expression'),
+        )
+
     def __init__(self, id, widget_type, **kw):
         self._setId(id)
         self.widget_type = widget_type
@@ -143,19 +147,6 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     def getHtmlWidgetId(self):
         """Get the html-form version of this widget's id."""
         return widgetname(self.getWidgetId())
-
-    def _postProcessProperties(self):
-        """Post-processing after properties change."""
-        # TALES expression.
-        for attr_str, attr in (
-            ('hidden_if_expression_str', 'hidden_if_expression'),
-            ):
-            p = getattr(self, attr_str).strip()
-            if p:
-                v = Expression(p)
-            else:
-                v = None
-            setattr(self, attr, v)
 
     #
     # Widget accessibility.

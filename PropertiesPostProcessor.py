@@ -26,6 +26,7 @@ from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.CMFCorePermissions import ManageProperties
+from Products.CMFCore.Expression import Expression
 
 
 class PropertiesPostProcessor(Base):
@@ -68,8 +69,30 @@ class PropertiesPostProcessor(Base):
             return self.manage_propertiesForm(self, REQUEST,
                                               manage_tabs_message=message)
 
+    _properties_post_process_split = ()
+    _properties_post_process_tales = ()
+
     def _postProcessProperties(self):
         """Post-processing after properties change."""
-        pass
+        # Split on some separator.
+        for attr_str, attr, seps in self._properties_post_process_split:
+            v = [getattr(self, attr_str)]
+            for sep in seps:
+                vv = []
+                for s in v:
+                    vv.extend(s.split(sep))
+                v = vv
+            v = [s.strip() for s in v]
+            v = filter(None, v)
+            setattr(self, attr_str, '; '.join(v))
+            setattr(self, attr, v)
+        # TALES expression.
+        for attr_str, attr in self._properties_post_process_tales:
+            p = getattr(self, attr_str).strip()
+            if p:
+                v = Expression(p)
+            else:
+                v = None
+            setattr(self, attr, v)
 
 InitializeClass(PropertiesPostProcessor)

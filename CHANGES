@@ -24,3 +24,4 @@ New internal features:
   needed.
 - computeLayoutStructure has a simpler API without the need for a chooser.
 - Added 'portal' to the namespace for field processing expression.
+- Factor out PropertiesPostProcessor usage.
