@@ -18,15 +18,32 @@ class BasicVocabularyTests(CPSSchemasTestCase):
         self.vocabs = self.portal.vocabs
 
     def makeOne(self):
-        l = ('foo', 'bar', 'meuh')
-        d = {'foo': 'F', 'bar': 'B', 'meuh': 'M'}
-        vocab = Vocabulary.CPSVocabulary('the_id', list=l, dict=d)
+        vocab = Vocabulary.CPSVocabulary(
+            'the_id', (('foo', 'F'), ('bar', 'B'), ('meuh', 'M')))
         self.vocabs._setObject('the_id', vocab)
         vocab = getattr(self.vocabs, 'the_id')
 
     def test_interface(self):
         verifyClass(IVocabulary, Vocabulary.Vocabulary)
         verifyClass(IVocabulary, Vocabulary.CPSVocabulary)
+
+
+    def testConstructor(self):
+        v = Vocabulary.CPSVocabulary(
+            'someid',
+            (('fyy', 'F'), ('bro', 'B')))
+        self.assertEquals(v.keys(), ['fyy', 'bro'])
+        self.assertEquals(v.values(), ['F', 'B'])
+        v = Vocabulary.CPSVocabulary(
+            'someid',
+            tuples=(('fyy', 'F'), ('bro', 'B')))
+        self.assertEquals(v.keys(), ['fyy', 'bro'])
+        self.assertEquals(v.values(), ['F', 'B'])
+        v = Vocabulary.CPSVocabulary(
+            'someid',
+            list=('fyy', 'bro'), dict={'fyy': 'F', 'bro': 'B'})
+        self.assertEquals(v.keys(), ['fyy', 'bro'])
+        self.assertEquals(v.values(), ['F', 'B'])
 
     def test_simple(self):
         self.makeOne()

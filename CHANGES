@@ -10,3 +10,5 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - '+' is allowed in email addresses.
+- Vocabularies are now preferrably initialized using the
+  syntax (('foo': "Foo"), ('bar': "Bar")).

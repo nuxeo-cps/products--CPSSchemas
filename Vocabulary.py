@@ -24,6 +24,7 @@ computed source.
 """
 
 from zLOG import LOG, DEBUG
+from types import StringType
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
@@ -50,15 +51,58 @@ class Vocabulary(Persistent):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, dict=None, list=None):
-        # XXX improve
+    def __init__(self, tuples=None, list=None, dict=None):
+        """Initialize a vocabularies.
+
+        Allowed parameter syntaxes are:
+
+          - Vocabulary((('foo', "Foo"), ('bar', "Bar")))
+
+            Preferred
+
+          - Vocabulary(('foo', 'bar'))
+
+            Values are same as keys.
+
+          - Vocabulary(tuples=(('foo', "Foo"), ('bar', "Bar")))
+
+            Same as first.
+
+          - Vocabulary(list=('foo', 'bar'), dict={'foo':"Foo", 'bar':"Bar"})
+
+            Old syntax.
+
+          - Vocabulary(dict={'foo':"Foo", 'bar':"Bar"})
+
+            Old syntax, key order is random.
+        """
         self.clear()
-        if dict is not None:
-            self._dict = dict.copy()
-            if list is not None:
-                self._list = builtins_list(list)
+        l = []
+        d = {}
+        if tuples is not None:
+            if tuples and isinstance(tuples[0], StringType):
+                # Vocabulary(('foo', 'bar'))
+                l = builtins_list(tuples)
+                for k in tuples:
+                    d[k] = k
             else:
-                self._list = dict.keys()
+                # Vocabulary((('foo', "Foo"), ('bar', "Bar")))
+                for k, v in tuples:
+                    l.append(k)
+                    d[k] = v
+        elif dict is not None:
+            d = dict.copy()
+            if list is not None:
+                # Vocabulary(list=('foo',), dict={'foo':"Foo"})
+                l = builtins_list(list)
+            else:
+                # Vocabulary(dict={'foo':"Foo", 'bar':"Bar"})
+                l = dict.keys()
+        else:
+            # Vocabulary()
+            pass
+        self._list = l
+        self._dict = d
 
     def __repr__(self):
         return '<Vocabulary %s>' % repr(self._dict)
@@ -164,10 +208,10 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
 
     user_modified = 0
 
-    def __init__(self, id, title='', dict={}, list=[], **kw):
+    def __init__(self, id, tuples=None, list=None, dict=None, title='', **kw):
         self.id = id
         self.title = title
-        vocab = Vocabulary(dict=dict, list=list)
+        vocab = Vocabulary(tuples=tuples, list=list, dict=dict)
         self.setVocabulary(vocab)
 
     security.declareProtected(ManagePortal, 'setVocabulary')
