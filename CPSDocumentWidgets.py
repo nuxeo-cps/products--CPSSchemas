@@ -1,9 +1,8 @@
-##Script Python "CPSDocumentWidgets"
-##parameters=
 #$Id$
 
 """
-List of widgets to be registered
+Here are defined the list of widgets to be registred
+Please, follow the same pattern to add new ones
 """
 
 widgets = {
