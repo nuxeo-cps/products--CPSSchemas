@@ -258,11 +258,8 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         if ob is None:
             # Creation
             return field.getDefault()
-        attr = self._field_attributes.get(field_id)
-        if attr is None:
-            raise ValueError("Field %s not allowed by MetaDataStorageAdapter"
-                             % field_id)
-        elif attr is ACCESSOR or attr is ACCESSOR_READ_ONLY:
+        attr = self._field_attributes.get(field_id, field_id)
+        if attr is ACCESSOR or attr is ACCESSOR_READ_ONLY:
             return getattr(ob, field_id)()
         elif hasattr(aq_base(ob), attr):
             return getattr(ob, attr)
@@ -277,12 +274,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         """
         # No kw arguments are expected.
         ob = self._ob
-        attr = self._field_attributes.get(field_id)
-        if attr is None:
-            raise ValueError("Field %s not allowed by MetaDataStorageAdapter"
-                             % field_id)
-        elif attr is ACCESSOR:
-            getattr(ob, 'set'+field_id)(value)
+        attr = self._field_attributes.get(field_id, field_id)
+        if attr is ACCESSOR:
+            getattr(ob, 'set' + field_id)(value)
         elif attr is ACCESSOR_READ_ONLY:
             raise ValueError("Field %s is read-only" % field_id)
         else:

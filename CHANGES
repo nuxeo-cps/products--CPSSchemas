@@ -4,6 +4,10 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - Add the possibility to translate a vocabulary
+- Made the MetaDataStorageAdapter now accepts unknown attributes to him and
+  stores them as regular attributes. This makes it natural to customize the
+  metadata schema.
+
 Bug fixes:
 ~~~~~~~~~~
 - Vocabulary export and import deal with msgid
