@@ -747,14 +747,16 @@ class CPSBooleanWidget(CPSWidget):
 
     field_types = ('CPS Int Field',)
 
+    # XXX should extend with a property to choose rendering
+    # between checkbox, select or radio button (and replace chekbox widget)
     _properties = CPSWidget._properties + (
         {'id': 'label_false', 'type': 'string', 'mode': 'w',
          'label': 'False label'},
         {'id': 'label_true', 'type': 'string', 'mode': 'w',
          'label': 'True label'},
         )
-    label_false = 'cpsschema_false'
-    label_true = 'cpsschema_true'
+    label_false = 'cpsschema_label_false'
+    label_true = 'cpsschema_label_true'
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
