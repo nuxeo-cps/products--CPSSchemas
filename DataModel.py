@@ -24,16 +24,16 @@ and the storage options.
 
 It is *not* a storage, it isn't persistent at all. Its purpose is:
 
-- being one single point of access for information on the structure of
-  the document, as well as a single point of access for the document
-  data, no matter with which schema and in which storage the data is
-  located,
+  - being one single point of access for information on the structure of
+    the document, as well as a single point of access for the document
+    data, no matter with which schema and in which storage the data is
+    located,
 
-- validating data before storage,
+  - validating data before storage,
 
-- acting as a cache (read and write) for data. This is only really
-  useful for data that is not stored in the ZODB, but for simplicity
-  *all* data is cached. (NOTIMPLEMENTED).
+  - acting as a cache (read and write) for data. This is only really
+    useful for data that is not stored in the ZODB, but for simplicity
+    *all* data is cached. (NOTIMPLEMENTED).
 
 The storage itself is done through a storage adapter (NOTIMPLEMENTED).
 """
