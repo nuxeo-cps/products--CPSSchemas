@@ -1,4 +1,31 @@
 *******************************************
+** CPSSchemas V0.11.0 [R1 build 2003/12/15-09:06 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Fields now have a read_process_dependent_fields property to specify which
+  fields the depend on.
+- New compound widget textimage
+Bug fixes:
+~~~~~~~~~~
+- old CPSDocument using deprecated CPSLinkWidget (not the compound) can be
+  viewed
+- CPSImageWidget, CPSPhotoWidget, CPSFileWidget and CPSAttachedFileWidget all
+  assumed that the data was stored as a ZODB attribute. Now they instead ask
+  the StorageAdapter for the URL to the content.
+- Fixed typos in RTE widget meta_types:
+  "CPS Rich Text EditorWidget" -> "CPS Rich Text Editor Widget"
+  "CPS Rich Text Editor Widget Type " -> "CPS Rich Text Editor Widget Type"
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added the possibility to restrict the fields managed by a storage adapter.
+- improve link, photo css integration
+- Renamed makeWidget to makeWidgetTypeInstance in WidgetTypeRegistry
+
+*******************************************
 ** CPSSchemas V0.10.1 [R1 build 2003/12/10-18:24 by ben]
 
 ZODB Requires:
