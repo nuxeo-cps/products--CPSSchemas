@@ -9,5 +9,4 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- No Epoz Dependency (EpozPatch)
-- No PortalTransforms dependency (install.py)
+-

@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.36.0 [R1 build 2004/12/13-09:09 by edegoute]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- No Epoz Dependency (EpozPatch)
+- No PortalTransforms dependency (install.py)
+- simplifier javascipt API: see the widget howto 
+
+*******************************************
 ** CPSSchemas V0.35.4 [R1 build 2004/12/07-16:57 by regebro]
 
 Requires:
