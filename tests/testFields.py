@@ -24,15 +24,23 @@ class BasicFieldTests(unittest.TestCase):
         field.setNotRequired()
         self.failUnless(field.validate(None) == None)
 
-    def testDefaultValues(self):
+#     def testDefaultValues(self):
+#         field = BasicField('the_id', 'the_title')
+#         self.failUnlessRaises(ValueError, field.validate, None)
+#         field.setNotRequired()
+#         self.failUnless(field.validate(None) is None)
+#         field.setDefaultValue('The Default Value')
+#         self.failUnless(field.getDefaultValue() == 'The Default Value')
+#         field.setRequired()
+#         self.failUnless(field.validate(None) == 'The Default Value')
+
+    def testSetSettings(self):
         field = BasicField('the_id', 'the_title')
-        self.failUnlessRaises(ValueError, field.validate, None)
-        field.setNotRequired()
-        self.failUnless(field.validate(None) is None)
-        field.setDefaultValue('The Default Value')
-        self.failUnless(field.getDefaultValue() == 'The Default Value')
-        field.setRequired()
-        self.failUnless(field.validate(None) == 'The Default Value')
+        field.setSetting('default', 'newdefault')
+        self.failUnless(field.getSetting('default') == 'newdefault')
+        self.failUnlessRaises(KeyError, field.setSetting, 'notasetting', 'somevalue')
+
+
 
     def testRequired(self):
         field = BasicField('the_id', 'the_title')
@@ -58,6 +66,12 @@ class TextFieldTests(unittest.TestCase):
         four = NotAString()
         self.failUnlessRaises(TypeError, field.validate, four)
 
+
+    # OK, field settings are not attributes, instead each field instance
+    # has a 'settings' naahhhh. Testfirst!!!
+    # field.setSetting(setting, value)
+    # field.getSetting(setting)
+    # filed.get AllSettings(): return list
 
 def test_suite():
     suites = [unittest.makeSuite(BasicFieldTests), \

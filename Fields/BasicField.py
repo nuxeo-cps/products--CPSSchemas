@@ -54,11 +54,17 @@ class BasicField:
     _required = 1
     _allow_none = 1
     requiredmessage = 'This field is required'
+    schema = {'id': 'TextField',
+              'title': 'TextField',
+              'default': 'TextField',
+              'required': 'BooleanField'}
+
 
     def __init__(self, id, title):
         self.id = id
         self.title = title
         self.setStorageId(id)
+        self.settings = {}
 
     def validate(self, data):
         """Convert and validate data"""
@@ -114,3 +120,10 @@ class BasicField:
     def isRequired(self):
         return self._required
 
+    def setSetting(self, setting, value):
+        if not self.schema.has_key(setting):
+            raise KeyError(setting)
+        self.settings[setting] = value
+
+    def getSetting(self, setting):
+        return self.settings[setting]
