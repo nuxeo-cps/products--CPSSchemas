@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-04 16:46default\n"
-"PO-Revision-Date: 2004-03-03 15:46+0100\n"
+"PO-Revision-Date: 2004-03-16 12:36+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -232,7 +232,7 @@ msgid "cpsschemas_err_password_size_min"
 msgstr "Votre mot de passe est trop court"
 
 msgid "cpsschemas_err_password_lower"
-msgstr "Votre mot de passe doit contenir au moins une miniscule"
+msgstr "Votre mot de passe doit contenir au moins une minuscule"
 
 msgid "cpsschemas_err_password_upper"
 msgstr "Votre mot de passe doit contenir au moins une lettre capital"
@@ -392,3 +392,4 @@ msgstr "Description"
 #, fuzzy
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Format de date invalide"
+
