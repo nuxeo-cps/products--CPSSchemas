@@ -87,7 +87,6 @@ class BaseStorageAdapter:
     #
     # API called by DataModel
     #
-
     def getData(self):
         """Get data from the object, returns a mapping."""
         return self._getData()
@@ -99,7 +98,6 @@ class BaseStorageAdapter:
     #
     # Internal API for subclasses
     #
-
     def _getData(self, **kw):
         """Get data from the object, returns a mapping."""
         data = {}
@@ -122,17 +120,16 @@ class BaseStorageAdapter:
         """Get data from one field."""
         raise NotImplementedError
 
-    def _setData(self, data, **kw):
+    def _setData(self, data):
         """Set data to the object, from a mapping."""
-        data = self._setDataDoProcess(data, **kw)
+        data = self._setDataDoProcess(data)
         for field_id, field in self.getWritableFieldItems():
-            self._setFieldData(field_id, field, data[field_id], **kw)
+            self._setFieldData(field_id, data[field_id])
 
-    def _setDataDoProcess(self, data, **kw):
+    def _setDataDoProcess(self, data):
         """Process data before write.
 
-        Returns a copy, without the fields that are not stored.
-        """
+        Returns a copy, without the fields that are not stored."""
         new_data = {}
         for field_id, field in self.getFieldItems():
             if field.write_ignore_storage:
@@ -141,7 +138,7 @@ class BaseStorageAdapter:
             new_data[field_id] = field.processValueBeforeWrite(value, data)
         return new_data
 
-    def _setFieldData(self, field_id, field, value, **kw):
+    def _setFieldData(self, field_id, value):
         """Set data for one field."""
         raise NotImplementedError
 
@@ -178,7 +175,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
             return field.getDefault()
         return getattr(ob, field_id)
 
-    def _setFieldData(self, field_id, field, value):
+    def _setFieldData(self, field_id, value):
         """Set data for one field."""
         setattr(self._ob, field_id, value)
 
@@ -193,9 +190,8 @@ ACCESSOR_READ_ONLY = []
 class MetaDataStorageAdapter(BaseStorageAdapter):
     """MetaData Storage Adapter
 
-    This adapter simply gets and sets metadata using X() and setX()
-    methods for standard CMF Dublin Core methods, or using specific
-    attributes otherwise.
+    This adapter simply gets and sets metadata using X() and setX() methods for
+    standard CMF Dublin Core methods, or using specific attributes otherwise.
     """
 
     _field_attributes = {
@@ -246,7 +242,7 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
             # Use default from field.
             return field.getDefault()
 
-    def _setFieldData(self, field_id, field, value):
+    def _setFieldData(self, field_id, value):
         """Set data for one field.
 
         Calls the setter method.
