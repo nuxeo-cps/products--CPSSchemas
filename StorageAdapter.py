@@ -156,13 +156,13 @@ class AttributeStorageAdapter(BaseStorageAdapter):
     This adapter simply gets and sets data from/to an attribute.
     """
 
-    def __init__(self, schema, ob, field_ids=None):
+    def __init__(self, schema, ob, **kw):
         """Create an Attribute Storage Adapter for a schema.
 
         The object passed is the one on which to get/set attributes.
         """
         self._ob = ob
-        BaseStorageAdapter.__init__(self, schema, field_ids=field_ids)
+        BaseStorageAdapter.__init__(self, schema, **kw)
 
     def setContextObject(self, ob):
         """Set a new underlying object for this adapter.
@@ -231,9 +231,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         'Relation': 'relation',
         }
 
-    def __init__(self, schema, ob, field_ids=None):
+    def __init__(self, schema, ob, **kw):
         self._ob = ob
-        BaseStorageAdapter.__init__(self, schema, field_ids=field_ids)
+        BaseStorageAdapter.__init__(self, schema, **kw)
 
     def setContextObject(self, ob):
         """Set a new underlying object for this adapter."""
@@ -280,5 +280,6 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         else:
             setattr(ob, attr, value)
 
+    # XXX MetaDataStorageAdapter doesn't store files, this is useless.
     def _getContentUrl(self, object, field_id):
         return '%s/%s' % (object.absolute_url(), field_id)
