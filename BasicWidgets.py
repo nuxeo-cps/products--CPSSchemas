@@ -1422,7 +1422,7 @@ class CPSDateWidget(CPSWidget):
                                     'max_value': '31',
                                     'max_size': '2',
                                     'low_trigger': '4',
-                                    'next_widget': 'widget__swamBirthday_m',
+                                    'next_widget': html_widget_id+'_m',
                                  })
             mtag = renderHtmlTag('input',
                                  type='text',
@@ -1435,7 +1435,7 @@ class CPSDateWidget(CPSWidget):
                                     'max_value': '12',
                                     'max_size': '2',
                                     'low_trigger': '2',
-                                    'next_widget': 'widget__swamBirthday_y',
+                                    'next_widget': html_widget_id+'_y',
                                  })
             ytag = renderHtmlTag('input',
                                  type='text',
