@@ -107,7 +107,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #vocabulary = None
     read_ignore_storage = 0
     read_process_expr = ''
-    read_process_dependent_fields = []
+    read_process_dependent_fields = ()
     write_ignore_storage = 0
     write_process_expr = ''
 
