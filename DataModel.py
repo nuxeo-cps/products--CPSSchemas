@@ -41,6 +41,7 @@ The storage itself is done through a storage adapter (NOTIMPLEMENTED).
 from zLOG import LOG, DEBUG
 from Acquisition import aq_base
 from UserDict import UserDict
+from cgi import escape
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo, Unauthorized
@@ -159,6 +160,24 @@ class DataModel(UserDict):
             ob.postCommitHook()
 
         return ob
+
+    def _exportAsXML(self):
+        """Export the datamodel as XML string."""
+        res = []
+        data = self.data
+        for schema, adapter in self._schemas.values():
+            for field_id, field in schema.items():
+                value = data[field_id]
+                svalue, info = field._exportValue(value)
+                s = '  <field id="%s"' % escape(field_id)
+                if info:
+                    attrs = ['%s="%s"' % (k, escape(str(v)))
+                             for k, v in info.items()]
+                    s += ' '+' '.join(attrs)
+                s += '>'+svalue+'</field>'
+                res.append(s)
+        return '\n'.join(res)
+
 
     def __repr__(self):
         return '<DataModel %s>' % (self.data,)

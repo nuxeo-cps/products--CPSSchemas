@@ -106,6 +106,31 @@ class Field(SimpleItemWithProperties):
             # Standalone field.
             return id
 
+    def _exportValue(self, value):
+        """Export this field's value as a string.
+
+        Returns the string and a dict with any info needed if it makes
+        sense and will be needed for import.
+
+        Called by the datamodel during export.
+        """
+        # Default implementation suitable for simple fields.
+        if value is None:
+            return '', {'none': 'true'}
+        else:
+            return str(value), {}
+
+    def _importValue(self, svalue, info):
+        """Import field value.
+
+        Returns a value.
+
+        Receives a string and additional info as arguments.
+        """
+        if info and info['none'] == 'true':
+            return None
+        raise NotImplementedError
+
     security.declarePublic('validate')
     def validate(self, value):
         """Validate a value."""
