@@ -31,8 +31,6 @@ from zLOG import LOG, DEBUG
 LOG('DublinCorePatch', DEBUG, "Patching DublinCore...")
 
 
-security = ClassSecurityInfo()
-
 def Coverage(self):
     """
     """
@@ -50,8 +48,6 @@ DublinCore.Source = Source
 DublinCore.Relation = Relation
 InitializeClass(DublinCore)
 
-
-security = ClassSecurityInfo()
 
 def setCoverage(self, coverage):
     """
@@ -103,6 +99,13 @@ DefaultDublinCoreImpl.Source = Source
 DefaultDublinCoreImpl.setSource = setSource
 DefaultDublinCoreImpl.Relation = Relation
 DefaultDublinCoreImpl.setRelation = setRelation
+
+# Setting default values for the new metadata
+DefaultDublinCoreImpl.coverage = ''
+DefaultDublinCoreImpl.source = ''
+DefaultDublinCoreImpl.relation = ''
+
+DefaultDublinCoreImpl.security = security
 InitializeClass(DefaultDublinCoreImpl)
 
 
