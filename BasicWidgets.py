@@ -638,7 +638,7 @@ class CPSImageWidget(CPSWidget):
         if mode == 'view':
             src = self.getWidgetId() # XXX does not work in a document rendering
             return renderHtmlTag('img',
-                                 scr = src,
+                                 src = src,
                                  contents = current,
                                  css_class = self.css_class,
                                  )
