@@ -1,4 +1,23 @@
 *******************************************
+** CPSSchemas V0.22.3 [R1 build 2004/06/10-15:56 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- getFileInfo returned 'None' when file had no modification date; nows returns
+  the default empty string.
+- Handling of empty fields (regression)
+- fixed bug in widget internal links render that appeared in CPSSchemas-0_22_1
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.22.2 [R1 build 2004/06/04-14:17 by hcauwelier]
 
 Requires:
