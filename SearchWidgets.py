@@ -21,6 +21,7 @@ Widget used to build search forms.
 """
 
 from zLOG import LOG, DEBUG, TRACE
+from types import StringType
 from cgi import escape
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -186,16 +187,18 @@ class CPSSearchLanguageWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         widget_id = self.getWidgetId()
         datastructure[widget_id] = []
-        datastructure[widget_id + '_select'] = 'no'
+        datastructure[widget_id + '_selected'] = 'no'
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         datamodel = datastructure.getDataModel()
         selected = escape(datastructure[widget_id + '_selected'])
-        if selected != 'yes':
+        values = datastructure[widget_id]
+        if selected != 'yes' or not values:
             return 1
-        values = escape(datastructure[widget_id])
+        if isinstance(values, StringType):
+            values = [values]
         vocabulary = self._getLanguageVoc()
         languages = vocabulary.keys()
         v = []
@@ -211,7 +214,7 @@ class CPSSearchLanguageWidget(CPSWidget):
         render_method = 'widget_searchlanguage_render'
         widget_id = self.getWidgetId()
         values = datastructure[widget_id]
-        selected = escape(datastructure[widget_id + '_select'])
+        selected = escape(datastructure[widget_id + '_selected'])
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
