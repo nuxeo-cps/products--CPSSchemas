@@ -1469,6 +1469,12 @@ class CPSCompoundWidget(CPSWidget):
     widget_ids = []
     widget_type = ''
 
+    security.declarePrivate('_getType')
+    def _getType(self):
+        """Get the type object for this widget."""
+        wtool = getToolByName(self, 'portal_widget_types')
+        return getattr(wtool, self.widget_type)
+
     security.declarePrivate('_getRenderMethod')
     def _getRenderMethod(self):
         """Get the render method."""
@@ -1492,15 +1498,17 @@ class CPSCompoundWidget(CPSWidget):
         for widget_id in self.widget_ids:
             widget = layout[widget_id]
             widget.prepare(datastructure, **kw)
+        self._getType().prepare(self, datastructure)
 
     def validate(self, datastructure, **kw):
         """Validate the underlying widgets."""
         layout = aq_parent(aq_inner(self))
-        ok = 1
+        ret = 1
         for widget_id in self.widget_ids:
             widget = layout[widget_id]
-            ok = widget.validate(datastructure, **kw) and ok
-        return ok
+            ret = widget.validate(datastructure, **kw) and ret
+
+        return ret and self._getType().validate(self, datastructure)
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -1533,11 +1541,13 @@ class CPSCompoundWidgetType(CPSWidgetType):
     _properties = CPSWidgetType._properties + (
         {'id': 'render_method', 'type': 'string', 'mode': 'w',
          'label': 'Render Method'},
+        {'id': 'prepare_validate_method', 'type': 'string', 'mode': 'w',
+         'label': 'Prepare & Validate Method'},
         )
     render_method = ''
+    prepare_validate_method = None
 
     # API
-
     security.declarePrivate('getRenderMethod')
     def getRenderMethod(self, widget):
         """Get the render method."""
@@ -1549,6 +1559,25 @@ class CPSCompoundWidgetType(CPSWidgetType):
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (self.render_method, self.getId()))
         return meth
+
+    def prepare(self, widget, datastructure):
+        if not self.prepare_validate_method:
+            return
+        meth = getattr(widget, self.prepare_validate_method, None)
+        if meth:
+            return meth('prepare', datastructure)
+        raise RuntimeError("Unknown Validate Method %s for widget type %s"
+                           % (self.prepare_validate_method, self.getId()))
+
+    def validate(self, widget, datastructure):
+        if not self.prepare_validate_method:
+            return 1
+        meth = getattr(widget, self.prepare_validate_method, None)
+        if meth:
+            return meth('validate', datastructure)
+        raise RuntimeError("Unknown Validate Method %s for widget type %s"
+                           % (self.prepare_validate_method, self.getId()))
+
 
 InitializeClass(CPSCompoundWidgetType)
 
