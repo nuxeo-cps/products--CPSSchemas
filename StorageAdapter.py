@@ -266,3 +266,32 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
             raise ValueError("Field %s is read-only" % field_id)
         else:
             setattr(ob, attr, value)
+
+
+class MappingStorageAdapter(BaseStorageAdapter):
+    """Mapping or dictionnary Storage Adapter
+
+    This adapter simply store data into a dictionnary.
+    """
+
+    def __init__(self, schema, ob, **kw):
+        """Create an Attribute Storage Adapter for a schema.
+
+        The object passed is the one on which to get/set attributes.
+        """
+        self._ob = ob
+        BaseStorageAdapter.__init__(self, schema, **kw)
+
+    def setContextObject(self, context):
+        """Set a new underlying context for this adapter."""
+        pass
+
+    def _getFieldData(self, field_id, field):
+        """Get data from one field."""
+        LOG('XXXX getFieldData', DEBUG, 'get %s' % field_id)
+        return self._ob.get(field_id, field.getDefault())
+
+    def _setFieldData(self, field_id, value):
+        """Set data for one field."""
+        # No kw arguments are expected.
+        self._ob.update({field_id : value})
