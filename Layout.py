@@ -174,26 +174,34 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
 
         return widgetModeChooser
 
-    security.declarePrivate('getLayoutData')
-    def getLayoutData(self, datastructure, widget_mode_chooser):
-        """Get the layout data with rendered widgets.
+    security.declarePrivate('prepareLayoutWidgets')
+    def prepareLayoutWidgets(self, datastructure):
+        """Prepare the layout widgets.
+
+        Prepare all the widgets and thus updates the datastructure.
+        """
+        for widget_id, widget in self.items():
+            widget.prepare(datastructure)
+
+    security.declarePrivate('computeLayout')
+    def computeLayout(self, datastructure, widget_mode_chooser):
+        """Compute the layout.
+
+        Renders the widgets and computes the final layout structure.
+
+        The datastructure may have been updated with user data since the
+        prepare phase.
 
         Renders all the widgets in an appropriate mode, and computes the
         final row/cell structure.
 
-        widget_mode_chooser(widget) must return the mode used for
-        rendering a widget, or None to not render the widget at all.
-
-        Returns a layoutdata, with the widgets and the rendered widgets.
+        Return a layout data.
         """
         layoutdata = self.getLayoutDefinition() # get a copy
         layoutdata['id'] = self.getId()
-        # Compute all the widgets.
+        # Render all the widgets.
         widgets = {}
         for widget_id, widget in self.items():
-            widget.prepare(datastructure)
-            # XXX here filtering according to permissions ?
-            # XXX also treat: hidden_view, hidden_edit, hidden_empty
             mode = widget_mode_chooser(widget)
             if mode is not None:
                 rendered = widget.render(mode, datastructure).strip()
