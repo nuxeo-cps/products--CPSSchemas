@@ -1484,10 +1484,12 @@ class CPSFileWidget(CPSWidget):
         """Get the file info from the datastructure."""
         file = datastructure[self.getWidgetId()]
         size = 0
+        last_modified = ''
         if file:
             if _isinstance(file, File):
                 current_name = file.getId()
                 size = file.get_size()
+                last_modified = str(file._p_mtime)
             else:
                 current_name = self.getWidgetId()
             empty_file = 0
@@ -1530,6 +1532,7 @@ class CPSFileWidget(CPSWidget):
                 'current_name': current_name,
                 'mimetype': mimetype,
                 'size': size,
+                'last_modified': last_modified,
                }
 
     def prepare(self, datastructure, **kw):
@@ -1591,7 +1594,8 @@ class CPSFileWidget(CPSWidget):
             file_info = {'empty_file': 1,
                          'content_url': '',
                          'current_name': '-',
-                         'mimetype': ''
+                         'mimetype': '',
+                         'last_modified': '',
                         }
         else:
             file_info = self.getFileInfo(datastructure)
