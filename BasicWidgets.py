@@ -346,10 +346,15 @@ class CPSURLWidget(CPSStringWidget):
             target = self.target
             if not target and value.lower().startswith('http'):
                 target = 'CPS_Link'
-            kw = {'href': value, 'contents': value,
+            if len(value) > self.display_width:
+                value_for_display = value[:self.display_width] + '...'
+            else :
+                value_for_display = value
+            kw = {'href': value, 'contents': value_for_display,
                   'css_class': self.css_class,
                   'target': target}
-            return renderHtmlTag('a', **kw )
+            return renderHtmlTag('a', **kw)
+
         return CPSStringWidget.render(self, mode, datastructure, **kw)
 
 
