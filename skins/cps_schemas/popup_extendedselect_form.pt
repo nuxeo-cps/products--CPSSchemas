@@ -1,0 +1,87 @@
+<metal:html tal:define="emptybody python:1;
+                        vtool here/portal_vocabularies;
+                        source request/source|string:;
+                        input request/input|string:;
+                        searched python:request.get('searched', '').upper();
+                        previous request/previous|string:;
+                       ">
+<metal:body use-macro="here/main_template/macros/master">
+<metal:headslot fill-slot="head_slot">
+  <script type="text/javascript">
+  <!--
+    function set_parent_value(parent_id, key, value) {
+      parent_input = opener.document.getElementById(parent_id)
+      parent_input.value = key
+      parent_text = opener.document.getElementById(parent_id + '_text')
+      parent_text.innerHTML = value
+      self.close()
+    }
+  -->
+  </script>
+</metal:headslot>
+<metal:main fill-slot="body">
+
+<tal:notSelected condition="not:searched">
+  <form action="" method="get"
+        tal:attributes="action string:${base_url}${template/id}">
+  <input type="hidden" name="source" value=""
+         tal:attributes="value source">
+  <input type="hidden" name="input" value=""
+         tal:attributes="value input">
+  <input type="hidden" name="previous" value=""
+         tal:attributes="value previous">
+  <table border="0" width="80%" align="center" cellpadding="4" cellspacing="4">
+    <tr>
+      <th i18n:translate="heading_enter_searched_value">
+        Enter a search term:
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" id="field_focus" name="searched">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="submit" class="context" value="button_search"
+               i18n:attributes="value">
+      </td>
+    </tr>
+  </table>
+  </form>
+</tal:notSelected>
+
+<tal:selected condition="searched">
+  <table border="0" width="80%" align="center" cellspacing="4" cellpadding="4">
+    <tr>
+      <th i18n:translate="heading_click_chosen_value">
+        Click on the chosen value
+      </th>
+    </tr>
+    <tal:entries define="entries python:vtool[source]"
+                 repeat="key entries/keys">
+      <tr tal:define="value python:entries[key]"
+          tal:condition="python:(key.upper().find(searched)>-1) or
+                                (value.upper().find(searched) > -1)">
+        <td>
+          <b tal:omit-tag="python:key != previous">
+            <a tal:attributes="href string:javascript:set_parent_value('${input}', '${key}', '${value}')"
+               tal:content="value">
+               Value
+            </a>
+          </b>
+        </td>
+      </tr>
+    </tal:entries>
+    <tr>
+      <td>
+        <input type="button" class="standalone" value="button_back"
+               onclick="javascript:history.back()" i18n:attributes="value">
+      </td>
+    </tr>
+  </table>
+</tal:selected>
+
+</metal:main>
+</metal:body>
+</metal:html>
