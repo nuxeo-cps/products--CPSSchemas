@@ -37,6 +37,8 @@ ZMI.
 
 from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
+from OFS.ObjectManager import ObjectManager
+from OFS.SimpleItem import SimpleItem
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
@@ -211,7 +213,18 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if _isinstance(field, CPSSubObjectsField):
             field.setAsAttribute(ob, field_id, value)
         else:
-            setattr(ob, field_id, value)
+            
+            # If the field is stored as a subobject first delete it.
+            if hasattr(aq_base(ob),'objectIds') and field_id in ob.objectIds():
+                ob._delObject(field_id)
+                
+            # If it is a Zope object, store as subobject and not attribute
+            if hasattr(aq_base(value), 'manage_beforeDelete'):
+                if hasattr(aq_base(ob), field_id):
+                    delattr(ob, field_id)
+                ob._setObject(field_id, value)
+            else:
+                setattr(ob, field_id, value)
 
     def _getContentUrl(self, object, field_id, file_name):
         return '%s/downloadFile/%s/%s' % (

@@ -4,6 +4,7 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - Add a range list field
+- A DiskFile field, that stores the file on disk.
 Bug fixes:
 ~~~~~~~~~~
 -

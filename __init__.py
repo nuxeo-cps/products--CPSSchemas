@@ -40,6 +40,7 @@ import BasicWidgets
 import ExtendedWidgets
 
 import EpozPatch
+import DiskFile
 
 tools = (
     VocabulariesTool.VocabulariesTool,
@@ -57,6 +58,13 @@ def initialize(registrar):
         constructors=(Schema.addCPSSchemaForm,
                       Schema.addCPSSchema,),
         )
+# Registering the DiskFile so it can be added through the ZMI is really
+# useful only for debugging.
+#     registrar.registerClass(
+#         DiskFile.DiskFile,
+#         constructors=(DiskFile.addDiskFileForm,
+#                       DiskFile.addDiskFile,)
+#         )
     utils.ToolInit(
         'CPS Document Tools',
         tools = tools,
@@ -65,3 +73,5 @@ def initialize(registrar):
         ).initialize(registrar)
     VocabularyTypeRegistry.register(CPSVocabulary)
     VocabularyTypeRegistry.register(MethodVocabulary)
+
+    
