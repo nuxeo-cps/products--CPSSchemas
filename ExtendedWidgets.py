@@ -774,7 +774,7 @@ class CPSGenericSelectWidget(CPSWidget):
         cpsmcat = portal.Localizer.default
         if mode == 'view':
             if getattr(self, 'translated', None):
-                return escape(cpsmcat(vocabulary.get(value, value)).encode('ISO-8859-15', 'ignore'))
+                return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
         elif mode == 'edit':
@@ -788,13 +788,10 @@ class CPSGenericSelectWidget(CPSWidget):
                 res = renderHtmlTag('select', name=html_widget_id)
             # vocabulary options
             for k, v in vocabulary.items():
+                if getattr(self, 'translated', None):
+                    v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                 if render_format == 'select':
-                    if getattr(self, 'translated', None):
-                        kw = {'value': k,
-                              'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
-                              }
-                    else:
-                        kw = {'value': k, 'contents': v}
+                    kw = {'value': k, 'contents': v}
                     if value == k:
                         kw['selected'] = 'selected'
                         in_selection = 1
@@ -964,13 +961,15 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        cpsmcat = portal.Localizer.default
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
             elif getattr(self, 'translated', None):
-                return ', '.join([escape(cpsmcat(vocabulary.get(i, i))) for i in value])
+                return ', '.join([escape(cpsmcat(vocabulary.getMsgid(i, i))) for i in value])
             else:
                 return ', '.join([escape(vocabulary.get(i, i)) for i in value])
         elif mode == 'edit':
@@ -989,13 +988,10 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 res = renderHtmlTag('select', **kw)
             # vocabulary options
             for k, v in vocabulary.items():
+                if getattr(self, 'translated', None):
+                    v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                 if render_format == 'select':
-                    if getattr(self, 'translated', None):
-                        kw = {'value': k,
-                              'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
-                              }
-                    else:
-                        kw = {'value': k, 'contents': v}
+                    kw = {'value': k, 'contents': v}
                     if k in value:
                         kw['selected'] = 'selected'
                         in_selection = 1
@@ -1005,7 +1001,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                     kw = {'id': html_widget_id+'_'+k,
                           'type': render_format,
                           'name': html_widget_id+':list',
-                          'value': k,
+                          'value': v,
                           }
                     if k in value:
                         kw['checked'] = 'checked'
