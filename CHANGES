@@ -18,3 +18,5 @@ New internal features:
 - i18n of title title_view and description
 - css_class widget attribute is now used for view mode, edition use
   default css row/fields ...
+- adding get_size method
+- adding CPSDefault hook getAdditionalContentInfo
