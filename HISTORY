@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.32.2 [R1 build 2004/10/25-13:46 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- indent error on generic select widget validation
+- #411: write_process_expr for contributors was broken
+- fix: BooleanWidget don't work properly with ldap storage adapter
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.32.1 [R1 build 2004/10/21-15:35 by ben]
 
 Requires:
