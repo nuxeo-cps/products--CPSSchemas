@@ -117,6 +117,12 @@ def install(self):
         pr(" Creating portal_layouts")
         portal.manage_addProduct["CPSDocument"].manage_addTool(
             'CPS Layouts Tool')
+    if portalhas('portal_vocabularies'):
+        prok()
+    else:
+        pr(" Creating portal_vocabularies")
+        portal.manage_addProduct["CPSDocument"].manage_addTool(
+            'CPS Vocabularies Tool')
 
 
     # widgets
@@ -167,6 +173,21 @@ def install(self):
             widget = layout.manage_addCPSWidget(widget_id, widgetinfo['type'],
                                                 **widgetinfo['data'])
         layout.setLayoutDefinition(info['layout'])
+
+    # vocabularies
+    pr("Verifiying vocabularies")
+    vocabularies = self.getDocumentVocabularies()
+
+    vtool = portal.portal_vocabularies
+    for id, info in vocabularies.items():
+        pr(" Vocabulary %s" % id)
+        if id in vtool.objectIds():
+            pr("  Deleting.")
+            vtool.manage_delObjects([id])
+        pr("  Installing.")
+        ddict = info['data']['dict']
+        dlist = info['data']['list']
+        vtool.manage_addCPSVocabulary(id, dict=ddict, list=dlist)
 
 
     # setup portal_type
