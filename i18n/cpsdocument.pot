@@ -1,9 +1,12 @@
+# ##########################################################
+# ################# DON'T EDIT THIS FILE! ##################
+# ##########################################################
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-04 13:02default\n"
+"POT-Creation-Date: 2003-09-04 14:30default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -16,24 +19,65 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
+#.   <h1>Edit ${title}</h1>
+#: from ../skins/cps_document/cpsdocument_edit_form.pt
+msgid "Edit ${title}"
+msgstr ""
 
-#: from ../skins/cps_document/layout_dummy_editlayout.pt
 #.   <input value="button_add" name="addwidget_button" type="submit" />
-#: from ../skins/cps_document/layout_fancy_editlayout.pt
-#: from ../skins/cps_document/layout_form_editlayout.pt
+#: from ../skins/cps_document/layout_dummy_editlayout.pt
+#: ../skins/cps_document/layout_fancy_editlayout.pt
+#: ../skins/cps_document/layout_form_editlayout.pt
 msgid "button_add"
 msgstr ""
 
-#: from ../skins/cps_document/layout_default_edit.pt
 #.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_dummy_edit.pt
 #.   <input value="button_change" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_fancy_edit.pt
-#: from ../skins/cps_document/layout_form_edit.pt
+#: from ../skins/cps_document/layout_default_edit.pt
+#: ../skins/cps_document/layout_dummy_edit.pt
+#: ../skins/cps_document/layout_fancy_edit.pt
+#: ../skins/cps_document/layout_form_edit.pt
 msgid "button_change"
 msgstr ""
 
-#: from ../skins/cps_document/layout_default_edit.pt
 #.   <span>Form error.</span>
+#: from ../skins/cps_document/layout_default_edit.pt
 msgid "cpsdoc_form_error"
+msgstr ""
+
+#.   <em content="err" style="color: red">err</em>
+#: from ../skins/cps_document/layout_default_edit.pt
+msgid "err"
+msgstr ""
+
+# default doc types
+msgid "portal_type_FAQ_title"
+msgstr ""
+
+msgid "portal_type_FAQ_description"
+msgstr ""
+
+msgid "portal_type_News_title"
+msgstr ""
+
+msgid "portal_type_News_description"
+msgstr ""
+
+# Widget Error msg
+msgid "cpsdoc_err_string"
+msgstr ""
+
+msgid "cpsdoc_err_textarea"
+msgstr ""
+
+msgid "cpsdoc_err_int"
+msgstr ""
+
+msgid "cpsdoc_err_date"
+msgstr ""
+
+msgid "cpsdoc_err_file"
+msgstr ""
+
+msgid "cpsdoc_err_image"
 msgstr ""

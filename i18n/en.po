@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-09-04 13:02default\n"
-"PO-Revision-Date: 2003-09-04 13:14+0200\n"
+"POT-Creation-Date: 2003-09-04 14:30default\n"
+"PO-Revision-Date: 2003-09-04 14:30+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -19,24 +19,65 @@ msgstr ""
 "Domain: default\n"
 "X-Generator: KBabel 1.0.1\n"
 
-#: from ../skins/cps_document/layout_dummy_editlayout.pt
+#.   <h1>Edit ${title}</h1>
+#: from ../skins/cps_document/cpsdocument_edit_form.pt
+msgid "Edit ${title}"
+msgstr "Edit \"${title}\""
+
 #.   <input value="button_add" name="addwidget_button" type="submit" />
-#: from ../skins/cps_document/layout_fancy_editlayout.pt
-#: from ../skins/cps_document/layout_form_editlayout.pt
+#: from ../skins/cps_document/layout_dummy_editlayout.pt
+#: ../skins/cps_document/layout_fancy_editlayout.pt
+#: ../skins/cps_document/layout_form_editlayout.pt
 msgid "button_add"
 msgstr "Add"
 
-#: from ../skins/cps_document/layout_default_edit.pt
 #.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_dummy_edit.pt
 #.   <input value="button_change" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_fancy_edit.pt
-#: from ../skins/cps_document/layout_form_edit.pt
+#: from ../skins/cps_document/layout_default_edit.pt
+#: ../skins/cps_document/layout_dummy_edit.pt
+#: ../skins/cps_document/layout_fancy_edit.pt
+#: ../skins/cps_document/layout_form_edit.pt
 msgid "button_change"
 msgstr "Change"
 
-#: from ../skins/cps_document/layout_default_edit.pt
 #.   <span>Form error.</span>
+#: from ../skins/cps_document/layout_default_edit.pt
 msgid "cpsdoc_form_error"
 msgstr "Invalid form submit:"
+
+#.   <em content="err" style="color: red">err</em>
+#: from ../skins/cps_document/layout_default_edit.pt
+msgid "err"
+msgstr "Error"
+
+# default doc types
+msgid "portal_type_FAQ_title"
+msgstr "FAQ"
+
+msgid "portal_type_FAQ_description"
+msgstr "Frequently Asked Questions"
+
+msgid "portal_type_News_title"
+msgstr "News"
+
+msgid "portal_type_News_description"
+msgstr "A news document"
+
+msgid "cpsdoc_err_string"
+msgstr "Invalid string"
+
+msgid "cpsdoc_err_textarea"
+msgstr "invalid text"
+
+msgid "cpsdoc_err_int"
+msgstr "invalid integer"
+
+msgid "cpsdoc_err_date"
+msgstr "invalid date"
+
+msgid "cpsdoc_err_file"
+msgstr "invalid file"
+
+msgid "cpsdoc_err_image"
+msgstr "invalid image"
 

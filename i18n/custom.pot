@@ -16,3 +16,36 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
+# default doc types
+msgid "portal_type_FAQ_title"
+msgstr ""
+
+msgid "portal_type_FAQ_description"
+msgstr ""
+
+msgid "portal_type_News_title"
+msgstr ""
+
+msgid "portal_type_News_description"
+msgstr ""
+
+
+# Widget Error msg
+msgid "cpsdoc_err_string"
+msgstr ""
+
+msgid "cpsdoc_err_textarea"
+msgstr ""
+
+msgid "cpsdoc_err_int"
+msgstr ""
+
+msgid "cpsdoc_err_date"
+msgstr ""
+
+msgid "cpsdoc_err_file"
+msgstr ""
+
+msgid "cpsdoc_err_image"
+msgstr ""
+
