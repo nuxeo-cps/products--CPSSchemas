@@ -128,7 +128,7 @@ msgstr "Vocabulaires disponibles"
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
-msgstr "Ce vocabulaire contient ${voc_entries}·entrée(s)"
+msgstr "Ce vocabulaire contient ${voc_entries} entrée(s)"
 
 #.   <h2>cpsschemas_vocabulary_delete</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -158,7 +158,7 @@ msgstr "Clé&nbsp;:"
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_manage"
-msgstr "Gestion des vocabulaires"
+msgstr "Gérer les vocabulaires"
 
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
