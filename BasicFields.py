@@ -122,10 +122,6 @@ InitializeClass(CPSStringListField)
 class CPSDateTimeField(CPSField):
     """DateTime field."""
     meta_type = "CPS DateTime Field"
-    _properties = CPSField._properties + (
-        {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
-         'label': 'Allow None'},
-        )
     default = ''
     allow_none = 1
 
