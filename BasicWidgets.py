@@ -434,6 +434,78 @@ InitializeClass(CPSTextAreaWidgetType)
 
 ##################################################
 
+class CPSLinesWidget(CPSTextAreaWidget):
+    """Lines widget."""
+    meta_type = "CPS Lines Widget"
+
+    field_types = ('CPS String List Field',)
+
+    width = 30
+    
+    render_mode = None
+    
+    _properties = CPSWidget._properties + (
+        {'id': 'width', 'type': 'int', 'mode': 'w',
+         'label': 'Width'},
+        {'id': 'height', 'type': 'int', 'mode': 'w',
+         'label': 'Height'},
+        )
+
+    all_render_modes = []
+
+ 
+    def prepare(self, datastructure):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        value = datamodel[self.fields[0]]
+        if value == '':
+            # Buggy Zope :lines prop may give us '' instead of [] for default.
+            value = []
+        # XXX make a copy of the list ?
+        datastructure[self.getWidgetId()] = value
+
+    def validate(self, datastructure):
+        """Update datamodel from user data in datastructure."""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        v = value # Zope handle :lines automagically
+        if self.is_required and not v:
+            datastructure[widget_id] = ''
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, OLDdatamodel=None):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            if not value:
+                # XXX L10N empty format may be subject to i18n.
+                return self.format_empty
+            # XXX customize view mode, lots of displays are possible
+            return ', '.join([escape(i) for i in value])
+        elif mode == 'edit':
+            return renderHtmlTag('textarea',
+                                 name=self.getHtmlWidgetId()+":lines",
+                                 cols=self.width,
+                                 rows=self.height,
+                                 contents='\n'.join(value))
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSLinesWidget)
+
+
+class CPSLinesWidgetType(CPSWidgetType):
+    """Lines widget type."""
+    meta_type = "CPS Lines Widget Type"
+    cls = CPSLinesWidget
+
+InitializeClass(CPSLinesWidgetType)
+
+##################################################
+
 class CPSSelectWidget(CPSWidget):
     """Select widget."""
     meta_type = "CPS Select Widget"
@@ -1539,6 +1611,7 @@ WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSLinkWidgetType, CPSLinkWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
+WidgetTypeRegistry.register(CPSLinesWidgetType, CPSLinesWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSLongWidgetType, CPSLongWidget)
 WidgetTypeRegistry.register(CPSFloatWidgetType, CPSFloatWidget)
