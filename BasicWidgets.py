@@ -32,7 +32,6 @@ from Products.PythonScripts.standard import structured_text
 from Products.CMFCore.CMFCorePermissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
 
-from Products.CPSDocument.Field import ValidationError
 from Products.CPSDocument.Widget import CPSWidget
 from Products.CPSDocument.Widget import CPSWidgetType
 from Products.CPSDocument.WidgetsTool import WidgetTypeRegistry
