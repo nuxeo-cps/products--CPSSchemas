@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-11-05 13:30default\n"
+"POT-Creation-Date: 2005-02-09 04:23default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -30,15 +30,10 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button type="button" attributes="
-#.           id button_rte_id;
-#.           style python:test(rformat == 'html',
-#.           'visibility: visible;;', 'visibility: hidden;;');
-#.           onclick
-#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
-#: from ../skins/cps_schemas/widget_text_render.pt
-msgid "button_rte"
+#.   <button onclick="window.close()">Fermer</button>
+#: from ../skins/cps_schemas/popup_photo.pt
+#, fuzzy
+msgid "button_close"
 msgstr "Retorna"
 
 #.   <block>at</block>
@@ -86,7 +81,6 @@ msgid "cpsschemas_image_resize"
 msgstr "Redimensiona"
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
-#.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
@@ -97,13 +91,9 @@ msgstr "Mudar"
 msgid "cpsschemas_label_file_delete"
 msgstr "Remover"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" define="ds options/datastructure;
-#.                                dm ds/getDataModel;
-#.                                proxy dm/getProxy;
-#.                                portal here/portal_url/getPortalObject;
-#.                                field_id python:here.fields[0]">
-#.                   Edit file online
-#.                 </a>
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.                     Edit file online
+#.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_label_file_edit_online"
@@ -120,7 +110,7 @@ msgid "cpsschemas_label_file_none"
 msgstr "Nenhum"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
-#: from ../skins/cps_schemas/widget_image_render.pt
+#: from ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_label_image_resize"
 msgstr "Redimensiona"
@@ -146,21 +136,10 @@ msgstr "Formato de renderização"
 msgid "cpsschemas_render_position"
 msgstr "Posição de renderização"
 
-#.   <block condition="b">
-#.               cpsschemas_size_max
-#.               ${size_max}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.             </block>
-#.   <block condition="m">
-#.               cpsschemas_size_max
-#.               ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
-#.             </block>
-#.   <block condition="k">
-#.               cpsschemas_size_max
-#.               ${size_max (tal content="python:'%s' % (size_max / 1024)")}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.             </block>
+#.   <p>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="str_sizeMax")}
+#.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
@@ -193,19 +172,16 @@ msgstr "Remover vocabulário"
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
 msgstr "Editar ${voc_id}"
 
-#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
 msgstr "Adicionar entrada de vocabulário"
 
 #.   <th>Id:</th>
-#.   <th>Id:</th>
-#.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
 msgstr "Id:"
 
-#.   <th>Key:</th>
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
@@ -217,22 +193,25 @@ msgid "cpsschemas_vocabulary_manage"
 msgstr "Administrar vocabulário"
 
 #.   <th>MsgId:</th>
-#.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
 msgstr "MsgId"
 
 #.   <th>Value:</th>
-#.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
 msgstr "Valor:"
 
-#.   <em style="color: red" content="err">err</em>
-#.   <em style="color: red" content="err">err</em>
+#.   <p>description_vocabulary_manage_form</p>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#, fuzzy
+msgid "description_vocabulary_manage_form"
+msgstr "Administrar vocabulário"
+
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
 msgstr "erro"
@@ -253,12 +232,14 @@ msgstr "Entre um termo de busca:"
 
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
 #.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
 msgstr ""
 
@@ -310,6 +291,10 @@ msgid "cpsschemas_err_int"
 msgstr "Inteiro inválido."
 
 msgid "cpsschemas_err_date"
+msgstr "Data inválida."
+
+#, fuzzy
+msgid "cpsschemas_err_bad_date"
 msgstr "Data inválida."
 
 msgid "cpsschemas_err_file"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-05 13:30default\n"
+"POT-Creation-Date: 2005-02-09 04:23default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -35,15 +35,10 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button type="button" attributes="
-#.           id button_rte_id;
-#.           style python:test(rformat == 'html',
-#.           'visibility: visible;;', 'visibility: hidden;;');
-#.           onclick
-#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
-#: from ../skins/cps_schemas/widget_text_render.pt
-msgid "button_rte"
+#.   <button onclick="window.close()">Fermer</button>
+#: from ../skins/cps_schemas/popup_photo.pt
+#, fuzzy
+msgid "button_close"
 msgstr "Fanomezana endrika"
 
 #.   <block>at</block>
@@ -83,15 +78,14 @@ msgstr "mn"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
-"Tsy maintsy manana iray amin'ireto tovana manara ireto ny fichier mahazo alalana : "
-"${allowed_file_suffixes}."
+"Tsy maintsy manana iray amin'ireto tovana manara ireto ny fichier mahazo "
+"alalana : ${allowed_file_suffixes}."
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "sy avidika amin'ny 'format'"
 
-#.   <label attributes="for string:${radio_name}_change">Change</label>
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
@@ -103,13 +97,9 @@ msgstr "Ovaina"
 msgid "cpsschemas_label_file_delete"
 msgstr "Fafana"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" define="ds options/datastructure;
-#.                                dm ds/getDataModel;
-#.                                proxy dm/getProxy;
-#.                                portal here/portal_url/getPortalObject;
-#.                                field_id python:here.fields[0]">
-#.                   Edit file online
-#.                 </a>
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.                     Edit file online
+#.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_edit_online"
 msgstr "Ovaina eo anivon'ny tranonkala"
@@ -125,7 +115,7 @@ msgid "cpsschemas_label_file_none"
 msgstr "Tsy misy"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
-#: from ../skins/cps_schemas/widget_image_render.pt
+#: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_label_image_resize"
 msgstr "Ovaina amin'ny format "
 
@@ -150,23 +140,13 @@ msgstr "Format&nbsp;: "
 msgid "cpsschemas_render_position"
 msgstr "Toerana&nbsp;: "
 
-#.   <block condition="b">
-#.               cpsschemas_size_max
-#.               ${size_max}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.             </block>
-#.   <block condition="m">
-#.               cpsschemas_size_max
-#.               ${size_max (tal content="python:'%.02f' % float(size_max / 1048576.0)")}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_mega_bytes')")}
-#.             </block>
-#.   <block condition="k">
-#.               cpsschemas_size_max
-#.               ${size_max (tal content="python:'%s' % (size_max / 1024)")}
-#.               ${storage_unit (tal content="python:cpsmcat('cpsschemas_unit_kilo_bytes')")}
-#.             </block>
+#.   <p>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="str_sizeMax")}
+#.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
-msgid "cpsschemas_size_max ${size_max} ${storage_unit}"
+#, fuzzy
+msgid "cpsschemas_size_max ${size_max}"
 msgstr "Alehibeazo ekena farany : ${size_max} ${storage_unit}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
@@ -196,19 +176,16 @@ msgstr "Fafana"
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
 msgstr "Fanovana ny voambolana Â« ${voc_id} Â"
 
-#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
 msgstr "Manampy iray"
 
 #.   <th>Id:</th>
-#.   <th>Id:</th>
-#.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
 msgstr "Anarana famantarana&nbsp;:"
 
-#.   <th>Key:</th>
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
@@ -220,22 +197,25 @@ msgid "cpsschemas_vocabulary_manage"
 msgstr "Fandrindrana ireo voambolana"
 
 #.   <th>MsgId:</th>
-#.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
 msgstr "MsgId&nbsp;:"
 
 #.   <th>Value:</th>
-#.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
 msgstr "Isany&nbsp;:"
 
-#.   <em style="color: red" content="err">err</em>
-#.   <em style="color: red" content="err">err</em>
+#.   <p>description_vocabulary_manage_form</p>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#, fuzzy
+msgid "description_vocabulary_manage_form"
+msgstr "Fandrindrana ireo voambolana"
+
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
 msgstr ""
@@ -256,12 +236,14 @@ msgstr "Mampidira teny iray entina hikaroka&nbsp;:"
 
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
 #.   <span content="widget/label" condition="widget/is_i18n">label</span>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
 msgstr ""
 
@@ -311,6 +293,10 @@ msgstr "Tsy mety ny 'entier'"
 msgid "cpsschemas_err_date"
 msgstr "Tsy mety ny daty"
 
+#, fuzzy
+msgid "cpsschemas_err_bad_date"
+msgstr "Tsy mety ny daty"
+
 msgid "cpsschemas_err_file"
 msgstr "Tsy mety ny antotandahatsoratra na sary nalefa"
 
@@ -326,7 +312,8 @@ msgid "cpsschemas_err_file_too_big"
 msgstr "Fichier mavesatra loatra"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Mavesatra loatra io fichier io, Ny habe farany azo ekena dia ${max_size}Mo."
+msgstr ""
+"Mavesatra loatra io fichier io, Ny habe farany azo ekena dia ${max_size}Mo."
 
 msgid "cpsschemas_err_image"
 msgstr "Sary tsy azo ekena"
@@ -365,7 +352,9 @@ msgid "cpsschemas_err_password_digit"
 msgstr "Tsy maintsy misy isa iray farafahakeliny ny môdepasinao"
 
 msgid "cpsschemas_err_password_extra"
-msgstr "Ny môdepasinao dia tsy maintsy misy 'caractère spécial' ankoatran'ny litera na isa"
+msgstr ""
+"Ny môdepasinao dia tsy maintsy misy 'caractère spécial' ankoatran'ny litera "
+"na isa"
 
 msgid "cpsschemas_err_identifier"
 msgstr "Identifiant tsy ekena"
@@ -490,4 +479,3 @@ msgstr "Hafa, hamafiso : "
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Ovaina eo anivon'ny tranonkala"
-
