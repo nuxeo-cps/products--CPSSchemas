@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Generic select widget: now possible to set display width and max size
+  parameters for the 'other' option.
 Bug fixes:
 ~~~~~~~~~~
 - Made the Layout.renderLayoutStyle() method more generic so that it can deal

@@ -848,6 +848,10 @@ class CPSGenericSelectWidget(CPSWidget):
         # (ignored if render format is 'select')
         {'id': 'other_option', 'type': 'boolean', 'mode':'w',
          'label': "Provide an 'other' option"},
+        {'id': 'other_option_display_width', 'type': 'int', 'mode': 'w',
+         'label': "'other' option display width"},
+        {'id': 'other_option_size_max', 'type': 'int', 'mode': 'w',
+         'label': "'other' option maximum input width"},
         # Enables the possibility to add blank values to vocabulary just to
         # change the way the list is presented (using items like 'choose a
         # category' or '------------' to separate items) and not affect the way
@@ -865,6 +869,8 @@ class CPSGenericSelectWidget(CPSWidget):
     translated = 0
     render_format = render_formats[0]
     other_option = 0
+    other_option_display_width = 20
+    other_option_size_max = 0
     blank_value_ok_if_required = 1
 
     def _getVocabulary(self, datastructure=None):
@@ -1008,7 +1014,10 @@ class CPSGenericSelectWidget(CPSWidget):
                               'value': value,
                               'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value",
                               'onclick': "document.getElementById('"+html_widget_id+"_other_selection').checked='checked'",
+                              'size': self.other_option_display_width,
                               }
+                        if self.other_option_size_max:
+                            kw['maxlength'] = self.other_option_size_max
                         res += renderHtmlTag('input', **kw)
                         res += '<br/>\n'
                     else:
@@ -1042,7 +1051,10 @@ class CPSGenericSelectWidget(CPSWidget):
                           'value': "",
                           'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value",
                           'onclick': "document.getElementById('"+html_widget_id+"_other_selection').checked='checked'",
+                          'size': self.other_option_display_width,
                           }
+                    if self.other_option_size_max:
+                        kw['maxlength'] = self.other_option_size_max
                     res += renderHtmlTag('input', **kw)
                     res += '<br/>\n'
             # default option
