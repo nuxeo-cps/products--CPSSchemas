@@ -34,12 +34,10 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.Expression import Expression, getEngine
 
 from Products.CPSSchemas.DataModel import WriteAccessError
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
-
-from Products.CMFCore.Expression import getEngine
-
 
 def widgetname(id):
     """Return the name of the widget as used in HTML forms."""
@@ -101,14 +99,22 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         {'id': 'hidden_empty', 'type': 'boolean', 'mode': 'w',
          'label': 'Hidden if empty'},
         {'id': 'hidden_if_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Hide the widget if the given TAL expression returns true'},
+         'label': 'Hide the widget if the given TALES expression returns true'},
         {'id': 'widget_mode_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Get the widget mode from the given TAL expression'},
+         'label': 'Get the widget mode from the given TALES expression'},
         # CSS
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
          'label': 'CSS class for view'},
         {'id': 'css_class_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Get the CSS class from the given TAL expression'},
+         'label': 'Get the CSS class from the given TALES expression'},
+        # Javascript
+        # TALES expressions can be used. A expression type using the
+        # 'javascript:' prefix is also supported to ease bare Javascript code
+        # declarations.
+        # XXX Define a way to declare and evaluate variables in the string
+        # after the 'javascript:' prefix
+        {'id': 'javascript_expr', 'type': 'text', 'mode': 'w',
+         'label': 'JavaScript expression'},
         )
 
     fields = []
@@ -126,6 +132,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     hidden_if_expr = ''
     widget_mode_expr = ''
     css_class_expr = ''
+    javascript_expr = ''
 
     widget_type = '' # Not a property by default
     field_types = []
@@ -135,17 +142,49 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     hidden_if_expr_c = None
     widget_mode_expr_c = None
     css_class_expr_c = None
+    javascript_expr_c = None
 
     _properties_post_process_tales = (
         ('hidden_if_expr', 'hidden_if_expr_c'),
         ('widget_mode_expr', 'widget_mode_expr_c'),
         ('css_class_expr', 'css_class_expr_c'),
+        # not always a TALES expression
+        ('javascript_expr', 'javascript_expr_c'),
         )
 
     def __init__(self, id, widgettype, **kw):
         self._setId(id)
         self.widget_type = widgettype
         self.manage_changeProperties(**kw)
+
+
+    # overloaded from the PropertiesPostProcessor class to handle the special
+    # compilation of javascript code
+    def _postProcessProperties(self):
+        """Post-processing after properties change."""
+        # Split on some separator.
+        for attr_str, attr, seps in self._properties_post_process_split:
+            v = [getattr(self, attr_str)]
+            for sep in seps:
+                vv = []
+                for s in v:
+                    vv.extend(s.split(sep))
+                v = vv
+            v = [s.strip() for s in v]
+            v = filter(None, v)
+            setattr(self, attr_str, '; '.join(v))
+            setattr(self, attr, v)
+        # TALES expression, or string if the expression starts with
+        # 'javascript:' prefix, used to ease JavaScript declarations
+        for attr_str, attr in self._properties_post_process_tales:
+            p = getattr(self, attr_str).strip()
+            if not p:
+                v = None
+            elif p.startswith('javascript:'):
+                v = p[len('javascript:'):].strip()
+            else:
+                v = Expression(p)
+            setattr(self, attr, v)
 
     security.declarePublic('getWidgetId')
     def getWidgetId(self):
@@ -219,12 +258,12 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         if layout_mode in self.hidden_layout_modes:
             return 'hidden'
         if self.hidden_if_expr_c:
-            # Creating the context for evaluating the TAL expression
+            # Creating the context used to evaluate the TALES expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
             if self.hidden_if_expr_c(expr_context):
                 return 'hidden'
         if self.widget_mode_expr_c:
-            # Creating the context for evaluating the TAL expression
+            # Creating the context used to evaluate the TALES expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
             mode = self.widget_mode_expr_c(expr_context)
             if mode:
@@ -273,7 +312,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         default behaviour does not apply to computed css classes.
         """
         if self.css_class_expr_c:
-            # Create the context to evaluate the TAL expression
+            # Create the context used to evaluate the TALES expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
             css_class_computed = self.css_class_expr_c(expr_context)
             if css_class_computed:
@@ -289,6 +328,34 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
                 css_class = css_class + 'Edit'
 
         return css_class
+
+    security.declarePrivate('getJavascriptCode')
+    def getJavaScriptCode(self, layout_mode, datamodel):
+        """Get the JavaScript code to display in the widget rendering.
+
+        If the javascript_expr property is not set, return an empty string.
+
+        Else:
+        - if prefixed with 'javascript:', return the string after it
+          (Javascript code, no variables supported a the moment)
+        - if not, compute it as a TALES expression, using the standard context
+          evaluated from layout mode and datamodel.
+        """
+        if not self.javascript_expr_c:
+            js_code = ''
+        elif isinstance(self.javascript_expr_c, str):
+            # XXX Be able to evaluate variables
+            js_code = self.javascript_expr_c
+        else:
+            # Create the context used to evaluate the TALES expression
+            expr_context = self._createExpressionContext(datamodel, layout_mode)
+            js_code_computed = self.javascript_expr_c(expr_context)
+            if js_code_computed:
+                js_code = js_code_computed
+            else:
+                js_code = ''
+        return js_code
+
 
     #
     # May be overloaded.
