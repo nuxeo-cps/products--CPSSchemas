@@ -22,8 +22,8 @@
           parent_input.value += '\n'
         }
         parent_input.value += links
-        self.close()
       }
+      self.close()
     }
   -->
   </script>
