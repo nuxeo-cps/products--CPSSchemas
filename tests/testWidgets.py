@@ -1,5 +1,6 @@
-# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# Copyright (c) 2004-2005 Nuxeo SARL <http://nuxeo.com>
+# Authors: Florent Guillaume <fg@nuxeo.com>
+#          Anahide Tchertchian <at@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -18,88 +19,55 @@
 # $Id$
 
 import unittest
-import CPSSchemasTestCase
+from Acquisition import Implicit
 
-from Products.CMFCore.Expression import Expression
-
-from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
-from Products.CPSSchemas.Widget import Widget
 from Products.CPSSchemas.DataModel import DataModel
-
-class TestWidgetTypesTool(CPSSchemasTestCase.CPSSchemasTestCase):
-
-    def afterSetUp(self):
-        self.tool = self.portal.portal_widget_types
-
-        # Delete widget types that has already been set up by the CPSDocument
-        # installer.
-        self.tool.manage_delObjects(ids=list(self.tool.objectIds()))
-
-        # Refill the tool with the widgets using only default values.
-        amt = self.tool.all_meta_types()
-        for d in amt:
-            widget_type = d['name']
-            swt = widget_type.replace(" ", "")
-            id = widget_type[len("CPS "):-len(" Type")]
-            # XXX AT: tests fail using zopectl. It seems like all_meta_types
-            # returns the meta_type list twice. Did not investigate further to
-            # see if this is because widget types are registered twice.
-            if id not in self.tool.objectIds():
-                self.tool.manage_addCPSWidgetType(id, swt)
+from Products.CPSSchemas.Widget import Widget
 
 
-    def testRegistry(self):
-        registry = WidgetTypeRegistry
+class FakePortal(Implicit):
+    pass
+fakePortal = FakePortal()
 
-        for widget_type in registry.listWidgetTypes():
-            widget_class = registry.getClass(widget_type)
+class FakeUrlTool(Implicit):
+    def getPortalObject(self):
+        return fakePortal
 
-            # There is a naming pattern here. Someone may want to break
-            # it though, but I don't know why someone would want to do it.
-            self.assertEquals(widget_class.meta_type + " Type", widget_type)
+fakePortal.portal_url = FakeUrlTool()
+fakePortal.portal_workflow = None
 
-            widget_type_instance = \
-                registry.makeWidgetTypeInstance(widget_type, "widget_type_id")
 
-            self.assertEquals(widget_type_instance.meta_type, 
-                widget_class.meta_type + " Type")
-
-            widget = widget_type_instance.makeInstance("widget_id")
-            self.assert_(isinstance(widget, widget_class))
-
-            # XXX: doesn't work if the widget type doesn't live in
-            # portal_widget_types
-            # field_types = widget.getFieldTypes()
-
+class TestWidgets(unittest.TestCase):
 
     def testStringWidget(self):
-        widget = self.tool["String Widget"].makeInstance("widget_id")
-        self.assertEquals(widget.getWidgetId(), "widget_id")
+        from Products.CPSSchemas.BasicWidgets import CPSStringWidget
+        widget = CPSStringWidget('foo', 'notype')
+        self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS String Field',))
 
     def testIntWidget(self):
-        widget = self.tool["Int Widget"].makeInstance("widget_id")
-        self.assertEquals(widget.getWidgetId(), "widget_id")
+        from Products.CPSSchemas.BasicWidgets import CPSIntWidget
+        widget = CPSIntWidget('foo', 'notype')
+        self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Int Field',))
 
     def testLongWidget(self):
-        widget = self.tool["Long Widget"].makeInstance("widget_id")
-        self.assertEquals(widget.getWidgetId(), "widget_id")
+        from Products.CPSSchemas.BasicWidgets import CPSLongWidget
+        widget = CPSLongWidget('foo', 'notype')
+        self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Long Field',))
 
     def testFloatWidget(self):
-        widget = self.tool["Float Widget"].makeInstance("widget_id")
-        self.assertEquals(widget.getWidgetId(), "widget_id")
+        from Products.CPSSchemas.BasicWidgets import CPSFloatWidget
+        widget = CPSFloatWidget('foo', 'notype')
+        self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Float Field',))
 
     def test_getCssClass(self):
         # create a bare widget, and set it in the portal to be able to create
         # the expression namespace
-        widget = Widget('widget_id', widgettype='dummy_type')
-        self.portal._setOb('widget_id', widget)
-        widget = self.portal._getOb('widget_id')
-        # dummy datamodel to be passed to the expression
-        dm = DataModel(ob=self.portal, proxy=None)
+        widget = Widget('widget_id', 'notype').__of__(fakePortal)
+        dm = DataModel(ob=None, proxy=None)
 
         # just use css_class
         self.assertEquals(widget.getCssClass('view', dm), '')
@@ -110,41 +78,48 @@ class TestWidgetTypesTool(CPSSchemasTestCase.CPSSchemasTestCase):
         self.assertEquals(widget.getCssClass('edit', dm), 'stringClassEdit')
 
         # just use css_class_expr
-        kw = {'css_class': '', 'css_class_expr': 'string:exprClass'}
+        kw = {'css_class': '',
+              'css_class_expr': 'string:exprClass'}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
         self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
 
         # use both properties
-        kw = {'css_class': 'stringClass', 'css_class_expr': 'string:exprClass'}
+        kw = {'css_class': 'stringClass',
+              'css_class_expr': 'string:exprClass'}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.getCssClass('view', dm), 'exprClass')
         self.assertEquals(widget.getCssClass('edit', dm), 'exprClass')
 
-        kw = {'css_class': 'stringClass', 'css_class_expr': 'nothing'}
+        kw = {'css_class': 'stringClass',
+              'css_class_expr': 'nothing'}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.getCssClass('view', dm), '')
         self.assertEquals(widget.getCssClass('edit', dm), '')
 
         # use non dummy expressions :)
         kw = {'css_class': 'stringClass',
-              'css_class_expr': "python:layout_mode == 'view' and 'viewExprClass' or nothing"}
+              'css_class_expr': "python:layout_mode == 'view' "
+                                "and 'viewExprClass' or nothing"}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.getCssClass('view', dm), 'viewExprClass')
         self.assertEquals(widget.getCssClass('edit', dm), '')
 
         kw = {'css_class': 'stringClass',
-              'css_class_expr': "python:layout_mode == 'search' and 'searchExprClass' or nothing"}
+              'css_class_expr': "python:layout_mode == 'search' "
+                                "and 'searchExprClass' or nothing"}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.getCssClass('view', dm), '')
         self.assertEquals(widget.getCssClass('edit', dm), '')
         self.assertEquals(widget.getCssClass('search', dm), 'searchExprClass')
 
     def test_javascript_expr_compilation(self):
-        widget = Widget('widget_id', widgettype='dummy_type')
+        widget = Widget('widget_id', 'notype')
+
         kw = {'javascript_expr': ''}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.javascript_expr_c, None)
+
         js_code = """
 function getSelectedRadioId(buttonGroup) {
   var i = getSelectedRadio(buttonGroup);
@@ -159,7 +134,6 @@ function getSelectedRadioId(buttonGroup) {
   }
 }
 """
-
         kw = {'javascript_expr': 'javascript:' + js_code}
         widget.manage_changeProperties(**kw)
         self.assertEquals(widget.javascript_expr_c, js_code.strip())
@@ -167,11 +141,8 @@ function getSelectedRadioId(buttonGroup) {
     def test_getJavaScriptCode(self):
         # create a bare widget, and set it in the portal to be able to create
         # the expression namespace
-        widget = Widget('widget_id', widgettype='dummy_type')
-        self.portal._setOb('widget_id', widget)
-        widget = self.portal._getOb('widget_id')
-        # dummy datamodel to be passed to the expression
-        dm = DataModel(ob=self.portal, proxy=None)
+        widget = Widget('widget_id', 'notype').__of__(fakePortal)
+        dm = DataModel(ob=None, proxy=None)
 
         # dummy tests, sorry, no JavaScript inspiration :)
         kw = {'javascript_expr': ''}
@@ -194,7 +165,8 @@ function getSelectedRadioId(buttonGroup) {
 """
         kw = {'javascript_expr': 'javascript:' + js_code}
         widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getJavaScriptCode('view', dm), js_code.strip())
+        self.assertEquals(widget.getJavaScriptCode('view', dm),
+                          js_code.strip())
 
         js_code = """
 function getLayoutMode() {
@@ -206,13 +178,13 @@ function getLayoutMode() {
   return '${layout_mode}';
 }"""}
         widget.manage_changeProperties(**kw)
-        self.assertEquals(widget.getJavaScriptCode('view', dm), js_code.strip())
-
-
+        self.assertEquals(widget.getJavaScriptCode('view', dm),
+                          js_code.strip())
 
 def test_suite():
-    suites = [unittest.makeSuite(TestWidgetTypesTool)]
-    return unittest.TestSuite(suites)
+    return unittest.TestSuite((
+        unittest.makeSuite(TestWidgets),
+        ))
 
-if __name__=="__main__":
-    unittest.main(defaultTest='test_suite')
+if __name__ == '__main__':
+    unittest.TextTestRunner().run(test_suite())
