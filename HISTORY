@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.31.4 [R1 build 2004/09/28-16:25 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fix getFileInfo() within CPSFileWidget to cope with non proxy object
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added getExternalEditorPath.py
+
+*******************************************
 ** CPSSchemas V0.31.3 [R1 build 2004/09/24-12:13 by madarche]
 
 Requires:
