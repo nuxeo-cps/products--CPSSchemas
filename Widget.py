@@ -86,6 +86,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Label in edit layout mode'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
          'label': 'Description'},
+        {'id': 'help', 'type': 'text', 'mode': 'w',
+         'label': 'Help'},
         {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
          'label': 'Label is i18n'},
         {'id': 'readonly_layout_modes', 'type': 'tokens', 'mode': 'w',
@@ -108,6 +110,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     label = ''
     label_edit = ''
     description = ''
+    help = ''
     is_i18n = 0
     css_class = ''
     readonly_layout_modes = []
