@@ -308,7 +308,7 @@ class FlexibleTypeInformation(TypeInformation):
         for field_type in field_types:
             # Find free field id (based on the field type name).
             s = field_type.lower().replace(' field', '').replace('cps ', '')
-            field_id_base = s.replace(' ', '')
+            field_id_base = 'val_%s' % s.replace(' ', '') # Prefix with val_
             field_id = field_id_base
             n = 0
             all_field_ids = schema.keys()
