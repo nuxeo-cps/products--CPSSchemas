@@ -130,9 +130,18 @@ msgstr ""
 msgid "img_xlarge"
 msgstr ""
 
-msgid "cpsschema_label_false"
+msgid "cpsschemas_label_false"
 msgstr ""
 
-msgid "cpsschema_label_true"
+msgid "cpsschemas_label_true"
+msgstr ""
+
+msgid "cpsschemas_label_link_href"
+msgstr ""
+
+msgid "cpsschemas_label_link_content"
+msgstr ""
+
+msgid "cpsschemas_label_link_title"
 msgstr ""
 
