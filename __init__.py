@@ -57,7 +57,14 @@ import BasicWidgets
 import ExtendedWidgets
 
 import DublinCorePatch
-import EpozPatch
+
+try:
+    from Products import Epoz
+    import EpozPatch
+except ImportError:
+    # Epoz is not installed
+    pass
+
 import DiskFile
 
 import utils
