@@ -21,7 +21,7 @@
         <strong tal:content="widget/title">label</strong>:
         (<em tal:content="widget/description">label</em>)
        
-        <div tal:replace="structure python:widget.render('edit', ds, dm)" />
+        <div tal:replace="structure python:widget.render('view', ds, dm)" />
       </tal:block>
     </td>
   </tr>
