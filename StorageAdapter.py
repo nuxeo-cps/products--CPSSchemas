@@ -78,12 +78,7 @@ class BaseStorageAdapter:
     def getContextObject(self):
         """Get the underlying context for this adapter.
 
-        If a getData/setData is later done, it will be done on this new
-        context.
-
-        This is used by CPS to switch to a writable object after unfreezing.
-        Also used by directory entry creation process, to specifiy the
-        id after an empty datamodel has been fetched.
+        See setContextObject for the semantics.
         """
         return None
 
