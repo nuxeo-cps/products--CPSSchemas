@@ -40,7 +40,7 @@ def install(self):
     _log = []
     def pr(bla, zlog=1, _log=_log):
         if bla == 'flush':
-            return '<html><head><title>SIT UPDATE</title></head><body><pre>'+ \
+            return '<html><head><title>CPSDocument Update</title></head><body><pre>'+ \
                    '\n'.join(_log) + \
                    '</pre></body></html>'
 
