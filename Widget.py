@@ -203,6 +203,14 @@ class CPSWidget(Widget):
         """
         return (self.fields and self.fields[0] == '?')
 
+    security.declarePrivate('setTemplate')
+    def setTemplate(self):
+        """Turn a widget into a Template Widget.
+
+        A template widget is not displayed or validate
+        it is used in flexible mode to produce new widget"""
+        self.fields = ['?']
+
 InitializeClass(CPSWidget)
 
 
