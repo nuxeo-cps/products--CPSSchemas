@@ -59,12 +59,12 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     A widget can be "rendered" in several modes, the basic ones are:
 
-    - view: the standard rendering view,
+      - view: the standard rendering view,
 
-    - edit: the standard editing view,
+      - edit: the standard editing view,
 
-    - modify: a pseudo-view that parses user input into the
-      datastructure.
+      - modify: a pseudo-view that parses user input into the
+        datastructure.
 
     A widget may have some additional parameters that describe certain
     aspects of its graphical representation or behavior.
