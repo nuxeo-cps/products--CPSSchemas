@@ -71,7 +71,7 @@ class SchemaContainer(Folder):
         """Add a schema, called from the ZMI."""
         schema = CPSSchema(id)
         schema = self.addSchema(id, schema)
-        if REQUEST is not None:
+        if REQUEST:
             REQUEST.RESPONSE.redirect(schema.absolute_url()+'/manage_main'
                                       '?manage_tabs_message=Added.')
         else:
@@ -80,6 +80,8 @@ class SchemaContainer(Folder):
 InitializeClass(SchemaContainer)
 
 
+# XXX: this class (at least, its two methods) is useless. This
+# should be refactored.
 class Schema(FolderWithPrefixedIds):
     """Schema
 
@@ -94,19 +96,24 @@ class Schema(FolderWithPrefixedIds):
     id = None
 
     def __init__(self, id='', title=''):
+        raise "XXX: Should not be called"
+        print "Schema.__init__() called (I thought it would not be)"
         self.id = id
         self.title = title
         self._clear()
         # XXX
 
     def _clear(self):
+        raise "XXX: Should not be called"
         """Clear the schema."""
+        print "Schema.clear() called (I thought it would not be)"
         pass
 
 InitializeClass(Schema)
 
 
 class CPSSchema(Schema):
+    # XXX: the Schema class is already persistent.
     """Persistent Schema."""
 
     meta_type = "CPS Schema"
@@ -116,6 +123,7 @@ class CPSSchema(Schema):
     def __init__(self, id, title='', schema=None, **kw):
         self.id = id
         self.title = title
+        # XXX: can we remove this + the schema and **kw parameters ?
         #if schema is None:
         #    schema = Schema()
         #self.setSchema(schema)
@@ -153,13 +161,13 @@ class CPSSchema(Schema):
     security.declareProtected(ManagePortal, 'manage_addField')
     def manage_addField(self, id, field_type, REQUEST=None, **kw):
         """Add a field TTW."""
-        if REQUEST is not None:
+        if REQUEST:
             kw.update(REQUEST.form)
             for key in ('id', 'field_type'):
                 if kw.has_key(key):
                     del kw[key]
         field = self.addField(id, field_type, **kw)
-        if REQUEST is not None:
+        if REQUEST:
             REQUEST.RESPONSE.redirect(field.absolute_url()+'/manage_workspace'
                                       '?manage_tabs_message=Added.')
         else:
@@ -169,7 +177,7 @@ class CPSSchema(Schema):
     def manage_delFieldItems(self, ids, REQUEST=None):
         """Add a field TTW."""
         self.manage_delObjects(ids)
-        if REQUEST is not None:
+        if REQUEST:
             REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_editSchema'
                                       '?manage_tabs_message=Deleted.')
 
@@ -188,5 +196,5 @@ def addCPSSchema(container, id, REQUEST=None):
     ob = CPSSchema(id)
     container._setObject(id, ob)
     ob = container._getOb(id)
-    if REQUEST is not None:
+    if REQUEST:
         REQUEST.RESPONSE.redirect(ob.absolute_url() + "/manage_main")
