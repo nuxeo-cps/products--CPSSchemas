@@ -38,14 +38,14 @@ def _convertFileToMimeType(file, mime_type, context=None):
         return None
     transformer = getToolByName(context, 'portal_transforms', None)
     if transformer is None:
-        LOG('convertFileToText', DEBUG, 'No portal_transforms')
+        LOG('_convertFileToMimeType', DEBUG, 'No portal_transforms')
         return None
     raw = str(file)
     if not raw:
         return None
-    LOG('convertFileToText', DEBUG, 'File is %s' % repr(file))
-    current_mime_type = getattr(file, 'content_type', 
-        'application/octet-stream')
+    LOG('_convertFileToMimeType', DEBUG, 'File is %s' % repr(file))
+    current_mime_type = getattr(file, 'content_type',
+                                'application/octet-stream')
     data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
                                  # filename='fooXXX', encoding='',
                                  )
