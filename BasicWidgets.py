@@ -208,10 +208,12 @@ class CPSStringWidget(CPSWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        if not value:
+            value = ''                  # fix 'None' pb
         err = 0
         try:
-            v = str(value).strip()
-        except ValueError:
+            v = value.strip()
+        except AttributeError:
             err = 'cpsschemas_err_string'
         else:
             if self.is_required and not v:
