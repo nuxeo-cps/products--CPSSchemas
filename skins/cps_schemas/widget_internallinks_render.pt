@@ -11,7 +11,7 @@
                    item_per_page python:10666
                   ">
   <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
-    <metal:items use-macro="here/content_lib/macros/display_contents"></metal:items>
+    <metal:items use-macro="here/content_lib_display_contents/macros/display_contents"></metal:items>
   </tal:block>
 
   <tal:block condition="python:mode == 'edit'">

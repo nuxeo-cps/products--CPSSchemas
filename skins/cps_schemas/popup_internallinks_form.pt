@@ -32,7 +32,7 @@
         tal:attributes="action string:${here_url}/${template/id}">
     <input type="hidden" name="textarea" value=""
            tal:attributes="value textarea" />
-    <metal:block use-macro="here/generic_lib/macros/search_form" />
+    <metal:block use-macro="here/generic_lib_search_form/macros/search_form" />
   </form>
 </tal:notSelected>
 
@@ -55,7 +55,7 @@
         tal:condition="not:items" 
         i18n:translate="legend_no_search_result"
         style="margin: 10px 0 0 5px;">No items found.</div>                   
-      <metal:block use-macro="here/content_lib/macros/display_contents" />
+      <metal:block use-macro="here/content_lib_display_contents/macros/display_contents" />
     </tal:block>
     <hr>
     <input type="button" class="standalone" value="button_back"

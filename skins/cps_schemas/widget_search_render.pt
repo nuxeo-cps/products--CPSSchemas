@@ -19,7 +19,7 @@
           utool nocall:here/portal_url;
           base_url python:utool()+ '/';
           ">
-            <metal:block use-macro="here/content_lib/macros/display_contents" />
+            <metal:block use-macro="here/content_lib_display_contents/macros/display_contents" />
         </tal:block>
         <!--div tal:condition="link_more">
             <a href="" tal:attributes="href link_more"
