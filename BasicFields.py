@@ -400,7 +400,7 @@ class CPSImageField(CPSField):
         """Convert a value to LDAP attribute values."""
         if not value:
             return []
-        return [str(value)]
+        return [str(value.data)]
 
     def convertFromLDAP(self, values):
         """Convert a value from LDAP attribute values."""
