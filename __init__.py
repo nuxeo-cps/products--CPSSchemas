@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2004 Nuxeo SARL <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,23 @@
 # 02111-1307, USA.
 #
 # $Id$
+
+from zLOG import LOG, INFO
+
+# PATCH For Plone
+
+try:
+    from Products.CMFPlone.Portal import PloneSite
+    import PlacelessTranslationServicePatch
+    LOG("Patch PlacelessTranslationService for CPS compatiblity",
+        INFO,
+        "translate() accessible through restricted code on PLTS"
+        "Patch CMF / Plone portal to have a fake Localizer access point")
+except ImportError:
+    # CMF / CPS instance
+    pass
+
+# EOF
 
 from Products.CMFCore import utils
 from Products.CMFCore.DirectoryView import registerDirectory
