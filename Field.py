@@ -104,6 +104,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': "Read: ignore storage"},
         {'id': 'read_process_expression_str', 'type': 'string', 'mode': 'w',
          'label': "Read: expression"},
+        {'id': 'read_process_dependent_fields', 'type': 'tokens', 'mode': 'w',
+         'label': "Read: expression dependent fields"},
         {'id': 'write_ignore_storage', 'type': 'boolean', 'mode': 'w',
          'label': "Write: ignore storage"},
         {'id': 'write_process_expression_str', 'type': 'string', 'mode': 'w',
@@ -123,6 +125,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #vocabulary = None
     read_ignore_storage = 0
     read_process_expression_str = ''
+    read_process_dependent_fields = []
     write_ignore_storage = 0
     write_process_expression_str = ''
 

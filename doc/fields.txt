@@ -132,6 +132,12 @@ Fields
 
         - nothing: None
 
+    read_process_dependent_fields -- Read: expression dependent fields
+
+      If the above expression uses some other fields, they must be
+      specified here so that the backend knows what to fetch when a
+      recomputation is done.
+
     write_ignore_storage -- Write: ignore storage
 
       If true, nothing will actually be written to the storage.
