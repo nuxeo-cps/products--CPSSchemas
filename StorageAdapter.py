@@ -62,6 +62,16 @@ class BaseStorageAdapter:
         self._field_items = field_items
         self._writable_field_items = writable_field_items
 
+    def setContextObject(self, ob):
+        """Set a new underlying object for this adapter.
+
+        If a getData/setData is later done, it will be done on this new
+        object.
+
+        This is used by CPS to switch to a writable object after unfreezing.
+        """
+        self._ob = ob
+
     def getSchema(self):
         """Get schema this adapter is about."""
         return self._schema
@@ -157,16 +167,6 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
 
-    def setContextObject(self, ob):
-        """Set a new underlying object for this adapter.
-
-        If a getData/setData is later done, it will be done on this new
-        object.
-
-        This is used by CPS to switch to a writable object after unfreezing.
-        """
-        self._ob = ob
-
     def _getFieldData(self, field_id, field):
         """Get data from one field."""
         ob = self._ob
@@ -216,10 +216,6 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
     def __init__(self, schema, ob, **kw):
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
-
-    def setContextObject(self, ob):
-        """Set a new underlying object for this adapter."""
-        self._ob = ob
 
     def _getFieldData(self, field_id, field):
         """Get data from one field.
