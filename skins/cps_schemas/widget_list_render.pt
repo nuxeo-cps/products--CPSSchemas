@@ -1,6 +1,6 @@
 <tal:block define="mode options/mode;
                    value options/value;
-                   display context/display;
+                   display here/display;
                   ">
 
 <tal:block condition="python: mode == 'view'">
@@ -14,15 +14,15 @@
       Content
     </li>
   </ul>
-  <div tal:condition="not:value" tal:content="context/format_empty" />
+  <div tal:condition="not:value" tal:content="here/format_empty" />
 </tal:block>
 
 <tal:block condition="python: mode == 'edit'">
-  <textarea tal:define="wid context/getHtmlWidgetId"
+  <textarea tal:define="wid here/getHtmlWidgetId"
             tal:attributes="id wid;
                             name string:${wid}:lines;
-                            cols context/width;
-                            rows context/height"
+                            cols here/width;
+                            rows here/height"
             tal:content="python:'\n'.join(value)"> 
     Content
   </textarea>
