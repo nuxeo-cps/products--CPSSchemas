@@ -8,17 +8,16 @@
                    last_modified options/last_modified;
                   ">
 <tal:block condition="python: mode == 'view' and not empty_file">
-
-  <tal:block define="preview_id python:options['datastructure'][id+'_preview']">
-    <a target="_blank"
+  <div
+    tal:define="preview_id python:options['datastructure'][id+'_preview']">
+    <a target="_blank"  condition="mimetype"
       tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <tal:block condition="mimetype"
-        replace="structure python:here.getImgTag(mimetype.icon_path,
-        title=mimetype.name())" />
-    </a>
-    <a tal:attributes="href string:${content_url}?nocache=${last_modified}">
-      <tal:block replace="current_name" />
-    </a>
+      <tal:block
+        replace="structure python:here.getImgTag(mimetype.icon_path, zoom=2,
+        title=mimetype.name())" /></a>
+    <a class="strong"
+      tal:attributes="href string:${content_url}?nocache=${last_modified}">
+      <tal:block replace="current_name" /></a>
 
     <span tal:condition="size" class="note"
           tal:define="b python:size < 1024;
@@ -29,7 +28,6 @@
       <tal:block condition="m" content="python:'%.02f M' % float(size / 1048576.0)"/>
       <tal:block condition="k" content="python:'%s K' % (size / 1024)"/>
     </span>
-
     <span tal:condition="preview_id">
       <a href="http://url..." target="_blank"
          tal:attributes="href preview_id"
@@ -37,7 +35,7 @@
        (preview)
       </a>
     </span>
-  </tal:block>
+  </div>
 
 </tal:block>
 
