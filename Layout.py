@@ -232,9 +232,9 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                     mode = 'hidden'
                 elif layout_mode.startswith('view'):
                     mode = 'view'
-                elif layout_mode.startswith('edit') or\
-                         layout_mode.startswith('create') or\
-                         layout_mode.startswith('search'):
+                elif (layout_mode.startswith('edit') or
+                      layout_mode.startswith('create') or
+                      layout_mode.startswith('search')):
                     if self.isReadOnly():
                         mode = 'view'
                     else:
