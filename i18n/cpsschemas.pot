@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-02-05 11:30default\n"
+"POT-Creation-Date: 2004-02-06 16:54default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -19,38 +19,6 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
-#.   <input value="button_add" type="submit">
-#.         </input>
-#.   <input value="button_add" name="vocabulary_addkey:method" type="submit">
-#.   </input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_add"
-msgstr ""
-
-#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
-#.       <input value="button_ok" class="context" type="submit">
-#.     </input></input>
-#: from ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_back"
-msgstr ""
-
-#.   <input onclick="window.close()" class="context" type="button" value="button_cancel">
-#.     <input value="button_update" class="standalone" type="submit">
-#.   </input></input>
-#: from ../skins/cps_schemas/popup_rte_form.pt
-msgid "button_cancel"
-msgstr ""
-
-#.   <input value="button_delete" type="submit">
-#.         </input>
-#.   <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
-#.   </input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_delete"
-msgstr ""
-
 #.   <input value="button_edit" type="submit">
 #.         </input>
 #.   <input value="button_edit" name="vocabulary_update:method" type="submit">
@@ -61,22 +29,10 @@ msgstr ""
 msgid "button_edit"
 msgstr ""
 
-#.   <input value="button_ok" class="context" type="submit">
-#.     </input>
-#: from ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_ok"
-msgstr ""
-
 #.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_rte"
-msgstr ""
-
-#.   <input value="button_update" class="standalone" type="submit">
-#.   </input>
-#: from ../skins/cps_schemas/popup_rte_form.pt
-msgid "button_update"
 msgstr ""
 
 #.   <span>at</span>

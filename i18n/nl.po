@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-05 11:30default\n"
+"POT-Creation-Date: 2004-02-06 16:54default\n"
 "PO-Revision-Date: 2004-02-05 11:33+0100\n"
 "Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
 "Language-Team: francais <fr@li.org>\n"
@@ -19,38 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.0.2\n"
-
-#.   <input value="button_add" type="submit">
-#.         </input>
-#.   <input value="button_add" name="vocabulary_addkey:method" type="submit">
-#.   </input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_add"
-msgstr "Invalide Email"
-
-#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
-#.       <input value="button_ok" class="context" type="submit">
-#.     </input></input>
-#: from ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_back"
-msgstr "Terug"
-
-#.   <input onclick="window.close()" class="context" type="button" value="button_cancel">
-#.     <input value="button_update" class="standalone" type="submit">
-#.   </input></input>
-#: from ../skins/cps_schemas/popup_rte_form.pt
-msgid "button_cancel"
-msgstr "Terug"
-
-#.   <input value="button_delete" type="submit">
-#.         </input>
-#.   <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
-#.   </input>
-#: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#: ../skins/cps_schemas/vocabulary_edit_form.pt
-msgid "button_delete"
-msgstr "Schrappen"
 
 #.   <input value="button_edit" type="submit">
 #.         </input>
@@ -62,23 +30,11 @@ msgstr "Schrappen"
 msgid "button_edit"
 msgstr "Wijzig"
 
-#.   <input value="button_ok" class="context" type="submit">
-#.     </input>
-#: from ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_ok"
-msgstr "Ok"
-
 #.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_rte"
 msgstr "..."
-
-#.   <input value="button_update" class="standalone" type="submit">
-#.   </input>
-#: from ../skins/cps_schemas/popup_rte_form.pt
-msgid "button_update"
-msgstr "Bijwerken"
 
 #.   <span>at</span>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -368,6 +324,24 @@ msgstr "Link naam"
 msgid "cpsschemas_label_link_title"
 msgstr "Beschrijving"
 
+#~ msgid "button_add"
+#~ msgstr "Invalide Email"
+
+#~ msgid "button_back"
+#~ msgstr "Terug"
+
+#~ msgid "button_cancel"
+#~ msgstr "Terug"
+
+#~ msgid "button_delete"
+#~ msgstr "Schrappen"
+
+#~ msgid "button_ok"
+#~ msgstr "Ok"
+
+#~ msgid "button_update"
+#~ msgstr "Bijwerken"
+
 #~ msgid "button_search"
 #~ msgstr "Zoeken"
 
@@ -376,4 +350,3 @@ msgstr "Beschrijving"
 
 #~ msgid "heading_enter_searched_value"
 #~ msgstr "Gaat een termijn van onderzoek in&nbsp;:"
-
