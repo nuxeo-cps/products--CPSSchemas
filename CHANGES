@@ -3,11 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- now possible to set an 'alt' text in Image/Photo widgets
-  (was previously set to the filename's value)
+-
 Bug fixes:
 ~~~~~~~~~~
-- 
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

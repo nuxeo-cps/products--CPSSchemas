@@ -1,4 +1,21 @@
 *******************************************
+** CPSSchemas V0.22.0 [R1 build 2004/05/24-10:19 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- now possible to set an 'alt' text in Image/Photo widgets
+  (was previously set to the filename's value)
+Bug fixes:
+~~~~~~~~~~
+- 
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.21.1 [R1 build 2004/05/10-06:19 by madarche]
 
 Requires:
