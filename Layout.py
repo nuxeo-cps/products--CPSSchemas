@@ -34,11 +34,12 @@ from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.permissions import ViewManagementScreens
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.Expression import getEngine
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
-from Products.CMFCore.Expression import getEngine
+from Products.CPSSchemas.DataModel import ReadAccessError
 
 class LayoutContainer(Folder):
     """Layout Tool
@@ -250,9 +251,14 @@ class Layout(PropertiesPostProcessor,
 
         Prepare all the widgets and thus updates the datastructure.
         """
+        dm = datastructure.getDataModel()
+        dm._forbidden_widgets = []
         for widget_id, widget in self.items():
             if not widget.isHidden():
-                widget.prepare(datastructure)
+                try:
+                    widget.prepare(datastructure)
+                except ReadAccessError:
+                    dm._forbidden_widgets.append(widget_id)
 
     security.declarePrivate('computeLayoutStructure')
     def computeLayoutStructure(self, layout_mode, datamodel):
@@ -280,7 +286,8 @@ class Layout(PropertiesPostProcessor,
         # Set the mode, CSS class and JavaScript code for all the widgets.
         widgets = {}
         for widget_id, widget in self.items():
-            if not widget.isHidden():
+            if (not widget_id in datamodel._forbidden_widgets
+                and not widget.isHidden()):
                 mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
                 css_class = widget.getCssClass(layout_mode, datamodel)
                 js_code = widget.getJavaScriptCode(layout_mode, datamodel)
@@ -290,6 +297,12 @@ class Layout(PropertiesPostProcessor,
                     'widget_css_class': css_class,
                     'widget_javascript': js_code,
                     }
+            else:
+                widgets[widget_id] = {
+                    'widget': widget,
+                    'widget_mode': 'hidden',
+                    }
+
         layout_structure['widgets'] = widgets
         # Store computed widget info in row/cell structure.
         for row in layout_structure['rows']:
