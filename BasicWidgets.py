@@ -235,8 +235,8 @@ class CPSLinkWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         datastructure[widget_id] = datamodel[self.fields[0]]
-        datastructure[widget_id+'_content'] =datamodel[self.fields[1]]
-        datastructure[widget_id+'_title'] = datamodel[self.fields[2]]
+        datastructure[widget_id + '_content'] = datamodel[self.fields[1]]
+        datastructure[widget_id + '_title'] = datamodel[self.fields[2]]
 
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
@@ -912,10 +912,10 @@ class CPSFloatWidget(CPSWidget):
             return 0
 
         if self.is_limited:
-           if (v < self.min_value) or (v > self.max_value):
-               datastructure.setError(self.getWidgetId(),
-                                      "cpsschemas_err_float_range")
-               return 0
+            if (v < self.min_value) or (v > self.max_value):
+                datastructure.setError(self.getWidgetId(),
+                                       "cpsschemas_err_float_range")
+                return 0
 
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
@@ -1584,7 +1584,7 @@ class CPSInternalLinksWidget(CPSWidget):
     def render(self, mode, datastructure):
         """Render this widget from the datastructure or datamodel."""
         if mode not in ('view', 'edit'):
-          raise RuntimeError('unknown mode %s' % mode)
+            raise RuntimeError('unknown mode %s' % mode)
 
         render_method = 'widget_internallinks_render'
         meth = getattr(self, render_method, None)
