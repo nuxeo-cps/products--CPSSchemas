@@ -64,12 +64,15 @@ class DataModel(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, ob, schemas=[], proxy=None):
+    def __init__(self, ob, schemas=[], proxy=None, context=None):
         """Constructor.
 
         Proxy must be passed, if different than the object, so that
-        widgets or fields can do some placeful computations, and that
         an editable content can be created at commit time.
+
+        Context must be passed if the widgets or fields have some
+        placeful computations to do. Be careful that the context may not
+        be the proxy but its container during creation.
         """
         UserDict.__init__(self)
         # self.data initialized by UserDict
@@ -78,6 +81,7 @@ class DataModel(UserDict):
         self._schemas = ()
         self._adapters = ()
         self._proxy = proxy
+        self._context = context
         for schema in schemas:
             self._addSchema(schema)
 
@@ -89,6 +93,10 @@ class DataModel(UserDict):
     def getProxy(self):
         """Get the proxy of the object for this DataModel."""
         return self._proxy
+
+    def getContext(self):
+        """Get the context for this DataModel."""
+        return self._context
 
     # Expose setter as method for restricted code.
     def set(self, key, value):
