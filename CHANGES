@@ -6,9 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- A DiskFiles getData() would return the data of the previously committed
-  file, not the newly uploaded file, if called before a commit.
-  This made the previews of Disk File Fields preview "lag behind" the file.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.35.2 [R1 build 2004/12/07-13:22 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- A DiskFiles getData() would return the data of the previously committed
+  file, not the newly uploaded file, if called before a commit.
+  This made the previews of Disk File Fields preview "lag behind" the file.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.35.1 [R1 build 2004/12/03-12:41 by regebro]
 
 Requires:
