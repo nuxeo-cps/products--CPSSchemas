@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Add a script to make available vocabulary keys sorted by label or by 
+  translated msgid
 Bug fixes:
 ~~~~~~~~~~
 - Generic select widget did not refuse validation of empty values when required
