@@ -180,6 +180,20 @@ class BasicFieldTests(CPSSchemasTestCase.CPSSchemasTestCase):
         self.assertEquals(field.validate(image), image)
         self.assertRaises(ValueError, field.validate, [1])
 
+    def testRangeListField(self):
+        field = BasicFields.CPSRangeListField('the_id')
+        self.fields._setObject('the_id', field)
+        field = getattr(self.fields, 'the_id')
+
+        self.assertEquals(field.getDefault(), [])
+        self.assertEquals(field.validate([(1,), (2, 5)]), [(1,), (2, 5)])
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, [1])
+        self.assertRaises(ValueError, field.validate, [()])
+        self.assertRaises(ValueError, field.validate, [(1, 2, 3)])
+        self.assertRaises(ValueError, field.validate, [[1], (2, 5)])
+        self.assertRaises(ValueError, field.validate, [(1), (2, 5)])
+
 def test_suite():
     suites = [unittest.makeSuite(BasicFieldTests)]
     return unittest.TestSuite(suites)

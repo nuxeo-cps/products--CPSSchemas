@@ -548,6 +548,35 @@ class CPSImageField(CPSField):
 
 InitializeClass(CPSImageField)
 
+class CPSRangeListField(CPSListField):
+    """Meta list Field"""
+    meta_type = "CPS Range List Field"
+
+    validation_error_msg = 'Not a range list: '
+
+    def validate(self, value):
+        LOG('##################', DEBUG, repr(value))
+        if isinstance(value, ListType):
+            for v in value:
+                if not isinstance(v, TupleType):
+                    raise ValidationError(self.validation_error_msg +
+                                          "%s is not a tuple in %s" % (repr(v), repr(value)))
+                if len(v) not in (1, 2):
+                    raise ValidationError(self.validation_error_msg +
+                                          "bad length for %s in %s" % (repr(v), repr(value)))
+                for e in v:
+                    if not self.verifyType(e):
+                        raise ValidationError(self.validation_error_msg +
+                                              "%s is not an integer in %s" % (repr(e), repr(value)))
+            return value
+        raise ValidationError(self.validation_error_msg + repr(value))
+
+    def verifyType(self, value):
+        """Verify the type of the value"""
+        return isinstance(value, IntType)
+    
+InitializeClass(CPSRangeListField)
+
 # Register field classes
 
 FieldRegistry.register(CPSStringField)
@@ -561,3 +590,4 @@ FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
 FieldRegistry.register(CPSSubObjectsField)
 FieldRegistry.register(CPSImageField)
+FieldRegistry.register(CPSRangeListField)
