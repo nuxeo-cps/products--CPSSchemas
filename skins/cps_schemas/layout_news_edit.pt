@@ -1,0 +1,29 @@
+<tal:block define="layout options/layout;
+                   ds options/datastructure;
+                   dm options/datamodel;
+                   ok options/ok|nothing;
+                  ">
+<form action="." method="POST"
+  tal:attributes="action string:${here/absolute_url}/cpsdocument_edit_form">
+<table border="1">
+  <tr tal:condition="not:ok">
+    <td tal:attributes="colspan layout/ncols">
+      <b style="color: red">Please correct the errors.</b>
+    </td>
+  </tr>
+  <tr tal:repeat="row layout/rows">
+    <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
+      <tal:block define="widget cell/widget; wid widget/getWidgetId">
+        <div tal:define="err python:ds.getError(wid)"
+             tal:condition="err">
+          <b style="color: red" tal:content="err">err</b>
+        </div>
+        <span tal:replace="widget/title">label</span>:
+        <div tal:replace="structure python:widget.render('edit', ds, dm)" />
+      </tal:block>
+    </td>
+  </tr>
+</table>
+<input type="submit" name="cpsdocument_edit_button" value="Change" />
+</form>
+</tal:block>
