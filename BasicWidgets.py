@@ -743,6 +743,28 @@ class CPSFloatWidget(CPSWidget):
 
     field_types = ('CPS Float Field',)
 
+    _properties = CPSWidget._properties + (
+        {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
+         'label': 'Value limited by a range'},
+        {'id': 'min', 'type': 'float', 'mode': 'w',
+         'label': 'Min value of the range'},
+        {'id': 'max', 'type': 'float', 'mode': 'w',
+         'label': 'Max value of the range'},
+        {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
+         'label': 'Thousands separator'},
+        {'id': 'decimals_separator', 'type': 'string', 'mode': 'w',
+         'label': 'Decimals separator'},
+        {'id': 'decimals_number', 'type': 'int', 'mode': 'w',
+         'label': 'Number of decimals'},
+            )
+
+    is_limited = 0
+    min = 0.0
+    max = 0.0
+    thousands_separator = ''
+    decimals_separator = ','
+    decimals_number = 0
+
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -756,17 +778,35 @@ class CPSFloatWidget(CPSWidget):
         except (ValueError, TypeError):
             datastructure.setError(self.getWidgetId(),
                                    "cpsschemas_err_float")
-            ok = 0
-        else:
-            datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = v
-            ok = 1
-        return ok
+            return 0
+
+        if self.is_limited:
+           if (v < self.min) or (v > self.max):
+               datastructure.setError(self.getWidgetId(),
+                                      "cpsschemas_err_float_range")
+               return 0
+
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            v = float(value)
+            if self.decimals_number:
+                value = ("%0." + str(self.decimals_number) + "f") % v
+            if self.thousands_separator:
+                intpart, decpart = value.split('.')
+                thousands = []
+                while intpart:
+                    thousands.insert(0, intpart[-3:])
+                    intpart = intpart[:-3]
+                value = self.thousands_separator.join(thousands)
+                value = ''.join([value, '.', decpart])
+            if self.decimals_separator:
+                value = value.replace('.', self.decimals_separator)
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
