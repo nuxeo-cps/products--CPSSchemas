@@ -202,3 +202,6 @@ msgstr ""
 msgid "cpsschemas_psm_vocabulary_updated"
 msgstr ""
 
+msgid "label_none_selection"
+msgstr ""
+

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-06-18 19:54default\n"
+"POT-Creation-Date: 2004-06-23 16:33default\n"
 "PO-Revision-Date: 2004-06-08 16:42-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: Português do Brasil <pt@li.org>\n"
@@ -46,6 +46,14 @@ msgstr "hora"
 #.           </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_preview"
+msgstr "Previsão"
+
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
+#.             (printable version)
+#.           </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#, fuzzy
+msgid "cpsschema_link_printable_version"
 msgstr "Previsão"
 
 #.   <span>mn</span>
@@ -378,3 +386,6 @@ msgstr "Remover vocabulário"
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_updated"
 msgstr "Adicionar vocabulário"
+
+msgid "label_none_selection"
+msgstr ""

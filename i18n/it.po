@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"POT-Creation-Date: 2004-06-18 19:54default\n"
+"POT-Creation-Date: 2004-06-23 16:33default\n"
 "PO-Revision-Date: 2004-05-21 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -19,13 +19,13 @@ msgstr ""
 #            string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
 #    <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
 #            string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
-#.   <button attributes="
+#.   <button type="button" attributes="
 #.           id button_rte_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           " type="button">Layout</button>
+#.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_rte"
 msgstr "..."
@@ -43,8 +43,8 @@ msgstr "h"
 #    <a attributes="href preview_id" href="http://url..." target="_blank">
 #           (preview)
 #          </a>
-#.   <a attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
-#.             + '/preview_html?file=' + fields[0] + '&file_html=' + fields[2]" href="http://url...">
+#.   <a href="http://url..." attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
+#.             + '/preview_html?file=' + fields[0] + '&file_html=' + fields[2]">
 #.             (preview)
 #.           </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -54,7 +54,7 @@ msgstr "(anteprima)"
 #    <a attributes="href preview_id" href="http://url..." target="_blank">
 #           (preview)
 #          </a>
-#.   <a attributes="href preview_id" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
 #.             (printable version)
 #.           </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -89,13 +89,13 @@ msgid "cpsschemas_label_file_delete"
 msgstr "Elimina"
 
 #.   <label>Keep</label>
-#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
+#.   <label attributes="for string:${radio_name}_keep" condition="not: empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Mantieni"
 
-#.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Nessuno"
@@ -176,7 +176,7 @@ msgstr "Valore:"
 
 #    <em content="err" style="color: red">err</em>
 #    <em content="err" style="color: red">err</em>
-#.   <em content="err" style="color: red">err</em>
+#.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
@@ -405,3 +405,5 @@ msgstr "Elimina vocabolario"
 msgid "cpsschemas_psm_vocabulary_updated"
 msgstr "Aggiungi vocabolario"
 
+msgid "label_none_selection"
+msgstr ""
