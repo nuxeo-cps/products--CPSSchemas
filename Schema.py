@@ -176,6 +176,7 @@ class CPSSchema(Schema):
         {'id': 'xxx', 'type': 'string', 'mode': 'w',
          'label':'yyy'},
         )
+    xxx = ''
 
     manage_options = (
         {'label': 'Schema', 'action': 'manage_editSchema', },

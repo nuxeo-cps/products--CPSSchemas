@@ -158,6 +158,8 @@ class FlexibleTypeInformation(TypeInformation):
           'label': 'Layout style prefix'},
          {'id': 'flexible_layouts', 'type': 'tokens', 'mode': 'w',
           'label': 'Flexible layouts'}, # XXX layout1:schema1 layout2:schema2
+         {'id': 'storage_methods', 'type': 'tokens', 'mode': 'w',
+          'label': 'Storage methods'}, # XXX use schema storage adapters later
          )
         )
     content_meta_type = 'CPS Document'
@@ -167,6 +169,7 @@ class FlexibleTypeInformation(TypeInformation):
     default_layout = ''
     layout_style_prefix = ''
     flexible_layouts = []
+    storage_methods = [] # XXX will later use a storage adapter in the schema
     cps_is_searchable = 1
     cps_proxy_type = 'document'
 
@@ -506,6 +509,66 @@ class FlexibleTypeInformation(TypeInformation):
                 evtool = getToolByName(self, 'portal_eventservice', None)
                 if evtool is not None:
                     evtool.notify('sys_modify_object', ob, {})
+            else:
+                mode = errmode
+        else:
+            ok = 1
+        return self._renderLayoutStyle(ob, mode, layout=layoutdata,
+                                       datastructure=ds, datamodel=dm, ok=ok,
+                                       **kw)
+
+    security.declarePrivate('validateStoreRenderObject')
+    def validateStoreRenderObject(self, ob, request=None, mode='edit',
+                                  okmode='edit', errmode='edit',
+                                  layout_id=None, **kw):
+        """Modify the object from request, store data, and renders to new mode.
+
+        If request is None, the object is rendered in the specified mode.
+
+        If request is not None:
+        - the parameters are validated.
+        - if there is a validation error:
+          - the object is rendered in mode errmode;
+        - if there is no validation error:
+          - the object is modified, or a storage method is called,
+          - the object is renderd in mode okmode.
+        """
+        dm = self.getDataModel(ob)
+        ds = DataStructure()
+        layoutob = self.getLayout(layout_id, ob)
+        # Prepare each widget, and so update the datastructure.
+        layoutdata = layoutob.getLayoutData(ds, dm)
+        if request is not None:
+            # Validate from request.
+            ds.updateFromMapping(request.form)
+            ok = layoutob.validateLayout(layoutdata, ds, dm)
+            if ok:
+                method_name = None
+                for sm in self.storage_methods:
+                    v = sm.split(':')
+                    if len(v) != 2:
+                        raise ValueError("Bad syntax in storage_methods")
+                    if v[0] != mode:
+                        continue
+                    method_name = v[1]
+                    break
+                if method_name:
+                    # Do storage using a method.
+                    method = getattr(ob, method_name, None)
+                    if method is None:
+                        raise ValueError("No storage method %s" %
+                                         method_name)
+                    method(mode, layout=layoutdata,
+                           datastructure=ds, datamodel=dm, **kw)
+                else:
+                    # Do storage by committing the dm.
+                    dm._commit()
+                    # CMF/CPS stuff.
+                    ob.reindexObject()
+                    evtool = getToolByName(self, 'portal_eventservice', None)
+                    if evtool is not None:
+                        evtool.notify('sys_modify_object', ob, {})
+                mode = okmode
             else:
                 mode = errmode
         else:

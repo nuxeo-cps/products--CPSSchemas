@@ -162,6 +162,22 @@ class CPSDocumentMixin(ExtensionClass.Base):
         return ti.renderEditObject(self, request, mode=mode, errmode=errmode,
                                    layout_id=layout_id, **kw)
 
+    security.declareProtected(ModifyPortalContent, 'validateStoreRender')
+    def validateStoreRender(self, request=None,
+                            mode='edit', okmode='edit', errmode='edit',
+                            layout_id=None, **kw):
+        """Modify the object from request, store data, and renders to new mode.
+
+        If no request was passed, renders mode.
+
+        If request was passed, renders okmode, or errmode if validation
+        failed.
+        """
+        ti = self.getTypeInfo()
+        return ti.validateStoreRenderObject(self, request, mode=mode,
+                                            okmode=okmode, errmode=errmode,
+                                            layout_id=layout_id, **kw)
+
     # XXX make this a WorkflowMethod
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, **kw):

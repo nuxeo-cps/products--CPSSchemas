@@ -204,6 +204,10 @@ class DataModel(UserDict):
         for schema in schemas:
             self._addSchema(schema)
 
+    def getObject(self):
+        """Get the object this DataModel is about."""
+        return self._ob
+
     # Expose setter as method for restricted code.
     def set(self, key, value):
         # XXX This should check field permission access...
