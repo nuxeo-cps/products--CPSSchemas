@@ -2,7 +2,7 @@
   <body>
 
     <div metal:fill-slot="main"
-         tal:content="structure doc/render">
+         tal:content="structure python:doc.render(proxy=here)">
       Body
     </div>
 

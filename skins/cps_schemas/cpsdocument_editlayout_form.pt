@@ -2,7 +2,7 @@
   <body>
 
     <div metal:fill-slot="main">
-      <div tal:replace="structure python:doc.render(mode='editlayout')" />
+      <div tal:replace="structure python:doc.render(mode='editlayout', proxy=here)" />
     </div>
 
   <body>

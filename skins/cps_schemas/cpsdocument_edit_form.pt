@@ -3,7 +3,8 @@
   <body>
 
     <div metal:fill-slot="main">
-      <div tal:replace="structure python:doc.renderEdit(request=edit_request)" />
+      <div tal:replace="structure
+    python:doc.renderEdit(request=edit_request, proxy=here)" />
     </div>
 
   <body>
