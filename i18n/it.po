@@ -21,7 +21,7 @@ msgstr ""
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 #: ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "button_add"
-msgstr "Indietro"
+msgstr "Aggiungi"
 
 #.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
 #.       <input value="button_ok" class="context" type="submit">
@@ -35,7 +35,7 @@ msgstr "Indietro"
 #.   </input></input>
 #: from ../skins/cps_schemas/popup_rte_form.pt
 msgid "button_cancel"
-msgstr "Indietro"
+msgstr "Cancella"
 
 #.   <input value="button_delete" type="submit">
 #.         </input>
