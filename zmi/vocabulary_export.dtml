@@ -16,11 +16,11 @@ vocabulary should look like.</p>
 <dtml-in items>
 <dtml-if "_['sequence-item'].find(dquote) != -1 or
           _['sequence-item'].find(cr) != -1">
-            ('<dtml-var sequence-key>', """<dtml-var sequence-item html_quote>"""),
+            ('<dtml-var sequence-key>', """<dtml-var sequence-item html_quote>""", '<dtml-var "getMsgid(_['sequence-key'])" html_quote>'),
 <dtml-elif "_['sequence-item'].find(squote) != -1">
-            ('<dtml-var sequence-key>', "<dtml-var sequence-item html_quote>"),
+            ('<dtml-var sequence-key>', "<dtml-var sequence-item html_quote>", '<dtml-var "getMsgid(_['sequence-key'])" html_quote>'),
 <dtml-else>
-            ('<dtml-var sequence-key>', '<dtml-var sequence-item html_quote>'),
+            ('<dtml-var sequence-key>', '<dtml-var sequence-item html_quote>', '<dtml-var "getMsgid(_['sequence-key'])" html_quote>'),
 </dtml-if>
 </dtml-in>
         ),
