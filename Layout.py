@@ -144,7 +144,9 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         for row in rows:
             w = 0
             for cell in row:
-                w += cell.get('ncols', 1)
+                ncols = cell.get('ncols', 1)
+                cell['ncols'] = ncols
+                w += ncols
             if w > maxw:
                 maxw = w
         layoutdef['ncols'] = maxw
@@ -155,7 +157,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 if cell is row[-1]:
                     cell['ncols'] = maxw - w
                 else:
-                    w += cell.get('ncols', 1)
+                    w += cell['ncols']
         # Remove empty rows.
         layoutdef['rows'] = filter(None, rows)
         return layoutdef
