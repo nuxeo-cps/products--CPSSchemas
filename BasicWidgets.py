@@ -500,7 +500,7 @@ class CPSCheckBoxWidget(CPSWidget):
             tag = renderHtmlTag('input', **kw)
             default_tag = renderHtmlTag('input',
                                         type='hidden',
-                                        name=html_widget_id+':tokens:default',
+                                        name=html_widget_id+':default',
                                         value='')
             return default_tag+tag
         raise RuntimeError('unknown mode %s' % mode)
