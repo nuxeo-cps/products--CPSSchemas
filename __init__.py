@@ -60,10 +60,12 @@ import DublinCorePatch
 
 try:
     from Products import Epoz
-    import EpozPatch
 except ImportError:
-    # Epoz is not installed
-    pass
+    LOG("Epoz is not installed",
+        INFO,
+        "EpozPatch can't be applied")
+else:
+    import EpozPatch
 
 import DiskFile
 
