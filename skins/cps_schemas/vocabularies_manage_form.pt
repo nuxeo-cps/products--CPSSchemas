@@ -23,7 +23,7 @@
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_change" i18n:attributes="value">
+        <input type="submit" value="button_change" i18n:attributes="value" />
       </td>
     </tr>
   </table>
@@ -37,11 +37,11 @@
   <table border="0">
     <tr>
       <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
-      <td><input type="text" name="new_vocid" size="25"></td>
+      <td><input type="text" name="new_vocid" size="25" /></td>
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_add" i18n:attributes="value">
+        <input type="submit" value="button_add" i18n:attributes="value" />
       </td>
     </tr>
   </table>
@@ -69,7 +69,7 @@
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_delete" i18n:attributes="value">
+        <input type="submit" value="button_delete" i18n:attributes="value" />
       </td>
   </table>
 </form>

@@ -25,11 +25,11 @@
   <form action="" method="get"
         tal:attributes="action string:${base_url}${template/id}">
   <input type="hidden" name="source" value=""
-         tal:attributes="value source">
+         tal:attributes="value source" />
   <input type="hidden" name="input" value=""
-         tal:attributes="value input">
+         tal:attributes="value input" />
   <input type="hidden" name="previous" value=""
-         tal:attributes="value previous">
+         tal:attributes="value previous" />
   <table border="0" width="80%" align="center" cellpadding="4"
     cellspacing="4" summary="search form layout">
     <tr>
@@ -39,13 +39,13 @@
     </tr>
     <tr>
       <td>
-        <input type="text" id="field_focus" name="searched">
+        <input type="text" id="field_focus" name="searched" />
       </td>
     </tr>
     <tr>
       <td>
         <input type="submit" class="context" value="button_search"
-               i18n:attributes="value">
+               i18n:attributes="value" />
       </td>
     </tr>
   </table>
@@ -78,7 +78,7 @@
     <tr>
       <td>
         <input type="button" class="standalone" value="button_back"
-               onclick="javascript:history.back()" i18n:attributes="value">
+               onclick="javascript:history.back()" i18n:attributes="value" />
       </td>
     </tr>
   </table>

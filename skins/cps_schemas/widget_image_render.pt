@@ -22,7 +22,7 @@
         <input type="radio" class="noborder" name="." value="keep"
           checked="checked"
           tal:attributes="name radio_name;
-                          id string:${radio_name}_keep">
+                          id string:${radio_name}_keep" />
         <label i18n:translate="cpsschemas_label_file_none"
           tal:condition="empty_file"
           tal:attributes="for string:${radio_name}_keep">None</label>
@@ -45,7 +45,7 @@
       <td valign="middle" nowrap>
         <input type="radio" class="noborder"  name="." value="change"
                tal:attributes="name radio_name;
-                               id string:${radio_name}_change">
+                               id string:${radio_name}_change" />
         <label i18n:translate="cpsschemas_label_file_change"
                tal:attributes="for string:${radio_name}_change">Change</label>
         &nbsp;
@@ -54,7 +54,7 @@
         <input type="file" name="."
                tal:attributes="name name;
                    onclick string:document.getElementById('${radio_name}_change').checked='checked'
-    ">
+    " />
         <tal:block condition="here/allow_resize|nothing">
         <span i18n:translate="cpsschemas_image_resize">resize</span>
         <select tal:attributes="name string:${name}_resize"
@@ -71,7 +71,7 @@
       <td valign="middle" colspan="2" nowrap>
         <input type="radio" class="noborder" name="." value="delete"
                tal:attributes="name radio_name;
-                               id string:${radio_name}_delete">
+                               id string:${radio_name}_delete" />
         <label i18n:translate="cpsschemas_label_file_delete"
                tal:attributes="for string:${radio_name}_delete">Delete</label>
       </td>

@@ -41,7 +41,7 @@
   <div class="field">
     <input type="text" size="30" maxlength="50"
       tal:attributes="name string:${value_name}_subtitle;
-                      value subtitle">
+                      value subtitle" />
   </td></tr></table>
 </tal:block>
 </tal:block>

@@ -8,6 +8,6 @@
 <tal:block condition="python: mode == 'edit'">
   <input type="text" name="." value="."
          tal:attributes="name here/getHtmlWidgetId;
-                              value value">
+                              value value" />
 </tal:block>
 </tal:block>

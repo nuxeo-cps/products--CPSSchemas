@@ -34,7 +34,7 @@
   <form action="" method="get"
         tal:attributes="action string:${here_url}/${template/id}">
     <input type="hidden" name="textarea" value=""
-           tal:attributes="value textarea">
+           tal:attributes="value textarea" />
     <metal:block use-macro="here/generic_lib/macros/search_form" />
   </form>
 </tal:notSelected>
@@ -58,9 +58,9 @@
     </tal:block>
     <hr>
     <input type="button" class="standalone" value="button_back"
-           onclick="javascript:history.back()" i18n:attributes="value">
+           onclick="javascript:history.back()" i18n:attributes="value" />
     <input type="submit" class="context" value="button_ok"
-           i18n:attributes="value">
+           i18n:attributes="value" />
   </form>
 </tal:selected>
 

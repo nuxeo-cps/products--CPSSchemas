@@ -22,7 +22,7 @@
 <div class="row">
  <h3 tal:content="label_edit" i18n:translate="" />
  <div class="field">
-  <input type="hidden" name="input_id" tal:attributes="value input_id">
+  <input type="hidden" name="input_id" tal:attributes="value input_id" />
 
   <tal:block define="locale cpsmcat/get_selected_language|string:en;"
     replace="structure python:here.cpsInitEpoz(input_id=input_id,
@@ -31,9 +31,9 @@
  </div>
 </div>
   <input type="button" value="button_cancel" class="context"
-    onClick="window.close()" i18n:attributes="value">
+    onClick="window.close()" i18n:attributes="value" />
   <input type="submit" value="button_update" class="standalone"
-    i18n:attributes="value">
+    i18n:attributes="value" />
 </form>
 </div>
 </div>
