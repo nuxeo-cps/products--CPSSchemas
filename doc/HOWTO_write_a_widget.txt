@@ -114,8 +114,8 @@ How to write a widget
       expression. If this expression is not used the value give 'visible'.
       Bases values that expression will be give are 'hidden' and 'visible' which
       correspond to CSS2 class. If you need more, extend css class.
-      The context is widget template context, then you can use 'dm' to catch
+      The context is widget template context, then you can use 'datamodel' to catch
       schema value, but you cannot access directly to the proxy.
       Example of widget_display_expr:
-        python:test(dm[depends_on_field_id] == depends_on_field_value,
+        python:test(datamodel[depends_on_field_id] == depends_on_field_value,
                     widget.css_class or 'visible', 'hidden')
