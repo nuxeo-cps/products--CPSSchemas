@@ -52,10 +52,7 @@ class DataModelTests(unittest.TestCase):
         self.failUnless(isinstance(field, TextField))
         field = self.dm.getField('f2')
 
-    #def testGetAdapters(self):
-
     def testAccessData(self):
-#        self.failUnless(self.dm['f1'] == 'Value1')
         self.failUnless(self.dm['f2'] == 'Value2', 'Default value not used when use with no document')
 
     def testInitwithDoc(self):
@@ -68,17 +65,18 @@ class DataModelTests(unittest.TestCase):
         self.failUnless(dm['f5'] == 'Value5')
 
     def testSetInvalidData(self):
-        # Can't use failUnlessRaises with subscription, so I have to use the
-        # uglier method of catching the exeption myself.
-        try:
-            self.dm['f5'] = 'invalid'
-        except Exception, x:
-            self.failUnless(isinstance(x, ValueError))
+        self.failUnlessRaises(ValueError, self.dm.__setitem__, 'f5', 'invalid')
         self.failUnlessRaises(ValueError, self.dm.update, {'f5': 'invalid'})
 
     #def testCreateDoc(self):
     #    dm[f1] = 'Value1'
+
+    # test saving to existing doc
+    # test creating new doc
     # Saving with invalid data should fail.
+    # test that data from two different schemas can be used
+    # test that data is not changed in the storage until a commit is called
+    # test creating the data structure
 
 def test_suite():
     return unittest.makeSuite(DataModelTests)

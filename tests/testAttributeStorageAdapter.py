@@ -79,6 +79,7 @@ class AttributeAdapterTests(unittest.TestCase):
         self.failUnless(a._fields['f3'].getDefaultValue() == 'Value3')
 
     # TODO: Tests for None document
+    # tests for namespaces
 
 def test_suite():
     return unittest.makeSuite(AttributeAdapterTests)

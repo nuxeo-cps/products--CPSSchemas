@@ -227,6 +227,10 @@ CPS 3 Document objects
         which order these fields are to be displayed, and how the fields are to
         be displayed (editing / viewing / ...)
 
+    To be determined
+
+      - Details about how to group fields
+
 
   Template
 
@@ -270,6 +274,13 @@ CPS 3 Document objects
       List of all fields
       Copies of the documents data
 
+    Uses
+
+      Schema
+      Field
+      Adapter
+      Document
+
     Responsabilities
 
       - Acts as a single point for retrieval and updating all the documents data,
@@ -280,9 +291,12 @@ CPS 3 Document objects
         external storages isn't expensively called many times. This does mean you
         need to "commit" the data after changing.
 
-      - Creating DataStructures (either from a document of from defaults)
+      - Creating a DataStructure from the data in the data model
 
-      - Saving DataStructures, either to an existing document or to a new document.
+      - Loading the default field data when created without an associated document
+
+      - Saving DataStructures, either to the document that is associated with the
+        DataModel, or to a new document (also used when copying, I guess?)
 
     Things to do
 

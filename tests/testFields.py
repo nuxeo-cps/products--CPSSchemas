@@ -35,6 +35,7 @@ class FieldTests(unittest.TestCase):
         self.failUnless(field.validate(None) == 'The Default Value')
 
     # test required set/is
+    # test data conversion (can only be tested for string fields)
 
 def test_suite():
     return unittest.makeSuite(FieldTests)
