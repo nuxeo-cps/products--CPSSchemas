@@ -131,7 +131,7 @@ class CPSWidget(Widget):
         {'id': 'hidden_view', 'type': 'boolean', 'mode': 'w',
          'label': 'hidden field in view mode'},
         {'id': 'hidden_edit', 'type': 'boolean', 'mode': 'w',
-         'label': 'hidden fiedl in edit mode'},
+         'label': 'hidden field in edit mode'},
         {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
          'label': 'does the title and description use msgid ?'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
