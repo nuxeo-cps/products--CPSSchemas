@@ -87,8 +87,6 @@ InitializeClass(LayoutContainer)
 
 
 ######################################################################
-
-
 class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     """Basic Layout.
 
@@ -116,9 +114,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     _properties = (
         {'id': 'style_prefix', 'type': 'string', 'mode': 'w',
          'label': 'Prefix for zpt'},
+        {'id': 'allowed_widgets', 'type': 'tokens', 'mode': 'w',
+         'label': 'Allowed widgets in flexible mode'},
         )
 
     style_prefix = ''
+    allowed_widgets = ''
     prefix = 'w__'
 
     security = ClassSecurityInfo()
@@ -222,7 +223,8 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         Prepare all the widgets and thus updates the datastructure.
         """
         for widget_id, widget in self.items():
-            widget.prepare(datastructure)
+            if not widget.isTemplate():
+                widget.prepare(datastructure)
 
     security.declarePrivate('computeLayoutStructure')
     def computeLayoutStructure(self, datastructure, widget_mode_chooser):
@@ -248,11 +250,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         # Choose the mode for all the widgets.
         widgets = {}
         for widget_id, widget in self.items():
-            mode = widget_mode_chooser(widget)
-            widgets[widget_id] = {
-                'widget': widget,
-                'widget_mode': mode,
-                }
+            if not widget.isTemplate():
+                mode = widget_mode_chooser(widget)
+                widgets[widget_id] = {
+                    'widget': widget,
+                    'widget_mode': mode,
+                    }
         layout_structure['widgets'] = widgets
         # Store computed widget info in row/cell structure.
         for row in layout_structure['rows']:
@@ -305,8 +308,16 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         if layout_style is None:
             raise ValueError("No layout method '%s' for layout '%s'" %
                              (layout_meth, self.getId()))
+        items = []
+        for wid in self.allowed_widgets:
+            widget = self[wid]
+            # TODO checking number of occurence
+            items.append(widget)
+
         rendered = layout_style(layout=layout_structure,
-                                datastructure=datastructure, **kw)
+                                datastructure=datastructure,
+                                allowed_widgets = items,
+                                **kw)
         return rendered
 
 
@@ -479,4 +490,3 @@ class CPSLayout(Layout):
         return self.manage_changeLayout(splitcell=1, REQUEST=REQUEST, **kw)
 
 InitializeClass(CPSLayout)
-
