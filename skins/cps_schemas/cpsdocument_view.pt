@@ -1,9 +1,10 @@
 <html metal:use-macro="here/content_lib/macros/master">
-<body>
+  <body>
 
-<div metal:fill-slot="main" tal:content="structure doc/render">
-  Body
-</div>
+    <div metal:fill-slot="main"
+         tal:content="structure doc/render">
+      Body
+    </div>
 
-</body>
+  </body>
 </html>
