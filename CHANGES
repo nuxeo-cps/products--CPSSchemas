@@ -13,7 +13,7 @@ New features:
 - Passing kwargs for every transformation methods of FileUtils
 Bug fixes:
 ~~~~~~~~~~
--
+- Forgot to add the "fields" variable in the widget_attachedfile_render template.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
