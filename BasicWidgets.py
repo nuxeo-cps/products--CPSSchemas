@@ -24,6 +24,8 @@ Definition of standard widget types.
 from zLOG import LOG, DEBUG
 from cgi import escape
 from types import IntType, StringType, UnicodeType
+from string import split
+from time import asctime
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from OFS.PropertyManager import PropertyManager
@@ -356,6 +358,55 @@ class CPSCustomizableWidgetType(CPSWidgetType):
 
 InitializeClass(CPSCustomizableWidgetType)
 
+##################################################
+
+class CPSDateWidget(CPSWidget):
+    """Date widget."""
+    meta_type = "CPS Int Widget"
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        value = datastructure[self.getWidgetId()]
+        try:
+            [day,month,year] = split(value, '/')
+            v = asctime( (year, month, date,'0','0','0','0','0','0') )
+        except (ValueError, TypeError):
+            datastructure.setError(self.getWidgetId(),
+                                   "Bad date received")
+            ok = 0
+        else:
+            datamodel[self.fields[0]] = v
+            ok = 1
+        return ok
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            return escape(value)
+        elif mode == 'edit':
+            return renderHtmlTag('input',
+                                 type='text',
+                                 name=self.getHtmlWidgetId(),
+                                 value=value,
+                                 css_class=self.css_class,
+                                 )
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSDateWidget)
+
+
+class CPSDateWidgetType(CPSWidgetType):
+    """Date widget type."""
+    meta_type = "CPS Date Widget Type"
+    cls = CPSDateWidget
+
+InitializeClass(CPSDateWidgetType)
+
 #
 # Register widget types.
 #
@@ -364,3 +415,4 @@ WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
+WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
