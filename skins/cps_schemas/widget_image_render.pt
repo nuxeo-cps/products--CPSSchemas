@@ -2,7 +2,7 @@
                    id here/getWidgetId;
                    current_name options/current_name;
                   ">
-<tal:block condition="python: mode == 'view'">
+<tal:block condition="python: mode == 'view' and current_name != '-'">
   <img src="." tal:attributes="src python:here.fields[0]">
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
