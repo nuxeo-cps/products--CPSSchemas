@@ -1,6 +1,6 @@
 Requires:
 ~~~~~~~~~
--
+- Now using CPSUtil.integration.isProductPresent method.
 New features:
 ~~~~~~~~~~~~~
 - Add keysSortedBy method to Vocabulary. Criterium available and well tested 

@@ -1,4 +1,7 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
+# Authors:
+# M.-A. Darche <madarche@nuxeo.com>
+# Tarek Ziade <tziade@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -18,34 +21,9 @@
 """Miscellaneous utility functions.
 """
 
-from AccessControl import allow_type, allow_class
-from AccessControl import ModuleSecurityInfo
 from zLOG import LOG, INFO, DEBUG
 from cStringIO import StringIO
 from OFS.Image import File, Image
-
-# Allowing the methods of this file to be imported in restricted code
-ModuleSecurityInfo('Products.CPSSchemas.utils').declarePublic('isProductPresent')
-
-
-def isProductPresent(product_name):
-    """Return whether the product corresponding to the given product name is
-    present and ready (not broken) in the current Zope instance.
-
-    Examples:
-      * in Python code utils.isProductPresent('Products.ExternalEditor')
-      * in ZEXPR modules["Products.CPSSchemas.utils"].isProductPresent("Products.ExternalEditor")
-
-    """
-    log_key = 'isProductPresent'
-    LOG(log_key, DEBUG, "...")
-    try:
-        __import__(product_name)
-        present = 1
-    except ImportError:
-        present = 0
-    LOG(log_key, DEBUG, "present = %s" % present)
-    return present
 
 def copyFile(file_src):
     """Return a copy of a file object."""
@@ -84,7 +62,7 @@ def getHumanReadableSize(octet_size):
             return (1, 'cpsschemas_unit_mega_bytes')
         else:
             msize = float(octet_size/float(mega))
-            msize = float('%.02f' % msize)            
+            msize = float('%.02f' % msize)
             return (msize, 'cpsschemas_unit_mega_bytes')
     elif octet_size >= kilo:
 
@@ -98,4 +76,4 @@ def getHumanReadableSize(octet_size):
         if octet_size == 1:
             return (1, 'cpsschemas_unit_bytes')
         else:
-            return (octet_size ,'cpsschemas_unit_bytes') 
+            return (octet_size ,'cpsschemas_unit_bytes')

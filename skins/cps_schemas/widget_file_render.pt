@@ -80,7 +80,7 @@
                   title=mimetype.name())" />
               <tal:block replace="current_name" />
             </a>
-            <tal:block condition="python:not empty_file and modules['Products.CPSSchemas.utils'].isProductPresent('Products.ExternalEditor')">
+            <tal:block condition="python:not empty_file and modules['Products.CPSUtil.integration'].isProductPresent('Products.ExternalEditor')">
               <tal:block define="ds options/datastructure;
                                  dm ds/getDataModel;
                                  proxy dm/getProxy;
