@@ -272,6 +272,30 @@ msgstr "Name of the link"
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
 
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr "Vocabulary entry added."
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr "A vocabulary with that Id already exists."
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr "Vocabulary created."
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr "The vocabulary Id was missing."
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr "Vocabulary entrie(s) deleted."
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr "No vocabulary entry selected."
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr "Vocabulary deleted."
+
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr "Vocabulary updated."
+
 #~ msgid "cpsschemas_rformat_icon"
 #~ msgstr "Icon size"
 

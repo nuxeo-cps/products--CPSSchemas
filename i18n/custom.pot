@@ -145,3 +145,26 @@ msgstr ""
 msgid "cpsschemas_label_link_title"
 msgstr ""
 
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr ""
