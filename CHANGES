@@ -27,4 +27,7 @@ Bug fixes:
 - Correct commit when a proxy is present in a datamodel for a new document.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Widget properties: widget_group_id was removed (not used ans not XHTML
+  compliant), widget_css_class renamed into css_class_expr, and
+  getCssClassForDatamodel method was renamed into getCssClass: if expression is
+  specified, the basic property css_class is ignored.
