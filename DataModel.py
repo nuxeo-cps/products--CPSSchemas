@@ -236,12 +236,14 @@ class DataModel(UserDict):
 
     def _commit(self):
         """Commit modified data into object."""
+        ob = self._ob
         for schema in self._schemas.values():
             # XXX use storage adapters for each schema
             for fieldid in schema.keys():
-                setattr(self._ob, fieldid, self.data[fieldid])
-        if hasattr(aq_base(self._ob), 'postCommitHook' ):
-            self._ob.postCommitHook()
+                setattr(ob, fieldid, self.data[fieldid])
+        # XXX temporary until we have a better API for this
+        if hasattr(aq_base(ob), 'postCommitHook'):
+            ob.postCommitHook()
 
 
     def __repr__(self):
