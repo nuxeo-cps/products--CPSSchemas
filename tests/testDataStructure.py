@@ -40,6 +40,18 @@ class TestDataStructure(unittest.TestCase):
         self.assertEquals(ds.data, {})
         self.assertEquals(ds.errors, {})
 
+        # Test __delitem__()
+        ds['f1'] = 'Value1'
+        del ds['f1']
+        self.assertEquals(ds.data, {})
+        self.assertEquals(ds.errors, {})
+
+        ds['f1'] = 'Value1'
+        ds.setError('f1', 'Error')
+        del ds['f1']
+        self.assertEquals(ds.data, {})
+        self.assertEquals(ds.errors, {})
+
         # Test popitem()
         ds['f1'] = 'Value1'
         self.assertEquals(ds.popitem(), ('f1', 'Value1'))
