@@ -98,6 +98,8 @@ class DataStructure(UserDict):
         any other object with a mapping-interface).
 
         No validation is done.
+
+        XXX: explain why <widgetname(key)> is used instead of <key>.
         """
         for key in self.keys():
             if mapping.has_key(widgetname(key)):
@@ -117,14 +119,17 @@ class DataStructure(UserDict):
     def setError(self, key, message):
         self.errors[key] = message
 
+    # XXX: Not used, seemingly
     def delError(self, key):
         """Removes an error"""
         if self.errors.has_key(key):
             del self.errors[key]
 
+    # XXX: Not used, seemingly
     def getErrorsFields(self):
         return self.errors.keys()
 
+    # XXX: Not used, seemingly
     def getErrors(self):
         return self.errors # XXX Should it return the original or a copy?
 
