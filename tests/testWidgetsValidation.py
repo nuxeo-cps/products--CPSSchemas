@@ -3,11 +3,9 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.DataStructure import DataStructure
-from Products.CPSSchemas.Schema import CPSSchema
-from Products.CPSSchemas.BasicFields import CPSStringField
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
+from Products.CPSSchemas.BasicWidgets import CPSBooleanWidget
 
 class TestWidgetsValidation(unittest.TestCase):
     """Tests validate method of widgets"""
@@ -20,68 +18,105 @@ class TestWidgetsValidation(unittest.TestCase):
     def _makeDataStructure(self, data):
         return DataStructure(data, datamodel={})
 
-    def _validateString(self, properties, value):
-        ds = self._makeDataStructure({'f': value})
-        properties.update({'fields': 'f'})
-        widget = self._makeStringWidget('f', properties)
+    def _validate(self, type, properties, value):
+        id = 'f'
+        ds = self._makeDataStructure({id: value})
+        properties.update({'fields': id})
+        if type == 'String':
+            widget = CPSStringWidget(id, '')
+        elif type == 'Boolean':
+            widget = CPSBooleanWidget(id, '')
+        widget.manage_changeProperties(**properties)
         ret = widget.validate(ds)
-        err = ds.getError('f')
+        err = ds.getError(id)
         return ret, err, ds
 
+
+    ############################################################
+    # StringWidget
+    #
     def test_string_ok_1(self):
-        ret, err, ds = self._validateString({}, '12345')
+        ret, err, ds = self._validate('String', {}, '12345')
         self.failUnless(ret, err)
 
     def test_string_ok_2(self):
-        ret, err, ds = self._validateString({}, '')
+        ret, err, ds = self._validate('String', {}, '')
         self.failUnless(ret, err)
 
     def test_string_ok_3(self):
-        ret, err, ds = self._validateString({}, None)
+        ret, err, ds = self._validate('String', {}, None)
         self.failUnless(ret, err)
         # check convertion None into ''
         self.failUnless(ds.getDataModel().values()[0] == '')
 
     def test_string_nok_1(self):
-        ret, err, ds = self._validateString({}, {'a':1} )
+        ret, err, ds = self._validate('String', {}, {'a':1} )
         self.failUnless(err == 'cpsschemas_err_string')
 
     def test_string_size_max_ok_1(self):
-        ret, err, ds = self._validateString({'size_max': 10}, '12345')
+        ret, err, ds = self._validate('String', {'size_max': 10}, '12345')
         self.failUnless(ret)
 
     def test_string_size_max_ok_2(self):
-        ret, err, ds = self._validateString({'size_max': 10}, None)
+        ret, err, ds = self._validate('String', {'size_max': 10}, None)
         self.failUnless(ret)
 
     def test_string_size_max_ok_3(self):
-        ret, err, ds = self._validateString({'size_max': 10}, '')
+        ret, err, ds = self._validate('String', {'size_max': 10}, '')
         self.failUnless(ret)
 
     def test_string_size_max_ok_4(self):
-        ret, err, ds = self._validateString({'size_max': 10}, '1234567890')
+        ret, err, ds = self._validate('String', {'size_max': 10}, '1234567890')
         self.failUnless(ret)
 
     def test_string_size_max_nok_1(self):
-        ret, err, ds = self._validateString({'size_max': 10}, '12345678901')
+        ret, err, ds = self._validate('String', {'size_max': 10}, '12345678901')
         self.failUnless(err=='cpsschemas_err_string_too_long')
 
     def test_string_size_max_nok_2(self):
-        ret, err, ds  = self._validateString({'size_max': 10},
+        ret, err, ds  = self._validate('String', {'size_max': 10},
                                              '1234567890azerz')
         self.failUnless(err == 'cpsschemas_err_string_too_long')
 
     def test_string_required_ok_1(self):
-        ret, err, ds = self._validateString({'is_required': 1}, '123')
+        ret, err, ds = self._validate('String', {'is_required': 1}, '123')
         self.failUnless(ret)
 
     def test_string_required_nok_1(self):
-        ret, err, ds = self._validateString({'is_required': 1}, '')
+        ret, err, ds = self._validate('String', {'is_required': 1}, '')
         self.failUnless(err == 'cpsschemas_err_required')
 
     def test_string_required_nok_2(self):
-        ret, err, ds = self._validateString({'is_required': 1}, None)
+        ret, err, ds = self._validate('String', {'is_required': 1}, None)
         self.failUnless(err == 'cpsschemas_err_required')
+
+    ############################################################
+    # BooleanWidget
+    #
+    def test_boolean_ok_1(self):
+        ret, err, ds = self._validate('Boolean', {}, 0)
+        self.failUnless(ret, err)
+
+    def test_boolean_ok_2(self):
+        ret, err, ds = self._validate('Boolean', {}, 1)
+        self.failUnless(ret, err)
+
+    def test_boolean_nok_1(self):
+        ret, err, ds = self._validate('Boolean', {}, 2)
+        self.failUnless(err == 'cpsschemas_err_boolean')
+
+    def test_boolean_nok_2(self):
+        ret, err, ds = self._validate('Boolean', {}, -1)
+        self.failUnless(err == 'cpsschemas_err_boolean')
+
+    def test_boolean_nok_3(self):
+        ret, err, ds = self._validate('Boolean', {}, '')
+        self.failUnless(err == 'cpsschemas_err_boolean')
+
+    def test_boolean_nok_4(self):
+        ret, err, ds = self._validate('Boolean', {}, None)
+        self.failUnless(err == 'cpsschemas_err_boolean')
+
 
 
 def test_suite():
