@@ -58,6 +58,8 @@ import ExtendedWidgets
 
 import DublinCorePatch
 
+import LocalVocabulary
+
 try:
     from Products import Epoz
 except ImportError:
@@ -87,6 +89,12 @@ def initialize(registrar):
         constructors=(Schema.addCPSSchemaForm,
                       Schema.addCPSSchema,),
         )
+    registrar.registerClass(
+        LocalVocabulary.LocalVocabularyContainer,
+        permission=ManagePortal,
+        constructors=(LocalVocabulary.addLocalVocabularyContainer,),
+        )
+
 # Registering the DiskFile so it can be added through the ZMI is really
 # useful only for debugging.
 #     registrar.registerClass(

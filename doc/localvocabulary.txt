@@ -1,0 +1,71 @@
+Architecture
+==============================
+
+There are local vocabulary container and local vocabulary.
+By default container is created with id '.cps_vocabularies'
+
+Local vocabulary has two string properties that control behaviour how
+values for given local vocabulary are computed, they are:
+inheritance_type - may be 'inherit' or 'global'
+merge_behaviour  - 'None' which is actually empty string or 'union'. Future
+                   possible additions are 'intersection' and 'difference'.
+
+Combining values of above two properties we define the way how we are going get
+values for our local vocabulary.
+
+Case 1: local vocabulary with given id is present in local vocabulary container
+
+a) inheritance_type = 'inherit'
+   merge_behaviour = 'None'
+
+Only the content of this local vocabulary is used.
+
+b) inheritance_type = 'inherit'
+   merge_behaviour = 'union'
+
+Union with the 'above' local vocabulary, which itself may be defined as it sees
+fit.
+
+c) inheritance_type = 'global'
+   merge_behaviour = 'None'
+
+Local vocabulary is ignored and the global one is used.
+
+d) inheritance_type = 'global'
+   merge_behaviour = 'union'
+
+Union with the global vocabulary
+
+
+Local vocabulary container itself has same two properties as local vocabulary,
+which are used to determine behaviour in case there is no local vocabulary with
+given id in container, so we have case 2.
+
+Case 2: there is no local vocabulary with given id in container. Further
+behaviour is defined by properties of container. In this case only
+inheritance_type does matter.
+
+a) inheritance_type = 'inherit'
+
+Use 'above' local vocabulary, which itself may be defined as it sees fit.
+
+b) inheritance_type = 'global'
+
+Use global vocabulary.
+
+
+N.B. The global vocabulary always will be the default when inheriting and
+nothing is found in the above containers.
+
+
+ZMI
+==============================
+From ZMI you can add local vocabulary container which will have
+'Global vocabularies' tab listing all global vocabularies you can customize.
+After creation you can edit local vocabulary same as global one.
+
+API
+==============================
+
+VocabulariesTool provides method getVocabularyFor(context. voc_id) that returns
+local vocabulary for passed context.

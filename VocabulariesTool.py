@@ -16,16 +16,14 @@
 # 02111-1307, USA.
 #
 # $Id$
-"""Vocabularies Tool
-"""
+"""Vocabularies Tool"""
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
-
 from OFS.Folder import Folder
-
 from Products.CMFCore.utils import UniqueObject
-from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.permissions import ManagePortal, View
+from Products.CPSSchemas.LocalVocabulary import LOCAL_VOCABULARY_CONTAINER_ID
 
 class VocabulariesTool(UniqueObject, Folder):
     """Vocabularies Tool
@@ -74,6 +72,36 @@ class VocabulariesTool(UniqueObject, Folder):
     def getVocabularyMetaType(self, meta_type):
         """Get an unstripped version of a vocabulary meta type."""
         return VocabularyTypeRegistry.getType(meta_type).meta_type
+
+    security.declareProtected(View, 'getVocabularyFor')
+    def getVocabularyFor(self, context, voc_id):
+        """Returns vocabulary for given context."""
+
+        def hasLocalVocContainer(context):
+            try:
+                return LOCAL_VOCABULARY_CONTAINER_ID in context.objectIds()
+            except:
+                return 0
+
+        def getLocalVocContainer(context):
+            return context._getOb(LOCAL_VOCABULARY_CONTAINER_ID, None)
+
+        getParentNode = lambda node: getattr(getattr(node, 'aq_inner', None),
+                                             'aq_parent', None)
+
+        if not hasLocalVocContainer(context):
+            parent = getParentNode(context)
+            while parent:
+                if hasLocalVocContainer(parent):
+                    return getLocalVocContainer(parent).getVocabulary(voc_id)
+                parent = getParentNode(parent)
+            # no local vocabulary container found for given context
+            globvoc = self._getOb(voc_id, None)
+            if globvoc is None:
+                raise KeyError, 'No vocabulary by id %s' % voc_id
+            return globvoc
+        else:
+            return getLocalVocContainer(context).getVocabulary(voc_id)
 
 InitializeClass(VocabulariesTool)
 
