@@ -11,3 +11,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Datamodel add_roles setting split into convenience function.
+- improve attachedFile rendering
