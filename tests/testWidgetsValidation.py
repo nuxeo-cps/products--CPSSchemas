@@ -5,7 +5,8 @@ from Testing.ZopeTestCase import ZopeLite
 
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
-     CPSBooleanWidget, CPSURLWidget, CPSEmailWidget, CPSPasswordWidget
+     CPSBooleanWidget, CPSURLWidget, CPSEmailWidget, CPSPasswordWidget, \
+     CPSIdentifierWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSTextWidget
 
 class TestWidgetsValidation(unittest.TestCase):
@@ -33,6 +34,8 @@ class TestWidgetsValidation(unittest.TestCase):
             widget = CPSURLWidget(id, '')
         elif type == 'Email':
             widget = CPSEmailWidget(id, '')
+        elif type == 'Identifier':
+            widget = CPSIdentifierWidget(id, '')
         elif type == 'Password':
             widget = CPSPasswordWidget(id, '')
         widget.manage_changeProperties(**properties)
@@ -310,6 +313,55 @@ class TestWidgetsValidation(unittest.TestCase):
 #    def test_email_nok_8(self):
 #        ret, err, ds = self._validate('Email', {}, 'a@foo.france')
 #        self.failUnless(err == 'cpsschemas_err_email', err)
+
+    ############################################################
+    # IdentifierWidget
+
+    def test_identifier_ok_1(self):
+        ret, err, ds = self._validate('Identifier', {}, 'POM')
+        self.failUnless(ret, err)
+
+    def test_identifier_ok_2(self):
+        ret, err, ds = self._validate('Identifier', {},
+                                      'azermaozeiurpoiuwmfvljwxcvn12345678790')
+        self.failUnless(ret, err)
+
+    def test_identifier_ok_3(self):
+        ret, err, ds = self._validate('Identifier', {},
+                                      'a_1234@12.zz')
+        self.failUnless(ret, err)
+
+    def test_identifier_ok_4(self):
+        ret, err, ds = self._validate('Identifier', {}, 'a_1.2')
+        self.failUnless(ret, err)
+
+    def test_identifier_ok_5(self):
+        ret, err, ds = self._validate('Identifier', {}, 'fbar@be.bo.ba')
+        self.failUnless(ret, err)
+
+    def test_identifier_ok_5(self):
+        ret, err, ds = self._validate('Identifier', {}, 'foo-bar')
+        self.failUnless(ret, err)
+
+    def test_identifier_nok_1(self):
+        ret, err, ds = self._validate('Identifier', {}, '1234')
+        self.failUnless(err == 'cpsschemas_err_identifier')
+
+    def test_identifier_nok_2(self):
+        ret, err, ds = self._validate('Identifier', {}, 'élskjd')
+        self.failUnless(err == 'cpsschemas_err_identifier', err)
+
+    def test_identifier_nok_3(self):
+        ret, err, ds = self._validate('Identifier', {}, 'boaz mlskjr ')
+        self.failUnless(err == 'cpsschemas_err_identifier', err)
+
+    def test_identifier_nok_4(self):
+        ret, err, ds = self._validate('Identifier', {}, 'foo\tzie')
+        self.failUnless(err == 'cpsschemas_err_identifier', err)
+
+    def test_identifier_nok_5(self):
+        ret, err, ds = self._validate('Identifier', {}, '_foo')
+        self.failUnless(err == 'cpsschemas_err_identifier', err)
 
     ############################################################
     # PasswordWidget
