@@ -8,6 +8,7 @@ Bug fixes:
 ~~~~~~~~~~
 - Initializing img_info dict with 'height' and 'width' for Image and Photo
   widgets. The lack of initialization was problematic in some cases.
+- Fixed problem of default values markers appearing in field expressions.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Refactoring of unit tests.
