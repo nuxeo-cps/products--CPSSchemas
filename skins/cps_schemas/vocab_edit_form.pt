@@ -1,0 +1,81 @@
+<metal:body use-macro="here/main_template/macros/master">
+<metal:main fill-slot="main"
+            tal:define="voc_id request/voc_id;
+                        vocab python:here.portal_vocabularies[voc_id];
+                        keys python:vocab.keys()">
+
+<h1 i18n:translate="">cpsschemas_vocabulary_edit <span
+    tal:replace="vocab/title_or_id" i18n:name="voc_id" /></h1>
+<span class="description" i18n:translate="">cpsschemas_vocabulary_contains
+  <span tal:replace="python:len(keys)" i18n:name="voc_entries" />
+  entry(ies)</span>
+
+<form action="" method="post"
+      tal:attributes="action base_url"
+      tal:condition="keys">
+  <table border="0">
+  <tr>
+    <th></th>
+    <th i18n:translate="cpsschemas_vocabulary_key">Key:</th>
+    <th i18n:translate="cpsschemas_vocabulary_value">Value:</th>
+    <th i18n:translate="cpsschemas_vocabulary_msgid">MsgId:</th>
+  </tr>
+  <tal:keys repeat="key keys">
+    <tr tal:define="num repeat/key/index">
+      <td>
+        <input type="checkbox" name="keys:list" tal:attributes="value key">
+      </td>
+      <td>
+        <input type="text" size="20"
+               tal:attributes="name string:key_${num};
+                               value key">
+      </td>
+      <td>
+        <input type="text" size="40"
+               tal:attributes="name string:label_${num};
+                               value python:vocab.get(key)">
+      </td>
+      <td>
+        <input type="text"  size="15"
+               tal:attributes="name string:msgid_${num};
+                               value python:vocab.getMsgid(key)">
+      </td>
+    </tr>
+  </tal:keys>
+  </table>
+  <input type="hidden" name="voc_id" tal:attributes="value voc_id">
+  <input type="submit" name="vocab_update:method" value="button_edit"
+         i18n:attributes="value">
+  <input type="submit" name="vocab_delkeys:method" value="button_delete"
+         i18n:attributes="value">
+</form>
+
+<hr>
+
+<h1 i18n:translate="">cpsschemas_vocabulary_entry_add</h1>
+<form tal:attributes="action here/portal_url" method="post">
+  <table border="0">
+  <tr>
+    <th i18n:translate="cpsschemas_vocabulary_key">Key:</th>
+    <th i18n:translate="cpsschemas_vocabulary_value">Value:</th>
+    <th i18n:translate="cpsschemas_vocabulary_msgid">MsgId:</th>
+  </tr>
+  <tr>
+    <td>
+      <input type="text" name="new_key" size="20">
+    </td>
+    <td>
+      <input type="text" name="new_label" size="40">
+    </td>
+    <td>
+        <input type="text" name="new_msgid" size="15">
+    </td>
+  </tr>
+  </table>
+  <input type="hidden" name="voc_id" tal:attributes="value voc_id">
+  <input type="submit" name="vocab_addkey:method" value="button_add"
+         i18n:attributes="value">
+</form>
+
+</metal:main>
+</metal:body>
