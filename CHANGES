@@ -10,7 +10,7 @@ New features:
     than transformations to text
   - Modified the AttachedFile widget to use the new embedded in the site template
     preview
-
+- Passing kwargs for every transformation methods of FileUtils
 Bug fixes:
 ~~~~~~~~~~
 -

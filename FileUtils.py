@@ -25,7 +25,7 @@ from zLOG import LOG, DEBUG
 from Products.CMFCore.utils import getToolByName
 
 
-def _convertFileToMimeType(file, mime_type, context=None):
+def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     """Convert a file to a new mime type.
     
     The file argument may be a Zope File object or None.
@@ -48,36 +48,40 @@ def _convertFileToMimeType(file, mime_type, context=None):
                                 'application/octet-stream')
     data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
                                  # filename='fooXXX', encoding='',
+                                 **kwargs
                                  )
     if not data:
         return None
     return data
 
 
-def convertFileToText(file, context=None):
+def convertFileToText(file, context=None, **kwargs):
     """Convert a file to text.
     
     Returns a string, or None if no conversion is possible.
     """
-    result = _convertFileToMimeType(file, 'text/plain', context=context)
+    result = _convertFileToMimeType(file, 'text/plain',
+                                    context=context, **kwargs)
     if result is not None:
         result = result.getData()
     return result
 
 
-def convertFileToHtml(file, context=None):
+def convertFileToHtml(file, context=None, **kwargs):
     """Convert a file to HTML.
     
     Returns a data object (string and subobjects),
     or None if no conversion is possible.
     """
-    return _convertFileToMimeType(file, 'text/html', context=context)
+    return _convertFileToMimeType(file, 'text/html',
+                                  context=context, **kwargs)
 
 
-def convertFileToDocbook(file, context=None):
+def convertFileToDocbook(file, context=None, **kwargs):
     """Convert a file to Docbook XML.
     
     Returns a data object (string and subobjects),
     or None if no conversion is possible.
     """
-    return _convertFileToMimeType(file, 'application/docbook+xml', context=context)
+    return _convertFileToMimeType(file, 'application/docbook+xml',
+                                  context=context, **kwargs)
