@@ -17,9 +17,9 @@
 # $Id$
 from Products import Epoz
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from zLOG import LOG, INFO
+from zLOG import LOG, TRACE
 
-LOG('EpozPatch', INFO, 'Patching epoz_blank_iframe.html')
+LOG('EpozPatch', TRACE, 'Patching epoz_blank_iframe.html')
 # override to load all css
 Epoz.methods.update({'epoz_blank_iframe.html':
                      PageTemplateFile(
