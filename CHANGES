@@ -1,19 +1,17 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
-- Image widget resize image to display_with and display_heigh param
-  if PIL is installed, read CPSDefault/doc/HOWTO.install_CPS3 to
-  know how to install PIL
-
+- Image widget resize require PIL library
+  read CPSDefault/doc/HOWTO.install_CPS3 to know how to install PIL
 New features:
 ~~~~~~~~~~~~~
-- CPSImageWidget resize image
+- if PIL is installed ImageWidget resize image bigger than display_widhtxdisplay_height
+  if allow_resize is set then user can choose a smaller format, list of size format
+  is defined in getImgSizes.py, the imported image will be resized if bigger.
 - New Compound Widget Type, enabling the creation of compound widgets by
   defining a render skin in the type, and the subwidget ids in the widget.
-
 Bug fixes:
 ~~~~~~~~~~
 -
-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Possibility to define different render modes such as edit and 
