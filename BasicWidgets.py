@@ -1459,8 +1459,7 @@ class CPSCompoundWidget(CPSWidget):
     security = ClassSecurityInfo()
 
     _properties = (
-        CPSWidget._properties[:1] + (
-        # Skip fields, which is fixed.
+        CPSWidget._properties[:2] + (
         {'id': 'widget_ids', 'type': 'tokens', 'mode': 'w',
          'label': 'Widget ids'},
         {'id': 'widget_type', 'type': 'string', 'mode': 'w',
@@ -1480,27 +1479,12 @@ class CPSCompoundWidget(CPSWidget):
     security.declarePrivate('getFieldTypes')
     def getFieldTypes(self):
         """Get field types from the underlying widgets."""
-        layout = aq_parent(aq_inner(self))
-        field_types = []
-        for widget_id in self.widget_ids:
-            widget = layout[widget_id]
-            fts = widget.getFieldTypes()
-            field_types.extend(fts)
-        return field_types
+        return []
 
     security.declarePrivate('getFieldInits')
     def getFieldInits(self):
         """Get field inits from the underlying widgets."""
-        layout = aq_parent(aq_inner(self))
-        field_inits = []
-        for widget_id in self.widget_ids:
-            widget = layout[widget_id]
-            fts = widget.getFieldTypes()
-            fis = widget.getFieldInits() or ()
-            if len(fis) != len(fts):
-                fis = [{} for ft in fts]
-            field_inits.extend(fis)
-        return field_inits
+        return []
 
     def prepare(self, datastructure, **kw):
         """Prepare the underlying widgets."""
