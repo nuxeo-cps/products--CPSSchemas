@@ -24,6 +24,7 @@ Definition of standard widget types.
 from zLOG import LOG, DEBUG
 from cgi import escape
 from DateTime.DateTime import DateTime
+from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
@@ -770,27 +771,34 @@ class CPSDateWidget(CPSWidget):
 
     _properties = CPSWidget._properties + (
         {'id': 'view_format', 'type': 'string', 'mode': 'w',
-         'label': 'View format'},
-        {'id': 'view_format_none', 'type': 'string', 'mode': 'w',
-         'label': 'View format empty'},
+         'label': 'View format (short, medium or long)'},
+        {'id': 'time_setting', 'type': 'boolean', 'mode': 'w',
+         'label': 'enable time setting'},
         )
-    view_format = "%d/%m/%Y" # XXX unused for now
-    view_format_none = "-"
+    view_format = 'medium'
+    time_setting = 1
 
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         v = datamodel[self.fields[0]]
+        if not v and self.is_required:
+            v = DateTime()
         widget_id = self.getWidgetId()
+        date = ''
+        hour = minute = ''
         if v is not None:
             d = str(v.day())
             m = str(v.month())
             y = str(v.year())
-        else:
-            d = m = y = ''
-        datastructure[widget_id+'_d'] = d
-        datastructure[widget_id+'_m'] = m
-        datastructure[widget_id+'_y'] = y
+            date = str(v)
+            hour = str(v.h_24())
+            minute = str(v.minute())
+
+        datastructure[widget_id] = v
+        datastructure[widget_id+'_date'] = date
+        datastructure[widget_id+'_hour'] = hour or '12'
+        datastructure[widget_id+'_minute'] = minute or '00'
 
     def validate(self, datastructure):
         """Update datamodel from user data in datastructure."""
@@ -798,11 +806,11 @@ class CPSDateWidget(CPSWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
 
-        d = datastructure[widget_id+'_d'].strip()
-        m = datastructure[widget_id+'_m'].strip()
-        y = datastructure[widget_id+'_y'].strip()
+        date = datastructure[widget_id+'_date'].strip()
+        hour = datastructure[widget_id+'_hour'].strip() or '12'
+        minute = datastructure[widget_id+'_minute'].strip() or '00'
 
-        if not (d+m+y):
+        if not (date):
             if self.is_required:
                 datastructure[widget_id] = ''
                 datastructure.setError(widget_id, "cpsschemas_err_required")
@@ -811,51 +819,37 @@ class CPSDateWidget(CPSWidget):
                 datamodel[field_id] = None
                 return 1
 
+        if not match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date):
+            datastructure.setError(widget_id, 'cpsschemas_err_date')
+            return 0
+
+        locale = self.Localizer.default.get_selected_language()
+        if locale in ('en', 'hu', ):
+            m, d, y = date.split('/')
+        else:
+            d, m, y = date.split('/')
+
         try:
-            v = DateTime(int(y), int(m), int(d))
+            v = DateTime(int(y), int(m), int(d), int(hour), int(minute))
         except (ValueError, TypeError, DateTime.DateTimeError,
                 DateTime.SyntaxError, DateTime.DateError):
             datastructure.setError(widget_id, 'cpsschemas_err_date')
             return 0
         else:
+            datastructure[widget_id] = v
             datamodel[field_id] = v
             return 1
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
-        widget_id = self.getWidgetId()
-        d = datastructure[widget_id+'_d']
-        m = datastructure[widget_id+'_m']
-        y = datastructure[widget_id+'_y']
-        if mode == 'view':
-            if not (d+m+y):
-                return escape(self.view_format_none)
-            else:
-                # XXX customize format
-                return escape(d+'/'+m+'/'+y)
-        elif mode == 'edit':
-            html_widget_id = self.getHtmlWidgetId()
-            dtag = renderHtmlTag('input',
-                                 type='text',
-                                 name=html_widget_id+'_d',
-                                 value=d,
-                                 size=2,
-                                 maxlength=2)
-            mtag = renderHtmlTag('input',
-                                 type='text',
-                                 name=html_widget_id+'_m',
-                                 value=m,
-                                 size=2,
-                                 maxlength=2)
-            ytag = renderHtmlTag('input',
-                                 type='text',
-                                 name=html_widget_id+'_y',
-                                 value=y,
-                                 size=6,
-                                 maxlength=6)
-            # XXX customize format
-            return dtag + '/' + mtag + '/' + ytag
-        raise RuntimeError('unknown mode %s' % mode)
+        render_method = 'widget_date_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        value = datastructure[self.getWidgetId()]
+        return meth(mode=mode, datastructure=datastructure)
+
 
 InitializeClass(CPSDateWidget)
 
