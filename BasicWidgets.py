@@ -27,6 +27,7 @@ from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
+from types import StringType, ListType
 
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
@@ -39,7 +40,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSDocument.Widget import CPSWidget
 from Products.CPSDocument.Widget import CPSWidgetType
 from Products.CPSDocument.WidgetsTool import WidgetTypeRegistry
-
 
 def _isinstance(ob, cls):
     try:
@@ -216,6 +216,68 @@ class CPSPwdWidgetType(CPSStringWidgetType):
 InitializeClass(CPSPwdWidgetType)
 
 ##################################################
+
+#class CPSCheckBoxWidget(CPSWidget):
+#    """CheckBox widget."""
+#    meta_type = "CPS Check Box Widget"
+#
+#    field_types = ('CPS CheckBox Field',)
+#
+#    choices = ['foo']
+#
+#    _properties = CPSWidget._properties + (
+#        {'id': 'choices', 'type': 'selection', 'mode': 'w',
+#         'label': 'choices', 'select_variable': 'all_choices',},
+#        )
+#
+#    all_choices = ['foo', 'bar']
+#
+#    def prepare(self, datastructure, datamodel):
+#        """Prepare datastructure from datamodel."""
+#        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+#
+#    def validate(self, datastructure, datamodel):
+#        """Update datamodel from user data in datastructure."""
+#        value = datastructure[self.getWidgetId()]
+#
+#        if isinstance(value, StringType):
+#            v = list(value)
+#            #self.choices = v
+#            datamodel[self.fields[0]] = v
+#            ok = 1
+#        elif isinstance(value, ListType):
+#            datamodel[self.fields[0]] = value
+#            #self.choices  = value
+#            ok = 1
+#        else:
+#            #raise datastructure.setError(self.getWidgetId(),
+#            #                             "Bad List/String received")
+#            ok = 0
+#
+#        return ok
+#
+#    def render(self, mode, datastructure, datamodel):
+#        """Render this widget from the datastructure or datamodel."""
+#        render_method = 'widget_checkbox_render'
+#        meth = getattr(self, render_method, None)
+#        if meth is None:
+#            raise RuntimeError("Unknown Render Method %s for widget type %s"
+#                               % (render_method, self.getId()))
+#        choices = self.choices
+#        all_choices = self.all_choices
+#        return meth(mode=mode, datastructure=datastructure,
+#                    datamodel=datamodel, choices=choices, all_choices=all_choices)
+#
+#InitializeClass(CPSCheckBoxWidget)
+#
+#class CPSCheckBoxWidgetType(CPSStringWidgetType):
+#    """CheckBox widget type."""
+#    meta_type = "CPS CheckBox Widget Type"
+#    cls = CPSCheckBoxWidget
+#
+#InitializeClass(CPSCheckBoxWidgetType)
+
+#############################################################
 
 class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
@@ -730,6 +792,7 @@ InitializeClass(CPSImageWidgetType)
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSPwdWidgetType, CPSPwdWidget)
+#WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)

@@ -3,7 +3,7 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- P1 #94: Password Widget
 Bug fixes:
 ~~~~~~~~~~
 -
