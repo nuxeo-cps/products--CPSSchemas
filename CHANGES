@@ -3,12 +3,10 @@ ZODB Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- P1 #94: Password Widget
-- P1 #96: action edit layout should appear only when flexible document 
-          Still open with CMF-1.3.1 (NOT WITH CMF-1.4)	 
+-
 Bug fixes:
 ~~~~~~~~~~
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Adding a dummy form document for demo created with CPSDocument.install
+-
