@@ -5,11 +5,22 @@ New features:
 ~~~~~~~~~~~~~
 - It is now possible to use the more sensible ISO 8601 date format for
   DateTimeWidget cf. http://www.w3.org/TR/NOTE-datetime
+- File and attached file widgets now display a link to edit file online
+  if external editor is installed.
+- It is now possible to resize images already loaded in an Image widget.
 Bug fixes:
 ~~~~~~~~~~
 - Now img tags always have an "alt" attribute as required by the W3C specs, even
   if it is empty.
 - Some XHTML cleaning.
+- A file rejected by widget validation was presented as an accepted
+  file to keep (file, attached file, image and photo widgets)
+- A file or an image accepted by validation was lost when layout was not
+  validated entirely
+- Image and File widget validation did not take care of the fact that the widget
+  could be required
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- File, Image, AttachedFile and Photo widgets have been refactored a little
+  bit: all generic features have been put in File widget, and specific features
+  are in each widget.
