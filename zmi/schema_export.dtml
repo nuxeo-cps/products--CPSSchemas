@@ -4,7 +4,7 @@
 </dtml-let>
 
 <p>You will find below what the Python dictionnary used to create the current
-layout should look like.</p>
+schema should look like.</p>
 
 <pre>
 <dtml-var id>_schema = {
