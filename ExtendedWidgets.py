@@ -36,9 +36,10 @@ from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
-from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance, CPSStringWidget, CPSImageWidget, CPSNoneWidget, \
-     CPSFileWidget, renderHtmlTag
+from Products.CPSSchemas.BasicWidgets import CPSNoneWidget, \
+     CPSSelectWidget, CPSMultiSelectWidget, \
+     CPSStringWidget, CPSImageWidget, CPSFileWidget, \
+     _isinstance, renderHtmlTag
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -1474,6 +1475,46 @@ InitializeClass(CPSDocumentLanguageSelectWidgetType)
 
 
 ##################################################
+
+class CPSSubjectWidget(CPSMultiSelectWidget):
+    """Subject widget."""
+    meta_type = "CPS Subject Widget"
+
+    def getEntriesHtml(self, entries, vocabulary, translated=False):
+        entries_html_list = []
+        for subject_name in entries:
+            if translated:
+                entries_html_list.append(self.getSubjectSearchLink(subject_name,
+                                                                   subject_name))
+            else:
+                subject_label = vocabulary.getMsgid(subject_name, subject_name)
+                entries_html_list.append(self.getSubjectSearchLink(subject_name,
+                                                                   subject_label))
+        return ', '.join(entries_html_list)
+
+    def getSubjectSearchLink(self, subject_name, subject_label):
+        """Return an HTML link for the subject name with the given label."""
+        return ('<a href="%s">%s</a>'
+                % (self.getSubjectSearchUrl(escape(subject_name)),
+                   escape(subject_label)))
+
+    def getSubjectSearchUrl(self, subject_name):
+        """Return the subject search URL"""
+        return "%s/search_form?Subject=%s" % (self.portal_url(), subject_name)
+
+
+InitializeClass(CPSSubjectWidget)
+
+
+class CPSSubjectWidgetType(CPSWidgetType):
+    """Subject widget type."""
+    meta_type = "CPS Subject Widget Type"
+    cls = CPSSubjectWidget
+
+InitializeClass(CPSSubjectWidgetType)
+
+
+##################################################
 #
 # Register widget types.
 #
@@ -1488,4 +1529,5 @@ WidgetTypeRegistry.register(CPSGenericSelectWidgetType)
 WidgetTypeRegistry.register(CPSGenericMultiSelectWidgetType)
 WidgetTypeRegistry.register(CPSRangeListWidgetType)
 WidgetTypeRegistry.register(CPSDocumentLanguageSelectWidgetType)
+WidgetTypeRegistry.register(CPSSubjectWidgetType)
 

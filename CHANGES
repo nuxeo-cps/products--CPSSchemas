@@ -3,7 +3,9 @@ Requires:
 - Now using CPSUtil.integration.isProductPresent method.
 New features:
 ~~~~~~~~~~~~~
-- Add keysSortedBy method to Vocabulary. Criterium available and well tested 
+- Added the SubjectWidget and made the MultiSelectWidget, from which it
+  inherits, easier to derive from.
+- Added keysSortedBy method to Vocabulary. Criterium available and well tested 
   are 'id', 'label', 'i18n'. You can also sort keys with a sort_function which 
   take the following list as an element (key, label, msgid, translated_msgid).
 - Try to implement sorted vocabularies. Now Vocabulary() can take an extra 

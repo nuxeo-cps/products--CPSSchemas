@@ -1126,6 +1126,17 @@ class CPSMultiSelectWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
+
+    def getEntriesHtml(self, entries, vocabulary, translated=False):
+        entries_html_list = []
+        for entry in entries:
+            if translated:
+                entries_html_list.append(entry)
+            else:
+                entries_html_list.append(vocabulary.getMsgid(entry, entry))
+        return ', '.join(entries_html_list)
+
+
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
@@ -1137,10 +1148,9 @@ class CPSMultiSelectWidget(CPSWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            elif getattr(self, 'translated', None):
-                return ', '.join([escape(cpsmcat(vocabulary.getMsgid(i, i))) for i in value])
             else:
-                return ', '.join([escape(vocabulary.get(i, i)) for i in value])
+                return self.getEntriesHtml(value, vocabulary,
+                                           getattr(self, 'translated', False))
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id+':list',
