@@ -1,18 +1,12 @@
 Requires:
 ~~~~~~~~~
-- TranslationService >= 0.5.0
+-
 New features:
 ~~~~~~~~~~~~~
-- Better error message for the CPSAttachedFileWidget, it tells what the max size
-  is if it has been exceeded.
+-
 Bug fixes:
 ~~~~~~~~~~
-- Allow for "file:///xxx" URLs
-- Compute paths to preview URLs fine.
-- StorageAdapters now goes through write expressions despite write ignore
-  storage flag
-- read_size variable was not set in CPSAttachedFile widget validation
-  when file was empty -> made the page crash.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Added variable mapping to errors stored in datastructure.
+-
