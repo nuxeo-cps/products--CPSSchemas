@@ -838,9 +838,11 @@ class CPSGenericSelectWidget(CPSWidget):
          'label': 'Is vocabulary translated on display'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
-         'label': 'Render format : select menu (default) or radio buttons'},
+         'label': 'Render format'},
+        # Provide an 'other' option where free input is accepted
+        # (ignored if render format is 'select')
         {'id': 'other_option', 'type': 'boolean', 'mode':'w',
-         'label': "Provide an 'other' option where free input is accepted (ignored if render format is 'select')"},
+         'label': "Provide an 'other' option"},
         # Enables the possibility to add blank values to vocabulary just to
         # change the way the list is presented (using items like 'choose a
         # category' or '------------' to separate items) and not affect the way
