@@ -40,14 +40,14 @@ layout should look like.</p>
         'rows': [
 <dtml-in rows>
 <dtml-in sequence-item>
-            <dtml-if sequence-start>[</dtml-if><dtml-var sequence-item>,
-                <dtml-if sequence-end>],
+<dtml-if sequence-start>            [<dtml-else> </dtml-if><dtml-var sequence-item>,
+            <dtml-if sequence-end>],
 </dtml-if>
 </dtml-in>
 </dtml-in>
-            ],
-        },
-    }
+        ],
+    },
+}
 </pre>
 
 </dtml-let>
