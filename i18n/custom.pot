@@ -78,3 +78,9 @@ msgstr ""
 msgid "cpsdoc_News_preview_title"
 msgstr ""
 
+msgid "cpsdoc_News_attachedFile_title"
+msgstr ""
+
+msgid "cpsdoc_News_attachedFile_title_view"
+msgstr ""
+

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-04 17:58default\n"
+"POT-Creation-Date: 2003-09-05 17:07default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -31,17 +31,17 @@ msgstr ""
 msgid "button_add"
 msgstr ""
 
-#.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
 #.   <input value="button_change" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_default_edit.pt
-#: ../skins/cps_document/layout_dummy_edit.pt
+#.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
+#: from ../skins/cps_document/layout_dummy_edit.pt
 #: ../skins/cps_document/layout_fancy_edit.pt
 #: ../skins/cps_document/layout_form_edit.pt
+#: ../skins/cps_document/layout_lib.pt
 msgid "button_change"
 msgstr ""
 
 #.   <span>Form error.</span>
-#: from ../skins/cps_document/layout_default_edit.pt
+#: from ../skins/cps_document/layout_lib.pt
 msgid "cpsdoc_form_error"
 msgstr ""
 
@@ -61,14 +61,13 @@ msgid "cpsdoc_label_file_keep"
 msgstr ""
 
 #.   <em content="err" style="color: red">err</em>
-#: from ../skins/cps_document/layout_default_edit.pt
+#: from ../skins/cps_document/layout_lib.pt
 msgid "err"
 msgstr ""
 
-#.   <span condition="widget/is_i18n" content="widget/title">label</span>
 #.   <span condition="widget/is_i18n" content="widget/title_view">label</span>
-#: from ../skins/cps_document/layout_default_edit.pt
-#: ../skins/cps_document/layout_default_view.pt
+#.   <span condition="widget/is_i18n" content="widget/title">label</span>
+#: from ../skins/cps_document/layout_lib.pt
 msgid "label"
 msgstr ""
 
@@ -130,4 +129,10 @@ msgid "cpsdoc_News_photo_title_view"
 msgstr ""
 
 msgid "cpsdoc_News_preview_title"
+msgstr ""
+
+msgid "cpsdoc_News_attachedFile_title"
+msgstr ""
+
+msgid "cpsdoc_News_attachedFile_title_view"
 msgstr ""

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-09-04 17:58default\n"
-"PO-Revision-Date: 2003-09-04 17:59+0200\n"
+"POT-Creation-Date: 2003-09-05 17:07default\n"
+"PO-Revision-Date: 2003-09-05 17:08+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -31,17 +31,17 @@ msgstr "Edit \"${title}\""
 msgid "button_add"
 msgstr "Add"
 
-#.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
 #.   <input value="button_change" name="cpsdocument_edit_button" type="submit" />
-#: from ../skins/cps_document/layout_default_edit.pt
-#: ../skins/cps_document/layout_dummy_edit.pt
+#.   <input value="button_change" class="standalone" name="cpsdocument_edit_button" type="submit" />
+#: from ../skins/cps_document/layout_dummy_edit.pt
 #: ../skins/cps_document/layout_fancy_edit.pt
 #: ../skins/cps_document/layout_form_edit.pt
+#: ../skins/cps_document/layout_lib.pt
 msgid "button_change"
 msgstr "Change"
 
 #.   <span>Form error.</span>
-#: from ../skins/cps_document/layout_default_edit.pt
+#: from ../skins/cps_document/layout_lib.pt
 msgid "cpsdoc_form_error"
 msgstr "Invalid form submit:"
 
@@ -61,14 +61,13 @@ msgid "cpsdoc_label_file_keep"
 msgstr "Keep"
 
 #.   <em content="err" style="color: red">err</em>
-#: from ../skins/cps_document/layout_default_edit.pt
+#: from ../skins/cps_document/layout_lib.pt
 msgid "err"
 msgstr "Error"
 
-#.   <span condition="widget/is_i18n" content="widget/title">label</span>
 #.   <span condition="widget/is_i18n" content="widget/title_view">label</span>
-#: from ../skins/cps_document/layout_default_edit.pt
-#: ../skins/cps_document/layout_default_view.pt
+#.   <span condition="widget/is_i18n" content="widget/title">label</span>
+#: from ../skins/cps_document/layout_lib.pt
 msgid "label"
 msgstr "label"
 
@@ -129,4 +128,10 @@ msgstr "photo 1"
 
 msgid "cpsdoc_News_preview_title"
 msgstr "Image preview: "
+
+msgid "cpsdoc_News_attachedFile_title"
+msgstr "Attached file: "
+
+msgid "cpsdoc_News_attachedFile_title_view"
+msgstr "More information: "
 
