@@ -48,7 +48,7 @@ class BaseStorageAdapter:
     Base class for storage adapters.
     """
 
-    def __init__(self, schema, field_ids=None):
+    def __init__(self, schema, field_ids=None, **kw):
         """Create a StorageAdapter for a schema.
 
         If field_ids is specified, only those fields will be managed.
