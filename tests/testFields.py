@@ -1,11 +1,11 @@
 import unittest
-from Products.NuxCPS3Document.LayoutFields import LayoutField
+from Products.NuxCPS3Document.Fields.BasicField import BasicField
 
 
 class FieldTests(unittest.TestCase):
 
     def testCreation(self):
-        field = LayoutField('the_id')
+        field = BasicField('the_id')
         self.failUnless(field.id() == 'the_id', 'Id was not set correctly')
 
 
