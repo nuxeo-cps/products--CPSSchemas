@@ -5,6 +5,7 @@ New features:
 ~~~~~~~~~~~~~
 - Fields now have a read_process_dependent_fields property to specify which
   fields the depend on.
+- New compound widget textimage
 Bug fixes:
 ~~~~~~~~~~
 - old CPSDocument using deprecated CPSLinkWidget (not the compound) can be viewed
@@ -14,3 +15,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added the possibility to restrict the fields managed by a storage adapter.
+- improve link, photo css integration
