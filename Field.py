@@ -80,6 +80,18 @@ class Field(SimpleItemWithProperties):
         """Get the default value for this field."""
         return self.default
 
+    security.declarePrivate('computeDependantFields')
+    def computeDependantFields(self, schema, data):
+        """Compute dependant fields.
+
+        Has access to the current schema, and may update the data from
+        the datamodel.
+
+        This is used for fields that update other fields when they are
+        themselves updated.
+        """
+        pass
+
     security.declarePublic('getFieldId')
     def getFieldId(self):
         """Get this field's id."""
