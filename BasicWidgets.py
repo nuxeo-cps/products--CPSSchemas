@@ -716,11 +716,11 @@ class CPSTextAreaWidget(CPSWidget):
         elif mode == 'view':
             rformat = self.render_format
             if rformat == 'pre':
-                ret = '<pre>'+escape(value)+'</pre>'
+                ret = '<pre>' + escape(value) + '</pre>'
             elif rformat == 'stx':
                 ret = structured_text(value)
             elif rformat == 'text':
-                ret = newline_to_br(value)
+                ret = newline_to_br(escape(value))
             elif rformat == 'html':
                 ret = value
             else:

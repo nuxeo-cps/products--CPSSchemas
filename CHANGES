@@ -8,6 +8,7 @@ Bug fixes:
 ~~~~~~~~~~
 - fix: zoomed mimetype icon for attached file is ugly
 - RTE button JavaScript toggle corrected
+- Hardening + W3C compliance : Escaping content that has been entered in as text
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Additional Field API to convert to and from LDAP attributes.

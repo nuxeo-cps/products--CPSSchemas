@@ -133,11 +133,11 @@ class CPSTextWidget(CPSStringWidget):
         rformat = datastructure[widget_id + '_rformat']
         if mode == 'view':
             if rformat == 'pre':
-                value = '<pre>'+escape(value)+'</pre>'
+                value = '<pre>' + escape(value) + '</pre>'
             elif rformat == 'stx':
                 value = structured_text(value)
             elif rformat == 'text':
-                value = newline_to_br(value)
+                value = newline_to_br(escape(value))
             elif rformat == 'html':
                 pass
             else:
