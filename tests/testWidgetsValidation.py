@@ -6,6 +6,7 @@ from Testing.ZopeTestCase import ZopeLite
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
 from Products.CPSSchemas.BasicWidgets import CPSBooleanWidget
+from Products.CPSSchemas.ExtendedWidgets import CPSTextWidget
 
 class TestWidgetsValidation(unittest.TestCase):
     """Tests validate method of widgets"""
@@ -26,6 +27,8 @@ class TestWidgetsValidation(unittest.TestCase):
             widget = CPSStringWidget(id, '')
         elif type == 'Boolean':
             widget = CPSBooleanWidget(id, '')
+        elif type == 'Text':
+            widget = CPSTextWidget(id, '')
         widget.manage_changeProperties(**properties)
         ret = widget.validate(ds)
         err = ds.getError(id)
@@ -34,7 +37,7 @@ class TestWidgetsValidation(unittest.TestCase):
 
     ############################################################
     # StringWidget
-    #
+
     def test_string_ok_1(self):
         ret, err, ds = self._validate('String', {}, '12345')
         self.failUnless(ret, err)
@@ -92,7 +95,7 @@ class TestWidgetsValidation(unittest.TestCase):
 
     ############################################################
     # BooleanWidget
-    #
+
     def test_boolean_ok_1(self):
         ret, err, ds = self._validate('Boolean', {}, 0)
         self.failUnless(ret, err)
@@ -124,6 +127,13 @@ class TestWidgetsValidation(unittest.TestCase):
     def test_boolean_nok_5(self):
         ret, err, ds = self._validate('Boolean', {}, {'foo': 'sk'})
         self.failUnless(err == 'cpsschemas_err_boolean')
+
+    ############################################################
+    # TextWidget
+
+    def test_text_ok_1(self):
+        ret, err, ds = self._validate('String', {}, '12345')
+        self.failUnless(ret, err)
 
 
 def test_suite():
