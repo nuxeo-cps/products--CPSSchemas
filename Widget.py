@@ -133,6 +133,54 @@ class Widget(SimpleItemWithProperties):
         return widgetname(self.getWidgetId())
 
     #
+    # Widget accessibility.
+    #
+
+    security.declarePrivate('_isReadOnly')
+    def _isReadOnly(self, datamodel):
+        """Return true if the widget is read-only.
+
+        This checks the managed fields for write access.
+        """
+        try:
+            for field_id in self.fields:
+                datamodel.checkWriteAccess(field_id)
+        except WriteAccessError:
+            return 1
+        else:
+            return 0
+
+    security.declarePrivate('isReadOnly')
+    def isReadOnly(self, datamodel, layout_mode):
+        """Return true if the widget is read-only in the layout_mode."""
+        if layout_mode in self.readonly_layout_modes:
+            return 1
+        return self._isReadOnly(datamodel)
+
+    security.declarePrivate('getModeFromLayoutMode')
+    def getModeFromLayoutMode(self, layout_mode, datamodel):
+        """Get the mode for this widget."""
+        if layout_mode in self.hidden_layout_modes:
+            return 'hidden'
+        readonly = None
+        if layout_mode in self.hidden_readonly_layout_modes:
+            readonly = self.isReadOnly(datamodel, layout_mode)
+            if readonly:
+                return 'hidden'
+        if layout_mode.startswith('view'):
+            return 'view'
+        if (layout_mode.startswith('edit') or
+            layout_mode.startswith('create') or
+            layout_mode.startswith('search')):
+            if readonly is None:
+                readonly = self.isReadOnly(datamodel, layout_mode)
+            if readonly:
+                return 'view'
+            else:
+                return 'edit'
+        raise ValueError("Unknown layout mode '%s'" % layout_mode)
+
+    #
     # May be overloaded.
     #
 
@@ -143,18 +191,6 @@ class Widget(SimpleItemWithProperties):
         Used by dynamic widget creation to create its needed fields.
         """
         return self.field_types
-
-    security.declarePrivate('isReadOnly')
-    def isReadOnly(self, datastructure):
-        """Return true if the widget is read-only."""
-        try:
-            datamodel = datastructure.getDataModel()
-            for field_id in self.fields:
-                datamodel.checkWriteAccess(field_id)
-        except WriteAccessError:
-            return 1
-        else:
-            return 0
 
     security.declarePrivate('getFieldInits')
     def getFieldInits(self):

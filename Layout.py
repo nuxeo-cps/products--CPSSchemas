@@ -207,43 +207,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     def getStandardWidgetModeChooser(self, layout_mode, datastructure):
         """Get a function to choose the mode to render a widget.
         """
-        class standardWidgetModeChooser:
-            """Choose the mode to render a widget."""
-            def __init__(self, layout, layout_mode, datastructure):
-                self.layout = layout
-                self.layout_mode = layout_mode
-                self.datastructure = datastructure
-            def isReadOnly(self):
-                widget = self.widget
-                if self.readonly is None:
-                    if self.layout_mode in widget.readonly_layout_modes:
-                        self.readonly = 1
-                    else:
-                        self.readonly = widget.isReadOnly(self.datastructure)
-                return self.readonly
-            def __call__(self, widget):
-                self.readonly = None
-                self.widget = widget
-                layout_mode = self.layout_mode
-                if layout_mode in widget.hidden_layout_modes:
-                    mode = 'hidden'
-                elif (layout_mode in widget.hidden_readonly_layout_modes
-                      and self.isReadOnly()):
-                    mode = 'hidden'
-                elif layout_mode.startswith('view'):
-                    mode = 'view'
-                elif (layout_mode.startswith('edit') or
-                      layout_mode.startswith('create') or
-                      layout_mode.startswith('search')):
-                    if self.isReadOnly():
-                        mode = 'view'
-                    else:
-                        mode = 'edit'
-                else:
-                    raise ValueError("Unknown layout mode '%s'" % layout_mode)
-                return mode
-
-        return standardWidgetModeChooser(self, layout_mode, datastructure)
+        datamodel = datastructure.getDataModel()
+        def chooser(widget,
+                    # The following needed for python 2.1
+                    layout_mode=layout_mode, datamodel=datamodel):
+            return widget.getModeFromLayoutMode(layout_mode, datamodel)
+        return chooser
 
     security.declarePrivate('removeHiddenWidgets')
     def removeHiddenWidgets(self, layout_structure):
