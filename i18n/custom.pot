@@ -58,7 +58,16 @@ msgstr ""
 msgid "cpsschemas_err_long"
 msgstr ""
 
-msgid "cpsschemas_err_long_out_of_limits"
+msgid "cpsschemas_err_long_range"
+msgstr ""
+
+msgid "cpsschemas_err_float_positive"
+msgstr ""
+
+msgid "cpsschemas_err_float_range"
+msgstr ""
+
+msgid "cpsschemas_err_float"
 msgstr ""
 
 msgid "jscalendar_date_fmt"
