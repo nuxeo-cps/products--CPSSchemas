@@ -25,10 +25,5 @@
   </tr>
 </table>
 <input type="submit" name="cpsdocument_edit_button" value="Change" />
-<p>
-      This is layout_flex_edit.pt, ok=<span tal:replace="ok" />
-      ds=<span tal:replace="ds" />
-      request=<span tal:replace="request/form" />
-</p>
 </form>
 </tal:block>
