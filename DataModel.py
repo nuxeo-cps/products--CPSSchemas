@@ -41,9 +41,12 @@ The storage itself is done through a storage adapter (NOTIMPLEMENTED).
 from zLOG import LOG, DEBUG
 from Acquisition import aq_base
 from UserDict import UserDict
+from Missing import MV # Missing.Value
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
+
+from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 
 
 class ValidationError(Exception):
@@ -60,6 +63,7 @@ class DataModel(UserDict):
 
     def __init__(self, ob, schemas=[]):
         UserDict.__init__(self)
+        # self.data initialized by UserDict
         self._ob = ob
         self._fields = {}
         self._schemas = {}
@@ -82,27 +86,28 @@ class DataModel(UserDict):
                                " but field ids must be unique" % fieldid)
             else:
                 self._fields[fieldid] = schema[fieldid]
-        self._schemas[schema.id] = schema
+        # XXX Adapter type isn't fixed.
+        adapter = AttributeStorageAdapter(schema, self._ob)
+        self._schemas[schema.id] = schema, adapter
 
     def _fetch(self):
         """Fetch the data into local dict for user access."""
-        for schema in self._schemas.values():
-            # XXX use storage adapters for each schema
-            for fieldid in schema.keys():
-                try:
-                    v = getattr(aq_base(self._ob), fieldid)
-                except AttributeError:
-                    field = schema[fieldid]
-                    v = field.getDefault()
-                self.data[fieldid] = v
+        for schema, adapter in self._schemas.values():
+            data = adapter.getData()
+            for field_id in schema.keys():
+                value = data[field_id]
+                if value is MV:
+                    # Use default from field. XXX Is this the adapter's work?
+                    field = schema[field_id]
+                    value = field.getDefault()
+                self.data[field_id] = value
 
     def _commit(self):
         """Commit modified data into object."""
         ob = self._ob
-        for schema in self._schemas.values():
-            # XXX use storage adapters for each schema
-            for fieldid in schema.keys():
-                setattr(ob, fieldid, self.data[fieldid])
+        for schema, adapter in self._schemas.values():
+            adapter.setData(self.data)
+
         # XXX temporary until we have a better API for this
         if hasattr(aq_base(ob), 'postCommitHook'):
             ob.postCommitHook()
