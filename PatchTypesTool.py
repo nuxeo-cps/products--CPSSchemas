@@ -22,6 +22,10 @@ from AccessControl.PermissionRole import PermissionRole
 
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
+from OFS.PropertyManager import PropertyManager
+from Products.CMFCore.TypesTool import TypeInformation
+from Products.CMFCore.TypesTool import FactoryTypeInformation as FTI
+from Products.CMFCore.CMFCorePermissions import ManageProperties
 
 from Products.CPSDocument.FlexibleTypeInformation import FlexibleTypeInformation
 from Products.CPSDocument.FlexibleTypeInformation import addFlexibleTypeInformationForm
@@ -49,3 +53,7 @@ TypesTool.addFlexibleTypeInformationForm = addFlexibleTypeInformationForm
 TypesTool.addFlexibleTypeInformationForm__roles__ = PermissionRole(ManagePortal)
 TypesTool.addFlexibleTypeInformation = addFlexibleTypeInformation
 TypesTool.addFlexibleTypeInformationForm__roles__ = PermissionRole(ManagePortal)
+
+TypeInformation.manage_propertiesForm = PropertyManager.manage_propertiesForm
+TypeInformation.manage_addProperty__roles__ = PermissionRole(ManageProperties)
+TypeInformation.manage_delProperties__roles__ = PermissionRole(ManageProperties)
