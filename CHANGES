@@ -14,3 +14,5 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - DataModel has a new isDirty method to check if a field is dirty (has
   been modified).
+- In DataModel split _commit and _commitData so that the postcommithook
+  can modify data and re-call _commitData to update dependent fields.
