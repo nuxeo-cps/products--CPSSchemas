@@ -453,7 +453,11 @@ InitializeClass(CPSAttachedFileWidgetType)
 #################################################
 
 class CPSRichTextEditorWidget(CPSWidget):
-    """Rich Text Editor widget."""
+    """Rich Text Editor widget.
+
+    This widget should not be used. Use the Text Widget which provides both HTML
+    and text formats.
+    """
     meta_type = "CPS Rich Text Editor Widget"
 
     field_types = ('CPS String Field',)
