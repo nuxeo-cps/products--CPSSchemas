@@ -619,6 +619,22 @@ class CPSIntWidget(CPSWidget):
 
     field_types = ('CPS Int Field',)
 
+    _properties = CPSWidget._properties + (
+        {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
+         'label': 'Value must be in range'},
+        {'id': 'min', 'type': 'float', 'mode': 'w',
+         'label': 'Range minimum value'},
+        {'id': 'max', 'type': 'float', 'mode': 'w',
+         'label': 'Range maximum value'},
+        {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
+         'label': 'Thousands separator'},
+        )
+
+    is_limited = 0
+    min = 0
+    max = 0
+    thousands_separator = ''
+
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -632,17 +648,28 @@ class CPSIntWidget(CPSWidget):
         except (ValueError, TypeError):
             datastructure.setError(self.getWidgetId(),
                                    "cpsschemas_err_int")
-            ok = 0
-        else:
-            datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = v
-            ok = 1
-        return ok
+            return 0
+
+        if self.is_limited:
+            if (v < self.min) or (v > self.max):
+                datastructure.setError(self.getWidgetId(),
+                                       "cpsschemas_err_int_range")
+                return 0
+            
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if self.thousands_separator:
+                thousands = []
+                while value:
+                    thousands.insert(0, value[-3:])
+                    value = value[:-3]
+                value = self.thousands_separator.join(thousands)
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -671,16 +698,19 @@ class CPSLongWidget(CPSWidget):
 
     _properties = CPSWidget._properties + (
         {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
-         'label': 'Field with limits'},
+         'label': 'Value must be in range'},
         {'id': 'minimum', 'type': 'int', 'mode': 'w',
-         'label': 'Minimum limit'},
+         'label': 'Range minimum value'},
         {'id': 'maximum', 'type': 'int', 'mode': 'w',
-         'label': 'Maximum  limit'},
+         'label': 'Range maximum  value'},
+        {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
+         'label': 'Thousands separator'},
         )
-    is_required = 0
+    
     is_limited = 0
     minimum = 0
     maximum = 0
+    thousands_separator = ''
 
     def prepare(self, datastructure):
         """Prepare datastructure from datamodel."""
@@ -716,6 +746,12 @@ class CPSLongWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if self.thousands_separator:
+                thousands = []
+                while value:
+                    thousands.insert(0, value[-3:])
+                    value = value[:-3]
+                value = self.thousands_separator.join(thousands)
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -745,15 +781,15 @@ class CPSFloatWidget(CPSWidget):
 
     _properties = CPSWidget._properties + (
         {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
-         'label': 'Value limited by a range'},
+         'label': 'Value must be in range'},
         {'id': 'min', 'type': 'float', 'mode': 'w',
-         'label': 'Min value of the range'},
+         'label': 'Range minimum value'},
         {'id': 'max', 'type': 'float', 'mode': 'w',
-         'label': 'Max value of the range'},
+         'label': 'Range maximum value'},
         {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
          'label': 'Thousands separator'},
         {'id': 'decimals_separator', 'type': 'string', 'mode': 'w',
-         'label': 'Decimals separator'},
+         'label': 'Decimal separator'},
         {'id': 'decimals_number', 'type': 'int', 'mode': 'w',
          'label': 'Number of decimals'},
             )
