@@ -24,7 +24,8 @@ if delete_rows:
     context.flexibleDelWidgetRows(layout_id, delete_rows)
 
 if kw.has_key('addwidget_button'):
-    context.flexibleAddWidget(layout_id, kw['widget_type'])
+    kwargs = {'title': kw['widget_title']}
+    context.flexibleAddWidget(layout_id, kw['widget_type'], **kwargs)
 
 
 if REQUEST is not None:
