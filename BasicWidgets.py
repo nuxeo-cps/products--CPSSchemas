@@ -243,6 +243,8 @@ class CPSStringWidget(CPSWidget):
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
+            # XXX TODO should use an other name than kw !
+            # XXX change this everywhere
             kw = {'type': 'text',
                   'id'  : self.getHtmlWidgetId(),
                   'name': self.getHtmlWidgetId(),
@@ -335,8 +337,11 @@ class CPSEmailWidget(CPSStringWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         err, v = self._extractValue(datastructure[widget_id])
-        if not err and v and not self.email_pat.match(v):
+        # no validation in search mode
+        if not err and kw.get('layout_mode') != 'search' and \
+               v and not self.email_pat.match(v):
             err = 'cpsschemas_err_email'
+
         if err:
             datastructure.setError(widget_id, err)
         else:

@@ -10,6 +10,8 @@ Bug fixes:
 - renderHtmlTag unable to generate <option value=""> tag
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- '+' is allowed in email addresses.
+- EmailWidget
+  - no validation in search mode 
+  - '+' is allowed in email addresses.
 - Vocabularies are now preferrably initialized using the
   syntax (('foo': "Foo"), ('bar': "Bar")).
