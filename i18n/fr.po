@@ -227,16 +227,16 @@ msgid "cpsschemas_rposition_center"
 msgstr "Au centre"
 
 msgid "cpsschemas_rformat_text"
-msgstr "Text"
+msgstr "Texte"
 
 msgid "cpsschemas_rformat_html"
-msgstr "Html"
+msgstr "HTML"
 
 msgid "cpsschemas_rformat_stx"
-msgstr "Texte structuré zope"
+msgstr "Texte structuré Zope"
 
 msgid "cpsschemas_rformat_pre"
-msgstr "Html préformaté"
+msgstr "HTML préformaté"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
