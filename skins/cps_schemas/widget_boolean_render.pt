@@ -42,7 +42,6 @@
           tal:content="here/label_false"
           i18n:translate="" />
 </select>
-<span tal:replace="value"/>
 </tal:select>
 </tal:block>
 </tal:block>
