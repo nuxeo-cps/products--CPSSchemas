@@ -1,0 +1,17 @@
+<tal:block define="layout options/layout;
+                   ds options/datastructure;
+                   dm options/datamodel;
+                  ">
+<table width="100%" cellpadding="2" cellspacing="2" border="0">
+  <tr tal:repeat="row layout/rows">
+    <td tal:repeat="cell row" tal:attributes="colspan cell/ncols">
+      <tal:block define="widget cell/widget">
+        <tal:block condition="widget/title">
+          <strong tal:content="widget/title">label</strong>:
+        </tal:block>
+        <div tal:replace="structure python:widget.render('view', ds, dm)" />
+      </tal:block>
+    </td>
+  </tr>
+</table>
+</tal:block>
