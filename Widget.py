@@ -164,6 +164,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     def _createHiddenExpressionContext(self, datamodel):
         """Create an expression context for hidden evaluation."""
         wftool = getToolByName(self, 'portal_workflow')
+        portal = getToolByName(self, 'portal_url').getPortalObject()
         proxy = datamodel._proxy
         if proxy is not None:
             review_state = wftool.getInfoFor(proxy, 'review_state')
@@ -175,6 +176,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             'user': datamodel._acl_cache_user,
             'nothing': None,
             'context': datamodel._context,
+            'portal': portal,
             'proxy': proxy,
             'portal_workflow': wftool,
             'review_state': review_state,
