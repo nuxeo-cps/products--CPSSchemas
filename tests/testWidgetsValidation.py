@@ -117,6 +117,13 @@ class TestWidgetsValidation(unittest.TestCase):
         ret, err, ds = self._validate('Boolean', {}, None)
         self.failUnless(err == 'cpsschemas_err_boolean')
 
+    def test_boolean_nok_5(self):
+        ret, err, ds = self._validate('Boolean', {}, 'foo')
+        self.failUnless(err == 'cpsschemas_err_boolean')
+
+    def test_boolean_nok_5(self):
+        ret, err, ds = self._validate('Boolean', {}, {'foo': 'sk'})
+        self.failUnless(err == 'cpsschemas_err_boolean')
 
 
 def test_suite():
