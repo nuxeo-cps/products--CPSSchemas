@@ -46,7 +46,7 @@ msgstr ""
 msgid "cpsschemas_err_file"
 msgstr ""
 
-msgid "cpsschemas_err_file_too_big"
+msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
 
 msgid "cpsschemas_err_file_empty"

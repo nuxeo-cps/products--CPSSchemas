@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-21 11:56default\n"
+"POT-Creation-Date: 2004-08-23 17:39default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -169,7 +169,8 @@ msgid "cpsschemas_vocabulary_value"
 msgstr "Waarde&nbsp;:"
 
 #.   <em style="color: red" content="err">err</em>
-#: from ../skins/cps_schemas/widget_link_render.pt
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
 msgstr ""
@@ -187,6 +188,16 @@ msgstr "Klikt op de gewilde waarde&nbsp;:"
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
 msgstr "Gaat een termijn van onderzoek in&nbsp;:"
+
+#.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+msgid "i18_key-help_for_this_field"
+msgstr ""
+
+#.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+msgid "label"
+msgstr ""
 
 #.   <td align="left">
 #.               Alternative text
@@ -225,7 +236,8 @@ msgstr "Formaat van invalide datum"
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
 
-msgid "cpsschemas_err_file_too_big"
+#, fuzzy
+msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr "te omvangrijk bestand"
 
 msgid "cpsschemas_err_file_empty"

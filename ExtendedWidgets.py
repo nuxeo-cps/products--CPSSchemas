@@ -330,6 +330,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
         filetitle = datastructure[widget_id + '_title']
         file = None
         err = 0
+        err_mapping = None
         if choice == 'keep':
             file = datamodel[field_id]
             if file is not None:
@@ -351,9 +352,12 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     err = 'cpsschemas_err_file_empty'
                 else:
                     fileUpload.seek(0)
-                    fileReadLength = len(fileUpload.read(ms + 1))
-                if ms and fileReadLength > ms:
-                    err = 'cpsschemas_err_file_too_big'
+                    read_size = len(fileUpload.read(ms + 1))
+                if ms and read_size > ms:
+                    # Size is expressed in Mb
+                    max_size = ms / (1024*1024)
+                    err = 'cpsschemas_err_file_too_big ${max_size}'
+                    err_mapping = {'max_size': max_size}
                 else:
                     fileUpload.seek(0)
                     # ignore title value from form;
@@ -372,9 +376,9 @@ class CPSAttachedFileWidget(CPSFileWidget):
                         'validate change set %s' % `file`)
                     datamodel[field_id] = file
         if err:
-            datastructure.setError(widget_id, err)
             LOG('CPSAttachedFileWidget', DEBUG,
                 'error %s on %s' % (err, `file`))
+            datastructure.setError(widget_id, err, err_mapping)
         else:
             self.prepare(datastructure)
 

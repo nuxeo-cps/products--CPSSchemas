@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Better error message for the CPSAttachedFileWidget, it tells what the max size
+  is if it has been exceeded.
 Bug fixes:
 ~~~~~~~~~~
 -

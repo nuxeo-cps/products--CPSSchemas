@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-07-21 11:56default\n"
+"POT-Creation-Date: 2004-08-23 17:39default\n"
 "PO-Revision-Date: 2004-06-08 16:42-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: Português do Brasil <pt@li.org>\n"
@@ -167,7 +167,8 @@ msgid "cpsschemas_vocabulary_value"
 msgstr "Valor:"
 
 #.   <em style="color: red" content="err">err</em>
-#: from ../skins/cps_schemas/widget_link_render.pt
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
 msgstr "erro"
@@ -185,6 +186,16 @@ msgstr "Clique no valor selecionado"
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
 msgstr "Entre um termo de busca:"
+
+#.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+msgid "i18_key-help_for_this_field"
+msgstr ""
+
+#.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+msgid "label"
+msgstr ""
 
 #.   <td align="left">
 #.               Alternative text
@@ -223,7 +234,8 @@ msgstr "cpsschemas_err_date"
 msgid "cpsschemas_err_file"
 msgstr "cpsschemas_err_file"
 
-msgid "cpsschemas_err_file_too_big"
+#, fuzzy
+msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr "cpsschemas_err_file_too_big"
 
 msgid "cpsschemas_err_file_empty"

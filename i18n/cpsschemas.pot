@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-07-21 11:56default\n"
+"POT-Creation-Date: 2004-08-23 17:39default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -166,7 +166,8 @@ msgid "cpsschemas_vocabulary_value"
 msgstr ""
 
 #.   <em style="color: red" content="err">err</em>
-#: from ../skins/cps_schemas/widget_link_render.pt
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
 msgstr ""
@@ -183,6 +184,16 @@ msgstr ""
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
+msgstr ""
+
+#.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+msgid "i18_key-help_for_this_field"
+msgstr ""
+
+#.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+msgid "label"
 msgstr ""
 
 #.   <td align="left">
@@ -222,7 +233,7 @@ msgstr ""
 msgid "cpsschemas_err_file"
 msgstr ""
 
-msgid "cpsschemas_err_file_too_big"
+msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
 
 msgid "cpsschemas_err_file_empty"
