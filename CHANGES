@@ -10,3 +10,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Use tuples for vocabularies export
+- Clarify setContextObject use.

@@ -62,15 +62,17 @@ class BaseStorageAdapter:
         self._field_items = field_items
         self._writable_field_items = writable_field_items
 
-    def setContextObject(self, ob):
-        """Set a new underlying object for this adapter.
+    def setContextObject(self, context):
+        """Set a new underlying context for this adapter.
 
         If a getData/setData is later done, it will be done on this new
-        object.
+        context.
 
         This is used by CPS to switch to a writable object after unfreezing.
+        Also used by directory entry creation process, to specifiy the
+        id after an empty datamodel has been fetched.
         """
-        self._ob = ob
+        raise NotImplementedError
 
     def getSchema(self):
         """Get schema this adapter is about."""
@@ -167,6 +169,10 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
 
+    def setContextObject(self, context):
+        """Set a new underlying context for this adapter."""
+        self._ob = context
+
     def _getFieldData(self, field_id, field):
         """Get data from one field."""
         ob = self._ob
@@ -177,6 +183,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
 
     def _setFieldData(self, field_id, value):
         """Set data for one field."""
+        # No kw arguments are expected.
         setattr(self._ob, field_id, value)
 
     def _getContentUrl(self, object, field_id, file_name):
@@ -217,6 +224,10 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
 
+    def setContextObject(self, context):
+        """Set a new underlying context for this adapter."""
+        self._ob = context
+
     def _getFieldData(self, field_id, field):
         """Get data from one field.
 
@@ -243,6 +254,7 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
 
         Calls the setter method.
         """
+        # No kw arguments are expected.
         ob = self._ob
         attr = self._field_attributes.get(field_id)
         if attr is None:
