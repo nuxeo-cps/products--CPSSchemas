@@ -36,11 +36,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget, \
-     _isinstance, CPSImageWidget, CPSNoneWidget, CPSFileWidget
+     _isinstance, CPSStringWidget, CPSImageWidget, CPSNoneWidget, CPSFileWidget
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
-class CPSTextWidget(CPSWidget):
+class CPSTextWidget(CPSStringWidget):
     """Text widget."""
     meta_type = "CPS Text Widget"
 
@@ -55,6 +55,8 @@ class CPSTextWidget(CPSWidget):
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
+        {'id': 'size_max', 'type': 'int', 'mode': 'w',
+         'label': 'Max Size'},
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_render_positions',
          'label': 'Render position'},
@@ -71,6 +73,7 @@ class CPSTextWidget(CPSWidget):
 
     width = 40
     height = 5
+    size_max = 0
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
     configurable = 'nothing'
@@ -97,28 +100,23 @@ class CPSTextWidget(CPSWidget):
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
-        value = datastructure[widget_id]
-        try:
-            v = str(value).strip()
-        except ValueError:
-            datastructure.setError(widget_id, "cpsschemas_err_textarea")
-            return 0
-        if self.is_required and not v:
-            datastructure[widget_id] = ''
-            datastructure.setError(widget_id, "cpsschemas_err_required")
-            return 0
-        datamodel = datastructure.getDataModel()
-        datamodel[self.fields[0]] = v
-        if self.configurable != 'nothing':
-            if len(self.fields) > 1:
-                rposition = datastructure[widget_id + '_rposition']
-                if rposition and rposition in self.all_render_positions:
-                    datamodel[self.fields[1]] = rposition
-            if len(self.fields) > 2:
-                rformat = datastructure[widget_id + '_rformat']
-                if rformat and rformat in self.all_render_formats:
-                    datamodel[self.fields[2]] = rformat
-        return 1
+        err, v = self._extractValue(datastructure[widget_id])
+        if err:
+            datastructure.setError(widget_id, err)
+            datastructure[widget_id] = v
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+            if self.configurable != 'nothing':
+                if len(self.fields) > 1:
+                    rposition = datastructure[widget_id + '_rposition']
+                    if rposition and rposition in self.all_render_positions:
+                        datamodel[self.fields[1]] = rposition
+                if len(self.fields) > 2:
+                    rformat = datastructure[widget_id + '_rformat']
+                    if rformat and rformat in self.all_render_formats:
+                        datamodel[self.fields[2]] = rformat
+        return not err
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
