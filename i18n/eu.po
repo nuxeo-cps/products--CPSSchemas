@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #.   <button type="button" attributes="
-#.           id button_rte_id;
+#.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
@@ -34,7 +34,7 @@ msgstr ""
 #: from
 #: ../skins/cps_schemas/widget_text_render.pt
 #, fuzzy
-msgid "button_rte"
+msgid "button_text_editor_popup"
 msgstr "Layout"
 
 #.   <span>at</span>

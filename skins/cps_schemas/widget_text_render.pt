@@ -5,7 +5,7 @@
   rposition options/render_position;
   rformat options/render_format;
   configurable options/configurable;
-  button_rte_id python:'widget__%s_button' % id;
+  button_text_editor_popup_id python:'widget__%s_button' % id;
   ">
   <tal:block condition="python: mode == 'view'">
     <div tal:condition="value"
@@ -38,7 +38,7 @@
         <tal:block i18n:translate="">cpsschemas_render_format</tal:block>
         <select tal:attributes="name string:${value_name}_rformat;
           id string:${value_name}_rformat;
-          onchange python:'showElement(this.value == \'html\',\'%s\')' % button_rte_id
+          onchange python:'showElement(this.value == \'html\',\'%s\')' % button_text_editor_popup_id
           ">
           <option tal:repeat="op here/all_render_formats"
             tal:attributes="selected python:op == rformat;
@@ -47,9 +47,9 @@
         </select>
       </tal:block>
       <button type="button"
-        i18n:translate="button_rte"
+        i18n:translate="button_text_editor_popup"
         tal:attributes="
-        id button_rte_id;
+        id button_text_editor_popup_id;
         style python:test(rformat == 'html',
         'visibility: visible;;', 'visibility: hidden;;');
         onclick
