@@ -194,19 +194,53 @@ class CPSDocumentMixin(ExtensionClass.Base):
         # XXX Deal with Unicode properly...
         return ' '.join(strings)
 
-    def _makeFlexible(self):
-        """Make this document flexible.
-
-        Creates an instance copy of the schemas defined in the type object.
-        """
+    security.declareProtected(ModifyPortalContent, 'flexibleAddWidget')
+    def flexibleAddWidget(self, layout_id, wtid, **kw):
+        """Add a new widget to the flexible part of document."""
         ti = self.getTypeInfo()
         ti._makeObjectFlexible(self)
+        layout, schema = ti._getFlexibleLayoutAndSchemaFor(self, layout_id)
 
-    security.declarePublic('debugMakeFlexible')
-    def debugMakeFlexible(self):
-        """ debug """
-        self._makeFlexible()
-        return 'ok'
+        # Find free widget id (based on the widget type name).
+        widget_id_base = wtid.lower().replace(' widget', '').replace(' ', '')
+        widget_id = widget_id_base
+        widget_ids = layout.keys()
+        n = 0
+        while widget_id in widget_ids:
+            n += 1
+            widget_id = '%s_%d' % (widget_id_base, n)
+
+        # Create the widget.
+        widget = layout.addWidget(widget_id, wtid, **kw)
+
+        # Create the needed fields.
+        field_types = widget.getFieldTypes()
+        fields = []
+        for field_type in field_types:
+            # Find free field id (based on the field type name).
+            s = field_type.lower().replace(' field', '').replace('cps ', '')
+            field_id_base = s.replace(' ', '')
+            field_id = field_id_base
+            n = 0
+            all_field_ids = schema.keys()
+            while field_id in all_field_ids:
+                n += 1
+                field_id = '%s_%d' % (field_id_base, n)
+
+            # Create field.
+            schema.addField(field_id, field_type) # Use default parameters.
+            fields.append(field_id)
+
+        # Set fields used by the widget.
+        widget.fields = fields
+
+        # Now add widget to end of layout definition.
+        layoutdef = layout.getLayoutDefinition()
+        layoutdef['rows'].append(
+            [{'ncols': 1, 'widget_id': widget_id}]
+            )
+        layout.setLayoutDefinition(layoutdef)
+
 
 InitializeClass(CPSDocumentMixin)
 
