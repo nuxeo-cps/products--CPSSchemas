@@ -66,12 +66,17 @@ class BasicStorageAdapter:
         self._namespace = namespace
         self._fields = fields
 
-    def getFieldStorageId(self, field_id):
-        """This gets the physical id used for the fields storage"""
-        field = self._fields[field_id]
-        return field.getStorageId()
 
     def set(self, field_id, data):
+        if self._document is None:
+            raise StorageError('Can not store data without document')
+        field = self._fields[field_id]
+        self._set(field, data)
+
+    def _set(self, field, data):
+        """The method does the data store
+
+        This must be overriden in all subclasses"""
         raise NotImplementedError
 
     def get(self, field_id):
@@ -82,9 +87,31 @@ class BasicStorageAdapter:
         document is None), and the field is required, or None if it is
         not required
         """
+        field = self._fields[field_id]
+        if self._document is None:
+            if field.isRequired():
+                return field.getDefaultValue()
+            else:
+                return None
+
+        return self._get(field)
+
+    def _get(self, field):
+        """The method does the data fetch
+
+        This must be overriden in all subclasses"""
         raise NotImplementedError
 
     def delete(self, field_id):
+        if self._document is None:
+            raise StorageError('Can not delete data without document')
+        field = self._fields[field_id]
+        self._delete(field)
+
+    def _delete(self, field):
+        """The method does the data deletion
+
+        This must be overriden in all subclasses"""
         raise NotImplementedError
 
     def has_data(self, field_id):

@@ -27,6 +27,24 @@ class BasicStorageAdapterTests(unittest.TestCase):
         self.failUnless(a.get('f1') == None)
         self.failUnless(a.get('f3') == 'Value3')
 
+    def testPythonBehavior(self):
+        """Make sure it really is the real references that are stored"""
+        # Yes, python does behave like I expected it to. :)
+        # I wrote these tests when I couldn't find a strange fault, to make
+        # sure that Python behaved as I thought it did. And it did. These
+        # tests are strictly not nessecary, but I like keeping tests around.
+        # Of course, it's quite unlikely that Python ever changes this behaviour. :)
+        f1 = TextField('f1', 'Field1')
+        f3 = SelectionField('f3', 'Field3')
+        f3.setOptions( ['Value1', 'Value2', 'Value3'])
+        f3.setDefaultValue('Value3')
+        fielddict = {}
+        fielddict['f1'] = f1
+        fielddict['f3'] = f3
+        a = BasicStorageAdapter(None, fielddict)
+        self.failUnless(a._fields['f1'] is f1)
+        self.failUnless(a._fields['f3'].getDefaultValue() == 'Value3')
+
 
 class AttributeAdapterTests(unittest.TestCase):
 
@@ -80,38 +98,17 @@ class AttributeAdapterTests(unittest.TestCase):
         self.a.writeData({'f1': 'Value1', 'f2': 'Value2', 'f3': None})
         self.failUnless(self.a.readData() == {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'})
 
-
-class AADocumentTests(unittest.TestCase):
-
-    def testPythonBehavior(self):
-        """Make sure it really is the real references that are stored"""
-        # Yes, python does behave like I expected it to. :)
-        # I wrote these tests when I couldn't find a strange fault, to make
-        # sure that Python behaved as I thought it did. And it did. These
-        # tests are strictly not nessecary, but I like keeping tests around.
-        # Of course, it's quite unlikely that Python ever changes this behaviour. :)
-        h = AttributeHolder()
-        f1 = TextField('f1', 'Field1')
-        f2 = TextField('f2', 'Field2')
-        f3 = SelectionField('f3', 'Field3')
-        f3.setOptions( ['Value1', 'Value2', 'Value3'])
-        f3.setDefaultValue('Value3')
-        fielddict = {}
-        fielddict['f1'] = f1
-        fielddict['f2'] = f2
-        fielddict['f3'] = f3
-        a = AttributeStorageAdapter(h, fielddict)
-        self.failUnless(a._fields['f1'] is f1)
-        self.failUnless(a._fields['f3'].getDefaultValue() == 'Value3')
+    def testNameSpace(self):
+        self.a._namespace = 'Lespacedenom'
+        self.a.set('f1', 'datadata')
+        self.failUnless(hasattr(self.h, 'Lespacedenom_f1'))
 
 
 
-    # tests for namespaces
 
 def test_suite():
     tests = [unittest.makeSuite(BasicStorageAdapterTests),
-             unittest.makeSuite(AttributeAdapterTests),
-             unittest.makeSuite(AADocumentTests)]
+             unittest.makeSuite(AttributeAdapterTests)]
     return unittest.TestSuite( tests)
 
 if __name__=="__main__":

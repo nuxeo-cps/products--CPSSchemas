@@ -9,30 +9,33 @@ class AttributeStorageAdapter(BasicStorageAdapter):
     def __init__(self, document, fields, namespace=''):
         BasicStorageAdapter.__init__(self, document, fields, namespace)
         if namespace:
-            self._namespace = namespace + '_'
+            self._namespace = namespace
         else:
             self._namespace = ''
 
-    def set(self, field_id, data):
-        fsid = self._namespace + self.getFieldStorageId(field_id)
+    def _set(self, field, data):
+        if self._namespace:
+            fsid = self._namespace + '_' + field.getStorageId()
+        else:
+            fsid = field.getStorageId()
         setattr(self._document, fsid, data)
 
-    def get(self, field_id):
-        field = self._fields[field_id]
-        fsid = self._namespace + self.getFieldStorageId(field_id)
-        if self._document is None:
-            if field.isRequired():
-                return field.getDefaultValue()
-            else:
-                return None
+    def _get(self, field):
+        if self._namespace:
+            fsid = self._namespace + '_' + field.getStorageId()
+        else:
+            fsid = field.getStorageId()
         data = getattr(self._document, fsid, None)
         if data is None:
             if field.isRequired():
                 return field.getDefaultValue()
         return data
 
-    def delete(self, field_id):
-        fsid = self._namespace + self.getFieldStorageId(field_id)
+    def _delete(self, field):
+        if self._namespace:
+            fsid = self._namespace + '_' + field.getStorageId()
+        else:
+            fsid = field.getStorageId()
         if hasattr(self._document, fsid):
             delattr(self._document, fsid)
 
