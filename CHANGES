@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- fix part of #175 for attachedFile widget: 
+- fix #175 for attachedFileWidget: 
   (#175: File/Image widgets lose attached files when modifying after errors)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
