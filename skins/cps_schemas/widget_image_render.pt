@@ -1,6 +1,7 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    content_url options/content_url;
+                   image_tag options/image_tag;
                    datastructure options/datastructure;
                    datamodel datastructure/getDataModel;
                    ctx datamodel/getContext;
@@ -9,12 +10,11 @@
                    empty_file options/empty_file;
                    mimetype options/mimetype;
                   ">
-<tal:block condition="python: mode == 'view' and not empty_file">
-  <img tal:attributes="src content_url" />
-</tal:block>
+<img tal:condition="python: mode == 'view' and not empty_file"
+     tal:replace="structure image_tag" />
 <tal:block condition="python: mode == 'edit'" tal:define="img_resize python:1">
   <img tal:condition="python: not empty_file"
-       tal:attributes="src content_url"/>
+       tal:replace="structure image_tag" />
 <metal:block define-macro="file_edit">
   <table cellpadding="0" cellspacing="0" border="0"
     tal:define="name here/getHtmlWidgetId;
@@ -55,8 +55,8 @@
       <td valign="middle">
         <input type="file" name="."
                tal:attributes="name name;
-		               onclick string:document.getElementById('${radio_name}_change').checked='checked'
-		">
+                   onclick string:document.getElementById('${radio_name}_change').checked='checked'
+    ">
         <tal:block condition="here/allow_resize|nothing">
         <span i18n:translate="cpsschemas_image_resize">resize</span>
         <select tal:attributes="name string:${name}_resize"
