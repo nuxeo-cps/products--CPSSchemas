@@ -1,8 +1,13 @@
-##parameters=mode, datastructure
+##parameters=mode, datastructure, post_validate=1
 # $Id$
 
 if mode != 'validate':
+    # we handle only validation
     return
+
+if not post_validate:
+    # we do nothing on pre validation
+    return 1
 
 widget_href = context.widget_ids[0]
 
