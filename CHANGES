@@ -12,6 +12,8 @@ Bug fixes:
 ~~~~~~~~~~
 - #312: refactor export tab to use smart writing. Now detects quotes used and
   put stronger quotes.
+- Using the file title is there is one for file attachment. This makes other
+  CPSComponents happy.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Use tuples for vocabularies export

@@ -1594,7 +1594,7 @@ class CPSFileWidget(CPSWidget):
         last_modified = ''
         if file:
             if _isinstance(file, File):
-                current_name = file.getId()
+                current_name = file.title_or_id()
                 size = file.get_size()
                 last_modified = str(file._p_mtime)
             else:
