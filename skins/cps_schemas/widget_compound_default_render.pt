@@ -6,7 +6,7 @@
   <tal:block condition="python: mode == 'view'">
       <tal:block repeat="cell cells">
         <tal:block define="widget cell/widget">
-          <div tal:attributes="class widget/widget_display_expr;
+          <div tal:attributes="class cell/widget_css_class;
                                id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';">
             <div class="label" tal:condition="widget/label">
               <span i18n:translate="" tal:condition="widget/is_i18n"
@@ -30,7 +30,7 @@
                          tooltip_id python:wid + '_help';
                          css_class python:test(err, 'row error', 'row')">
         <div tal:attributes="class css_class">
-        <div tal:attributes="class widget/widget_display_expr;
+        <div tal:attributes="class cell/widget_css_class;
                              id python:widget.widget_group_id or widget.getHtmlWidgetId() + '_widget';">
           <div class="label" tal:condition="widget/label_edit"
                              tal:attributes="class python:test(is_required, 'label required',
