@@ -203,6 +203,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 cell['widget'] = widget
                 # XXX here filtering according to permissions ?
                 widget.prepare(datastructure, datamodel)
+        layoutdata['id'] = self.getId()
         return layoutdata
 
     security.declarePrivate('validateLayout')
