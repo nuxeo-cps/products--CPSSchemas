@@ -276,7 +276,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     def isWriteAllowed(self):
         """Test if the user can write to this vocabulary."""
         return getSecurityManager().getUser().has_role(
-            self.acl_write_roles)
+            self.acl_write_roles_c, object=self)
 
     security.declareProtected(ManagePortal, 'isUserModified')
     def isUserModified(self):
