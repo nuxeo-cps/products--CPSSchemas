@@ -13,7 +13,7 @@ data = opener.document.getElementById("%s").value;
 name = kw.get('name')
 del kw['name']
 del kw['data']
-jsepoz = context.Epoz(name=name, data='data', css='nuxeo_css2.css', **kw)
+jsepoz = context.Epoz(name=name, data='data', **kw)
 jsepoz = jsepoz.replace('<!--', jspatch % input_id)
 jsepoz = jsepoz.replace("'data'", 'data')
 
