@@ -1,4 +1,26 @@
 *******************************************
+** CPSSchemas V0.27.0 [R1 build 2004/07/23-13:28 by guillaum]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Add a range list field
+- A DiskFile field, that stores the file on disk.
+- Add an 'other' option where free input is accepted in Generic Select widget
+  (ignored if render format is 'select')
+Bug fixes:
+~~~~~~~~~~
+- Small bug in CPSSubObjectsField when deleting fields.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- DataModel has a new isDirty method to check if a field is dirty (has
+  been modified).
+- In DataModel split _commit and _commitData so that the postcommithook
+  can modify data and re-call _commitData to update dependent fields.
+
+*******************************************
 ** CPSSchemas V0.26.2 [R1 build 2004/07/07-17:04 by madarche]
 
 Requires:
