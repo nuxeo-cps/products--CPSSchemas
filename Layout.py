@@ -93,6 +93,24 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     """Basic Layout.
 
     A layout describes how to render the basic fields of a schema.
+
+    Layout rendering occurs with the following step:
+
+    - prepareLayoutWidgets(): updates datastructure from field values,
+
+    - optional: manual updating of datastructure from request,
+
+    - computeLayoutStructure(): computes layout_structure,
+
+    - optional: validateLayoutStructure(): validates and updates
+      datamodel, or sets errors in datastructure,
+
+    - renderLayoutStructure(): renders each widget into
+      layout_structure,
+
+    - renderLayoutStyle(): returns the final rendering using the style
+      method.
+
     """
 
     _properties = (
@@ -163,12 +181,12 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
             """Choose the mode to render a widget."""
             if layout_mode == 'view':
                 if widget.hidden_view:
-                    mode = None
+                    mode = 'hidden'
                 else:
                     mode = 'view'
             elif layout_mode in ('edit', 'create'):
                 if widget.hidden_edit:
-                    mode = None
+                    mode = 'hidden'
                 elif 0: # XXX widget read-only
                     mode = 'view'
                 else:
@@ -181,8 +199,24 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
 
         return widgetModeChooser
 
+    security.declarePrivate('removeHiddenWidgets')
+    def removeHiddenWidgets(self, layout_structure):
+        """Remove cells of hidden widgets.
+        """
+        # XXX hiding a cell should be made more configurable,
+        # decide if it gets set to '', or if it is removed and
+        # its space contributed to the left or right cell.
+        for row in layout_structure['rows']:
+            new_row = []
+            for cell in row:
+                if cell['widget_mode'] != 'hidden':
+                    new_row.append(cell)
+            row[:] = new_row
+        # Re-normalize after removed cells.
+        self.normalizeLayoutDefinition(layout_structure)
+
     security.declarePrivate('prepareLayoutWidgets')
-    def prepareLayoutWidgets(self, datastructure):
+    def prepareLayoutWidgets(self, datastructure, **kw):
         """Prepare the layout widgets.
 
         Prepare all the widgets and thus updates the datastructure.
@@ -190,66 +224,91 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         for widget_id, widget in self.items():
             widget.prepare(datastructure)
 
-    security.declarePrivate('computeLayout')
-    def computeLayout(self, datastructure, widget_mode_chooser):
-        """Compute the layout.
+    security.declarePrivate('computeLayoutStructure')
+    def computeLayoutStructure(self, datastructure, widget_mode_chooser):
+        """Compute the layout structure.
 
-        Renders the widgets and computes the final layout structure.
+        Chooses the mode for all the widgets. Removes hidden ones.
 
-        The datastructure may have been updated with user data since the
-        prepare phase.
+        Returns a layout structure, which is a dictionary with keys:
+         - layout
+         - layout_id
+         - widgets
+         - rows
 
-        Renders all the widgets in an appropriate mode, and computes the
-        final row/cell structure.
-
-        Return a layout data.
+        Cells in a row have additionnal keys:
+         - widget
+         - widget_mode
+         - widget_rendered
+        (In addition to widget_id and ncols of the standard data.)
         """
-        layoutdata = self.getLayoutDefinition() # get a copy
-        layoutdata['id'] = self.getId()
-        # Render all the widgets.
+        layout_structure = self.getLayoutDefinition() # get a copy
+        layout_structure['layout'] = self
+        layout_structure['layout_id'] = self.getId() # XXX FIXME remove
+        # Choose the mode for all the widgets.
         widgets = {}
         for widget_id, widget in self.items():
             mode = widget_mode_chooser(widget)
-            if mode is not None:
-                rendered = widget.render(mode, datastructure).strip()
-                if widget.hidden_empty and not rendered:
-                    hidden = 1
-                else:
-                    hidden = 0
-            else:
-                rendered = ''
-                hidden = 1
             widgets[widget_id] = {
                 'widget': widget,
-                'widget_rendered': rendered,
-                'hidden': hidden,
+                'widget_mode': mode,
                 }
-        layoutdata['widgets'] = widgets
+        layout_structure['widgets'] = widgets
         # Store computed widget info in row/cell structure.
-        for row in layoutdata['rows']:
-            new_row = []
+        for row in layout_structure['rows']:
             for cell in row:
                 cell.update(widgets[cell['widget_id']])
-                if not cell['hidden']:
-                    new_row.append(cell)
-            row[:] = new_row
-        # XXX hiding a cell should be made more configurable,
-        # decide if it gets set to '', or if it is removed and
-        # its space contributed to the left or right cell.
-        # Re-normalize after removed cells.
-        self.normalizeLayoutDefinition(layoutdata)
-        layoutdata['style_prefix'] = self.style_prefix
-        return layoutdata
+        # Eliminate hidden widgets.
+        self.removeHiddenWidgets(layout_structure)
+        return layout_structure
 
-    security.declarePrivate('validateLayout')
-    def validateLayout(self, layoutdata, datastructure):
-        """Validate the layout."""
-        ok = 1
-        for row in layoutdata['rows']:
+    security.declarePrivate('validateLayoutStructure')
+    def validateLayoutStructure(self, layout_structure, datastructure, **kw):
+        """Validate the layout structure."""
+        is_valid = 1
+        for row in layout_structure['rows']:
             for cell in row:
                 widget = cell['widget']
-                ok = widget.validate(datastructure) and ok
-        return ok
+                is_valid = widget.validate(datastructure, **kw) and is_valid
+        return is_valid
+
+    security.declarePrivate('renderLayoutStructure')
+    def renderLayoutStructure(self, layout_structure, datastructure, **kw):
+        """Render the layout structure.
+
+        Renders the widgets in their chosen mode.
+
+        After rendering, the structure may be updated because some empty
+        widgets may have been removed.
+        """
+        for row in layout_structure['rows']:
+            for cell in row:
+                widget = cell['widget']
+                mode = cell['widget_mode']
+                rendered = widget.render(mode, datastructure, **kw).strip()
+                cell['widget_rendered'] = rendered
+                if widget.hidden_empty and not rendered:
+                    cell['widget_mode'] = 'hidden'
+        # Eliminate hidden widgets.
+        self.removeHiddenWidgets(layout_structure)
+
+    security.declarePrivate('renderLayoutStyle')
+    def renderLayoutStyle(self, layout_structure, datastructure, context,
+                          **kw):
+        """Applies the layout style method to the rendered widgets.
+
+        Returns the rendered string.
+        """
+        layout_mode = kw['layout_mode']
+        layout_meth = self.style_prefix + layout_mode
+        layout_style = getattr(context, layout_meth, None)
+        if layout_style is None:
+            raise ValueError("No layout method '%s' for layout '%s'" %
+                             (layout_meth, self.getId()))
+        rendered = layout_style(layout=layout_structure,
+                                datastructure=datastructure, **kw)
+        return rendered
+
 
     def __repr__(self):
         return '<Layout %s>' % `self.getLayoutDefinition()`
