@@ -6,14 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- incorrect content type for attachement make portal transform 
-  unable to extract text
-- 197: FileWidget download link is badly cached
-- image title display full path of src image unde IE
-- Epoz editor don't use cps css
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Storage adapters always propagate **kw arguments to the base adapter.
-- Don't fail on ReadAccessError when doing datamodel.get('foo') but return
-  the default value.
-- _getContentUrl now receives the file_name as argument too.
+-

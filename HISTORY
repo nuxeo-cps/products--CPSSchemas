@@ -1,4 +1,27 @@
 *******************************************
+** CPSSchemas V0.17.1 [R1 build 2004/02/19-15:56 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- AttachedFile widget: incorrect content type for file attachement make 
+  portal transform unable to extract text
+- #197: FileWidget download link is badly cached
+- Image widget display windows full path of src as alt and title
+- Epoz editor don't use cps css
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Storage adapters always propagate **kw arguments to the base adapter.
+- Don't fail on ReadAccessError when doing datamodel.get('foo') but return
+  the default value.
+- _getContentUrl now receives the file_name as argument too.
+
+*******************************************
 ** CPSSchemas V0.17.0 [R1 build 2004/02/18-09:34 by regebro]
 
 Requires:
