@@ -67,15 +67,15 @@ class WidgetTypesTool(UniqueObject, Folder):
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidgetType')
     def manage_addCPSWidgetType(self, id, swt, REQUEST=None):
-        """Add a widget type, called from the ZMI."""
+        """Add a widget type instance, called from the ZMI."""
         wt = self.getUnstrippedWidgetType(swt)
-        widget = WidgetTypeRegistry.makeWidget(wt, id)
-        self._setObject(widget.getId(), widget)
-        widget = self._getOb(widget.getId())
-        if REQUEST is not None:
+        widget_type_instance = WidgetTypeRegistry.makeWidgetTypeInstance(wt, id)
+        self._setObject(widget_type_instance.getId(), widget_type_instance)
+        widget_type_instance = self._getOb(widget_type_instance.getId())
+        if REQUEST:
             REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_workspace')
         else:
-            return widget
+            return widget_type_instance
 
 InitializeClass(WidgetTypesTool)
 
@@ -107,8 +107,9 @@ class WidgetTypeRegistry:
         """Return the list of widget types."""
         return self._widget_types[:]
 
-    def makeWidget(self, widget_type, id, **kw):
-        """Factory to make a widget of the given type."""
+    def makeWidgetTypeInstance(self, widget_type, id, **kw):
+        """Factory to make a widget type instance of the given type
+        with id = <id>."""
         return self._widget_type_classes[widget_type](id, **kw)
 
     def getClass(self, widget_type):
