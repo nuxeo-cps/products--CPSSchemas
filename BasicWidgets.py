@@ -1479,7 +1479,13 @@ class CPSFloatWidget(CPSWidget):
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        value = datastructure[self.getWidgetId()]
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+
+        if not value and self.is_required:
+            datastructure[widget_id] = 0.0
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
 
         #put value back in a python-parsable state as decimal/thousands
         #separators might not be std representations understood by python
@@ -1491,14 +1497,12 @@ class CPSFloatWidget(CPSWidget):
         try:
             v = float(value)
         except (ValueError, TypeError):
-            datastructure.setError(self.getWidgetId(),
-                                   "cpsschemas_err_float")
+            datastructure.setError(widget_id, "cpsschemas_err_float")
             return 0
 
         if self.is_limited:
             if (v < self.min_value) or (v > self.max_value):
-                datastructure.setError(self.getWidgetId(),
-                                       "cpsschemas_err_float_range")
+                datastructure.setError(widget_id, "cpsschemas_err_float_range")
                 return 0
 
         datamodel = datastructure.getDataModel()
@@ -1510,16 +1514,14 @@ class CPSFloatWidget(CPSWidget):
         value = str(datastructure[self.getWidgetId()])
         #format number according to widget prefs
         if self.decimals_number:
-            v = float(value)
-            value = ("%0." + str(self.decimals_number) + "f") % v
+            value = ("%0." + str(self.decimals_number) + "f") % float(value)
         if self.thousands_separator:
             intpart, decpart = value.split('.')
             thousands = []
             while intpart:
                 thousands.insert(0, intpart[-3:])
                 intpart = intpart[:-3]
-            value = self.thousands_separator.join(thousands)
-            value = ''.join([value, '.', decpart])
+            value = '.'.join([self.thousands_separator.join(thousands), decpart])
         if self.decimals_separator:
             value = value.replace('.', self.decimals_separator)
 
