@@ -22,7 +22,7 @@
 A layout describes how to render a set of widgets.
 """
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, WARNING
 from copy import deepcopy
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
@@ -212,7 +212,11 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         for row in layout_structure['rows']:
             new_row = []
             for cell in row:
-                if self.has_key(cell['widget_id']) and cell['widget_mode'] != 'hidden':
+                if not self.has_key(cell['widget_id']):
+                    LOG('CPSSchemas', WARNING, 
+                        'Layout %s refers to deleted widget %s' % (
+                            self.getId(), cell['widget_id']))
+                elif cell['widget_mode'] != 'hidden':
                     new_row.append(cell)
             row[:] = new_row
         # Re-normalize after removed cells.
@@ -264,6 +268,10 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
             for cell in row:
                 if widgets.has_key(cell['widget_id']):
                     cell.update(widgets[cell['widget_id']])
+                else:
+                    LOG('CPSSchemas', WARNING, 
+                        'Layout %s refers to deleted widget %s' % (
+                            self.getId(), cell['widget_id']))
         # Eliminate hidden widgets.
         self.removeHiddenWidgets(layout_structure)
         return layout_structure
