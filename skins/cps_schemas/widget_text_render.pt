@@ -37,7 +37,8 @@
         >
         <span i18n:translate="">cpsschemas_render_format</span>
         <select tal:attributes="name string:${value_name}_rformat;
-          onchange python:'toggleElementVisibility(\'%s\')' % button_rte_id
+          id string:${value_name}_rformat;
+          onchange python:'showElement(this.value == \'html\',\'%s\')' % button_rte_id
           ">
           <option tal:repeat="op here/all_render_formats"
             tal:attributes="selected python:op == rformat;
@@ -46,7 +47,7 @@
         </select>
         <button type="button"
           i18n:translate="button_rte"
-          tal:condition="python:rformat=='html' or configurable.find('format')>=0"
+          tal:condition="python:configurable.find('format') >= 0"
           tal:attributes="
           id button_rte_id;
           style python:test(rformat == 'html',

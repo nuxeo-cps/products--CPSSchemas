@@ -7,6 +7,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - fix: zoomed mimetype icon for attached file is ugly
+- RTE button JavaScript toggle corrected
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
