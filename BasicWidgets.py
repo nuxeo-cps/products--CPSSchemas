@@ -409,29 +409,50 @@ class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
     meta_type = "CPS TextArea Widget"
 
-    field_types = ('CPS String Field',)
-    field_inits = ({'is_indexed': 1,},)
+    # Warning if configurable the widget require field[1] and field[2]
+    field_types = ('CPS String Field',  # textarea value
+                   'CPS String Field',  # render_format if configurable
+                   'CPS String Field')  # render_position if configurable
+    field_inits = ({'is_indexed': 1,}, {}, {})
 
-    width = 40
-    height = 5
-    render_mode = 'pre'
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
-        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_modes',
-         'label': 'Render mode'},
+        {'id': 'render_format', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_formats',
+         'label': 'Render format'},
+        {'id': 'render_position', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_render_positions',
+         'label': 'Render position'},
+        {'id': 'configurable', 'type': 'boolean', 'mode': 'w',
+         'label': 'Render format and position are editable, REQUIRES 3 FIELDS'},
+
         )
+    all_render_formats = ['text', 'pre', 'stx', 'html']
+    all_render_positions = ['normal', 'col_left', 'col_right']
 
-
-    all_render_modes = ['pre', 'stx', 'text']
+    width = 40
+    height = 5
+    render_format = all_render_formats[0]
+    render_position = all_render_positions[0]
+    configurable = 0
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = str(datamodel[self.fields[0]])
+        if self.configurable and len(self.fields) != 3:
+            raise ValueError("Invalid textarea widget '%s' " % widget_id +
+                             "configurable textarea requires 3 fields.")
+        if self.configurable:
+            datastructure[widget_id + '_rformat'] = datamodel[self.fields[1]]
+            datastructure[widget_id + '_rposition'] = datamodel[self.fields[2]]
+        else:
+            datastructure[widget_id + '_rformat'] = self.render_format
+            datastructure[widget_id + '_rposition'] = self.render_position
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -448,26 +469,43 @@ class CPSTextAreaWidget(CPSWidget):
             return 0
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
+        if self.configurable:
+            rformat = datastructure[widget_id + '_rformat']
+            rposition = datastructure[widget_id + '_rposition']
+            if rformat and rformat in self.all_render_formats:
+                datamodel[self.fields[1]] = rformat
+                LOG('textarea', DEBUG, 'saving rformat = %s' % rformat)
+            if rposition and rposition in self.all_render_positions:
+                datamodel[self.fields[2]] = rposition
+                LOG('textarea', DEBUG, 'saving rposition = %s' % rposition)
         return 1
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = datastructure[self.getWidgetId()]
+        render_method = 'widget_textarea_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+        rformat = datastructure[widget_id + '_rformat']
+        rposition = datastructure[widget_id + '_rposition']
         if mode == 'view':
-            render_mode = self.render_mode
-            if render_mode == 'pre':
-                return '<pre>'+escape(value)+'</pre>'
-            elif render_mode == 'stx':
-                return structured_text(value)
-            else: # render_mode == 'text'
-                return '<div>'+newline_to_br(value)+'</div>'
-        elif mode == 'edit':
-            return renderHtmlTag('textarea',
-                                 name=self.getHtmlWidgetId(),
-                                 cols=self.width,
-                                 rows=self.height,
-                                 contents=value)
-        raise RuntimeError('unknown mode %s' % mode)
+            if rformat == 'pre':
+                value = '<pre>'+escape(value)+'</pre>'
+            elif rformat == 'stx':
+                value = structured_text(value)
+            elif rformat == 'text':
+                value = newline_to_br(value)
+            elif rformat == 'html':
+                pass
+            else:
+                RuntimeError("unknown render_format '%s' for '%s'" %
+                             (rformat, self.getId()))
+        return meth(mode=mode, datastructure=datastructure,
+                    value=value, render_format=rformat,
+                    render_position=rposition)
 
 InitializeClass(CPSTextAreaWidget)
 
