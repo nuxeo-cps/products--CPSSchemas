@@ -20,12 +20,14 @@
     <div tal:attributes="class python:test(rposition == 'right', 'dright',
                                       test(rposition == 'center', 'dcenter', 'dleft'))">
       <tal:block condition="python: original_photo">
-        <a href="#" tal:define="original_width python:original_photo.width; original_height python:original_photo.height"
-	            tal:attributes="onClick python:'window.open(\'popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(id,str(int(original_width)+20)) +
-			               ',innerheight=%s'%str(int(original_height) + 40) + 
-				       ',location=no,menubar=no' +
-                                       ',personalbar=no,toolbar=no,status=no' +
-                                       ',scrollbars=yes\')'"><img tal:replace="structure image_tag" /></a>
+        <a href="#" 
+          tal:define="original_width python:original_photo.width; 
+                      original_height python:original_photo.height"
+          tal:attributes="onClick python:'window.open(\'popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(id,str(int(original_width)+20)) +
+                         ',innerheight=%s'%str(int(original_height) + 40) + 
+                         ',location=no,menubar=no' +
+                         ',personalbar=no,toolbar=no,status=no' +
+                         ',scrollbars=yes\')'"><img tal:replace="structure image_tag" /></a>
       </tal:block>
       <tal:block condition="not: original_photo">
         <img tal:replace="structure image_tag" />
