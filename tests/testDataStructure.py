@@ -92,6 +92,12 @@ class DataStructureTests(unittest.TestCase):
             if key == 'f2':
                 self.failIf(ds.hasError('f2'), 'Popitem failed to remove error')
 
+    def test_25_Update(self):
+        ds = DataStructure( {'f1': 'Nice fish', 'f2': 'Value2'})
+        ds.update({'f1': 'Value1', 'f3': 'Value3'})
+        self.failUnless(ds.data == {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'})
+
+
     def test_30_Copy(self):
         """Test copy"""
         ds = DataStructure( {'f1': 'Value1', 'f2': 'Value2', 'f3': 'Value3'}, \
@@ -147,9 +153,6 @@ class DataStructureTests(unittest.TestCase):
         self.failUnless(ds.getModifiedFlags() == ['f1', 'f2', 'f3'])
         ds.clear(clear_modified_flags=1)
         self.failIf(ds.getModifiedFlags())
-
-
-
 
     def test_50_UpdateFromRequest(self):
         """Update from request, with missing values"""

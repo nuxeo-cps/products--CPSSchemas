@@ -2,7 +2,7 @@
 # $Id$
 
 from OrderedDictionary import OrderedDictionary
-from Adapter import AttributeAdapter
+from AttributeStorageAdapter import AttributeStorageAdapterFactory
 
 class Schema(OrderedDictionary):
     """Defines fields used in a document"""
@@ -15,7 +15,7 @@ class Schema(OrderedDictionary):
         self.id = id
         self.title = title
         if not adapter:
-            self._adapter = AttributeAdapter()
+            self._adapter = AttributeStorageAdapterFactory()
         self._namespace = ''
 
     def setAdapter(self, adapter):

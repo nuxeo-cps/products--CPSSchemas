@@ -113,7 +113,7 @@ class DataStructure(UserDict):
             self.setModifiedKeys(dict.keys())
         elif isinstance(dict, type(self.data)):
             self.data.update(dict)
-            self.setModifiedKeys(dict.keys())
+            self.setModifiedFlags(dict.keys())
         else:
             for k, v in dict.items():
                 self.data[k] = v
