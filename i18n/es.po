@@ -1,0 +1,345 @@
+# Álvaro Tejero Cantero <alvaro@antalia.com>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: es-CPSSchemas\n"
+"POT-Creation-Date: 2004-03-04 16:46default\n"
+"PO-Revision-Date: 2004-03-27 20:56+0100\n"
+"Last-Translator: Álvaro Tejero Cantero <alvaro@antalia.com>\n"
+"Language-Team: EspaÃ±ol <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-code: es\n"
+"Language-name: Español\n"
+"Preferred-encodings: utf-8 latin1\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+"X-Generator: KBabel 1.0.2\n"
+
+#    <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
+#            string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
+#: from
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "button_rte"
+msgstr "..."
+
+#    <span>at</span>
+#: from
+#: ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_at"
+msgstr "a"
+
+#    <span>h</span>
+#: from
+#: ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_hour"
+msgstr "h"
+
+#    <a attributes="href preview_id" href="http://url..." target="_blank">
+#           (preview)
+#          </a>
+#: from
+#: ../skins/cps_schemas/widget_attachedfile_render.pt
+#, fuzzy
+msgid "cpsschema_link_preview"
+msgstr "(Versión HTML)"
+
+#    <span>mn</span>
+#: from
+#: ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_minute"
+msgstr "mn"
+
+#    <span>resize</span>
+#: from
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr "y redimensionar: "
+
+#    <label>Change</label>
+#    <label attributes="for string:${radio_name}_change">Change</label>
+#: from
+#: ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_change"
+msgstr "Cambiar"
+
+#    <label>Delete</label>
+#    <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from
+#: ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_delete"
+msgstr "Borrar"
+
+#    <label>Keep</label>
+#    <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
+#: from
+#: ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_keep"
+msgstr "Guardar"
+
+#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#: from
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_none"
+msgstr "Ninguno"
+
+#    <span>cpsschemas_photo_subtitle</span>
+#: from
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr "Pie de figura:"
+
+#    <span>cpsschemas_render_format</span>
+#: from
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_format"
+msgstr "Formato: "
+
+#    <div class="label">cpsschemas_render_position</div>
+#    <span>cpsschemas_render_position</span>
+#: from
+#: ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_position"
+msgstr "Posición: "
+
+#    <h2>cpsschemas_vocabulary_add</h2>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_add"
+msgstr "Añadir un vocabulario"
+
+#    <h2>cpsschemas_vocabulary_available</h2>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_available"
+msgstr "Vocabularios disponibles"
+
+#    <span class="description">cpsschemas_vocabulary_contains
+#      ${voc_entries (tal replace="python:len(keys)")}
+#      entry(ies)</span>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
+msgstr "Este vocabulario contiene ${voc_entries}·entrada(s)"
+
+#    <h2>cpsschemas_vocabulary_delete</h2>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_delete"
+msgstr "Borrar"
+
+#    <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_edit ${voc_id}"
+msgstr "Edición del vocabulario «&nbsp;,${voc_id}&nbsp;»"
+
+#    <h1>cpsschemas_vocabulary_entry_add</h1>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_entry_add"
+msgstr "Añadir una entrada"
+
+#    <th>Id:</th>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_id"
+msgstr "Id:"
+
+#    <th>Key:</th>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_key"
+msgstr "Clave: "
+
+#    <h1>cpsschemas_vocabulary_manage</h1>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_manage"
+msgstr "Gestión de vocabularios"
+
+#    <th>MsgId:</th>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_msgid"
+msgstr "MsgId"
+
+#    <th>Value:</th>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_value"
+msgstr "Valor: "
+
+#    <a attributes="href string: #;
+#                           onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#    <a attributes="href string: #;
+#                           onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from
+#: ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr "Insertar imagen"
+
+#    <em content="err" style="color: red">err</em>
+#: from
+#: ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_textimage_render.pt
+msgid "err"
+msgstr "Error"
+
+msgid "cpsschemas_err_string"
+msgstr "Cadena de caracteres no válida"
+
+msgid "cpsschemas_err_string_too_long"
+msgstr "Cadena de caracteres demasiado larga"
+
+msgid "cpsschemas_err_required"
+msgstr "Campo obligatorio"
+
+msgid "cpsschemas_err_textarea"
+msgstr "Texto no válido"
+
+msgid "cpsschemas_err_select"
+msgstr "Selección no válida"
+
+msgid "cpsschemas_err_multiselect"
+msgstr "Selección múltiple no válida"
+
+msgid "cpsschemas_err_boolean"
+msgstr "Valor lógico no válido"
+
+msgid "cpsschemas_err_int"
+msgstr "Entero no válido"
+
+msgid "cpsschemas_err_date"
+msgstr "Formato de fecha no válido"
+
+msgid "cpsschemas_err_file"
+msgstr "Fichero no válido"
+
+msgid "cpsschemas_err_file_too_big"
+msgstr "Lo sentimos, este fichero es demasiado grande"
+
+msgid "cpsschemas_err_file_empty"
+msgstr "fichero vacío"
+
+msgid "cpsschemas_err_image"
+msgstr "Imagen no válida"
+
+msgid "cpsschemas_err_url"
+msgstr "URL no válida"
+
+msgid "cpsschemas_err_long"
+msgstr "Entero largo no válido"
+
+msgid "cpsschemas_err_long_range"
+msgstr "Entero largo fuera de límites"
+
+msgid "cpsschemas_err_float_positive"
+msgstr "Este número real debe ser positivo"
+
+msgid "cpsschemas_err_float_range"
+msgstr "Número real fuera de límites"
+
+msgid "cpsschemas_err_float"
+msgstr "Número real no válido"
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr "La contraseña y su confirmación no coinciden"
+
+msgid "cpsschemas_err_password_size_min"
+msgstr "Su contraseña es demasiado corta"
+
+msgid "cpsschemas_err_password_lower"
+msgstr "Su contraseña debe contener al menos una minúscula"
+
+msgid "cpsschemas_err_password_upper"
+msgstr "Su contraseña debe contener al menos una mayúscula"
+
+msgid "cpsschemas_err_password_digit"
+msgstr "Su contraseña debe contener al menos una cifra"
+
+msgid "cpsschemas_err_password_extra"
+msgstr "Su contraseña debe contener al menos un carácter especial distinto de letras o cifras"
+
+msgid "cpsschemas_err_identifier"
+msgstr "Identificador no válido"
+
+msgid "cpsschemas_err_email"
+msgstr "Correo-e no válido"
+
+msgid "jscalendar_date_fmt"
+msgstr "d/m/y"
+
+msgid "cpsschemas_rposition_normal"
+msgstr "Anchura de la página"
+
+msgid "cpsschemas_rposition_col_right"
+msgstr "Columna de la derecha"
+
+msgid "cpsschemas_rposition_col_left"
+msgstr "Columna de la izquierda"
+
+msgid "cpsschemas_rposition_left"
+msgstr "A la izquierda"
+
+msgid "cpsschemas_rposition_right"
+msgstr "A la derecha"
+
+msgid "cpsschemas_rposition_center"
+msgstr "En el centro"
+
+msgid "cpsschemas_rformat_text"
+msgstr "Texto"
+
+msgid "cpsschemas_rformat_html"
+msgstr "HTML"
+
+msgid "cpsschemas_rformat_stx"
+msgstr "Texto estructurado Zope"
+
+msgid "cpsschemas_rformat_pre"
+msgstr "HTML preformateado"
+
+msgid "cpsschemas_rformat_original"
+msgstr "Original"
+
+msgid "img_auto_size"
+msgstr "Automático"
+
+msgid "img_icon"
+msgstr "Icono"
+
+msgid "img_xsmall"
+msgstr "Muy pequeña"
+
+msgid "img_small"
+msgstr "Pequeña"
+
+msgid "img_medium"
+msgstr "Media"
+
+msgid "img_large"
+msgstr "Grande"
+
+msgid "img_xlarge"
+msgstr "Muy grande"
+
+msgid "cpsschemas_label_false"
+msgstr "No"
+
+msgid "cpsschemas_label_true"
+msgstr "Sí"
+
+msgid "cpsschemas_label_link_href"
+msgstr "URL"
+
+msgid "cpsschemas_label_link_content"
+msgstr "Nombre del enlace"
+
+msgid "cpsschemas_label_link_title"
+msgstr "Descripción"
+
