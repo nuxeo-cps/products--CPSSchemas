@@ -222,7 +222,6 @@ class DataModel(UserDict):
     #
     def getObject(self):
         """Get the object this DataModel is about."""
-        # XXX used by what ???
         return self._ob
 
     def getProxy(self):
