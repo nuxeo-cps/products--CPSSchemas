@@ -335,7 +335,7 @@ class CPSEmailWidget(CPSStringWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         err, v = self._extractValue(datastructure[widget_id])
-        if not err and not self.email_pat.match(v):
+        if not err and v and not self.email_pat.match(v):
             err = 'cpsschemas_err_email'
         if err:
             datastructure.setError(widget_id, err)
