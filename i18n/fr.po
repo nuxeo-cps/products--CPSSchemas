@@ -1,33 +1,62 @@
+# translation of fr.po to ben
 # Gettext Message File for default.
 # Your Name <your@email>, Year
+# ben <ben@nuxeo.com>, 2003
 msgid ""
 msgstr ""
-"Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-09 13:01default\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Your Name <your@email>\n"
-"Language-Team: Name <email>\n"
+"Project-Id-Version: fr\n"
+"POT-Creation-Date: 2003-09-09 15:29default\n"
+"PO-Revision-Date: 2003-09-09 15:33+0200\n"
+"Last-Translator: ben <ben@nuxeo.com>\n"
+"Language-Team: ben\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-code: LL\n"
 "Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+"X-Generator: KBabel 1.0.1\n"
 
-
-#: from ../skins/cps_schemas/widget_file_render.pt
 #.   <label>Change</label>
-msgid "cpsdoc_label_file_change"
-msgstr ""
-
 #: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschemas_label_file_change"
+msgstr "Changer"
+
 #.   <label>Delete</label>
-msgid "cpsdoc_label_file_delete"
-msgstr ""
-
 #: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschemas_label_file_delete"
+msgstr "Effacer"
+
 #.   <label>Keep</label>
-msgid "cpsdoc_label_file_keep"
-msgstr ""
+#: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschemas_label_file_keep"
+msgstr "Garder"
+
+msgid "cpsschemas_err_string"
+msgstr "Chaîne de caractère invalide"
+
+msgid "cpsschemas_err_required"
+msgstr "Champ obligatoire"
+
+msgid "cpsschemas_err_textarea"
+msgstr "Texte invalide"
+
+msgid "cpsschemas_err_select"
+msgstr "Selection invalide"
+
+msgid "cpsschemas_err_multiselect"
+msgstr "Selection invalide"
+
+msgid "cpsschemas_err_int"
+msgstr "Entier non valide"
+
+msgid "cpsschemas_err_date"
+msgstr "Format de date invalide"
+
+msgid "cpsschemas_err_file"
+msgstr "Fichier invalide"
+
+msgid "cpsschemas_err_image"
+msgstr "Image invalide"
