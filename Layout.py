@@ -38,7 +38,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 
-
 class LayoutContainer(Folder):
     """Layout Tool
 
@@ -313,7 +312,10 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
         Returns the rendered string.
         """
         layout_mode = kw['layout_mode']
-        layout_meth = self.style_prefix + layout_mode
+        style_prefix = kw.get('style_prefix')
+        if not style_prefix:
+            style_prefix = self.style_prefix
+        layout_meth =  style_prefix + layout_mode
         layout_style = getattr(context, layout_meth, None)
         if layout_style is None:
             raise ValueError("No layout method '%s' for layout '%s'" %
