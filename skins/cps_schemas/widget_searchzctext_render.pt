@@ -1,0 +1,25 @@
+<tal:block define="mode options/mode;
+                   ds options/datastructure;
+                   widget_base_id string:${here/getHtmlWidgetId}_;
+                   field_base_id string:${here/getWidgetId}_;">
+  <tal:block repeat="operator here/operators">
+    <div align="right"
+         tal:define="widget_id string:${widget_base_id}${operator};
+                     field_id string:${field_base_id}${operator};">
+      <label tal:attributes="for widget_id"
+             tal:content="string:label_search_operator_${operator}"
+             i18n:translate="">All the words</label>
+      <input type="text" size="28"
+             tal:attributes="id widget_id;
+                             name widget_id;
+                             value ds/?field_id" />
+      <select tal:attributes="name string:${widget_id}_field;">
+        <tal:block repeat="field here/fields">
+          <option tal:attributes="value field"
+                  tal:content="string:label_search_field_${field}"
+                  i18n:translate="">sur la page</option>
+        </tal:block>
+      </select>
+    </div>
+  </tal:block>
+</tal:block>
