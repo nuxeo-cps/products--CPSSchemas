@@ -2,7 +2,8 @@
 <metal:block use-macro="here/content_lib/macros/master">
 
   <metal:block fill-slot="header">
-    <h1 i18n:translate="">Edit <span i18n:name="title">Page Title</span></h1>
+    <h1 i18n:translate="">Edit <span i18n:name="title"
+      tal:content="here/title_or_id">Page Title</span></h1>
     <div metal:use-macro="here/content_lib/macros/byline">By Me</div>
   </metal:block>
 
