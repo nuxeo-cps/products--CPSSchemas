@@ -13,7 +13,7 @@
 <tal:block condition="python: mode == 'edit'" tal:define="img_resize python:1">
 
 <metal:block define-macro="file_title_edit">
-<table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 5px"
+<table cellpadding="0" cellspacing="0" border="0" 
     summary="image alternative text edit" tal:define="name here/getHtmlWidgetId;
                 title_name string:${name}_title;"> 
   <tr>
