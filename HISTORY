@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.24.1 [R1 build 2004/06/18-17:52 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Renamed the preview template -> preview_html so that it doesn't collide with
+  the preview attribute of the image widget.
+- There are now two kinds of preview, an embedded preview and a non-embedded
+  preview, called for users' sake "printable version".
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.24.0 [R1 build 2004/06/16-11:35 by madarche]
 
 Requires:
