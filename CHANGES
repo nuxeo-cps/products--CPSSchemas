@@ -7,6 +7,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - indent error on generic select widget validation
+- #411: write_process_expr for contributors was broken
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
