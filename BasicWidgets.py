@@ -281,7 +281,7 @@ class CPSURLWidget(CPSStringWidget):
     # XXX should find a better one or check for invalid may be ?
     # see test_url_nok_5
     url_pat = compile(
-        r'^((http://)|/)?((\w|\~|\#|=|\.\.)[\:\.\-\/\?\=\&\+%]?)+$')
+        r'^((http://)|/)?((\w|\~|\#|=|\.\.|\-)[\:\.\-\/\?\=\&\+%]?)+$')
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
