@@ -123,7 +123,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     hidden_if_expression = None
 
-    _properties_post_process_split = (
+    _properties_post_process_tales = (
         ('hidden_if_expression_str', 'hidden_if_expression'),
         )
 
