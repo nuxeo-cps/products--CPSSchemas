@@ -1,6 +1,7 @@
 Requires:
 ~~~~~~~~~
--
+- CPSDefault > 3.21.0-2 for internal link widget
+
 New features:
 ~~~~~~~~~~~~~
 -
