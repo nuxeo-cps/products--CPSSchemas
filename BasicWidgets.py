@@ -65,7 +65,8 @@ def renderHtmlTag(tagname, **kw):
     for key, value in kw.items():
         if value == None:
             value = key
-        attrs.append('%s="%s"' % (key, escape(str(value))))
+        if value != '':
+            attrs.append('%s="%s"' % (key, escape(str(value))))
     res = '<%s %s>' % (tagname, ' '.join(attrs))
     if contents is not None:
         res += contents + '</%s>' % tagname
@@ -493,7 +494,6 @@ class CPSFileWidget(CPSWidget):
         """Update datamodel from user data in datastructure."""
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
-
         choice = datastructure[widget_id+'_choice']
         if choice == 'keep':
             # XXX check SESSION
@@ -510,6 +510,7 @@ class CPSFileWidget(CPSWidget):
                 datamodel[field_id] = file
                 ok = 1
             else:
+                LOG('CPSFileWidget', DEBUG, 'unvalidate change set %s' % `file`)
                 datastructure.setError(widget_id, "Bad file received (%s)" % repr(file))
                 ok = 0
         if ok:
@@ -582,6 +583,118 @@ InitializeClass(CPSFileWidgetType)
 
 ##################################################
 
+class CPSImageWidget(CPSWidget):
+    """Image widget."""
+    meta_type = "CPS Image Widget"
+
+    _properties = CPSWidget._properties + (
+        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
+         'label': 'Deletable'},
+        )
+    deletable = 1
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        datastructure[widget_id+'_choice'] = '' # make update from request work
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+
+        choice = datastructure[widget_id+'_choice']
+        if choice == 'keep':
+            # XXX check SESSION
+            ok = 1
+        elif choice == 'delete':
+            datamodel[field_id] = None
+            ok = 1
+        else: # 'change'
+            file = datastructure[widget_id]
+            if _isinstance(file, FileUpload):
+                fileid, filetitle = cookId('', '', file)
+                file = File(fileid, filetitle, file)
+                LOG('CPSImageWidget', DEBUG, 'validate change set %s' % `file`)
+                datamodel[field_id] = file
+                ok = 1
+            else:
+                LOG('CPSImageWidget', DEBUG, 'unvalidate change set %s' % `file`)
+                datastructure.setError(widget_id, "Bad file received (%s)" % repr(file))
+                ok = 0
+        if ok:
+            self.prepare(datastructure, datamodel)
+        return ok
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        LOG('CPSImageWidget', DEBUG, self.getWidgetId())
+        if hasattr(aq_base(value), 'getId'):
+            current = value.getId()
+        else:
+            current = '-'
+        if mode == 'view':
+            src = self.getWidgetId() # XXX does not work in a document rendering
+            return renderHtmlTag('img',
+                                 scr = src,
+                                 contents = current,
+                                 css_class = self.css_class,
+                                 )
+        elif mode == 'edit':
+            html_widget_id = self.getHtmlWidgetId()
+            # XXX urgh put this in a macro somewhere
+            res = """
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td>
+        <input type="radio" name="%(radio)s" value="keep" checked>
+      </td>
+      <td valign="middle" colspan="2">
+        Keep %(current)s
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="radio" name="%(radio)s" value="change">
+      </td>
+      <td valign="middle">
+        Change:
+      </td>
+      <td>
+        <input type="file" name="%(name)s">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="radio" name="%(radio)s" value="delete">
+      </td>
+      <td valign="middle" colspan="2">
+        Delete
+      </td>
+    </tr>
+  </table>
+"""
+            res = res % {'radio': html_widget_id+'_choice',
+                         'name': html_widget_id,
+                         'current': escape(current),
+                         }
+            return res
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSImageWidget)
+
+
+class CPSImageWidgetType(CPSWidgetType):
+    """Image widget type."""
+    meta_type = "CPS Image Widget Type"
+    cls = CPSImageWidget
+
+InitializeClass(CPSImageWidgetType)
+
+##################################################
+
 #
 # Register widget types.
 #
@@ -592,3 +705,4 @@ WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
+WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
