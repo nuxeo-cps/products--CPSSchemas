@@ -174,6 +174,8 @@ class CPSMethodWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         if len(self.fields):
             datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+        else:
+            datastructure[self.getWidgetId()] = None
         
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -185,7 +187,8 @@ class CPSMethodWidget(CPSWidget):
             datastructure[widget_id] = v
         else:
             datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = v
+            if len(self.fields):
+                datamodel[self.fields[0]] = v
 
         return not err
 
@@ -1067,6 +1070,8 @@ class CPSMultiSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
+        LOG('MultiSelect Widget.render', DEBUG,
+            "datastructure = %s, datastructure.getDataModel() = %s" % (datastructure, datastructure.getDataModel()))
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
