@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- fix: zoomed mimetype icon for attached file is ugly
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
