@@ -1313,10 +1313,15 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
+        res = ''
         datamodel = datastructure.getDataModel()
         proxy = datamodel.getProxy()
+        if proxy is None:
+            return res
         proxy_url = proxy.absolute_url()
         languages = proxy.Languages()
+        if len(languages) <= 1:
+            return res
         current_language = datamodel[self.fields[0]]
         Localizer = getToolByName(self, 'Localizer')
         if Localizer is not None:
@@ -1325,7 +1330,6 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
             def mcat(msgid):
                 return msgid
 
-        res = ''
         for language in languages:
             language_title = mcat('label_language_%s'% language).encode(
                 'ISO-8859-15', 'ignore')
