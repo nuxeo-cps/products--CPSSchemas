@@ -92,27 +92,27 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     A layout describes how to render a set of widgets.
 
     A layout can be rendered in several layout_modes (view, edit,
-    create, editlayout, etc.). The widgets rendered themselves can only
+    create, editlayout, etc.). The rendered widgets themselves can only
     have two mode: 'view' and 'edit'. So the layout has to choose the
     widget modes depending on the layout_mode and various information
     about the widgets and their fields, notably read-only mode and ACLs.
 
     Layout rendering occurs with the following step:
 
-    - prepareLayoutWidgets(): updates datastructure from field values,
+      - prepareLayoutWidgets(): updates datastructure from field values,
 
-    - optional: manual updating of datastructure from request,
+      - (optional) manual updating of datastructure from request,
 
-    - computeLayoutStructure(): computes layout_structure,
+      - computeLayoutStructure(): computes layout_structure,
 
-    - optional: validateLayoutStructure(): validates and updates
-      datamodel, or sets errors in datastructure,
+      - (optional) validateLayoutStructure(): validates and updates
+        datamodel, or sets errors in datastructure,
 
-    - renderLayoutStructure(): renders each widget into
-      layout_structure,
+      - renderLayoutStructure(): renders each widget into
+        layout_structure,
 
-    - renderLayoutStyle(): returns the final rendering using the style
-      method.
+      - renderLayoutStyle(): returns the final rendering using the style
+        method.
     """
 
     _properties = (
