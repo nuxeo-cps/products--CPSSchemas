@@ -1608,14 +1608,21 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
 
     def getEntriesHtml(self, entries, vocabulary, translated=False):
         entries_html_list = []
+        if translated:
+            cpsmcat = getToolByName(self, 'translation_service', None)
+            if cpsmcat is None:
+                translated = False
         for subject_name in entries:
             if translated:
-                entries_html_list.append(self.getSubjectSearchLink(subject_name,
-                                                                   subject_name))
+                subject_label = cpsmcat(
+                    vocabulary.getMsgid(subject_name, subject_name),
+                    subject_name)
+                entries_html_list.append(self.getSubjectSearchLink(
+                    subject_name, subject_label))
             else:
-                subject_label = vocabulary.getMsgid(subject_name, subject_name)
-                entries_html_list.append(self.getSubjectSearchLink(subject_name,
-                                                                   subject_label))
+                entries_html_list.append(
+                    self.getSubjectSearchLink(subject_name,
+                                              subject_name))
         return ', '.join(entries_html_list)
 
     def getSubjectSearchLink(self, subject_name, subject_label):
