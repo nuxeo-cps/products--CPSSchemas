@@ -31,6 +31,8 @@ from OFS.Image import Image
 
 from Products.CPSSchemas.Field import CPSField, FieldRegistry
 from Products.CPSSchemas.Field import propertiesWithType
+from Products.CPSSchemas.FileUtils import convertFileToHtml
+from Products.CPSSchemas.FileUtils import convertFileToText
 
 
 def _isinstance(ob, cls):
@@ -175,13 +177,16 @@ class CPSFileField(CPSField):
 
     def computeDependantFields(self, schemas, data):
         """Compute dependant fields."""
-        # XXX dummy implementation
+        field_id = self.getFieldId()
+        value = data[field_id] # May be None.
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
         if html_field_id is not None:
-            data[html_field_id] = 'html...' # XXX
+            html = convertFileToHtml(value)
+            data[html_field_id] = html
         text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:
-            data[text_field_id] = 'text...' # XXX
+            text = convertFileToText(value)
+            data[text_field_id] = text
 
     def validate(self, value):
         if not value:
