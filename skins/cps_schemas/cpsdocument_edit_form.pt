@@ -8,8 +8,8 @@
   </metal:block>
 
   <metal:block fill-slot="main">
-      <div tal:replace="structure
-    python:doc.renderEdit(request=edit_request, proxy=here)" />
+    <div tal:replace="structure
+      python:doc.renderEdit(request=edit_request, proxy=here)" />
   </metal:block>
 
 </metal:block>
