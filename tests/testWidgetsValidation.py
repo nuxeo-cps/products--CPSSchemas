@@ -273,6 +273,10 @@ class TestWidgetsValidation(unittest.TestCase):
                                       'r-12@1.gouv')
         self.failUnless(ret, err)
 
+    def test_email_ok_4(self):
+        ret, err, ds = self._validate('Email', {}, 'f+bar@be.bo.ba')
+        self.failUnless(ret, err)
+
     def test_email_nok_1(self):
         ret, err, ds = self._validate('Email', {}, 'root')
         self.failUnless(err == 'cpsschemas_err_email')
