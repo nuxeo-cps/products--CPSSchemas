@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-06 16:54default\n"
+"POT-Creation-Date: 2004-02-26 12:52default\n"
 "PO-Revision-Date: 2004-02-05 11:33+0100\n"
 "Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
 "Language-Team: francais <fr@li.org>\n"
@@ -163,6 +163,15 @@ msgstr "MsgId&nbsp;:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Waarde&nbsp;:"
 
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
@@ -248,6 +257,10 @@ msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
 #, fuzzy
 msgid "cpsschemas_err_password_extra"
 msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_identifier"
+msgstr "Invalid int "
 
 msgid "cpsschemas_err_email"
 msgstr "Invalide Email"

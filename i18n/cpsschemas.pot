@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-02-06 16:54default\n"
+"POT-Creation-Date: 2004-02-26 12:52default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -162,6 +162,15 @@ msgstr ""
 msgid "cpsschemas_vocabulary_value"
 msgstr ""
 
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
@@ -241,6 +250,9 @@ msgid "cpsschemas_err_password_digit"
 msgstr ""
 
 msgid "cpsschemas_err_password_extra"
+msgstr ""
+
+msgid "cpsschemas_err_identifier"
 msgstr ""
 
 msgid "cpsschemas_err_email"

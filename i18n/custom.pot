@@ -91,6 +91,9 @@ msgstr ""
 msgid "cpsschemas_err_password_extra"
 msgstr ""
 
+msgid "cpsschemas_err_identifier"
+msgstr ""
+
 msgid "cpsschemas_err_email"
 msgstr ""
 

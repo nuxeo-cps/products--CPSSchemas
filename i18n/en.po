@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-06 16:54default\n"
-"PO-Revision-Date: 2004-02-05 11:31+0100\n"
-"Last-Translator: emmanuel <epietriga@nuxeo.com>\n"
-"Language-Team: francais <fr@li.org>\n"
+"POT-Creation-Date: 2004-02-26 12:52default\n"
+"PO-Revision-Date: 2004-02-26 12:53+0100\n"
+"Last-Translator: ben <ben@nuxeo.com>\n"
+"Language-Team: ben\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.0.2\n"
+"X-Generator: KBabel 1.0.1\n"
 
 #.   <input value="button_edit" type="submit">
 #.         </input>
@@ -163,6 +163,15 @@ msgstr "MsgId:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Value:"
 
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
@@ -245,6 +254,9 @@ msgid "cpsschemas_err_password_extra"
 msgstr ""
 "Sorry your password must contain a special character other than a letter or "
 "a digit"
+
+msgid "cpsschemas_err_identifier"
+msgstr "Invalid identifier"
 
 msgid "cpsschemas_err_email"
 msgstr "Invalid Email"
@@ -386,3 +398,4 @@ msgstr "Description"
 
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Position :"
+
