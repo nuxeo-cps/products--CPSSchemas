@@ -17,7 +17,6 @@
 # 02111-1307, USA.
 #
 # $Id$
-# $Id$
 """Layout
 
 A layout describes how to render the basic fields of a schema.
@@ -84,9 +83,6 @@ class HtmlLayout(BasicLayout):
 
 
 ######################################################################
-######################################################################
-######################################################################
-
 
 class LayoutContainer(Folder):
     """Layout Tool

@@ -62,7 +62,7 @@ def renderHtmlTag(tagname, **kw):
         contents = None
     attrs = []
     for key, value in kw.items():
-        if value == None:
+        if value is None:
             value = key
         if value != '':
             attrs.append('%s="%s"' % (key, escape(str(value))))

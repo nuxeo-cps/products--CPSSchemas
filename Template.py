@@ -78,14 +78,14 @@ class Template:
         """
         if not validation_method:
             self._validation_method = None
-            return None
+            return
 
         if validation_method is _fixed_validation:
             self._validation_method = '_fixed'
-            return None
+            return
 
         argnames = inspect.getargspec(validation_method)[0]
-        if argnames != [template_layout, document_layout]:
+        if argnames != ["template_layout", "document_layout"]:
             raise TypeError(
                 'The supplied method does not have the correct signature')
         self._validation_method = validation_method

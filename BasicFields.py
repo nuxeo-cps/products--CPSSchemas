@@ -22,7 +22,7 @@ Definition of standard field types.
 """
 
 from zLOG import LOG, DEBUG
-from types import IntType, StringType
+from types import IntType, StringType, ListType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
