@@ -6,6 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
+- incorrect content type for attachement make portal transform 
+  unable to extract text
 - 197: FileWidget download link is badly cached
 - image title display full path of src image unde IE
 - Epoz editor don't use cps css
