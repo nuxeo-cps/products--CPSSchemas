@@ -1328,9 +1328,12 @@ class CPSDateWidget(CPSWidget):
          'label': 'View format'},
         {'id': 'view_format_none', 'type': 'string', 'mode': 'w',
          'label': 'View format empty'},
+        {'id': 'use_javascript', 'type': 'boolean', 'mode': 'w',
+         'label': 'Use Javascript'},
         )
     view_format = "%d/%m/%Y" # XXX unused for now
     view_format_none = "-"
+    use_javascript = 0
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -1378,6 +1381,25 @@ class CPSDateWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render this widget from the datastructure or datamodel."""
+        if self.use_javascript:
+            js_onKeyPress = """if (navigator.appName == 'Netscape') 
+                { var key = event.which } else { var key = event.keyCode };
+                if ( key < 32 ) { return true; }
+                if ( key < 48 || key > 57 ) { return false; }"""
+
+            js_onKeyUp = """if (navigator.appName == 'Netscape') 
+                { var key = event.which } else { var key = event.keyCode };
+                if ( key < 32 ) { return true; }
+                if ( this.value > %(max_value)s ) { return false};
+                if ( this.value >= %(low_trigger)s ) { 
+                    form.%(next_widget)s.focus() }
+                if ( this.value.length >= %(max_size)s) { 
+                    form.%(next_widget)s.focus() }
+                 """
+        else:
+            js_onKeyPress = ""
+            js_onKeyUp = ""
+                                             
         widget_id = self.getWidgetId()
         d = datastructure[widget_id+'_d']
         m = datastructure[widget_id+'_m']
@@ -1395,13 +1417,27 @@ class CPSDateWidget(CPSWidget):
                                  name=html_widget_id+'_d',
                                  value=d,
                                  size=2,
-                                 maxlength=2)
+                                 maxlength=2,
+                                 onKeyPress=js_onKeyPress,
+                                 onKeyUp=js_onKeyUp % {
+                                    'max_value': '21',
+                                    'max_size': '2',
+                                    'low_trigger': '4',
+                                    'next_widget': 'widget__swamBirthday_m',
+                                 })
             mtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_m',
                                  value=m,
                                  size=2,
-                                 maxlength=2)
+                                 maxlength=2,
+                                 onKeyPress=js_onKeyPress,
+                                 onKeyUp=js_onKeyUp % {
+                                    'max_value': '12',
+                                    'max_size': '2',
+                                    'low_trigger': '2',
+                                    'next_widget': 'widget__swamBirthday_y',
+                                 })
             ytag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_y',
