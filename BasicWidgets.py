@@ -1070,8 +1070,6 @@ class CPSMultiSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
-        LOG('MultiSelect Widget.render', DEBUG,
-            "datastructure = %s, datastructure.getDataModel() = %s" % (datastructure, datastructure.getDataModel()))
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
