@@ -1248,20 +1248,11 @@ class CPSImageWidget(CPSWidget):
                         if size[0] and size[1]:
                             try:
                                 img = PIL.Image.open(file)
-                                # keep ratio
-                                x, y = cur_size = img.size
-                                if x != size[0]:
-                                    y = y * size[0] / x;
-                                    x = size[0]
-                                if y > size[1]:
-                                    x = x * size[1] / y;
-                                    y = size[1]
-                                if (x, y) != cur_size:
-                                    img = img.resize((x, y),
-                                                     PIL.Image.ANTIALIAS)
-                                    file.seek(0)
-                                    img.save(file,
-                                             format=mimetype.extensions[0])
+                                img.thumbnail(size,
+                                              resample=PIL.Image.ANTIALIAS)
+                                file.seek(0)
+                                img.save(file,
+                                         format=mimetype.extensions[0])
                             except (NameError, IOError, ValueError):
                                 LOG('CPSImageWidget', PROBLEM,
                                     "Failed to resize file %s keep original" \
