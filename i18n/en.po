@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-09-05 17:07default\n"
-"PO-Revision-Date: 2003-09-05 17:08+0200\n"
+"POT-Creation-Date: 2003-09-05 17:18default\n"
+"PO-Revision-Date: 2003-09-05 17:19+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -101,6 +101,9 @@ msgstr "invalid file"
 
 msgid "cpsdoc_err_image"
 msgstr "invalid image"
+
+msgid "cpsdoc_err_empty"
+msgstr "Field required"
 
 msgid "cpsdoc_News_newsdate_title"
 msgstr "Date :"

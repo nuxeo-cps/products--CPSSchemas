@@ -49,6 +49,9 @@ msgstr ""
 msgid "cpsdoc_err_image"
 msgstr ""
 
+msgid "cpsdoc_err_empty"
+msgstr ""
+
 
 # News demo
 msgid "cpsdoc_News_newsdate_title"

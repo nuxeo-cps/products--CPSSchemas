@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-05 17:07default\n"
+"POT-Creation-Date: 2003-09-05 17:18default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -101,6 +101,9 @@ msgid "cpsdoc_err_file"
 msgstr ""
 
 msgid "cpsdoc_err_image"
+msgstr ""
+
+msgid "cpsdoc_err_empty"
 msgstr ""
 
 # News demo
