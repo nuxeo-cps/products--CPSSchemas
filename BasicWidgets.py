@@ -125,12 +125,12 @@ class CPSStringWidget(CPSWidget):
     field_types = ('CPS String Field',)
 
     display_width = 20
-    display_maxwidth = 0
+    size_max = 0
     _properties = CPSWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
-        {'id': 'display_maxwidth', 'type': 'int', 'mode': 'w',
-         'label': 'Maximum input'},
+        {'id': 'size_max', 'type': 'int', 'mode': 'w',
+         'label': 'Maximum input width'},
         )
 
     def prepare(self, datastructure):
@@ -142,18 +142,25 @@ class CPSStringWidget(CPSWidget):
         """Update datamodel from user data in datastructure."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        err = 0
         try:
             v = str(value).strip()
         except ValueError:
-            datastructure.setError(widget_id, "cpsschemas_err_string")
-            return 0
-        if self.is_required and not v:
-            datastructure[widget_id] = ''
-            datastructure.setError(widget_id, "cpsschemas_err_required")
-            return 0
-        datamodel = datastructure.getDataModel()
-        datamodel[self.fields[0]] = v
-        return 1
+            err = 'cpsschemas_err_string'
+        else:
+            if self.is_required and not v:
+                datastructure[widget_id] = ''
+                err = 'cpsschemas_err_required'
+            elif self.size_max and len(v) > self.size_max:
+                err = 'cpsschemas_err_string_too_long'
+
+        if err:
+            datastructure.setError(widget_id, err)
+        else:
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[0]] = v
+
+        return not err
 
     def render(self, mode, datastructure, OLDdatamodel=None):
         """Render this widget from the datastructure or datamodel."""
@@ -166,8 +173,8 @@ class CPSStringWidget(CPSWidget):
                   'value': value,
                   'size': self.display_width,
                   }
-            if self.display_maxwidth:
-                kw['maxlength'] = self.display_maxwidth
+            if self.size_max:
+                kw['maxlength'] = self.size_max
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
@@ -200,8 +207,8 @@ class CPSPasswordWidget(CPSStringWidget):
                   'value': value,
                   'size': self.display_width,
                   }
-            if self.display_maxwidth:
-                kw['maxlength'] = self.display_maxwidth
+            if self.size_max:
+                kw['maxlength'] = self.size_max
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
