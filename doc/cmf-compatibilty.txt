@@ -7,6 +7,8 @@ CPSSchemas works just fine within a 'stock' CMF instance.
 CPSSchemas is a framework. If you're looking for 'out of the box' content
 types install CPSDocument on your CMF. (same dependencies as below)
 
+Actually tested with CMF-1.4.7
+
 DEPENDENCIES :
 ---------------
 
