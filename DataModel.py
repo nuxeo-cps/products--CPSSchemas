@@ -138,10 +138,17 @@ class DataModel(UserDict):
             lang = None
         ob = proxy.getEditableContent(lang=lang)
         if ob is not old_ob:
-            # Switch to the new object for the DataModel and the adapters.
-            self._ob = ob
-            for adapter in self._adapters:
-                adapter.setContextObject(ob)
+            self._setObject(ob)
+
+    def _setObject(self, ob):
+        """Set the object this datamodel is about.
+
+        Used when a datamodel is switched to a new editable content,
+        or to a newly created object.
+        """
+        self._ob = ob
+        for adapter in self._adapters:
+            adapter.setContextObject(ob)
 
     def _commit(self, check_perms=1):
         """Commit modified data into object.
