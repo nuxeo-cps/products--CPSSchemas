@@ -97,6 +97,12 @@ factory_type_information = (
                   'permissions': (None,),
                   'visible': 0,
                   },
+                 {'id': 'issearchabledocument',
+                  'name': 'issearchabledocument',
+                  'action': 'document',
+                  'permissions': (None,),
+                  'visible': 0,
+                  },
                  )
      },
     )
