@@ -85,7 +85,7 @@
 
     <metal:block define-macro="file_edit">
 
-      <ul class="noBullet"
+      <ul class="fileChoice"
           tal:define="name here/getHtmlWidgetId;
                       radio_name string:${name}_choice;">
         <li>
