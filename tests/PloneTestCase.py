@@ -11,12 +11,9 @@ ZopeTestCase.installProduct('CMFCore', quiet=1)
 ZopeTestCase.installProduct('CMFDefault', quiet=1)
 ZopeTestCase.installProduct('CMFTopic', quiet=1)
 ZopeTestCase.installProduct('DCWorkflow', quiet=1)
-ZopeTestCase.installProduct('Localizer', quiet=1)
 ZopeTestCase.installProduct('MailHost', quiet=1)
-ZopeTestCase.installProduct('TranslationService', quiet=1)
 ZopeTestCase.installProduct('SiteAccess', quiet=1)
 ZopeTestCase.installProduct('CPSSchemas', quiet=1)
-ZopeTestCase.installProduct('PortalTransforms', quiet=1)
 ZopeTestCase.installProduct('Epoz', quiet=1)
 ZopeTestCase.installProduct('CMFPlone', quiet=1)
 
@@ -24,71 +21,6 @@ from AccessControl.SecurityManagement \
     import newSecurityManager, noSecurityManager
 
 import time
-
-# The folowing are patches needed because Localizer doesn't work
-# well within ZTC
-
-# This one is needed by ProxyTool.
-def get_selected_language(self):
-    """ """
-    return self._default_language
-
-from Products.Localizer.Localizer import Localizer
-Localizer.get_selected_language = get_selected_language
-
-# Dummy portal_catalog.
-
-from OFS.SimpleItem import SimpleItem
-class DummyTranslationService(SimpleItem):
-    meta_type = 'Translation Service'
-    id = 'translation_service'
-    def translate(self, domain, msgid, *args, **kw):
-        return msgid
-
-    def getDomainInfo(self):
-        return [(None, 'Localizer/default')]
-
-    def manage_addDomainInfo(self, domain, path, REQUEST=None, **kw):
-        pass
-
-# Dummy MessageCatalog
-class DummyMessageCatalog:
-    def __call__(self, message, *args, **kw):
-        return message
-
-    def get_selected_language(self):
-        "xxx"
-        return 'fr'
-
-
-    def get_languages(self):
-        return ['en', 'fr']
-
-    def manage_import(self, *args, **kw):
-        pass
-
-    def wl_isLocked(self):
-        return None # = False
-
-
-from StringIO import StringIO
-from Products.Localizer import LocalizerStringIO
-from types import UnicodeType
-# Un-patch LocalizerStringIO
-def LocalizerStringIO_write(self, s):
-    StringIO.write(self, s)
-# Hack around Unicode problem
-def LocalizerStringIO_getvalue(self):
-    if self.buflist:
-        for buf in self.buflist:
-            if type(buf) == UnicodeType:
-                self.buf += buf.encode('latin-1')
-            else:
-                self.buf += buf
-        self.buflist = []
-    return self.buf
-LocalizerStringIO.write = LocalizerStringIO_write
-LocalizerStringIO.getvalue = LocalizerStringIO_getvalue
 
 class PloneTestCase(ZopeTestCase.PortalTestCase):
 
@@ -136,8 +68,6 @@ class PloneInstaller:
         self.addUser()
         self.login()
         self.addPortal(portal_id)
-        self.installLocalizer()
-        self.fixupTranslationServices(portal_id)
         self.logout()
 
     def addUser(self):
@@ -152,54 +82,6 @@ class PloneInstaller:
     def addPortal(self, portal_id):
         factory = self.app.manage_addProduct['CMFDefault']
         factory.manage_addCMFSite(portal_id)
-
-    def installLocalizer(self):
-        """ Install Localizer and Translation service for the tests
-
-        Mandatory products for the tests and the component right now.
-        """
-
-        # Localizer
-        if 'Localizer' not in self.app.portal.objectIds():
-            languages = ('en',)
-            self.app.portal.manage_addProduct['Localizer'].manage_addLocalizer(
-                title='',
-                languages=languages)
-
-        localizer = self.app.portal.Localizer
-        catalog_id = 'default'
-        title = 'Default messages'
-
-        # Default MessageCatalog
-        if catalog_id not in localizer.objectIds():
-            languages = localizer.get_supported_languages()
-            localizer.manage_addProduct['Localizer'].manage_addMessageCatalog(
-                id=catalog_id,
-                title=title,
-                languages=languages)
-
-        if catalog_id.lower() != 'default':
-            translation_service = self.app.portal.translation_service
-            domains = [info[0] for info in translation_service.getDomainInfo()]
-            if not catalog_id in domains:
-                translation_service.manage_addDomainInfo(catalog_id,
-                    'Localizer/' + catalog_id)
-
-        # translation_service
-        if 'translation_service' not in self.app.portal.objectIds():
-            self.app.portal.manage_addProduct[
-                'TranslationService'].addPlacefulTranslationService(
-                id='translation_service')
-            translation_service = self.app.portal.translation_service
-            translation_service.manage_setDomainInfo(path_0='Localizer/default')
-
-    # Change translation_service to DummyTranslationService
-    def fixupTranslationServices(self, portal_id):
-        portal = getattr(self.app, portal_id)
-        portal.translation_service = DummyTranslationService()
-        localizer = portal.Localizer
-        for domain in localizer.objectIds():
-            setattr(localizer, domain, DummyMessageCatalog())
 
     def logout(self):
         noSecurityManager()
