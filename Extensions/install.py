@@ -110,6 +110,10 @@ def install(self):
             'type': 'CPS String Widget Type',
             'data': {},
             },
+        'Password Widget': {
+            'type': 'CPS Password Widget Type',
+            'data': {},
+            },
         'TextArea Widget': {
             'type': 'CPS TextArea Widget Type',
             'data': {},
