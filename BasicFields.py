@@ -124,14 +124,12 @@ class CPSDateTimeField(CPSField):
     """DateTime field."""
     meta_type = "CPS DateTime Field"
     default = ''
-    allow_none = 1
 
     def getDefault(self):
         """Get the default datetime."""
         default = self.default
-        if self.allow_none:
-            if not default or default in ('None', 'none'):
-                return None
+        if not default or default in ('None', 'none'):
+            return None
         try:
             return DateTime(default)
         except (ValueError, TypeError, DateTime.DateTimeError,
@@ -139,7 +137,7 @@ class CPSDateTimeField(CPSField):
             return DateTime('1970-01-01')
 
     def validate(self, value):
-        if self.allow_none and not value:
+        if not value:
             return None
         if isinstance(value, DateTime):
             return value
