@@ -50,6 +50,9 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 
+from Products.CPSSchemas.Field import ReadAccessError
+
+
 class ValidationError(Exception):
     """Validation error during field storage."""
     pass
@@ -126,7 +129,10 @@ class DataModel(UserDict):
         return self.data[key]
 
     def get(self, key, failobj=None):
-        self.checkReadAccess(key)
+        try:
+            self.checkReadAccess(key)
+        except ReadAccessError:
+            return failobj
         return self.data.get(key, failobj)
 
     def items(self):
