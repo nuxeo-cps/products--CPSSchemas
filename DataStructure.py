@@ -51,26 +51,31 @@ class DataStructure(UserDict):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
-    def __init__(self, data={}, errors={}, datamodel=None):
+    def __init__(self, data={}, errors={}, error_mappings={}, datamodel=None):
         self.data = {}
         self.data.update(data)
         self.errors = {}
         self.errors.update(errors)
+        self.error_mappings = {}
+        self.error_mappings.update(errors)
         self.datamodel = datamodel
 
     # Override standard dictionary stuff:
     def clear(self):
         self.data.clear()
         self.errors.clear()
+        self.error_mappings.clear()
 
     def __delitem__(self, key):
         del self.data[key]
         if self.errors.has_key(key):
             del self.errors[key]
+        if self.error_mappings.has_key(key):
+            del self.error_mappings[key]
 
     def copy(self):
         if self.__class__ is DataStructure:
-            return DataStructure(self.data, self.errors)
+            return DataStructure(self.data, self.errors, self.error_mappings)
         # Some kind of subclass. Just return a dict with data.
         # If more is needed, override copy() in the subclass.
         return self.data.copy()
@@ -79,6 +84,8 @@ class DataStructure(UserDict):
         key, val = self.data.popitem()
         if self.errors.has_key(key):
             del self.errors[key]
+        if self.error_mappings.has_key(key):
+            del self.error_mappings[key]
         return key, val
 
     def update(self, dict):
