@@ -3,7 +3,7 @@
                         value request/value|string:;
                         label_edit request/label_edit|string:;
                         rte_value request/rte_value|nothing;">
-<metal:body use-macro="here/main_template/macros/master">
+<metal:body use-macro="here/main_template_popup/macros/master">
 <metal:headslot fill-slot="head_slot" tal:condition="rte_value">
  <script type="text/javascript"
   tal:define="js_rte_value python:here.encodeJsString(rte_value)"
