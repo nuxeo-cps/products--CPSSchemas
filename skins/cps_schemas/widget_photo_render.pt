@@ -1,54 +1,65 @@
 <tal:block define="mode options/mode;
-                   id here/getWidgetId;
-                   value_name here/getHtmlWidgetId;
-                   current_name options/current_name;
-                   current_title options/current_title;
-                   content_url options/content_url;
-                   image_tag options/image_tag;
-                   image_width options/width;
-                   empty_file options/empty_file;
-                   mimetype options/mimetype;
-                   subtitle options/subtitle;
-                   rposition options/render_position;
-                   configurable options/configurable;
-                   last_modified options/last_modified;
-                  ">
-<tal:block condition="python: mode == 'view' and current_name and current_name != '-'">
-  <div tal:attributes="class python:test(rposition == 'right', 'dright',
-                                        test(rposition == 'center',
-                                             'dcenter', 'dleft'))">
-    <img tal:replace="structure image_tag" />
-    <div tal:condition="subtitle"
-         style="width: 100px;" tal:attributes="style python:'width: %spx;;' % image_width">
-      <small tal:content="subtitle" />
+  id here/getWidgetId;
+  value_name here/getHtmlWidgetId;
+  fields here/fields;
+  current_name options/current_name;
+  current_title options/current_title;
+  empty_file options/empty_file;
+  mimetype options/mimetype;
+  size options/size;
+  content_url options/content_url;
+  image_tag options/image_tag;
+  image_width options/width;
+  subtitle options/subtitle;
+  rposition options/render_position;
+  configurable options/configurable;
+  last_modified options/last_modified;
+  ">
+  <tal:block condition="python: mode == 'view' and not empty_file">
+    <div tal:attributes="class python:test(rposition == 'right', 'dright',
+                                      test(rposition == 'center', 'dcenter', 'dleft'))">
+      <img tal:replace="structure image_tag" />
+      <div tal:condition="subtitle"
+           style="width: 100px;"
+           tal:attributes="style python:'width: %spx;;' % image_width">
+        <small tal:content="subtitle" />
+      </div>
     </div>
-  </div>
-</tal:block>
-<tal:block condition="python: mode == 'edit'">
-  <metal:block use-macro="here/widget_image_render/macros/file_title_edit" />
-  <img tal:condition="python:current_name != '-'"
-       tal:replace="structure image_tag" />
+  </tal:block>
 
-  <metal:block use-macro="here/widget_image_render/macros/file_edit"
-/>
-  <table summary="photo layout">
-    <tr><td tal:condition="python: configurable.find('position')>=0">
-   <div class="label" i18n:translate="">cpsschemas_render_position</div>
-   <div class="field">
-   <select tal:attributes="name string:${value_name}_rposition">
-     <option tal:repeat="op here/all_render_positions"
-       tal:attributes="selected python:op == rposition;
-                       value op"
-       tal:content="string:cpsschemas_rposition_${op}" i18n:translate="" />
-   </select>
-   </div>
-  </td><td>
-  <div class="label">
-    <span i18n:translate="">cpsschemas_photo_subtitle</span></div>
-  <div class="field">
-    <input type="text" size="30"
-      tal:attributes="name string:${value_name}_subtitle;
-                      value subtitle" />
-  </td></tr></table>
-</tal:block>
+  <tal:block condition="python: mode == 'edit'">
+    <metal:block use-macro="here/widget_image_render/macros/image_title_edit" />
+
+    <img tal:condition="python: not empty_file"
+      tal:replace="structure image_tag" />
+
+    <metal:block use-macro="here/widget_image_render/macros/image_edit" />
+
+    <tal:block condition="python:len(fields) > 2 and configurable.find('position')>=0">
+      <p tal:define="name here/getHtmlWidgetId;
+                     title_name string:${name}_title;">
+        <span i18n:translate="cpsschemas_render_position">
+          Render position
+        </span>
+        <select tal:attributes="name string:${value_name}_rposition">
+          <option tal:repeat="op here/all_render_positions"
+            tal:attributes="selected python:op == rposition;
+                            value op"
+            tal:content="string:cpsschemas_rposition_${op}"
+            i18n:translate="" />
+        </select>
+      </p>
+    </tal:block>
+
+    <tal:block condition="python:len(fields)>1">
+      <span i18n:translate="cpsschemas_photo_subtitle">
+        Photo subtitle
+      </span>
+      <input type="text" size="30"
+             tal:attributes="name string:${value_name}_subtitle;
+                             value subtitle" />
+    </tal:block>
+
+  </tal:block>
+
 </tal:block>
