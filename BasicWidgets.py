@@ -1250,7 +1250,8 @@ class CPSImageWidget(CPSWidget):
             LOG('CPSImageWidget', DEBUG,
                 'error %s on %s' % (err, `file`))
         else:
-            self.prepare(datastructure)
+            datastructure[widget_id] = datamodel[self.fields[0]]
+            datastructure[widget_id + '_choice'] = ''
 
         return not err
 
