@@ -131,7 +131,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     def setLayoutDefinition(self, layoutdef):
         """Set the layout definition."""
         layoutdef = self._normalizeLayoutDefinition(layoutdef)
-        self._layoutdef = layoutdef
+        self._layoutdef = deepcopy(layoutdef)
 
     security.declareProtected(View, 'getLayoutDefinition')
     def getLayoutDefinition(self):
@@ -244,6 +244,8 @@ class CPSLayout(Layout):
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(widget.absolute_url()+
                                       '/manage_workspace')
+        else:
+            return widget
 
     security.declareProtected(ManagePortal, 'manage_changeLayout')
     def manage_changeLayout(self, addrow=0,
