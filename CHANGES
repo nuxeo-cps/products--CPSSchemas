@@ -8,7 +8,7 @@ New features:
   and Relation
 Bug fixes:
 ~~~~~~~~~~
--
+- Bug fix for handling of non-ZODB images.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
