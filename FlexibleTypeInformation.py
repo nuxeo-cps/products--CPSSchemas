@@ -265,9 +265,12 @@ class FlexibleTypeInformation(TypeInformation):
             if ok:
                 # Update the object from dm.
                 dm._commit()
-                ob.reindexObject()
-                # XXX notify CPS event tool
                 mode = okmode
+                # CMF/CPS stuff.
+                ob.reindexObject()
+                evtool = getToolByName(self, 'portal_eventservice', None)
+                if evtool is not None:
+                    evtool.notify('sys_modify_object', ob, {})
             else:
                 mode = errmode
         else:
