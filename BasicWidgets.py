@@ -80,6 +80,8 @@ class CPSStringWidget(CPSWidget):
     """String widget."""
     meta_type = "CPS String Widget"
 
+    field_types = ('CPS String Field',)
+
     display_width = 20
     display_maxwidth = 0
     _properties = CPSWidget._properties + (
@@ -139,6 +141,8 @@ InitializeClass(CPSStringWidgetType)
 class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
     meta_type = "CPS TextArea Widget"
+
+    field_types = ('CPS String Field',)
 
     width = 40
     height = 5
@@ -210,6 +214,8 @@ class CPSIntWidget(CPSWidget):
     """Integer widget."""
     meta_type = "CPS Int Widget"
 
+    field_types = ('CPS Int Field',)
+
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
         datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
@@ -276,6 +282,10 @@ class CPSCustomizableWidget(CPSWidget):
         wtool = getToolByName(self, 'portal_widgets')
         return getattr(wtool, self.widget_type)
 
+    security.declarePrivate('getFieldTypes')
+    def getFieldTypes(self):
+        return self._getType().field_types
+
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
         return self._getType().prepare(self, datastructure, datamodel)
@@ -298,11 +308,14 @@ class CPSCustomizableWidgetType(CPSWidgetType):
     security = ClassSecurityInfo()
 
     _properties = CPSWidgetType._properties + (
+        {'id': 'field_types', 'type': 'lines', 'mode': 'w',
+         'label': 'Field types'},
         {'id': 'prepare_validate_method', 'type': 'string', 'mode': 'w',
          'label': 'Prepare & Validate Method'},
         {'id': 'render_method', 'type': 'string', 'mode': 'w',
          'label': 'Render Method'},
         )
+    field_types = []
     prepare_validate_method = ''
     render_method = ''
     _class_props = [p['id'] for p in _properties]
@@ -376,6 +389,8 @@ InitializeClass(CPSCustomizableWidgetType)
 class CPSDateWidget(CPSWidget):
     """Date widget."""
     meta_type = "CPS Date Widget"
+
+    field_types = ('CPS DateTime Field',)
 
     _properties = CPSWidget._properties + (
         {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
@@ -477,6 +492,8 @@ InitializeClass(CPSDateWidgetType)
 class CPSFileWidget(CPSWidget):
     """File widget."""
     meta_type = "CPS File Widget"
+
+    field_types = ('CPS File Field',)
 
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
@@ -586,6 +603,8 @@ InitializeClass(CPSFileWidgetType)
 class CPSImageWidget(CPSWidget):
     """Image widget."""
     meta_type = "CPS Image Widget"
+
+    field_types = ('CPS Image Field',)
 
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
