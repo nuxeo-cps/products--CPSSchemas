@@ -60,13 +60,21 @@ class Vocabulary(Persistent):
 
             Preferred
 
+          - Vocabulary(tuples=(('foo', "Foo"), ('bar', "Bar")))
+
+            Same as first.
+
           - Vocabulary(('foo', 'bar'))
 
             Values are same as keys.
 
-          - Vocabulary(tuples=(('foo', "Foo"), ('bar', "Bar")))
+          - Vocabulary(list=('foo', 'bar'))
 
-            Same as first.
+            Values are same as keys, alternate syntax.
+
+          - Vocabulary(tuples=('foo', 'bar'))
+
+            Values are same as keys, other syntax.
 
           - Vocabulary(list=('foo', 'bar'), dict={'foo':"Foo", 'bar':"Bar"})
 
@@ -83,7 +91,7 @@ class Vocabulary(Persistent):
             if tuples and isinstance(tuples[0], StringType):
                 # Vocabulary(('foo', 'bar'))
                 l = builtins_list(tuples)
-                for k in tuples:
+                for k in l:
                     d[k] = k
             else:
                 # Vocabulary((('foo', "Foo"), ('bar', "Bar")))
@@ -98,6 +106,11 @@ class Vocabulary(Persistent):
             else:
                 # Vocabulary(dict={'foo':"Foo", 'bar':"Bar"})
                 l = dict.keys()
+        elif list is not None:
+            # Vocabulary(list=('foo', 'bar'))
+            l = builtins_list(list)
+            for k in l:
+                d[k] = k
         else:
             # Vocabulary()
             pass
