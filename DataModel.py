@@ -41,7 +41,6 @@ The storage itself is done through a storage adapter (NOTIMPLEMENTED).
 from zLOG import LOG, DEBUG
 from Acquisition import aq_base
 from UserDict import UserDict
-from Missing import MV # Missing.Value
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo, Unauthorized
@@ -98,13 +97,7 @@ class DataModel(UserDict):
         """Fetch the data into local dict for user access."""
         for schema, adapter in self._schemas.values():
             data = adapter.getData()
-            for field_id in schema.keys():
-                value = data[field_id]
-                if value is MV:
-                    # Use default from field. XXX Is this the adapter's work?
-                    field = schema[field_id]
-                    value = field.getDefault()
-                self.data[field_id] = value
+            self.data.update(data)
 
     def _setEditableFromProxy(self, proxy):
         """Set the editable object for this DataModel from a proxy.
