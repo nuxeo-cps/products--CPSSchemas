@@ -1,0 +1,13 @@
+<tal:block define="mode options/mode;
+                   value options/value;
+                   widget_id here/getHtmlWidgetId;
+                   times here/times;">
+  <select tal:attributes="name widget_id">
+    <tal:block repeat="time times">
+      <option tal:attributes="value time;
+                              selected python:test(value==time, 'selected', nothing)"
+              tal:content="string:cpsschemas_label_modified_since_${time}"
+              i18n:translate="" />
+    </tal:block>
+  </select>
+</tal:block>
