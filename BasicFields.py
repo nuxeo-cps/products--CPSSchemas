@@ -60,6 +60,20 @@ class CPSIntField(CPSField):
 InitializeClass(CPSIntField)
 
 
+class CPSFloatField(CPSField):
+    """Integer field."""
+    meta_type = "CPS Float Field"
+    _properties = propertiesWithType(CPSField._properties, 'default', 'float')
+    default = 0
+
+    def validate(self, value):
+        if isinstance(value, FloatType):
+            return value
+        raise ValidationError('Not an real number: %s' % repr(value))
+
+InitializeClass(CPSFloatField)
+
+
 class CPSStringField(CPSField):
     """String field."""
     meta_type = "CPS String Field"
@@ -178,6 +192,7 @@ FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
 FieldRegistry.register(CPSStringListField)
 FieldRegistry.register(CPSIntField)
+FieldRegistry.register(CPSFloatField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
 FieldRegistry.register(CPSImageField)
