@@ -1,20 +1,36 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
 
-# The DataModel is a transient object that holds information about a
-# Particular documents data structure, including schemas and storage
-#
-# It is NOT a storage, it's not persistent at all. It's purpose is:
-# - Being one single point of access for information on the structure of the
-#   document, as well as a single point of access for the document data, no matter
-#   with which schema and in which storage the data is located.
-# - Validating data before storage
-# - Acting as a cache (read and write) for data. (This is only really useful for
-#   data that is not stored in the ZODB, but for simplicity ALL data is cached).
-#
-# The "caching" of the data is completely explicit. That is that you can change
-# the data of a DataModel as much as you like, nothing will be written to
-# the storage until it's committed.
+"""
+The DataModel is a transient object that holds information about a
+Particular documents data structure, including schemas and storage
+
+It is NOT a storage, it's not persistent at all. It's purpose is:
+- Being one single point of access for information on the structure of the
+  document, as well as a single point of access for the document data, no matter
+  with which schema and in which storage the data is located.
+- Validating data before storage
+- Acting as a cache (read and write) for data. (This is only really useful for
+  data that is not stored in the ZODB, but for simplicity ALL data is cached).
+
+The "caching" of the data is completely explicit. That is that you can change
+the data of a DataModel as much as you like, nothing will be written to
+the storage until it's committed.
+"""
 
 from zLOG import LOG, DEBUG
 from Acquisition import aq_base

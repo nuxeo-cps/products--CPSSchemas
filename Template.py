@@ -1,5 +1,19 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
 
 import inspect
 
@@ -31,6 +45,20 @@ _fixed_validation = 'fixed_validation_marker'
 class Template:
     """Defines the behaviour of a document, including layout"""
 
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
     _validation_method = '_fixed'
 
     def __init__(self, id, title):
@@ -43,7 +71,7 @@ class Template:
         self.addSchema(Schema('default', 'Default'))
 
     def setValidationMethod(self, validation_method):
-        """Sets a method that validates the layout of a document
+        """Set a method that validates the layout of a document
 
         There are two built-in validations, No validation (always returns true),
         and fixed (makes sure it's the same as the type layouts
@@ -58,11 +86,12 @@ class Template:
 
         argnames = inspect.getargspec(validation_method)[0]
         if argnames != [template_layout, document_layout]:
-            raise TypeError('The supplied method does not have the correct signature')
+            raise TypeError(
+                'The supplied method does not have the correct signature')
         self._validation_method = validation_method
 
     def getValidationMethod(self):
-        """Returns the validation method"""
+        """Return the validation method"""
         if self._validation_method is None:
             return _flexibleValidationMethod
         if self._validation_method == '_fixed':

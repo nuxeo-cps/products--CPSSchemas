@@ -24,7 +24,6 @@ they can be arbitrary.
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
-from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 from Products.CMFCore.CMFCorePermissions import AccessContentsInformation
 
 

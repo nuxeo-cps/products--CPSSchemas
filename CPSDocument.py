@@ -21,7 +21,7 @@
 from zLOG import LOG, DEBUG, ERROR
 from types import ListType, TupleType
 import ExtensionClass
-from Globals import InitializeClass, DTMLFile
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.CMFCorePermissions import View
@@ -34,7 +34,6 @@ from Products.CMFCore.PortalFolder import PortalFolder
 
 from ZODB.PersistentMapping import PersistentMapping
 from Products.CPSDocument.Template import Template
-from Products.CPSDocument.DataStructure import DataStructure
 
 class LayoutValidationError(ValueError):
     pass
@@ -58,7 +57,8 @@ class OLDCPSDocument:
                                         modifications to the structure")
         validation_error = self.validateStructure(data_structure)
         if validation_error:
-            raise LayoutValidationError(validation_error) #Maybe the validation_method should raise this?
+            # XXX: Maybe the validation_method should raise this?
+            raise LayoutValidationError(validation_error) 
         self._structure = data_structure
 
     def getStructure(self):
@@ -75,11 +75,12 @@ class OLDCPSDocument:
                                         modifications to the layout")
         validation_error = self.validateLayout(new_layout)
         if validation_error:
-            raise LayoutValidationError(validation_error) #Maybe the validation_method should raise this?
+            # XXX: Maybe the validation_method should raise this?
+            raise LayoutValidationError(validation_error) 
         self._layout = new_layout
 
     def getLayout(self):
-        """Returns a layout object"""
+        """Return a layout object"""
         template = self.getTemplate()
         if template.isFixedValidation() or self._layout is None:
             return template.getLayout(layout_id)
@@ -87,14 +88,15 @@ class OLDCPSDocument:
             return self._getLayout(layout_id)
 
     def render(self, layout_id):
-        """Returns the rendrition of the document"""
+        """Return the rendrition of the document"""
         layout = self.getLayout(layout_id)
         template = self.getTemplate()
         data = template.getData(self)
         return layout.render(template, data)
 
     def setData(self, dict):
-        """Sets the data of the object from a dictionary or dictionary-like object"""
+        """Set the data of the object from a dictionary or dictionary-like
+        object"""
         self._data.update(dict)
 
     def getData(self, id=None):
@@ -106,17 +108,17 @@ class OLDCPSDocument:
             return self.getStructure()[id].getDefaultValue()
 
     def setDocumentType(self, document_type):
-        """Sets the document type of the document
+        """Set the document type of the document
 
         A document type is the name of a specific template"""
         return None
 
     def getDocumentType(self):
-        """Gets the document type of the document"""
+        """Get the document type of the document"""
         return None
 
     def getTemplate(self):
-        """Gets the Template of the document"""
+        """Get the Template of the document"""
         return self._template
 
     def validateLayout(self, layout=None):
@@ -130,11 +132,7 @@ class OLDCPSDocument:
             layout = self.getLayout()
         return method(template.getLayout(), layout)
 
-
 ######################################################################
-######################################################################
-######################################################################
-
 
 class CPSDocumentMixin(ExtensionClass.Base):
     """Mixin giving CPS Document behaviour.
@@ -245,7 +243,8 @@ InitializeClass(CPSDocumentMixin)
 # XXX remove later
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 
-class CPSDocument(CPSDocumentMixin, PortalContent, PortalFolder, DefaultDublinCoreImpl):
+class CPSDocument(CPSDocumentMixin, PortalContent, PortalFolder,
+                  DefaultDublinCoreImpl):
     """CPS Document
 
     Basic document type from which real types are derived according to

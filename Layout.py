@@ -337,14 +337,10 @@ class CPSLayout(Layout):
                     if cell.get('split'):
                         cell['ncols'] = max(1, cell['ncols']-1)
                         del cell['split']
-                        newrow.append(
-                            {'ncols': 1, 'widget_id': ''}
-                            )
+                        newrow.append({'ncols': 1, 'widget_id': ''})
                 rows[nrow-1] = newrow
         if addrow:
-            rows.append(
-                [{'ncols': 1, 'widget_id': ''}]
-                )
+            rows.append([{'ncols': 1, 'widget_id': ''}])
         layoutdef['rows'] = rows
         self.setLayoutDefinition(layoutdef)
         if REQUEST is not None:

@@ -31,7 +31,6 @@ from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.TypesTool import TypeInformation
 
 from Products.CPSDocument.Schema import SchemaContainer

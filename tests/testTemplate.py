@@ -7,10 +7,8 @@ from Testing.ZopeTestCase import ZopeLite
 from Products.CPSDocument.Template import Template
 from Products.CPSDocument.Schema import CPSSchema
 from Products.CPSDocument.Layout import HtmlLayout
-from Products.CPSDocument.Fields.BasicField import BasicField
 from Products.CPSDocument.Fields.TextField import TextField
 from Products.CPSDocument.Fields.SelectionField import SelectionField
-from Products.CPSDocument.OrderedDictionary import OrderedDictionary
 
 class AttributeHolder:
     pass

@@ -28,10 +28,7 @@ from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 
-from OFS.Folder import Folder
-
-from Products.CMFCore.CMFCorePermissions import View, ModifyPortalContent
-from Products.CMFCore.CMFCorePermissions import ManagePortal
+from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 

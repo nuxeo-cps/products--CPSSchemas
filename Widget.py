@@ -26,21 +26,17 @@ It can then be rendered by passing it a datastructure.
 """
 
 from zLOG import LOG, DEBUG
-from copy import deepcopy
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
-from Persistence import Persistent
 
 from OFS.Folder import Folder
 
-from Products.CMFCore.CMFCorePermissions import View, ModifyPortalContent
-from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 
 def widgetname(id):
     """Return the name of the widget as used in HTML forms."""
-    return 'widget__'+id
+    return 'widget__' + id
 
 
 class Widget(SimpleItemWithProperties):

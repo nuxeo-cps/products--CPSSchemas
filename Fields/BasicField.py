@@ -97,10 +97,11 @@ class BasicField:
         return self._field_widget(self)
 
     def getDefaultValue(self):
-       return self._default
+        return self._default
 
     def setDefaultValue(self, default):
-        self._default = self._validate(default) # Make sure the default is an acceptable value.
+        # Make sure the default is an acceptable value.
+        self._default = self._validate(default) 
 
     def getStorageId(self):
         """Gets the id used for storing data

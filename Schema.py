@@ -30,7 +30,6 @@ from Persistence import Persistent
 from OFS.Folder import Folder
 
 from Products.CMFCore.CMFCorePermissions import ManagePortal
-from Products.CMFCore.utils import SimpleItemWithProperties
 
 from Products.CPSDocument.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSDocument.OrderedDictionary import OrderedDictionary

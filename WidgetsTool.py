@@ -22,20 +22,13 @@ The Widgets Tool manages the available widget types.
 """
 
 from zLOG import LOG, DEBUG
-from types import DictType
 from Globals import InitializeClass, DTMLFile
-from Acquisition import aq_base, aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
-from AccessControl.PermissionRole import rolesForPermissionOn
-from ZODB.PersistentMapping import PersistentMapping
-from ZODB.PersistentList import PersistentList
 
 from OFS.Folder import Folder
 
-from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import ManagePortal
-from Products.CMFCore.utils import SimpleItemWithProperties
-from Products.CMFCore.utils import UniqueObject, getToolByName
+from Products.CMFCore.utils import UniqueObject
 
 
 class WidgetsTool(UniqueObject, Folder):
@@ -52,7 +45,6 @@ class WidgetsTool(UniqueObject, Folder):
     #
     # ZMI
     #
-
     def all_meta_types(self):
         return [
             {'name': wt,

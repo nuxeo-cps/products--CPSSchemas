@@ -23,9 +23,8 @@ Definition of standard widget types.
 
 from zLOG import LOG, DEBUG
 from cgi import escape
-from types import IntType, StringType, UnicodeType
 from DateTime.DateTime import DateTime
-from Globals import InitializeClass, DTMLFile
+from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
 
@@ -194,8 +193,7 @@ class CPSTextAreaWidget(CPSWidget):
                                  cols=self.width,
                                  rows=self.height,
                                  contents=value,
-                                 css_class=self.css_class,
-                                 )
+                                 css_class=self.css_class)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSTextAreaWidget)
@@ -244,8 +242,7 @@ class CPSIntWidget(CPSWidget):
                                  type='text',
                                  name=self.getHtmlWidgetId(),
                                  value=value,
-                                 css_class=self.css_class,
-                                 )
+                                 css_class=self.css_class)
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSIntWidget)
@@ -459,22 +456,19 @@ class CPSDateWidget(CPSWidget):
                                  type='text',
                                  name=html_widget_id+'_d',
                                  value=d,
-                                 css_class=self.css_class,
-                                 )
+                                 css_class=self.css_class)
             mtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_m',
                                  value=m,
-                                 css_class=self.css_class,
-                                 )
+                                 css_class=self.css_class)
             ytag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_y',
                                  value=y,
-                                 css_class=self.css_class,
-                                 )
+                                 css_class=self.css_class)
             # XXX customize format
-            return dtag+'/'+mtag+'/'+ytag
+            return dtag + '/' + mtag + '/' + ytag
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSDateWidget)
@@ -528,7 +522,8 @@ class CPSFileWidget(CPSWidget):
                 ok = 1
             else:
                 LOG('CPSFileWidget', DEBUG, 'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, "Bad file received (%s)" % repr(file))
+                datastructure.setError(widget_id, "Bad file received (%s)" 
+                                       % repr(file))
                 ok = 0
         if ok:
             self.prepare(datastructure, datamodel)
@@ -547,8 +542,7 @@ class CPSFileWidget(CPSWidget):
         else:
             current_name = '-'
         return meth(mode=mode, datastructure=datastructure,
-                    datamodel=datamodel,
-                    current_name=current_name)
+                    datamodel=datamodel, current_name=current_name)
 
 InitializeClass(CPSFileWidget)
 
@@ -578,7 +572,7 @@ class CPSImageWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         widget_id = self.getWidgetId()
         datastructure[widget_id] = datamodel[self.fields[0]]
-        datastructure[widget_id+'_choice'] = '' # make update from request work
+        datastructure[widget_id + '_choice'] = '' # make update from request work
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
@@ -601,8 +595,10 @@ class CPSImageWidget(CPSWidget):
                 datamodel[field_id] = file
                 ok = 1
             else:
-                LOG('CPSImageWidget', DEBUG, 'unvalidate change set %s' % `file`)
-                datastructure.setError(widget_id, "Bad file received (%s)" % repr(file))
+                LOG('CPSImageWidget', DEBUG, 
+                    'unvalidate change set %s' % `file`)
+                datastructure.setError(widget_id, "Bad file received (%s)" 
+                                       % repr(file))
                 ok = 0
         if ok:
             self.prepare(datastructure, datamodel)
@@ -631,6 +627,8 @@ class CPSImageWidgetType(CPSWidgetType):
     """Image widget type."""
     meta_type = "CPS Image Widget Type"
     cls = CPSImageWidget
+
+    # XXX: TBD
 
 InitializeClass(CPSImageWidgetType)
 

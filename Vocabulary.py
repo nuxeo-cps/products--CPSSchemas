@@ -29,8 +29,6 @@ from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 from Interface import Interface
 
-from OFS.Folder import Folder
-
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 

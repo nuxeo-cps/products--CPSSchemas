@@ -23,8 +23,7 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG
 from types import IntType, StringType
-from Globals import InitializeClass, DTMLFile
-from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
 from OFS.Image import File
@@ -70,7 +69,6 @@ class CPSStringField(CPSField):
         if isinstance(value, StringType):
             return value
         raise ValidationError('Not a string: %s' % repr(value))
-
 
 InitializeClass(CPSStringField)
 
@@ -141,7 +139,6 @@ class CPSImageField(CPSField):
         raise ValidationError('Not an image: %s' % repr(value))
 
 InitializeClass(CPSImageField)
-
 
 # Register field classes
 

@@ -20,7 +20,6 @@
 """
 
 from Globals import InitializeClass, DTMLFile
-from Acquisition import aq_parent, aq_inner, aq_base
 from AccessControl import ClassSecurityInfo
 
 from OFS.Folder import Folder
