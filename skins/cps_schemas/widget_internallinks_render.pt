@@ -6,6 +6,9 @@
                    utool nocall:here/portal_url;
                    base_url python:here.getBaseUrl(utool=utool);
                    items python:context.getObjectsFromPath(values);
+                   format string:simple;
+                   display_description python:1;
+                   item_per_page python:10666
                   ">
   <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
     <metal:items use-macro="here/content_lib/macros/display_contents"></metal:items>
