@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-06-18 19:43default\n"
+"POT-Creation-Date: 2004-06-18 19:54default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -352,4 +352,28 @@ msgid "cpsschemas_label_link_content"
 msgstr ""
 
 msgid "cpsschemas_label_link_title"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_updated"
 msgstr ""

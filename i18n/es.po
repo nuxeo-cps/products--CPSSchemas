@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2004-06-18 19:43default\n"
+"POT-Creation-Date: 2004-06-18 19:54default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -395,3 +395,44 @@ msgstr "Nombre del enlace"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Descripción"
+
+#    <th>Id:</th>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr "Id:"
+
+#    <h2>cpsschemas_vocabulary_add</h2>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr "Añadir un vocabulario"
+
+#    <th>Id:</th>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr "Id:"
+
+#    <h2>cpsschemas_vocabulary_delete</h2>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr "Borrar"
+
+#    <h1>cpsschemas_vocabulary_entry_add</h1>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr "Añadir una entrada"
+
+#    <h2>cpsschemas_vocabulary_delete</h2>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr "Borrar"
+
+#    <h2>cpsschemas_vocabulary_delete</h2>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr "Borrar"
+
+#    <h2>cpsschemas_vocabulary_add</h2>
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr "Añadir un vocabulario"
+

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"POT-Creation-Date: 2004-06-18 19:43default\n"
+"POT-Creation-Date: 2004-06-18 19:54default\n"
 "PO-Revision-Date: 2004-05-21 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -372,3 +372,36 @@ msgstr "Nome del collegamento"
 
 msgid "cpsschemas_label_link_title"
 msgstr "Descrizione"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr "Identificatore:"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr "Aggiungi vocabolario"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr "Identificatore:"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr "Elimina vocabolario"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr "Aggiungi un elemento al vocabolario"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr "Elimina vocabolario"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr "Elimina vocabolario"
+
+#, fuzzy
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr "Aggiungi vocabolario"
+
