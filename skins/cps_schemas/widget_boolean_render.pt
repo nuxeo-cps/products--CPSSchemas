@@ -7,10 +7,10 @@
 <tal:block condition="python: mode == 'edit'">
 <select tal:attributes="name here/getHtmlWidgetId;">
   <option value="0" i18n:translate=""
-    tal:attributes="selected not:value|nothing"
+    tal:attributes="selected python:test(value or value=='0', nothing, 1)"
     tal:content="here/label_false" />
   <option value="1" i18n:translate=""
-    tal:attributes="selected value|nothing"
+    tal:attributes="selected python:test(value and value!='0', '1', nothing)"
     tal:content="here/label_true" />
 </select>
 </tal:block>
