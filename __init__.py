@@ -41,7 +41,7 @@ tools = (
     WidgetTypesTool.WidgetTypesTool,
     )
 
-registerDirectory('skins/cps_schemas', globals())
+registerDirectory('skins', globals())
 
 def initialize(registrar):
     registrar.registerClass(
