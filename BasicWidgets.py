@@ -1327,6 +1327,41 @@ class CPSRichTextEditorWidgetType(CPSWidgetType):
 InitializeClass(CPSRichTextEditorWidgetType)
 
 
+##########################################
+
+class CPSExtendedSelectWidget(CPSSelectWidget):
+    """Extended Select widget."""
+    meta_type = "CPS ExtendedSelect Widget"
+
+    def render(self, mode, datastructure):
+        """Render this widget from the datastructure or datamodel."""
+
+        if mode == 'view':
+            return CPSSelectWidget.render(self, mode, datastructure)
+
+        elif mode == 'edit':
+            render_method = 'widget_extendedselect_render'
+
+            meth = getattr(self, render_method, None)
+            if meth is None:
+                raise RuntimeError("Unknown Render Method %s for widget type %s"
+                                   % (render_method, self.getId()))
+            return meth(mode=mode, datastructure=datastructure,
+                        vocabulary=self._getVocabulary(datastructure))
+
+        else:
+            raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSExtendedSelectWidget)
+
+class CPSExtendedSelectWidgetType(CPSSelectWidgetType):
+    """Extended Select widget type."""
+    meta_type = "CPS ExtendedSelect Widget Type"
+    cls = CPSExtendedSelectWidget
+
+InitializeClass(CPSExtendedSelectWidgetType)
+
+
 ##################################################
 
 #
@@ -1346,6 +1381,9 @@ WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
 WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
 WidgetTypeRegistry.register(CPSImageWidgetType, CPSImageWidget)
 WidgetTypeRegistry.register(CPSHtmlWidgetType, CPSHtmlWidget)
-WidgetTypeRegistry.register(CPSRichTextEditorWidgetType, CPSRichTextEditorWidget)
+WidgetTypeRegistry.register(CPSRichTextEditorWidgetType,
+                            CPSRichTextEditorWidget)
 WidgetTypeRegistry.register(CPSSelectWidgetType, CPSSelectWidget)
 WidgetTypeRegistry.register(CPSMultiSelectWidgetType, CPSMultiSelectWidget)
+WidgetTypeRegistry.register(CPSExtendedSelectWidgetType,
+                            CPSExtendedSelectWidget)
