@@ -6,6 +6,7 @@ import inspect
 from ZODB.PersistentMapping import PersistentMapping
 
 from Layout import HtmlLayout
+from Schema import Schema
 from OrderedDictionary import OrderedDictionary
 
 
@@ -34,10 +35,11 @@ class Template:
     def __init__(self, id, title):
         self.id = id
         self.title = title
-        self._model = OrderedDictionary()
+        self._schemas = PersistentMapping()
         self._layouts = PersistentMapping()
         self.addLayout(HtmlLayout('view', 'View'))
         self.addLayout(HtmlLayout('edit', 'Edit'))
+        self.addSchema(Schema('default', 'Default'))
 
     def setValidationMethod(self, validation_method):
         """Sets a method that validates the layout of a document
@@ -81,5 +83,25 @@ class Template:
     def getLayoutIds(self):
         return self._layouts.keys()
 
+    def getLayout(self, layout_id):
+        return self._layouts[layout_id]
+
+    def addSchema(self, schema):
+        self._schemas[schema.id] = schema
+
+    def removeSchema(self, schema_id):
+        del self._schemas[schema_id]
+
+    def getSchemaIds(self):
+        return self._schemas.keys()
+
+    def getSchema(self, schema_id):
+        return self._schemas[schema_id]
+
     def getDatamodel(self):
-        return self._model
+        # TODO: fetch the global schemas too.
+        schemas = self.getSchemaIds()
+        dm = DataModel()
+        for schema in schemas:
+            dm[schema] = self.getSchema(schema)
+        return dm

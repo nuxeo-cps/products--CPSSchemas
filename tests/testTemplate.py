@@ -3,6 +3,7 @@
 
 import unittest
 from Products.NuxCPS3Document.Template import Template
+from Products.NuxCPS3Document.Schema import Schema
 from Products.NuxCPS3Document.Layout import HtmlLayout
 from Products.NuxCPS3Document.Fields.BasicField import BasicField
 from Products.NuxCPS3Document.OrderedDictionary import OrderedDictionary
@@ -18,6 +19,8 @@ class TemplateTests(unittest.TestCase):
         self.failUnless('view' in views and 'edit' in views, \
                         'Default layout creation failed')
         self.failUnless(template.isFixedValidation(), 'Fixed validation is not default')
+        schemas = template.getSchemaIds()
+        self.failUnless(schemas == ['default'], 'Default schema not created')
 
     def testAddLayout(self):
         """Add a layout"""
@@ -31,22 +34,35 @@ class TemplateTests(unittest.TestCase):
         template.removeLayout('view')
         self.failIf('view' in template.getLayoutIds(), 'Could not remove layout')
 
-    def testAddRemoveFields(self):
-        """Make sure fields are modifiable"""
+    def testGetLayout(self):
+        """Retreive the layout object"""
         template = Template('template', 'Template')
-        model = template.getDatamodel()
-        self.failUnless(isinstance(model, OrderedDictionary), \
-                        'The returned field definition is not an OrderedDictionary')
+        layout = template.getLayout('view')
+        self.failUnless(isinstance(layout, HtmlLayout), 'getLayout() Failed')
+        self.failUnless(layout.id == 'view', 'getLayout retreived the wrong layout')
 
-        model['f1'] = BasicField('f1', 'Field1')
-        model['f2'] = BasicField('f2', 'Field2')
-        model['f3'] = BasicField('f3', 'Field3')
-        model['f4'] = BasicField('f4', 'Field4')
-        del model['f3']
+    def testGetNoLayout(self):
+        """Retreiving non-existing layouts should fail"""
+        template = Template('template', 'Template')
+        self.failUnlessRaises(KeyError, template.getLayout, 'notalayout' )
+    def testAddSchema(self):
+        """Add a schema"""
+        template = Template('template', 'Template')
+        template.addSchema(Schema('new', 'New'))
+        self.failUnless('new' in template.getSchemaIds(), 'Could not add new layout')
 
-        struct2 = template.getDatamodel()
-        self.failUnless(model.keys() == struct2.keys(), \
-                        'Update of field definition failed')
+    def testRemoveSchema(self):
+        """Remove a schema"""
+        template = Template('template', 'Template')
+        template.removeSchema('default')
+        self.failIf('default' in template.getSchemaIds(), 'Could not remove schema')
+
+    def testGetSchema(self):
+        template = Template('template', 'Template')
+        self.failUnlessRaises(KeyError, template.getSchema, 'notaschema')
+
+    #def testGetModel(self):
+    #def testGetData(self):
 
     # Tests TODO:
     # Structure verification
