@@ -205,7 +205,6 @@ msgstr "Value:"
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
 msgid "description_vocabulary_manage_form"
 msgstr "This page allow you to manage vocabularies and their entries."
 
