@@ -181,12 +181,10 @@ class CPSFileField(CPSField):
         value = data[field_id] # May be None.
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
         if html_field_id is not None:
-            html = convertFileToHtml(value)
-            data[html_field_id] = html
+            data[html_field_id] = convertFileToHtml(value)
         text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:
-            text = convertFileToText(value)
-            data[text_field_id] = text
+            data[text_field_id] = convertFileToText(value)
 
     def validate(self, value):
         if not value:
