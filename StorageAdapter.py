@@ -37,7 +37,6 @@ ZMI.
 
 from zLOG import LOG, DEBUG
 from Acquisition import aq_base
-from Missing import MV # Missing.Value
 
 
 class BasicStorageAdapter:
@@ -72,20 +71,14 @@ class BasicStorageAdapter:
     #
 
     def getData(self):
-        """Get data from the object, returns a mapping.
-
-        The values returned may be Missing.Value if they're not found.
-        """
+        """Get data from the object, returns a mapping."""
         data = {}
         for field_id in self._schema.keys():
             data[field_id] = self._get(field_id)
         return data
 
     def setData(self, data):
-        """Set data to the object, from a mapping.
-
-        If the value is Missing.Value, nothing is done for this field.
-        """
+        """Set data to the object, from a mapping."""
         for field_id in self._schema.keys():
             self._set(field_id, data[field_id])
 
@@ -114,22 +107,9 @@ class AttributeStorageAdapter(BasicStorageAdapter):
         """
         self._ob = ob
 
-    def _get(self, field_id):
-        """Get the value or returns Missing.Value."""
-        ob = self._ob
-        if hasattr(aq_base(ob), field_id):
-            return getattr(ob, field_id)
-        else:
-            return MV
-
     def _set(self, field_id, value):
-        """Set the value except if it's Missing.Value."""
-        ob = self._ob
-        if value is not MV:
-            setattr(ob, field_id, value)
-        else:
-            LOG('AttributeStorageAdapter._set', DEBUG,
-                'Setting MV for %s on %s' % (field_id, ob))
+        """Set the value."""
+        setattr(self._ob, field_id, value)
 
     def _delete(self, field_id):
         raise NotImplementedError
@@ -141,3 +121,19 @@ class AttributeStorageAdapter(BasicStorageAdapter):
             LOG('AttributeStorageAdapter._delete', DEBUG,
                 'Attempting to delete %s on %s' % (field_id, ob))
 
+    def getData(self):
+        """Get data from the object, returns a mapping.
+
+        Fills default value from the field if the object has no attribute.
+        """
+        data = {}
+        ob = self._ob
+        base_ob = aq_base(ob)
+        for field_id, field in self._schema.items():
+            if hasattr(base_ob, field_id):
+                value = getattr(ob, field_id)
+            else:
+                # Use default from field.
+                value = field.getDefault()
+            data[field_id] = value
+        return data
