@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-09 04:23default\n"
+"POT-Creation-Date: 2005-02-10 10:27default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -126,7 +126,7 @@ msgstr "Formaat&nbsp;: "
 msgid "cpsschemas_photo_subtitle"
 msgstr "Onderschrift&nbsp;: "
 
-#.   <span>cpsschemas_render_format</span>
+#.   <block>cpsschemas_render_format</block>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Formaat&nbsp;: "
@@ -134,7 +134,7 @@ msgstr "Formaat&nbsp;: "
 #.   <span>
 #.             Render position
 #.           </span>
-#.   <span>cpsschemas_render_position</span>
+#.   <block>cpsschemas_render_position</block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
@@ -234,13 +234,15 @@ msgstr "Klikt op de gewilde waarde&nbsp;:"
 msgid "heading_enter_searched_value"
 msgstr "Gaat een termijn van onderzoek in&nbsp;:"
 
+#.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
-#.   <span content="widget/label" condition="widget/is_i18n">label</span>
+#.   <block content="widget/label" condition="widget/is_i18n">label</block>
+#.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt

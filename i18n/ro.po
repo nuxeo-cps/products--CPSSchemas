@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-02-09 04:23default\n"
+"POT-Creation-Date: 2005-02-10 10:27default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "cpsschemas_photo_subtitle"
 msgstr ""
 
-#.   <span>cpsschemas_render_format</span>
+#.   <block>cpsschemas_render_format</block>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr ""
@@ -125,7 +125,7 @@ msgstr ""
 #.   <span>
 #.             Render position
 #.           </span>
-#.   <span>cpsschemas_render_position</span>
+#.   <block>cpsschemas_render_position</block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
@@ -223,13 +223,15 @@ msgstr ""
 msgid "heading_enter_searched_value"
 msgstr ""
 
+#.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
-#.   <span content="widget/label" condition="widget/is_i18n">label</span>
+#.   <block content="widget/label" condition="widget/is_i18n">label</block>
+#.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
