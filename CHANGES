@@ -10,7 +10,7 @@ New features:
 - Add 'depends on' attributes for javascript display toggle
 Bug fixes:
 ~~~~~~~~~~
--
+- Date widget use nn/nn/nnnn instead of n/n/n for rendering
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Malagasy javascript camendar (to translate)

@@ -1549,9 +1549,9 @@ class CPSDateWidget(CPSWidget):
         v = datamodel[self.fields[0]]
         widget_id = self.getWidgetId()
         if v is not None:
-            d = str(v.day())
-            m = str(v.month())
-            y = str(v.year())
+            d = '%02i' % v.day()
+            m = '%02i' % v.month()
+            y = '%04i' % v.year()
         else:
             d = m = y = ''
         datastructure[widget_id+'_d'] = d
