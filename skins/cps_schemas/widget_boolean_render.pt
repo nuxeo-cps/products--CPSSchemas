@@ -1,0 +1,17 @@
+<tal:block define="mode options/mode;
+                   value options/value;
+                   label_value options/label_value;">
+<tal:block condition="python: mode == 'view'">
+  <span i18n:translate="" tal:content="label_value"></span>
+</tal:block>
+<tal:block condition="python: mode == 'edit'">
+<select tal:attributes="name here/getHtmlWidgetId;">
+  <option value="0" i18n:translate=""
+    tal:attributes="selected not:value|nothing"
+    tal:content="here/label_false" />
+  <option value="1" i18n:translate=""
+    tal:attributes="selected value|nothing"
+    tal:content="here/label_true" />
+</select>
+</tal:block>
+</tal:block>
