@@ -352,3 +352,6 @@ msgstr "Name of the link"
 msgid "cpsschemas_label_link_title"
 msgstr "Description"
 
+msgid "action_search"
+msgstr "Search"
+
