@@ -9,7 +9,8 @@ New features:
   HTML. This is now done through JavaScript.
 Bug fixes:
 ~~~~~~~~~~
--
+- #312: refactor export tab to use smart writing. Now detects quotes used and
+  put stronger quotes.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Use tuples for vocabularies export
