@@ -551,17 +551,16 @@ class CPSInternalLinksWidget(CPSWidget):
 
 
         for line in value:
-            if len(line.strip()):
+            if line.strip():
                 v.append(line)
-            else:
-                value.remove(line)
 
         if err:
             datastructure.setError(widget_id, err)
         else:
             datamodel = datastructure.getDataModel()
             datamodel[self.fields[0]] = v
-
+            self.prepare(datastructure)
+            
         return not err
 
     def render(self, mode, datastructure, **kw):

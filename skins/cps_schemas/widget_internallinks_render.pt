@@ -48,6 +48,7 @@
         var intlinks_w_id = '${id}'
         var links_div_id = 'div_${id}'
         var all_div_id = 'div_all_${id}'  
+        var info_div_id = 'info_div_${id}'
 
         function is_in(item, list) {
          exist = false
@@ -64,6 +65,9 @@
           
           if (xmlhttp) { 
             textareaElement = document.getElementById(intlinks_w_id)
+         
+            links_div = document.getElementById(all_div_id)
+
             d = document;
             params = ''
             i = 0
@@ -74,14 +78,14 @@
                 params += 'results:list=' + link + '&'
               }
             }
-  
+
             url = 'results_html_render?no_form:int=0&' + params
             
             xmlhttp.open('GET', url, false);
             xmlhttp.send(null);
 
             links_html = xmlhttp.responseText;
-            links_div = document.getElementById(all_div_id)
+
             links_div.innerHTML = links_html
           }
         }
@@ -143,14 +147,17 @@
         }
         -->
       </script>
-
       <div tal:attributes="id string:div_all_${id}">
         <tal:block content="structure python:here.results_html_render(results=values, no_form=0)" />
         <div tal:attributes="id string:div_${id}"></div>
       </div>
 
       <input type="button" name="del_item" value="action_delete" i18n:attributes="value"
-        onClick="delete_items()"> 
+        onClick="delete_items()">
+      <input type="button" name="move_up" value="button_move_up" i18n:attributes="value"
+        onClick="move_up_items()">
+      <input type="button" name="move_down" value="button_move_down" i18n:attributes="value"
+        onClick="move_down_items()">
       <input type="button" name="search_item" value="action_search" i18n:attributes="value"
         onClick="open_search_dialog()"><br>
       <textarea cols="2" style="width: 90%;visibility:hidden"
