@@ -13,7 +13,7 @@ Bug fixes:
 ~~~~~~~~~~
 - EmailWidget was always mandatory.
 - CheckBoxWidget's default should not be a list but an empty string.
-- SelectWidget in edit mode displays the current value selected
+- #195: SelectWidget in edit mode displays the current value selected
   even if the value is not in the vocabulary
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
