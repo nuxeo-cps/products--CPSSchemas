@@ -9,13 +9,13 @@
 
 <tal:block condition="python:mode == 'edit'">
   <tal:block define="
-    true_checked python:test(value and value != '0', 'checked', nothing);
-    false_checked python:test(not value or value == '0', 'checked', nothing);
+    true_checked python:test(value and value != '0', 1, 0);
+    false_checked python:test(not value or value == '0', 1, nothing);
     ">
 
     <tal:checkbox condition="python:render_format == 'checkbox'">
       <input type="checkbox"
-             tal:attributes="checked false_checked;
+             tal:attributes="checked true_checked;
                              value value;
                              name here/getHtmlWidgetId;" />
       <input type="hidden" value=""
