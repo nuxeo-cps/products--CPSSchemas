@@ -1,6 +1,7 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 - CPSSchemas requires Epoz-0.5.1
+- indexing File require PortalTransforms-1.0a3
 - Recreate portal_widget_types using installer.
 New features:
 ~~~~~~~~~~~~~

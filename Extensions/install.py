@@ -111,6 +111,34 @@ def install(self):
         pr(" Creating portal_vocabularies")
         portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Vocabularies Tool')
+
+    # portal_transforms
+    pr("Verifying Portal Transforms tool")
+
+    if portalhas('portal_transforms'):
+        pt = portal.portal_transforms
+        if pt.portal_type == ' Portal Transforms':
+            prok()
+        else:
+            portal.manage_delObjects(['portal_transforms'])
+
+    if not portalhas('portal_transforms'):
+        pr(" Creating Portal Transforms Tool")
+        if not portalhas('portal_transforms_installer'):
+            from Products.ExternalMethod.ExternalMethod import ExternalMethod
+            pr('  Adding Portal Transforms Installer')
+            try:
+                installer = ExternalMethod('portal_transforms_installer',
+                                           'Portal Transforms Installer',
+                                           'PortalTransforxms.Install',
+                                           'install')
+                portal._setObject('portal_transforms_installer', installer)
+            except:
+                raise "Missing Product", "not foundPortalTransforms !"
+        portal.portal_transforms_installer()
+        pr("   done")
+
+
     # Old stuff (UPGRADES)
     if portalhas('portal_widgets'):
         portal.manage_delObjects('portal_widgets')
