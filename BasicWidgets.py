@@ -974,7 +974,7 @@ class CPSSelectWidget(CPSWidget):
         cpsmcat = portal.Localizer.default
         if mode == 'view':
             if getattr(self, 'translated', False):
-                return escape(cpsmcat(vocabulary.get(value, value)).encode('ISO-8859-15', 'ignore'))
+                return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
         elif mode == 'edit':
@@ -984,7 +984,7 @@ class CPSSelectWidget(CPSWidget):
             for k, v in vocabulary.items():
                 if getattr(self, 'translated', False):
                     kw = {'value': k,
-                          'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
+                          'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                           }
                 else:
                     kw = {'value': k, 'contents': v}
@@ -1094,7 +1094,7 @@ class CPSMultiSelectWidget(CPSWidget):
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
             elif getattr(self, 'translated', False):
-                return ', '.join([escape(cpsmcat(vocabulary.get(i, i))) for i in value])
+                return ', '.join([escape(cpsmcat(vocabulary.getMsgid(i, i))) for i in value])
             else:
                 return ', '.join([escape(vocabulary.get(i, i)) for i in value])
         elif mode == 'edit':
@@ -1108,7 +1108,7 @@ class CPSMultiSelectWidget(CPSWidget):
             for k, v in vocabulary.items():
                 if getattr(self, 'translated', False):
                     kw = {'value': k,
-                          'contents': cpsmcat(vocabulary.getMsgid(k, '')).encode('ISO-8859-15', 'ignore')
+                          'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                           }
                 else:
                     kw = {'value': k, 'contents': v}
