@@ -9,6 +9,7 @@
                    subtitle options/subtitle;
                    rposition options/render_position;
                    configurable options/configurable;
+                   last_modified options/last_modified;
                   ">
 <tal:block condition="python: mode == 'view' and current_name != '-'">
   <div tal:attributes="class python:test(rposition == 'right', 'dright',
