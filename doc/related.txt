@@ -1,0 +1,52 @@
+Related projects and their status
+
+  Revision information
+
+    $Id$
+
+  Older versions in CPS
+
+    - NuxDocument
+
+    - NuxCPSFlexibleDocument
+
+    - NuxCPSFlexibleDocument2
+
+    Not abstract enough. Lack easy TypesTool creation. Not enough
+    abstraction of form processing and layout. Not useable for
+    extensible metadata.
+
+  Formulator
+
+    - http://www.zope.org/Members/faassen/Formulator
+
+    Not oriented toward having extensible instances. Too much oriented
+    toward form generation. No abstraction of layout.
+
+  CMFTypes
+
+    - http://plone.org/documentation/CMFTypesBook
+
+    - http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/collective/CMFTypes/
+
+    Oriented toward code generation, not TTW document type creation.
+    Types are not extensible. Presentation and validation are confused.
+    There is no abstraction of the layout.
+
+    Has an interesting concept of text transformations but this is mixed
+    deeply in the validation code instead of being an entirely different
+    tool.
+
+  Flexible Metadata patch
+
+    - http://www.gocept.com/opensource/projects/CMF_Metadata
+
+    Only does flexible metadata.
+
+  Bricolage
+
+    - http://www.bricolage.cc
+
+    - http://www.masonbook.com/book/appendix-d.mhtml
+
+    Not a Zope product. Does interesting stuff.
