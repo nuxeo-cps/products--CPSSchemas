@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Correct utf-8 conversion.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
