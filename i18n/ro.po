@@ -302,7 +302,7 @@ msgstr "Sterge acest vocabular"
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
-msgstr "Editeaza vocabularul ?&#160;${voc_id}&#160;?"
+msgstr "Editeaza vocabularul \"${voc_id}\""
 
 #.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
