@@ -7,9 +7,9 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Using a wider translation_table to that the attachedfile name does not contain
-  special characters.
+  special characters. Added rules for ligatures.
 - Correct utf-8 conversion.
 - Increase the size of the text input for the title of file and image widgets
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- renderHtmlTag now ignores None arguments, acting as tal:attributes.

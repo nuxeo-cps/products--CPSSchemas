@@ -1622,6 +1622,8 @@ class CPSFileWidget(CPSWidget):
         # independent of CPSCore :-(
         current_name = current_name.replace('Æ', 'AE')
         current_name = current_name.replace('æ', 'ae')
+        current_name = current_name.replace('¼', 'OE')
+        current_name = current_name.replace('½', 'oe')
         current_name = current_name.replace('ß', 'ss')
         translation_table = string.maketrans(
             r"'\;/ &:ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ",
