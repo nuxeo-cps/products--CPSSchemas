@@ -1,10 +1,10 @@
 <tal:block define="layout options/layout;
                    ds options/datastructure;
                    dm options/datamodel;
-                   proxy options/proxy;
+                   proxy nocall:options/proxy|here;
                   ">
 <form action="." method="POST" enctype="multipart/form-data"
-  tal:attributes="action string:${options/proxy/absolute_url}/cpsdocument_editlayout">
+  tal:attributes="action string:${proxy/absolute_url}/cpsdocument_editlayout">
 <input type="hidden" name="layout_id" value="."
   tal:attributes="value layout/id">
 <table cellpadding="2" cellspacing="2" border="1"

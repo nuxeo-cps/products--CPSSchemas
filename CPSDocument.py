@@ -145,9 +145,8 @@ class CPSDocumentMixin(ExtensionClass.Base):
     security = ClassSecurityInfo()
 
     security.declareProtected(View, 'render')
-    def render(self, mode='view', layout_id=None, proxy=None, **kw):
+    def render(self, mode='view', layout_id=None, **kw):
         """Render the object according to a mode."""
-        kw['proxy'] = proxy
         ti = self.getTypeInfo()
         return ti.renderObject(self, mode=mode, layout_id=layout_id, **kw)
 
