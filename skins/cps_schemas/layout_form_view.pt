@@ -20,12 +20,11 @@
         </div>
         <strong tal:content="widget/title">label</strong>:
         (<em tal:content="widget/description">label</em>)
-       
+
         <div tal:replace="structure python:widget.render('view', ds, dm)" />
       </tal:block>
     </td>
   </tr>
 </table>
-<input type="submit" name="cpsdocument_edit_button" value="Envoyer" />
 </form>
 </tal:block>

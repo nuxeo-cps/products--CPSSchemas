@@ -4,7 +4,7 @@
                    ok options/ok|python:1;
                   ">
 <form action="." method="POST" enctype="multipart/form-data"
-  tal:attributes="action string:cpsdocument_edit_form">
+  tal:attributes="action string:cpsdocument_form_view">
 <table width="100%" cellpadding="2" cellspacing="2" border="0">
   <tr tal:condition="not:ok">
     <td tal:attributes="colspan layout/ncols">
@@ -24,7 +24,7 @@
     </td>
   </tr>
 </table>
-<input type="submit" name="cpsdocument_edit_button" value="button_change"
+<input type="submit" name="cpsdocument_edit_button" value="button_submit"
   i18n:attributes="value" />
 </form>
 </tal:block>

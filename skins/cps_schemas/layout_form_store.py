@@ -3,9 +3,5 @@
 """Called when a form is validated by the user.
 
 """
-
-raise 'ok', 'data is %s' % (datamodel,)
-pass
-
-
+context.REQUEST.RESPONSE.redirect(context.absolute_url()+'/cpsdocument_form_view')
 
