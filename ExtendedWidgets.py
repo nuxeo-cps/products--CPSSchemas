@@ -855,7 +855,7 @@ class CPSGenericSelectWidget(CPSWidget):
         # accept blank values if they were in the vocabulary (e.g
         # blank_value_ok_if_required = 1)
         {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
-         'label': "Accept blank values (defined in vocabulary) when validating if the widget is required and the vocabulary holds blank values"},
+         'label': "Accept blank values when validating"},
         )
     render_formats = ['select', 'radio']
 
