@@ -121,6 +121,12 @@ class Layout(PropertiesPostProcessor,
     _properties = (
         {'id': 'style_prefix', 'type': 'string', 'mode': 'w',
          'label': 'Prefix for zpt'},
+        {'id': 'layout_create_method', 'type': 'string', 'mode': 'w',
+         'label': 'ZPT in charge of layout when in create mode'},
+        {'id': 'layout_edit_method', 'type': 'string', 'mode': 'w',
+         'label': 'ZPT in charge of layout when in edit mode'},
+        {'id': 'layout_view_method', 'type': 'string', 'mode': 'w',
+         'label': 'ZPT in charge of layout when in view mode'},
         {'id': 'flexible_widgets', 'type': 'tokens', 'mode': 'w',
          'label': 'Allowed widgets in flexible'},
         {'id': 'validate_values_expr', 'type': 'text', 'mode': 'w',
@@ -129,6 +135,9 @@ class Layout(PropertiesPostProcessor,
         )
 
     style_prefix = 'layout_default_'
+    layout_create_method = None
+    layout_edit_method = None
+    layout_view_method = None
     flexible_widgets = []
     validate_values_expr = ''
     validate_values_expr_c = None
@@ -365,14 +374,24 @@ class Layout(PropertiesPostProcessor,
                           **kw):
         """Applies the layout style method to the rendered widgets.
 
-        Returns the rendered string.
+        Returns the rendered string. The rendered string is computed according
+        to the following properties and in decreasing order of precedence:
+        "layout_create_method", "layout_create_method", "layout_create_method"
+        and "style_prefix" found in the document layout definitions.
         """
         layout_mode = kw['layout_mode']
-        style_prefix = kw.get('style_prefix')
-        if not style_prefix:
-            style_prefix = self.style_prefix
-        layout_meth =  style_prefix + layout_mode
-        layout_style = getattr(context, layout_meth, None)
+        if self.layout_create_method is not None and layout_mode == 'create':
+            layout_method = self.layout_create_method
+        elif self.layout_edit_method is not None and layout_mode == 'edit':
+            layout_method = self.layout_edit_method
+        elif self.layout_view_method is not None and layout_mode == 'view':
+            layout_method = self.layout_view_method
+        else:
+            style_prefix = kw.get('style_prefix')
+            if not style_prefix:
+                style_prefix = self.style_prefix
+            layout_method =  style_prefix + layout_mode
+        layout_style = getattr(context, layout_method, None)
         if layout_style is None:
             raise ValueError("No layout method '%s' for layout '%s'" %
                              (layout_meth, self.getId()))
