@@ -27,6 +27,8 @@ Bug fixes:
 - Fixed the English translation telling the maximum size of an attached file.
 - Correct commit when a proxy is present in a datamodel for a new document.
 - Don't do properties post-processing in Layout every time it's called.
+- The URL Widget returned an empty tag (<a class="url"></a>) when there was
+  no value to display which made the 'hidden if empty' option ineffective.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Widget properties: widget_group_id was removed (not used ans not XHTML

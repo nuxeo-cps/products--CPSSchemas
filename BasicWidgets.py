@@ -404,6 +404,8 @@ class CPSURLWidget(CPSStringWidget):
                 value_for_display = value[:self.display_width] + '...'
             else :
                 value_for_display = value
+            if not value_for_display:
+                return ''
             kw = {'href': value, 'contents': value_for_display,
                   'css_class': self.css_class,
                   'target': target}
