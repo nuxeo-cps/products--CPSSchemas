@@ -248,26 +248,22 @@ class CPSDateTimeWidget(CPSWidget):
                 datamodel[field_id] = None
                 return 1
 
-        if (self.view_format.startswith('iso8601')
-            and match(r'^[0-9]+-[0-9]{2}-[0-9]{2}', date) is None):
-            LOG('CPSDateTimeWidget', DEBUG, 'iso date = %s' % date)
-            datastructure.setError(widget_id, 'cpsschemas_err_date')
-            return 0
-
-        if (not self.view_format.startswith('iso8601')
-            and match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date) is None):
-            LOG('CPSDateTimeWidget', DEBUG, 'not iso date = %s' % date)
-            datastructure.setError(widget_id, 'cpsschemas_err_date')
-            return 0
-
         if self.view_format.startswith('iso8601'):
-            y, m, d = date.split('-')
-        else:
-            locale = self.Localizer.get_selected_language()
-            if locale in ('en', 'hu'):
-                m, d, y = date.split('/')
+            if match(r'^[0-9]+-[0-9]{2}-[0-9]{2}', date) is not None:
+                y, m, d = date.split('-')
             else:
-                d, m, y = date.split('/')
+                datastructure.setError(widget_id, 'cpsschemas_err_date')
+                return 0
+        else:
+            if match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date) is not None:
+                locale = self.Localizer.get_selected_language()
+                if locale in ('en', 'hu'):
+                    m, d, y = date.split('/')
+                else:
+                    d, m, y = date.split('/')
+            else:
+                datastructure.setError(widget_id, 'cpsschemas_err_date')
+                return 0
 
         try:
             v = DateTime(int(y), int(m), int(d), int(hour), int(minute))
