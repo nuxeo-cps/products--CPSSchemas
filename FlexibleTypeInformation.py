@@ -249,14 +249,17 @@ class FlexibleTypeInformation(TypeInformation):
                 obj = ltool._getOb(layout_id)
                 self._copyPasteObject(obj, layouts)
 
-    def _getFlexibleInfo(self, n):
+    def _getFlexibleInfo(self, n=None):
         flex = []
         for s in self.flexible_layouts:
             v = s.split(':')
             if len(v) != 2:
                 raise RuntimeError("Bad syntax for flexible_layouts, must be"
                                    "'layout1:schema1 layout2:schema2 ...'")
-            flex.append(v[n])
+            if n is not None:
+                flex.append(v[n])
+            else:
+                flex.append(v)
         return flex
 
     def _getFlexibleLayouts(self):
@@ -264,6 +267,19 @@ class FlexibleTypeInformation(TypeInformation):
 
     def _getFlexibleSchemas(self):
         return self._getFlexibleInfo(1)
+
+    def _getFlexibleLayoutAndSchemaFor(self, ob, layout_id):
+        flex = self._getFlexibleInfo()
+        schema_id = None
+        for lid, sid in flex:
+            if lid == layout_id:
+                schema_id = sid
+                break
+        if sid is None:
+            raise ValueError("Layout %s is not flexible" % layout_id)
+        layout = ob._getOb('.cps_layouts')._getOb(layout_id)
+        schema = ob._getOb('.cps_schemas')._getOb(schema_id)
+        return (layout, schema)
 
     security.declarePrivate('getSchemas')
     def getSchemas(self, ob=None):
