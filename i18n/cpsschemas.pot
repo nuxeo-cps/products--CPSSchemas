@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-10-17 08:26default\n"
+"POT-Creation-Date: 2003-11-04 16:00default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -18,6 +18,28 @@ msgstr ""
 "Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+
+#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
+#.         </input>
+#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
+#.       <input value="button_ok" class="context" type="submit">
+#.     </input></input>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+#: ../skins/cps_schemas/popup_internallinks_form.pt
+msgid "button_back"
+msgstr ""
+
+#.   <input value="button_ok" class="context" type="submit">
+#.     </input>
+#: from ../skins/cps_schemas/popup_internallinks_form.pt
+msgid "button_ok"
+msgstr ""
+
+#.   <input value="button_search" class="context" type="submit">
+#.         </input>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "button_search"
+msgstr ""
 
 #.   <span>at</span>
 #: from ../skins/cps_schemas/widget_date_render.pt
@@ -51,9 +73,14 @@ msgstr ""
 msgid "cpsschemas_label_file_delete"
 msgstr ""
 
-#.   <label attributes="for string:${radio_name}_keep">Keep</label>
+#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_keep"
+msgstr ""
+
+#.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschemas_label_file_none"
 msgstr ""
 
 #.   <td>name</td>
@@ -127,7 +154,7 @@ msgstr ""
 msgid "cpsschemas_err_long"
 msgstr ""
 
-msgid "cpsschemas_err_long_out_of_limits"
+msgid "cpsschemas_err_long_range"
 msgstr ""
 
 msgid "cpsschemas_err_float_positive"
