@@ -11,17 +11,17 @@
     tal:content="structure value" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
-   <button type="button" style="float: right;"
-    tal:condition="python:rformat=='html' or here.configurable"
-    tal:attributes="onclick
-      string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
-    >...</button>
   <textarea
     tal:attributes="id value_name;
                     name value_name;
                     cols here/width;
                     rows here/height;"
     tal:content="value" />
+   <button type="button" style="float: right;"
+    tal:condition="python:rformat=='html' or here.configurable"
+    tal:attributes="onclick
+      string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
+    >...</button><br>
   <div tal:condition="here/configurable"
     tal:define="rposition_name string:${value_name}_rposition;
                 rformat_name string:${value_name}_rformat;">
