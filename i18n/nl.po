@@ -1,0 +1,366 @@
+# translation of fr.po to ben
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+# ben <ben@nuxeo.com>, 2003
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-15 17:23default\n"
+"PO-Revision-Date: 2004-01-22 11:40+0100\n"
+"Last-Translator: Christian Czerwinski <christian.czerwinski@ncgey.be>\n"
+"Language-Team: ben\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#.   <input value="button_add" type="submit">
+#.         </input>
+#.   <input value="button_add" name="vocabulary_addkey:method" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "button_add"
+msgstr "Terug"
+
+#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
+#.         </input>
+#.   <input onclick="javascript:history.back()" class="standalone" type="button" value="button_back">
+#.       <input value="button_ok" class="context" type="submit">
+#.     </input></input>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+#: ../skins/cps_schemas/popup_internallinks_form.pt
+msgid "button_back"
+msgstr "Terug"
+
+#.   <input onclick="window.close()" class="context" type="button" value="button_cancel">
+#.     <input value="button_update" class="standalone" type="submit">
+#.   </input></input>
+#: from ../skins/cps_schemas/popup_rte_form.pt
+msgid "button_cancel"
+msgstr "Terug"
+
+#.   <input value="button_delete" type="submit">
+#.         </input>
+#.   <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "button_delete"
+msgstr "Schrappen"
+
+#.   <input value="button_edit" type="submit">
+#.         </input>
+#.   <input value="button_edit" name="vocabulary_update:method" type="submit">
+#.     <input value="button_delete" name="vocabulary_delkeys:method" type="submit">
+#.   </input></input>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "button_edit"
+msgstr "Wijzig"
+
+#.   <input value="button_ok" class="context" type="submit">
+#.     </input>
+#: from ../skins/cps_schemas/popup_internallinks_form.pt
+msgid "button_ok"
+msgstr "Ok"
+
+#.   <button condition="python:rformat=='html' or configurable.find('format')>=0" attributes="onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}');;" type="button">...</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_rte"
+msgstr "..."
+
+#.   <input value="button_search" class="context" type="submit">
+#.         </input>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "button_search"
+msgstr "Zoeken"
+
+#.   <input value="button_update" class="standalone" type="submit">
+#.   </input>
+#: from ../skins/cps_schemas/popup_rte_form.pt
+msgid "button_update"
+msgstr "Bijwerken"
+
+#.   <span>at</span>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_at"
+msgstr "aan"
+
+#.   <span>h</span>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_hour"
+msgstr "h"
+
+#.   <a attributes="href preview_id" href="http://url..." target="_blank">
+#.          (preview)
+#.         </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+msgid "cpsschema_link_preview"
+msgstr "(Versie HTML)"
+
+#.   <span>mn</span>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_minute"
+msgstr "mn"
+
+#.   <span>resize</span>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr "Formaat&nbsp;: "
+
+#.   <label>Change</label>
+#.   <label attributes="for string:${radio_name}_change">Change</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_change"
+msgstr "Laden"
+
+#.   <label>Delete</label>
+#.   <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_delete"
+msgstr "Afschaffen"
+
+#.   <label>Keep</label>
+#.   <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_keep"
+msgstr "Bewaren"
+
+#.   <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_none"
+msgstr "Niemand"
+
+#.   <span>cpsschemas_photo_subtitle</span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr "Onderschrift&nbsp;: "
+
+#.   <span>cpsschemas_render_format</span>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_format"
+msgstr "Formaat&nbsp;: "
+
+#.   <div class="label">cpsschemas_render_position</div>
+#.   <span>cpsschemas_render_position</span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_position"
+msgstr "Positie&nbsp;: "
+
+#.   <h2>cpsschemas_vocabulary_add</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_add"
+msgstr "Toevoegen een woordenlijst"
+
+#.   <h2>cpsschemas_vocabulary_available</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_available"
+msgstr "Beschikbare woordenlijst"
+
+#.   <span class="description">cpsschemas_vocabulary_contains
+#.     ${voc_entries (tal replace="python:len(keys)")}
+#.     entry(ies)</span>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
+msgstr "Dit woordenlijst bevat ${voc_entries} ingegaan"
+
+#.   <h2>cpsschemas_vocabulary_delete</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_delete"
+msgstr "Afschaffen"
+
+#.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_edit ${voc_id}"
+msgstr "Uitgave van het woordenlijst «&nbsp,${voc_id}&nbsp;»"
+
+#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_entry_add"
+msgstr "Een toegang toevoegen"
+
+#.   <th>Id:</th>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_id"
+msgstr "Identificatie&nbsp;:"
+
+#.   <th>Key:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_key"
+msgstr "Key&nbsp;:"
+
+#.   <h1>cpsschemas_vocabulary_manage</h1>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_manage"
+msgstr "Beleid van het woordenlijst"
+
+#.   <th>MsgId:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_msgid"
+msgstr "MsgId&nbsp;:"
+
+#.   <th>Value:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_value"
+msgstr "Waarde&nbsp;:"
+
+#.   <em content="err" style="color: red">err</em>
+#: from ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_textimage_render.pt
+msgid "err"
+msgstr ""
+
+#.   <th>
+#.           Click on the chosen value
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_click_chosen_value"
+msgstr "Klikt op de gewilde waarde&nbsp;:"
+
+#.   <th>
+#.           Enter a search term:
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_enter_searched_value"
+msgstr "Gaat een termijn van onderzoek in&nbsp;:"
+
+msgid "cpsschemas_err_string"
+msgstr "Keten van invalide karakter"
+
+msgid "cpsschemas_err_string_too_long"
+msgstr "Te lange keten van karakter"
+
+msgid "cpsschemas_err_required"
+msgstr "Verplicht veld"
+
+msgid "cpsschemas_err_textarea"
+msgstr "Invalide tekst"
+
+msgid "cpsschemas_err_select"
+msgstr "Invalide selectie"
+
+msgid "cpsschemas_err_multiselect"
+msgstr "Invalide veelvoudige selectie"
+
+msgid "cpsschemas_err_boolean"
+msgstr "Invalid boolean"
+
+msgid "cpsschemas_err_int"
+msgstr "Invalid int "
+
+msgid "cpsschemas_err_date"
+msgstr "Formaat van invalide datum"
+
+msgid "cpsschemas_err_file"
+msgstr "Invalid file"
+
+msgid "cpsschemas_err_file_too_big"
+msgstr "te omvangrijk bestand"
+
+msgid "cpsschemas_err_file_empty"
+msgstr "leeg bestand"
+
+msgid "cpsschemas_err_image"
+msgstr "Invalid image"
+
+msgid "cpsschemas_err_url"
+msgstr "Invalid URL"
+                                          
+msgid "cpsschemas_err_long"
+msgstr "Invalid long integer"
+                                          
+msgid "cpsschemas_err_long_range"
+msgstr "Long integer out of range"
+
+msgid "cpsschemas_err_float_positive"
+msgstr "This float must be positive"
+
+msgid "cpsschemas_err_float_range"
+msgstr "Float out of range"
+
+msgid "cpsschemas_err_float"
+msgstr "Invalid float"
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+msgid "jscalendar_date_fmt"
+msgstr "d/m/y"
+
+msgid "cpsschemas_rposition_normal"
+msgstr "Breedte van de bladzijde"
+
+msgid "cpsschemas_rposition_col_right"
+msgstr "Kolom aan de rechterkant"
+
+msgid "cpsschemas_rposition_col_left"
+msgstr "Kolom aan de linkerkant"
+
+msgid "cpsschemas_rposition_left"
+msgstr "Aan de linkerkant"
+
+msgid "cpsschemas_rposition_right"
+msgstr "Aan de rechterkant"
+
+msgid "cpsschemas_rposition_center"
+msgstr "In het centrum"
+
+msgid "cpsschemas_rformat_text"
+msgstr "Tekst"
+
+msgid "cpsschemas_rformat_html"
+msgstr "HTML"
+
+msgid "cpsschemas_rformat_stx"
+msgstr "Gestructureerde tekst Zope"
+
+msgid "cpsschemas_rformat_pre"
+msgstr "HTML preformated"
+
+msgid "cpsschemas_rformat_original"
+msgstr "Origineel"
+
+msgid "img_auto_size"
+msgstr "Automatisch"
+
+msgid "img_icon"
+msgstr "Icon"
+
+msgid "img_xsmall"
+msgstr "Zeer klein"
+
+msgid "img_small"
+msgstr "Klein"
+
+msgid "img_medium"
+msgstr "Gemiddelde"
+
+msgid "img_large"
+msgstr "Groot"
+
+msgid "img_xlarge"
+msgstr "Zeer groot"
+
+msgid "cpsschemas_label_false"
+msgstr "Nee"
+
+msgid "cpsschemas_label_true"
+msgstr "Ja"
+
+msgid "cpsschemas_label_link_href"
+msgstr "URL"
+
+msgid "cpsschemas_label_link_content"
+msgstr "Link naam"
+
+msgid "cpsschemas_label_link_title"
+msgstr "Beschrijving"
