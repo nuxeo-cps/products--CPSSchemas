@@ -211,7 +211,7 @@ class DataModel(UserDict):
                     v = getattr(aq_base(self._ob), fieldid)
                 except AttributeError:
                     field = schema[fieldid]
-                    v = field.default # XXX use a method here
+                    v = field.getDefault()
                 self.data[fieldid] = v
 
     def _commit(self):
