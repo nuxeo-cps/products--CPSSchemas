@@ -1,18 +1,15 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 -
+
 New features:
 ~~~~~~~~~~~~~
-- Italian translation.
-- A password widget can compare its value with another one so that you can have
-  a confirm password.
 -
+
 Bug fixes:
 ~~~~~~~~~~
-- EmailWidget was always mandatory.
-- CheckBoxWidget's default should not be a list but an empty string.
-- SelectWidget in edit mode adding display current value select 
-  even if not in the vocabulary
+-
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- MultiSelect widget handle is_required property
+-

@@ -1,4 +1,25 @@
 *******************************************
+** CPSSchemas V0.14.1 [R1 build 2004/01/21-10:46 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Italian translation.
+- A password widget can compare its value with another one so that you can have
+  a confirm password.
+Bug fixes:
+~~~~~~~~~~
+- EmailWidget was always mandatory.
+- CheckBoxWidget's default should not be a list but an empty string.
+- SelectWidget in edit mode displays the current value selected
+  even if the value is not in the vocabulary
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- MultiSelect widget handle is_required property
+
+*******************************************
 ** CPSSchemas V0.14.0 [R1 build 2004-01/06-15:06 by anguenot]
 
 ZODB Requires:
