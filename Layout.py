@@ -193,8 +193,6 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                     mode = 'view'
                 else:
                     mode = 'edit'
-            elif layout_mode == 'editlayout':
-                mode = 'view'
             else:
                 raise ValueError("Unknown layout mode '%s'" % layout_mode)
             return mode
