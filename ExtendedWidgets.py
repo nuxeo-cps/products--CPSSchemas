@@ -350,6 +350,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
                 ms = self.size_max
                 if fileUpload.read(1) == '':
                     err = 'cpsschemas_err_file_empty'
+                    read_size = 0
                 else:
                     fileUpload.seek(0)
                     read_size = len(fileUpload.read(ms + 1))
