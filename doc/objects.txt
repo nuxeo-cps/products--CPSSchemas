@@ -2,41 +2,44 @@ CPS 3 Document objects
 
   This is an overview of the basic object structure used in NuxCPS3Document.
 
-  This list of classes and groups of classes will start with the ones that do not
-  rely on other classes, and work itself "upwards". This is so that you can read
-  this document from the start without having to jump around in the document.
-  It doesn't work 100%, but that's the aim. :)
+  This list of classes and groups of classes will start with the ones that
+  do not rely on other classes, and work itself "upwards". This is so that
+  you can read this document from the start without having to jump around
+  in the document. It doesn't work 100%, but that's the aim. :)
 
 
   General classes
 
-    The OrderedDictionary class is not connected to anything document-like but
-    is simply an ordered version of PersistentMapping. If it is ever useful in any
-    other product, we should probably move it to NuxCPS3 core.
+    The OrderedDictionary class is not connected to anything document-like
+    but is simply an ordered version of PersistentMapping. If it is ever
+    useful in any other product, we should probably move it to NuxCPS3 core.
 
-    DataStructure is also free of dependencies, and may have other uses completely
-    independent of CPS and even Zope, but I'll describe it here anyway as it's an
-    important and non-obvious part of the happenings.
+    DataStructure is also free of dependencies, and may have other uses
+    completely independent of CPS and even Zope, but I'll describe it here
+    anyway as it's an important and non-obvious part of the happenings.
 
 
   General to do
 
-    - Nothing has any kind of userinterface so far. Most objects do need that. Either
-      add to them to make them persistent and have a UI, or make subclasses with UI's.
-      This would be a pain with Fields, and craete lots of duplication if each field
-      had it's own UI, so for field we need a special UI. One way is to make a general
-      UI for the BasicField, and let every single subclass just have a definition of
-      fields to decide what should be shown in a nice self-referential, bootstrap-
-      yourself-into-existance structure. Formulator does this. It requires some
-      heavy thinking, but will make it much easier to make new field types.
+    - Nothing has any kind of userinterface so far. Most objects do need
+      that. Either add to them to make them persistent and have a UI, or
+      make subclasses with UI's. This would be a pain with Fields, and
+      create lots of duplication if each field had it's own UI, so for
+      field we need a special UI. One way is to make a general UI for the
+      BasicField, and let every single subclass just have a definition of
+      fields to decide what should be shown in a nice self-referential,
+      bootstrap-yourself-into-existance structure. Formulator does this.
+      It requires some heavy thinking, but will make it much easier to make
+      new field types.
 
 
   Renderers
 
-    A Renderer is an object that knows how to render a logical design element, such
-    as a combo-box or a border. There may be several different Renderers, such as
-    HtmlRender, XmlRenderer and  PdfRenderer. In this first phase only one renderer
-    will be implemented to render things within CPS pages.
+    A Renderer is an object that knows how to render a logical design
+    element, such as a combo-box or a border. There may be several different
+    Renderers, such as HtmlRender, XmlRenderer and  PdfRenderer. In this
+    first phase only one renderer will be implemented to render things
+    within CPS pages.
 
     Used by
 
@@ -44,23 +47,22 @@ CPS 3 Document objects
 
     Decisions to be taken
 
-      - When implementing each field and implementing the Renderer, we need to
-        decide exactly which design elements ti implement. This will
-        probably only be possible to decide during the actual implementation, and it
-        change in the future if new types of renderers are implemented. Once
-        renderers for web, print and data exchange has been created we should
-        have something general and solid.
+      - When implementing each field and implementing the Renderer, we need
+        to decide exactly which design elements ti implement. This will
+        probably only be possible to decide during the actual implementation,
+        and it change in the future if new types of renderers are
+        implemented. Once renderers for web, print and data exchange has been
+        created we should  have something general and solid.
 
-      - How to knit the rendering into the portal_skins. One possibility is to create
-        a MetalRenderer, where you can in the renderer define a file with METAL
-        macros that render each element.
-
+      - How to knit the rendering into the portal_skins. One possibility is
+        to create a MetalRenderer, where you can in the renderer define a
+        file with METAL macros that render each element.
 
   Fields
 
-    There are several types of fields, and more types will be needed, so they
-    should be easy to add. All fields need to inherit BasicField. Each Field
-    class needs a corresponding FieldWidget class.
+    There are several types of fields, and more types will be needed, so
+    they should be easy to add. All fields need to inherit BasicField. Each
+    Field class needs a corresponding FieldWidget class.
 
     Used by
 
@@ -75,46 +77,48 @@ CPS 3 Document objects
     Responsability
 
       - Fields are the smallest part of data validation. It's class will
-        determine the type of data contained in the field. It's class will also
-        determine which FieldWidget to use.
+        determine the type of data contained in the field. It's class will
+        also determine which FieldWidget to use.
 
       - Fields carry the information about the physical name used to store
         the data in the storage.
 
-      - Keeping default values, and returning these for non-existing required fields.
+      - Keeping default values, and returning these for non-existing required
+        fields.
 
       - Each field will validate one piece of content. It will validate that:
 
-        - The data entered in forms can be converted into the type of object used
-          for the field (such as string into DateTime)
+        - The data entered in forms can be converted into the type of object
+          used for the field (such as string into DateTime)
 
         - Required fields are not None
 
     Decisions to be taken
 
       - Should fields also carry out other validation, such as max and min
-        validation? There are higher-level validations that are necessary, such
-        as validating data across several fields. This needs to be carried out
-        either in schemas or in templates. It may be that even single-field
-        validation should be carried out in the same place for simplicity.
-        However, conversion and therefore conversion validation, is definitely
-        the responsability of the field objects.
+        validation? There are higher-level validations that are necessary,
+        such as validating data across several fields. This needs to be
+        carried out either in schemas or in templates. It may be that even
+        single-field validation should be carried out in the same place for
+        simplicity. However, conversion and therefore conversion validation,
+        is definitely the responsability of the field objects.
 
     Things to do
 
-      - Add support to change the physical field storage id (today it is always the
-        same as the field id).
+      - Add support to change the physical field storage id (today it is
+        always the same as the field id).
 
       - Add a field type registry. There are Zope support for doing this
-        so I guess using the standard Zope class registry would be the best way.
-        PluginIndexes use this, as an example of usage. The alternative would be
-        to write our own registry, which although easy, is probably not neccesary.
+        so I guess using the standard Zope class registry would be the best
+        way. PluginIndexes use this, as an example of usage. The alternative
+        would be to write our own registry, which although easy, is probably
+        not neccesary.
 
 
   FieldWidgets
 
-    Each Field has a corresponding FieldWidget. Each FieldWidget needs to inherit
-    from the BasicFieldWidget class.
+    Each Field has a corresponding FieldWidget. Each FieldWidget needs to
+    inherit from the BasicFieldWidget class.
 
     Contained by
 
@@ -130,19 +134,20 @@ CPS 3 Document objects
 
     Responsability
 
-      - The FieldWidget knows what graphical elements a field needs when it is rendered.
-        For example, a text field will need a piece of text when rendered in view mode,
-        or a text box in edit mode. A SelectionField in edit mode may be a list box, or
-        a list of checkboxes. The FieldWidget will know which to use, depending on
-        settings in the widget, and will call the Renderer to ask the renderer to draw
-        this particular graphical element.
+      - The FieldWidget knows what graphical elements a field needs when it
+        is rendered. For example, a text field will need a piece of text
+        when rendered in view mode, or a text box in edit mode. A
+        SelectionField in edit mode may be a list box, or a list of
+        checkboxes. The FieldWidget will know which to use, depending on
+        settings in the widget, and will call the Renderer to ask the
+        renderer to draw this particular graphical element.
 
 
   StorageAdapters
 
-    A StorageAdapter is a transient object that is responsible for storing and
-    retreiving the  data connected to a particular Schema. All StorageAdapters
-    inherit from BasicStorageAdapter.
+    A StorageAdapter is a transient object that is responsible for storing
+    and retreiving the  data connected to a particular Schema. All
+    StorageAdapters inherit from BasicStorageAdapter.
     The only StorageAdapter to be implemented in the first phase is
     AttributeStorageAdapter, that stores data as attributes on the document.
 
@@ -168,9 +173,10 @@ CPS 3 Document objects
 
   StorageAdapterFactories
 
-    These are objects that create StorageAdapters. They have settings for the
-    StorageAdapter behaviour. An SqlStorageAdapterFactory would have a setting
-    for which SqlConnection to use, and maybe which table to use, and so on.
+    These are objects that create StorageAdapters. They have settings for
+    the StorageAdapter behaviour. An SqlStorageAdapterFactory would have a
+    setting for which SqlConnection to use, and maybe which table to use,
+    and so on.
 
     Used by
 
@@ -185,9 +191,9 @@ CPS 3 Document objects
 
   Schema
 
-    Schemas hold a list of fields that make up one part of a documents data model.
-    There will be schemas local to a particular document type as well as inherited
-    or global schemas. Each schema has a namespace.
+    Schemas hold a list of fields that make up one part of a documents data
+    model. There will be schemas local to a particular document type as well
+    as inherited or global schemas. Each schema has a namespace.
 
     Contains
 
@@ -210,8 +216,8 @@ CPS 3 Document objects
 
   Layout
 
-    Layouts are ordered lists of FieldWidgets. These FieldWidgets all correspond to
-    one field in the schemas available to the document.
+    Layouts are ordered lists of FieldWidgets. These FieldWidgets all
+    correspond to one field in the schemas available to the document.
 
     Contains
 
@@ -224,8 +230,8 @@ CPS 3 Document objects
     Responsabilities
 
       - The layouts decide which fields to display for a document, and also
-        which order these fields are to be displayed, and how the fields are to
-        be displayed (editing / viewing / ...)
+        which order these fields are to be displayed, and how the fields
+        are to be displayed (editing / viewing / ...)
 
     To be determined
 
@@ -253,8 +259,8 @@ CPS 3 Document objects
   DataStructure
 
     This is a container of data in a "displayable" and "inputable" form.
-    This means text or numbers, as opposed to objects. The DataStructure is used
-    to display data, and to hold the data received from form input.
+    This means text or numbers, as opposed to objects. The DataStructure is
+    used to display data, and to hold the data received from form input.
 
     Responsabilities
 
@@ -265,8 +271,8 @@ CPS 3 Document objects
 
   DataModel
 
-    The model of the data contained in one document. This is a transient object
-    created when it needs to be used and then thrown away.
+    The model of the data contained in one document. This is a transient
+    object created when it needs to be used and then thrown away.
 
     Contains
 
@@ -283,23 +289,26 @@ CPS 3 Document objects
 
     Responsabilities
 
-      - Acts as a single point for retrieval and updating all the documents data,
-        independantly of where it is stored.
+      - Acts as a single point for retrieval and updating all the documents
+        data, independantly of where it is stored.
 
-      - Acts as a "data cache". It gets all data from a storage in one go, as well
-        as setting all data from one storage in one go, thereby making sure that
-        external storages isn't expensively called many times. This does mean you
-        need to "commit" the data after changing.
+      - Acts as a "data cache". It gets all data from a storage in one go,
+        as well as setting all data from one storage in one go, thereby making
+        sure that external storages isn't expensively called many times. This
+        does mean you need to "commit" the data after changing.
 
       - Creating a DataStructure from the data in the data model
 
-      - Loading the default field data when created without an associated document
+      - Loading the default field data when created without an associated
+        document
 
-      - Saving DataStructures, either to the document that is associated with the
-        DataModel, or to a new document (also used when copying, I guess?)
+      - Saving DataStructures, either to the document that is associated
+        with the DataModel, or to a new document (also used when copying, I
+        guess?)
 
     Things to do
 
-      - Implement lazyness of data retreival, for the benefit of external storages
+      - Implement lazyness of data retreival, for the benefit of external
+        storages
 
 
