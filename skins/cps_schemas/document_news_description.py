@@ -52,9 +52,10 @@
         'indexed': 1,
         },
       'newsdate': {
-        'type': 'CPS String Field',
-        'default': '01/01/2001',
+        'type': 'CPS Date Field',
+        'default': '',
         'indexed': 1,
+        'allow_none': 1,
         },
       'longTitle': {
         'type': 'CPS String Field',
@@ -64,6 +65,16 @@
       'content': {
         'type': 'CPS String Field',
         'default': 'News',
+        'indexed': 0,
+        },
+      'sticker': {
+        'type': 'CPS Image Field',
+        'default': '',
+        'indexed': 0,
+        },
+      'image': {
+        'type': 'CPS Image Field',
+        'default': '',
         'indexed': 0,
         },
       },
@@ -99,6 +110,8 @@
         'title_msgid': 'News date',
         'description': '',
         'css_class': 'title',
+        'view_format': '%d/%m/%Y',
+        'view_format_none': '-',
         },
       'longTitle': {
         'type': 'CPS String Widget',
@@ -121,6 +134,24 @@
         'heigth': '25',
         'render_mode': 'stx',
         },
+      'sticker': {
+        'type': 'CPS Image Widget',
+        'fields': ['sticker'],
+        'title': 'News sticker',
+        'title_msgid': 'News sticker',
+        'description': '',
+        'css_class': 'title',
+        'deletable': 1,
+        },
+      'image': {
+        'type': 'CPS Image Widget',
+        'fields': ['image'],
+        'title': 'News image',
+        'title_msgid': 'News image',
+        'description': '',
+        'css_class': 'title',
+        'deletable': 1,
+        },
       },
     'layout': {
       'cols': 2,
@@ -128,7 +159,8 @@
       'data': ('newsdate',
                ('title','longTitle'),
                'description',
-               'content'
+               'content',
+               ('sticker','image')
                ),
       },
     },
