@@ -15,8 +15,15 @@ class FieldTests(unittest.TestCase):
         self.failUnless(field.id == 'the_id', 'Id was not set correctly')
         self.failUnless(field.title == 'the_title', 'Title was not set correctly')
 
+    def testBasicValidation(self):
+        field = BasicField('the_id', 'the_title')
+        self.failUnless(field.validate('bimbo') == 'bimbo')
+        self.failUnlessRaises(ValueError, field.validate, None)
+        field.setDefaultValue('spam')
+        self.failUnless(field.validate(None) == 'spam')
+        field.setNotRequired()
+        self.failUnless(field.validate(None) == None)
 
-    # TODO: Test validation when that is to be implemented.
 
     # test default value handling
 

@@ -6,6 +6,7 @@ from Products.NuxCPS3Document.Layout import BasicLayout
 #from Products.NuxCPS3Document.NuxCPS3Document import NuxCPS3Document
 #from Products.NuxCPS3Document.Template import Template
 from Products.NuxCPS3Document.DataModel import DataModel
+from Products.NuxCPS3Document.Schema import Schema
 from Products.NuxCPS3Document.DataStructure import DataStructure
 from Products.NuxCPS3Document.Renderer import BasicRenderer
 from Products.NuxCPS3Document.Fields.BasicField import BasicField, BasicFieldWidget
@@ -60,14 +61,16 @@ class RenderingTests(unittest.TestCase):
     # The 50 to 99 test: Tests rendering of complete layouts and documents
     def test_50_LayoutRendering(self):
         layout = BasicLayout('id', 'title')
-        model = DataModel()
+        schema = Schema('schema', 'Schema')
         f1 = TextField('f1', 'Field1')
         f2 = TextField('f2', 'Field2')
         f3 = SelectionField('f3', 'Field3')
         f3.setOptions( ['Value1', 'Value2', 'Value3'])
-        model['f1'] = f1
-        model['f2'] = f2
-        model['f3'] = f3
+        schema['f1'] = f1
+        schema['f2'] = f2
+        schema['f3'] = f3
+        model = DataModel()
+        model.addSchema(schema)
         layout['f1'] = TextFieldWidget(f1)
         layout['f2'] = TextFieldWidget(f2)
         layout['f3'] = SelectionFieldWidget(f3)

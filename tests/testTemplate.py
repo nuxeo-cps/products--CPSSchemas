@@ -96,7 +96,7 @@ class TemplateTests(unittest.TestCase):
         template.getSchema('new')['f5'] = SelectionField('f5', 'Field5')
         template.getSchema('new')['f6'] = TextField('f6', 'Field6')
         dm = template.getDataModel()
-        fields = dm.keys()
+        fields = dm.getFieldIds()
         fields.sort()
         self.failUnless(fields == ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'])
 
@@ -113,7 +113,7 @@ class TemplateTests(unittest.TestCase):
         template.getSchema('new')['f6'] = TextField('f6', 'Field6')
         dm = template.getDataModel()
         doc = AttributeHolder()
-        for fieldid in dm.keys():
+        for fieldid in dm.getFieldIds():
             template.setData(doc, fieldid, fieldid + '_data')
             data = template.getData(doc, fieldid)
             self.failUnless(data == fieldid + '_data', 'SetData or getData failed')

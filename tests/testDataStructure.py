@@ -4,6 +4,7 @@
 import unittest
 from Products.NuxCPS3Document.DataStructure import DataStructure
 from Products.NuxCPS3Document.DataModel import DataModel
+from Products.NuxCPS3Document.Schema import Schema
 from Products.NuxCPS3Document.Fields.BasicField import BasicField
 from Products.NuxCPS3Document.Fields.TextField import TextField
 from Products.NuxCPS3Document.Fields.SelectionField import SelectionField
@@ -14,14 +15,16 @@ class DataStructureTests(unittest.TestCase):
     Also depends on some fields for testing"""
     def makeDatamodel(self):
         dm = DataModel()
+        schema = Schema('schema', 'Schema')
         f1 = TextField('f1', 'Field1')
         f2 = TextField('f2', 'Field2')
         f3 = SelectionField('f3', 'Field3')
         f3.setOptions( ['Value1', 'Value2', 'Value3'])
         f3.setDefaultValue('Value3')
-        dm['f1'] = f1
-        dm['f2'] = f2
-        dm['f3'] = f3
+        schema['f1'] = f1
+        schema['f2'] = f2
+        schema['f3'] = f3
+        dm.addSchema(schema)
         return dm
 
 
