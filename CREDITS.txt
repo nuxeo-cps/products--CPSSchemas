@@ -1,0 +1,4 @@
+Credits for the CPSSchemas product
+
+  The link_popup.gif and search_popup.gif icons are from the default Gnome
+  theme.  Many thanks to their authors for their work.
