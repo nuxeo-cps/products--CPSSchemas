@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.35.1 [R1 build 2004/12/03-12:41 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- More ExternalEditor support bugfixes for Disk File Field.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Better labels for Generic Select widget.
+
+*******************************************
 ** CPSSchemas V0.35.0 [R1 build 2004/12/02-15:38 by regebro]
 
 Requires:
