@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2003-09-30 12:45default\n"
-"PO-Revision-Date: 2003-09-30 11:11+0200\n"
+"POT-Creation-Date: 2003-09-30 16:03default\n"
+"PO-Revision-Date: 2003-09-30 16:03+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,13 @@ msgstr "at"
 #: from ../skins/cps_schemas/widget_date_render.pt
 msgid "cpsschema_hour"
 msgstr "h"
+
+#.   <a attributes="href preview_id" href="http://url..." target="_blank">
+#.          (preview)
+#.         </a>
+#: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschema_link_preview"
+msgstr "(preview)"
 
 #.   <span>mn</span>
 #: from ../skins/cps_schemas/widget_date_render.pt
@@ -87,3 +94,4 @@ msgstr "invalid image"
 
 msgid "jscalendar_date_fmt"
 msgstr "m/d/y"
+

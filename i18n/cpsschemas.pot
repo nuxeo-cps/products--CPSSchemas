@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2003-09-30 12:45default\n"
+"POT-Creation-Date: 2003-09-30 16:03default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -27,6 +27,13 @@ msgstr ""
 #.   <span>h</span>
 #: from ../skins/cps_schemas/widget_date_render.pt
 msgid "cpsschema_hour"
+msgstr ""
+
+#.   <a attributes="href preview_id" href="http://url..." target="_blank">
+#.          (preview)
+#.         </a>
+#: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschema_link_preview"
 msgstr ""
 
 #.   <span>mn</span>
