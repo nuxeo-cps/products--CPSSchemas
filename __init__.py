@@ -35,7 +35,7 @@ except ImportError:
 
 # EOF
 
-from Products.CMFCore import utils
+import Products.CMFCore
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
@@ -60,6 +60,8 @@ import DublinCorePatch
 import EpozPatch
 import DiskFile
 
+import utils
+
 tools = (
     VocabulariesTool.VocabulariesTool,
     SchemasTool.SchemasTool,
@@ -83,7 +85,7 @@ def initialize(registrar):
 #         constructors=(DiskFile.addDiskFileForm,
 #                       DiskFile.addDiskFile,)
 #         )
-    utils.ToolInit(
+    Products.CMFCore.utils.ToolInit(
         'CPS Document Tools',
         tools = tools,
         product_name = 'CPSSchemas',

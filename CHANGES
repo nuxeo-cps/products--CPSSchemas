@@ -9,4 +9,7 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Added the isProductPresent method which returns whether the product
+  corresponding to the given product name is present and ready (not broken) in
+  the current Zope instance.
+- Added the translation for the msg "action_edit_online".
