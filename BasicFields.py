@@ -170,7 +170,7 @@ InitializeClass(CPSImageField)
 
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPwdField)
-FieldRegistry.register(CPSCheckBoxField)
+#FieldRegistry.register(CPSCheckBoxField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)
