@@ -157,7 +157,7 @@ class Widget(SimpleItemWithProperties):
             return 0
 
     security.declarePrivate('getFieldInits')
-    def getFieldInits(self, ):
+    def getFieldInits(self):
         nb_field = len(self.getFieldTypes())
         if len(self.field_inits) == nb_field:
             return self.field_inits
