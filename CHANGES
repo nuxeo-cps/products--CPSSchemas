@@ -8,6 +8,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Allow for "file:///xxx" URLs
+- Compute paths to preview URLs fine.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added variable mapping to errors stored in datastructure.
