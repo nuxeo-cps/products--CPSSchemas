@@ -38,7 +38,7 @@ It is *not* a storage, it isn't persistent at all. Its purpose is:
 The storage itself is done through a storage adapter (NOTIMPLEMENTED).
 """
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, INFO
 from Acquisition import aq_base
 from UserDict import UserDict
 from cgi import escape
@@ -92,8 +92,10 @@ class DataModel(UserDict):
             schema = adapter.getSchema()
             for fieldid, field in schema.items():
                 if fields.has_key(fieldid):
-                    raise KeyError("Two schemas have field id %s "
-                                   " but field ids must be unique" % fieldid)
+                    LOG('DataModel init', INFO,
+                        "Two schemas have field id '%s' using the first shema,"
+                        " doc id: %s" % (fieldid, ob.getId()))
+                    continue
                 fields[fieldid] = field
             schemas.append(schema)
         self._schemas = tuple(schemas)
