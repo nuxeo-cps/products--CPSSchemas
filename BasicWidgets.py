@@ -176,6 +176,7 @@ class CPSStringWidget(CPSWidget):
 
 InitializeClass(CPSStringWidget)
 
+
 class CPSStringWidgetType(CPSWidgetType):
     """String widget type."""
     meta_type = "CPS String Widget Type"
@@ -218,65 +219,64 @@ InitializeClass(CPSPasswordWidgetType)
 
 ##################################################
 
-#class CPSCheckBoxWidget(CPSWidget):
-#    """CheckBox widget."""
-#    meta_type = "CPS Check Box Widget"
-#
-#    field_types = ('CPS CheckBox Field',)
-#
-#    choices = ['foo']
-#
-#    _properties = CPSWidget._properties + (
-#        {'id': 'choices', 'type': 'selection', 'mode': 'w',
-#         'label': 'choices', 'select_variable': 'all_choices',},
-#        )
-#
-#    all_choices = ['foo', 'bar']
-#
-#    def prepare(self, datastructure, datamodel):
-#        """Prepare datastructure from datamodel."""
-#        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
-#
-#    def validate(self, datastructure, datamodel):
-#        """Update datamodel from user data in datastructure."""
-#        value = datastructure[self.getWidgetId()]
-#
-#        if isinstance(value, StringType):
-#            v = list(value)
-#            #self.choices = v
-#            datamodel[self.fields[0]] = v
-#            ok = 1
-#        elif isinstance(value, ListType):
-#            datamodel[self.fields[0]] = value
-#            #self.choices  = value
-#            ok = 1
-#        else:
-#            #raise datastructure.setError(self.getWidgetId(),
-#            #                             "Bad List/String received")
-#            ok = 0
-#
-#        return ok
-#
-#    def render(self, mode, datastructure, datamodel):
-#        """Render this widget from the datastructure or datamodel."""
-#        render_method = 'widget_checkbox_render'
-#        meth = getattr(self, render_method, None)
-#        if meth is None:
-#            raise RuntimeError("Unknown Render Method %s for widget type %s"
-#                               % (render_method, self.getId()))
-#        choices = self.choices
-#        all_choices = self.all_choices
-#        return meth(mode=mode, datastructure=datastructure,
-#                    datamodel=datamodel, choices=choices, all_choices=all_choices)
-#
-#InitializeClass(CPSCheckBoxWidget)
-#
-#class CPSCheckBoxWidgetType(CPSStringWidgetType):
-#    """CheckBox widget type."""
-#    meta_type = "CPS CheckBox Widget Type"
-#    cls = CPSCheckBoxWidget
-#
-#InitializeClass(CPSCheckBoxWidgetType)
+class CPSCheckBoxWidget(CPSWidget):
+    """CheckBox widget."""
+    meta_type = "CPS CheckBox Widget"
+
+    field_types = ('CPS Int Field',)
+
+    _properties = CPSWidget._properties + (
+        {'id': 'display_true', 'type': 'string', 'mode': 'w',
+         'label': 'Display for true'},
+        {'id': 'display_false', 'type': 'string', 'mode': 'w',
+         'label': 'Display for false'},
+        )
+    display_true = "Yes"
+    display_false = "No"
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        datastructure[self.getWidgetId()] = not not datamodel[self.fields[0]]
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        value = datastructure[self.getWidgetId()]
+        datamodel[self.fields[0]] = not not value
+        return 1
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if mode == 'view':
+            # XXX L10N Should expand view mode to be able to do i18n.
+            if value:
+                return self.display_true
+            else:
+                return self.display_false
+        elif mode == 'edit':
+            widget_id = self.getHtmlWidgetId()
+            kw = {'type': 'checkbox',
+                  'name': widget_id,
+                  }
+            if value:
+                kw['checked'] = None
+            tag = renderHtmlTag('input', **kw)
+            default_tag = renderHtmlTag('input',
+                                        type='hidden',
+                                        name=widget_id+':tokens:default',
+                                        value='')
+            return default_tag+tag
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSCheckBoxWidget)
+
+
+class CPSCheckBoxWidgetType(CPSStringWidgetType):
+    """CheckBox widget type."""
+    meta_type = "CPS CheckBox Widget Type"
+    cls = CPSCheckBoxWidget
+
+InitializeClass(CPSCheckBoxWidgetType)
 
 ##################################################
 
@@ -988,7 +988,7 @@ InitializeClass(CPSRichTextEditorWidgetType)
 WidgetTypeRegistry.register(CPSCustomizableWidgetType, CPSCustomizableWidget)
 WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
-#WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
+WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
