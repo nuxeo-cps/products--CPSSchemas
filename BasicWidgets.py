@@ -67,6 +67,8 @@ def _isinstance(ob, cls):
 
 def renderHtmlTag(tagname, **kw):
     """Render an HTML tag."""
+    # The "class" key cannot be used since it is a reserved word in python, so
+    # to set the "class" attribute one has to specify the "css_class" key.
     if kw.get('css_class'):
         kw['class'] = kw['css_class']
         del kw['css_class']
