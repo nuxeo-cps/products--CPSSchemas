@@ -103,3 +103,17 @@ How to write a widget
     - A widget is not always called in the context of an existing
       document. During creation, a datamodel and datastrucure are
       constructed, but don't (yet) have an object behind them.
+
+    - A widget has a 'widget_group_id' attribute. It makes possible to catch
+      several widget in javascript with only one id. If this attribute is empty,
+      it's the unique id of the widget which used.
+
+    - A widget has 'depends_on_field_id', 'depends_on_field_value' and 
+      'display_if_depends_equals' attributes. The main idea below is if you
+      want to use javascript to toggle display of widgets, you want too that
+      they will be hidden/displayed on all rendering actions. The two first 
+      attributes define respectively the id and the value on which displaying
+      depends on. The last, 'display_if_depends_equals', if it's true the widget
+      will be displayed when the value of the field with 'depends_on_field_id'
+      is equal to 'depends_on_field_value'. If it's false, the widget wil be
+      displayed on all value, but the 'depends_on_field_value'.
