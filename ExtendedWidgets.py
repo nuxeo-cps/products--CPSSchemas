@@ -512,7 +512,7 @@ class CPSLinkWidget(CPSWidget):
                 datastructure[widget_id] = ''
                 err = 'cpsschemas_err_required'
             elif href and not match(
-                r'^((http://)|/)?([\w\~](\:|\.|\-|\/|\?|\=)?){2,}$', href):
+                r'^((http://)|/)?([\w\~](\:|\.|\-|\/|\?|\=|\&|\+)?){2,}$', href):
                 err = 'cpsschemas_err_url'
         if err:
             datastructure.setError(widget_id, err)
