@@ -101,6 +101,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         #
         {'id': 'css_class', 'type': 'string', 'mode': 'w',
          'label': 'CSS class for view'},
+        {'id': 'widget_mode_expr', 'type': 'text', 'mode': 'w',
+         'label': 'Get the widget mode from the given TAL expression'},
         )
 
     fields = []
@@ -116,6 +118,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     hidden_readonly_layout_modes = []
     hidden_empty = 0
     hidden_if_expr = ''
+    widget_mode_expr = ''
 
     widget_type = '' # Not a property by default
     field_types = []
@@ -123,9 +126,11 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
                      # using the same order as in field_types
 
     hidden_if_expr_c = None
+    widget_mode_expr_c = None
 
     _properties_post_process_tales = (
         ('hidden_if_expr', 'hidden_if_expr_c'),
+        ('widget_mode_expr', 'widget_mode_expr_c'),
         )
 
     def __init__(self, id, widgettype, **kw):
@@ -152,7 +157,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # Widget access control
     #
-    def _createHiddenExpressionContext(self, datamodel):
+    def _createExpressionContext(self, datamodel, layout_mode):
         """Create an expression context for hidden evaluation."""
         wftool = getToolByName(self, 'portal_workflow')
         portal = getToolByName(self, 'portal_url').getPortalObject()
@@ -171,6 +176,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             'proxy': proxy,
             'portal_workflow': wftool,
             'review_state': review_state,
+            'layout_mode': layout_mode,
             }
         return getEngine().getContext(data)
 
@@ -202,9 +208,15 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             return 'hidden'
         if self.hidden_if_expr_c:
             # Creating the context for evaluating the TAL expression
-            expr_context = self._createHiddenExpressionContext(datamodel)
+            expr_context = self._createExpressionContext(datamodel)
             if self.hidden_if_expr_c(expr_context):
                 return 'hidden'
+        if self.widget_mode_expr_c:
+            # Creating the context for evaluating the TAL expression
+            expr_context = self._createExpressionContext(datamodel, layout_mode)
+            mode = self.widget_mode_expr_c(expr_context)
+            if mode:
+                return mode
         readonly = None
         if layout_mode in self.hidden_readonly_layout_modes:
             readonly = self.isReadOnly(datamodel, layout_mode)
