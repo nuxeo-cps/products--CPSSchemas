@@ -13,4 +13,5 @@ Bug fixes:
 
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Field property is_indexed has been renamed to is_searchabletext.
+  Update your schemas and schema creation scripts if needed.

@@ -80,8 +80,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': "Id"},
         {'id': 'default_expr', 'type': 'string', 'mode': 'w',
          'label': "Default value expression"},
-        {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
-         'label': "Indexed in SearchableText"},
+        {'id': 'is_searchabletext', 'type': 'boolean', 'mode': 'w',
+         'label': "Indexed by SearchableText"},
         {'id': 'acl_read_permissions', 'type': 'string', 'mode': 'w',
          'label': "ACL: read permissions"},
         {'id': 'acl_read_roles', 'type': 'string', 'mode': 'w',
@@ -113,7 +113,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         )
 
     default_expr = 'string:'
-    is_indexed = 0
+    is_searchabletext = 0
     acl_read_permissions = ''
     acl_read_roles = ''
     acl_read_expr = ''

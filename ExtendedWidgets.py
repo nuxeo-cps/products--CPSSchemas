@@ -48,7 +48,7 @@ class CPSTextWidget(CPSStringWidget):
     field_types = ('CPS String Field',  # text value
                    'CPS String Field',  # render_position if configurable
                    'CPS String Field')  # render_format if configurable
-    field_inits = ({'is_indexed': 1,}, {}, {})
+    field_inits = ({'is_searchabletext': 1,}, {}, {})
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
@@ -275,13 +275,13 @@ class CPSAttachedFileWidget(CPSFileWidget):
 
     # XXX The second and third fields are actually optional...
     field_types = ('CPS File Field', 'CPS String Field', 'CPS File Field')
-    field_inits = ({'is_indexed': 0,
+    field_inits = ({'is_searchabletext': 0,
                     'suffix_text': '_f1', # _f# are autocomputed field ext
                     'suffix_html': '_f2',
                     },
-                   {'is_indexed': 1,
+                   {'is_searchabletext': 1,
                     },
-                   {'is_indexed': 0,
+                   {'is_searchabletext': 0,
                     },
                    )
 
@@ -381,7 +381,7 @@ class CPSRichTextEditorWidget(CPSWidget):
     meta_type = "CPS Rich Text Editor Widget"
 
     field_types = ('CPS String Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     width = 40
     height = 5
@@ -487,7 +487,7 @@ class CPSInternalLinksWidget(CPSWidget):
     meta_type = "CPS InternalLinks Widget"
 
     field_types = ('CPS String List Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     _properties = CPSWidget._properties + (
         {'id': 'new_window', 'type': 'boolean', 'mode': 'w',
@@ -551,7 +551,7 @@ class CPSPhotoWidget(CPSImageWidget):
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Sub title
                    'CPS String Field',) # render_position if configurable
-    field_inits = ({}, {'is_indexed': 1,}, {})
+    field_inits = ({}, {'is_searchabletext': 1,}, {})
 
     _properties = CPSImageWidget._properties + (
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',

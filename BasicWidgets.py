@@ -190,7 +190,7 @@ class CPSStringWidget(CPSWidget):
     meta_type = "CPS String Widget"
 
     field_types = ('CPS String Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     display_width = 20
     size_max = 0
@@ -513,7 +513,7 @@ class CPSTextAreaWidget(CPSWidget):
     meta_type = "CPS TextArea Widget"
 
     field_types = ('CPS String Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
@@ -595,7 +595,7 @@ class CPSLinesWidget(CPSWidget):
     meta_type = "CPS Lines Widget"
 
     field_types = ('CPS String List Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     width = 40
     height = 5
@@ -739,7 +739,7 @@ class CPSSelectWidget(CPSWidget):
     meta_type = "CPS Select Widget"
 
     field_types = ('CPS String Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     vocabulary = ''
     _properties = CPSWidget._properties + (
@@ -815,7 +815,7 @@ class CPSMultiSelectWidget(CPSWidget):
     meta_type = "CPS MultiSelect Widget"
 
     field_types = ('CPS String List Field',)
-    field_inits = ({'is_indexed': 1,},)
+    field_inits = ({'is_searchabletext': 1,},)
 
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
