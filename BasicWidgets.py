@@ -1159,9 +1159,14 @@ class CPSFileWidget(CPSWidget):
         if ob is None: # Not stored in the ZODB.
             # StorageAdapters that do not store the object in
             # ZODB takes the entry_id instead of object.
-            #id_field = dm.getContext().id_field
-            #entry_id = datastructure[id_field]
-            entry_id = datastructure[field_id]
+            # Get the entry_id from the datamodel context(typically
+            # a directory).
+            id_field = getattr(dm.getContext(), 'id_field')
+            if id_field:
+                entry_id = datastructure[id_field]
+            else:
+                # No object passed, and no id_field
+                entry_id = None
             if entry_id:
                 content_url = adapter._getContentUrl(entry_id, field_id)
             else:
