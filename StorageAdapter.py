@@ -104,6 +104,16 @@ class AttributeStorageAdapter(BasicStorageAdapter):
         self._ob = ob
         BasicStorageAdapter.__init__(self, schema)
 
+    def setContextObject(self, ob):
+        """Set a new underlying object for this adapter.
+
+        If a getData/setData is later done, it will be done on this new
+        object.
+
+        This is used by CPS to switch to a writable object after unfreezing.
+        """
+        self._ob = ob
+
     def _get(self, field_id):
         """Get the value or returns Missing.Value."""
         ob = self._ob
