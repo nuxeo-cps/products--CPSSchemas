@@ -88,4 +88,15 @@ class FolderWithPrefixedIds(Folder):
                 keys.append(id[prefixlen:])
         return keys
 
+    security.declareProtected(AccessContentsInformation, 'items')
+    def items(self):
+        """Return items, ids without prefix."""
+        items = []
+        prefix = self.prefix
+        prefixlen = len(prefix)
+        for id, value in self.objectItems():
+            if id.startswith(prefix):
+                items.append((id[prefixlen:], value))
+        return items
+
 InitializeClass(FolderWithPrefixedIds)
