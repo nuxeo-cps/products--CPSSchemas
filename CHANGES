@@ -8,6 +8,9 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - old CPSDocument using deprecated CPSLinkWidget (not the compound) can be viewed
+- CPSImageWidget, CPSPhotoWidget and CPSAttachedFileWidget all assumed that the
+  data was stored as a ZODB attribute. Now they instead ask the StorageAdapter for
+  the URL to the content.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added the possibility to restrict the fields managed by a storage adapter.
