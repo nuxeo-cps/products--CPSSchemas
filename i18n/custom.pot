@@ -76,6 +76,21 @@ msgstr ""
 msgid "cpsschemas_err_password_mismatch"
 msgstr ""
 
+msgid "cpsschemas_err_password_size_min"
+msgstr ""
+
+msgid "cpsschemas_err_password_lower"
+msgstr ""
+
+msgid "cpsschemas_err_password_upper"
+msgstr ""
+
+msgid "cpsschemas_err_password_digit"
+msgstr ""
+
+msgid "cpsschemas_err_password_extra"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""
 
@@ -147,3 +162,4 @@ msgstr ""
 
 msgid "cpsschemas_label_link_title"
 msgstr ""
+

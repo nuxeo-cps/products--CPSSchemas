@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-15 17:23default\n"
+"POT-Creation-Date: 2004-01-23 10:42default\n"
 "PO-Revision-Date: 2004-01-22 11:40+0100\n"
 "Last-Translator: Christian Czerwinski <christian.czerwinski@ncgey.be>\n"
 "Language-Team: ben\n"
@@ -274,10 +274,10 @@ msgstr "Invalid image"
 
 msgid "cpsschemas_err_url"
 msgstr "Invalid URL"
-                                          
+
 msgid "cpsschemas_err_long"
 msgstr "Invalid long integer"
-                                          
+
 msgid "cpsschemas_err_long_range"
 msgstr "Long integer out of range"
 
@@ -291,6 +291,26 @@ msgid "cpsschemas_err_float"
 msgstr "Invalid float"
 
 msgid "cpsschemas_err_password_mismatch"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_size_min"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_lower"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_upper"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_digit"
+msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+
+#, fuzzy
+msgid "cpsschemas_err_password_extra"
 msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
 
 msgid "jscalendar_date_fmt"

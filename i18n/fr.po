@@ -1,21 +1,22 @@
 # translation of fr.po to ben
 # Gettext Message File for default.
 # Your Name <your@email>, Year
-# ben <ben@nuxeo.com>, 2003
-# 
-# 
+# ben <ben@nuxeo.com>, 2003,2004
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-15 17:23default\n"
-"PO-Revision-Date: 2004-01-15 16:07+0100\n"
+"POT-Creation-Date: 2004-01-23 10:42default\n"
+"PO-Revision-Date: 2004-01-23 10:46+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.0.1\n"
 
 #.   <input value="button_add" type="submit">
 #.         </input>
@@ -293,6 +294,21 @@ msgstr "Nombre flottant invalide"
 msgid "cpsschemas_err_password_mismatch"
 msgstr "Votre mot de passe et sa confirmation ne correspondent pas"
 
+msgid "cpsschemas_err_password_size_min"
+msgstr "Votre mot de passe est trop court"
+
+msgid "cpsschemas_err_password_lower"
+msgstr "Votre mot de passe doit contenir au moins une miniscule"
+
+msgid "cpsschemas_err_password_upper"
+msgstr "Votre mot de passe doit contenir au moins une lettre capital"
+
+msgid "cpsschemas_err_password_digit"
+msgstr "Votre mot de passe doit contenir au moin un chiffre"
+
+msgid "cpsschemas_err_password_extra"
+msgstr "Votre mot de passe doit contenir au moins un caractére special autre qu'une lettre ou un chiffre"
+
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
 
@@ -404,3 +420,4 @@ msgstr "Description"
 #, fuzzy
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Format de date invalide"
+

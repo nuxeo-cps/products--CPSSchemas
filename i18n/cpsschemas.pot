@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-01-15 17:23default\n"
+"POT-Creation-Date: 2004-01-23 10:42default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -293,6 +293,21 @@ msgid "cpsschemas_err_float"
 msgstr ""
 
 msgid "cpsschemas_err_password_mismatch"
+msgstr ""
+
+msgid "cpsschemas_err_password_size_min"
+msgstr ""
+
+msgid "cpsschemas_err_password_lower"
+msgstr ""
+
+msgid "cpsschemas_err_password_upper"
+msgstr ""
+
+msgid "cpsschemas_err_password_digit"
+msgstr ""
+
+msgid "cpsschemas_err_password_extra"
 msgstr ""
 
 msgid "jscalendar_date_fmt"

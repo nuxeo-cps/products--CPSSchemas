@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-15 17:23default\n"
+"POT-Creation-Date: 2004-01-23 10:42default\n"
 "PO-Revision-Date: 2004-01-15 16:02+0100\n"
 "Last-Translator: Paolo Dina <paolo@php3.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -288,6 +288,26 @@ msgid "cpsschemas_err_float"
 msgstr "Numero decimale non valido"
 
 msgid "cpsschemas_err_password_mismatch"
+msgstr "La password e la conferma non coincidono"
+
+#, fuzzy
+msgid "cpsschemas_err_password_size_min"
+msgstr "La password e la conferma non coincidono"
+
+#, fuzzy
+msgid "cpsschemas_err_password_lower"
+msgstr "La password e la conferma non coincidono"
+
+#, fuzzy
+msgid "cpsschemas_err_password_upper"
+msgstr "La password e la conferma non coincidono"
+
+#, fuzzy
+msgid "cpsschemas_err_password_digit"
+msgstr "La password e la conferma non coincidono"
+
+#, fuzzy
+msgid "cpsschemas_err_password_extra"
 msgstr "La password e la conferma non coincidono"
 
 msgid "jscalendar_date_fmt"
