@@ -1333,7 +1333,7 @@ class CPSImageWidget(CPSFileWidget):
                     file.seek(0)
                     fileid, filetitle = cookId('', '', file)
                     registry = getToolByName(self, 'mimetypes_registry')
-                    mimetype = registry.lookupExtension(filetitle)
+                    mimetype = registry.lookupExtension(fileid.lower())
                     if (not mimetype or
                         not mimetype.normalized().startswith('image')):
                         err = 'cpsschemas_err_image'
