@@ -1805,15 +1805,7 @@ class CPSImageWidget(CPSFileWidget):
                     err = 'cpsschemas_err_file_too_big'
                 else:
                     file.seek(0)
-                    fileid, filetitle = cookId('', filetitle, file)
-                    # important: cookId always returns a non-empty
-                    # string value for filetitle;
-                    # if the given filetitle argument is an empty string,
-                    # the filename is returned;
-                    # in order to allow empty titles we set to ''
-                    # a filetitle found identical to filename
-                    if fileid == filetitle:
-                        filetitle = ''
+                    fileid = cookId('', '', file)[0]
                     registry = getToolByName(self, 'mimetypes_registry')
                     mimetype = registry.lookupExtension(fileid.lower())
                     if (not mimetype or
