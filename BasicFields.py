@@ -67,7 +67,7 @@ class CPSLongField(CPSField):
     """Long field."""
     meta_type = "CPS Long Field"
 
-    default_expression_str = 'python:0'
+    default_expression_str = 'python:0L'
     default_expression = Expression(default_expression_str)
 
     def validate(self, value):
