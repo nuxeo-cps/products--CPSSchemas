@@ -1,103 +1,103 @@
 <tal:block define="mode options/mode;
-                   id here/getWidgetId;
-                   content_url options/content_url;
-                   image_tag options/image_tag;
-                   current_name options/current_name;
-                   empty_file options/empty_file;
-                   current_title options/current_title;
-                   mimetype options/mimetype;
-                   last_modified options/last_modified;
-                  ">
-<img tal:condition="python: mode == 'view' and not empty_file"
-     tal:replace="structure image_tag" />
-<tal:block condition="python: mode == 'edit'" tal:define="img_resize python:1">
+  id here/getWidgetId;
+  content_url options/content_url;
+  image_tag options/image_tag;
+  current_name options/current_name;
+  empty_file options/empty_file;
+  current_title options/current_title;
+  mimetype options/mimetype;
+  last_modified options/last_modified;
+  ">
+  <img tal:condition="python: mode == 'view' and not empty_file"
+    tal:replace="structure image_tag" />
+  <tal:block condition="python: mode == 'edit'" tal:define="img_resize python:1">
 
-<metal:block define-macro="file_title_edit">
-<table cellpadding="0" cellspacing="0" border="0" 
-    summary="image alternative text edit" tal:define="name here/getHtmlWidgetId;
-                title_name string:${name}_title;"> 
-  <tr>
-    <td align="left" i18n:translate="label_alt_text">
-     Alternative text
-    </td>
-    <td>
-        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
+    <metal:block define-macro="file_title_edit">
+      <table cellpadding="0" cellspacing="0" border="0" 
+        summary="image alternative text edit" tal:define="name here/getHtmlWidgetId;
+        title_name string:${name}_title;"> 
+        <tr>
+          <td align="left" i18n:translate="label_alt_text">
+            Alternative text
+          </td>
+          <td>
+            <input style="margin-left: 5px" type="text" size="30" maxlength="80"
               tal:attributes="name title_name;
               value current_title">
-    </td>
-  </tr>
-</table>
-</metal:block>
+          </td>
+        </tr>
+      </table>
+    </metal:block>
 
-<img tal:condition="python: not empty_file"
-       tal:replace="structure image_tag" />
+    <img tal:condition="python: not empty_file"
+      tal:replace="structure image_tag" />
 
-<metal:block define-macro="file_edit">
-  <table cellpadding="0" cellspacing="0" border="0"
-    summary="file edit form"
-    tal:define="name here/getHtmlWidgetId;
-                radio_name string:${name}_choice;">
-    <tr>
-      <td valign="middle" nowrap="nowrap">
-        <input type="radio" class="noborder" name="." value="keep"
-          checked="checked"
-          tal:attributes="name radio_name;
-                          id string:${radio_name}_keep" />
-        <label i18n:translate="cpsschemas_label_file_none"
-          tal:condition="empty_file"
-          tal:attributes="for string:${radio_name}_keep">None</label>
-        <label i18n:translate="cpsschemas_label_file_keep"
-          tal:condition="not: empty_file"
-          tal:attributes="for string:${radio_name}_keep">Keep</label>
-      </td>
-      <td valign="middle">
-        <a href="http://url..." target="_blank"
-          tal:condition="python: not empty_file"
-          tal:attributes="href string:${content_url}?nocache=${last_modified}">
-        <tal:block condition="mimetype"
-          replace="structure python:here.getImgTag(mimetype.icon_path,
-          title=mimetype.name())" />
-        <tal:block replace="current_name" />
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td valign="middle" nowrap="nowrap">
-        <input type="radio" class="noborder"  name="." value="change"
-               tal:attributes="name radio_name;
-                               id string:${radio_name}_change" />
-        <label i18n:translate="cpsschemas_label_file_change"
-               tal:attributes="for string:${radio_name}_change">Change</label>
-        &nbsp;
-      </td>
-      <td valign="middle">
-        <input type="file" name="."
-               tal:attributes="name name;
-                   onclick string:document.getElementById('${radio_name}_change').checked='checked'
-    " />
-        <tal:block condition="here/allow_resize|nothing">
-        <span i18n:translate="cpsschemas_image_resize">resize</span>
-        <select tal:attributes="name string:${name}_resize"
-          tal:define="wid_size python:(here.display_width, here.display_height);
-          sizes python:[s for s in here.getImgSizes() if not wid_size[0] or s['size'] < wid_size]">
-          <option tal:repeat="op sizes"
-            tal:attributes="value op/id"
-            tal:content="op/id" i18n:translate="" />
-        </select>
-        </tal:block>
-      </td>
-    </tr>
-    <tr tal:condition="python:here.deletable and not empty_file">
-      <td valign="middle" colspan="2" nowrap="nowrap">
-        <input type="radio" class="noborder" name="." value="delete"
-               tal:attributes="name radio_name;
-                               id string:${radio_name}_delete" />
-        <label i18n:translate="cpsschemas_label_file_delete"
-               tal:attributes="for string:${radio_name}_delete">Delete</label>
-      </td>
-    </tr>
-  </table>
-</metal:block>
+    <metal:block define-macro="file_edit">
+      <table cellpadding="0" cellspacing="0" border="0"
+        summary="file edit form"
+        tal:define="name here/getHtmlWidgetId;
+        radio_name string:${name}_choice;">
+        <tr>
+          <td valign="middle" nowrap="nowrap">
+            <input type="radio" class="noborder" name="." value="keep"
+              checked="checked"
+              tal:attributes="name radio_name;
+              id string:${radio_name}_keep" />
+            <label i18n:translate="cpsschemas_label_file_none"
+              tal:condition="empty_file"
+              tal:attributes="for string:${radio_name}_keep">None</label>
+            <label i18n:translate="cpsschemas_label_file_keep"
+              tal:condition="not: empty_file"
+              tal:attributes="for string:${radio_name}_keep">Keep</label>
+          </td>
+          <td valign="middle">
+            <a href="http://url..." target="_blank"
+              tal:condition="python: not empty_file"
+              tal:attributes="href string:${content_url}?nocache=${last_modified}">
+              <tal:block condition="mimetype"
+                replace="structure python:here.getImgTag(mimetype.icon_path,
+                title=mimetype.name())" />
+              <tal:block replace="current_name" />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" nowrap="nowrap">
+            <input type="radio" class="noborder"  name="." value="change"
+              tal:attributes="name radio_name;
+              id string:${radio_name}_change" />
+            <label i18n:translate="cpsschemas_label_file_change"
+              tal:attributes="for string:${radio_name}_change">Change</label>
+            &nbsp;
+          </td>
+          <td valign="middle">
+            <input type="file" name="."
+              tal:attributes="name name;
+              onclick string:document.getElementById('${radio_name}_change').checked='checked'
+              " />
+            <tal:block condition="here/allow_resize|nothing">
+              <span i18n:translate="cpsschemas_image_resize">resize</span>
+              <select tal:attributes="name string:${name}_resize"
+                tal:define="wid_size python:(here.display_width, here.display_height);
+                sizes python:[s for s in here.getImgSizes() if not wid_size[0] or s['size'] < wid_size]">
+                <option tal:repeat="op sizes"
+                  tal:attributes="value op/id"
+                  tal:content="op/id" i18n:translate="" />
+              </select>
+            </tal:block>
+          </td>
+        </tr>
+        <tr tal:condition="python:here.deletable and not empty_file">
+          <td valign="middle" colspan="2" nowrap="nowrap">
+            <input type="radio" class="noborder" name="." value="delete"
+              tal:attributes="name radio_name;
+              id string:${radio_name}_delete" />
+            <label i18n:translate="cpsschemas_label_file_delete"
+              tal:attributes="for string:${radio_name}_delete">Delete</label>
+          </td>
+        </tr>
+      </table>
+    </metal:block>
 
-</tal:block>
+  </tal:block>
 </tal:block>
