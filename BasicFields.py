@@ -396,6 +396,12 @@ class CPSImageField(CPSField):
             return value
         raise ValidationError('Not an image: %s' % repr(value))
 
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        if not value:
+            return []
+        return [str(value)]
+
     def convertFromLDAP(self, values):
         """Convert a value from LDAP attribute values."""
         if not values:
