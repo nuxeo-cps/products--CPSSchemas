@@ -3,9 +3,10 @@
                    ds options/datastructure">
 <tal:block condition="python: mode == 'view'"
   define="href python: cells[0]['widget_rendered'];
+          href_id python: cells[0]['widget'].getWidgetId();
+          href_url ds/?href_id;
           content python: cells[1]['widget_rendered'];
-          title python: cells[2]['widget_rendered'];
-          href_url ds/Relation">
+          title python: cells[2]['widget_rendered'];">
 <img tal:replace="structure python:here.getImgTag('link_icon.gif')" />
 <a href="" tal:attributes="href href_url;title title|nothing;
   target python: test(href_url.startswith('http'), 'CPS Link', nothing);">
