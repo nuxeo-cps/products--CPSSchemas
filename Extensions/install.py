@@ -17,19 +17,6 @@
 #
 # $Id$
 
-# to use CPSDocument in your product add the following line in your setup:
-#     #  CPSDocument installer/updater
-#     #
-#     if not portalhas('cpsdocument_installer'):
-#         from Products.ExternalMethod.ExternalMethod import ExternalMethod
-#         pr('Adding cpsdocument installer')
-#         cpsdocument_installer = ExternalMethod('cpsdocument_installer',
-#                                       'CPSDocument Updater',
-#                                       'CPSDocument.install',
-#                                       'install')
-#         portal._setObject('cpsdocument_installer', cpsdocument_installer)
-#     pr(portal.cpsdocument_installer())
-
 import os
 from App.Extensions import getPath
 from re import match
@@ -40,18 +27,18 @@ def install(self):
     _log = []
     def pr(bla, zlog=1, _log=_log):
         if bla == 'flush':
-            return '<html><head><title>CPSDocument Update</title></head><body><pre>'+ \
+            return '<html><head><title>CPSSchemas Update</title></head><body><pre>'+ \
                    '\n'.join(_log) + \
                    '</pre></body></html>'
 
         _log.append(bla)
         if (bla and zlog):
-            LOG('CPSDocument install:', INFO, bla)
+            LOG('CPSSchemas install:', INFO, bla)
 
     def prok(pr=pr):
         pr(" Already correctly installed")
 
-    pr("Starting CPSDocument install")
+    pr("Starting CPSSchemas install")
 
     portal = self.portal_url.getPortalObject()
 
@@ -60,9 +47,9 @@ def install(self):
 
 
     # skins
-    skins = ('cps_document',)
+    skins = ('cps_schemas',)
     paths = {
-        'cps_document': 'Products/CPSDocument/skins/cps_document',
+        'cps_schemas': 'Products/CPSSchemas/skins/cps_schemas',
     }
     skin_installed = 0
     for skin in skins:
@@ -103,25 +90,25 @@ def install(self):
         prok()
     else:
         pr(" Creating portal_schemas")
-        portal.manage_addProduct["CPSDocument"].manage_addTool(
+        portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Schemas Tool')
     if portalhas('portal_widgets'):
         prok()
     else:
         pr(" Creating portal_widgets")
-        portal.manage_addProduct["CPSDocument"].manage_addTool(
+        portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Widgets Tool')
     if portalhas('portal_layouts'):
         prok()
     else:
         pr(" Creating portal_layouts")
-        portal.manage_addProduct["CPSDocument"].manage_addTool(
+        portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Layouts Tool')
     if portalhas('portal_vocabularies'):
         prok()
     else:
         pr(" Creating portal_vocabularies")
-        portal.manage_addProduct["CPSDocument"].manage_addTool(
+        portal.manage_addProduct["CPSSchemas"].manage_addTool(
             'CPS Vocabularies Tool')
 
 
@@ -189,70 +176,10 @@ def install(self):
         dlist = info['data']['list']
         vtool.manage_addCPSVocabulary(id, dict=ddict, list=dlist)
 
-
-    # setup portal_type
-    pr("Verifying portal types")
-    flextypes = self.getDocumentTypes()
-    newptypes = flextypes.keys()
-    ttool = portal.portal_types
-    if 'Workspace' in ttool.objectIds():
-        workspaceACT = list(ttool['Workspace'].allowed_content_types)
-    else:
-        raise DependanceError, 'Workspace'
-    for ptype in newptypes:
-        if ptype not in  workspaceACT:
-            workspaceACT.append(ptype)
-
-    allowed_content_type = {
-                            'Workspace' : workspaceACT,
-                            }
-
-    ttool['Workspace'].allowed_content_types = allowed_content_type['Workspace']
-
-    ptypes_installed = ttool.objectIds()
-
-    for ptype, data in flextypes.items():
-        pr("  Type '%s'" % ptype)
-        if ptype in ptypes_installed:
-            ttool.manage_delObjects([ptype])
-            pr("   Deleted")
-        ti = ttool.addFlexibleTypeInformation(id=ptype)
-        ti.manage_changeProperties(**data)
-        pr("   Installation")
-
-    # check site and workspaces proxies
-    sections_id = 'sections'
-    workspaces_id = 'workspaces'
-
-    # check workflow association
-    pr("Verifying local workflow association")
-    if not '.cps_workflow_configuration' in portal[workspaces_id].objectIds():
-        raise DependanceError, 'no .cps_workflow_configuration in Workspace'
-    else:
-        wfc = getattr(portal[workspaces_id], '.cps_workflow_configuration')
-
-    for ptype in newptypes:
-        pr("  Add %s chain to portal type %s in %s of %s" %('workspace_content_wf',
-             ptype, '.cps_workflow_configuration', workspaces_id))
-        wfc.manage_addChain(portal_type=ptype,
-                            chain='workspace_content_wf')
-
-    if not '.cps_workflow_configuration' in portal[sections_id].objectIds():
-        raise DependanceError, 'no .cps_workflow_configuration in Section'
-    else:
-        wfc = getattr(portal[sections_id], '.cps_workflow_configuration')
-
-    for ptype in newptypes:
-        pr("  Add %s chain to portal type %s in %s of %s" %('section_content_wf',
-             ptype, '.cps_workflow_configuration', sections_id))
-        wfc.manage_addChain(portal_type=ptype,
-                            chain='section_content_wf')
-
-
     # importing .po files
     mcat = portal['Localizer']['default']
     pr(" Checking available languages")
-    podir = os.path.join('Products', 'CPSDocument')
+    podir = os.path.join('Products', 'CPSSchemas')
     popath = getPath(podir, 'i18n')
     if popath is None:
         pr(" !!! Unable to find .po dir")
@@ -277,5 +204,5 @@ def install(self):
                     pr( '    Skipping not installed locale for file %s' % file)
 
 
-    pr("End of specific CPSDocument install")
+    pr("End of specific CPSSchemas install")
     return pr('flush')

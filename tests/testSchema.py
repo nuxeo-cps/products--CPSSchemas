@@ -4,10 +4,10 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.Schema import CPSSchema
-from Products.CPSDocument.AttributeStorageAdapter import \
+from Products.CPSSchemas.Schema import CPSSchema
+from Products.CPSSchemas.AttributeStorageAdapter import \
     AttributeStorageAdapterFactory
-from Products.CPSDocument.Fields.TextField import TextField
+from Products.CPSSchemas.Fields.TextField import TextField
 
 class AttributeHolder:
     pass

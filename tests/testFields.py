@@ -4,9 +4,8 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.Fields.BasicField import BasicField, BasicFieldWidget
-from Products.CPSDocument.Fields.TextField import TextField, TextFieldWidget
-from Products.CPSDocument.Renderer import BasicRenderer
+from Products.CPSSchemas.Fields.BasicField import BasicField, BasicFieldWidget
+from Products.CPSSchemas.Fields.TextField import TextField, TextFieldWidget
 
 
 class BasicFieldTests(unittest.TestCase):

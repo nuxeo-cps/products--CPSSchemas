@@ -24,7 +24,7 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import UniqueObject
 
-from Products.CPSDocument.Schema import SchemaContainer
+from Products.CPSSchemas.Schema import SchemaContainer
 
 
 class SchemasTool(UniqueObject, SchemaContainer):

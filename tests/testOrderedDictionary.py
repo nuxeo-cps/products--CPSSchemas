@@ -4,7 +4,7 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.OrderedDictionary import OrderedDictionary
+from Products.CPSSchemas.OrderedDictionary import OrderedDictionary
 
 class OrderedDictionaryTests(unittest.TestCase):
     """Tests for OrderedDictionary"""

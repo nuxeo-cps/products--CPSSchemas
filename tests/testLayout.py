@@ -4,11 +4,10 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.Layout import BasicLayout
-from Products.CPSDocument.CPSDocument import CPSDocument
-from Products.CPSDocument.Template import Template
-from Products.CPSDocument.Fields.TextField import TextField, TextFieldWidget
-from Products.CPSDocument.Fields.SelectionField import SelectionField, \
+from Products.CPSSchemas.Layout import BasicLayout
+from Products.CPSSchemas.CPSSchemas import CPSSchemas
+from Products.CPSSchemas.Fields.TextField import TextField, TextFieldWidget
+from Products.CPSSchemas.Fields.SelectionField import SelectionField, \
     SelectionFieldWidget
 
 class LayoutTests(unittest.TestCase):

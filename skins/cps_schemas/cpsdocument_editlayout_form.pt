@@ -1,9 +1,0 @@
-<html metal:use-macro="here/content_lib/macros/master">
-  <body>
-
-    <div metal:fill-slot="main">
-      <div tal:replace="structure python:doc.render(mode='editlayout', proxy=here)" />
-    </div>
-
-  <body>
-</html>

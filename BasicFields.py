@@ -29,8 +29,8 @@ from DateTime.DateTime import DateTime
 from OFS.Image import File
 from OFS.Image import Image
 
-from Products.CPSDocument.Field import CPSField, FieldRegistry
-from Products.CPSDocument.Field import propertiesWithType
+from Products.CPSSchemas.Field import CPSField, FieldRegistry
+from Products.CPSSchemas.Field import propertiesWithType
 
 
 def _isinstance(ob, cls):

@@ -37,9 +37,9 @@ from Products.PythonScripts.standard import structured_text
 from Products.CMFCore.CMFCorePermissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
 
-from Products.CPSDocument.Widget import CPSWidget
-from Products.CPSDocument.Widget import CPSWidgetType
-from Products.CPSDocument.WidgetsTool import WidgetTypeRegistry
+from Products.CPSSchemas.Widget import CPSWidget
+from Products.CPSSchemas.Widget import CPSWidgetType
+from Products.CPSSchemas.WidgetsTool import WidgetTypeRegistry
 
 def _isinstance(ob, cls):
     try:

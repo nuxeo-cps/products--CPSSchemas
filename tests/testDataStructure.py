@@ -4,12 +4,12 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.DataStructure import DataStructure
-from Products.CPSDocument.DataModel import DataModel
-from Products.CPSDocument.Schema import CPSSchema
-from Products.CPSDocument.Fields.BasicField import BasicField
-from Products.CPSDocument.Fields.TextField import TextField
-from Products.CPSDocument.Fields.SelectionField import SelectionField
+from Products.CPSSchemas.DataStructure import DataStructure
+from Products.CPSSchemas.DataModel import DataModel
+from Products.CPSSchemas.Schema import CPSSchema
+from Products.CPSSchemas.Fields.BasicField import BasicField
+from Products.CPSSchemas.Fields.TextField import TextField
+from Products.CPSSchemas.Fields.SelectionField import SelectionField
 
 class DataStructureTests(unittest.TestCase):
     """Tests the DataStructure

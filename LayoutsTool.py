@@ -26,7 +26,7 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import UniqueObject
 
-from Products.CPSDocument.Layout import LayoutContainer
+from Products.CPSSchemas.Layout import LayoutContainer
 
 
 class LayoutsTool(UniqueObject, LayoutContainer):

@@ -31,52 +31,12 @@ from OFS.Folder import Folder
 
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
-from Products.CPSDocument.FolderWithPrefixedIds import FolderWithPrefixedIds
-from Products.CPSDocument.OrderedDictionary import OrderedDictionary
-from Products.CPSDocument.AttributeStorageAdapter import AttributeStorageAdapterFactory
+from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
+from Products.CPSSchemas.OrderedDictionary import OrderedDictionary
+from Products.CPSSchemas.AttributeStorageAdapter import AttributeStorageAdapterFactory
 
-from Products.CPSDocument.Field import FieldRegistry
+from Products.CPSSchemas.Field import FieldRegistry
 
-
-class OLDSchema(OrderedDictionary):
-    """Defines fields used in a document"""
-
-    # It doesn't really have to be ordered, I think a pure
-    # PersistentMapping would work. But then again, it can't hurt...
-
-    def __init__(self, adapter=None):
-        OrderedDictionary.__init__(self)
-        self._namespace = ''
-        if not adapter:
-            adapter = AttributeStorageAdapterFactory()
-        self._adapter = adapter
-
-    def setStorageAdapterFactory(self, adapter):
-        self._adapter = adapter
-
-    def getStorageAdapterFactory(self):
-        return self._adapter
-
-    def makeStorageAdapter(self, document):
-        return self._adapter.makeStorageAdapter(document, \
-                                 self.getFieldDictionary(), self._namespace)
-
-    def setNamespace(self, namespace):
-        self._namespace = namespace
-
-    def getNamespace(self):
-        return self._namespace
-
-    def getFieldStorageId(self, fieldid):
-        if self._namespace:
-            ns = self._namespace + '_'
-        else:
-            ns = ''
-        return ns + self[fieldid].getStorageId()
-
-    def getFieldDictionary(self):
-        """Returns all the fields as a dictionary"""
-        return self.data
 
 class SchemaContainer(Folder):
     """Schema Container
@@ -100,6 +60,7 @@ class SchemaContainer(Folder):
     #
     # ZMI
     #
+
     def all_meta_types(self):
         return ({'name': 'CPS Schema',
                  'action': 'manage_addCPSSchemaForm',

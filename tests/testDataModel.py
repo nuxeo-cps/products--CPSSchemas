@@ -4,10 +4,10 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
-from Products.CPSDocument.DataModel import DataModel, ValidationError
-from Products.CPSDocument.Schema import Schema
-from Products.CPSDocument.Fields.TextField import TextField
-from Products.CPSDocument.Fields.SelectionField import SelectionField
+from Products.CPSSchemas.DataModel import DataModel, ValidationError
+from Products.CPSSchemas.Schema import Schema
+from Products.CPSSchemas.Fields.TextField import TextField
+from Products.CPSSchemas.Fields.SelectionField import SelectionField
 
 class FakeDocument:
     pass

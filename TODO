@@ -10,13 +10,6 @@
    - ...
    - i18n
 
-- doc generator
-   build a new type of document using a simple configuration file
-   see archetype before coding
-
-- flexible doc
-   be able to customize ttw a document type
-
 - implementation of get_size
 
 - questions

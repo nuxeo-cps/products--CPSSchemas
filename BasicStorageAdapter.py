@@ -73,7 +73,7 @@ class BasicStorageAdapter:
     def __init__(self, document, fields, namespace=''):
         """Create a StorageAdapter
 
-        document is the CPSDocument, namespace is a string,
+        document is the CPSSchemas, namespace is a string,
         fields is a dict of fieldid's and fields.
         """
         self._document = document
