@@ -10,7 +10,7 @@
 <tal:block condition="python: mode == 'view' and not empty_file">
   <div
     tal:define="preview_id python:options['datastructure'][id+'_preview']">
-    <a target="_blank"  condition="mimetype"
+    <a target="_blank"  tal:condition="mimetype"
       tal:attributes="href string:${content_url}?nocache=${last_modified}">
       <tal:block
         replace="structure python:here.getImgTag(mimetype.icon_path,
