@@ -441,9 +441,9 @@ class CPSLinesWidget(CPSTextAreaWidget):
     field_types = ('CPS String List Field',)
 
     width = 30
-    
+
     render_mode = None
-    
+
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
@@ -453,7 +453,7 @@ class CPSLinesWidget(CPSTextAreaWidget):
 
     all_render_modes = []
 
- 
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -721,7 +721,7 @@ class CPSIntWidget(CPSWidget):
         #separator might not be std representations understood by python
         if self.thousands_separator:
             value = value.replace(self.thousands_separator,'')
-        
+
         try:
             v = int(value)
         except (ValueError, TypeError):
@@ -734,7 +734,7 @@ class CPSIntWidget(CPSWidget):
                 datastructure.setError(self.getWidgetId(),
                                        "cpsschemas_err_int_range")
                 return 0
-            
+
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         return 1
@@ -749,7 +749,7 @@ class CPSIntWidget(CPSWidget):
                 thousands.insert(0, value[-3:])
                 value = value[:-3]
             value = self.thousands_separator.join(thousands)
-        
+
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
@@ -787,7 +787,7 @@ class CPSLongWidget(CPSWidget):
         {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
          'label': 'Thousands separator'},
         )
-    
+
     is_limited = 0
     min_value = 0
     max_value = 0
@@ -803,12 +803,12 @@ class CPSLongWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        
+
         #put value back in a python-parsable state as thousands
         #separator might not be std representations understood by python
         if self.thousands_separator:
             value = value.replace(self.thousands_separator,'')
-        
+
         if not value and self.is_required:
             datastructure[widget_id] = 0
             datastructure.setError(widget_id, "cpsschemas_err_required")
@@ -938,7 +938,7 @@ class CPSFloatWidget(CPSWidget):
             value = ''.join([value, '.', decpart])
         if self.decimals_separator:
             value = value.replace('.', self.decimals_separator)
-        
+
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
@@ -1374,8 +1374,11 @@ class CPSImageWidget(CPSWidget):
             current_name = value.getId()
         else:
             current_name = '-'
+        mimetype = None
+        registry = getToolByName(self, 'mimetypes_registry')
+        mimetype = registry.lookupExtension(current_name)
         return meth(mode=mode, datastructure=datastructure,
-                    current_name=current_name)
+                    current_name=current_name, mimetype=mimetype)
 
 InitializeClass(CPSImageWidget)
 
@@ -1588,7 +1591,7 @@ class CPSInternalLinksWidget(CPSWidget):
 
         render_method = 'widget_internallinks_render'
         meth = getattr(self, render_method, None)
-        
+
         return meth(mode=mode, datastructure=datastructure)
 
 InitializeClass(CPSInternalLinksWidget)
