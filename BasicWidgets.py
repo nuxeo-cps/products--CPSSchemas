@@ -29,6 +29,7 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CPSDocument.Field import ValidationError
 from Products.CPSDocument.Widget import CPSWidget, WidgetRegistry
+from Products.CPSDocument.Widget import widgetname
 
 
 class CPSStringWidget(CPSWidget):
@@ -37,16 +38,16 @@ class CPSStringWidget(CPSWidget):
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
-        datastructure['widget_%s' % self.id] = datamodel[self.field]
+        datastructure[self.id] = datamodel[self.field]
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
         id = self.id
-        value = datastructure.get('widget_%s' % id, '')
+        value = datastructure.get(id, '')
         try:
             v = str(value)
         except ValueError:
-            datastructure['widgerr_%s' % id] = 'Bad str received'
+            datastructure.setError(id, "Bad str received")
             ok = 0
         else:
             datamodel[self.field] = v
@@ -56,13 +57,12 @@ class CPSStringWidget(CPSWidget):
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
         id = self.id
-        value = datastructure['widget_%s' % id]
+        value = datastructure[id]
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
             return ('<input type="text" name="%s" value="%s" />'
-                    % (escape('widget_%s' % id),
-                       escape(value)))
+                    % (escape(widgetname(id)), escape(value)))
         else:
             return '[XXX unknown mode %s]' % mode
 
@@ -73,16 +73,16 @@ class CPSIntWidget(CPSWidget):
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
-        datastructure['widget_%s' % self.id] = str(datamodel[self.field])
+        datastructure[self.id] = str(datamodel[self.field])
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
         id = self.id
-        value = datastructure.get('widget_%s' % id, '')
+        value = datastructure.get(id, '')
         try:
             v = int(value)
         except ValueError:
-            datastructure['widgerr_%s' % id] = 'Bad int received'
+            datastructure.setError(id, "Bad int received")
             ok = 0
         else:
             datamodel[self.field] = v
@@ -92,13 +92,12 @@ class CPSIntWidget(CPSWidget):
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
         id = self.id
-        value = datastructure['widget_%s' % id]
+        value = datastructure[id]
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
             return ('<input type="text" name="%s" value="%s" />'
-                    % (escape('widget_%s' % id),
-                       escape(value)))
+                    % (escape(widgetname(id)), escape(value)))
         else:
             return '[XXX unknown mode %s]' % mode
 

@@ -1,5 +1,5 @@
 # (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
-# Authors: Lennart Regebro <regebro@nuxeo.com>
+# Authors: Lennart Regebro <lr@nuxeo.com>
 #          Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify

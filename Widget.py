@@ -38,6 +38,11 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 
+def widgetname(id):
+    """Return the name of the widget as used in HTML forms."""
+    return 'widget__'+id
+
+
 class Widget(SimpleItemWithProperties):
     """Basic Widget Class.
 

@@ -1,6 +1,29 @@
-# (c) 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# Authors: Lennart Regebro <lr@nuxeo.com>
+#          Florent Guillaume <fg@nuxeo.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
 # $Id$
+"""DataStructure
 
+A DataStructure holds the form-related data before display or after
+validation returned an error, for redisplay.
+"""
+
+# NOTE: this text is old
 # Data structures are classes that hold the content of a document while it is
 # being used. It is NOT a storage, it's not persistent at all. It's purpose is:
 # - Keeping track of which fields have changed, so that StorageAdapters only
@@ -44,8 +67,13 @@
 # This is all quite simple, but it took me a whole afternoon to get it straight,
 # so the text should stay, so I don't get confused once again. :) /regebro
 
-
 from UserDict import UserDict
+
+from Globals import InitializeClass
+from AccessControl import ClassSecurityInfo
+
+from Products.CPSDocument.Widget import widgetname
+
 
 class DataStructure(UserDict):
     """Used for passing a documents data and validation errors around
@@ -60,32 +88,24 @@ class DataStructure(UserDict):
       with setitem, and to set without validation you operate directly on
       DataStructure.data. It's mostly a matter of tatse, and I can't decide. :)"""
 
+    security = ClassSecurityInfo()
+    security.setDefaultAccess('allow')
+
     def __init__(self, data={}, errors={}):
         self.data = {}
         self.data.update(data)
         self.errors = {}
         self.errors.update(errors)
-        self.modified_fields = []
 
     # Override standard dictionary stuff:
-    def clear(self, clear_modified_flags=0):
-        if clear_modified_flags:
-            self.modified_fields = []
-        else:
-            self.setModifiedFlags(self.data.keys())
+    def clear(self):
         self.data.clear()
         self.errors.clear()
-
-    def __setitem__(self, key, item):
-        if item != self.data.get(key, None): # Only change if it actually is different
-            self.data[key] = item
-            self.setModifiedFlag(key)
 
     def __delitem__(self, key):
         del self.data[key]
         if self.errors.has_key(key):
             del self.errors[key]
-        self.setModifiedFlag(key)
 
     def copy(self):
         if self.__class__ is DataStructure:
@@ -103,28 +123,25 @@ class DataStructure(UserDict):
     def update(self, dict):
         if isinstance(dict, UserDict):
             self.data.update(dict.data)
-            self.setModifiedFlags(dict.keys())
         elif isinstance(dict, type(self.data)):
             self.data.update(dict)
-            self.setModifiedFlags(dict.keys())
         else:
             for k, v in dict.items():
                 self.data[k] = v
-                self.setModifiedFlag(k)
 
     def updateFromRequest(self, REQUEST):
         """Updates and validates field data from a REQUEST object
 
         This method (unlike the standard update method) will only update
         existing fields. It is used to set the data from request (or indeed
-        any other object with a mapping-interface). No validation is done,
-        the validation is instead done when storing the data via the DataModel.
+        any other object with a mapping-interface).
+
+        No validation is done.
         """
-        for fieldid in self.keys():
-            if REQUEST.has_key('field_'+fieldid): # The field_ syntax is used by formulator etc.
-                self[fieldid] = REQUEST['field_'+fieldid]
-            elif REQUEST.has_key(fieldid):
-                self[fieldid] = REQUEST[fieldid] # Will return None if it doesn't exist
+        form = REQUEST.form
+        for key in self.keys():
+            if form.has_key(widgetname(key)):
+                self[key] = form[widgetname(key)]
 
     # Expose the errors dictionary.
     def getError(self, key):
@@ -147,26 +164,4 @@ class DataStructure(UserDict):
     def getErrors(self):
         return errors # TODO: Should it return the original or a copy?
 
-    def setModifiedFlag(self, key):
-        if key not in self.modified_fields:
-            self.modified_fields.append(key)
-
-    def setModifiedFlags(self, keys):
-        for key in keys:
-            self.setModifiedFlag(key)
-
-    def clearModifiedFlag(self, key):
-        if key in self.modified_fields:
-            self.modified_fields.remove(key)
-
-    def clearModifiedFlags(self, keys):
-        for key in keys:
-            self.clearModifiedFlag(key)
-
-    def clearAllModifiedFlags(self):
-        self.modified_flags = []
-
-    def getModifiedFlags(self):
-        return self.modified_fields
-
-
+InitializeClass(DataStructure)
