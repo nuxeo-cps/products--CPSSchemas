@@ -362,7 +362,7 @@ InitializeClass(CPSCustomizableWidgetType)
 
 class CPSDateWidget(CPSWidget):
     """Date widget."""
-    meta_type = "CPS Int Widget"
+    meta_type = "CPS Date Widget"
 
     def prepare(self, datastructure, datamodel):
         """Prepare datastructure from datamodel."""
