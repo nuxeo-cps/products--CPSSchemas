@@ -92,9 +92,10 @@ class DataModel(UserDict):
             schema = adapter.getSchema()
             for fieldid, field in schema.items():
                 if fields.has_key(fieldid):
-                    LOG('DataModel init', INFO,
-                        "Two schemas have field id '%s' using the first shema,"
-                        " doc id: %s" % (fieldid, ob.getId()))
+                    LOG('DataModel.__init__', INFO,
+                        "Two schemas have field id '%s', ignoring schema "
+                        "'%s' (doc id: '%s')" %
+                        (fieldid, schema.getId(), ob.getId()))
                     continue
                 fields[fieldid] = field
             schemas.append(schema)
