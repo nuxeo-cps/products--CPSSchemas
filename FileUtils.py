@@ -22,7 +22,6 @@ Utilities to deal with files: conversion to HTML, or text.
 """
 
 from zLOG import LOG, DEBUG
-from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 
 
