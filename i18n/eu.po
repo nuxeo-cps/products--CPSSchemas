@@ -1,0 +1,434 @@
+# translation of CPSSchemas_en.po to Euskara
+# translation of en.po to
+# translation of en.po to Francais
+# translation of en.po to francais
+# translation of en.po to ben
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+# ben <ben@nuxeo.com>, 2003,2004.
+# emmanuel <epietriga@nuxeo.com>, 2004.
+# DARCHE <madarche@nuxeo.com>, 2004.
+# Encolpe DEGOUTE <ed@nuxeo.com>, 2004.
+# Asier  Sarasua <asarasua@codesyntax.com>, 2004.
+# Aitzol Naberan Burgaña <anaberan@codesyntax.com>, 2004.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CPSSchemas_en\n"
+"POT-Creation-Date: 2004-07-21 11:56default\n"
+"PO-Revision-Date: 2004-10-04 16:59+0100\n"
+"Last-Translator:  <>\n"
+"Language-Team: Euskara <eu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#.   <button type="button" attributes="
+#.           id button_rte_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from
+#: ../skins/cps_schemas/widget_text_render.pt
+#, fuzzy
+msgid "button_rte"
+msgstr "Layout"
+
+#.   <span>at</span>
+#: from
+#: ../skins/cps_schemas/widget_datetime_render.pt
+#, fuzzy
+msgid "cpsschema_at"
+msgstr "at"
+
+#.   <span>h</span>
+#: from
+#: ../skins/cps_schemas/widget_datetime_render.pt
+#, fuzzy
+msgid "cpsschema_hour"
+msgstr "h"
+
+#.   <a href="http://url..." attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
+#.             + '/preview_html?file=' + fields[0] + '&file_html=' + fields[2]">
+#.             (preview)
+#.           </a>
+#: from
+#: ../skins/cps_schemas/widget_attachedfile_render.pt
+msgid "cpsschema_link_preview"
+msgstr "(aurrebista)"
+
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
+#.             (printable version)
+#.           </a>
+#: from
+#: ../skins/cps_schemas/widget_attachedfile_render.pt
+msgid "cpsschema_link_printable_version"
+msgstr "(inprimatzeko)"
+
+#.   <span>mn</span>
+#: from
+#: ../skins/cps_schemas/widget_datetime_render.pt
+#, fuzzy
+msgid "cpsschema_minute"
+msgstr "m"
+
+#.   <span>resize</span>
+#: from
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr "neurri berria:"
+
+#.   <label>Change</label>
+#.   <label attributes="for string:${radio_name}_change">Change</label>
+#: from
+#: ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_change"
+msgstr "Aldatu"
+
+#.   <label>Delete</label>
+#.   <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from
+#: ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_delete"
+msgstr "Ezabatu"
+
+#.   <label>Keep</label>
+#.   <label attributes="for string:${radio_name}_keep" condition="not: empty_file">Keep</label>
+#: from
+#: ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_keep"
+msgstr "Mantendu"
+
+#.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
+#: from
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_none"
+msgstr "Bat ere ez"
+
+#.   <span>cpsschemas_photo_subtitle</span>
+#: from
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr "Izenburupea: "
+
+#.   <span>cpsschemas_render_format</span>
+#: from
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_format"
+msgstr "Formatua: "
+
+#.   <div class="label">cpsschemas_render_position</div>
+#.   <span>cpsschemas_render_position</span>
+#: from
+#: ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_position"
+msgstr "Posizioa: "
+
+#.   <h2>cpsschemas_vocabulary_add</h2>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_add"
+msgstr "Hiztegia gehitu"
+
+#.   <h2>cpsschemas_vocabulary_available</h2>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_available"
+msgstr "Hiztegi erabilgarriak"
+
+#.   <span class="description">cpsschemas_vocabulary_contains
+#.     ${voc_entries (tal replace="python:len(keys)")}
+#.     entry(ies)</span>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
+msgstr "Hiztegi honetan:  ${voc_entries} sarrera"
+
+#.   <h2>cpsschemas_vocabulary_delete</h2>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_delete"
+msgstr "Hiztegia ezabat"
+
+#.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_edit ${voc_id}"
+msgstr "Hiztegia editatu  \"${voc_id}\""
+
+#.   <h1>cpsschemas_vocabulary_entry_add</h1>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_entry_add"
+msgstr "Sarrera gehitu"
+
+#.   <th>Id:</th>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_id"
+msgstr "Id:"
+
+#.   <th>Key:</th>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+#, fuzzy
+msgid "cpsschemas_vocabulary_key"
+msgstr "Key:"
+
+#.   <h1>cpsschemas_vocabulary_manage</h1>
+#: from
+#: ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_manage"
+msgstr "Hiztegien kudeaketa"
+
+#.   <th>MsgId:</th>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_msgid"
+msgstr "MsgId:"
+
+#.   <th>Value:</th>
+#: from
+#: ../skins/cps_schemas/vocabulary_edit_form.pt
+#, fuzzy
+msgid "cpsschemas_vocabulary_value"
+msgstr "Value:"
+
+#.   <em style="color: red" content="err">err</em>
+#: from
+#: ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_textimage_render.pt
+msgid "err"
+msgstr ""
+
+#.   <th>
+#.           Click on the chosen value
+#.         </th>
+#: from
+#: ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_click_chosen_value"
+msgstr "Nahi duzuna aukeratu:"
+
+#.   <th>
+#.           Enter a search term:
+#.         </th>
+#: from
+#: ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_enter_searched_value"
+msgstr "Zer bilatu?"
+
+#.   <td align="left">
+#.               Alternative text
+#.             </td>
+#: from
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "label_alt_text"
+msgstr "Ordezko testua"
+
+msgid "cpsschemas_err_string"
+msgstr "Katea okerra"
+
+msgid "cpsschemas_err_string_too_long"
+msgstr "Luzeegia"
+
+#, fuzzy
+msgid "cpsschemas_err_required"
+msgstr "Field required"
+
+msgid "cpsschemas_err_textarea"
+msgstr "Testu okerra"
+
+msgid "cpsschemas_err_select"
+msgstr "Aukeraketa okerra"
+
+msgid "cpsschemas_err_multiselect"
+msgstr "Aukeraketa okerra"
+
+msgid "cpsschemas_err_boolean"
+msgstr "Boolear okerra"
+
+msgid "cpsschemas_err_int"
+msgstr "Zenbaki okerra"
+
+msgid "cpsschemas_err_date"
+msgstr "Data okerra"
+
+msgid "cpsschemas_err_file"
+msgstr "Fitxategi okerra"
+
+msgid "cpsschemas_err_file_too_big"
+msgstr "Fitxategia astunegia da"
+
+msgid "cpsschemas_err_file_empty"
+msgstr "Fitxategi okerra"
+
+msgid "cpsschemas_err_image"
+msgstr "Irudi okerra"
+
+msgid "cpsschemas_err_url"
+msgstr "URL okerra"
+
+msgid "cpsschemas_err_long"
+msgstr "Zenbaki okerra"
+
+msgid "cpsschemas_err_long_range"
+msgstr "Zenbakia mugaz kanpo"
+
+msgid "cpsschemas_err_float_positive"
+msgstr "'Float' honek positiboa behar du"
+
+#, fuzzy
+msgid "cpsschemas_err_float_range"
+msgstr "Float out of range"
+
+msgid "cpsschemas_err_float"
+msgstr "'Float' okerra"
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr "Pasahitza eta konfirmazioa ez datoz bat"
+
+msgid "cpsschemas_err_password_size_min"
+msgstr "Pasahitza laburregia da"
+
+msgid "cpsschemas_err_password_lower"
+msgstr "Gutxienez karaktere bat txikiz idatzi, mesedez"
+
+msgid "cpsschemas_err_password_upper"
+msgstr "Gutxienez karaktere bat handiz idatzi, mesedez"
+
+msgid "cpsschemas_err_password_digit"
+msgstr "Gutxienez zenbaki bat idatzi, mesedez"
+
+msgid "cpsschemas_err_password_extra"
+msgstr "Karaktere bereziren bat sartu, mesedez"
+
+msgid "cpsschemas_err_identifier"
+msgstr "Identifikatzaile okerra"
+
+msgid "cpsschemas_err_email"
+msgstr "E-posta okerra"
+
+msgid "cpsschemas_err_readonly"
+msgstr "Irakurtzeko bakarrik"
+
+#, fuzzy
+msgid "cpsschemas_err_rangelist"
+msgstr "Invalid range list"
+
+#, fuzzy
+msgid "jscalendar_date_fmt"
+msgstr "h/e/u"
+
+msgid "cpsschemas_rposition_normal"
+msgstr "Orriaren zabalera"
+
+msgid "cpsschemas_rposition_col_right"
+msgstr "Eskuineko zutabea"
+
+msgid "cpsschemas_rposition_col_left"
+msgstr "Ezkerreko zutabea"
+
+msgid "cpsschemas_rposition_left"
+msgstr "Ezkerrean"
+
+msgid "cpsschemas_rposition_right"
+msgstr "Eskuinean"
+
+msgid "cpsschemas_rposition_center"
+msgstr "Erdian"
+
+msgid "cpsschemas_rformat_text"
+msgstr "Testua"
+
+msgid "cpsschemas_rformat_html"
+msgstr "HTML"
+
+msgid "cpsschemas_rformat_stx"
+msgstr "Testu Egituratua"
+
+#, fuzzy
+msgid "cpsschemas_rformat_pre"
+msgstr "HTML preformated"
+
+msgid "cpsschemas_rformat_original"
+msgstr "Jatorrizkoa"
+
+msgid "img_auto_size"
+msgstr "Automatikoa"
+
+msgid "img_icon"
+msgstr "Ikonoa"
+
+msgid "img_xsmall"
+msgstr "Oso txikia"
+
+msgid "img_small"
+msgstr "Txikia"
+
+msgid "img_medium"
+msgstr "Ertaina"
+
+msgid "img_large"
+msgstr "Handia"
+
+msgid "img_xlarge"
+msgstr "Oso handia"
+
+msgid "cpsschemas_label_false"
+msgstr "Ez"
+
+msgid "cpsschemas_label_true"
+msgstr "Bai"
+
+msgid "cpsschema_label_on"
+msgstr "On"
+
+msgid "cpsschema_label_off"
+msgstr "Off"
+
+msgid "cpsschemas_label_link_href"
+msgstr "URL"
+
+msgid "cpsschemas_label_link_content"
+msgstr "Loturaren izena"
+
+msgid "cpsschemas_label_link_title"
+msgstr "Azalpena"
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr "Id hau badago; beste bat aukeratu"
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr "Hiztegia sortuta"
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr "Id bat aukeratu"
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr "Hiztegia ezabatuta"
+
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr "Sarrera gehituta."
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr "Hiztegia ezabatuta."
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr "Sarrera bat aukeratu, mesedez."
+
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr "Hiztegia eguneratuta."
+
+msgid "label_none_selection"
+msgstr " -- Hutsik -- "
+
+msgid "label_other_selection"
+msgstr "Beste bat; zehaztu, mesedez: "
+
