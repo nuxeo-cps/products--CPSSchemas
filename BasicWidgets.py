@@ -49,12 +49,12 @@ class CPSStringWidget(CPSWidget):
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        id = self.getWidgetId()
-        value = datastructure.get(id, '')
+        value = datastructure[self.getWidgetId()]
         try:
             v = str(value)
         except ValueError:
-            datastructure.setError(id, "Bad str received")
+            datastructure.setError(self.getWidgetId(),
+                                   "Bad str received")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
@@ -63,8 +63,7 @@ class CPSStringWidget(CPSWidget):
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
-        id = self.getWidgetId()
-        value = datastructure[id]
+        value = datastructure[self.getWidgetId()]
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
@@ -95,12 +94,12 @@ class CPSIntWidget(CPSWidget):
 
     def validate(self, datastructure, datamodel):
         """Update datamodel from user data in datastructure."""
-        id = self.getWidgetId()
-        value = datastructure.get(id, '')
+        value = datastructure[self.getWidgetId()]
         try:
             v = int(value)
         except ValueError:
-            datastructure.setError(id, "Bad int received")
+            datastructure.setError(self.getWidgetId(),
+                                   "Bad int received")
             ok = 0
         else:
             datamodel[self.fields[0]] = v
@@ -109,8 +108,7 @@ class CPSIntWidget(CPSWidget):
 
     def render(self, mode, datastructure, datamodel):
         """Render this widget from the datastructure or datamodel."""
-        id = self.getWidgetId()
-        value = datastructure[id]
+        value = datastructure[self.getWidgetId()]
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
