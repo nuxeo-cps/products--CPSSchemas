@@ -4,10 +4,8 @@ import unittest
 from Testing.ZopeTestCase import ZopeLite
 
 from Products.CPSSchemas.DataStructure import DataStructure
-from Products.CPSSchemas.BasicWidgets import CPSStringWidget
-from Products.CPSSchemas.BasicWidgets import CPSBooleanWidget
-from Products.CPSSchemas.BasicWidgets import CPSURLWidget
-from Products.CPSSchemas.BasicWidgets import CPSEmailWidget
+from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
+     CPSBooleanWidget, CPSURLWidget, CPSEmailWidget, CPSPasswordWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSTextWidget
 
 class TestWidgetsValidation(unittest.TestCase):
@@ -19,7 +17,7 @@ class TestWidgetsValidation(unittest.TestCase):
         return widget
 
     def _makeDataStructure(self, data):
-        return DataStructure(data, datamodel={})
+        return DataStructure(data, datamodel=data)
 
     def _validate(self, type, properties, value):
         id = 'f'
@@ -35,7 +33,10 @@ class TestWidgetsValidation(unittest.TestCase):
             widget = CPSURLWidget(id, '')
         elif type == 'Email':
             widget = CPSEmailWidget(id, '')
+        elif type == 'Password':
+            widget = CPSPasswordWidget(id, '')
         widget.manage_changeProperties(**properties)
+
         ret = widget.validate(ds)
         err = ds.getError(id)
         return ret, err, ds
@@ -309,6 +310,82 @@ class TestWidgetsValidation(unittest.TestCase):
 #    def test_email_nok_8(self):
 #        ret, err, ds = self._validate('Email', {}, 'a@foo.france')
 #        self.failUnless(err == 'cpsschemas_err_email', err)
+
+    ############################################################
+    # PasswordWidget
+
+    def test_password_ok_required_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'is_required': 0,
+                                       }, '')
+        self.assertEqual(err, None, err)
+
+    def test_password_nok_required_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'is_required': 1,
+                                       }, '')
+        self.assertEqual(err, 'cpsschemas_err_required', err)
+
+    def test_password_ok_size_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'size_min': 5,
+                                       }, 'fooba')
+        self.assertEqual(err, None, err)
+
+    def test_password_ok_size_2(self):
+        ret, err, ds = self._validate('Password',
+                                      {'size_max': 8,
+                                       }, 'foobarfo')
+        self.assertEqual(err, None, err)
+
+    def test_password_nok_size_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'size_min': 5,
+                                       }, 'foob')
+        self.assertEqual(err, 'cpsschemas_err_password_size_min', err)
+
+    def test_password_nok_size_2(self):
+        ret, err, ds = self._validate('Password',
+                                      {'size_max': 8,
+                                       }, 'foobarfoo')
+        self.assertEqual(err, 'cpsschemas_err_string_too_long', err)
+
+    def test_password_ok_lower_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'check_lower': 1,
+                                       }, 'FoE1.A')
+        self.assertEqual(err, None, err)
+
+    def test_password_nok_lower_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'check_lower': 1,
+                                       }, 'FFFFF')
+        self.assertEqual(err, 'cpsschemas_err_password_lower', err)
+
+    def test_password_ok_upper_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'check_upper': 1,
+                                       }, 'F....')
+        self.assertEqual(err, None, err)
+
+    def test_password_nok_upper_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'check_upper': 1,
+                                       }, 'azert')
+        self.assertEqual(err, 'cpsschemas_err_password_upper', err)
+
+
+    def test_password_ok_extra_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'check_extra': 1,
+                                       }, 'azert*')
+        self.assertEqual(err, None, err)
+
+    def test_password_nok_extra_1(self):
+        ret, err, ds = self._validate('Password',
+                                      {'check_extra': 1,
+                                       }, 'aze12')
+        self.assertEqual(err, 'cpsschemas_err_password_extra', err)
 
 
 
