@@ -404,6 +404,40 @@ InitializeClass(CPSIdentifierWidgetType)
 
 ##################################################
 
+class CPSHeadingWidget(CPSStringWidget):
+    """HTML Heading widget like H1 H2..."""
+    meta_type = "CPS Heading Widget"
+    display_width = 72
+    size_max = 128
+    _properties = CPSStringWidget._properties + (
+        {'id': 'level', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_levels',
+         'label': 'There are six levels of headings in HTML'},
+        )
+    all_levels = ['1', '2', '3', '4', '5', '6']
+    level = all_levels[0]
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        value = escape(datastructure[self.getWidgetId()])
+        if mode == 'view':
+            kw = {'contents': value}
+            return renderHtmlTag('h%s' % self.level, **kw)
+        return CPSStringWidget.render(self, mode, datastructure, **kw)
+
+
+InitializeClass(CPSHeadingWidget)
+
+class CPSHeadingWidgetType(CPSWidgetType):
+    """CPS Heading widget type."""
+    meta_type = "CPS Heading Widget Type"
+    cls = CPSHeadingWidget
+
+InitializeClass(CPSHeadingWidgetType)
+
+
+##################################################
+
 class CPSPasswordWidget(CPSStringWidget):
     """Password widget.
 
@@ -2086,6 +2120,7 @@ WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSURLWidgetType, CPSURLWidget)
 WidgetTypeRegistry.register(CPSEmailWidgetType, CPSEmailWidget)
 WidgetTypeRegistry.register(CPSIdentifierWidgetType, CPSIdentifierWidget)
+WidgetTypeRegistry.register(CPSHeadingWidgetType, CPSHeadingWidget)
 WidgetTypeRegistry.register(CPSPasswordWidgetType, CPSPasswordWidget)
 WidgetTypeRegistry.register(CPSCheckBoxWidgetType, CPSCheckBoxWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
