@@ -11,7 +11,7 @@ New features:
 - enhanced int, long, float widgets (better support for separators and range)
 - Vocabularies can now have write ACLs to allow user edits (no skins yet).
 - Fields can now check access rights (read and write).
-
+- new TextArea widget with format and postion
 Bug fixes:
 ~~~~~~~~~~
 - 
