@@ -372,7 +372,7 @@ class CPSDateWidget(CPSWidget):
          'label': 'View format empty'},
         )
     allow_none = 0
-    view_format = "%d/%m/%Y"
+    view_format = "%d/%m/%Y" # XXX unused for now
     view_format_none = "-"
 
     def prepare(self, datastructure, datamodel):
