@@ -13,6 +13,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - #125: File/Image Widget must be able to not display anything if no file
+- #144: Correctly unfreeze object before modifying them: pass the proxy.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - sf code cleaning
