@@ -22,7 +22,7 @@ class BasicLayout(OrderedDictionary):
         Data should have a subscriptable interface, such as a dictionary"""
         rendering = ""
 
-        for key, widget in self.getItems():
+        for key, widget in self.items():
             rendering = rendering + widget.render(self._renderer, data)
 
         return rendering
