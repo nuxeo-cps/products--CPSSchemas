@@ -33,6 +33,7 @@
   </tr>
 </table>
 Ajouter:
+<input type="string" name="widget_title" value="" />
 <select name="widget_type">
   <option value="."
     tal:repeat="wtid here/portal_widgets/objectIds"
