@@ -6,7 +6,9 @@ New features:
 - 
 Bug fixes:
 ~~~~~~~~~~
-- XXX Some change TBD
+- now possible to set an 'alt' text in Image/Photo widgets
+  (was previously set to the filename's value)
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
