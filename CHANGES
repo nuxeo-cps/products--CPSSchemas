@@ -6,8 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- CPSHtmlWidget was missing the field_list definition.
-- Use more semantical HTML markup
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

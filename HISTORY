@@ -1,4 +1,21 @@
 *******************************************
+** CPSSchemas V0.28.2 [R1 build 2004/08/23-05:55 by fermigier]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- CPSHtmlWidget was missing the field_list definition.
+- Use more semantical HTML markup
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.28.1 [R1 build 2004/08/16-14:17 by madarche]
 
 Requires:
