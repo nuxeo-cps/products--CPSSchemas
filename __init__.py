@@ -55,6 +55,7 @@ import WidgetTypesTool
 import BasicFields
 import BasicWidgets
 import ExtendedWidgets
+import SearchWidgets
 
 import DublinCorePatch
 
