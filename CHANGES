@@ -3,7 +3,7 @@ Requires:
 - use Epoz 7.4 for trendy xhtml
 New features:
 ~~~~~~~~~~~~~
-- 
+- Removed the deprecated AutoIndex field.
 Bug fixes:
 ~~~~~~~~~~
 -
