@@ -452,7 +452,7 @@ class CPSEmailWidget(CPSStringWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = escape(datastructure[self.getWidgetId()])
-        if mode == 'view':
+        if mode == 'view' and value:
             kw = {'href': 'mailto:' + value,
                   'contents': value}
             return renderHtmlTag('a', **kw)

@@ -29,6 +29,8 @@ Bug fixes:
 - Don't do properties post-processing in Layout every time it's called.
 - The URL Widget returned an empty tag (<a class="url"></a>) when there was
   no value to display which made the 'hidden if empty' option ineffective.
+- The Email Widget returned an empty tag (<a ...></a>) when there was
+  no value to display which made the 'hidden if empty' option ineffective.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Widget properties: widget_group_id was removed (not used ans not XHTML
