@@ -70,7 +70,7 @@ class CPSDateTimeField(CPSField):
         {'id': 'allow_none', 'type': 'boolean', 'mode': 'w',
          'label': 'Allow None'},
         )
-    default = DateTime('1970-01-01')
+    default = ''
     allow_none = 1
 
     def getDefault(self):
