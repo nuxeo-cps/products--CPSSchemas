@@ -1,6 +1,8 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
 - Epoz 0.6.0 is recommanded for Text widget
+- Warning Date and File widget are deprecated
+  you should use DateTime and attachedFile.
 New features:
 ~~~~~~~~~~~~~
 - CPSTextWidget handle an Epoz editor in a popup, enable multi RTE per document
