@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- It is now possible to use the more sensible ISO 8601 date format for
+  DateTimeWidget cf. http://www.w3.org/TR/NOTE-datetime
 Bug fixes:
 ~~~~~~~~~~
 -

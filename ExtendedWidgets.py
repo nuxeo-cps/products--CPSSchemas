@@ -178,6 +178,9 @@ class CPSDateTimeWidget(CPSWidget):
         {'id': 'time_minutes_default', 'type': 'string', 'mode': 'w',
          'label': 'default minutes for time'},
         )
+    # When will CPS default to the more sensible ISO 8601 date format?
+    # cf. http://www.w3.org/TR/NOTE-datetime
+    #view_format = 'iso8601_medium_easy'
     view_format = 'medium'
     time_setting = 1
     time_hour_default = '12'
@@ -196,25 +199,28 @@ class CPSDateTimeWidget(CPSWidget):
         if v == 'None':
             v = None
         if v:
-            # Backward compatibility, this logic is not used by the current code
+            # Backward compatibility test, this logic is not used by the
+            # current code.
             if type(v) is StringType:
                 v = DateTime(v)
             d = str(v.day())
             m = str(v.month())
             y = str(v.year())
-            locale = self.Localizer.get_selected_language()
-            if locale in ('en', 'hu', ):
-                date = m+'/'+d+'/'+y
+            if self.view_format.startswith('iso8601'):
+                date = '%s-%s-%s' % (y, m, d)
             else:
-                date = d+'/'+m+'/'+y
+                locale = self.Localizer.get_selected_language()
+                if locale in ('en', 'hu'):
+                    date = '%s/%s/%s' % (m, d, y)
+                else:
+                    date = '%s/%s/%s' % (d, m, y)
             hour = str(v.h_24())
             minute = str(v.minute())
 
         datastructure[widget_id] = v
-        datastructure[widget_id+'_date'] = date
-        datastructure[widget_id+'_hour'] = hour or self.time_hour_default
-        datastructure[widget_id+'_minute'] = minute or \
-                                             self.time_minutes_default
+        datastructure[widget_id + '_date'] = date
+        datastructure[widget_id + '_hour'] = hour or self.time_hour_default
+        datastructure[widget_id + '_minute'] = minute or self.time_minutes_default
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -222,30 +228,41 @@ class CPSDateTimeWidget(CPSWidget):
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
 
-        date = datastructure[widget_id+'_date'].strip()
-        hour = datastructure[widget_id+'_hour'].strip() or \
+        date = datastructure[widget_id + '_date'].strip()
+        hour = datastructure[widget_id + '_hour'].strip() or \
                self.time_hour_default
-        minute = datastructure[widget_id+'_minute'].strip() or \
+        minute = datastructure[widget_id + '_minute'].strip() or \
                  self.time_minutes_default
 
         if not (date):
             if self.is_required:
                 datastructure[widget_id] = ''
-                datastructure.setError(widget_id, "cpsschemas_err_required")
+                datastructure.setError(widget_id, 'cpsschemas_err_required')
                 return 0
             else:
                 datamodel[field_id] = None
                 return 1
 
-        if not match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date):
+        if (self.view_format.startswith('iso8601')
+            and match(r'^[0-9]+-[0-9]{2}-[0-9]{2}', date) is None):
+            LOG('CPSDateTimeWidget', DEBUG, 'iso date = %s' % date)
             datastructure.setError(widget_id, 'cpsschemas_err_date')
             return 0
 
-        locale = self.Localizer.get_selected_language()
-        if locale in ('en', 'hu', ):
-            m, d, y = date.split('/')
+        if (not self.view_format.startswith('iso8601')
+            and match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date) is None):
+            LOG('CPSDateTimeWidget', DEBUG, 'not iso date = %s' % date)
+            datastructure.setError(widget_id, 'cpsschemas_err_date')
+            return 0
+
+        if self.view_format.startswith('iso8601'):
+            y, m, d = date.split('-')
         else:
-            d, m, y = date.split('/')
+            locale = self.Localizer.get_selected_language()
+            if locale in ('en', 'hu'):
+                m, d, y = date.split('/')
+            else:
+                d, m, y = date.split('/')
 
         try:
             v = DateTime(int(y), int(m), int(d), int(hour), int(minute))
