@@ -1,4 +1,30 @@
 *******************************************
+** CPSSchemas V0.32.0 [R1 build 2004/10/21-09:56 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Generic Select and Generic MultiSelect widgets have a new property
+  'blank_value_ok_if_required' to specify whether a blank value in the
+  given vocabulary should be considered ok when validating if the field is
+  required.
+  It gives the opportunity add blank values to the vocabulary just to
+  change the way the list is presented (using items like 'choose a category' or
+  '------------' to separate items) and not affect the way the value will be
+  validated if the widget is required. Before this, if the widget was required,
+  default behavior was to accept blank values if they were in the vocabulary
+  (e.g blank_value_ok_if_required = 1)
+
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.31.7 [R1 build 2004/10/18-15:47 by madarche]
 
 Requires:
