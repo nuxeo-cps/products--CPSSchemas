@@ -19,6 +19,7 @@ Bug fixes:
 - Fixed error when saving changes on layout properties in the ZMI.
 - Better decoration for the CPSDocumentLanguageSelectWidget through CSS.
 - Fixed the BMP bug (#305)
+- Widgets controlling a forbidden field are now correctly hidden.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
