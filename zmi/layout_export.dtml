@@ -29,7 +29,7 @@ layout should look like.</p>
 </dtml-in>
     },
     'layout': {
-        'ncols': <dtml-var ncols>
+        'ncols': <dtml-var ncols>,
         'rows': [
 <dtml-in rows>
 <dtml-in sequence-item>

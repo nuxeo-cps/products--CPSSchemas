@@ -24,6 +24,7 @@ schema should look like.</p>
             },
         },
 </dtml-in>
+    }
 </pre>
 
 <dtml-var manage_page_footer>
