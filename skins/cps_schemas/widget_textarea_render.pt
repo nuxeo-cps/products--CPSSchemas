@@ -1,12 +1,12 @@
 <tal:block define="mode options/mode;
                    value_name here/getHtmlWidgetId;
                    value options/value;
-                   rmode options/render_mode;
-                   rdisp options/render_display;
+                   rformat options/render_format;
+                   rposition options/render_position;
   ">
 <tal:block condition="python: mode == 'view'">
- <div tal:attributes="class python:test(rdisp == 'col_left', 'dcolleft',
-                                        test(rdisp == 'col_right',
+ <div tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
+                                        test(rposition == 'col_right',
                                              'dcolright', 'dnocol'))"
     tal:content="structure value" />
 </tal:block>
@@ -16,23 +16,23 @@
                     cols here/width;
                     rows here/height;"
     tal:content="value" />
-  <tal:block condition="here/configurable"
-    define="rdisp_name string:${value_name}_rdisp;
-            rmode_name string:${value_name}_rmode;">
-   <br>mode:
-   <select tal:attributes="name rmode_name">
-     <option tal:repeat="o here/all_render_modes"
-       tal:attributes="selected python:o == rmode;
-                       value o"
-       tal:content="o" i18n:translate="" />
+  <div tal:condition="here/configurable"
+    tal:define="rposition_name string:${value_name}_rposition;
+                rformat_name string:${value_name}_rformat;">
+   <span i18n:translate="">cpsschemas_render_format</span>
+   <select tal:attributes="name rformat_name">
+     <option tal:repeat="op here/all_render_formats"
+       tal:attributes="selected python:op == rformat;
+                       value op"
+       tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
    </select>
-   display:
-   <select tal:attributes="name rdisp_name">
-     <option tal:repeat="o here/all_render_displays"
-       tal:attributes="selected python:o == rdisp;
-                       value o"
-       tal:content="o" i18n:translate="" />
-   </select>
-  </tal:block>
+   <span i18n:translate="">cpsschemas_render_position</span>
+   <select tal:attributes="name rposition_name">
+     <option tal:repeat="op here/all_render_positions"
+       tal:attributes="selected python:op == rposition;
+                       value op"
+       tal:content="string:cpsschemas_rposition_${op}" i18n:translate=""  />
+   </select><br><br>
+  </div>
 </tal:block>
 </tal:block>
