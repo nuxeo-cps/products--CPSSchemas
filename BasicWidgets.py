@@ -80,8 +80,6 @@ class CPSHtmlWidget(CPSWidget):
     """Html widget."""
     meta_type = "CPS Html Widget"
 
-    field_types = ()
-
     _properties = CPSWidget._properties + (
         {'id': 'html_view', 'type': 'text', 'mode': 'w',
          'label': 'Html for view'},
@@ -124,6 +122,7 @@ class CPSStringWidget(CPSWidget):
     meta_type = "CPS String Widget"
 
     field_types = ('CPS String Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     display_width = 20
     size_max = 0
@@ -229,6 +228,9 @@ class CPSLinkWidget(CPSWidget):
     meta_type = "CPS Link Widget"
 
     field_types = ('CPS String Field', 'CPS String Field', 'CPS String Field')
+    field_inits = ({'is_indexed': 1,},
+                   {'is_indexed': 1,},
+                   {'is_indexed': 1,},)
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -364,6 +366,7 @@ class CPSTextAreaWidget(CPSWidget):
     meta_type = "CPS TextArea Widget"
 
     field_types = ('CPS String Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     width = 40
     height = 5
@@ -439,6 +442,7 @@ class CPSLinesWidget(CPSTextAreaWidget):
     meta_type = "CPS Lines Widget"
 
     field_types = ('CPS String List Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     width = 30
 
@@ -512,6 +516,7 @@ class CPSSelectWidget(CPSWidget):
     meta_type = "CPS Select Widget"
 
     field_types = ('CPS String Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     vocabulary = ''
     _properties = CPSWidget._properties + (
@@ -586,6 +591,7 @@ class CPSMultiSelectWidget(CPSWidget):
     meta_type = "CPS MultiSelect Widget"
 
     field_types = ('CPS String List Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
@@ -1192,6 +1198,15 @@ class CPSFileWidget(CPSWidget):
 
     # XXX The second and third fields are actually optional...
     field_types = ('CPS File Field', 'CPS String Field', 'CPS File Field')
+    field_inits = ({'is_indexed': 0,
+                    'suffix_text': '_f1', # _f# are autocomputed field ext
+                    'suffix_html': '_f2',
+                    },
+                   {'is_indexed': 1,
+                    },
+                   {'is_indexed': 0,
+                    },
+                   )
 
     _properties = CPSWidget._properties + (
         {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
@@ -1393,6 +1408,7 @@ class CPSRichTextEditorWidget(CPSTextAreaWidget):
     meta_type = "CPS Rich Text EditorWidget"
 
     field_types = ('CPS String Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     width = 40
     height = 5
@@ -1543,6 +1559,7 @@ class CPSInternalLinksWidget(CPSWidget):
     meta_type = "CPS InternalLinks Widget"
 
     field_types = ('CPS String List Field',)
+    field_inits = ({'is_indexed': 1,},)
 
     _properties = CPSWidget._properties + (
         {'id': 'new_window', 'type': 'boolean', 'mode': 'w',
