@@ -107,14 +107,9 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'CSS class for view'},
         {'id': 'css_class_expr', 'type': 'text', 'mode': 'w',
          'label': "CSS class (TALES)"},
-        # Javascript
-        # TALES expressions can be used. A expression type using the
-        # 'javascript:' prefix is also supported to ease bare Javascript code
-        # declarations.
-        # XXX Define a way to declare and evaluate variables in the string
-        # after the 'javascript:' prefix
+        # JavaScript
         {'id': 'javascript_expr', 'type': 'text', 'mode': 'w',
-         'label': 'JavaScript expression'},
+         'label': 'JavaScript (TALES)'},
         )
 
     fields = []
@@ -148,7 +143,6 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         ('hidden_if_expr', 'hidden_if_expr_c'),
         ('widget_mode_expr', 'widget_mode_expr_c'),
         ('css_class_expr', 'css_class_expr_c'),
-        # not always a TALES expression
         ('javascript_expr', 'javascript_expr_c'),
         )
 
@@ -156,35 +150,6 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         self._setId(id)
         self.widget_type = widgettype
         self.manage_changeProperties(**kw)
-
-
-    # overloaded from the PropertiesPostProcessor class to handle the special
-    # compilation of javascript code
-    def _postProcessProperties(self):
-        """Post-processing after properties change."""
-        # Split on some separator.
-        for attr_str, attr, seps in self._properties_post_process_split:
-            v = [getattr(self, attr_str)]
-            for sep in seps:
-                vv = []
-                for s in v:
-                    vv.extend(s.split(sep))
-                v = vv
-            v = [s.strip() for s in v]
-            v = filter(None, v)
-            setattr(self, attr_str, '; '.join(v))
-            setattr(self, attr, v)
-        # TALES expression, or string if the expression starts with
-        # 'javascript:' prefix, used to ease JavaScript declarations
-        for attr_str, attr in self._properties_post_process_tales:
-            p = getattr(self, attr_str).strip()
-            if not p:
-                v = None
-            elif p.startswith('javascript:'):
-                v = p[len('javascript:'):].strip()
-            else:
-                v = Expression(p)
-            setattr(self, attr, v)
 
     security.declarePublic('getWidgetId')
     def getWidgetId(self):
@@ -334,26 +299,14 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         """Get the JavaScript code to display in the widget rendering.
 
         If the javascript_expr property is not set, return an empty string.
-
-        Else:
-        - if prefixed with 'javascript:', return the string after it
-          (Javascript code, no variables supported a the moment)
-        - if not, compute it as a TALES expression, using the standard context
-          evaluated from layout mode and datamodel.
         """
-        if not self.javascript_expr_c:
-            js_code = ''
-        elif isinstance(self.javascript_expr_c, str):
-            # XXX Be able to evaluate variables
-            js_code = self.javascript_expr_c
-        else:
+        js_code = ''
+        if self.javascript_expr_c:
             # Create the context used to evaluate the TALES expression
             expr_context = self._createExpressionContext(datamodel, layout_mode)
             js_code_computed = self.javascript_expr_c(expr_context)
             if js_code_computed:
                 js_code = js_code_computed
-            else:
-                js_code = ''
         return js_code
 
 
