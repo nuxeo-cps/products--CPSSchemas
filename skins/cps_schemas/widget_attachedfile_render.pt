@@ -52,9 +52,9 @@
     </td>
     <td>
         <input style="margin-left: 5px" type="text" tal:attributes="name title_name;
-                                           value current_title">
+                                           value current_title" />
         <input type="hidden" tal:attributes="name string:${name}_filename;
-                                           value current_name">
+                                           value current_name" />
     </td>
   </tr>
 </table>
