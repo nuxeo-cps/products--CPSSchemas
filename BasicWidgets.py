@@ -24,11 +24,10 @@ Definition of standard widget types.
 from zLOG import LOG, DEBUG
 from cgi import escape
 from DateTime.DateTime import DateTime
-from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
-from types import StringType, ListType, TupleType
+from types import ListType, TupleType
 
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image

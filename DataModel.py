@@ -50,9 +50,6 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 
-from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
-
-
 class ValidationError(Exception):
     """Validation error during field storage."""
     pass

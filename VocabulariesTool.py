@@ -27,8 +27,6 @@ from OFS.Folder import Folder
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
-from Products.CPSSchemas.Vocabulary import Vocabulary, CPSVocabulary
-
 class VocabulariesTool(UniqueObject, Folder):
     """Vocabularies Tool
 

@@ -36,7 +36,6 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
-from Products.CPSSchemas.OrderedDictionary import OrderedDictionary
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 
 

@@ -25,14 +25,12 @@ A Schema stores a set of fields defining the data stored in an object.
 from zLOG import LOG, DEBUG
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
-from Persistence import Persistent
 
 from OFS.Folder import Folder
 
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
-from Products.CPSSchemas.OrderedDictionary import OrderedDictionary
 from Products.CPSSchemas.Field import FieldRegistry
 
 

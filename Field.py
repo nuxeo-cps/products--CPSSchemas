@@ -27,12 +27,10 @@ from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl.PermissionRole import rolesForPermissionOn
-from Persistence import Persistent
 
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
-from Products.CMFCore.CMFCorePermissions import View, ManagePortal
-from Products.CMFCore.CMFCorePermissions import ManageProperties
+from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
 
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
