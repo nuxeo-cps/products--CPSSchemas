@@ -21,14 +21,14 @@
 Definition of standard widget types.
 """
 
-from zLOG import LOG, DEBUG, PROBLEM
-from cgi import escape
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
 from types import ListType, TupleType, StringType
+from cgi import escape
 from re import compile, search
+from zLOG import LOG, DEBUG, PROBLEM
 
 try:
     import PIL.Image
@@ -1565,6 +1565,10 @@ class CPSFileWidget(CPSWidget):
         else:
             current_name = ''
             empty_file = 1
+
+        # The attached file current name should not contain spaces otherwise it
+        # causes problem when used by the ExternalEditor.
+        current_name = current_name.replace(' ', '_')
 
         # XXX This is a total mess, it needs refactoring.
 
