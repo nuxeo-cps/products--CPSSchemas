@@ -199,17 +199,17 @@ class Vocabulary(Persistent, Implicit):
         return [self._dict.get(key) for key in self._list]
 
     def getSortFunction(self):
-        """@summary: Get Vocabulary sort function, None is list.append"""
+        """Get Vocabulary sort function, None is list.append"""
         return self._sort_fonction
 
     def setSortFunction(self, sort_function):
-        """@summary: Set Vocabulary sort function, None is list.append"""
+        """Set Vocabulary sort function, None is list.append"""
         # make test to be sure that's a vocabulary sort function
         if self.keysSortedBy('funct', sort_function) is not None:
             self._sort_fonction = sort_function
 
     def sortKeys(self):
-        """@summary: Sort keys with vocabulary sort function"""
+        """Sort keys with vocabulary sort function"""
         self._p_changed = 1
         if self._sort_fonction is not None:
             cpsmcat = getToolByName(self, 'portal_url').getPortalObject().translation_service
@@ -218,12 +218,12 @@ class Vocabulary(Persistent, Implicit):
             self._list = [x[0] for x in l]
 
     def keysSortedBy(self, crit='id', sort_function=None):
-        """@summary: Return a keys list sorted on a criterium
+        """Return a keys list sorted on a criterium
 
-        @summary: If criterium is not know, self.keys() is used.
+        If criterium is not know, self.keys() is used.
 
-        @summary: If criterium is 'funct' ans sortFunct is not None sortFunct
-        @summary: will sort keys on (key, label, msgid, translated msgid).
+        If criterium is 'funct' ans sortFunct is not None sortFunct
+        will sort keys on (key, label, msgid, translated msgid).
 
         @param crit: known criterium 'id', 'label', 'i18n', 'funct'
         @type crit: @String
