@@ -213,6 +213,16 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         return self._vocab.has_key(key)
 
     #
+    # Management
+    #
+
+    security.declarePublic('isWriteAllowed')
+    def isWriteAllowed(self):
+        """Test if the user can write to this vocabulary."""
+        return getSecurityManager().getUser().has_role(
+            self.acl_write_roles):
+
+    #
     # ZMI
     #
 
@@ -238,9 +248,8 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declarePrivate('_checkWriteAllowed')
     def _checkWriteAllowed(self):
         """Check that user can write to this vocabulary."""
-        if not getSecurityManager().getUser().has_role(
-            self.acl_write_roles):
-            raise Unauthorized("No write access to vocabulary (roles)")
+        if not self.isWriteAllowed():
+            raise Unauthorized("No write access to vocabulary")
 
     security.declarePublic('manage_addVocabularyItem')
     def manage_addVocabularyItem(self, new_key, new_label, new_msgid,
