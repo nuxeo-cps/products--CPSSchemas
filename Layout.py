@@ -259,7 +259,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
          - widget_mode
          - widget_css_class
          - widget_rendered
-         - widget_js
+         - widget_javascript
         (In addition to widget_id and ncols of the standard data.)
         """
         layout_structure = self.getLayoutDefinition() # get a copy
