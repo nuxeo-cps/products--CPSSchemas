@@ -124,6 +124,12 @@ msgstr ""
 msgid "cpsschemas_err_rangelist"
 msgstr ""
 
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_html_not_found"
+msgstr ""
+
 msgid "jscalendar_date_fmt"
 msgstr ""
 
