@@ -1,4 +1,23 @@
 *******************************************
+** CPSSchemas V0.31.5 [R1 build 2004/10/06-11:49 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added the isProductPresent method which returns whether the product
+  corresponding to the given product name is present and ready (not broken) in
+  the current Zope instance.
+- Added the translation for the msg "action_edit_online".
+
+*******************************************
 ** CPSSchemas V0.31.4 [R1 build 2004/09/28-16:25 by madarche]
 
 Requires:
