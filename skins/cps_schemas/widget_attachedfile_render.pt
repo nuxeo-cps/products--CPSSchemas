@@ -13,7 +13,7 @@
     <a target="_blank"  condition="mimetype"
       tal:attributes="href string:${content_url}?nocache=${last_modified}">
       <tal:block
-        replace="structure python:here.getImgTag(mimetype.icon_path, zoom=2,
+        replace="structure python:here.getImgTag(mimetype.icon_path,
         title=mimetype.name())" /></a>
     <a class="strong"
       tal:attributes="href string:${content_url}?nocache=${last_modified}">
