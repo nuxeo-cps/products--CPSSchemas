@@ -17,4 +17,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Possibility to define different render modes such as edit and 
   edit_metadata for instance.
-- attached file are open in a new window
+- attached file are open in a new window if you click on the mimetype icon
