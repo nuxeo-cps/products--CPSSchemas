@@ -4,6 +4,7 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - portal_layouts know how to render/validate a layout/schema
+- new MethodVocabulary this enable dynamic vocabulary
 Bug fixes:
 ~~~~~~~~~~
 -
