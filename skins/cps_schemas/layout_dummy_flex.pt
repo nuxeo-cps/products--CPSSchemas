@@ -30,6 +30,13 @@
     </td>
   </tr>
 </table>
-<input type="submit" name="addtxt_button" value="Add txt" />
+Ajouter:
+<select name="widget_type">
+  <option value="."
+    tal:repeat="wtid here/portal_widgets/objectIds"
+    tal:attributes="value wtid"
+    tal:content="wtid">Type</option>
+</select>
+<input type="submit" name="addwidget_button" value="Ajouter" />
 </form>
 </tal:block>

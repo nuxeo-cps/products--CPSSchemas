@@ -26,8 +26,8 @@ if up_row is not None or down_row is not None:
 if delete_rows:
     context.flexibleDelWidgetRows(layout, delete_rows)
 
-if kw.has_key('addtxt_button'):
-    context.flexibleAddWidget(layout, 'TextArea Widget', width=20)
+if kw.has_key('addwidget_button'):
+    context.flexibleAddWidget(layout, kw['widget_type'])
 
 
 if REQUEST is not None:
