@@ -1,15 +1,12 @@
 Requires:
 ~~~~~~~~~
-- use Epoz 7.4 for trendy xhtml
+-
 New features:
 ~~~~~~~~~~~~~
-- Removed the deprecated AutoIndex field.
-- widget text editor does true wysiwyg, using cps css
-- DateWidget can now use javascript to auto-tabulate
-  between the fields.
+-
 Bug fixes:
 ~~~~~~~~~~
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- 
+-

@@ -1,4 +1,23 @@
 *******************************************
+** CPSSchemas V0.17.0 [R1 build 2004/02/18-09:34 by regebro]
+
+Requires:
+~~~~~~~~~
+- use Epoz 7.4 for trendy xhtml
+New features:
+~~~~~~~~~~~~~
+- Removed the deprecated AutoIndex field.
+- widget text editor does true wysiwyg, using cps css
+- DateWidget can now use javascript to auto-tabulate
+  between the fields.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- 
+
+*******************************************
 ** CPSSchemas V0.16.0 [R1 build 2004/02/13-14:33 by regebro]
 
 Requires:
