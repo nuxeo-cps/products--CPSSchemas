@@ -9,7 +9,8 @@ New features:
   ZMI way of dealing with line fields.
 Bug fixes:
 ~~~~~~~~~~
--
+- enhanced int, long, float widgets (better support for separators and range)
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
