@@ -334,7 +334,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     file = File(fileid, fileid, file)
                     registry = getToolByName(self, 'mimetypes_registry')
                     mimetype = registry.lookupExtension(fileid.lower())
-                    if file.content_type != mimetype.normalized():
+                    if mimetype and file.content_type != mimetype.normalized():
                         LOG('CPSAttachedFileWidget', DEBUG,
                             'Fixing mimetype from %s to %s' % (
                             file.content_type, mimetype.normalized()))
