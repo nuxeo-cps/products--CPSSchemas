@@ -13,6 +13,6 @@ if keys:
 else:
     psm = "cpsschemas_psm_vocabulary_no_entries_selected"
 
-action_path = 'vocab_edit_form'
+action_path = 'vocabulary_edit_form'
 REQUEST.RESPONSE.redirect('%s/%s?voc_id=%s&portal_status_message=%s' %
                           (context.absolute_url(), action_path, voc_id, psm))

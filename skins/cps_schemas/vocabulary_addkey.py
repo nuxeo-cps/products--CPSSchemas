@@ -1,4 +1,4 @@
-#parameters=voc_id, new_key, new_label, new_msgid, REQUEST
+##parameters=voc_id, new_key, new_label, new_msgid, REQUEST
 
 # Parameters:
 #
@@ -10,6 +10,6 @@ vocabulary = context.portal_vocabularies[voc_id]
 vocabulary.manage_addVocabularyItem(new_key, new_label, new_msgid)
 
 psm = 'cpsschemas_psm_vocabulary_entry_added'
-action_path = 'vocab_edit_form'
+action_path = 'vocabulary_edit_form'
 REQUEST.RESPONSE.redirect('%s/%s?voc_id=%s&portal_status_message=%s' %
                           (context.absolute_url(), action_path, voc_id, psm))

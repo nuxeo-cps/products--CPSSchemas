@@ -44,9 +44,9 @@
   </tal:keys>
   </table>
   <input type="hidden" name="voc_id" tal:attributes="value voc_id">
-  <input type="submit" name="vocab_update:method" value="button_edit"
+  <input type="submit" name="vocabulary_update:method" value="button_edit"
          i18n:attributes="value">
-  <input type="submit" name="vocab_delkeys:method" value="button_delete"
+  <input type="submit" name="vocabulary_delkeys:method" value="button_delete"
          i18n:attributes="value">
 </form>
 
@@ -73,7 +73,7 @@
   </tr>
   </table>
   <input type="hidden" name="voc_id" tal:attributes="value voc_id">
-  <input type="submit" name="vocab_addkey:method" value="button_add"
+  <input type="submit" name="vocabulary_addkey:method" value="button_add"
          i18n:attributes="value">
 </form>
 
