@@ -4,5 +4,4 @@
 Epoz > 0.8.5
 
 # CPS --------------------
-CPSCore
-
+# CPSCore is optional
