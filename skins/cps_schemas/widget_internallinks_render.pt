@@ -67,7 +67,7 @@
             textareaElement = document.getElementById(intlinks_w_id)
          
             links_div = document.getElementById(all_div_id)
-
+            
             d = document;
             params = ''
             i = 0
@@ -87,6 +87,7 @@
             links_html = xmlhttp.responseText;
 
             links_div.innerHTML = links_html
+
           }
         }
 
@@ -124,6 +125,7 @@
         }
 
         function delete_items() {
+          
           selected = document.form.elements
           links = getExistingItems()
           deleted_links = getSelectedItems()
@@ -131,7 +133,7 @@
 
           for(i=0;i<links.length;i++) {
             value = links[i]
-            if(!is_in(value, deleted_links)) {
+            if(is_in(value, deleted_links)) {
               links[i] = ''
             }
           }
@@ -201,15 +203,12 @@
         function update_links(added_links) {
 
           links = getExistingItems()
-          alert(links)          
           for(i=0;i<added_links.length;i++) {
             value = added_links[i]
             if(!is_in(value, links)) {
               links.push(value)
-              alert(value)
             } 
           }
-          alert(links)
           setExistingItems(links)
           update_results()          
         }
