@@ -9,6 +9,7 @@ Bug fixes:
 - Using a wider translation_table to that the attachedfile name does not contain
   special characters.
 - Correct utf-8 conversion.
+- Increase the size of the text input for the title of file and image widgets
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
