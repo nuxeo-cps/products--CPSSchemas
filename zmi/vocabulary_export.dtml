@@ -1,0 +1,26 @@
+<dtml-var manage_page_header>
+<dtml-let management_view="'Export'">
+<dtml-var manage_tabs>
+</dtml-let>
+
+<p>You will find below what the Python dictionnary used to create the current
+vocabulary should look like.</p>
+
+<pre>
+<dtml-var id>_vocabulary = {
+    'data': {
+        'dict': {
+<dtml-in items>
+            '<dtml-var sequence-key>': "<dtml-var sequence-item>",
+</dtml-in>
+            },
+        'list': [
+<dtml-in keys>
+            '<dtml-var sequence-item>',
+</dtml-in>
+            ],
+        },
+    }
+</pre>
+
+<dtml-var manage_page_footer>

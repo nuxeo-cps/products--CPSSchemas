@@ -188,10 +188,17 @@ class CPSVocabulary(SimpleItemWithProperties):
         {'label': 'Vocabulary',
          'action': 'manage_editVocabulary',
          },
-        ) + SimpleItemWithProperties.manage_options
+        ) + SimpleItemWithProperties.manage_options + (
+        {'label': 'Export',
+         'action': 'manage_export',
+         },
+        )
 
     security.declareProtected(ManagePortal, 'manage_editVocabulary')
     manage_editVocabulary = DTMLFile('zmi/vocabulary_editform', globals())
+
+    security.declareProtected(ManagePortal, 'manage_export')
+    manage_export = DTMLFile('zmi/vocabulary_export', globals())
 
     security.declareProtected(ManagePortal, 'manage_main')
     manage_main = manage_editVocabulary
