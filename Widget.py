@@ -258,11 +258,11 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         If no css class is specified, this is the default "visible" class that
         is returned.
 
-        In edit mode if a css class is specified, this is the class name
-        suffixed by "Edit" that is returned. This is because in edit mode
-        one usually doesn't want the widgets to have the same appearance that
-        they have in view mode. Actually in edit mode one prefers to have all
-        the widgets with the same neutral presentation.
+        In create and edit mode if a css class is specified, this is the class
+        name suffixed by "Edit" that is returned. This is because in create and
+        edit mode one usually doesn't want the widgets to have the same
+        appearance that they have in view mode. Actually in create and edit mode
+        one prefers to have all the widgets with the same neutral presentation.
         """
         css_class = self.css_class
         if self.widget_css_class_expr_c:
@@ -272,7 +272,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             if css_class_computed:
                 css_class = css_class_computed
 
-        if css_class and layout_mode == 'edit':
+        if css_class and layout_mode in ('create', 'edit'):
             css_class = css_class + 'Edit'
         else:
             css_class = css_class or 'visible'
