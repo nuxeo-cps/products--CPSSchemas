@@ -1,4 +1,4 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
 # Authors: Lennart Regebro <lr@nuxeo.com>
 #          Florent Guillaume <fg@nuxeo.com>
 #
@@ -126,7 +126,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProc
              see documentation'},
         )
 
-    style_prefix = ''
+    style_prefix = 'layout_default_'
     flexible_widgets = []
     validate_values_expr = ''
     validate_values_expr_c = None
