@@ -6,11 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- (crash) Wasn't impossible to have a different field name than the widget name on couple of widgets (CPSIntWidget, CPSLongWidget, CPSBooleanWidget,  CPSFloafWidget)
-
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- splitting macro lib in progress
-- fix for #453 makes accessible javascript library
-- Use a non-empty default for the layout style prefix,
-  to avoid hard to track bugs.
+-

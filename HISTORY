@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.38.0 [R1 build 2005/01/20-11:41 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- (crash) Wasn't impossible to have a different field name than the widget name on couple of widgets (CPSIntWidget, CPSLongWidget, CPSBooleanWidget,  CPSFloafWidget)
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- macro lib splitted
+- fix for #453 makes accessible javascript library
+- Use a non-empty default for the layout style prefix,
+  to avoid hard to track bugs.
+
+*******************************************
 ** CPSSchemas V0.37.0 [R1 build 2004/12/21-09:17 by ben]
 
 Requires:
