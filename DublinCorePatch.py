@@ -26,9 +26,9 @@ from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, TRACE
 
-LOG('DublinCorePatch', DEBUG, "Patching DublinCore...")
+LOG('DublinCorePatch', TRACE, "Patching DublinCore...")
 
 
 def Coverage(self):
@@ -106,5 +106,3 @@ DefaultDublinCoreImpl.relation = ''
 DefaultDublinCoreImpl.security = security
 InitializeClass(DefaultDublinCoreImpl)
 
-
-LOG('DublinCorePatch', DEBUG, "Patching DublinCore done.")
