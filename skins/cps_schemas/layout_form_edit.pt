@@ -24,7 +24,7 @@
     </td>
   </tr>
 </table>
-<input type="submit" name="cpsdocument_edit_button" value="button_submit"
+<input type="submit" name="cpsdocument_edit_button" value="button_send"
   i18n:attributes="value" />
 </form>
 </tal:block>
