@@ -31,6 +31,7 @@ from re import compile, search
 from urlparse import urlparse
 from zLOG import LOG, INFO, DEBUG, PROBLEM
 from TAL.TALDefs import attrEscape
+import string
 
 try:
     import PIL.Image
@@ -1614,9 +1615,15 @@ class CPSFileWidget(CPSWidget):
             current_title = ''
             empty_file = 1
 
-        # The attached file current name should not contain spaces otherwise it
-        # causes problem when used by the ExternalEditor.
-        current_name = current_name.replace(' ', '_')
+        # The attached file current name should not contain special character
+        # otherwise it causes problem when used by the ExternalEditor.
+        # It would be better to use a centralized translation mechanism, that
+        # exists for example in CPSCore, but CPSSchemas is supposed to be
+        # independent of CPSCore :-(
+        translation_table = string.maketrans(
+            r"'\;/ &:ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ",
+            r"_______AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")
+        current_name = current_name.translate(translation_table)
 
         # XXX This is a total mess, it needs refactoring.
 
