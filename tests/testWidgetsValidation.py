@@ -14,10 +14,10 @@ class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
 
     def _validate(self, properties, value):
-        id = 'f'
+        id = 'ff'
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
-        properties.update({'fields': id})
+        properties.update({'fields': (id,)})
         widget = self.widget_type(id, '')
         widget.manage_changeProperties(**properties)
 
@@ -40,11 +40,11 @@ class StringWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, None)
         self.failUnless(ret, err)
         # check convertion None into ''
-        self.failUnless(ds.getDataModel().values()[0] == '')
+        self.assertEquals(ds.getDataModel().values()[0], '')
 
     def test_string_nok_1(self):
         ret, err, ds = self._validate({}, {'a': 1} )
-        self.failUnless(err == 'cpsschemas_err_string')
+        self.assertEquals(err, 'cpsschemas_err_string')
 
     def test_string_size_max_ok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345')
@@ -64,11 +64,11 @@ class StringWidgetValidationTest(WidgetValidationTest):
 
     def test_string_size_max_nok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345678901')
-        self.failUnless(err=='cpsschemas_err_string_too_long')
+        self.assertEquals(err, 'cpsschemas_err_string_too_long')
 
     def test_string_size_max_nok_2(self):
         ret, err, ds = self._validate({'size_max': 10}, '1234567890azerz')
-        self.failUnless(err == 'cpsschemas_err_string_too_long')
+        self.assertEquals(err, 'cpsschemas_err_string_too_long')
 
     def test_string_required_ok_1(self):
         ret, err, ds = self._validate({'is_required': 1}, '123')
@@ -76,11 +76,11 @@ class StringWidgetValidationTest(WidgetValidationTest):
 
     def test_string_required_nok_1(self):
         ret, err, ds = self._validate({'is_required': 1}, '')
-        self.failUnless(err == 'cpsschemas_err_required')
+        self.assertEquals(err, 'cpsschemas_err_required')
 
     def test_string_required_nok_2(self):
         ret, err, ds = self._validate({'is_required': 1}, None)
-        self.failUnless(err == 'cpsschemas_err_required', err)
+        self.assertEquals(err, 'cpsschemas_err_required')
 
 class BooleanWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSBooleanWidget
@@ -95,27 +95,27 @@ class BooleanWidgetValidationTest(WidgetValidationTest):
 
     def test_boolean_nok_1(self):
         ret, err, ds = self._validate({}, 2)
-        self.failUnless(err == 'cpsschemas_err_boolean')
+        self.assertEquals(err, 'cpsschemas_err_boolean')
 
     def test_boolean_nok_2(self):
         ret, err, ds = self._validate({}, -1)
-        self.failUnless(err == 'cpsschemas_err_boolean')
+        self.assertEquals(err, 'cpsschemas_err_boolean')
 
     def test_boolean_nok_3(self):
         ret, err, ds = self._validate({}, '')
-        self.failUnless(err == 'cpsschemas_err_boolean')
+        self.assertEquals(err, 'cpsschemas_err_boolean')
 
     def test_boolean_nok_4(self):
         ret, err, ds = self._validate({}, None)
-        self.failUnless(err == 'cpsschemas_err_boolean')
+        self.assertEquals(err, 'cpsschemas_err_boolean')
 
     def test_boolean_nok_5(self):
         ret, err, ds = self._validate({}, 'foo')
-        self.failUnless(err == 'cpsschemas_err_boolean')
+        self.assertEquals(err, 'cpsschemas_err_boolean')
 
     def test_boolean_nok_5(self):
         ret, err, ds = self._validate({}, {'foo': 'sk'})
-        self.failUnless(err == 'cpsschemas_err_boolean')
+        self.assertEquals(err, 'cpsschemas_err_boolean')
 
 class TextWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSTextWidget
@@ -132,7 +132,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, None)
         self.failUnless(ret, err)
         # check convertion None into ''
-        self.failUnless(ds.getDataModel().values()[0] == '')
+        self.assertEquals(ds.getDataModel().values()[0], '')
 
     def test_text_ok_4(self):
         text = r""" a strange text
@@ -152,7 +152,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
 
     def test_text_nok_1(self):
         ret, err, ds = self._validate({}, {'a':1} )
-        self.failUnless(err == 'cpsschemas_err_string', err)
+        self.assertEquals(err, 'cpsschemas_err_string')
 
     def test_text_size_max_ok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345')
@@ -172,7 +172,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
 
     def test_text_size_max_nok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345678901')
-        self.failUnless(err=='cpsschemas_err_string_too_long', err)
+        self.assertEquals(err, 'cpsschemas_err_string_too_long')
 
 
 class URLWidgetValidationTest(WidgetValidationTest):
@@ -220,19 +220,19 @@ class URLWidgetValidationTest(WidgetValidationTest):
 
     def test_url_nok_1(self):
         ret, err, ds = self._validate({}, 'a space')
-        self.failUnless(err == 'cpsschemas_err_url')
+        self.assertEquals(err, 'cpsschemas_err_url')
 
     def test_url_nok_2(self):
         ret, err, ds = self._validate({}, '[abraket')
-        self.failUnless(err == 'cpsschemas_err_url')
+        self.assertEquals(err, 'cpsschemas_err_url')
 
     def test_url_nok_3(self):
         ret, err, ds = self._validate({}, 'a??dlk')
-        self.failUnless(err == 'cpsschemas_err_url')
+        self.assertEquals(err, 'cpsschemas_err_url')
 
     def test_url_nok_4(self):
         ret, err, ds = self._validate({}, 'http://www./')
-        self.failUnless(err == 'cpsschemas_err_url')
+        self.assertEquals(err, 'cpsschemas_err_url')
 
 # XXX make it pass !
 #    def test_url_nok_5(self):
@@ -261,31 +261,31 @@ class EmailWidgetValidationTest(WidgetValidationTest):
 
     def test_email_nok_1(self):
         ret, err, ds = self._validate({}, 'root')
-        self.failUnless(err == 'cpsschemas_err_email')
+        self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_2(self):
         ret, err, ds = self._validate({}, 'root@azer')
-        self.failUnless(err == 'cpsschemas_err_email', err)
+        self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_3(self):
         ret, err, ds = self._validate({}, 'root@foo--')
-        self.failUnless(err == 'cpsschemas_err_email', err)
+        self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_4(self):
         ret, err, ds = self._validate({}, '@foo')
-        self.failUnless(err == 'cpsschemas_err_email', err)
+        self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_5(self):
         ret, err, ds = self._validate({}, 'foo bar@foo.com')
-        self.failUnless(err == 'cpsschemas_err_email', err)
+        self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_6(self):
         ret, err, ds = self._validate({}, 'é@à.fr')
-        self.failUnless(err == 'cpsschemas_err_email', err)
+        self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_7(self):
         ret, err, ds = self._validate({}, 'a@foo..fr')
-        self.failUnless(err == 'cpsschemas_err_email', err)
+        self.assertEquals(err, 'cpsschemas_err_email')
 
 #  XXX should fail
 #    def test_email_nok_8(self):
@@ -322,77 +322,75 @@ class IdentifierWidgetValidationTest(WidgetValidationTest):
 
     def test_identifier_nok_1(self):
         ret, err, ds = self._validate({}, '1234')
-        self.failUnless(err == 'cpsschemas_err_identifier')
+        self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_2(self):
         ret, err, ds = self._validate({}, 'élskjd')
-        self.failUnless(err == 'cpsschemas_err_identifier', err)
+        self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_3(self):
         ret, err, ds = self._validate({}, 'boaz mlskjr ')
-        self.failUnless(err == 'cpsschemas_err_identifier', err)
+        self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_4(self):
         ret, err, ds = self._validate({}, 'foo\tzie')
-        self.failUnless(err == 'cpsschemas_err_identifier', err)
+        self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_5(self):
         ret, err, ds = self._validate({}, '_foo')
-        self.failUnless(err == 'cpsschemas_err_identifier', err)
+        self.assertEquals(err, 'cpsschemas_err_identifier')
 
-    ############################################################
-    # PasswordWidget
 
 class PasswordWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSPasswordWidget
 
     def test_password_ok_required_1(self):
         ret, err, ds = self._validate({'is_required': 0}, '')
-        self.assertEqual(err, None, err)
+        self.assertEquals(err, None)
 
     def test_password_nok_required_1(self):
         ret, err, ds = self._validate({'is_required': 1}, '')
-        self.assertEqual(err, 'cpsschemas_err_required', err)
+        self.assertEquals(err, 'cpsschemas_err_required')
 
     def test_password_ok_size_1(self):
         ret, err, ds = self._validate({'size_min': 5}, 'fooba')
-        self.assertEqual(err, None, err)
+        self.assertEquals(err, None)
 
     def test_password_ok_size_2(self):
         ret, err, ds = self._validate({'size_max': 8}, 'foobarfo')
-        self.assertEqual(err, None, err)
+        self.assertEquals(err, None)
 
     def test_password_nok_size_1(self):
         ret, err, ds = self._validate({'size_min': 5}, 'foob')
-        self.assertEqual(err, 'cpsschemas_err_password_size_min', err)
+        self.assertEquals(err, 'cpsschemas_err_password_size_min')
 
     def test_password_nok_size_2(self):
         ret, err, ds = self._validate({'size_max': 8}, 'foobarfoo')
-        self.assertEqual(err, 'cpsschemas_err_string_too_long', err)
+        self.assertEquals(err, 'cpsschemas_err_string_too_long')
 
     def test_password_ok_lower_1(self):
         ret, err, ds = self._validate({'check_lower': 1}, 'FoE1.A')
-        self.assertEqual(err, None, err)
+        self.assertEquals(err, None)
 
     def test_password_nok_lower_1(self):
         ret, err, ds = self._validate({'check_lower': 1}, 'FFFFF')
-        self.assertEqual(err, 'cpsschemas_err_password_lower', err)
+        self.assertEquals(err, 'cpsschemas_err_password_lower')
 
     def test_password_ok_upper_1(self):
         ret, err, ds = self._validate({'check_upper': 1}, 'F....')
-        self.assertEqual(err, None, err)
+        self.assertEquals(err, None)
 
     def test_password_nok_upper_1(self):
         ret, err, ds = self._validate({'check_upper': 1}, 'azert')
-        self.assertEqual(err, 'cpsschemas_err_password_upper', err)
+        self.assertEquals(err, 'cpsschemas_err_password_upper')
 
     def test_password_ok_extra_1(self):
         ret, err, ds = self._validate({'check_extra': 1}, 'azert*')
-        self.assertEqual(err, None, err)
+        self.assertEquals(err, None)
 
     def test_password_nok_extra_1(self):
         ret, err, ds = self._validate({'check_extra': 1}, 'aze12')
-        self.assertEqual(err, 'cpsschemas_err_password_extra', err)
+        self.assertEquals(err, 'cpsschemas_err_password_extra')
 
 # XXX: test more widget types here
 
