@@ -7,6 +7,7 @@ New features:
   filling string lists with free text entered in a textarea.
   Each line of input text will be a string in the string list, ala
   ZMI way of dealing with line fields.
+- image widget in edit mode display the current image
 Bug fixes:
 ~~~~~~~~~~
 - enhanced int, long, float widgets (better support for separators and range)
