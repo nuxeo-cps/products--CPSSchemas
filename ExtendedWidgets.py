@@ -375,19 +375,13 @@ class CPSRichTextEditorWidget(CPSWidget):
 
     width = 40
     height = 5
-    render_mode = 'pre'
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
-        {'id': 'render_mode', 'type': 'selection', 'mode': 'w',
-         'select_variable': 'all_render_modes',
-         'label': 'Render mode'},
         )
 
-
-    all_render_modes = ['pre', 'stx', 'text']
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
