@@ -1,0 +1,13 @@
+<tal:block define="mode options/mode;
+                   id here/getWidgetId;
+                   value options/datastructure/?id;
+                  ">
+  <tal:block condition="python: mode == 'view'">
+    <span tal:content="value">123</span>
+  </tal:block>
+  <tal:block condition="python: mode == 'edit'">
+    <input type="text" name="." value="."
+           tal:attributes="name here/getHtmlWidgetId;
+                           value value">
+  </tal:block>
+</tal:block>
