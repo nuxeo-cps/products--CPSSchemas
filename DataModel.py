@@ -265,7 +265,7 @@ class DataModel(UserDict):
 
         # XXX temporary until we have a better API for this
         if hasattr(aq_base(ob), 'postCommitHook'):
-            ob.postCommitHook()
+            ob.postCommitHook(datamodel=self)
 
         return ob
 
