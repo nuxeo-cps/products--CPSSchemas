@@ -1,6 +1,6 @@
 $Id$
 
-this howto describe how to configure Epoz editor 
+this doc describe how to configure Epoz editor 
 used by Text and RichText widgets
 to produce valid xhtml instead of dirty browser html code
 
