@@ -1,15 +1,14 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
--
-
+- Image widget resize image to display_with and display_heigh param
+  if PIL is installed, read CPSDefault/doc/HOWTO.install_CPS3 to
+  know how to install PIL
 New features:
 ~~~~~~~~~~~~~
--
-
+- CPSImageWidget resize image
 Bug fixes:
 ~~~~~~~~~~
 -
-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
