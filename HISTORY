@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.5.1 [R1 build 2003-10/24-14:14 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Installing EPOZ for the RTE widget
+- Better support for range, decimal/thousands separator attributes for
+  widgets int, long and float
+- Delete option no longer appears in widgets File and Image if not Deletable
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Refactoring of vocabularies tool to allow registry of several types of
+  vocabularies.
+*******************************************
 ** CPSSchemas V0.5.0 [R1 build 2003-10/18-10:35 by anguenot]
 
 ZODB Requires:
