@@ -1,12 +1,9 @@
 Requires:
 ~~~~~~~~~
-- CPSCore > 3.19.0
-  api change Languages -> getProxyLanguages
+-
 New features:
 ~~~~~~~~~~~~~
-- Added expression attribute that can be used
-  to validate all form values together
-
+-
 Bug fixes:
 ~~~~~~~~~~
 -
