@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-07-08 08:36default\n"
+"POT-Creation-Date: 2004-07-21 11:56default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -186,8 +186,8 @@ msgid "heading_enter_searched_value"
 msgstr ""
 
 #.   <td align="left">
-#.        Alternative text
-#.       </td>
+#.               Alternative text
+#.             </td>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr ""
@@ -382,4 +382,7 @@ msgid "cpsschemas_psm_vocabulary_updated"
 msgstr ""
 
 msgid "label_none_selection"
+msgstr ""
+
+msgid "label_other_selection"
 msgstr ""

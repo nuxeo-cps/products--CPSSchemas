@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"POT-Creation-Date: 2004-07-08 08:36default\n"
+"POT-Creation-Date: 2004-07-21 11:56default\n"
 "PO-Revision-Date: 2004-05-21 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -203,8 +203,8 @@ msgid "heading_enter_searched_value"
 msgstr "Inserisci un termine di ricerca:"
 
 #.   <td align="left">
-#.        Alternative text
-#.       </td>
+#.               Alternative text
+#.             </td>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Testo alternativo"
@@ -410,4 +410,7 @@ msgid "cpsschemas_psm_vocabulary_updated"
 msgstr "Aggiungi vocabolario"
 
 msgid "label_none_selection"
+msgstr ""
+
+msgid "label_other_selection"
 msgstr ""

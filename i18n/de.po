@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-21 11:25default\n"
+"POT-Creation-Date: 2004-07-21 11:56default\n"
 "PO-Revision-Date: 2004-07-12 18:00+0200\n"
 "Last-Translator: <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
@@ -35,11 +35,20 @@ msgstr "um"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." target="_blank" attributes="href preview_id">
-#.          (preview)
-#.         </a>
+#.   <a href="http://url..." attributes="href python:options['datastructure'].getDataModel().getProxy().absolute_url()
+#.             + '/preview_html?file=' + fields[0] + '&file_html=' + fields[2]">
+#.             (preview)
+#.           </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_preview"
+msgstr "(Vorabansicht)"
+
+#.   <a href="http://url..." target="_blank" attributes="href preview_id">
+#.             (printable version)
+#.           </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#, fuzzy
+msgid "cpsschema_link_printable_version"
 msgstr "(Vorabansicht)"
 
 #.   <span>mn</span>
@@ -173,8 +182,8 @@ msgid "heading_enter_searched_value"
 msgstr "Eingabe Suchgegriff:"
 
 #.   <td align="left">
-#.        The Title
-#.       </td>
+#.               Alternative text
+#.             </td>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Titel"
@@ -253,8 +262,8 @@ msgstr "Sorry, das Passwort muss eine Zahl enthalten "
 
 msgid "cpsschemas_err_password_extra"
 msgstr ""
-"Sorry, das Passwort muss ein Sonderzeichen enthalten, dh weder Buchstabe"
-"noch Zahl"
+"Sorry, das Passwort muss ein Sonderzeichen enthalten, dh weder Buchstabenoch "
+"Zahl"
 
 msgid "cpsschemas_err_identifier"
 msgstr "Ungültiger Bezeichner"
@@ -264,6 +273,10 @@ msgstr "Ungültige Email"
 
 msgid "cpsschemas_err_readonly"
 msgstr "Nur lesbares Feld"
+
+#, fuzzy
+msgid "cpsschemas_err_rangelist"
+msgstr "Ungültiges Bild"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -367,6 +380,11 @@ msgstr "Kein Eintrag ausgewählt. Wähle einen."
 msgid "cpsschemas_psm_vocabulary_updated"
 msgstr "Wörterbuch auf neusten Stand gebracht."
 
+msgid "label_none_selection"
+msgstr ""
+
+msgid "label_other_selection"
+msgstr ""
+
 #~ msgid "action_search"
 #~ msgstr "Search"
-

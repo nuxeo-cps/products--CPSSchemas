@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-08 08:36default\n"
+"POT-Creation-Date: 2004-07-21 11:56default\n"
 "PO-Revision-Date: 2004-06-18 20:02+0200\n"
 "Last-Translator: Encolpe DEGOUTE <ed@nuxeo.com>\n"
 "Language-Team: French <cantact@nuxeo.com>\n"
@@ -191,8 +191,8 @@ msgid "heading_enter_searched_value"
 msgstr "Enter a search term:"
 
 #.   <td align="left">
-#.        Alternative text
-#.       </td>
+#.               Alternative text
+#.             </td>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Alternative text"
@@ -390,6 +390,9 @@ msgstr "Vocabulary updated."
 
 msgid "label_none_selection"
 msgstr " -- Empty -- "
+
+msgid "label_other_selection"
+msgstr "Other, please specify: "
 
 #~ msgid "action_search"
 #~ msgstr "Search"

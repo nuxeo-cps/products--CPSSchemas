@@ -208,3 +208,5 @@ msgstr ""
 msgid "label_none_selection"
 msgstr ""
 
+msgid "label_other_selection"
+msgstr ""

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2004-07-08 08:36default\n"
+"POT-Creation-Date: 2004-07-21 11:56default\n"
 "PO-Revision-Date: 2004-06-08 16:42-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: Português do Brasil <pt@li.org>\n"
@@ -187,8 +187,8 @@ msgid "heading_enter_searched_value"
 msgstr "Entre um termo de busca:"
 
 #.   <td align="left">
-#.        Alternative text
-#.       </td>
+#.               Alternative text
+#.             </td>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "label_alt_text"
 msgstr "Texto alternativo"
@@ -392,4 +392,7 @@ msgid "cpsschemas_psm_vocabulary_updated"
 msgstr "Adicionar vocabulário"
 
 msgid "label_none_selection"
+msgstr ""
+
+msgid "label_other_selection"
 msgstr ""
