@@ -158,7 +158,7 @@ class CPSMethodWidget(CPSWidget):
     meta_type = "CPS Method Widget"
 
     _properties = CPSWidget._properties + (
-        {'id': 'render_method', 'type': 'text', 'mode': 'w',
+        {'id': 'render_method', 'type': 'string', 'mode': 'w',
          'label': 'the zpt or py script method'},)
     render_method = ''
 

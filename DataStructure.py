@@ -101,6 +101,7 @@ class DataStructure(UserDict):
 
         XXX: explain why <widgetname(key)> is used instead of <key>.
         """
+        #raise "mapping", str(mapping)
         for key in self.keys():
             if mapping.has_key(widgetname(key)):
                 self[key] = mapping[widgetname(key)]
