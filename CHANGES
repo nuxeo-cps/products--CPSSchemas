@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- (crash) Wasn't impossible to have a different field name than the widget name on couple of widgets (CPSIntWidget, CPSLongWidget, CPSBooleanWidget,  CPSFloafWidget)
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - splitting macro lib in progress
