@@ -10,7 +10,7 @@
 ">
 <tal:block condition="python: mode == 'view'"
   define="fmt here/view_format">
-<span tal:content="python:here.getDateStr(value, fmt=fmt)" /><br>
+<span tal:replace="python:here.getDateStr(value, fmt=fmt)" />
 </tal:block>
 <tal:block define="name here/getHtmlWidgetId;"
   condition="python: mode == 'edit'">
