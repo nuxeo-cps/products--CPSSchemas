@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.26.1 [R1 build 2004/07/07-13:08 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Unregistered too general list field.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.26.0 [R1 build 2004/07/07-09:13 by madarche]
 
 Requires:
