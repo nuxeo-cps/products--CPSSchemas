@@ -26,7 +26,11 @@ from cgi import escape
 from types import IntType, StringType, UnicodeType
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass, DTMLFile
+from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
+
+from ZPublisher.HTTPRequest import FileUpload
+from OFS.Image import cookId, File, Image
 from OFS.PropertyManager import PropertyManager
 from Products.PythonScripts.standard import structured_text
 
@@ -36,6 +40,15 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSDocument.Widget import CPSWidget
 from Products.CPSDocument.Widget import CPSWidgetType
 from Products.CPSDocument.WidgetsTool import WidgetTypeRegistry
+
+
+def _isinstance(ob, cls):
+    try:
+        return isinstance(ob, cls)
+    except TypeError:
+        # In python 2.1 isinstance() raises TypeError
+        # instead of returning 0 for ExtensionClasses.
+        return 0
 
 
 def renderHtmlTag(tagname, **kw):
@@ -458,6 +471,117 @@ class CPSDateWidgetType(CPSWidgetType):
 
 InitializeClass(CPSDateWidgetType)
 
+##################################################
+
+class CPSFileWidget(CPSWidget):
+    """File widget."""
+    meta_type = "CPS File Widget"
+
+    _properties = CPSWidget._properties + (
+        {'id': 'deletable', 'type': 'boolean', 'mode': 'w',
+         'label': 'Deletable'},
+        )
+    deletable = 1
+
+    def prepare(self, datastructure, datamodel):
+        """Prepare datastructure from datamodel."""
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = datamodel[self.fields[0]]
+        datastructure[widget_id+'_choice'] = '' # make update from request work
+
+    def validate(self, datastructure, datamodel):
+        """Update datamodel from user data in datastructure."""
+        field_id = self.fields[0]
+        widget_id = self.getWidgetId()
+
+        choice = datastructure[widget_id+'_choice']
+        if choice == 'keep':
+            # XXX check SESSION
+            ok = 1
+        elif choice == 'delete':
+            datamodel[field_id] = None
+            ok = 1
+        else: # 'change'
+            file = datastructure[widget_id]
+            if _isinstance(file, FileUpload):
+                fileid, filetitle = cookId('', '', file)
+                file = File(fileid, filetitle, file)
+                LOG('CPSFileWidget', DEBUG, 'validate change set %s' % `file`)
+                datamodel[field_id] = file
+                ok = 1
+            else:
+                datastructure.setError(widget_id, "Bad file received (%s)" % repr(file))
+                ok = 0
+        if ok:
+            self.prepare(datastructure, datamodel)
+        return ok
+
+    def render(self, mode, datastructure, datamodel):
+        """Render this widget from the datastructure or datamodel."""
+        value = datastructure[self.getWidgetId()]
+        if hasattr(aq_base(value), 'getId'):
+            current = value.getId()
+        else:
+            current = '-'
+        if mode == 'view':
+            return renderHtmlTag('a',
+                                 href='url...',
+                                 contents=current,
+                                 css_class=self.css_class,
+                                 )
+        elif mode == 'edit':
+            html_widget_id = self.getHtmlWidgetId()
+            # XXX urgh put this in a macro somewhere
+            res = """
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td>
+        <input type="radio" name="%(radio)s" value="keep" checked>
+      </td>
+      <td valign="middle" colspan="2">
+        Keep %(current)s
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="radio" name="%(radio)s" value="change">
+      </td>
+      <td valign="middle">
+        Change:
+      </td>
+      <td>
+        <input type="file" name="%(name)s">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="radio" name="%(radio)s" value="delete">
+      </td>
+      <td valign="middle" colspan="2">
+        Delete
+      </td>
+    </tr>
+  </table>
+"""
+            res = res % {'radio': html_widget_id+'_choice',
+                         'name': html_widget_id,
+                         'current': escape(current),
+                         }
+            return res
+        raise RuntimeError('unknown mode %s' % mode)
+
+InitializeClass(CPSFileWidget)
+
+
+class CPSFileWidgetType(CPSWidgetType):
+    """File widget type."""
+    meta_type = "CPS File Widget Type"
+    cls = CPSFileWidget
+
+InitializeClass(CPSFileWidgetType)
+
+##################################################
+
 #
 # Register widget types.
 #
@@ -467,3 +591,4 @@ WidgetTypeRegistry.register(CPSStringWidgetType, CPSStringWidget)
 WidgetTypeRegistry.register(CPSTextAreaWidgetType, CPSTextAreaWidget)
 WidgetTypeRegistry.register(CPSIntWidgetType, CPSIntWidget)
 WidgetTypeRegistry.register(CPSDateWidgetType, CPSDateWidget)
+WidgetTypeRegistry.register(CPSFileWidgetType, CPSFileWidget)
