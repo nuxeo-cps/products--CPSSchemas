@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
-"POT-Creation-Date: 2003-09-22 17:41default\n"
-"PO-Revision-Date: 2003-09-22 17:44+0200\n"
+"POT-Creation-Date: 2003-09-30 12:45default\n"
+"PO-Revision-Date: 2003-09-30 11:11+0200\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,21 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 "X-Generator: KBabel 1.0.1\n"
+
+#.   <span>at</span>
+#: from ../skins/cps_schemas/widget_date_render.pt
+msgid "cpsschema_at"
+msgstr "à"
+
+#.   <span>h</span>
+#: from ../skins/cps_schemas/widget_date_render.pt
+msgid "cpsschema_hour"
+msgstr "h"
+
+#.   <span>mn</span>
+#: from ../skins/cps_schemas/widget_date_render.pt
+msgid "cpsschema_minute"
+msgstr "mn"
 
 #.   <label>Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -67,7 +82,8 @@ msgstr "fichier trop volumineux"
 msgid "cpsschemas_err_file_empty"
 msgstr "fichier vide"
 
-#, fuzzy
 msgid "cpsschema_err_image"
 msgstr "Image invalide"
 
+msgid "jscalendar_date_fmt"
+msgstr "d/m/y"
