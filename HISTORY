@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.21.1 [R1 build 2004/05/10-06:19 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- In the widget_text_render.pt the RTE button now appears if and only if the
+  selected render format if HTML, and not depending on whether the format is
+  configurable or not.
+- Missing conversion method for Image Field.
+- Check on file max size for AttachedFile Widget works again
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.21.0 [R1 build 2004/05/05-00:21 by guillaum]
 
 Requires:
