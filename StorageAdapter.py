@@ -123,7 +123,7 @@ class BaseStorageAdapter:
         for field_id, v in data.items():
             if v is DEFAULT_VALUE_MARKER:
                 data[field_id] = self._schema[field_id].getDefault()
-        
+
     #
     # API called by DataModel
     #
@@ -173,8 +173,10 @@ class BaseStorageAdapter:
         Returns a copy, without the fields that are not stored."""
         new_data = {}
         for field_id, field in self.getFieldItems():
-            if field.write_ignore_storage:
-                continue
+            # XXX we want here to pursue even if
+            # writing storage is ignored
+            #if field.write_ignore_storage:
+            #    continue
             value = data[field_id]
             new_data[field_id] = field.processValueBeforeWrite(value, data,
                                                                self.getContextObject())
@@ -226,11 +228,11 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if _isinstance(field, CPSSubObjectsField):
             field.setAsAttribute(ob, field_id, value)
         else:
-            
+
             # If the field is stored as a subobject first delete it.
             if hasattr(aq_base(ob),'objectIds') and field_id in ob.objectIds():
                 ob._delObject(field_id)
-                
+
             # If it is a Zope object, store as subobject and not attribute
             if hasattr(aq_base(value), 'manage_beforeDelete'):
                 if hasattr(aq_base(ob), field_id):
