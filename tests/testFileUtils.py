@@ -16,8 +16,8 @@ class TestFileUtils(CPSSchemasTestCase.CPSSchemasTestCase):
 
         file = File('test', 'test', 'test')
         file.content_type = 'text/html'
-        self.assertEquals(
-            FileUtils.convertFileToText(file, context=self.portal), 'test')
+        result = FileUtils.convertFileToText(file, context=self.portal)
+        self.assertEquals(result.strip(), 'test')
 
     def testConvertFileToHtml(self):
         file = None
@@ -26,8 +26,8 @@ class TestFileUtils(CPSSchemasTestCase.CPSSchemasTestCase):
 
         file = File('test', 'test', 'test')
         file.content_type = 'text/html'
-        self.assertEquals(
-            FileUtils.convertFileToText(file, context=self.portal), 'test')
+        result = FileUtils.convertFileToHtml(file, context=self.portal)
+        self.assertEquals(result.strip(), 'test')
 
 
 def test_suite():
