@@ -686,8 +686,8 @@ InitializeClass(CPSRangeListField)
 class CPSCoupleField(CPSListField):
     """CPS Couple Field
 
-    Holds two integer values within a list
-    The values of a couple are ordered
+    Holds two values within a list (whatever types)
+    The order matters in a couple for the comparaison.
     """
 
     meta_type = "CPS Couple Field"
