@@ -54,7 +54,6 @@ class Vocabulary(Persistent):
     __implements__ = IVocabulary
 
     security = ClassSecurityInfo()
-    security.setDefaultAccess('allow')
 
     def __init__(self, dict=None, list=None):
         # XXX improve
@@ -132,6 +131,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     meta_type = "CPS Vocabulary"
 
     security = ClassSecurityInfo()
+    security.declareObjectProtected(View)
 
     _propertiesBaseClass = SimpleItemWithProperties
     _properties = (
@@ -235,7 +235,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declareProtected(ManagePortal, 'manage_main')
     manage_main = manage_editVocabulary
 
-    security.declarePrivate('')
+    security.declarePrivate('_checkWriteAllowed')
     def _checkWriteAllowed(self):
         """Check that user can write to this vocabulary."""
         if not getSecurityManager().getUser().has_role(
