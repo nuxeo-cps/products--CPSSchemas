@@ -459,12 +459,15 @@ class CPSLinesWidget(CPSWidget):
 
     width = 30
     height = 5
+    format_empty = ''
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
          'label': 'Width'},
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
+        {'id': 'format_empty', 'type': 'string', 'mode': 'w',
+         'label': 'Format for empty list'},
         )
 
 
