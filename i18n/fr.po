@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-24 17:16default\n"
+"POT-Creation-Date: 2004-04-05 16:15default\n"
 "PO-Revision-Date: 2004-03-24 17:21+0100\n"
 "Last-Translator: ben <ben@nuxeo.com>\n"
 "Language-Team: ben\n"
@@ -153,20 +153,25 @@ msgstr "MsgId&nbsp;:"
 msgid "cpsschemas_vocabulary_value"
 msgstr "Valeur&nbsp;:"
 
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
-
 #.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
 msgstr ""
+
+#.   <th>
+#.           Click on the chosen value
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_click_chosen_value"
+msgstr "Cliquez sur la valeur voulue&nbsp;:"
+
+#.   <th>
+#.           Enter a search term:
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_enter_searched_value"
+msgstr "Entrez un terme de recherche&nbsp;:"
 
 msgid "cpsschemas_err_string"
 msgstr "Chaîne de caractère invalide"
@@ -353,12 +358,6 @@ msgstr "Description"
 #~ msgid "button_search"
 #~ msgstr "Rechercher"
 
-#~ msgid "heading_click_chosen_value"
-#~ msgstr "Cliquez sur la valeur voulue&nbsp;:"
-
-#~ msgid "heading_enter_searched_value"
-#~ msgstr "Entrez un terme de recherche&nbsp;:"
-
 #~ msgid "cpsschemas_psm_vocabulary_entry_added"
 #~ msgstr "EntrÃ©e ajoutÃ©e au vocabulaire."
 
@@ -398,4 +397,3 @@ msgstr "Description"
 #, fuzzy
 #~ msgid "cpsschemas_render_display"
 #~ msgstr "Format de date invalide"
-
