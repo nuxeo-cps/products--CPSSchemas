@@ -937,7 +937,11 @@ class CPSDateWidget(CPSWidget):
             d = str(v.day())
             m = str(v.month())
             y = str(v.year())
-            date = str(v)
+            locale = self.Localizer.default.get_selected_language()
+            if locale in ('en', 'hu', ):
+                date = m+'/'+d+'/'+y
+            else:
+                date = d+'/'+m+'/'+y
             hour = str(v.h_24())
             minute = str(v.minute())
 
