@@ -7,13 +7,14 @@
 <tal:block condition="python: mode == 'view'">
  <div tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
                                         test(rposition == 'col_right',
-                                             'dcolright', 'dnocol'))"
+                                             'dcolright', 'dflush'))"
     tal:content="structure value" />
 </tal:block>
 <tal:block condition="python: mode == 'edit'">
    <button type="button" style="float: right;"
-    tal:condition="here/configurable" tal:attributes="onclick
-    string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
+    tal:condition="python:rformat=='html' or here.configurable"
+    tal:attributes="onclick
+      string:javascript:popup_rte('${value_name}', '${here/label_edit}');;"
     >...</button>
   <textarea
     tal:attributes="id value_name;
