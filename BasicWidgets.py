@@ -1863,7 +1863,7 @@ class CPSImageWidget(CPSFileWidget):
                     width = int(zoom * width)
                     height = int(zoom * height)
 
-            title = getattr(image, 'title', None)
+            title = datastructure['Title']
             tag = renderHtmlTag('img', src=image_info['content_url'],
                     width=str(width), height=str(height), border='0',
                     alt=title, title=title)
