@@ -450,7 +450,7 @@ InitializeClass(CPSTextAreaWidgetType)
 
 ##################################################
 
-class CPSLinesWidget(CPSTextAreaWidget):
+class CPSLinesWidget(CPSWidget):
     """Lines widget."""
     meta_type = "CPS Lines Widget"
 
@@ -458,6 +458,7 @@ class CPSLinesWidget(CPSTextAreaWidget):
     field_inits = ({'is_indexed': 1,},)
 
     width = 30
+    height = 5
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
