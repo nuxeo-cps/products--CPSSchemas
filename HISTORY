@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.10.1 [R1 build 2003/12/10-18:24 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- The Image and Photo Widgets rendering assumed that the data was attributes.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.10.0 [R1 build 2003/12/10-17:19 by ben]
 
 ZODB Requires:
