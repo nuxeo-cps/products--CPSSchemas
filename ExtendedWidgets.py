@@ -621,9 +621,8 @@ class CPSPhotoWidget(CPSImageWidget):
 
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Sub title
-                   'CPS String Field',  # render_position if configurable
-                   'CPS String Field')  # render_format if configurable
-    field_inits = ({}, {'is_indexed': 1,}, {}, {})
+                   'CPS String Field',) # render_position if configurable
+    field_inits = ({}, {'is_indexed': 1,}, {})
 
     _properties = CPSImageWidget._properties + (
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',
@@ -636,13 +635,12 @@ class CPSPhotoWidget(CPSImageWidget):
          'select_variable': 'all_configurable',
          'label': 'What is user configurable, require extra fields'},
         )
-    all_configurable = ['nothing', 'position', 'format', 'position and format']
+    all_configurable = ['nothing', 'position']
     all_render_positions = ['left', 'center', 'right']
-    all_render_formats = ['original', 'icon', 'medium', 'large']
 
-    configurable = 'position'
+    allow_resize = 1
+    configurable = all_configurable[0]
     render_position = all_render_positions[0]
-    render_format = all_render_formats[0]
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -651,17 +649,14 @@ class CPSPhotoWidget(CPSImageWidget):
         datastructure[widget_id] = datamodel[self.fields[0]]
         datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
         rposition = self.render_position
-        rformat = self.render_format
         if self.configurable != 'nothing':
             if len(self.fields) > 2:
                 rposition = datamodel[self.fields[2]]
-            if len(self.fields) > 3:
-                rformat = datamodel[self.fields[3]]
         datastructure[widget_id + '_rposition'] = rposition
-        datastructure[widget_id + '_rformat'] = rformat
         # make update from request work
         datastructure[widget_id + '_choice'] = ''
-
+        if self.allow_resize:
+            datastructure[widget_id + '_resize'] = ''
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -676,10 +671,6 @@ class CPSPhotoWidget(CPSImageWidget):
                     rposition = datastructure[widget_id + '_rposition']
                     if rposition and rposition in self.all_render_positions:
                         datamodel[self.fields[2]] = rposition
-                if len(self.fields) > 3:
-                    rformat = datastructure[widget_id + '_rformat']
-                    if rformat and rformat in self.all_render_formats:
-                        datamodel[self.fields[3]] = rformat
 
         return ret
 
@@ -701,13 +692,12 @@ class CPSPhotoWidget(CPSImageWidget):
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = registry.lookupExtension(current_name)
         rposition = datastructure[widget_id + '_rposition']
-        rformat = datastructure[widget_id + '_rformat']
         subtitle = datastructure[widget_id + '_subtitle']
 
         return meth(mode=mode, datastructure=datastructure,
                     current_name=current_name, mimetype=mimetype,
                     subtitle=subtitle,
-                    render_position=rposition, render_format=rformat,
+                    render_position=rposition,
                     configurable=str(self.configurable))
 
 
