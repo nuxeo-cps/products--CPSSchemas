@@ -53,24 +53,24 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
     try:
         # CMF 1.4 compatible
         flexti.addAction('view',
-                         'View',
+                         'action_view',
                          'cpsdocument_view',
                          '', # condition: only for CMF 1.4 and above
                          View,
                          'object')
         flexti.addAction('edit',
-                         'Edit',
+                         'action_edit',
                          'cpsdocument_edit_form',
                          '', # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
         flexti.addAction('edit_layout',
-                         'Edit Layout',
+                         'action_edit_layout',
                          'cpsdocument_editlayout_form',
                          'python: object.portal_types[object.getPortalTypeName()].flexible_layouts', # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
-        flexti.addAction('action_metadata',
+        flexti.addAction('metadata',
                          'action_metadata',
                          'metadata_edit_form',
                          '', # condition: only for CMF 1.4 and above
@@ -79,24 +79,24 @@ def addFlexibleTypeInformation(container, id, REQUEST=None):
 
     except TypeError, errorType:
         flexti.addAction('view',
-                         'View',
+                         'action_view',
                          'cpsdocument_view',
                          # condition: only for CMF 1.4 and above
                          View,
                          'object')
         flexti.addAction('edit',
-                         'Edit',
+                         'action_edit',
                          'cpsdocument_edit_form',
                          # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
         flexti.addAction('edit_layout',
-                         'Edit Layout',
+                         'action_edit_layout',
                          'cpsdocument_editlayout_form',
                          # condition: only for CMF 1.4 and above
                          ModifyPortalContent,
                          'object')
-        flexti.addAction('action_metadata',
+        flexti.addAction('metadata',
                          'action_metadata',
                          'metadata_edit_form',
                          # condition: only for CMF 1.4 and above
