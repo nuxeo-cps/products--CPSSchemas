@@ -8,6 +8,7 @@ New features:
   within an Image widget
 - Add an HTML id on each widget: group_id
 - Add 'depends on' attributes for javascript display toggle
+- Malagasy language
 Bug fixes:
 ~~~~~~~~~~
 - Date widget use nn/nn/nnnn instead of n/n/n for rendering
