@@ -26,8 +26,7 @@ from types import IntType, StringType, ListType, FloatType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
-from OFS.Image import File
-from OFS.Image import Image
+from OFS.Image import cookId, File, Image
 
 from Products.CPSSchemas.Field import CPSField, FieldRegistry
 from Products.CPSSchemas.Field import propertiesWithType
@@ -178,13 +177,25 @@ class CPSFileField(CPSField):
     def computeDependantFields(self, schemas, data, context=None):
         """Compute dependant fields."""
         field_id = self.getFieldId()
-        value = data[field_id] # May be None.
+        file = data[field_id] # May be None.
         html_field_id = self._getDependantFieldId(schemas, self.suffix_html)
         if html_field_id is not None:
-            data[html_field_id] = convertFileToHtml(value, context=context)
+            html_string = convertFileToHtml(file, context=context)
+            if html_string is not None:
+                fileid = cookId('', '', file)[0]
+                if '.' in fileid:
+                    fileid = fileid[:fileid.rfind('.')]
+                if not fileid:
+                    fileid = 'document'
+                fileid = fileid + '.html'
+                html_file = File(fileid, '', html_string,
+                                 content_type='text/html')
+            else:
+                html_file = None
+            data[html_field_id] = html_file
         text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:
-            data[text_field_id] = convertFileToText(value, context=context)
+            data[text_field_id] = convertFileToText(file, context=context)
 
     def validate(self, value):
         if not value:
