@@ -49,6 +49,10 @@ class BaseStorageAdapter:
         """Create a StorageAdapter for a schema."""
         self._schema = schema
 
+    def getSchema(self):
+        """Get schema this adapter is about."""
+        return self._schema
+
     #
     # API called by DataModel
     #
