@@ -1,6 +1,7 @@
 ZODB Requires:
 ~~~~~~~~~~~~~~
--
+- Update the default value of any field that has a non-default default.
+  This means changing getDocumentSchemas.py or getCustomDocumentSchemas.py
 New features:
 ~~~~~~~~~~~~~
 - rewrite Link widget into Compound widget
@@ -12,6 +13,7 @@ New features:
   the given TAL expression returns true.
 - Compound widget have customisable prepare_validate method
 - Added fields.txt documentation in doc.
+- Field's default value is now a TALES expression.
 Bug fixes:
 ~~~~~~~~~~
 - do not raise exception if 2 schemas have a field in common

@@ -31,6 +31,7 @@ from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
 from AccessControl.PermissionRole import rolesForPermissionOn
 
+from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
@@ -77,8 +78,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     _properties = (
         {'id': 'getFieldIdProperty', 'type': 'string', 'mode': '',
          'label': "Id"},
-        {'id': 'default', 'type': 'string', 'mode': 'w',
-         'label': "Default value"},
+        {'id': 'default_expression_str', 'type': 'string', 'mode': 'w',
+         'label': "Default value expression"},
         {'id': 'is_indexed', 'type': 'boolean', 'mode': 'w',
          'label': "Indexed in SearchableText"},
         {'id': 'acl_read_permissions_str', 'type': 'string', 'mode': 'w',
@@ -109,7 +110,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': "Write: expression"},
         )
 
-    default = ''
+    default_expression_str = 'string:'
     is_indexed = 0
     acl_read_permissions_str = ''
     acl_read_roles_str = ''
@@ -125,6 +126,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     write_ignore_storage = 0
     write_process_expression_str = ''
 
+    default_expression = Expression(default_expression_str)
     acl_read_permissions = []
     acl_read_roles = []
     acl_read_expression = None
@@ -142,6 +144,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         )
 
     _properties_post_process_tales = (
+        ('default_expression_str', 'default_expression'),
         ('acl_read_expression_str', 'acl_read_expression'),
         ('acl_write_expression_str', 'acl_write_expression'),
         ('read_process_expression_str', 'read_process_expression'),
@@ -155,7 +158,21 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     security.declarePrivate('getDefault')
     def getDefault(self):
         """Get the default value for this field."""
-        return self.default
+        if not self.default_expression:
+            return None
+        expr_context = self._createDefaultExpressionContext()
+        return self.default_expression(expr_context)
+
+    def _createDefaultExpressionContext(self):
+        """Create an expression context for default value evaluation."""
+        mapping = {
+            'field': self,
+            'user': getSecurityManager().getUser(),
+            'portal': getToolByName(self, 'portal_url').getPortalObject(),
+            'DateTime': DateTime,
+            'nothing': None,
+            }
+        return getEngine().getContext(mapping)
 
     security.declarePrivate('computeDependantFields')
     def computeDependantFields(self, schemas, data, context=None):
@@ -224,10 +241,10 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         mapping.update({
             'value': value,
             'data': data,
-            'field_id': self.getId(),
+            'field': self,
             'user': getSecurityManager().getUser(),
             'portal': getToolByName(self, 'portal_url').getPortalObject(),
-            'getDateTime': lambda: DateTime(),
+            'DateTime': DateTime,
             'nothing': None,
             })
         return getEngine().getContext(mapping)
@@ -255,7 +272,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     def _createAclExpressionContext(self, datamodel):
         """Create an expression context for ACL evaluation."""
         context = datamodel._context
-        data = {
+        mapping = {
             'field': self,
             'datamodel': datamodel,
             'user': datamodel._acl_cache_user,
@@ -267,7 +284,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             # Useful for directories
             'dir': context,
             }
-        return getEngine().getContext(data)
+        return getEngine().getContext(mapping)
 
     def _checkAccess(self, datamodel, context,
                      acl_permissions, acl_roles, acl_expression,

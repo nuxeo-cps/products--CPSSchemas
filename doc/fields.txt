@@ -36,11 +36,22 @@ Fields
 
     Fields are configured using the following properties.
 
-    default -- Default value
+    default_expression_str -- Default value expression
 
       The default value for this field at creation time. It is also used
       if the attribute is not found on an object when it is accessed,
-      this can happen on old instances if its schema is edited later.
+      this can happen on an old instances if its schema is edited later.
+      In the expression the following namespace is available:
+
+        - field: the current field
+
+        - user: the current user
+
+        - portal: the portal
+
+        - DateTime: a DateTime constructor
+
+        - nothing: None
 
     is_indexed -- Indexed in SearchableText
 
@@ -68,9 +79,9 @@ Fields
       condition read access to the field is allowed. In the expression
       the following namespace is available:
 
-        - field: the field object itself
-
         - datamodel: the datamodel
+
+        - field: the current field
 
         - user: the current user
 
@@ -111,14 +122,13 @@ Fields
 
         - data: a mapping of the values read from the storage for this entry
 
-        - field_id: the id of the current field
+        - field: the current field
 
         - user: the current user
 
         - portal: the portal
 
-        - getDateTime: a method who, when called, returns the current
-          DateTime
+        - DateTime: a DateTime constructor
 
         - nothing: None
 

@@ -28,8 +28,9 @@ from DateTime.DateTime import DateTime
 
 from OFS.Image import cookId, File, Image
 
+from Products.CMFCore.Expression import Expression
+
 from Products.CPSSchemas.Field import CPSField, FieldRegistry
-from Products.CPSSchemas.Field import propertiesWithType
 from Products.CPSSchemas.FileUtils import convertFileToHtml
 from Products.CPSSchemas.FileUtils import convertFileToText
 
@@ -50,8 +51,9 @@ class ValidationError(ValueError):
 class CPSIntField(CPSField):
     """Integer field."""
     meta_type = "CPS Int Field"
-    _properties = propertiesWithType(CPSField._properties, 'default', 'int')
-    default = 0
+
+    default_expression_str = 'python:0'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if isinstance(value, IntType):
@@ -64,8 +66,9 @@ InitializeClass(CPSIntField)
 class CPSLongField(CPSField):
     """Long field."""
     meta_type = "CPS Long Field"
-    _properties = propertiesWithType(CPSField._properties, 'default', 'long')
-    default = 0
+
+    default_expression_str = 'python:0'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if isinstance(value, LongType):
@@ -78,8 +81,9 @@ InitializeClass(CPSLongField)
 class CPSFloatField(CPSField):
     """Float field."""
     meta_type = "CPS Float Field"
-    _properties = propertiesWithType(CPSField._properties, 'default', 'float')
-    default = 0.0
+
+    default_expression_str = 'python:0.0'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if isinstance(value, FloatType):
@@ -92,7 +96,9 @@ InitializeClass(CPSFloatField)
 class CPSStringField(CPSField):
     """String field."""
     meta_type = "CPS String Field"
-    #_properties = propertiesWithType(CPSField._properties, 'default', 'string')
+
+    default_expression_str = 'string:'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if isinstance(value, StringType):
@@ -104,7 +110,9 @@ InitializeClass(CPSStringField)
 class CPSPasswordField(CPSField):
     """Password field."""
     meta_type = "CPS Password Field"
-    #_properties = propertiesWithType(CPSField._properties, 'default', 'string')
+
+    default_expression_str = 'string:'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if isinstance(value, StringType):
@@ -117,7 +125,9 @@ InitializeClass(CPSPasswordField)
 class CPSStringListField(CPSField):
     """String List field."""
     meta_type = "CPS String List Field"
-    _properties = propertiesWithType(CPSField._properties, 'default', 'lines')
+
+    default_expression_str = 'python:[]'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if isinstance(value, ListType):
@@ -137,18 +147,9 @@ InitializeClass(CPSStringListField)
 class CPSDateTimeField(CPSField):
     """DateTime field."""
     meta_type = "CPS DateTime Field"
-    default = ''
 
-    def getDefault(self):
-        """Get the default datetime."""
-        default = self.default
-        if not default or default in ('None', 'none'):
-            return None
-        try:
-            return DateTime(default)
-        except (ValueError, TypeError, DateTime.DateTimeError,
-                DateTime.SyntaxError, DateTime.DateError):
-            return DateTime('1970-01-01')
+    default_expression_str = 'nothing'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if not value:
@@ -163,6 +164,10 @@ InitializeClass(CPSDateTimeField)
 class CPSFileField(CPSField):
     """File field."""
     meta_type = "CPS File Field"
+
+    default_expression_str = 'nothing'
+    default_expression = Expression(default_expression_str)
+
     _properties = CPSField._properties + (
         {'id': 'suffix_text', 'type': 'string', 'mode': 'w',
          'label': 'Suffix for field containing Text conversion'},
@@ -171,10 +176,6 @@ class CPSFileField(CPSField):
         )
     suffix_text = ''
     suffix_html = ''
-
-    def getDefault(self):
-        """Get the default file object."""
-        return None
 
     def _getDependantFieldId(self, schemas, suffix):
         """Get a dependant field id described by the suffix."""
@@ -223,9 +224,8 @@ class CPSImageField(CPSField):
     """Image field."""
     meta_type = "CPS Image Field"
 
-    def getDefault(self):
-        """Get the default file object."""
-        return None
+    default_expression_str = 'nothing'
+    default_expression = Expression(default_expression_str)
 
     def validate(self, value):
         if not value:
