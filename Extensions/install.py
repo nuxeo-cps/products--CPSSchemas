@@ -31,6 +31,42 @@ def install(self):
     def portalhas(id, portal=portal):
         return id in portal.objectIds()
 
+       
+    # skins
+    skins = ('cps_document',)
+    paths = {
+        'cps_document': 'Products/CPSDocument/skins/cps_document',
+    }
+
+    for skin in skins:
+        path = paths[skin]
+        path = path.replace('/', os.sep)
+        pr(" FS Directory View '%s'" % skin)
+        if skin in portal.portal_skins.objectIds():
+            dv = portal.portal_skins[skin]
+            oldpath = dv.getDirPath()
+            if oldpath == path:
+                prok()
+            else:
+                pr("  Correctly installed, correcting path")
+                dv.manage_properties(dirpath=path)
+        else:
+            portal.portal_skins.manage_addProduct['CMFCore'].manage_addDirectoryView(filepath=path, id=skin)
+            pr("  Creating skin")
+    allskins = portal.portal_skins.getSkinPaths()
+    for skin_name, skin_path in allskins:
+        if skin_name != 'Basic':
+            continue
+        path = [x.strip() for x in skin_path.split(',')]
+        path = [x for x in path if x not in skins] # strip all
+        if path and path[0] == 'custom':
+            path = path[:1] + list(skins) + path[1:]
+        else:
+            path = list(skins) + path
+        npath = ', '.join(path)
+        portal.portal_skins.addSkinSelection(skin_name, npath)
+        pr(" Fixup of skin %s" % skin_name)
+
 # widgets
     pr("Verifiying widgets")
     widgets = {
@@ -75,135 +111,6 @@ def install(self):
         pr("  Installing.")
         widget = wtool.manage_addCPSWidgetType(id, info['type'])
         widget.manage_changeProperties(**info['data'])
-
-
-    # setup portal_type: CPS Proxy Document, CPS Proxy Folder
-    # CPS Folder
-    pr("Verifying portal types")
-    newptypes = ('FAQ', 'News')
-    ttool = portal.portal_types
-    if 'Workspace' in ttool.objectIds():
-        workspaceACT = list(ttool['Workspace'].allowed_content_types)
-    else:
-        raise DependanceError, 'Workspace'
-    for ptype in newptypes:
-        if ptype not in  workspaceACT:
-            workspaceACT.append(ptype)
-    
-    ptypes = {
-        }
-    flextypes = {
-        'FAQ': {
-            'title': 'portal_type_FAQ_title',
-            'description': 'portal_type_FAQ_description',
-            'icon': 'faq_icon.gif',
-            'immediate_view': 'cpsdocument_edit_form',
-            'schemas': ['faq'],
-            'default_layout': 'faq',
-            'layout_style_prefix': 'layout_faq_',
-            },
-        'News': {
-            'title': 'portal_type_News_title',
-            'description': 'portal_type_News_description',
-            'icon': 'news_icon.gif',
-            'immediate_view': 'cpsdocument_edit_form',
-            'schemas': ['news'],
-            'default_layout': 'news',
-            'layout_style_prefix': 'layout_news_',
-            }
-        }
-    allowed_content_type = {
-                            'Workspace' : workspaceACT,
-                            }
-    
-    ptypes_installed = ttool.objectIds()
-    
-    for prod in ptypes.keys():
-        for ptype in ptypes[prod]:
-            pr("  Type '%s'" % ptype)
-            if ptype in ptypes_installed:
-                ttool.manage_delObjects([ptype])
-                pr("   Deleted")
-
-            ttool.manage_addTypeInformation(
-                id=ptype,
-                add_meta_type='Factory-based Type Information',
-                typeinfo_name=prod+': '+ptype,
-                )
-            pr("   Installation")
-
-    for ptype, data in flextypes.items():
-        pr("  Type '%s'" % ptype)
-        if ptype in ptypes_installed:
-            ttool.manage_delObjects([ptype])
-            pr("   Deleted")
-        ti = ttool.addFlexibleTypeInformation(id=ptype)
-        ti.manage_changeProperties(**data)
-        pr("   Installation")
-    
-
-    # check site and workspaces proxies
-    sections_id = 'sections'
-    workspaces_id = 'workspaces'
-    
-    # check workflow association
-    pr("Verifying local workflow association")
-    if not '.cps_workflow_configuration' in portal[workspaces_id].objectIds():
-        raise DependanceError, 'no .cps_workflow_configuration in Workspace'
-    else:
-        wfc = getattr(portal[workspaces_id], '.cps_workflow_configuration')
-    
-    for ptype in newptypes:
-        pr("  Add %s chain to portal type %s in %s of %s" %('workspace_content_wf',
-             ptype, '.cps_workflow_configuration', workspaces_id)) 
-        wfc.manage_addChain(portal_type=ptype,
-                            chain='workspace_content_wf')
-    
-    if not '.cps_workflow_configuration' in portal[sections_id].objectIds():
-        raise DependanceError, 'no .cps_workflow_configuration in Section'
-    else:
-        wfc = getattr(portal[sections_id], '.cps_workflow_configuration')
-    
-    for ptype in newptypes:    
-        pr("  Add %s chain to portal type %s in %s of %s" %('section_content_wf',
-             ptype, '.cps_workflow_configuration', sections_id))
-        wfc.manage_addChain(portal_type=ptype,
-                            chain='section_content_wf')
-        
-    # skins
-    skins = ('cps_document',)
-    paths = {
-        'cps_document': 'Products/CPSDocument/skins/cps_document',
-    }
-
-    for skin in skins:
-        path = paths[skin]
-        path = path.replace('/', os.sep)
-        pr(" FS Directory View '%s'" % skin)
-        if skin in portal.portal_skins.objectIds():
-            dv = portal.portal_skins[skin]
-            oldpath = dv.getDirPath()
-            if oldpath == path:
-                prok()
-            else:
-                pr("  Correctly installed, correcting path")
-                dv.manage_properties(dirpath=path)
-        else:
-            portal.portal_skins.manage_addProduct['CMFCore'].manage_addDirectoryView(filepath=path, id=skin)
-            pr("  Creating skin")
-    allskins = portal.portal_skins.getSkinPaths()
-    for skin_name, skin_path in allskins:
-        if skin_name != 'Basic':
-            continue
-        path = [x.strip() for x in skin_path.split(',')]
-        path = [x for x in path if x not in skins] # strip all
-        if path and path[0] == 'custom':
-            path = path[:1] + list(skins) + path[1:]
-        else:
-            path = list(skins) + path
-        npath = ', '.join(path)
-        portal.portal_skins.addSkinSelection(skin_name, npath)
-        pr(" Fixup of skin %s" % skin_name)
 
     # schemas
     pr("Verifiying schemas")
@@ -491,5 +398,81 @@ def install(self):
         layout.setLayoutDefinition(info['layout'])
 
 
-    pr("End of specific CPSDocument intall")
+    # setup portal_type: FAQ and News
+    pr("Verifying portal types")
+    newptypes = ('FAQ', 'News')
+    ttool = portal.portal_types
+    if 'Workspace' in ttool.objectIds():
+        workspaceACT = list(ttool['Workspace'].allowed_content_types)
+    else:
+        raise DependanceError, 'Workspace'
+    for ptype in newptypes:
+        if ptype not in  workspaceACT:
+            workspaceACT.append(ptype)
+    
+    flextypes = {
+        'FAQ': {
+            'title': 'portal_type_FAQ_title',
+            'description': 'portal_type_FAQ_description',
+            'icon': 'faq_icon.gif',
+            'immediate_view': 'cpsdocument_edit_form',
+            'schemas': ['faq'],
+            'default_layout': 'faq',
+            'layout_style_prefix': 'layout_faq_',
+            },
+        'News': {
+            'title': 'portal_type_News_title',
+            'description': 'portal_type_News_description',
+            'icon': 'news_icon.gif',
+            'immediate_view': 'cpsdocument_edit_form',
+            'schemas': ['news'],
+            'default_layout': 'news',
+            'layout_style_prefix': 'layout_news_',
+            }
+        }
+    allowed_content_type = {
+                            'Workspace' : workspaceACT,
+                            }
+    
+    ptypes_installed = ttool.objectIds()
+
+    for ptype, data in flextypes.items():
+        pr("  Type '%s'" % ptype)
+        if ptype in ptypes_installed:
+            ttool.manage_delObjects([ptype])
+            pr("   Deleted")
+        ti = ttool.addFlexibleTypeInformation(id=ptype)
+        ti.manage_changeProperties(**data)
+        pr("   Installation")
+    
+
+    # check site and workspaces proxies
+    sections_id = 'sections'
+    workspaces_id = 'workspaces'
+    
+    # check workflow association
+    pr("Verifying local workflow association")
+    if not '.cps_workflow_configuration' in portal[workspaces_id].objectIds():
+        raise DependanceError, 'no .cps_workflow_configuration in Workspace'
+    else:
+        wfc = getattr(portal[workspaces_id], '.cps_workflow_configuration')
+    
+    for ptype in newptypes:
+        pr("  Add %s chain to portal type %s in %s of %s" %('workspace_content_wf',
+             ptype, '.cps_workflow_configuration', workspaces_id)) 
+        wfc.manage_addChain(portal_type=ptype,
+                            chain='workspace_content_wf')
+    
+    if not '.cps_workflow_configuration' in portal[sections_id].objectIds():
+        raise DependanceError, 'no .cps_workflow_configuration in Section'
+    else:
+        wfc = getattr(portal[sections_id], '.cps_workflow_configuration')
+    
+    for ptype in newptypes:    
+        pr("  Add %s chain to portal type %s in %s of %s" %('section_content_wf',
+             ptype, '.cps_workflow_configuration', sections_id))
+        wfc.manage_addChain(portal_type=ptype,
+                            chain='section_content_wf')
+
+    pr("End of specific CPSDocument install")
     return pr('flush')
