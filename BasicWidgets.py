@@ -1433,7 +1433,7 @@ class CPSInternalLinksWidget(CPSWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         err = 0
-        if self.is_required and value == [] or value == ['']:
+        if self.is_required and (value == [] or value == ['']):
             err = 'cpsschemas_err_required'
         v = []
         for line in value:
