@@ -20,6 +20,7 @@ Bug fixes:
   this case is possible when you change your schema definition
 - Fix lines widget to deal with Zope bug where it returns [''] instead of [].
 - Fix image widget to use a correct absolute URL for the image.
+- #253: ImageWidget PIL don't know how to save JPEG image
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Pass the datamodel as argument to postCommitHook as it is sometimes

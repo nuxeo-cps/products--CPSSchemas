@@ -1276,8 +1276,7 @@ class CPSImageWidget(CPSWidget):
                                 img.thumbnail(size,
                                               resample=PIL.Image.ANTIALIAS)
                                 file.seek(0)
-                                img.save(file,
-                                         format=mimetype.extensions[0])
+                                img.save(file, format=img.format)
                             except (NameError, IOError, ValueError):
                                 LOG('CPSImageWidget', PROBLEM,
                                     "Failed to resize file %s keep original" \
@@ -1328,7 +1327,6 @@ class CPSImageWidget(CPSWidget):
         current_name = '-'
         if hasattr(aq_base(value), 'getId'):
             current_name = value.getId()
-        mimetype = None
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = registry.lookupExtension(current_name)
         return meth(mode=mode, datastructure=datastructure,
