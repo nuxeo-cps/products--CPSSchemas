@@ -197,6 +197,42 @@ class CPSPasswordField(CPSStringField):
 
 InitializeClass(CPSPasswordField)
 
+class CPSListField(CPSField):
+    """Meta list Field"""
+    meta_type = "CPS List Field"
+
+    default_expr = 'python:[]'
+    default_expr_c = Expression(default_expr)
+    validation_error_msg = 'Not a list: '
+
+    def validate(self, value):
+        if isinstance(value, ListType):
+            ok = 1
+            for v in value:
+                if not self.verifyType(v):
+                    ok = 0
+                    break
+            if ok:
+                return value
+        raise ValidationError(self.validation_error_msg + repr(value))
+
+    def verifyType(self, value):
+        """Verify the type of the value"""
+        return 1
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        # Empty values are not allowed in LDAP
+        return value
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        res = []
+        for v in values:
+            res.append(v)
+        return res
+    
+InitializeClass(CPSListField)
 
 class CPSStringListField(CPSField):
     """String List field."""
@@ -238,6 +274,48 @@ class CPSStringListField(CPSField):
 
 InitializeClass(CPSStringListField)
 
+class CPSListListField(CPSListField):
+    """List of List field."""
+    meta_type = "CPS List List Field"
+
+    validation_error_msg = 'Not a list of list: '
+
+    def validate(self, value):
+        if isinstance(value, ListType):
+            ok = 1
+            for list in value:
+                if isinstance(list, ListType) and ok:
+                    for e in list:
+                        if not self.verifyType(e):
+                            ok = 0
+                            break
+            if ok:
+                return value
+        raise ValidationError(self.validation_error_msg + repr(value))
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        # Empty values are not allowed in LDAP
+        if value:
+            return value
+
+    def convertFromLDAP(self, value):
+        """Convert a value from LDAP attribute values."""
+        return value
+    
+InitializeClass(CPSListListField)
+
+class CPSIntListListField(CPSListField):
+    """List of List field."""
+    meta_type = "CPS Int List List Field"
+
+    validation_error_msg = 'Not a list of integer list: '
+
+    def verifyType(self, value):
+        """Verify the type of the value"""
+        return isinstance(value, IntType)
+    
+InitializeClass(CPSIntListListField)
 
 class CPSDateTimeField(CPSField):
     """DateTime field."""
@@ -484,6 +562,9 @@ InitializeClass(CPSImageField)
 
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
+FieldRegistry.register(CPSListField)
+FieldRegistry.register(CPSListListField)
+FieldRegistry.register(CPSIntListListField)
 FieldRegistry.register(CPSStringListField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSLongField)
