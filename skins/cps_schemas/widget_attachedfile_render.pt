@@ -1,6 +1,6 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
-                   fields python:here.fields;
+                   fields here/fields;
                    current_name options/current_name;
                    current_title options/current_title;
                    empty_file options/empty_file;
