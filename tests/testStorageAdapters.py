@@ -106,8 +106,6 @@ class AttributeAdapterTests(unittest.TestCase):
         self.failUnless(hasattr(self.h, 'Lespacedenom_f1'))
 
 
-
-
 def test_suite():
     tests = [unittest.makeSuite(BasicStorageAdapterTests),
              unittest.makeSuite(AttributeAdapterTests)]

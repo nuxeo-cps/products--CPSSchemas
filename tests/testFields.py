@@ -15,7 +15,8 @@ class BasicFieldTests(unittest.TestCase):
         """Test field creation"""
         field = BasicField('the_id', 'the_title')
         self.failUnless(field.id == 'the_id', 'Id was not set correctly')
-        self.failUnless(field.title == 'the_title', 'Title was not set correctly')
+        self.failUnless(field.title == 'the_title', 
+            'Title was not set correctly')
 
     def testBasicValidation(self):
         field = BasicField('the_id', 'the_title')
@@ -76,7 +77,7 @@ class TextFieldTests(unittest.TestCase):
     # filed.get AllSettings(): return list
 
 def test_suite():
-    suites = [unittest.makeSuite(BasicFieldTests), \
+    suites = [unittest.makeSuite(BasicFieldTests),
               unittest.makeSuite(TextFieldTests)]
     return unittest.TestSuite(suites)
 

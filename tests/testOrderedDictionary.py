@@ -15,27 +15,26 @@ class OrderedDictionaryTests(unittest.TestCase):
         # __getitem__ is defined in UserDict and not overriden, and
         # therefore not tested.
         dict = OrderedDictionary()
-        dict.update( {'k1': 'i1'})
+        dict.update({'k1': 'i1'})
         dict['k2'] = 'i2'
         dict['k3'] = 'i3'
         dict['k4'] = 'i4'
-        dict.update( {'k5': 'i5'})
+        dict.update({'k5': 'i5'})
 
-        self.failUnless(dict.keys() == ['k1', 'k2','k3', 'k4', 'k5' ],
+        self.failUnless(dict.keys() == ['k1', 'k2','k3', 'k4', 'k5'],
                         'Keys were not added correctly')
         self.failUnless(dict.items() ==  [('k1', 'i1'), ('k2', 'i2'),
                                           ('k3', 'i3'), ('k4','i4'),
                                           ('k5', 'i5')],
                         'Items were not added correctly')
         del dict['k2']
-        self.failUnless(dict.keys() == ['k1', 'k3', 'k4', 'k5' ],
+        self.failUnless(dict.keys() == ['k1', 'k3', 'k4', 'k5'],
                         'Removal of second key failed')
         self.failUnless(dict.items() ==  [('k1', 'i1'), ('k3', 'i3'),
                                           ('k4','i4'), ('k5', 'i5')],
                         'Removal of second item failed')
         del dict['k1']
-        self.failUnless(dict.keys() == ['k3',
-                                        'k4', 'k5' ],
+        self.failUnless(dict.keys() == ['k3', 'k4', 'k5' ],
                         'Removal of first key failed')
         self.failUnless(dict.items() ==  [('k3', 'i3'), ('k4','i4'),
                                           ('k5', 'i5')],

@@ -57,7 +57,8 @@ class DataModelTests(unittest.TestCase):
         field = self.dm.getField('f2')
 
     def testAccessData(self):
-        self.failUnless(self.dm['f2'] == 'Value2', 'Default value not used when use with no document')
+        self.failUnless(self.dm['f2'] == 'Value2', 
+            'Default value not used when use with no document')
 
     def testInitwithDoc(self):
         doc = FakeDocument()
@@ -65,7 +66,8 @@ class DataModelTests(unittest.TestCase):
         doc.f5 = 'Value5'
         dm = DataModel((self.s1, self.s2), doc)
         self.failUnless(dm['f1'] == 'Value1')
-        self.failUnless(dm['f2'] == 'Value2', 'Default value not used when loading from document')
+        self.failUnless(dm['f2'] == 'Value2',   
+            'Default value not used when loading from document')
         self.failUnless(dm['f5'] == 'Value5')
 
     def testSetInvalidData(self):

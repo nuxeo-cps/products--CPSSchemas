@@ -57,7 +57,8 @@ class RenderingTests(unittest.TestCase):
         self.failUnless(res == 'Field1\n', 'TextField view render failed')
         fw1.setRenderMode('edit')
         res = fw1.render(renderer, f1, 'Field1', None)
-        self.failUnless(res == '*Field1\n Field2\n Field3\n', 'TextField edit render failed')
+        self.failUnless(res == '*Field1\n Field2\n Field3\n', 
+            'TextField edit render failed')
 
 
     # The 50 to 99 test: Tests rendering of complete layouts and documents
