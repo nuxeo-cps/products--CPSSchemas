@@ -14,6 +14,7 @@ Bug fixes:
 ~~~~~~~~~~
 - #125: File/Image Widget must be able to not display anything if no file
 - #144: Correctly unfreeze object before modifying them: pass the proxy.
+- #158: Fix permission problem on renderEdit for frozen objects.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - sf code cleaning
