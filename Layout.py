@@ -37,6 +37,8 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
+from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CMFCore.Expression import getEngine
 
 class LayoutContainer(Folder):
     """Layout Tool
@@ -85,7 +87,7 @@ InitializeClass(LayoutContainer)
 
 
 ######################################################################
-class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
+class Layout(FolderWithPrefixedIds, SimpleItemWithProperties, PropertiesPostProcessor):
     """Basic Layout.
 
     A layout describes how to render a set of widgets.
@@ -119,10 +121,15 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
          'label': 'Prefix for zpt'},
         {'id': 'flexible_widgets', 'type': 'tokens', 'mode': 'w',
          'label': 'Allowed widgets in flexible'},
+        {'id': 'validate_values_expr', 'type': 'text', 'mode': 'w',
+         'label': 'Validates layout values with the given expression, \
+             see documentation'},
         )
 
     style_prefix = ''
     flexible_widgets = []
+    validate_values_expr = ''
+    validate_values_expr_c = None
 
     prefix = 'w__'
     id = None
@@ -130,6 +137,9 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
 
+    _properties_post_process_tales = (
+        ('validate_values_expr', 'validate_values_expr_c'),
+        )
 
     def __init__(self, **kw):
         layoutdef = {'ncols': 1, 'rows': []}
@@ -213,7 +223,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
             new_row = []
             for cell in row:
                 if not self.has_key(cell['widget_id']):
-                    LOG('CPSSchemas', WARNING, 
+                    LOG('CPSSchemas', WARNING,
                         'Layout %s refers to deleted widget %s' % (
                             self.getId(), cell['widget_id']))
                 elif cell['widget_mode'] != 'hidden':
@@ -272,7 +282,7 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 if widgets.has_key(cell['widget_id']):
                     cell.update(widgets[cell['widget_id']])
                 else:
-                    LOG('CPSSchemas', WARNING, 
+                    LOG('CPSSchemas', WARNING,
                         'Layout %s refers to deleted widget %s' % (
                             self.getId(), cell['widget_id']))
         # Eliminate hidden widgets.
@@ -291,7 +301,37 @@ class Layout(FolderWithPrefixedIds, SimpleItemWithProperties):
                 if cell['widget_mode'] == 'edit':
                     widget = cell['widget']
                     ok = widget.validate(datastructure, **kw) and ok
-        return ok
+        # validate the whole layout if necessary
+        if ok:
+            return self._validateLayout(datastructure, **kw)
+        else:
+            return ok
+
+    security.declarePrivate('_validateLayout')
+    def _validateLayout(self, datastructure, **kw):
+        """ Calls a script or an expression
+            to validate the layout
+        """
+        ok = 1
+        self._postProcessProperties()
+        if not self.validate_values_expr_c:
+            return ok
+        expr_context = self._createExpressionContext(datastructure, **kw)
+        return self.validate_values_expr_c(expr_context)
+
+    security.declarePrivate('_createExpressionContext')
+    def _createExpressionContext(self, datastructure, **kw):
+        """ creates an expression contect for script execution
+        """
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        data = {
+            'layout': self,
+            'datastructure': datastructure,
+            'kw': kw,
+            'nothing': None,
+            'portal': portal,
+            }
+        return getEngine().getContext(data)
 
     security.declarePrivate('renderLayoutStructure')
     def renderLayoutStructure(self, layout_structure, datastructure, **kw):
