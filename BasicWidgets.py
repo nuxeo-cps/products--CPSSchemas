@@ -410,9 +410,7 @@ class CPSSelectWidget(CPSWidget):
         elif mode == 'edit':
             res = renderHtmlTag('select',
                                 name=self.getHtmlWidgetId())
-            LOG('render', DEBUG, 'voc=%s' % repr(vocabulary))
             for k, v in vocabulary.items():
-                LOG('render', DEBUG, 'k=%s v=%s' % (k, v))
                 kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = None
