@@ -1084,7 +1084,7 @@ class CPSBooleanWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure.getDataModel()[self.getWidgetId()]
-        if value:
+        if value and str(value) != '0':
             label_value = self.label_true
         else:
             label_value = self.label_false
