@@ -749,6 +749,15 @@ class CPSGenericSelectWidget(CPSWidget):
          'label': 'Render format : select menu (default) or radio buttons'},
         {'id': 'other_option', 'type': 'boolean', 'mode':'w',
          'label': "Provide an 'other' option where free input is accepted (ignored if render format is 'select')"},
+        # Enables the possibility to add blank values to vocabulary just to
+        # change the way the list is presented (using items like 'choose a
+        # category' or '------------' to separate items) and not affect the way
+        # the value will be validated if the widget is required.
+        # Before this, if the widget was required, default behavior was to
+        # accept blank values if they were in the vocabulary (e.g
+        # blank_value_ok_if_required = 1)
+        {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
+         'label': "Accept blank values (defined in vocabulary) when validating if the widget is required and the vocabulary holds blank values"},
         )
     render_formats = ['select', 'radio']
 
@@ -757,6 +766,7 @@ class CPSGenericSelectWidget(CPSWidget):
     translated = 0
     render_format = render_formats[0]
     other_option = 0
+    blank_value_ok_if_required = 1
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -798,10 +808,11 @@ class CPSGenericSelectWidget(CPSWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_select")
                     return 0
         else:
-            if self.is_required and not vocabulary.has_key(value):
-                datastructure.setError(widget_id, "cpsschemas_err_required")
-                return 0
-        datamodel = datastructure.getDataModel()
+            if self.is_required and vocabulary.has_key(value):
+                if not self.blank_value_ok_if_required:
+                    datastructure.setError(widget_id, "cpsschemas_err_required")
+                    return 0
+            datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         return 1
 
@@ -985,6 +996,15 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format : select menu (default), radio buttons or checkboxes'},
+        # Enables the possibility to add blank values to vocabulary just to
+        # change the way the list is presented (using items like 'choose a
+        # category' or '------------' to separate items) and not affect the way
+        # the value will be validated if the widget is required.
+        # Before this, if the widget was required, default behavior was to
+        # accept blank values if they were in the vocabulary (e.g
+        # blank_value_ok_if_required = 1)
+        {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
+         'label': "Accept blank values (defined in vocabulary) when validating if the widget is required and the vocabulary holds blank values"},
         )
     render_formats = ['select', 'radio', 'checkbox']
     # XXX make a menu for the vocabulary.
@@ -994,6 +1014,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
     size = 0
     format_empty = ''
     render_format = render_formats[0]
+    blank_value_ok_if_required = 1
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -1039,7 +1060,15 @@ class CPSGenericMultiSelectWidget(CPSWidget):
                 if not vocabulary.has_key(i):
                     datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                     return 0
-                v.append(i)
+            else:
+                if not vocabulary.has_key(i):
+                    datastructure.setError(widget_id, "cpsschemas_err_multiselect")
+                    return 0
+                else:
+                    if self.is_required and not self.blank_value_ok_if_required:
+                        datastructure.setError(widget_id, "cpsschemas_err_multiselect")
+                        return 0
+            v.append(i)
         if self.is_required and not len(v):
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
