@@ -3,14 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- new Identifier Widget
-- new Heading Widget rendering with H tag
+-
 Bug fixes:
 ~~~~~~~~~~
-- #336: File uploading fails for some extensions
-- AttachedFile no mimetype icons if file extension have uppercase char
-- AttachedFile/Image/File return invalid file when choose keep under Mac and IE
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Datamodel add_roles setting split into convenience function.
-- improve attachedFile rendering
+-
