@@ -156,21 +156,18 @@ msgstr "Position&nbsp;: "
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Entier long en dehors des limites"
+msgstr "Toutes les langues"
 
 #.   <strong>or</strong>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_language_or"
-msgstr "Entier long en dehors des limites"
+msgstr "ou"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Entier long en dehors des limites"
+msgstr "La ou les langues suivantes"
 
 #.   <p>
 #.             cpsschemas_size_max

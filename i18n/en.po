@@ -156,21 +156,18 @@ msgstr "Position: "
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Long integer out of range"
+msgstr "Any language"
 
 #.   <strong>or</strong>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_language_or"
-msgstr "Long integer out of range"
+msgstr "or"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Long integer out of range"
+msgstr "One or more of the following languages"
 
 #.   <p>
 #.             cpsschemas_size_max
