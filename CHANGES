@@ -11,6 +11,7 @@ New features:
   viewed online. Using index.html or any html file from the zip as preview
   page.
 - Added a "file_uploader" option to the Text Widget.
+- New SearchWidgets to build search form
 Bug fixes:
 ~~~~~~~~~~
 - Made the Layout.renderLayoutStyle() method more generic so that it can deal
