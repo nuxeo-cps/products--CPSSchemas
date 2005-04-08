@@ -16,27 +16,26 @@ function checkLanguageSelected(form){
     form.${widget_selected_id}[0].checked=(count<=0);
     form.${widget_selected_id}[1].checked=(count>0);
 }" />
-<input type="radio"
+<input type="radio" class="noborder"
        tal:attributes="id string:${widget_selected_id}_no;
                        name widget_selected_id;
                        checked python:test(selected!='yes', 1, 0);
                        value string:no;
                        onclick string:for(i=0;;i<this.form.${widget_id}.length;;i++) this.form.${widget_id}[i].checked=0;" />
 <label tal:attributes="for string:${widget_selected_id}_no" i18n:translate="">cpsschemas_search_all_languages</label><br />
-<strong i18n:translate="cpsschemas_search_language_or">or</strong><br />
-<input type="radio"
+<input type="radio" class="noborder"
        tal:attributes="id string:${widget_selected_id}_yes;
                        name widget_selected_id;
                        checked python:test(selected=='yes', 1, 0);
                        value string:yes;" />
 <label tal:attributes="for string:${widget_selected_id}_yes" i18n:translate="">cpsschemas_search_languages</label><br />
 <div>
-<span style="float:left; width:12em">
+<span style="padding-left: 1em; float:left; width:12em">
   <tal:block repeat="lang languages">
     <tal:block
         condition="python:repeat['lang'].index and not repeat['lang'].index % 4"
         content="structure string:</span><span style='float:left;; width:12em'>" />
-    <input type="checkbox"
+    <input type="checkbox" class="noborder"
            onclick="checkLanguageSelected(this.form)"
            tal:attributes="name widget_id;
                            id string:${widget_id}_${lang};
