@@ -22,7 +22,7 @@ else:
     ret = 1
     value = datastructure.get(widget_id, '')
     value_select = datastructure.get(widget_id+'_select', '')
-    if value_select == 'here':
+    if value_select == 'here' and value:
         value = '/'.join([portal_path, value])
         # check that value is valid
         # datastructure.setError(widget_id, '')
