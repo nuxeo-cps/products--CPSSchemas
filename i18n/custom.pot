@@ -249,6 +249,31 @@ msgstr ""
 msgid "cpsschemas_label_modified_since_365"
 msgstr ""
 
+msgid "cpsschemas_label_searchsort_relevance"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_antechrono"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_chrono"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_expires"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_title"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_review_state"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_relative_path"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_portal_type"
+msgstr ""
+
+
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr ""
 

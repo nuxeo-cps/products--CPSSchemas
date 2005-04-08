@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-05 15:20default\n"
+"POT-Creation-Date: 2005-04-08 11:51default\n"
 "PO-Revision-Date: 2005-03-14 11:08+0100\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -20,23 +20,6 @@ msgstr "Falsch"
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Wahr"
-
-#.   <button onclick="window.close()">Fermer</button>
-#: from ../skins/cps_schemas/popup_photo.pt
-#, fuzzy
-msgid "button_close"
-msgstr "Layout"
-
-#.   <button type="button" attributes="
-#.           id button_text_editor_popup_id;
-#.           style python:test(rformat == 'html',
-#.           'visibility: visible;;', 'visibility: hidden;;');
-#.           onclick
-#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
-#: from ../skins/cps_schemas/widget_text_render.pt
-msgid "button_text_editor_popup"
-msgstr ""
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -126,7 +109,7 @@ msgstr "Bildgröße ändern "
 msgid "cpsschemas_photo_subtitle"
 msgstr "Überschrift: "
 
-#.   <block>cpsschemas_render_format</block>
+#.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Format: "
@@ -134,7 +117,7 @@ msgstr "Format: "
 #.   <span>
 #.             Render position
 #.           </span>
-#.   <block>cpsschemas_render_position</block>
+#.   <label attributes="for position_selector_id">Position:</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
@@ -230,6 +213,15 @@ msgstr "Wert:"
 msgid "description_vocabulary_manage_form"
 msgstr "Wörterbuch Management"
 
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -275,7 +267,7 @@ msgid "label_alt_text"
 msgstr "Titel"
 
 #.   <label attributes="for file_upload_id">
-#.             File to use to fill the text area</label>
+#.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
 msgstr ""
@@ -530,6 +522,38 @@ msgstr "Keine"
 msgid "cpsschemas_label_modified_since_365"
 msgstr "Keine"
 
+#, fuzzy
+msgid "cpsschemas_label_searchsort_relevance"
+msgstr "Ändern"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_antechrono"
+msgstr "Ändern"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_chrono"
+msgstr "Ändern"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_expires"
+msgstr "Ja"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_title"
+msgstr "Beschreibung"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_review_state"
+msgstr "Löschen"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_relative_path"
+msgstr "Löschen"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_portal_type"
+msgstr "Keine"
+
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id existiert schon, wählen Sie eine andere."
 
@@ -563,3 +587,7 @@ msgstr "Anders-Selektion"
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Berbeiten online"
+
+#, fuzzy
+#~ msgid "button_close"
+#~ msgstr "Layout"

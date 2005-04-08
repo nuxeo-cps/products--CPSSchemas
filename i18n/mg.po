@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-05 15:20default\n"
+"POT-Creation-Date: 2005-04-08 11:51default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -33,22 +33,6 @@ msgstr ""
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
-msgstr ""
-
-#.   <button onclick="window.close()">Fermer</button>
-#: from ../skins/cps_schemas/popup_photo.pt
-msgid "button_close"
-msgstr ""
-
-#.   <button type="button" attributes="
-#.           id button_text_editor_popup_id;
-#.           style python:test(rformat == 'html',
-#.           'visibility: visible;;', 'visibility: hidden;;');
-#.           onclick
-#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
-#: from ../skins/cps_schemas/widget_text_render.pt
-msgid "button_text_editor_popup"
 msgstr ""
 
 #.   <block>at</block>
@@ -141,7 +125,7 @@ msgstr "Ovaina amin'ny format "
 msgid "cpsschemas_photo_subtitle"
 msgstr "Fanazavana kely &nbsp;: "
 
-#.   <block>cpsschemas_render_format</block>
+#.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Format&nbsp;: "
@@ -149,7 +133,7 @@ msgstr "Format&nbsp;: "
 #.   <span>
 #.             Render position
 #.           </span>
-#.   <block>cpsschemas_render_position</block>
+#.   <label attributes="for position_selector_id">Position:</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
@@ -245,6 +229,15 @@ msgstr "Isany&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr "Fandrindrana ireo voambolana"
 
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
+#.   <a attributes="href string: #;
+#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
+#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
+#: ../skins/cps_schemas/epoz_toolbox.pt
+msgid "epoz_insert_image"
+msgstr ""
+
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
@@ -290,7 +283,7 @@ msgid "label_alt_text"
 msgstr "Teny fanoloana"
 
 #.   <label attributes="for file_upload_id">
-#.             File to use to fill the text area</label>
+#.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
 msgstr ""
@@ -545,6 +538,38 @@ msgstr "Tsy misy"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_365"
+msgstr "Tsy misy"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_relevance"
+msgstr "Ovaina"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_antechrono"
+msgstr "Ovaina"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_chrono"
+msgstr "Ovaina"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_expires"
+msgstr "Eny"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_title"
+msgstr "Fanazavana"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_review_state"
+msgstr "Fafana"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_relative_path"
+msgstr "Fafana"
+
+#, fuzzy
+msgid "cpsschemas_label_searchsort_portal_type"
 msgstr "Tsy misy"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
