@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
-"POT-Creation-Date: 2005-04-08 11:51default\n"
+"POT-Creation-Date: 2005-04-08 12:50default\n"
 "PO-Revision-Date: 2004-05-21 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -157,12 +157,6 @@ msgstr "Posición: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Entero largo fuera de límites"
-
-#.   <strong>or</strong>
-#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
-msgid "cpsschemas_search_language_or"
 msgstr "Entero largo fuera de límites"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
@@ -682,3 +676,7 @@ msgstr ""
 # ## action =================================================
 msgid "action_edit_online"
 msgstr ""
+
+#, fuzzy
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "Entero largo fuera de límites"

@@ -125,7 +125,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-04-08 11:51default\n"
+"POT-Creation-Date: 2005-04-08 12:50default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -257,12 +257,6 @@ msgstr "Pozitie&nbsp;: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Intreg lung in afara limitelor"
-
-#.   <strong>or</strong>
-#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
-msgid "cpsschemas_search_language_or"
 msgstr "Intreg lung in afara limitelor"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
@@ -705,6 +699,10 @@ msgstr "Altul, precizeaza : "
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Modifica in linie"
+
+#, fuzzy
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "Intreg lung in afara limitelor"
 
 #~ msgid "button_close"
 #~ msgstr "Inchide"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-04-08 11:51default\n"
+"POT-Creation-Date: 2005-04-08 12:50default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -134,11 +134,6 @@ msgstr ""
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 msgid "cpsschemas_search_all_languages"
-msgstr ""
-
-#.   <strong>or</strong>
-#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-msgid "cpsschemas_search_language_or"
 msgstr ""
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>

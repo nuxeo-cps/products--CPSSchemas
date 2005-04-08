@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-08 11:51default\n"
+"POT-Creation-Date: 2005-04-08 12:50default\n"
 "PO-Revision-Date: 2005-03-14 11:08+0100\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -127,12 +127,6 @@ msgstr "Position: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Long Integer Zahl auﬂerhalb des Wertebereichs"
-
-#.   <strong>or</strong>
-#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
-msgid "cpsschemas_search_language_or"
 msgstr "Long Integer Zahl auﬂerhalb des Wertebereichs"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
@@ -587,6 +581,10 @@ msgstr "Anders-Selektion"
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Berbeiten online"
+
+#, fuzzy
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "Long Integer Zahl auﬂerhalb des Wertebereichs"
 
 #, fuzzy
 #~ msgid "button_close"

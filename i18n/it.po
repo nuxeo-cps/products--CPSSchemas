@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
-"POT-Creation-Date: 2005-04-08 11:51default\n"
+"POT-Creation-Date: 2005-04-08 12:50default\n"
 "PO-Revision-Date: 2004-09-30 16:26+0100\n"
 "Last-Translator: Fabio Nosari <fabnos@fastwebnet.it>\n"
 "Language-Team: Fabio Nosari <fabnos@fastwebnet.it>\n"
@@ -139,12 +139,6 @@ msgstr "Posizione: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Numero intero lungo fuori dall'intervallo consentito."
-
-#.   <strong>or</strong>
-#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
-msgid "cpsschemas_search_language_or"
 msgstr "Numero intero lungo fuori dall'intervallo consentito."
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
@@ -610,3 +604,7 @@ msgstr "Altro, specifica :"
 # ## action =================================================
 msgid "action_edit_online"
 msgstr ""
+
+#, fuzzy
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "Numero intero lungo fuori dall'intervallo consentito."

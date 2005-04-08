@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-08 11:51default\n"
+"POT-Creation-Date: 2005-04-08 12:50default\n"
 "PO-Revision-Date: 2005-02-10 10:30+0100\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -142,11 +142,6 @@ msgstr "Position&nbsp;: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 msgid "cpsschemas_search_all_languages"
 msgstr "Toutes les langues"
-
-#.   <strong>or</strong>
-#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-msgid "cpsschemas_search_language_or"
-msgstr "ou"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
@@ -575,6 +570,9 @@ msgstr "Autre, précisez : "
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Modifier en ligne"
+
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "ou"
 
 #~ msgid "button_close"
 #~ msgstr "Fermer"
