@@ -1,4 +1,36 @@
 *******************************************
+** CPSSchemas V0.41.0 [R1 build 2005/04/08-16:28 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Generic select widget: now possible to set display width and max size
+  parameters for the 'other' option.
+- Local vocabularies support, take a look at doc/localvocabulary.txt for more
+  information.
+- New ZippedHtmlWidget: store a zip file that contains html which can be
+  viewed online. Using index.html or any html file from the zip as preview
+  page.
+- Added a "file_uploader" option to the Text Widget.
+- New SearchWidgets to build search form
+Bug fixes:
+~~~~~~~~~~
+- Made the Layout.renderLayoutStyle() method more generic so that it can deal
+  with any mode.
+- Fixed HTML errors in Boolean Widget render method (invalid id, invalid label
+  in edit mode)
+- Fixed error when saving changes on layout properties in the ZMI.
+- Better decoration for the CPSDocumentLanguageSelectWidget through CSS.
+- Fixed the BMP bug (#305)
+- Widgets controlling a forbidden field are now correctly hidden.
+- fix: SubjectWidget doesn't translate i18n vocabulary in view mode
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.40.0 [R1 build 2005/03/07-16:17 by madarche]
 
 Requires:
