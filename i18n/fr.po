@@ -514,7 +514,7 @@ msgid "cpsschemas_label_modified_since_365"
 msgstr "au cours de la l'année"
 
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "pertinance"
+msgstr "pertinence"
 
 msgid "cpsschemas_label_searchsort_antechrono"
 msgstr "antechronologique"
