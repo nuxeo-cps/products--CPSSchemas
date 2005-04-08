@@ -122,7 +122,9 @@ class CPSSearchModifiedWidget(CPSWidget):
     """
     meta_type = "CPS Search Modified Widget"
     _properties = CPSWidget._properties
-    field_types = ('CPS String Field')
+    field_types = ('CPS String Field',  # the date
+                   'CPS String Field',  # the modified-usage
+                   )
     times = [0, 1, 30, 91, 182, 365]
 
     def prepare(self, datastructure, **kw):
@@ -143,6 +145,8 @@ class CPSSearchModifiedWidget(CPSWidget):
         if value and value in self.times:
             value = now - value
         datamodel[self.fields[0]] = value
+        if value:
+            datamodel[self.field[1]] = 'range:min'
         return 1
 
     def render(self, mode, datastructure, **kw):
@@ -236,6 +240,74 @@ InitializeClass(CPSSearchLanguageWidgetType)
 
 
 
+#
+# Sort widget
+#
+class CPSSearchSortWidget(CPSWidget):
+    """Widget to choose a sort mode in a search form.
+
+    This widget should be used only on edit mode to buid search form.
+    """
+    meta_type = "CPS Search Sort Widget"
+    _properties = CPSWidget._properties + (
+        {'id': 'sort_limit', 'type': 'int', 'mode': 'w',
+         'label': 'Maximum number of result'},
+        )
+    field_types = ('CPS String Field',  # sort-on
+                   'CPS String Field',  # sort-order
+                   'CPS String Field',  # sort-limit
+                   )
+    sort_limit = 100
+    sort_mode_names = ('relevance', 'antechrono', 'chrono',
+                       'expires', 'title', 'review_state',
+                       'relative_path', 'portal_type')
+    sort_modes = {'relevance': ('', ''),
+                  'antechrono': ('modified', 'reverse'),
+                  'chrono': ('modified', ''),
+                  'expires': ('expires', ''),
+                  'title': ('Title', ''),
+                  'review_state': ('review_state', ''),
+                  'portal_type': ('portal_type' , ''),
+                  'relative_path': ('relative_path', ''),
+                }
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        widget_id = self.getWidgetId()
+        datastructure[widget_id] = ''
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        widget_id = self.getWidgetId()
+        datamodel = datastructure.getDataModel()
+        value = escape(datastructure[widget_id])
+        if value in self.sort_mode_names:
+            sort_on, sort_order = self.sort_modes[value]
+            datamodel[self.fields[0]] = sort_on
+            datamodel[self.fields[1]] = sort_order
+            datamodel[self.fields[2]] = self.sort_limit
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_searchsort_render'
+        value = datastructure[self.getWidgetId()]
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+        return meth(mode=mode, value=value)
+
+InitializeClass(CPSSearchSortWidget)
+
+
+class CPSSearchSortWidgetType(CPSWidgetType):
+    """Widget Type."""
+    meta_type = "CPS Search Sort Widget Type"
+    cls = CPSSearchSortWidget
+
+InitializeClass(CPSSearchSortWidgetType)
+
 
 ##################################################
 
@@ -245,3 +317,5 @@ WidgetTypeRegistry.register(CPSSearchModifiedWidgetType,
                             CPSSearchModifiedWidget)
 WidgetTypeRegistry.register(CPSSearchLanguageWidgetType,
                             CPSSearchLanguageWidget)
+WidgetTypeRegistry.register(CPSSearchSortWidgetType,
+                            CPSSearchSortWidget)
