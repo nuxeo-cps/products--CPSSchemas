@@ -524,7 +524,7 @@ msgid "cpsschemas_label_searchsort_antechrono"
 msgstr "antechronologic"
 
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "chronologic"
+msgstr "chronological"
 
 msgid "cpsschemas_label_searchsort_expires"
 msgstr "expiration date"
