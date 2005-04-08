@@ -141,12 +141,12 @@ msgstr "Position: "
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 msgid "cpsschemas_search_all_languages"
-msgstr "Any language"
+msgstr "any language"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 msgid "cpsschemas_search_languages"
-msgstr "One or more of the following languages"
+msgstr "one or more of the following languages"
 
 #.   <p>
 #.             cpsschemas_size_max
