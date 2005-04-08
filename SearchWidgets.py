@@ -284,8 +284,9 @@ class CPSSearchSortWidget(CPSWidget):
         if value in self.sort_mode_names:
             sort_on, sort_order = self.sort_modes[value]
             datamodel[self.fields[0]] = sort_on
-            datamodel[self.fields[1]] = sort_order
-            datamodel[self.fields[2]] = self.sort_limit
+            if sort_on:
+                datamodel[self.fields[1]] = sort_order
+                datamodel[self.fields[2]] = self.sort_limit
         return 1
 
     def render(self, mode, datastructure, **kw):
