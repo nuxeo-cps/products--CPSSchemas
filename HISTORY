@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.41.1 [R1 build 2005/04/11-12:54 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- field_types was not correctly defined in CPSSearchLanguageWidget
+- For the Text Widget made the file_upload being used only when it is not
+  empty. (Fixes #578)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.41.0 [R1 build 2005/04/08-16:28 by ben]
 
 Requires:

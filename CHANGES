@@ -6,9 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- field_types was not correctly defined in CPSSearchLanguageWidget
-- For the Text Widget made the file_upload being used only when it is not
-  empty. (Fixes #578)
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
