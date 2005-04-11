@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- field_types was not correctly defined in CPSSearchLanguageWidget
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

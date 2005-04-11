@@ -175,11 +175,11 @@ InitializeClass(CPSSearchModifiedWidgetType)
 class CPSSearchLanguageWidget(CPSWidget):
     """Widget to choose a document language in search form.
 
-    This widget should be used only on edit mode to buid search form.
+    This widget should be used only on edit mode to build search forms.
     """
     meta_type = "CPS Search Language Widget"
     _properties = CPSWidget._properties
-    field_types = ('CPS List Field')
+    field_types = ('CPS String List Field',)
 
 
     def _getLanguageVoc(self):
