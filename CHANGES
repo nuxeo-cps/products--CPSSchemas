@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- fix: advanced search: traceback when using updated criteria
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
