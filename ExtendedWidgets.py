@@ -121,9 +121,11 @@ class CPSTextWidget(CPSStringWidget):
                 err_mapping = {'max_size': max_size_str}
                 return self.doesNotValidate(err, err_mapping,
                                             file, datastructure)
-            file_upload_valid = True
             file_upload.seek(0)
             value = file_upload.read()
+            read_size = len(value)
+            if read_size > 0:
+                file_upload_valid = True
         if not file_upload_valid:
             value = datastructure[widget_id]
         err, v = self._extractValue(value)
