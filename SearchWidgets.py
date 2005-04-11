@@ -146,7 +146,7 @@ class CPSSearchModifiedWidget(CPSWidget):
             value = now - value
         datamodel[self.fields[0]] = value
         if value:
-            datamodel[self.field[1]] = 'range:min'
+            datamodel[self.fields[1]] = 'range:min'
         return 1
 
     def render(self, mode, datastructure, **kw):
