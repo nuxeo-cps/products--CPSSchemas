@@ -23,7 +23,8 @@
 
 __version__ = '$Revision$'[11:-2]
 
-import os, stat
+import os
+import sys
 
 from zLOG import LOG, DEBUG, ERROR, WARNING
 from Globals import InitializeClass, DTMLFile
@@ -76,23 +77,31 @@ class DiskFile(File, VTM):
     #
     def _finish(self):
         if not self.is_new_file:
+            return
+        self.is_new_file = 0
+        filename = self.getFullFilename()
+        new_filename = self.getFullFilename(self._new_filename)
+        if sys.platform == 'win32':
+            # Crappy win32 cannot do an atomic rename
             try:
-                os.remove(self.getFullFilename())
+                os.remove(filename)
             except OSError:
                 LOG('DiskFile', WARNING, 'Error during transaction commit',
                     'Removing file %s failed. \nStray files may linger.\n' %
-                        self.getFullFilename())
-        self.is_new_file = 0
-        os.rename(self.getFullFilename(self._new_filename),
-                  self.getFullFilename())
+                    filename)
+        os.rename(new_filename, filename)
 
     def _abort(self):
+        if not self.is_new_file:
+            return
+        self.is_new_file = 0
+        new_filename = self.getFullFilename(self._new_filename)
         try:
-            os.remove(self.getFullFilename(self._new_filename))
+            os.remove(new_filename)
         except OSError:
             LOG('DiskFile', WARNING, 'Error during transaction abort',
                 'Removing file %s failed. \nStray files may linger.\n' %
-                    self.getFullFilename(self._new_filename))
+                new_filename)
 
     #
     # API
