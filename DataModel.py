@@ -38,7 +38,7 @@ It is *not* a storage, it isn't persistent at all. Its purpose is:
 The storage itself is done through a storage adapter.
 """
 
-from zLOG import LOG, DEBUG, WARNING
+from zLOG import LOG, DEBUG, WARNING, TRACE
 from Acquisition import aq_base
 from UserDict import UserDict
 from cgi import escape
@@ -331,7 +331,7 @@ class DataModel(UserDict):
         for schema in self._schemas:
             for field_id, field in schema.items():
                 if self.isDirty(field_id):
-                    LOG("DataModel", DEBUG, "Computing field '%s'" % (field_id,))
+                    LOG("DataModel", TRACE, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
 
