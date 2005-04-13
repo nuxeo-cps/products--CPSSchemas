@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- #584: On win32 DiskFile field was not compatible with ExternalEditor.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

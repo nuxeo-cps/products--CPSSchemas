@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.41.4 [R1 build 2005/04/13-17:51 by fguillaume]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- #584: On win32 DiskFile field was not compatible with ExternalEditor.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.41.3 [R1 build 2005/04/13-15:39 by madarche]
 
 Requires:
