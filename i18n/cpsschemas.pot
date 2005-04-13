@@ -1,12 +1,9 @@
-# ##########################################################
-# ################# DON'T EDIT THIS FILE! ##################
-# ##########################################################
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -209,15 +206,6 @@ msgstr ""
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "description_vocabulary_manage_form"
-msgstr ""
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
 msgstr ""
 
 #.   <em style="color: red" content="err">err</em>

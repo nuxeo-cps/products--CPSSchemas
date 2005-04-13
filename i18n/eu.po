@@ -13,10 +13,12 @@
 # Aitzol Naberan Burgaña <anaberan@codesyntax.com>, 2004.
 #
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas_en\n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: 2004-10-04 16:59+0100\n"
 "Last-Translator:  <>\n"
 "Language-Team: Euskara <eu@li.org>\n"
@@ -34,17 +36,19 @@ msgstr ""
 msgid "True"
 msgstr ""
 
+#    <span>at</span>
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 #, fuzzy
 msgid "cpsschema_at"
-msgstr "Data okerra"
+msgstr "a"
 
+#    <span>h</span>
 #.   <label attributes="for elt_hour_id">h</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 #, fuzzy
 msgid "cpsschema_hour"
-msgstr "URL okerra"
+msgstr "h"
 
 #.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
 #.                        field_html python:len(fields)>2 and fields[2] or ''">
@@ -65,11 +69,12 @@ msgstr "(aurrebista)"
 msgid "cpsschema_link_printable_version"
 msgstr "(inprimatzeko)"
 
+#    <span>mn</span>
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 #, fuzzy
 msgid "cpsschema_minute"
-msgstr "Zenbaki okerra"
+msgstr "mn"
 
 #.   <p>
 #.           cpsschemas_allowed_file_suffixes
@@ -102,7 +107,7 @@ msgstr "Ezabatu"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Bat ere ez"
+msgstr "Edit online"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -118,7 +123,7 @@ msgstr "Bat ere ez"
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_label_image_resize"
-msgstr "neurri berria:"
+msgstr "Resize as "
 
 #.   <span>
 #.           Photo subtitle
@@ -145,13 +150,13 @@ msgstr "Posizioa: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Zenbakia mugaz kanpo"
+msgstr "any language"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Zenbakia mugaz kanpo"
+msgstr "one or more of the following languages"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -160,7 +165,7 @@ msgstr "Zenbakia mugaz kanpo"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "neurri berria:"
+msgstr "Maximal size: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -199,11 +204,12 @@ msgstr "Sarrera gehitu"
 msgid "cpsschemas_vocabulary_id"
 msgstr "Id:"
 
+#    <th>Key:</th>
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 #, fuzzy
 msgid "cpsschemas_vocabulary_key"
-msgstr "Id:"
+msgstr "Clave: "
 
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -215,26 +221,18 @@ msgstr "Hiztegien kudeaketa"
 msgid "cpsschemas_vocabulary_msgid"
 msgstr "MsgId:"
 
+#    <th>Value:</th>
 #.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 #, fuzzy
 msgid "cpsschemas_vocabulary_value"
-msgstr "Hiztegi erabilgarriak"
+msgstr "Valor: "
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 #, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "Hiztegien kudeaketa"
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
+msgstr "This page allow you to manage vocabularies and their entries."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -288,19 +286,19 @@ msgstr ""
 
 #, fuzzy
 msgid "cpsschemas_unit_bytes"
-msgstr "Data okerra"
+msgstr "bytes"
 
 #, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
-msgstr "Erdian"
+msgstr "Kb"
 
 #, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
-msgstr "neurri berria:"
+msgstr "Mb"
 
 #, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
-msgstr "Data okerra"
+msgstr "Gb"
 
 msgid "cpsschemas_err_string"
 msgstr "Katea okerra"
@@ -310,7 +308,7 @@ msgstr "Luzeegia"
 
 #, fuzzy
 msgid "cpsschemas_err_required"
-msgstr "URL okerra"
+msgstr "Campo obligatorio"
 
 msgid "cpsschemas_err_textarea"
 msgstr "Testu okerra"
@@ -332,7 +330,7 @@ msgstr "Data okerra"
 
 #, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Data okerra"
+msgstr "Date incorrecte"
 
 msgid "cpsschemas_err_file"
 msgstr "Fitxategi okerra"
@@ -348,7 +346,7 @@ msgstr "Fitxategia astunegia da"
 
 #, fuzzy
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Fitxategia astunegia da"
+msgstr "This file is too big, the allowed max size is ${max_size}Mb."
 
 msgid "cpsschemas_err_image"
 msgstr "Irudi okerra"
@@ -367,7 +365,7 @@ msgstr "'Float' honek positiboa behar du"
 
 #, fuzzy
 msgid "cpsschemas_err_float_range"
-msgstr "Zenbakia mugaz kanpo"
+msgstr "Número real fuera de límites"
 
 msgid "cpsschemas_err_float"
 msgstr "'Float' okerra"
@@ -401,15 +399,15 @@ msgstr "Irakurtzeko bakarrik"
 
 #, fuzzy
 msgid "cpsschemas_err_rangelist"
-msgstr "Irudi okerra"
+msgstr "Invalid range list"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "E-posta okerra"
+msgstr "Invalid Zip file"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "Luzeegia"
+msgstr "No html document found in the Zip file"
 
 msgid "jscalendar_date_fmt"
 msgstr ""
@@ -443,7 +441,7 @@ msgstr "Testu Egituratua"
 
 #, fuzzy
 msgid "cpsschemas_rformat_pre"
-msgstr "Testua"
+msgstr "HTML preformateado"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Jatorrizkoa"
@@ -492,87 +490,87 @@ msgstr "Azalpena"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "Testu okerra"
+msgstr "all of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "Bat ere ez"
+msgstr "any of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "Testu okerra"
+msgstr "the exact phrase"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "Bat ere ez"
+msgstr "none of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "Ezabatu"
+msgstr "in the document"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "Azalpena"
+msgstr "in the title"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "Bat ere ez"
+msgstr "in the description"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "Bat ere ez"
+msgstr "anytime"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "Bat ere ez"
+msgstr "since yesterday"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "Bat ere ez"
+msgstr "within the past month"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "Bat ere ez"
+msgstr "within the past 3 months"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "Bat ere ez"
+msgstr "within the past 6 months"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "Bat ere ez"
+msgstr "within a year"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "Aldatu"
+msgstr "relevance"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "Aldatu"
+msgstr "antechronologic"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "Aldatu"
+msgstr "chronological"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Bai"
+msgstr "expiration date"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "Azalpena"
+msgstr "title"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "Ezabatu"
+msgstr "status"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "Ezabatu"
+msgstr "location"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "Bat ere ez"
+msgstr "type of document"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id hau badago; beste bat aukeratu"
@@ -609,5 +607,8 @@ msgid "action_edit_online"
 msgstr ""
 
 #, fuzzy
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "Zenbakia mugaz kanpo"
+msgid "cpsschemas_search_language_or"
+msgstr "or"
+
+msgid "button_close"
+msgstr "Close"

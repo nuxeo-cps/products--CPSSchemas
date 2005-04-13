@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Updated i18n with new version of update_pos.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved some obnoxious DEBUG logs to TRACE level.

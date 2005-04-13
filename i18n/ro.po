@@ -122,10 +122,12 @@
 # , 2005.
 # , 2005.
 # , 2005.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -257,13 +259,13 @@ msgstr "Pozitie&nbsp;: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Intreg lung in afara limitelor"
+msgstr "toutes les langues"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Intreg lung in afara limitelor"
+msgstr "la ou les langues suivantes"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -335,15 +337,6 @@ msgstr "Valoare&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr ""
 "Aceasta pagina iti permite sa administrezi vocabularele si intrarile lor."
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -636,35 +629,35 @@ msgstr ""
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "Schimba"
+msgstr "pertinence"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "Schimba"
+msgstr "antechronologique"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "Schimba"
+msgstr "chronologique"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Da"
+msgstr "date d'expiration"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "Descriere"
+msgstr "titre"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "Sterge"
+msgstr "statut"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "Sterge"
+msgstr "chemin"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "Da"
+msgstr "type de document"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Identificatorul este deja folosit, alege altul"
@@ -701,8 +694,8 @@ msgid "action_edit_online"
 msgstr "Modifica in linie"
 
 #, fuzzy
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "Intreg lung in afara limitelor"
+msgid "cpsschemas_search_language_or"
+msgstr "ou"
 
-#~ msgid "button_close"
-#~ msgstr "Inchide"
+msgid "button_close"
+msgstr "Inchide"

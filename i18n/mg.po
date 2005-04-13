@@ -9,11 +9,12 @@
 # Encolpe DEGOUTE <ed@nuxeo.com>, 2004.
 #
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -143,13 +144,13 @@ msgstr "Toerana&nbsp;: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "'Entier long' mivoaka ny faritra"
+msgstr "toutes les langues"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "'Entier long' mivoaka ny faritra"
+msgstr "la ou les langues suivantes"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -158,7 +159,7 @@ msgstr "'Entier long' mivoaka ny faritra"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "sy avidika amin'ny 'format'"
+msgstr "Taille maximale : ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -221,16 +222,7 @@ msgstr "Isany&nbsp;:"
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 #, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "Fandrindrana ireo voambolana"
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
+msgstr "Cette page vous permet de gérer les vocabulaires et leurs entrées."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -323,7 +315,7 @@ msgstr "Tsy mety ny daty"
 
 #, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Tsy mety ny daty"
+msgstr "Date incorrecte"
 
 msgid "cpsschemas_err_file"
 msgstr "Tsy mety ny antotandahatsoratra na sary nalefa"
@@ -398,11 +390,11 @@ msgstr "Tsy mety ny 'liste d intervalle'"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Tsy ekena io mailaka io"
+msgstr "Fichier Zip invalide"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "Lava loatra ny teny (chaine de caractere) nampidirinao"
+msgstr "Le fichier Zip ne contient aucun document html"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -484,87 +476,87 @@ msgstr "Fanazavana"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "Tsy mety ny lahatsoratra"
+msgstr "tous ces mots"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "Tsy misy"
+msgstr "au moins l'un de ces mots"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "Tsy mety ny lahatsoratra"
+msgstr "la phrase exacte"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "Tsy misy"
+msgstr "aucun de ces mots"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "Fafana"
+msgstr "dans le document"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "Fanazavana"
+msgstr "dans le titre"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "Ovaina eo anivon'ny tranonkala"
+msgstr "dans la description"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "Tsy misy"
+msgstr "n'importe quelle période"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "Tsy misy"
+msgstr "depuis hier"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "Tsy misy"
+msgstr "au cours du mois"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "Tsy misy"
+msgstr "au cours des 3 derniers mois"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "Tsy misy"
+msgstr "au cours des 6 derniers mois"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "Tsy misy"
+msgstr "depuis un an"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "Ovaina"
+msgstr "pertinence"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "Ovaina"
+msgstr "antechronologique"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "Ovaina"
+msgstr "chronologique"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Eny"
+msgstr "date d'expiration"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "Fanazavana"
+msgstr "titre"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "Fafana"
+msgstr "statut"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "Fafana"
+msgstr "chemin"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "Tsy misy"
+msgstr "type de document"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Efa misy mampiasa an'io anarana famantarana io. Mifidiana hafa."
@@ -601,5 +593,8 @@ msgid "action_edit_online"
 msgstr "Ovaina eo anivon'ny tranonkala"
 
 #, fuzzy
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "'Entier long' mivoaka ny faritra"
+msgid "cpsschemas_search_language_or"
+msgstr "ou"
+
+msgid "button_close"
+msgstr "Fermer"

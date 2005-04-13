@@ -7,11 +7,12 @@
 # emmanuel <epietriga@nuxeo.com>, 2004.
 #
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -61,7 +62,7 @@ msgstr "(Versie HTML)"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #, fuzzy
 msgid "cpsschema_link_printable_version"
-msgstr "(Versie HTML)"
+msgstr "(printable version)"
 
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -99,7 +100,7 @@ msgstr "Afschaffen"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Niemand"
+msgstr "Edit online"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -115,7 +116,7 @@ msgstr "Niemand"
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_label_image_resize"
-msgstr "Formaat&nbsp;: "
+msgstr "Resize as "
 
 #.   <span>
 #.           Photo subtitle
@@ -142,13 +143,13 @@ msgstr "Positie&nbsp;: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Long integer out of range"
+msgstr "any language"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Long integer out of range"
+msgstr "one or more of the following languages"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -157,7 +158,7 @@ msgstr "Long integer out of range"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Formaat&nbsp;: "
+msgstr "Maximal size: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -220,16 +221,7 @@ msgstr "Waarde&nbsp;:"
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 #, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "Beleid van het woordenlijst"
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
+msgstr "This page allow you to manage vocabularies and their entries."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -283,19 +275,19 @@ msgstr ""
 
 #, fuzzy
 msgid "cpsschemas_unit_bytes"
-msgstr "mn"
+msgstr "bytes"
 
 #, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
-msgstr "In het centrum"
+msgstr "Kb"
 
 #, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
-msgstr "Formaat&nbsp;: "
+msgstr "Mb"
 
 #, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
-msgstr "Formaat van invalide datum"
+msgstr "Gb"
 
 msgid "cpsschemas_err_string"
 msgstr "Keten van invalide karakter"
@@ -326,7 +318,7 @@ msgstr "Formaat van invalide datum"
 
 #, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Formaat van invalide datum"
+msgstr "Date incorrecte"
 
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
@@ -339,11 +331,11 @@ msgstr "leeg bestand"
 
 #, fuzzy
 msgid "cpsschemas_err_file_too_big"
-msgstr "Invalid file"
+msgstr "This file is too big"
 
 #, fuzzy
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "This float must be positive"
+msgstr "This file is too big, the allowed max size is ${max_size}Mb."
 
 msgid "cpsschemas_err_image"
 msgstr "Invalid image"
@@ -371,46 +363,48 @@ msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
 
 #, fuzzy
 msgid "cpsschemas_err_password_size_min"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+msgstr "Sorry your password is too short"
 
 #, fuzzy
 msgid "cpsschemas_err_password_lower"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+msgstr "Sorry your password must contain a lower case character"
 
 #, fuzzy
 msgid "cpsschemas_err_password_upper"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+msgstr "Sorry your password must contain an upper case character"
 
 #, fuzzy
 msgid "cpsschemas_err_password_digit"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+msgstr "Sorry your password must contain a digit"
 
 #, fuzzy
 msgid "cpsschemas_err_password_extra"
-msgstr "Uw wachtwoord en zijn bevestiging komen niet overeen"
+msgstr ""
+"Sorry your password must contain a special character other than a letter or "
+"a digit"
 
 #, fuzzy
 msgid "cpsschemas_err_identifier"
-msgstr "Invalid int "
+msgstr "Invalid identifier"
 
 msgid "cpsschemas_err_email"
 msgstr "Invalide Email"
 
 #, fuzzy
 msgid "cpsschemas_err_readonly"
-msgstr "Invalide Email"
+msgstr "Read only field"
 
 #, fuzzy
 msgid "cpsschemas_err_rangelist"
-msgstr "Invalid image"
+msgstr "Invalid range list"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Invalide Email"
+msgstr "Invalid Zip file"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "Te lange keten van karakter"
+msgstr "No html document found in the Zip file"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -477,11 +471,11 @@ msgstr "Ja"
 
 #, fuzzy
 msgid "cpsschema_label_on"
-msgstr "Ja"
+msgstr "On"
 
 #, fuzzy
 msgid "cpsschema_label_off"
-msgstr "Nee"
+msgstr "Off"
 
 msgid "cpsschemas_label_link_href"
 msgstr "URL"
@@ -494,119 +488,119 @@ msgstr "Beschrijving"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "Invalide tekst"
+msgstr "all of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "Niemand"
+msgstr "any of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "Invalide tekst"
+msgstr "the exact phrase"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "Niemand"
+msgstr "none of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "Afschaffen"
+msgstr "in the document"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "Beschrijving"
+msgstr "in the title"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "Niemand"
+msgstr "in the description"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "Niemand"
+msgstr "anytime"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "Niemand"
+msgstr "since yesterday"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "Niemand"
+msgstr "within the past month"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "Niemand"
+msgstr "within the past 3 months"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "Niemand"
+msgstr "within the past 6 months"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "Niemand"
+msgstr "within a year"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "Laden"
+msgstr "relevance"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "Laden"
+msgstr "antechronologic"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "Laden"
+msgstr "chronological"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Ja"
+msgstr "expiration date"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "Beschrijving"
+msgstr "title"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "Afschaffen"
+msgstr "status"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "Afschaffen"
+msgstr "location"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "Niemand"
+msgstr "type of document"
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Identificatie&nbsp;:"
+msgstr "Id already exist, choose another one."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Toevoegen een woordenlijst"
+msgstr "Vocabulary created."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "Identificatie&nbsp;:"
+msgstr "Choose an id."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Afschaffen"
+msgstr "Vocabulary deleted."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr "Een toegang toevoegen"
+msgstr "Entry added."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Afschaffen"
+msgstr "Vocabulary deleted."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr "Afschaffen"
+msgstr "No entry selected. Choose one."
 
 #, fuzzy
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Toevoegen een woordenlijst"
+msgstr "Vocabulary updated."
 
 msgid "label_none_selection"
 msgstr ""
@@ -619,5 +613,8 @@ msgid "action_edit_online"
 msgstr ""
 
 #, fuzzy
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "Long integer out of range"
+msgid "cpsschemas_search_language_or"
+msgstr "or"
+
+msgid "button_close"
+msgstr "Close"

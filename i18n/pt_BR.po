@@ -7,10 +7,12 @@
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 # Mario Olimpio de Menezes <mario@curiango.ipen.br>, 2004.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: 2004-09-08 16:19-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
 "Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
@@ -95,7 +97,7 @@ msgstr "Remover"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Nenhum"
+msgstr "Edit online"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -111,7 +113,7 @@ msgstr "Nenhum"
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_label_image_resize"
-msgstr "Redimensiona"
+msgstr "Resize as "
 
 #.   <span>
 #.           Photo subtitle
@@ -138,13 +140,13 @@ msgstr "Posição de renderização"
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Inteiro longo fora da faixa."
+msgstr "any language"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Inteiro longo fora da faixa."
+msgstr "one or more of the following languages"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -153,7 +155,7 @@ msgstr "Inteiro longo fora da faixa."
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Redimensiona"
+msgstr "Maximal size: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -216,16 +218,7 @@ msgstr "Valor:"
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 #, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "Administrar vocabulário"
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
+msgstr "This page allow you to manage vocabularies and their entries."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -279,19 +272,19 @@ msgstr ""
 
 #, fuzzy
 msgid "cpsschemas_unit_bytes"
-msgstr "min"
+msgstr "bytes"
 
 #, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
-msgstr "Centro"
+msgstr "Kb"
 
 #, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
-msgstr "Redimensiona"
+msgstr "Mb"
 
 #, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
-msgstr "Data inválida."
+msgstr "Gb"
 
 msgid "cpsschemas_err_string"
 msgstr "Cadeia de caracteres inválida."
@@ -322,7 +315,7 @@ msgstr "Data inválida."
 
 #, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Data inválida."
+msgstr "Date incorrecte"
 
 msgid "cpsschemas_err_file"
 msgstr "Arquivo inválido."
@@ -330,14 +323,15 @@ msgstr "Arquivo inválido."
 #, fuzzy
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
-"Este arquivo é muito grande, o tamanho máximo permitido é ${max_size}Mb."
+"This file has not an allowed suffix, the allowed suffixes are: "
+"${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Arquivo inválido (vazio)."
 
 #, fuzzy
 msgid "cpsschemas_err_file_too_big"
-msgstr "Arquivo inválido."
+msgstr "This file is too big"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
@@ -398,11 +392,11 @@ msgstr "Faixa de lista inválida"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Email inválido."
+msgstr "Invalid Zip file"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "Cadeia de caracteres muito longa."
+msgstr "No html document found in the Zip file"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -484,87 +478,87 @@ msgstr "Descrição"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "Texto inválido."
+msgstr "all of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "Nenhum"
+msgstr "any of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "Texto inválido."
+msgstr "the exact phrase"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "Nenhum"
+msgstr "none of these words"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "Remover"
+msgstr "in the document"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "Descrição"
+msgstr "in the title"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "Nenhum"
+msgstr "in the description"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "Nenhum"
+msgstr "anytime"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "Nenhum"
+msgstr "since yesterday"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "Nenhum"
+msgstr "within the past month"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "Nenhum"
+msgstr "within the past 3 months"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "Nenhum"
+msgstr "within the past 6 months"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "Nenhum"
+msgstr "within a year"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "Mudar"
+msgstr "relevance"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "Mudar"
+msgstr "antechronologic"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "Mudar"
+msgstr "chronological"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Sim"
+msgstr "expiration date"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "Descrição"
+msgstr "title"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "Remover"
+msgstr "status"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "Remover"
+msgstr "location"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "Nenhum"
+msgstr "type of document"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id já existe, escolha outro."
@@ -601,5 +595,8 @@ msgid "action_edit_online"
 msgstr ""
 
 #, fuzzy
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "Inteiro longo fora da faixa."
+msgid "cpsschemas_search_language_or"
+msgstr "or"
+
+msgid "button_close"
+msgstr "Close"

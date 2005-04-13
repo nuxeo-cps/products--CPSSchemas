@@ -3,10 +3,12 @@
 # ##########################################################
 # Gettext Message File for default.
 # Your Name <your@email>, Year
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: 2004-09-30 16:26+0100\n"
 "Last-Translator: Fabio Nosari <fabnos@fastwebnet.it>\n"
 "Language-Team: Fabio Nosari <fabnos@fastwebnet.it>\n"
@@ -96,7 +98,7 @@ msgstr "Elimina"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Non sostituire"
+msgstr "Modifier en ligne"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -112,7 +114,7 @@ msgstr "Non sostituire"
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_label_image_resize"
-msgstr "Ridimensiona"
+msgstr "Redimensionner "
 
 #.   <span>
 #.           Photo subtitle
@@ -139,13 +141,13 @@ msgstr "Posizione: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "Numero intero lungo fuori dall'intervallo consentito."
+msgstr "toutes les langues"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "Numero intero lungo fuori dall'intervallo consentito."
+msgstr "la ou les langues suivantes"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -154,7 +156,7 @@ msgstr "Numero intero lungo fuori dall'intervallo consentito."
 #: from ../skins/cps_schemas/widget_file_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Ridimensiona"
+msgstr "Taille maximale : ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -217,16 +219,7 @@ msgstr "Valore:"
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 #, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "Configura i dizionari"
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
+msgstr "Cette page vous permet de gérer les vocabulaires et leurs entrées."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -280,19 +273,19 @@ msgstr ""
 
 #, fuzzy
 msgid "cpsschemas_unit_bytes"
-msgstr "mn"
+msgstr "octets"
 
 #, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
-msgstr "Al centro"
+msgstr "Ko"
 
 #, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
-msgstr "Ridimensiona"
+msgstr "Mo"
 
 #, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
-msgstr "Il formato della data non è valido."
+msgstr "Go"
 
 msgid "cpsschemas_err_string"
 msgstr "Il valore immesso non è valido."
@@ -323,7 +316,7 @@ msgstr "Il formato della data non è valido."
 
 #, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Il formato della data non è valido."
+msgstr "Date incorrecte"
 
 msgid "cpsschemas_err_file"
 msgstr "File non valido."
@@ -331,15 +324,15 @@ msgstr "File non valido."
 #, fuzzy
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
-"Le dimensioni del file sono eccessive. La grandezza massima consentita è di: "
-"${max_size}Mb."
+"Ce fichier n'a pas un suffixe autorisé, les suffixes autorisés sont : "
+"${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Il file è vuoto."
 
 #, fuzzy
 msgid "cpsschemas_err_file_too_big"
-msgstr "File non valido."
+msgstr "Fichier trop volumineux"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
@@ -403,11 +396,11 @@ msgstr "Lista di intervallo non valida"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Indirizzo e-mail non valido."
+msgstr "Fichier Zip invalide"
 
 #, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "Il valore immesso è troppo lungo."
+msgstr "Le fichier Zip ne contient aucun document html"
 
 msgid "jscalendar_date_fmt"
 msgstr "dd/mm/y"
@@ -489,87 +482,87 @@ msgstr "Descrizione:"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "Testo non valido."
+msgstr "tous ces mots"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "Non sostituire"
+msgstr "au moins l'un de ces mots"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "Testo non valido."
+msgstr "la phrase exacte"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "Non sostituire"
+msgstr "aucun de ces mots"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "Elimina"
+msgstr "dans le document"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "Descrizione:"
+msgstr "dans le titre"
 
 #, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "Non sostituire"
+msgstr "dans la description"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "Non sostituire"
+msgstr "n'importe quelle période"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "Non sostituire"
+msgstr "depuis hier"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "Non sostituire"
+msgstr "au cours du mois"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "Non sostituire"
+msgstr "au cours des 3 derniers mois"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "Non sostituire"
+msgstr "au cours des 6 derniers mois"
 
 #, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "Non sostituire"
+msgstr "depuis un an"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "Sostituisci con:"
+msgstr "pertinence"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "Sostituisci con:"
+msgstr "antechronologique"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "Sostituisci con:"
+msgstr "chronologique"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Sì"
+msgstr "date d'expiration"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "Descrizione:"
+msgstr "titre"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "Elimina"
+msgstr "statut"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "Elimina"
+msgstr "chemin"
 
 #, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "Non sostituire"
+msgstr "type de document"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Questo identificatore è già presente, scegli un altro termine."
@@ -606,5 +599,8 @@ msgid "action_edit_online"
 msgstr ""
 
 #, fuzzy
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "Numero intero lungo fuori dall'intervallo consentito."
+msgid "cpsschemas_search_language_or"
+msgstr "ou"
+
+msgid "button_close"
+msgstr "Fermer"
