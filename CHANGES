@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fix l10n on Multi-Select widget on view mode.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

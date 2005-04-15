@@ -1130,12 +1130,17 @@ class CPSMultiSelectWidget(CPSWidget):
 
 
     def getEntriesHtml(self, entries, vocabulary, translated=False):
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        cpsmcat = portal.Localizer.default
         entries_html_list = []
         for entry in entries:
+            entry_id = vocabulary.getMsgid(entry, entry)
             if translated:
-                entries_html_list.append(entry)
+                l10n_entry = cpsmcat(entry_id)
+                entries_html_list.append(l10n_entry.encode('ISO-8859-15',
+                                                           'ignore'))
             else:
-                entries_html_list.append(vocabulary.getMsgid(entry, entry))
+                entries_html_list.append(entry_id)
         return ', '.join(entries_html_list)
 
 
