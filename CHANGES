@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+-the local vocabularies are now used -if they exist- in the widgets
+that use vocabularies 
 Bug fixes:
 ~~~~~~~~~~
 - Fix l10n on Multi-Select widget on view mode.

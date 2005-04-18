@@ -984,11 +984,8 @@ class CPSGenericSelectWidget(CPSWidget):
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         vtool = getToolByName(self, 'portal_vocabularies')
-        try:
-            vocabulary = getattr(vtool, self.vocabulary)
-        except AttributeError:
-            raise ValueError("Missing vocabulary '%s' for widget '%s'" %
-                             (self.vocabulary, self.getWidgetId()))
+        context = datastructure.getDataModel().getContext()
+        vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
         return vocabulary
 
     def prepare(self, datastructure, **kw):
@@ -1249,11 +1246,8 @@ class CPSGenericMultiSelectWidget(CPSWidget):
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         vtool = getToolByName(self, 'portal_vocabularies')
-        try:
-            vocabulary = getattr(vtool, self.vocabulary)
-        except AttributeError:
-            raise ValueError("Missing vocabulary '%s' for widget '%s'" %
-                             (self.vocabulary, self.getWidgetId()))
+        context = datastructure.getDataModel().getContext()
+        vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
         return vocabulary
 
     def prepare(self, datastructure, **kw):

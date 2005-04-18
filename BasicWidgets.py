@@ -970,19 +970,15 @@ class CPSSelectWidget(CPSWidget):
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
+        context = datastructure.getDataModel().getContext()
         if not type(self.vocabulary) is StringType:
             # this is in case vocabulary directly holds
             # a vocabulary object
             vocabulary = self.vocabulary
         else:
             vtool = getToolByName(self, 'portal_vocabularies')
-            try:
-                vocabulary = getattr(vtool, self.vocabulary)
-            except AttributeError:
-                raise ValueError("Missing vocabulary '%s' for widget '%s'" %
-                                (self.vocabulary, self.getWidgetId()))
+            vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
         if vocabulary.meta_type == 'CPS Method Vocabulary':
-            context = datastructure.getDataModel().getContext()
             vocabulary = MethodVocabularyWithContext(vocabulary, context)
         return vocabulary
 
@@ -1081,13 +1077,9 @@ class CPSMultiSelectWidget(CPSWidget):
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         vtool = getToolByName(self, 'portal_vocabularies')
-        try:
-            vocabulary = getattr(vtool, self.vocabulary)
-        except AttributeError:
-            raise ValueError("Missing vocabulary '%s' for widget '%s'" %
-                             (self.vocabulary, self.getWidgetId()))
+        context = datastructure.getDataModel().getContext()
+        vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
         if vocabulary.meta_type == 'CPS Method Vocabulary':
-            context = datastructure.getDataModel().getContext()
             vocabulary = MethodVocabularyWithContext(vocabulary, context)
         return vocabulary
 
