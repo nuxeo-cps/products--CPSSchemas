@@ -1032,7 +1032,7 @@ class CPSSelectWidget(CPSWidget):
                     in_selection = 1
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
-                kw = {'value': value, 'contents': 'invalid: '+value,
+                kw = {'value': value, 'contents': 'invalid: '+ str(value),
                       'selected': 'selected'}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'

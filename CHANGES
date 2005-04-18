@@ -8,6 +8,7 @@ that use vocabularies
 Bug fixes:
 ~~~~~~~~~~
 - Fix l10n on Multi-Select widget on view mode.
+- Cast to str the value of a Select Widget to prevent from crashing if it's an integer.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
