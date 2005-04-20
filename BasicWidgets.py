@@ -958,7 +958,6 @@ class CPSSelectWidget(CPSWidget):
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 1,},)
 
-    vocabulary = ''
     _properties = CPSWidget._properties + (
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary', 'is_required' : 1},
@@ -966,7 +965,8 @@ class CPSSelectWidget(CPSWidget):
          'label': 'Is vocabulary translated on display'},
         )
     # XXX make a menu for the vocabulary.
-    translated = 0
+    vocabulary = ''
+    translated = False
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -1012,7 +1012,7 @@ class CPSSelectWidget(CPSWidget):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.Localizer.default
         if mode == 'view':
-            if getattr(self, 'translated', None):
+            if self.translated:
                 return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
@@ -1021,7 +1021,7 @@ class CPSSelectWidget(CPSWidget):
                                 name=self.getHtmlWidgetId())
             in_selection = 0
             for k, v in vocabulary.items():
-                if getattr(self, 'translated', None):
+                if self.translated:
                     kw = {'value': k,
                           'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                           }
@@ -1070,7 +1070,7 @@ class CPSMultiSelectWidget(CPSWidget):
         )
     # XXX make a menu for the vocabulary.
     vocabulary = ''
-    translated = 0
+    translated = False
     size = 0
     format_empty = ''
 
@@ -1122,18 +1122,20 @@ class CPSMultiSelectWidget(CPSWidget):
 
 
     def getEntriesHtml(self, entries, vocabulary, translated=False):
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.Localizer.default
-        entries_html_list = []
+        if translated:
+            cpsmcat = getToolByName(self, 'translation_service', None)
+            if cpsmcat is None:
+                translated = False
+        values = []
         for entry in entries:
-            entry_id = vocabulary.getMsgid(entry, entry)
             if translated:
-                l10n_entry = cpsmcat(entry_id)
-                entries_html_list.append(l10n_entry.encode('ISO-8859-15',
-                                                           'ignore'))
+                value = vocabulary.getMsgid(entry, entry)
+                value = cpsmcat(value, default=value)
+                value = value.encode('ISO-8859-15', 'ignore')
             else:
-                entries_html_list.append(entry_id)
-        return ', '.join(entries_html_list)
+                value = vocabulary.get(entry, entry)
+            values.append(value)
+        return escape(', '.join(values))
 
 
     def render(self, mode, datastructure, **kw):
@@ -1148,8 +1150,7 @@ class CPSMultiSelectWidget(CPSWidget):
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
             else:
-                return self.getEntriesHtml(value, vocabulary,
-                                           getattr(self, 'translated', False))
+                return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id+':list',
@@ -1159,7 +1160,7 @@ class CPSMultiSelectWidget(CPSWidget):
                 kw['size'] = self.size
             res = renderHtmlTag('select', **kw)
             for k, v in vocabulary.items():
-                if getattr(self, 'translated', None):
+                if self.translated:
                     kw = {'value': k,
                           'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                           }
