@@ -11,6 +11,7 @@ Bug fixes:
 - Cast to str the value of a Select Widget to prevent from crashing if it's an integer.
 - Add height/width parameters for Internet Explorer on the photo widget popup 
   and extend a little the popup dimensions
+- Fix PhotoWidget display when upgrading from older version.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
