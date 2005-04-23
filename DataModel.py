@@ -141,6 +141,7 @@ class DataModel(UserDict):
         self._acl_cache_user = user
         self._setAddRoles(add_roles)
         self._check_acls = 1
+        self._forbidden_widgets = []
 
     def _setAddRoles(self, add_roles):
         user = self._acl_cache_user
