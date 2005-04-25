@@ -3,15 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--the local vocabularies are now used -if they exist- in the widgets
-that use vocabularies 
+-
 Bug fixes:
 ~~~~~~~~~~
-- Fix l10n on Multi-Select widget on view mode.
-- Cast to str the value of a Select Widget to prevent from crashing if it's an integer.
-- Add height/width parameters for Internet Explorer on the photo widget popup 
-  and extend a little the popup dimensions
-- Fix PhotoWidget display when upgrading from older version.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
