@@ -9,4 +9,4 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Removed dumb LOGs that fill the logs with binary data.

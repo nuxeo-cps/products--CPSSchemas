@@ -445,10 +445,10 @@ class CPSFileField(CPSField):
                 # being a file but described as a string.
                 subobjects_dict = html_conversion.getSubObjects()
                 files_dict = {}
-                LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
+                #LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
                 for k, v in subobjects_dict.items():
                     files_dict[k] = File(k, k, v)
-                LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
+                #LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
             else:
                 html_file = None
                 files_dict = {}
@@ -538,10 +538,10 @@ class CPSDiskFileField(CPSFileField):
                 # being a file but described as a string.
                 subobjects_dict = html_conversion.getSubObjects()
                 files_dict = {}
-                LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
+                #LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
                 for k, v in subobjects_dict.items():
                     files_dict[k] = File(k, k, v)
-                LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
+                #LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
             else:
                 html_file = None
                 files_dict = {}
