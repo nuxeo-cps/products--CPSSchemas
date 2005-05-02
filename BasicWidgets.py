@@ -98,6 +98,13 @@ def cleanFileName(current_name):
     # It would be better to use a centralized translation mechanism, that
     # exists for example in CPSCore, but CPSSchemas is supposed to be
     # independent of CPSCore :-(
+
+    # FIXME: this is so latin-1 or latin-9 specific!
+    # FIXME: use CPSUtil instead
+
+    # Sometimes the filename is in Unicode
+    current_name = current_name.encode('latin-1')
+
     current_name = current_name.replace('Æ', 'AE')
     current_name = current_name.replace('æ', 'ae')
     current_name = current_name.replace('¼', 'OE')
