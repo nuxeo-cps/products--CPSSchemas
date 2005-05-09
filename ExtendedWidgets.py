@@ -222,26 +222,35 @@ class CPSDateTimeWidget(CPSWidget):
     time_hour_default = '12'
     time_minutes_default = '00'
 
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        v = datamodel[self.fields[0]]
-        if not v and self.is_required:
-            v = DateTime()
-        widget_id = self.getWidgetId()
-        date = ''
-        hour = minute = ''
+    def getDateTimeInfo(self, value, mode=None):
+        """Return a tuple that is used to set the datastructure
 
-        if v == 'None':
-            v = None
-        if v:
+        Called in prepare when mode is not known, and called again in render
+        when mode is known, because a default value has to be provided in edit
+        mode (current date time).
+        """
+        # default values
+        date = ''
+        hour = ''
+        minute = ''
+
+        # value is set to current time if:
+        # - value is not alrady set and
+        # - widget is required an
+        # - mode is 'edit' or 'create'
+        if not value and self.is_required and mode in ['edit', 'create']:
+            value = DateTime()
+
+        if value == 'None':
+            value = None
+        if value:
             # Backward compatibility test, this logic is not used by the
             # current code.
-            if type(v) is StringType:
-                v = DateTime(v)
-            d = str(v.day())
-            m = str(v.month())
-            y = str(v.year())
+            if type(value) is StringType:
+                value = DateTime(value)
+            d = str(value.day())
+            m = str(value.month())
+            y = str(value.year())
             if self.view_format.startswith('iso8601'):
                 date = '%s-%s-%s' % (y, m, d)
             else:
@@ -250,9 +259,24 @@ class CPSDateTimeWidget(CPSWidget):
                     date = '%s/%s/%s' % (m, d, y)
                 else:
                     date = '%s/%s/%s' % (d, m, y)
-            hour = str(v.h_24())
-            minute = str(v.minute())
+            hour = str(value.h_24())
+            minute = str(value.minute())
 
+        # if hour and minute are not set, set default values
+        hour = hour or self.time_hour_default
+        minute = minute or self.time_minutes_default
+
+        return (value, date, hour, minute)
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        datamodel = datastructure.getDataModel()
+        v = datamodel[self.fields[0]]
+
+        # get date time info, mode is not known here
+        v, date, hour, minute = self.getDateTimeInfo(v, mode=None)
+
+        widget_id = self.getWidgetId()
         datastructure[widget_id] = v
         datastructure[widget_id + '_date'] = date
         datastructure[widget_id + '_hour'] = hour or self.time_hour_default
@@ -314,6 +338,19 @@ class CPSDateTimeWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
+
+        # XXX AT: datastructure has to be set again here, in case we're in edit
+        # or create mode, because a default value has to be provided.
+        if mode in ['edit', 'create']:
+            datamodel = datastructure.getDataModel()
+            v = datamodel[self.fields[0]]
+            v, date, hour, minute = self.getDateTimeInfo(v, mode=mode)
+            widget_id = self.getWidgetId()
+            datastructure[widget_id] = v
+            datastructure[widget_id + '_date'] = date
+            datastructure[widget_id + '_hour'] = hour or self.time_hour_default
+            datastructure[widget_id + '_minute'] = minute or self.time_minutes_default
+
         return meth(mode=mode, datastructure=datastructure)
 
 
