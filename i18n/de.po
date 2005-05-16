@@ -1,9 +1,8 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-08 12:50default\n"
+"POT-Creation-Date: 2005-04-13 17:39default\n"
 "PO-Revision-Date: 2005-03-14 11:08+0100\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -207,15 +206,6 @@ msgstr "Wert:"
 #, fuzzy
 msgid "description_vocabulary_manage_form"
 msgstr "This page allow you to manage vocabularies and their entries."
-
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateImage('${url}');; window.close();; ;">Insert Image</a>
-#.   <a attributes="href string: #;
-#.                          onclick string: window.opener.CreateLink('${url}');; window.close();; ;">Insert Image</a>
-#: from ../skins/cps_schemas/cpsepoz_toolbox.pt
-#: ../skins/cps_schemas/epoz_toolbox.pt
-msgid "epoz_insert_image"
-msgstr ""
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -583,10 +573,12 @@ msgstr "Anders-Selektion"
 msgid "action_edit_online"
 msgstr "Berbeiten online"
 
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr ""
+
 #, fuzzy
 msgid "cpsschemas_search_language_or"
 msgstr "or"
 
-#, fuzzy
 msgid "button_close"
 msgstr "Close"

@@ -1,3 +1,4 @@
+# translation of en.po to 
 # translation of en.po to Francais
 # translation of en.po to francais
 # Gettext Message File for default.
@@ -6,16 +7,17 @@
 # emmanuel <epietriga@nuxeo.com>, 2004.
 # DARCHE <madarche@nuxeo.com>, 2004, 2005.
 # Encolpe DEGOUTE <ed@nuxeo.com>, 2004.
+# Julien Anguenot <anguenot@in.nuxeo.com>, 2005.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-13 17:39default\n"
-"PO-Revision-Date: 2005-02-10 10:30+0100\n"
-"Last-Translator: DARCHE <madarche@nuxeo.com>\n"
-"Language-Team: Francais <fr@li.org>\n"
+"POT-Creation-Date: 2005-05-16 02:44default\n"
+"PO-Revision-Date: 2005-05-16 02:45+0200\n"
+"Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -32,6 +34,24 @@ msgstr ""
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
+msgstr ""
+
+#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+#: ../skins/cps_schemas/popup_internallinks_form.pt
+#, fuzzy
+msgid "button_back"
+msgstr "Close"
+
+#.   <button type="button" attributes="
+#.           id button_text_editor_popup_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_text_editor_popup"
 msgstr ""
 
 #.   <block>at</block>
@@ -86,12 +106,14 @@ msgstr "and resize as "
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr "Change"
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Delete"
 
@@ -104,11 +126,13 @@ msgstr "Edit online"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Keep"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "None"
 
@@ -153,6 +177,7 @@ msgstr "one or more of the following languages"
 #.             ${size_max (tal content="str_sizeMax")}
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_size_max ${size_max}"
 msgstr "Maximal size: ${size_max}."
 
@@ -561,8 +586,6 @@ msgstr "Other, please specify: "
 msgid "action_edit_online"
 msgstr "Edit online"
 
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "or"
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr "Flash Animation (swf)"
 
-#~ msgid "button_close"
-#~ msgstr "Close"

@@ -9,12 +9,11 @@
 # Encolpe DEGOUTE <ed@nuxeo.com>, 2004.
 #
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-13 17:39default\n"
+"POT-Creation-Date: 2005-05-16 02:44default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -34,6 +33,24 @@ msgstr ""
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
+msgstr ""
+
+#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+#: ../skins/cps_schemas/popup_internallinks_form.pt
+#, fuzzy
+msgid "button_back"
+msgstr "Fermer"
+
+#.   <button type="button" attributes="
+#.           id button_text_editor_popup_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_text_editor_popup"
 msgstr ""
 
 #.   <block>at</block>
@@ -88,12 +105,14 @@ msgstr "sy avidika amin'ny 'format'"
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr "Ovaina"
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Fafana"
 
@@ -106,11 +125,13 @@ msgstr "Ovaina eo anivon'ny tranonkala"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Tazomina"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Tsy misy"
 
@@ -157,6 +178,7 @@ msgstr "la ou les langues suivantes"
 #.             ${size_max (tal content="str_sizeMax")}
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
 msgstr "Taille maximale : ${size_max}."
@@ -592,9 +614,9 @@ msgstr "Hafa, hamafiso : "
 msgid "action_edit_online"
 msgstr "Ovaina eo anivon'ny tranonkala"
 
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr ""
+
 #, fuzzy
 msgid "cpsschemas_search_language_or"
 msgstr "ou"
-
-msgid "button_close"
-msgstr "Fermer"

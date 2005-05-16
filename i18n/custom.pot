@@ -307,3 +307,6 @@ msgstr ""
 ### action =================================================
 msgid "action_edit_online"
 msgstr ""
+
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr ""
