@@ -63,6 +63,12 @@ class TestWidgets(unittest.TestCase):
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Float Field',))
 
+    def testFlashWidget(self):
+        from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
+        widget = CPSFlashWidget('foo', 'notype')
+        self.assertEquals(widget.getWidgetId(), 'foo')
+        self.assertEquals(widget.getFieldTypes(), ('CPS File Field',))
+
     def test_getCssClass(self):
         # create a bare widget, and set it in the portal to be able to create
         # the expression namespace

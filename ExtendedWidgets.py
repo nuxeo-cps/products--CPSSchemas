@@ -41,6 +41,8 @@ from Products.CPSSchemas.BasicWidgets import CPSNoneWidget, \
      CPSStringWidget, CPSImageWidget, CPSFileWidget, \
      _isinstance, renderHtmlTag
 
+from swfHeaderData import analyseContent
+
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
 class CPSTextWidget(CPSStringWidget):
@@ -1682,6 +1684,68 @@ class CPSSubjectWidgetType(CPSWidgetType):
 
 InitializeClass(CPSSubjectWidgetType)
 
+##################################################
+##################################################
+
+class CPSFlashWidget(CPSFileWidget):
+    """CPS Flash Widget
+    """
+
+    meta_type = "CPS Flash Widget"
+
+    def _flash_validate(self, datastructure, **kw):
+        """Check that this is a Flash animation
+        """
+        file = datastructure[self.getWidgetId()]
+        if file is not None:
+            cond = file.getContentType() == 'application/x-shockwave-flash'
+            if not cond:
+                print file.getContentType()
+                datastructure.setError(self.getWidgetId(),
+                                       'cpsschemas_err_file')
+                return False
+        return True
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel.
+        """
+        return (CPSFileWidget.validate(self, datastructure, **kw) and
+                self._flash_validate(datastructure, **kw))
+
+    def render(self, mode, datastructure, **kw):
+        """Render this widget from the datastructure or datamodel.
+        """
+        render_method = 'widget_flash_render'
+        meth = getattr(self, render_method, None)
+
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+
+        file = datastructure[self.getWidgetId()]
+
+        # Get common File props
+        file_info = self.getFileInfo(datastructure)
+
+        # Update with speficic swf header props
+        if file is not None:
+            try:
+                file_info.update(analyseContent(
+                    str(file.data), file_info['size']))
+            except TypeError:
+                pass
+
+        return meth(mode=mode, datastructure=datastructure, **file_info)
+
+InitializeClass(CPSFlashWidget)
+
+class CPSFlashWidgetType(CPSWidgetType):
+    """CPS Flash Widget Type
+    """
+    meta_type = "CPS Flash Widget Type"
+    cls = CPSFlashWidget
+
+InitializeClass(CPSFlashWidgetType)
 
 ##################################################
 #
@@ -1700,4 +1764,5 @@ WidgetTypeRegistry.register(CPSGenericMultiSelectWidgetType)
 WidgetTypeRegistry.register(CPSRangeListWidgetType)
 WidgetTypeRegistry.register(CPSDocumentLanguageSelectWidgetType)
 WidgetTypeRegistry.register(CPSSubjectWidgetType)
+WidgetTypeRegistry.register(CPSFlashWidgetType)
 

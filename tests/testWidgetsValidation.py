@@ -2,8 +2,11 @@
 # (c) 2003 Nuxeo SARL <http://nuxeo.com>
 # $Id$
 
+import os
 import unittest
 from Testing.ZopeTestCase import ZopeLite
+
+from OFS.Image import File
 
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
@@ -11,6 +14,11 @@ from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
      CPSIdentifierWidget, CPSFloatWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSRangeListWidget, \
      CPSTextWidget
+
+from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
+
+from Products.CPSSchemas import tests
+TEST_SWF = os.path.join(tests.__path__[0], 'test.swf')
 
 class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
@@ -499,6 +507,30 @@ class RangeListWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, ('1', '2-3'))
         self.assertEquals(err, 'cpsschemas_err_rangelist')
 
+class FlashWidgetValidationTest(WidgetValidationTest):
+
+    widget_type = CPSFlashWidget
+
+    data = open(TEST_SWF, 'r').read()
+    default_value = File('fake', '', data)
+    default_value.content_type = 'application/x-shockwave-flash'
+
+    def _validate(self, properties, value):
+        id = 'ff'
+        data = {id: value}
+        ds = DataStructure(data, datamodel=data)
+        properties.update({'fields': (id,),})
+        widget = self.widget_type(id, self.default_value)
+        widget.manage_changeProperties(**properties)
+
+        # Just test the internal validation related to swf
+        ret = widget._flash_validate(ds)
+        err = ds.getError(id)
+        return ret, err, ds
+    
+    def test_widget_nok_required_1(self):
+        pass
+    
 # XXX: test more widget types here
 
 def test_suite():
