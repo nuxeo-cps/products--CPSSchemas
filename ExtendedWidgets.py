@@ -1700,7 +1700,6 @@ class CPSFlashWidget(CPSFileWidget):
         if file is not None:
             cond = file.getContentType() == 'application/x-shockwave-flash'
             if not cond:
-                print file.getContentType()
                 datastructure.setError(self.getWidgetId(),
                                        'cpsschemas_err_file')
                 return False
