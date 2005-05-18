@@ -23,8 +23,9 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG, WARNING
 import sys
-from types import IntType, StringType, ListType, FloatType, LongType, \
-     DictType, UnicodeType, TupleType
+from types import IntType, FloatType, LongType, BooleanType, \
+                  StringType, UnicodeType, \
+                  ListType, DictType, TupleType
 
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
@@ -94,6 +95,36 @@ class CPSIntField(CPSField):
                                   % `values`)
 
 InitializeClass(CPSIntField)
+
+
+class CPSBooleanField(CPSField):
+    """Boolean field."""
+    meta_type = "CPS Boolean Field"
+
+    default_expr = 'python:False'
+    default_expr_c = Expression(default_expr)
+
+    # XXX this is never called yet.
+    def validate(self, value):
+        if isinstance(value, BooleanType):
+            return value
+        raise ValidationError('Not a boolean: %s' % repr(value))
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        return [str(value)]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        try:
+            if len(values) != 1:
+                raise ValueError
+            return bool(values[0])
+        except (ValueError, TypeError):
+            raise ValidationError("Incorrect Boolean value from LDAP: %s"
+                                  % `values`)
+
+InitializeClass(CPSBooleanField)
 
 
 class CPSLongField(CPSField):
@@ -717,6 +748,7 @@ class CPSCoupleField(CPSListField):
 
 # Register field classes
 
+FieldRegistry.register(CPSBooleanField)
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
 FieldRegistry.register(CPSIntListListField)

@@ -4,6 +4,7 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - Flash Widget
+- Added a "CPS Boolean Field".
 Bug fixes:
 ~~~~~~~~~~
 - DateTime widget: a default value (current date) was presented in view mode if
