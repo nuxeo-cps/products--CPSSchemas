@@ -9,6 +9,8 @@ Bug fixes:
 ~~~~~~~~~~
 - DateTime widget: a default value (current date) was presented in view mode if
   widget was required.
+- added check for non empty value in the validation of the CPSSelectWidget with
+  is_required == True
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Removed dumb LOGs that fill the logs with binary data.

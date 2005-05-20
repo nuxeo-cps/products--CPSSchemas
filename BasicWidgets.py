@@ -1007,6 +1007,9 @@ class CPSSelectWidget(CPSWidget):
         if not vocabulary.has_key(value):
             datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
+        if self.is_required and not len(v):
+            datastructure.setError(widget_id, "cpsschemas_err_required")
+            return 0
 
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
