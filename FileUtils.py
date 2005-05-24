@@ -27,11 +27,11 @@ from Products.CMFCore.utils import getToolByName
 
 def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     """Convert a file to a new mime type.
-    
+
     The file argument may be a Zope File object or None.
-    
+
     The context argument is used to find placeful tools.
-    
+
     Returns a string, or None if no conversion is possible.
     """
     if file is None:
@@ -57,7 +57,7 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
 
 def convertFileToText(file, context=None, **kwargs):
     """Convert a file to text.
-    
+
     Returns a string, or None if no conversion is possible.
     """
     result = _convertFileToMimeType(file, 'text/plain',
@@ -69,7 +69,7 @@ def convertFileToText(file, context=None, **kwargs):
 
 def convertFileToHtml(file, context=None, **kwargs):
     """Convert a file to HTML.
-    
+
     Returns a data object (string and subobjects),
     or None if no conversion is possible.
     """
@@ -79,7 +79,7 @@ def convertFileToHtml(file, context=None, **kwargs):
 
 def convertFileToDocbook(file, context=None, **kwargs):
     """Convert a file to Docbook XML.
-    
+
     Returns a data object (string and subobjects),
     or None if no conversion is possible.
     """
