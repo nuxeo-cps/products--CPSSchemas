@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: de\n"
+"Language-Name: German\n"
+"Domain: default\n"
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt

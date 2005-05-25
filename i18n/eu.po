@@ -24,6 +24,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Code: eu\n"
+"Language-Name: Basque\n"
+"Domain: default\n"
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
