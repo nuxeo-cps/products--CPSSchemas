@@ -1,10 +1,6 @@
 # translation of ro.po to 
-# ##########################################################
-# ################# DON'T EDIT THIS FILE! ##################
-# ##########################################################
 # Gettext Message File for default.
-# Your Name <your@email>, Year
-# , 2005.
+# Alin Voinea <avoinea@nuxeo.com>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
@@ -27,19 +23,19 @@ msgstr ""
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
-msgstr ""
+msgstr "Fals"
 
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
-msgstr ""
+msgstr "Adevarat"
 
 #.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 #: ../skins/cps_schemas/popup_internallinks_form.pt
 #, fuzzy
 msgid "button_back"
-msgstr "Fermer"
+msgstr "Inchide"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -94,7 +90,7 @@ msgstr "mn"
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
-"Fisierele autorizate trebuie sa aiba urmatoarele sufixe : "
+"Fisierele autorizate trebuie sa aiba urmatoarele sufixe: "
 "${allowed_file_suffixes}."
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
@@ -120,7 +116,7 @@ msgstr "Sterge"
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Modifica in linie"
+msgstr "Modifica online"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -144,12 +140,12 @@ msgstr "Redimensioneaza"
 #.         </span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr "Legenda&nbsp;: "
+msgstr "Legenda: "
 
 #.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
-msgstr "Format&nbsp;: "
+msgstr "Format: "
 
 #.   <span>
 #.             Render position
@@ -158,19 +154,19 @@ msgstr "Format&nbsp;: "
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
-msgstr "Pozitie&nbsp;: "
+msgstr "Pozitie: "
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "toutes les langues"
+msgstr "orice limba"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "la ou les langues suivantes"
+msgstr "una sau mai multe dintre urmatoarele limbi"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -189,7 +185,7 @@ msgstr "Adauga un vocabular"
 #.   <h2>cpsschemas_vocabulary_available</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_available"
-msgstr "Administreaza un vocabular"
+msgstr "Vocabulare disponibile"
 
 #.   <span class="description">cpsschemas_vocabulary_contains
 #.     ${voc_entries (tal replace="python:len(keys)")}
@@ -216,12 +212,12 @@ msgstr "Adauga o intrare"
 #.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
-msgstr "Identificator&nbsp;:"
+msgstr "Id:"
 
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
-msgstr "Cheie&nbsp;:"
+msgstr "Cheie:"
 
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -231,12 +227,12 @@ msgstr "Administreaza vocabularele"
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
-msgstr "MsgId&nbsp;:"
+msgstr "MsgId:"
 
 #.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
-msgstr "Valoare&nbsp;:"
+msgstr "Valoare:"
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -257,14 +253,14 @@ msgstr ""
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_click_chosen_value"
-msgstr "Selecteaza valoarea dorita&nbsp;:"
+msgstr "Selecteaza valoarea dorita:"
 
 #.   <th>
 #.           Enter a search term:
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
-msgstr "Introdu un termen de cautare&nbsp;:"
+msgstr "Introdu un termen de cautare:"
 
 #.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
@@ -292,7 +288,7 @@ msgstr "Text alternativ"
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr ""
+msgstr "Fisierul pentru inlocurea continutului:"
 
 msgid "cpsschemas_unit_bytes"
 msgstr "octeti"
@@ -341,18 +337,18 @@ msgstr "Fisier invalid"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
-"Acest fisier nu are un sufix autorizat, sufixele autorizate sunt : "
+"Acest fisier nu are un sufix autorizat, sufixele autorizate sunt: "
 "${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "fisier invalid"
 
 msgid "cpsschemas_err_file_too_big"
-msgstr "Fisier prea voluminos"
+msgstr "Fisier prea mare"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
-"Acest fisier este prea voluminos, marimea maxima autorizata este  "
+"Acest fisier este prea mare, marimea maxima autorizata este "
 "${max_size}."
 
 msgid "cpsschemas_err_image"
@@ -393,8 +389,8 @@ msgstr "Parola ta trebuie sa contina cel putin o cifra"
 
 msgid "cpsschemas_err_password_extra"
 msgstr ""
-"Parola ta trebuie sa contina cel putin un caracter special altul decato "
-"litera sau o cifra"
+"Parola ta trebuie sa contina cel putin un caracter special, altul decat "
+"o litera sau o cifra"
 
 msgid "cpsschemas_err_identifier"
 msgstr "Identificator invalid"
@@ -409,16 +405,16 @@ msgid "cpsschemas_err_rangelist"
 msgstr "Lista de intervale invalida"
 
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr ""
+msgstr "Fisier arhivat invalid"
 
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr ""
+msgstr "Nu a fost gasit nici un fisier HTML in arhiva"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
 
 msgid "cpsschemas_rposition_normal"
-msgstr "Largimea paginii"
+msgstr "Latime paginii"
 
 msgid "cpsschemas_rposition_col_right"
 msgstr "Coloana din dreapta"
@@ -451,7 +447,7 @@ msgid "cpsschemas_rformat_original"
 msgstr "Original"
 
 msgid "img_auto_size"
-msgstr "Automatic"
+msgstr "Automat"
 
 msgid "img_icon"
 msgstr "Imagine"
@@ -494,76 +490,67 @@ msgstr "Descriere"
 
 # zctext
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr ""
+msgstr "toate cuvintele"
 
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr ""
+msgstr "oricare cuvant"
 
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr ""
+msgstr "fraza exacta"
 
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr ""
+msgstr "nici un cuvant"
 
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr ""
+msgstr "in document"
 
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr ""
+msgstr "in titlu"
 
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr ""
+msgstr "in descriere"
 
-# modified
 msgid "cpsschemas_label_modified_since_0"
-msgstr ""
+msgstr "oricand"
 
 msgid "cpsschemas_label_modified_since_1"
-msgstr ""
+msgstr "de ieri"
 
 msgid "cpsschemas_label_modified_since_30"
-msgstr ""
+msgstr "in ultima luna"
 
 msgid "cpsschemas_label_modified_since_91"
-msgstr ""
+msgstr "in ultimele 3 luni"
 
 msgid "cpsschemas_label_modified_since_182"
-msgstr ""
+msgstr "in ultimele 6 luni"
 
 msgid "cpsschemas_label_modified_since_365"
-msgstr ""
+msgstr "de un an"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "pertinence"
+msgstr "relevanta"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "antechronologique"
+msgstr "antecronologic"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "chronologique"
+msgstr "cronologic"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "date d'expiration"
+msgstr "data expirari"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "titre"
+msgstr "titlu"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
 msgstr "statut"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "chemin"
+msgstr "locatie"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "type de document"
+msgstr "tip de document"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Identificatorul este deja folosit, alege altul"
@@ -587,21 +574,19 @@ msgid "cpsschemas_psm_vocabulary_no_entries_selected"
 msgstr "Trebuie sa selectezi o intrare."
 
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Vocabular adus la zi"
+msgstr "Vocabular actualizat"
 
 msgid "label_none_selection"
 msgstr " -- Gol -- "
 
 msgid "label_other_selection"
-msgstr "Altul, precizeaza : "
+msgstr "Altul, precizeaza: "
 
-# ## action =================================================
 msgid "action_edit_online"
-msgstr "Modifica in linie"
+msgstr "Modifica online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr ""
+msgstr "Animatie Flash (swf)"
 
-#, fuzzy
 msgid "cpsschemas_search_language_or"
-msgstr "ou"
+msgstr "sau"
