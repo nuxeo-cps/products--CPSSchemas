@@ -162,6 +162,11 @@ function getLayoutMode() {
         self.assertEquals(widget.getJavaScriptCode('view', dm).strip(),
                           js_code.strip())
 
+    def test_cleanFileName(self):
+       from Products.CPSSchemas.BasicWidgets import cleanFileName
+       self.assertEquals(cleanFileName(u'å'), 'a')
+       self.assertEquals(cleanFileName('å'), 'a')
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestWidgets),

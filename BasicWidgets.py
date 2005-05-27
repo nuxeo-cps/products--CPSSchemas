@@ -103,7 +103,8 @@ def cleanFileName(current_name):
     # FIXME: use CPSUtil instead
 
     # Sometimes the filename is in Unicode
-    current_name = current_name.encode('latin-1')
+    if isinstance(current_name, unicode):
+        current_name = current_name.encode('latin-1', 'replace')
 
     current_name = current_name.replace('Æ', 'AE')
     current_name = current_name.replace('æ', 'ae')
