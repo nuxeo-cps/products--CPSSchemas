@@ -104,7 +104,7 @@ def cleanFileName(current_name):
 
     # Sometimes the filename is in Unicode
     if isinstance(current_name, unicode):
-        current_name = current_name.encode('latin-1', 'replace')
+        current_name = current_name.encode('iso-8859-15', 'replace')
 
     current_name = current_name.replace('Æ', 'AE')
     current_name = current_name.replace('æ', 'ae')

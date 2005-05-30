@@ -11,6 +11,7 @@ Bug fixes:
   widget was required.
 - added check for non empty value in the validation of the CPSSelectWidget with
   is_required == True
+- Replaced remaining "latin1" encodings into "latin9" encodings.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Removed dumb LOGs that fill the logs with binary data.

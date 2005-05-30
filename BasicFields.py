@@ -56,7 +56,7 @@ def _isinstance(ob, cls):
 
 default_encoding = sys.getdefaultencoding()
 if default_encoding == 'ascii':
-    default_encoding = 'latin1'
+    default_encoding = 'iso-8859-15'
 
 def toUTF8(s):
     if not isinstance(s, UnicodeType):

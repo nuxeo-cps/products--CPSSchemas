@@ -80,7 +80,7 @@ def LocalizerStringIO_getvalue(self):
     if self.buflist:
         for buf in self.buflist:
             if type(buf) == UnicodeType:
-                self.buf += buf.encode('latin-1')
+                self.buf += buf.encode('iso-8859-15')
             else:
                 self.buf += buf
         self.buflist = []
