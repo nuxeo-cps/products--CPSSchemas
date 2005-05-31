@@ -82,7 +82,7 @@ class BaseStorageAdapter:
         """
         return None
 
-    def setContextObject(self, context):
+    def setContextObject(self, context, proxy=None):
         """Set a new underlying context for this adapter.
 
         If a getData/setData is later done, it will be done on this new
@@ -93,6 +93,11 @@ class BaseStorageAdapter:
         id after an empty datamodel has been fetched.
         """
         raise NotImplementedError
+
+    def getProxy(self):
+        """Get the potentially associated proxy for this adapter.
+        """
+        return None
 
     def getSchema(self):
         """Get schema this adapter is about."""
@@ -157,7 +162,8 @@ class BaseStorageAdapter:
         for field_id, field in self.getFieldItems():
             value = data[field_id]
             data[field_id] = field.processValueAfterRead(value, data,
-                                                         self.getContextObject())
+                                                         self.getContextObject(),
+                                                         self.getProxy())
 
     def _getFieldData(self, field_id, field, **kw):
         """Get data from one field."""
@@ -180,8 +186,9 @@ class BaseStorageAdapter:
             if not data.has_key(field_id):
                 continue
             value = data[field_id]
-            result = field.processValueBeforeWrite(value,
-                                data,self.getContextObject())
+            result = field.processValueBeforeWrite(value, data,
+                                                   self.getContextObject(),
+                                                   self.getProxy())
             if not field.write_ignore_storage:
                 new_data[field_id] = result
         return new_data
@@ -203,15 +210,21 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         The object passed is the one on which to get/set attributes.
         """
         self._ob = ob
+        self._proxy = None
         BaseStorageAdapter.__init__(self, schema, **kw)
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""
         return self._ob
 
-    def setContextObject(self, context):
+    def setContextObject(self, context, proxy=None):
         """Set a new underlying context for this adapter."""
         self._ob = context
+        self._proxy = proxy
+
+    def getProxy(self):
+        """Get the potentially associated proxy for this adapter."""
+        return self._proxy
 
     def _getFieldData(self, field_id, field):
         """Get data from one field."""
@@ -280,15 +293,21 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
 
     def __init__(self, schema, ob, **kw):
         self._ob = ob
+        self._proxy = None
         BaseStorageAdapter.__init__(self, schema, **kw)
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""
         return self._ob
 
-    def setContextObject(self, context):
+    def setContextObject(self, context, proxy=None):
         """Set a new underlying context for this adapter."""
         self._ob = context
+        self._proxy = proxy
+
+    def getProxy(self):
+        """Get the potentially associated proxy for this adapter."""
+        return self._proxy
 
     def _getFieldData(self, field_id, field):
         """Get data from one field.

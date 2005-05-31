@@ -291,7 +291,7 @@ class DataModel(UserDict):
         self._ob = ob
         self._proxy = proxy
         for adapter in self._adapters:
-            adapter.setContextObject(ob)
+            adapter.setContextObject(ob, proxy)
 
     def _commit(self, check_perms=1):
         """Commit modified data into object.

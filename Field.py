@@ -219,7 +219,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     #
     # Storage interaction
     #
-    def _createStorageExpressionContext(self, value, data, context):
+    def _createStorageExpressionContext(self, value, data, context, proxy):
         """Create an expression context for field storage process."""
         # Put all the names in the data in the namespace.
         mapping = data.copy() # XXX there may be DEFAULT_VALUE_MARKER here
@@ -236,26 +236,29 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'DateTime': DateTime,
             'nothing': None,
             # Useful for objects
+            'object': context,
+            'proxy': proxy,
+            # Deprecated: use the 'object' name instead
             'context': context,
             })
         return getEngine().getContext(mapping)
 
     security.declarePrivate('processValueAfterRead')
-    def processValueAfterRead(self, value, data, context):
+    def processValueAfterRead(self, value, data, context, proxy):
         """Process value after read from storage."""
         if not self.read_process_expr_c:
             return value
         expr_context = self._createStorageExpressionContext(value, data,
-                                                            context)
+                                                            context, proxy)
         return self.read_process_expr_c(expr_context)
 
     security.declarePrivate('processValueBeforeWrite')
-    def processValueBeforeWrite(self, value, data, context):
+    def processValueBeforeWrite(self, value, data, context, proxy):
         """Process value before write to storage."""
         if not self.write_process_expr_c:
             return value
         expr_context = self._createStorageExpressionContext(value, data,
-                                                            context)
+                                                            context, proxy)
         return self.write_process_expr_c(expr_context)
 
     #

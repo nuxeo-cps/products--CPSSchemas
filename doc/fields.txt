@@ -130,11 +130,15 @@ Fields
 
         - portal: the portal
 
-        - context: the context object
+        - proxy: the potentially associated proxy 
+
+        - object: the context object
 
         - DateTime: a DateTime constructor
 
         - nothing: None
+
+        - context: deprecated, use the "object" key instead
 
       Note that the context object is the object on which the read is
       being done, it is not the proxy (in the case of attribute storage).

@@ -71,6 +71,10 @@ class TestDataModel(unittest.TestCase):
                         read_process_expr='python: f2+"_yo"',
                         read_process_dependent_fields='f2',
                         )
+        schema.addField('f6', 'CPS String Field',
+                        read_ignore_storage=True,
+                        read_process_expr='python: proxy',
+                        )
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
@@ -86,6 +90,7 @@ class TestDataModel(unittest.TestCase):
               'f3': 'f3def',
               'f4': 'f4changed',
               'f5': 'f2inst_yo',
+              'f6': None,
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -93,6 +98,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm['f3'], ok['f3'])
         self.assertEquals(dm['f4'], ok['f4'])
         self.assertEquals(dm['f5'], ok['f5'])
+        self.assertEquals(dm['f6'], ok['f6'])
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 
@@ -105,6 +111,7 @@ class TestDataModel(unittest.TestCase):
               'f3': 'f3def',
               'f4': '',
               'f5': '_yo',
+              'f6': None,
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -112,6 +119,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm['f3'], ok['f3'])
         self.assertEquals(dm['f4'], ok['f4'])
         self.assertEquals(dm['f5'], ok['f5'])
+        self.assertEquals(dm['f6'], ok['f6'])
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 

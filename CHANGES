@@ -5,6 +5,8 @@ New features:
 ~~~~~~~~~~~~~
 - Flash Widget
 - Added a "CPS Boolean Field".
+- Added "proxy" in the namespace for "read_process_expr" and
+  "write_process_expr".
 Bug fixes:
 ~~~~~~~~~~
 - DateTime widget: a default value (current date) was presented in view mode if
