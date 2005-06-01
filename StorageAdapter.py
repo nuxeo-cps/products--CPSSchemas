@@ -361,7 +361,7 @@ class MappingStorageAdapter(BaseStorageAdapter):
         """Get the underlying context for this adapter."""
         return self._ob
 
-    def setContextObject(self, context):
+    def setContextObject(self, context, proxy=None):
         """Set a new underlying context for this adapter."""
         pass
 
