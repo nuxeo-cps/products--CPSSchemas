@@ -1,4 +1,4 @@
-# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2004-2005 Nuxeo SARL <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,8 @@ import unittest
 from Testing.ZopeTestCase import ZopeTestCase
 
 from Acquisition import Implicit
-from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
+from Products.CPSSchemas.StorageAdapter import \
+     AttributeStorageAdapter, MetaDataStorageAdapter, MappingStorageAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 
 
@@ -35,6 +36,7 @@ class FakePortal(Implicit):
     pass
 fakePortal = FakePortal()
 
+
 class FakeUrlTool(Implicit):
     def getPortalObject(self):
         return fakePortal
@@ -45,6 +47,11 @@ fakePortal.portal_url = fakeUrlTool
 
 class FakeDocument:
     f1 = 'f1class'
+
+
+class FakeProxy:
+    def __init__(self, document):
+        self.document = document
 
 
 class TestStorageAdapter(ZopeTestCase):
@@ -62,6 +69,7 @@ class TestStorageAdapter(ZopeTestCase):
                         )
         self.schema = schema
 
+
 class TestAttributeStorageAdapter(TestStorageAdapter):
     def afterSetUp(self):
         TestStorageAdapter.afterSetUp(self)
@@ -70,6 +78,7 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         doc = FakeDocument()
         doc.f2 = 'f2inst'
         self.doc = doc
+        self.doc_proxy = FakeProxy(doc)
 
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
         self.adapter = adapter
@@ -115,22 +124,63 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         self.assertEquals(doc.f4, 'f4changed')
         self.assertRaises(AttributeError, getattr, doc, 'f5')
 
-class TestMetadataStorageAdapter(TestStorageAdapter):
+        # Checking that the adapter accepts both an object and a proxy as an
+        # argument.
+        self.adapter.setContextObject(self.doc)
+        self.adapter.setContextObject(self.doc, self.doc_proxy)
+        context_object = self.adapter.getContextObject()
+        self.assertNotEquals(context_object, None)
+
+
+class TestMetaDataStorageAdapter(TestStorageAdapter):
     def afterSetUp(self):
+        doc = FakeDocument()
+        self.doc = doc
+        self.doc_proxy = FakeProxy(doc)
+
         TestStorageAdapter.afterSetUp(self)
-        self.adapter = MetadataStorageAdapter(self.schema, self.document)
+        self.adapter = MetaDataStorageAdapter(self.schema, self.doc)
 
     def testAccessors(self):
         # TODO: Later
         pass
 
     def testMutators(self):
+        # Checking that the adapter accepts both an object and a proxy as an
+        # argument.
+        self.adapter.setContextObject(self.doc)
+        self.adapter.setContextObject(self.doc, self.doc_proxy)
+        context_object = self.adapter.getContextObject()
+        self.assertNotEquals(context_object, None)
+
+
+class TestMappingStorageAdapter(TestStorageAdapter):
+    def afterSetUp(self):
+        doc = FakeDocument()
+        self.doc = doc
+        self.doc_proxy = FakeProxy(doc)
+
+        TestStorageAdapter.afterSetUp(self)
+        self.adapter = MappingStorageAdapter(self.schema, self.doc)
+
+    def testAccessors(self):
         # TODO: Later
         pass
 
+    def testMutators(self):
+        # Checking that the adapter accepts both an object and a proxy as an
+        # argument.
+        self.adapter.setContextObject(self.doc)
+        self.adapter.setContextObject(self.doc, self.doc_proxy)
+        context_object = self.adapter.getContextObject()
+        self.assertNotEquals(context_object, None)
+
 
 def test_suite():
-    suites = [unittest.makeSuite(TestAttributeStorageAdapter)]
+    suites = [unittest.makeSuite(TestAttributeStorageAdapter),
+              unittest.makeSuite(TestMetaDataStorageAdapter),
+              unittest.makeSuite(TestMappingStorageAdapter),
+              ]
     return unittest.TestSuite(suites)
 
 if __name__=="__main__":
