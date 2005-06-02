@@ -1,4 +1,27 @@
 *******************************************
+** CPSSchemas V0.43.0 [R1 build 2005/06/02-09:34 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 22058
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Flash Widget
+- Added a "CPS Boolean Field".
+- Added "proxy" in the namespace for "read_process_expr" and
+  "write_process_expr".
+Bug fixes:
+~~~~~~~~~~
+- DateTime widget: a default value (current date) was presented in view mode if
+  widget was required.
+- added check for non empty value in the validation of the CPSSelectWidget with
+  is_required == True
+- Replaced remaining "latin1" encodings into "latin9" encodings.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Removed dumb LOGs that fill the logs with binary data.
+
+*******************************************
 ** CPSSchemas V0.42.0 [R1 build 2005/04/25-15:15 by astefanescu]
 
 Requires:
