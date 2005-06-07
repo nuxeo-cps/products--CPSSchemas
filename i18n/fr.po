@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-16 02:44default\n"
+"POT-Creation-Date: 2005-06-07 16:57default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -27,34 +27,33 @@ msgstr ""
 "Language-Name: French\n"
 "Domain: default\n"
 
-
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
-msgstr ""
+msgstr "Non"
 
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
-msgstr ""
+msgstr "Oui"
 
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
+#.   <input type="button" class="standalone" value="button_back" onclick="javascript:history.back()" />
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 #: ../skins/cps_schemas/popup_internallinks_form.pt
 #, fuzzy
 msgid "button_back"
 msgstr "Fermer"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
-msgstr ""
+msgstr "Utiliser l'éditeur"
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -66,11 +65,11 @@ msgstr "à"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
 #.           (preview)
 #.         </a>
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}" href="http://url..." target="_blank">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -78,7 +77,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(prévisualisation)"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -119,7 +118,7 @@ msgstr "Charger"
 msgid "cpsschemas_label_file_delete"
 msgstr "Supprimer"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -245,7 +244,7 @@ msgstr "Valeur&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr "Cette page vous permet de gérer les vocabulaires et leurs entrées."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -352,7 +351,8 @@ msgid "cpsschemas_err_file_too_big"
 msgstr "Fichier trop volumineux"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Ce fichier est trop volumineux, la taille max autorisée est ${max_size}."
+msgstr ""
+"Ce fichier est trop volumineux, la taille max autorisée est ${max_size}."
 
 msgid "cpsschemas_err_image"
 msgstr "Image invalide"
@@ -590,4 +590,3 @@ msgstr "Modifier en ligne"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animation Flash (swf)"
-

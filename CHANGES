@@ -8,6 +8,7 @@ Bug fixes:
 ~~~~~~~~~~
 - Removed the debian directory of this product since this product will never be
   packaged on its own as a Debian package.
+- i18n: added missing translations for fr & en
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

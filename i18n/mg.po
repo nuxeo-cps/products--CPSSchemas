@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-16 02:44default\n"
+"POT-Creation-Date: 2005-06-07 16:57default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -26,7 +26,6 @@ msgstr ""
 "Language-Name: Malagasy\n"
 "Domain: default\n"
 
-
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
@@ -37,20 +36,20 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
+#.   <input type="button" class="standalone" value="button_back" onclick="javascript:history.back()" />
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 #: ../skins/cps_schemas/popup_internallinks_form.pt
 #, fuzzy
 msgid "button_back"
 msgstr "Fermer"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -65,11 +64,11 @@ msgstr "tamin'ny"
 msgid "cpsschema_hour"
 msgstr "ora"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
 #.           (preview)
 #.         </a>
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}" href="http://url..." target="_blank">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -77,7 +76,7 @@ msgstr "ora"
 msgid "cpsschema_link_preview"
 msgstr "(fijerena mialoha)"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -118,7 +117,7 @@ msgstr "Ovaina"
 msgid "cpsschemas_label_file_delete"
 msgstr "Fafana"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -248,7 +247,7 @@ msgstr "Isany&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr "Cette page vous permet de gérer les vocabulaires et leurs entrées."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -618,7 +617,3 @@ msgstr "Ovaina eo anivon'ny tranonkala"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
-
-#, fuzzy
-msgid "cpsschemas_search_language_or"
-msgstr "ou"

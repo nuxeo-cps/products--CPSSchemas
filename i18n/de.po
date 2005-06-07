@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-13 17:39default\n"
+"POT-Creation-Date: 2005-05-16 02:44default\n"
 "PO-Revision-Date: 2005-03-14 11:08+0100\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -23,6 +23,24 @@ msgstr "Falsch"
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Wahr"
+
+#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+#: ../skins/cps_schemas/popup_internallinks_form.pt
+#, fuzzy
+msgid "button_back"
+msgstr "Close"
+
+#.   <button type="button" attributes="
+#.           id button_text_editor_popup_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           ">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_text_editor_popup"
+msgstr ""
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -74,12 +92,14 @@ msgstr "und Größe ändern zu "
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
 msgstr "Ändern"
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Löschen"
 
@@ -92,11 +112,13 @@ msgstr "Datei online bearbeiten"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Behalten"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Keine"
 
@@ -143,6 +165,7 @@ msgstr "one or more of the following languages"
 #.             ${size_max (tal content="str_sizeMax")}
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
 #, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
 msgstr "Maximal size: ${size_max}."
@@ -578,10 +601,3 @@ msgstr "Berbeiten online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
-
-#, fuzzy
-msgid "cpsschemas_search_language_or"
-msgstr "or"
-
-msgid "button_close"
-msgstr "Close"
