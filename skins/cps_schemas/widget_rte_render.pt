@@ -5,6 +5,6 @@
                    value options/datastructure/?id;
                   ">
 <div style="width:550px; height:300px"
-  tal:define="locale here/Localizer/default/get_selected_language|string:en"
+  tal:define="locale here/translation_service/getSelectedLanguage|string:en"
   tal:content="structure python:here.Epoz(name=html_id, data=value, lang=locale, style='width:550px; height:220px; border:1px solid #A0A0A0; border-style:solid;')"></div>
 </tal:block>

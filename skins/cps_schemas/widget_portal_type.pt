@@ -2,7 +2,7 @@
              datamodel options/datastructure/getDataModel;
              proxy datamodel/getProxy | nothing">
   <tal:block tal:condition="python:proxy">
-    <div tal:define="cpsmcat nocall:here/Localizer/default;
+    <div tal:define="cpsmcat nocall:here/translation_service;
                      type_title python:proxy.getTypeInfo().Title()"
          tal:content="python:cpsmcat(type_title)"></div>
   </tal:block>

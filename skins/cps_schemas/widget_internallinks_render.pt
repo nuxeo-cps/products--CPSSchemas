@@ -2,7 +2,7 @@
                    datastructure options/datastructure;
                    id here/getWidgetId;
                    values datastructure/?id;
-                   cpsmcat nocall:here/Localizer/default;
+                   cpsmcat nocall:here/translation_service;
                    utool nocall:here/portal_url;
                    base_url python:here.getBaseUrl(utool=utool);
                    items python:here.getObjectsFromPath(values);
@@ -40,13 +40,13 @@
           // realistically do about it, blame the w3c or ECMA for not
           // having a working versioning capability in  <SCRIPT> or
           // ECMAScript.
-          try { 
+          try {
             xmlhttp = new XMLHttpRequest();
           } catch (e) {
          //   alert('Veuillez mettre à jour votre navigateur si vous désirez accéder à toutes les fonctionnalités de cette page')
           }
         }
-         
+
         var base_url = '${base_url}';
         var intlinks_w_id = '${id}';
         var links_div_id = 'div_${id}';
@@ -65,7 +65,7 @@
         }
 
         function update_results() {
-          if (xmlhttp) { 
+          if (xmlhttp) {
             var textareaElement = document.getElementById(intlinks_w_id);
             var links_div = document.getElementById(all_div_id);
             d = document;
@@ -102,9 +102,9 @@
              }
            }
            return selected_items;
-          
+
         }
-        
+
         function getExistingItems() {
            textareaElement = document.getElementById(intlinks_w_id);
            var existing_items = textareaElement.value.split('\n');
@@ -135,11 +135,11 @@
         }
 
         function delete_items() {
-          
+
           var selected = document.form.elements;
           var links = getExistingItems();
           var deleted_links = getSelectedItems();
-          
+
           for(i=0;i<links.length;i++) {
             var value = links[i];
             if(is_in(value, deleted_links)) {
@@ -195,7 +195,7 @@
               links[index] = tmp;
               changed = true;
             }
-          }          
+          }
 
           if(changed) {
             setExistingItems(links);
@@ -218,10 +218,10 @@
             var value = added_links[i];
             if(!is_in(value, links)) {
               links.push(value);
-            } 
+            }
           }
           setExistingItems(links);
-          update_results();  
+          update_results();
         }
 
         -->">

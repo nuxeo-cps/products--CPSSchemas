@@ -15,7 +15,7 @@
           items_per_page dm/nb_items|python:10;
           nav_action string:folder_view;
           zoom dm/zoom|nothing;
-          cpsmcat cpsmcat|nocall:here/Localizer/default;
+          cpsmcat cpsmcat|nocall:here/translation_service;
           utool nocall:here/portal_url;
           base_url python:utool()+ '/';
           ">

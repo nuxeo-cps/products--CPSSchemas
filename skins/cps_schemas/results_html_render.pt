@@ -1,6 +1,6 @@
 <tal:block define="results python:request and request.get('results',[]) or options.get('results',[]);
                    items python:here.getObjectsFromPath(path_list=results);
-                   cpsmcat nocall:here/Localizer/default;
+                   cpsmcat nocall:here/translation_service;
                    utool nocall:here/portal_url;
                    base_url python:here.getBaseUrl(utool=utool);
                    site_wide python:1;

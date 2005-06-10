@@ -256,7 +256,7 @@ class CPSDateTimeWidget(CPSWidget):
             if self.view_format.startswith('iso8601'):
                 date = '%s-%s-%s' % (y, m, d)
             else:
-                locale = self.Localizer.get_selected_language()
+                locale = self.translation_service.getSelectedLanguage()
                 if locale in ('en', 'hu'):
                     date = '%s/%s/%s' % (m, d, y)
                 else:
@@ -313,7 +313,7 @@ class CPSDateTimeWidget(CPSWidget):
                 return 0
         else:
             if match(r'^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{2,4}$', date) is not None:
-                locale = self.Localizer.get_selected_language()
+                locale = self.translation_service.getSelectedLanguage()
                 if locale in ('en', 'hu'):
                     m, d, y = date.split('/')
                 else:
@@ -1077,7 +1077,7 @@ class CPSGenericSelectWidget(CPSWidget):
         value = datastructure[widget_id]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.Localizer.default
+        cpsmcat = portal.translation_service
         if mode == 'view':
             if not vocabulary.has_key(value):
                 # for free input
@@ -1345,7 +1345,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         value = datastructure[widget_id]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.Localizer.default
+        cpsmcat = portal.translation_service
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -1592,9 +1592,9 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
         if len(languages) <= 1:
             return res
         current_language = datamodel[self.fields[0]]
-        Localizer = getToolByName(self, 'Localizer')
-        if Localizer is not None:
-            mcat = Localizer.default
+        translation_service = getToolByName(self, 'translation_service')
+        if translation_service is not None:
+            mcat = translation_service
         else:
             def mcat(msgid):
                 return msgid

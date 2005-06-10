@@ -24,7 +24,7 @@
  <div class="field">
   <input type="hidden" name="input_id" tal:attributes="value input_id" />
 
-  <tal:block define="locale cpsmcat/get_selected_language|string:en;"
+  <tal:block define="locale cpsmcat/getSelectedLanguage|string:en;"
     replace="structure python:here.cpsInitEpoz(input_id=input_id,
     name='rte_value', data=value, lang=locale,
     style='width:600px; height:300px; border:1px solid #A0A0A0; border-style:solid;')" />

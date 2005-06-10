@@ -23,7 +23,7 @@
   <button id="trigger"
     tal:attributes="id string:trigger_${name}_date">...</button>
   <tal:block define="jscalendar_date_fmt python:fmt.startswith('iso8601')
-      and 'y-mm-dd' or here.Localizer.default('jscalendar_date_fmt');"
+      and 'y-mm-dd' or here.translation_service('jscalendar_date_fmt');"
     replace="structure string:<script type='text/javascript'>
     Calendar.setup(
       {

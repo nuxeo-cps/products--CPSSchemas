@@ -1021,7 +1021,7 @@ class CPSSelectWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.Localizer.default
+        cpsmcat = portal.translation_service
         if mode == 'view':
             if self.translated:
                 return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
@@ -1154,7 +1154,7 @@ class CPSMultiSelectWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.Localizer.default
+        cpsmcat = portal.translation_service
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -1728,7 +1728,7 @@ class CPSFileWidget(CPSWidget):
         """
         hr = getHumanReadableSize(size)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.Localizer.default
+        cpsmcat = portal.translation_service
         return str(hr[0]) + ' ' + cpsmcat(hr[1])
 
     def getFileInfo(self, datastructure):
