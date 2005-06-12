@@ -1,3 +1,4 @@
+# -*- coding: ISO-8859-15 -*-
 # Copyright (c) 2004-2005 Nuxeo SARL <http://nuxeo.com>
 # Authors: Florent Guillaume <fg@nuxeo.com>
 #          Anahide Tchertchian <at@nuxeo.com>
