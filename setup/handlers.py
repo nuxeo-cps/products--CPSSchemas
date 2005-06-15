@@ -30,7 +30,7 @@ from Products.CMFSetup.utils import ConfiguratorBase
 from Products.CMFSetup.utils import CONVERTER, DEFAULT, KEY
 
 _pkgdir = package_home(globals())
-_xmldir = os.path.join(_pkgdir, 'setupxml')
+_xmldir = os.path.join(_pkgdir, 'xml')
 
 
 _FILENAME = 'schemas.xml'
