@@ -33,6 +33,7 @@ from AccessControl.PermissionRole import rolesForPermissionOn
 
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
+from Products.CMFCore.Expression import SecureModuleImporter
 from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
@@ -155,6 +156,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'datamodel': datamodel,
             'user': getSecurityManager().getUser(),
             'portal': getToolByName(self, 'portal_url').getPortalObject(),
+            'modules': SecureModuleImporter,
             'DateTime': DateTime,
             'nothing': None,
             }
@@ -233,6 +235,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'field': self,
             'user': getSecurityManager().getUser(),
             'portal': getToolByName(self, 'portal_url').getPortalObject(),
+            'modules': SecureModuleImporter,
             'DateTime': DateTime,
             'nothing': None,
             # Useful for objects

@@ -35,6 +35,7 @@ from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression, getEngine
+from Products.CMFCore.Expression import SecureModuleImporter
 
 from Products.CPSSchemas.DataModel import WriteAccessError
 from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
@@ -189,6 +190,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             'nothing': None,
             'context': datamodel._context,
             'portal': portal,
+            'modules': SecureModuleImporter,
             'proxy': proxy,
             'portal_workflow': wftool,
             'review_state': review_state,

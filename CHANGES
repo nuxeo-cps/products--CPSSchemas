@@ -12,4 +12,5 @@ Bug fixes:
 - Taking advantage of the new centralized CPSI18n.tests.translations module.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- The secure module importer ('modules') is available in the expression
+  context of field, widget and layout expressions.

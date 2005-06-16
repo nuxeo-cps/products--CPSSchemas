@@ -35,6 +35,7 @@ from Products.CMFCore.permissions import ViewManagementScreens
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import getEngine
+from Products.CMFCore.Expression import SecureModuleImporter
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
@@ -356,6 +357,7 @@ class Layout(PropertiesPostProcessor,
             'kw': kw,
             'nothing': None,
             'portal': portal,
+            'modules': SecureModuleImporter,
             }
         return getEngine().getContext(data)
 
