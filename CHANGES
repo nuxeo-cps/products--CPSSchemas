@@ -10,6 +10,7 @@ Bug fixes:
   packaged on its own as a Debian package.
 - i18n: added missing translations for fr & en
 - Taking advantage of the new centralized CPSI18n.tests.translations module.
+- Fixed translation files through the CPSI18n/bin/fix_pos script.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The secure module importer ('modules') is available in the expression

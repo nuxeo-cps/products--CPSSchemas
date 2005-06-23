@@ -1,43 +1,51 @@
+# translation of pt-BR.po to Português do Brasil
+# translation of pt-br.po to PortuguÃªs do Brasil
+# translation of cpsschemas.po to PortuguÃªs do Brasil
+# ##########################################################
+# ################# DON'T EDIT THIS FILE! ##################
+# ##########################################################
+# Gettext Message File for default.
+# Your Name <your@email>, Year
 # Mario Olimpio de Menezes <mario@curiango.ipen.br>, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-07 16:57default\n"
-"PO-Revision-Date: 2004-09-08 16:19-0300\n"
-"Last-Translator: Mario Olimpio de Menezes <mario@curiango.ipen.br>\n"
-"Language-Team: PortuguÃªs do Brasil <pt@li.org>\n"
+"POT-Creation-Date: 2005-05-16 02:44default\n"
+"PO-Revision-Date: 2005-06-17 17:37-0300\n"
+"Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
+"Language-Team: Portugues do Brasil <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Domain: default\n"
+"Language-Code: pt_BR \n"
 "Language-Code: pt_BR\n"
 "Language-Name: Portuguese Brazilian\n"
-"Domain: default\n"
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
-msgstr ""
+msgstr "Verdadeiro"
 
-#.   <input type="button" class="standalone" value="button_back" onclick="javascript:history.back()" />
+#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 #: ../skins/cps_schemas/popup_internallinks_form.pt
-#, fuzzy
 msgid "button_back"
-msgstr "Close"
+msgstr "Voltar"
 
-#.   <button attributes="
+#.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           " type="button">Layout</button>
+#.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -52,11 +60,11 @@ msgstr "às"
 msgid "cpsschema_hour"
 msgstr "hora"
 
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
+#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
-#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -64,7 +72,7 @@ msgstr "hora"
 msgid "cpsschema_link_preview"
 msgstr "Previsão"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -83,7 +91,7 @@ msgstr "min"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr ""
+msgstr "sufixos permitidos: ${allowed_file_suffixes}"
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -103,13 +111,12 @@ msgstr "Mudar"
 msgid "cpsschemas_label_file_delete"
 msgstr "Remover"
 
-#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Edit online"
+msgstr "Editar online"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -125,9 +132,8 @@ msgstr "Nenhum"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
-#, fuzzy
 msgid "cpsschemas_label_image_resize"
-msgstr "Resize as "
+msgstr "Redimensionar como"
 
 #.   <span>
 #.           Photo subtitle
@@ -152,15 +158,13 @@ msgstr "Posição de renderização"
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "any language"
+msgstr "qualquer idioma"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "one or more of the following languages"
+msgstr "um ou mais dos seguintes idiomas"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -168,9 +172,8 @@ msgstr "one or more of the following languages"
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
-#, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Maximal size: ${size_max}."
+msgstr "Tamanho máximo: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -231,11 +234,10 @@ msgstr "Valor:"
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "This page allow you to manage vocabularies and their entries."
+msgstr "Esta página permite administrar vocabulários e suas entradas."
 
-#.   <em content="err" style="color: red">err</em>
+#.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -262,7 +264,7 @@ msgstr "Entre um termo de busca:"
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
-msgstr ""
+msgstr "Tecla de ajuda"
 
 #.   <block content="widget/label" condition="widget/is_i18n">label</block>
 #.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
@@ -270,7 +272,7 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
-msgstr ""
+msgstr "rótulo"
 
 #.   <span>
 #.               The alternative text
@@ -283,21 +285,17 @@ msgstr "Texto alternativo"
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr ""
+msgstr "Arquivo a ser utilizado para preencher a área de texto:"
 
-#, fuzzy
 msgid "cpsschemas_unit_bytes"
 msgstr "bytes"
 
-#, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
 msgstr "Kb"
 
-#, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
 msgstr "Mb"
 
-#, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
 msgstr "Gb"
 
@@ -328,25 +326,22 @@ msgstr "Inteiro inválido."
 msgid "cpsschemas_err_date"
 msgstr "Data inválida."
 
-#, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Date incorrecte"
+msgstr "Data incorreta"
 
 msgid "cpsschemas_err_file"
 msgstr "Arquivo inválido."
 
-#, fuzzy
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
-"This file has not an allowed suffix, the allowed suffixes are: "
+"Este arquivo não tem um sufixo permitido; os sufixos permitidos são: "
 "${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Arquivo inválido (vazio)."
 
-#, fuzzy
 msgid "cpsschemas_err_file_too_big"
-msgstr "This file is too big"
+msgstr "Este arquivo é muito grande"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
@@ -405,13 +400,11 @@ msgstr "Campo somente para leitura."
 msgid "cpsschemas_err_rangelist"
 msgstr "Faixa de lista inválida"
 
-#, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Invalid Zip file"
+msgstr "Arquivo Zip inválido"
 
-#, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "No html document found in the Zip file"
+msgstr "Nenhum documento html econtrado no arquivo Zip"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -491,89 +484,68 @@ msgstr "Nome do Link"
 msgid "cpsschemas_label_link_title"
 msgstr "Descrição"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "all of these words"
+msgstr "todas estas palavras"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "any of these words"
+msgstr "qualquer uma destas palavras"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "the exact phrase"
+msgstr "a frase exata"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "none of these words"
+msgstr "nenhuma destas palavras"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "in the document"
+msgstr "no documento"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "in the title"
+msgstr "no título"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "in the description"
+msgstr "na descrição"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "anytime"
+msgstr "qualquer data"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "since yesterday"
+msgstr "desde ontem"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "within the past month"
+msgstr "dentro do último mês"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "within the past 3 months"
+msgstr "dentro dos últimos 3 meses"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "within the past 6 months"
+msgstr "dentro dos últimos 6 meses"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "within a year"
+msgstr "dentro de um ano"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "relevance"
+msgstr "relevância"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "antechronologic"
+msgstr "cronológica inversa"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "chronological"
+msgstr "cronológica"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "expiration date"
+msgstr "data de expiração"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "title"
+msgstr "título"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "status"
+msgstr "estado"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "location"
+msgstr "localização"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "type of document"
+msgstr "tipo do documento"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id já existe, escolha outro."
@@ -607,7 +579,10 @@ msgstr "Outra, por favor específica: "
 
 # ## action =================================================
 msgid "action_edit_online"
-msgstr ""
+msgstr "Editar"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr ""
+msgstr "Animação Flash (swf)"
+
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "ou"
