@@ -40,9 +40,8 @@ msgstr "Oui"
 #.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 #: ../skins/cps_schemas/popup_internallinks_form.pt
-#, fuzzy
 msgid "button_back"
-msgstr "Fermer"
+msgstr "Retour"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
