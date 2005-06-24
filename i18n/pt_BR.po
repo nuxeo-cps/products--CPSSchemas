@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-23 17:32default\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
 "PO-Revision-Date: 2005-06-17 17:37-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portugues do Brasil <pt@li.org>\n"
@@ -32,12 +32,6 @@ msgstr "Falso"
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Verdadeiro"
-
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_back"
-msgstr "Voltar"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -583,6 +577,9 @@ msgstr "Editar"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animação Flash (swf)"
+
+#~ msgid "button_back"
+#~ msgstr "Voltar"
 
 #~ msgid "cpsschemas_search_language_or"
 #~ msgstr "ou"

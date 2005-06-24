@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-23 17:32default\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
 "PO-Revision-Date: 2005-05-18 17:34+0100\n"
 "Last-Translator: Jesús <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
@@ -31,13 +31,6 @@ msgstr "Falso"
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Verdadero"
-
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-#, fuzzy
-msgid "button_back"
-msgstr "Close"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -618,6 +611,10 @@ msgstr "Editar en línea"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
+
+#, fuzzy
+#~ msgid "button_back"
+#~ msgstr "Close"
 
 #~ msgid "cpsschemas_search_language_or"
 #~ msgstr "o"

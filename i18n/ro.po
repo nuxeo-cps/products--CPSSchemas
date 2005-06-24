@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-23 17:32default\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -28,13 +28,6 @@ msgstr "Fals"
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Adevarat"
-
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-#, fuzzy
-msgid "button_back"
-msgstr "Fermer"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -585,6 +578,10 @@ msgstr "Modifica online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animatie Flash (swf)"
+
+#, fuzzy
+#~ msgid "button_back"
+#~ msgstr "Fermer"
 
 #~ msgid "cpsschemas_search_language_or"
 #~ msgstr "sau"

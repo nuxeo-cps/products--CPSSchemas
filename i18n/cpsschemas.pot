@@ -1,9 +1,12 @@
+# ##########################################################
+# ################# DON'T EDIT THIS FILE! ##################
+# ##########################################################
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-06-23 17:32default\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -24,12 +27,6 @@ msgstr ""
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
-msgstr ""
-
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_back"
 msgstr ""
 
 #.   <button type="button" attributes="

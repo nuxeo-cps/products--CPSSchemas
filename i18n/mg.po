@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-23 17:32default\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -35,13 +35,6 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr ""
-
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-#, fuzzy
-msgid "button_back"
-msgstr "Fermer"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -617,3 +610,7 @@ msgstr "Ovaina eo anivon'ny tranonkala"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
+
+#, fuzzy
+#~ msgid "button_back"
+#~ msgstr "Fermer"

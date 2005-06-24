@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-23 17:32default\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -36,12 +36,6 @@ msgstr "Non"
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
 msgstr "Oui"
-
-#.   <input onclick="javascript:history.back()" type="button" class="standalone" value="button_back" />
-#: from ../skins/cps_schemas/popup_extendedselect_form.pt
-#: ../skins/cps_schemas/popup_internallinks_form.pt
-msgid "button_back"
-msgstr "Retour"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -589,3 +583,6 @@ msgstr "Modifier en ligne"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animation Flash (swf)"
+
+#~ msgid "button_back"
+#~ msgstr "Retour"
