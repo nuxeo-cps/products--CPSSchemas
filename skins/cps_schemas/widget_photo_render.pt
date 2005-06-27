@@ -14,6 +14,7 @@
   rposition options/render_position;
   configurable options/configurable;
   last_modified options/last_modified;
+  photo_path python:'/'.join(content_url.split('/')[:-3]);
   original_photo_field python:len(fields)>3 and fields[3] or 'photo_original'
   ">
   <tal:block condition="python: mode == 'view' and not empty_file" 
@@ -24,7 +25,7 @@
         <a href="#" 
           tal:define="original_width python:original_photo.width; 
                       original_height python:original_photo.height"
-          tal:attributes="onClick python:'window.open(\'popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(original_photo_field,str(int(original_width)+40)) +
+          tal:attributes="onClick python:'window.open(\'%s/popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(photo_path,original_photo_field,str(int(original_width)+40)) +
                          ',innerheight=%s'%str(int(original_height) + 40) +
                          ',width=%s'%str(int(original_width)+40) +
                          ',height=%s'%str(int(original_height) + 40) +
