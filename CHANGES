@@ -15,3 +15,4 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The secure module importer ('modules') is available in the expression
   context of field, widget and layout expressions.
+- Added unit tests for CPSDateTime widget

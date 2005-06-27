@@ -6,6 +6,7 @@ import os
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
+from Acquisition import Implicit
 from OFS.Image import File
 
 from Products.CPSSchemas.DataStructure import DataStructure
@@ -16,9 +17,19 @@ from Products.CPSSchemas.ExtendedWidgets import CPSRangeListWidget, \
      CPSTextWidget
 
 from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
+from Products.CPSSchemas import tests as cpsschemas_tests
+TEST_SWF = os.path.join(cpsschemas_tests.__path__[0], 'test.swf')
 
-from Products.CPSSchemas import tests
-TEST_SWF = os.path.join(tests.__path__[0], 'test.swf')
+from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
+
+class FakePortal(Implicit):
+    pass
+fakePortal = FakePortal()
+
+class FakeTranslationService:
+    def getSelectedLanguage(self):
+        return 'fr'
+fakePortal.translation_service = FakeTranslationService()
 
 class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
@@ -30,7 +41,7 @@ class WidgetValidationTest(unittest.TestCase):
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,)})
-        widget = self.widget_type(id, self.default_value)
+        widget = self.widget_type(id, self.default_value).__of__(fakePortal)
         widget.manage_changeProperties(**properties)
 
         ret = widget.validate(ds)
@@ -527,10 +538,46 @@ class FlashWidgetValidationTest(WidgetValidationTest):
         ret = widget._flash_validate(ds)
         err = ds.getError(id)
         return ret, err, ds
-    
+
     def test_widget_nok_required_1(self):
         pass
-    
+
+class DateTimeWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSDateTimeWidget
+    default_value = ''
+
+    # base class validation method is not compatible with this widget
+    def _validate(self, properties, value):
+        id = 'ff'
+        data = {
+            id + '_date': value,
+            # dummy values for hour and minute, they're not tested here
+            id + '_hour': '3',
+            id + '_minute': '38',
+            }
+        ds = DataStructure(data, datamodel=data)
+        properties.update({'fields': (id,)})
+        widget = self.widget_type(id, self.default_value).__of__(fakePortal)
+        widget.manage_changeProperties(**properties)
+        ret = widget.validate(ds)
+        err = ds.getError(id)
+        return ret, err, ds
+
+    def test_datetime_ok_1(self):
+        ret, err, ds = self._validate({}, '27/06/2005')
+        self.assertEquals(ret, 1)
+
+    def test_datetime_nok_1(self):
+        ret, err, ds = self._validate({}, '26/27/2005')
+        self.assertEquals(ret, 0)
+        self.assertEquals(err, 'cpsschemas_err_date')
+
+    def test_datetime_nok_2(self):
+        ret, err, ds = self._validate({}, '26/2705k')
+        self.assertEquals(ret, 0)
+        self.assertEquals(err, 'cpsschemas_err_date')
+
+
 # XXX: test more widget types here
 
 def test_suite():

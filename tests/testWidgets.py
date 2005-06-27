@@ -34,9 +34,13 @@ class FakeUrlTool(Implicit):
     def getPortalObject(self):
         return fakePortal
 
+class FakeTranslationService:
+    def getSelectedLanguage(self):
+        return 'fr'
+
 fakePortal.portal_url = FakeUrlTool()
 fakePortal.portal_workflow = None
-
+fakePortal.translation_service = FakeTranslationService()
 
 class TestWidgets(unittest.TestCase):
 
@@ -63,6 +67,47 @@ class TestWidgets(unittest.TestCase):
         widget = CPSFloatWidget('foo', 'notype')
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Float Field',))
+
+    def testDateTimeWidget_getDateTimeInfo(self):
+        from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
+        from DateTime.DateTime import DateTime
+        widget = CPSDateTimeWidget('foo', 'notype').__of__(fakePortal)
+
+        #
+        # None value
+        #
+        value = None
+
+        # None mode
+        mode = None
+        self.assertEqual(widget.getDateTimeInfo(value, mode),
+                         (None, '', '12', '00'))
+        # None value, view mode
+        mode = 'view'
+        self.assertEqual(widget.getDateTimeInfo(value, mode),
+                         (None, '', '12', '00'))
+        mode = 'edit'
+        # None value, edit mode -> defaults to current time if required
+        self.assertEqual(widget.getDateTimeInfo(value, mode),
+                         (None, '', '12', '00'))
+        widget.manage_changeProperties(is_required=1)
+        self.assertNotEqual(widget.getDateTimeInfo(value, mode),
+                            (None, '', '12', '00'))
+
+        #
+        # not None value
+        #
+        value = DateTime(year=2005, month=4, day=1, hour=3, minutes=14)
+        # not None value, None mode
+        # suppose selected language is English
+        self.assertNotEqual(widget.getDateTimeInfo(value, mode),
+                            (value, '04/01/2005', '3', '14'))
+        # not None value, view mode
+        self.assertNotEqual(widget.getDateTimeInfo(value, mode),
+                            (value, '04/01/2005', '3', '14'))
+        # not None value, edit mode
+        self.assertNotEqual(widget.getDateTimeInfo(value, mode),
+                            (value, '04/01/2005', '3', '14'))
 
     def testFlashWidget(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
