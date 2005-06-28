@@ -1172,8 +1172,10 @@ class CPSMultiSelectWidget(CPSWidget):
             res = renderHtmlTag('select', **kw)
             for k, v in vocabulary.items():
                 if self.translated:
+                    label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
+                    label = label.encode('ISO-8859-15', 'ignore')
                     kw = {'value': k,
-                          'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
+                          'contents': label,
                           }
                 else:
                     kw = {'value': k, 'contents': v}

@@ -480,6 +480,9 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     content_type=mimetype.normalized())
                 LOG('CPSAttachedFileWidget', DEBUG,
                     'validate change set %s' % `file`)
+            # Taking the user suplied file title into account
+            if filetitle and filetitle != file.title:
+                file.manage_changeProperties(title=filetitle)
             datamodel[field_id] = file
             # here we ask to backup our file
             # in case of invalid layout
