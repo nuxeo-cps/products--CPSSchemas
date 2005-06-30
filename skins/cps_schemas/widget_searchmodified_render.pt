@@ -2,7 +2,8 @@
                    value options/value;
                    widget_id here/getHtmlWidgetId;
                    times here/times;">
-  <select tal:attributes="name widget_id">
+  <select tal:attributes="name widget_id;
+                          id widget_id;">
     <tal:block repeat="time times">
       <option tal:attributes="value time;
                               selected python:test(value==time, 'selected', nothing)"

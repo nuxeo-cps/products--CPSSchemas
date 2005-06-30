@@ -1,6 +1,8 @@
 # -*- coding: iso-8859-15 -*-
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
+# Authors:
+# Florent Guillaume <fg@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -311,13 +313,17 @@ class CPSStringWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
             # XXX TODO should use an other name than kw !
             # XXX change this everywhere
             kw = {'type': 'text',
-                  'id'  : self.getHtmlWidgetId(),
+                  'id'  : input_area_id,
                   'name': self.getHtmlWidgetId(),
                   'value': escape(value),
                   'size': self.display_width,
@@ -864,6 +870,10 @@ class CPSLinesWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -872,7 +882,7 @@ class CPSLinesWidget(CPSWidget):
             return ', '.join([escape(i) for i in value])
         elif mode == 'edit':
             return renderHtmlTag('textarea',
-                                 id=self.getHtmlWidgetId(),
+                                 id=input_area_id,
                                  name=self.getHtmlWidgetId()+":lines",
                                  cols=self.width,
                                  rows=self.height,
@@ -1022,6 +1032,10 @@ class CPSSelectWidget(CPSWidget):
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.translation_service
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         if mode == 'view':
             if self.translated:
                 return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
@@ -1029,7 +1043,8 @@ class CPSSelectWidget(CPSWidget):
                 return escape(vocabulary.get(value, value))
         elif mode == 'edit':
             res = renderHtmlTag('select',
-                                name=self.getHtmlWidgetId())
+                                name=self.getHtmlWidgetId(),
+                                id=input_area_id)
             in_selection = 0
             for k, v in vocabulary.items():
                 if self.translated:
@@ -1155,6 +1170,10 @@ class CPSMultiSelectWidget(CPSWidget):
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.translation_service
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -1166,6 +1185,7 @@ class CPSMultiSelectWidget(CPSWidget):
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id+':list',
                   'multiple': 'multiple',
+                  'id': input_area_id,
                   }
             if self.size:
                 kw['size'] = self.size

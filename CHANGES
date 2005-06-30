@@ -3,7 +3,11 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added the possibility for a widget to specify if it has a input area (ie for
+  user input). Using information about a potential input area is important for
+  accessibility: it is used to associate the widget label with a potential input
+  area. To test this, just "click" on the "title" label of any CPS document
+  layout and your pointer will jump to the user field.
 Bug fixes:
 ~~~~~~~~~~
 - Removed the debian directory of this product since this product will never be

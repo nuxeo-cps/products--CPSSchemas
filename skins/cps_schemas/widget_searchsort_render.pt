@@ -2,7 +2,8 @@
                    value options/value;
                    widget_id here/getHtmlWidgetId;
                    modes here/sort_mode_names;">
-  <select tal:attributes="name widget_id">
+  <select tal:attributes="name widget_id;
+                          id widget_id;">
     <tal:block repeat="mode modes">
       <option tal:attributes="value mode;
                               selected python:test(value==mode, 'selected', nothing)"

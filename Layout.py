@@ -292,11 +292,13 @@ class Layout(PropertiesPostProcessor,
                 mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
                 css_class = widget.getCssClass(layout_mode, datamodel)
                 js_code = widget.getJavaScriptCode(layout_mode, datamodel)
+                input_area_id = widget.getInputAreaId(layout_mode, datamodel)
                 widgets[widget_id] = {
                     'widget': widget,
                     'widget_mode': mode,
                     'widget_css_class': css_class,
                     'widget_javascript': js_code,
+                    'widget_input_area_id': input_area_id,
                     }
             else:
                 widgets[widget_id] = {

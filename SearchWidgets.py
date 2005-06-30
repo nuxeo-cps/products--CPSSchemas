@@ -98,6 +98,10 @@ class CPSSearchZCTextWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         return meth(mode=mode, datastructure=datastructure)
 
 InitializeClass(CPSSearchZCTextWidget)
@@ -157,6 +161,10 @@ class CPSSearchModifiedWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         return meth(mode=mode, value=value)
 
 InitializeClass(CPSSearchModifiedWidget)
@@ -224,6 +232,10 @@ class CPSSearchLanguageWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         return meth(mode=mode, value=value,
                     selected=selected,
                     vocabulary=self._getLanguageVoc())
@@ -297,6 +309,10 @@ class CPSSearchSortWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
+        # Associating the widget label with an input area to improve the widget
+        # accessibility.
+        input_area_id = self.getHtmlWidgetId()
+        self.setInputAreaId(input_area_id)
         return meth(mode=mode, value=value)
 
 InitializeClass(CPSSearchSortWidget)
