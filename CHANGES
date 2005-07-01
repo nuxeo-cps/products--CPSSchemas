@@ -8,6 +8,9 @@ New features:
   accessibility: it is used to associate the widget label with a potential input
   area. To test this, just "click" on the "title" label of any CPS document
   layout and your pointer will jump to the user field.
+- CPSIdentifierWidget: the regular expression is now a string property, this allow
+  you to change it if you need a special pattern for user ids
+
 Bug fixes:
 ~~~~~~~~~~
 - Removed the debian directory of this product since this product will never be
@@ -15,7 +18,7 @@ Bug fixes:
 - i18n: added missing translations for fr & en
 - Taking advantage of the new centralized CPSI18n.tests.translations module.
 - Fixed translation files through the CPSI18n/bin/fix_pos script.
-- Added absolute url to the photo popup call so that it works from a box 
+- Added absolute url to the photo popup call so that it works from a box
   (where the context is not the image itself)
 - related to #297 : do not loose file title on the attached file widget when a
   new file is loaded

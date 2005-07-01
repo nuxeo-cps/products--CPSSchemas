@@ -490,13 +490,24 @@ class CPSIdentifierWidget(CPSStringWidget):
     meta_type = "CPS Identifier Widget"
     display_width = 30
     size_max = 256
-    id_pat = compile(r"^[a-zA-Z][a-zA-Z0-9@\-\._]*$")
+
+    _properties = CPSStringWidget._properties + (
+                    {'id': 'id_pat',
+                     'type': 'string', 'mode': 'w',
+                     'label': 'Identifier regular expression (raw format)'},)
+
+    id_pat = r'^[a-zA-Z][a-zA-Z0-9@\-\._]*$'
+
+    def _checkIdentifier(self, value):
+        id_pat = compile(self.id_pat)
+        return id_pat.match(value.lower()) is not None
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         err, v = self._extractValue(datastructure[widget_id])
-        if not err and v and not self.id_pat.match(v.lower()):
+
+        if not err and v and not self._checkIdentifier(v):
             err = 'cpsschemas_err_identifier'
 
         if err:

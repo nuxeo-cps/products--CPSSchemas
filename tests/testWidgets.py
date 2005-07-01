@@ -213,6 +213,15 @@ function getLayoutMode() {
        self.assertEquals(cleanFileName(u'å'), 'a')
        self.assertEquals(cleanFileName('å'), 'a')
 
+    def test_CPSIdentifierWidget(self):
+       from Products.CPSSchemas.BasicWidgets import CPSIdentifierWidget
+       wi = CPSIdentifierWidget('widget_id', 'notype').__of__(fakePortal)
+       self.assert_(not wi._checkIdentifier('136ll'))
+       self.assert_(not wi._checkIdentifier('é"136ll'))
+       wi.id_pat = r'[a-zA-Z0-9@\-\._]*$'
+       self.assert_(wi._checkIdentifier('136ll'))
+       self.assert_(not wi._checkIdentifier('é"136ll'))
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestWidgets),
