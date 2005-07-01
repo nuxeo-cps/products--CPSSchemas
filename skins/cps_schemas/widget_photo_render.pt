@@ -14,7 +14,7 @@
   rposition options/render_position;
   configurable options/configurable;
   last_modified options/last_modified;
-  photo_path python:'/'.join(content_url.split('/')[:-3]);
+  photo_path python:content_url and '/'.join(content_url.split('/')[:-3]) or '';
   original_photo_field python:len(fields)>3 and fields[3] or 'photo_original'
   ">
   <tal:block condition="python: mode == 'view' and not empty_file" 
