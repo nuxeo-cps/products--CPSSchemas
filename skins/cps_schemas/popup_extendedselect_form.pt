@@ -30,7 +30,7 @@
          tal:attributes="value input" />
   <input type="hidden" name="previous" value=""
          tal:attributes="value previous" />
-  <table border="0" width="80%" align="center" cellpadding="4"
+  <table width="80%" align="center" cellpadding="4"
     cellspacing="4" summary="search form layout">
     <tr>
       <th i18n:translate="heading_enter_searched_value">
@@ -53,7 +53,7 @@
 </tal:notSelected>
 
 <tal:selected condition="searched">
-  <table border="0" width="80%" align="center" cellspacing="4"
+  <table width="80%" align="center" cellspacing="4"
     cellpadding="4" summary="search layout">
     <tr>
       <th i18n:translate="heading_click_chosen_value">

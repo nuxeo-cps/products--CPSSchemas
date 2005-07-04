@@ -13,7 +13,7 @@
 <form action="" method="post"
       tal:attributes="action base_url"
       tal:condition="keys">
-  <table border="0" summary="vocabulary edit form layout">
+  <table summary="vocabulary edit form layout">
   <tr>
     <th></th>
     <th i18n:translate="cpsschemas_vocabulary_key">Key:</th>
@@ -54,7 +54,7 @@
 
 <h2 i18n:translate="">cpsschemas_vocabulary_entry_add</h2>
 <form tal:attributes="action here/portal_url" method="post">
-  <table border="0" summary="vocabulary listing">
+  <table summary="vocabulary listing">
   <tr>
     <th i18n:translate="cpsschemas_vocabulary_key">Key:</th>
     <th i18n:translate="cpsschemas_vocabulary_value">Value:</th>

@@ -21,7 +21,7 @@
   </tal:block>
 
   <tal:block condition="python: mode in ('edit', 'create')">
-    <table border="0" width="100%" summary="link layout">
+    <table width="100%" summary="link layout">
       <tr tal:repeat="cell cells">
         <td valign="top" tal:content="cell/widget/label_edit" i18n:translate="" />
         <td valign="top"

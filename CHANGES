@@ -22,6 +22,9 @@ Bug fixes:
   (where the context is not the image itself)
 - related to #297 : do not loose file title on the attached file widget when a
   new file is loaded
+- Modified some ZPT files so that they are valid XHTML 1.0 Strict. This is a
+  work in progress to fix #773 "Using XHTML 1.0 Strict by default for CPS
+  sites".
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The secure module importer ('modules') is available in the expression

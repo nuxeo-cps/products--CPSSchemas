@@ -21,7 +21,7 @@
 <h2 i18n:translate="">cpsschemas_vocabulary_add</h2>
 <form action="vocabularies_addvoc" method="get"
       tal:attributes="action string:${base_url}vocabularies_addvoc">
-  <table border="0">
+  <table>
     <tr>
       <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
       <td><input type="text" name="new_vocid" size="25" /></td>
@@ -39,7 +39,7 @@
 <h2 i18n:translate="">cpsschemas_vocabulary_available</h2>
 <form action="vocabulary_edit_form" method="get"
       tal:attributes="action string:${base_url}vocabulary_edit_form">
-  <table border="0">
+  <table>
     <tr>
       <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
       <td>
@@ -67,7 +67,7 @@
 <form action="vocabularies_delvoc" method="get"
       tal:attributes="action string:${base_url}vocabularies_delvoc"
       tal:condition="vocabularies">
-  <table border="0">
+  <table>
     <tr>
       <th i18n:translate="cpsschemas_vocabulary_id">Id:</th>
       <td>
