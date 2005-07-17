@@ -10,7 +10,6 @@ New features:
   layout and your pointer will jump to the user field.
 - CPSIdentifierWidget: the regular expression is now a string property, this allow
   you to change it if you need a special pattern for user ids
-
 Bug fixes:
 ~~~~~~~~~~
 - Removed the debian directory of this product since this product will never be
