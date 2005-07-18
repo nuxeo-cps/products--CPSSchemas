@@ -24,6 +24,8 @@ Bug fixes:
 - Modified some ZPT files so that they are valid XHTML 1.0 Strict. This is a
   work in progress to fix #773 "Using XHTML 1.0 Strict by default for CPS
   sites".
+- Password widget accepted a blank value when widget was not required even if
+  a minimum size was set.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The secure module importer ('modules') is available in the expression

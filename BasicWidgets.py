@@ -640,27 +640,27 @@ class CPSPasswordWidget(CPSStringWidget):
                 pv = str(pvalue).strip()
                 if pv and v != pv:
                     err = 'cpsschemas_err_password_mismatch'
-            elif not v:
-                if self.is_required:
+            else:
+                if not v and self.is_required:
                     datamodel = datastructure.getDataModel()
                     if not datamodel[self.fields[0]]:
                         err = 'cpsschemas_err_required'
-            else:
-                # checking pw consistancy
-                len_v = len(v)
-                if not err and self.size_max and len_v > self.size_max:
-                    err = 'cpsschemas_err_string_too_long'
-                if not err and self.size_min and len_v < self.size_min:
-                    err = 'cpsschemas_err_password_size_min'
-                if not err and self.check_lower and not search(r'[a-z]', v):
-                    err = 'cpsschemas_err_password_lower'
-                if not err and self.check_upper and not search(r'[A-Z]', v):
-                    err = 'cpsschemas_err_password_upper'
-                if not err and self.check_digit and not search(r'[0-9]', v):
-                    err = 'cpsschemas_err_password_digit'
-                if not err and self.check_extra and not search(r'[^a-zA-Z0-9]',
-                                                               v):
-                    err = 'cpsschemas_err_password_extra'
+                else:
+                    # checking pw consistancy
+                    len_v = len(v)
+                    if not err and self.size_max and len_v > self.size_max:
+                        err = 'cpsschemas_err_string_too_long'
+                    if not err and self.size_min and len_v < self.size_min:
+                        err = 'cpsschemas_err_password_size_min'
+                    if not err and self.check_lower and not search(r'[a-z]', v):
+                        err = 'cpsschemas_err_password_lower'
+                    if not err and self.check_upper and not search(r'[A-Z]', v):
+                        err = 'cpsschemas_err_password_upper'
+                    if not err and self.check_digit and not search(r'[0-9]', v):
+                        err = 'cpsschemas_err_password_digit'
+                    if not err and self.check_extra and not search(r'[^a-zA-Z0-9]',
+                                                                   v):
+                        err = 'cpsschemas_err_password_extra'
 
         if err:
             datastructure[widget_id] = ''

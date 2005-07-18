@@ -435,7 +435,8 @@ class PasswordWidgetValidationTest(WidgetValidationTest):
         pass
 
     def test_password_ok_required_1(self):
-        ret, err, ds = self._validate({'is_required': 0}, '')
+        # default value for size_min is 5
+        ret, err, ds = self._validate({'is_required': 0, 'size_min': 0}, '')
         self.assertEquals(err, None)
 
     def test_password_nok_required_1(self):
@@ -457,6 +458,10 @@ class PasswordWidgetValidationTest(WidgetValidationTest):
     def test_password_nok_size_2(self):
         ret, err, ds = self._validate({'size_max': 8}, 'foobarfoo')
         self.assertEquals(err, 'cpsschemas_err_string_too_long')
+
+    def test_password_nok_size_3(self):
+        ret, err, ds = self._validate({'size_min': 5}, '')
+        self.assertEquals(err, 'cpsschemas_err_password_size_min')
 
     def test_password_ok_lower_1(self):
         ret, err, ds = self._validate({'check_lower': 1}, 'FoE1.A')
