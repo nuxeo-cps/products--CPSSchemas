@@ -30,11 +30,11 @@ function checkLanguageSelected(form){
                        value string:yes;" />
 <label tal:attributes="for string:${widget_selected_id}_yes" i18n:translate="">cpsschemas_search_languages</label><br />
 <div>
-<span style="padding-left: 1em; float:left; width:12em">
+<span class="advancedSearchColumn">
   <tal:block repeat="lang languages">
     <tal:block
         condition="python:repeat['lang'].index and not repeat['lang'].index % 4"
-        content="structure string:</span><span style='float:left;; width:12em'>" />
+        content="structure string:</span><span class='advancedSearchColumn'>" />
     <input type="checkbox" class="noborder"
            onclick="checkLanguageSelected(this.form)"
            tal:attributes="name widget_id;

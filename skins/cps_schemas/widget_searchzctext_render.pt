@@ -2,7 +2,7 @@
                       ds options/datastructure;
                       widget_base_htmlid string:${here/getHtmlWidgetId}_;
                       widget_base_id string:${here/getWidgetId}_;"
-          style="text-align: right">
+          id="advancedSearchZCText">
   <tal:block repeat="operator here/operators"><tal:block
      define="widget_htmlid string:${widget_base_htmlid}${operator};
              widget_id string:${widget_base_id}${operator};
