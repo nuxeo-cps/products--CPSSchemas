@@ -106,7 +106,6 @@ def initialize(registrar):
     Products.CMFCore.utils.ToolInit(
         'CPS Document Tools',
         tools = tools,
-        product_name = 'CPSSchemas',
         icon = 'tool.png',
         ).initialize(registrar)
     VocabularyTypeRegistry.register(CPSVocabulary)
