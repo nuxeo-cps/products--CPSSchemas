@@ -43,7 +43,8 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     raw = str(file)
     if not raw:
         return None
-    LOG('_convertFileToMimeType', DEBUG, 'File is %s' % repr(file))
+    LOG('_convertFileToMimeType', DEBUG, 'to %s for file %s'
+        % (mime_type, repr(file)))
     current_mime_type = getattr(file, 'content_type',
                                 'application/octet-stream')
     data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
