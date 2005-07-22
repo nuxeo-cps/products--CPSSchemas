@@ -37,8 +37,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression, getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 
+from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
 from Products.CPSSchemas.DataModel import WriteAccessError
-from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
 
 def widgetname(id):
     """Return the name of the widget as used in HTML forms."""

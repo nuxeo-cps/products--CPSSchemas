@@ -35,7 +35,7 @@ from Acquisition import Implicit
 from Products.CMFCore.permissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties, getToolByName
 
-from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
 
 from IVocabulary import IVocabulary
 

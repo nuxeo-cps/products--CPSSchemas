@@ -1,6 +1,6 @@
 Requires:
 ~~~~~~~~~
--
+- CPSUtil > 0.5.3
 New features:
 ~~~~~~~~~~~~~
 - Added the possibility for a widget to specify if it has a input area (ie for
@@ -10,6 +10,7 @@ New features:
   layout and your pointer will jump to the user field.
 - CPSIdentifierWidget: the regular expression is now a string property, this allow
   you to change it if you need a special pattern for user ids
+- PropertiesPostProcessor now lives in CPSUtil.
 Bug fixes:
 ~~~~~~~~~~
 - Removed the debian directory of this product since this product will never be

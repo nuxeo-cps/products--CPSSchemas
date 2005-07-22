@@ -38,7 +38,7 @@ from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 
-from Products.CPSSchemas.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
 from Products.CPSSchemas.DataModel import ReadAccessError
 from Products.CPSSchemas.DataModel import WriteAccessError
