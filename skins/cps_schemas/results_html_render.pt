@@ -2,7 +2,7 @@
                    items python:here.getObjectsFromPath(path_list=results);
                    cpsmcat nocall:here/translation_service;
                    utool nocall:here/portal_url;
-                   base_url python:here.getBaseUrl(utool=utool);
+                   base_url python:utool.getBaseUrl();
                    site_wide python:1;
                    no_form request/no_form|options/no_form|python:1;
                    format string:simple;

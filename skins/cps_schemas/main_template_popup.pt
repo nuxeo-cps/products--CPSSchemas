@@ -8,7 +8,7 @@
   wtool here/portal_workflow;
   btool here/portal_boxes;
   context_url python:here.getContextUrl(utool=utool);
-  base_url python:here.getBaseUrl(utool=utool);
+  base_url python:utool.getBaseUrl();
   here_url python:here.absolute_url();
   member mtool/getAuthenticatedMember;
   isAnon mtool/isAnonymousUser;

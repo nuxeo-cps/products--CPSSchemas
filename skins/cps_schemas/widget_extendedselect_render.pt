@@ -6,7 +6,8 @@
                    value python:vocabulary.get(key, key);
                   ">
 <tal:block condition="python: mode == 'edit'">
-  <tal:block define="base_url here/getBaseUrl;
+  <tal:block define="utool nocall:here/portal_url;
+                     base_url python:utool.getBaseUrl();
                      voc_id vocabulary/getId;
                     ">
     <script type="text/javascript" tal:content="structure string:<!--

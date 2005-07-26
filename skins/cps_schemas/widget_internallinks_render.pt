@@ -4,260 +4,258 @@
                    values datastructure/?id;
                    cpsmcat nocall:here/translation_service;
                    utool nocall:here/portal_url;
-                   base_url python:here.getBaseUrl(utool=utool);
+                   base_url python:utool.getBaseUrl();
                    items python:here.getObjectsFromPath(values);
                    format string:simple;
                    display_description python:1;
-                   item_per_page python:10666
+                   item_per_page python:10666;
                   ">
   <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
     <metal:items use-macro="here/content_lib_display_contents/macros/display_contents"></metal:items>
   </tal:block>
 
   <tal:block condition="python:mode == 'edit'">
-    <tal:block define="base_url here/getBaseUrl">
-      <script type="text/javascript" tal:content="structure string:<!--
-        var xmlhttp,alerted
-        /*@cc_on @*/
-        /*@if (@_jscript_version >= 5)
-        // JScript gives us Conditional compilation, we can cope with old IE versions.
+    <script type="text/javascript" tal:content="structure string:<!--
+      var xmlhttp,alerted
+      /*@cc_on @*/
+      /*@if (@_jscript_version >= 5)
+      // JScript gives us Conditional compilation, we can cope with old IE versions.
+      try {
+        xmlhttp=new ActiveXObject('Msxml2.XMLHTTP');
+      } catch (e) {
+      try {
+        xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+      } catch (E) {
+        alert('You must have Microsofts XML parsers available');
+      }
+      }
+      @else
+        xmlhttp=false;
+        alerted=true;
+      @end @*/
+
+      if (!xmlhttp && !alerted) {
+        // Non ECMAScript Ed. 3 will error here (IE<5 ok), nothing I can
+        // realistically do about it, blame the w3c or ECMA for not
+        // having a working versioning capability in  <SCRIPT> or
+        // ECMAScript.
         try {
-          xmlhttp=new ActiveXObject('Msxml2.XMLHTTP');
+          xmlhttp = new XMLHttpRequest();
         } catch (e) {
-        try {
-          xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
-        } catch (E) {
-          alert('You must have Microsofts XML parsers available');
+       //   alert('Veuillez mettre à jour votre navigateur si vous désirez accéder à toutes les fonctionnalités de cette page')
         }
+      }
+
+      var base_url = '${base_url}';
+      var intlinks_w_id = '${id}';
+      var links_div_id = 'div_${id}';
+      var all_div_id = 'div_all_${id}';
+      var info_div_id = 'info_div_${id}';
+
+      function is_in(item, list) {
+       exist = false;
+       for(j=0;j<list.length;j++) {
+         list_item = list[j];
+         if(item == list_item) {
+           exist = true;
+         }
         }
-        @else
-          xmlhttp=false;
-          alerted=true;
-        @end @*/
+        return exist;
+      }
 
-        if (!xmlhttp && !alerted) {
-          // Non ECMAScript Ed. 3 will error here (IE<5 ok), nothing I can
-          // realistically do about it, blame the w3c or ECMA for not
-          // having a working versioning capability in  <SCRIPT> or
-          // ECMAScript.
-          try {
-            xmlhttp = new XMLHttpRequest();
-          } catch (e) {
-         //   alert('Veuillez mettre à jour votre navigateur si vous désirez accéder à toutes les fonctionnalités de cette page')
-          }
-        }
+      function update_results() {
+        if (xmlhttp) {
+          var textareaElement = document.getElementById(intlinks_w_id);
+          var links_div = document.getElementById(all_div_id);
+          d = document;
+          var params = '';
+          var links = textareaElement.value.split('\n');
 
-        var base_url = '${base_url}';
-        var intlinks_w_id = '${id}';
-        var links_div_id = 'div_${id}';
-        var all_div_id = 'div_all_${id}';
-        var info_div_id = 'info_div_${id}';
-
-        function is_in(item, list) {
-         exist = false;
-         for(j=0;j<list.length;j++) {
-           list_item = list[j];
-           if(item == list_item) {
-             exist = true;
-           }
-          }
-          return exist;
-        }
-
-        function update_results() {
-          if (xmlhttp) {
-            var textareaElement = document.getElementById(intlinks_w_id);
-            var links_div = document.getElementById(all_div_id);
-            d = document;
-            var params = '';
-            var links = textareaElement.value.split('\n');
-
-            for(i=0; i < links.length; i++) {
-              var link = links[i];
-              if(link.length) {
-                params += 'results:list=' + link + '&';
-              }
-            }
-
-            var url = 'results_html_render?no_form:int=0&' + params;
-
-            xmlhttp.open('GET', url, false);
-            xmlhttp.send(null);
-
-            var links_html = xmlhttp.responseText;
-
-            links_div.innerHTML = links_html;
-
-          }
-        }
-
-
-        function getSelectedItems() {
-           var selected = document.form.elements;
-           var selected_items = new Array();
-           for (i = 0; i < selected.length; i++) {
-             var checkbox = selected[i];
-             if (checkbox.checked) {
-               selected_items.push(checkbox.value);
-             }
-           }
-           return selected_items;
-
-        }
-
-        function getExistingItems() {
-           textareaElement = document.getElementById(intlinks_w_id);
-           var existing_items = textareaElement.value.split('\n');
-           var reg=new RegExp('\n', 'g');
-
-           for(i=0; i<existing_items.length;i++) {
-             var value = existing_items[i];
-             lf_index = value.indexOf('\r',0);
-             if(lf_index != -1) {
-               existing_items[i] = value.substring(0, lf_index);
-             }
-           }
-           return existing_items;
-        }
-
-        function setExistingItems(items) {
-          // put items in textare form cache if value not ''
-          textareaElement = document.getElementById(intlinks_w_id);
-
-          var value = '';
-          for(i=0; i<items.length; i++) {
-            var item = items[i];
-            if(item.length) {
-              value += item + '\n';
-            }
-          }
-          textareaElement.value = value;
-        }
-
-        function delete_items() {
-
-          var selected = document.form.elements;
-          var links = getExistingItems();
-          var deleted_links = getSelectedItems();
-
-          for(i=0;i<links.length;i++) {
-            var value = links[i];
-            if(is_in(value, deleted_links)) {
-              links[i] = '';
+          for(i=0; i < links.length; i++) {
+            var link = links[i];
+            if(link.length) {
+              params += 'results:list=' + link + '&';
             }
           }
 
+          var url = 'results_html_render?no_form:int=0&' + params;
+
+          xmlhttp.open('GET', url, false);
+          xmlhttp.send(null);
+
+          var links_html = xmlhttp.responseText;
+
+          links_div.innerHTML = links_html;
+
+        }
+      }
+
+
+      function getSelectedItems() {
+         var selected = document.form.elements;
+         var selected_items = new Array();
+         for (i = 0; i < selected.length; i++) {
+           var checkbox = selected[i];
+           if (checkbox.checked) {
+             selected_items.push(checkbox.value);
+           }
+         }
+         return selected_items;
+
+      }
+
+      function getExistingItems() {
+         textareaElement = document.getElementById(intlinks_w_id);
+         var existing_items = textareaElement.value.split('\n');
+         var reg=new RegExp('\n', 'g');
+
+         for(i=0; i<existing_items.length;i++) {
+           var value = existing_items[i];
+           lf_index = value.indexOf('\r',0);
+           if(lf_index != -1) {
+             existing_items[i] = value.substring(0, lf_index);
+           }
+         }
+         return existing_items;
+      }
+
+      function setExistingItems(items) {
+        // put items in textare form cache if value not ''
+        textareaElement = document.getElementById(intlinks_w_id);
+
+        var value = '';
+        for(i=0; i<items.length; i++) {
+          var item = items[i];
+          if(item.length) {
+            value += item + '\n';
+          }
+        }
+        textareaElement.value = value;
+      }
+
+      function delete_items() {
+
+        var selected = document.form.elements;
+        var links = getExistingItems();
+        var deleted_links = getSelectedItems();
+
+        for(i=0;i<links.length;i++) {
+          var value = links[i];
+          if(is_in(value, deleted_links)) {
+            links[i] = '';
+          }
+        }
+
+        setExistingItems(links);
+        update_results();
+      }
+
+      function getIndex(item, list) {
+        for(i=0;i<list.length;i++) {
+          var value = list[i];
+          if(item == value) {
+            return i;
+          }
+        }
+        return -1;
+      }
+
+      function canMove(index, shift, max) {
+        if(shift == -1) {
+          if(index > 0) {
+            return true;
+          }
+        } else {
+          if(index < max) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function move_items(direction) {
+
+        var shift = 1;
+
+        if(direction=='up') {
+          shift = -1;
+        }
+
+        var move_links  = getSelectedItems();
+        var links = getExistingItems();
+        var changed = false;
+
+        for(i=0;i<move_links.length;i++) {
+          var value = move_links[i];
+          var index = getIndex(value, links);
+          if( canMove(index, shift,links.length) ) {
+            var tmp = links[index+shift];
+            links[index+shift] = value;
+            links[index] = tmp;
+            changed = true;
+          }
+        }
+
+        if(changed) {
           setExistingItems(links);
           update_results();
         }
+      }
 
-        function getIndex(item, list) {
-          for(i=0;i<list.length;i++) {
-            var value = list[i];
-            if(item == value) {
-              return i;
-            }
-          }
-          return -1;
-        }
+      function move_up_items() {
+        move_items('up');
+      }
 
-        function canMove(index, shift, max) {
-          if(shift == -1) {
-            if(index > 0) {
-              return true;
-            }
-          } else {
-            if(index < max) {
-              return true;
-            }
-          }
-          return false;
-        }
+       function move_down_items() {
+        move_items('down');
+      }
 
-        function move_items(direction) {
+      function update_links(added_links) {
 
-          var shift = 1;
-
-          if(direction=='up') {
-            shift = -1;
-          }
-
-          var move_links  = getSelectedItems();
-          var links = getExistingItems();
-          var changed = false;
-
-          for(i=0;i<move_links.length;i++) {
-            var value = move_links[i];
-            var index = getIndex(value, links);
-            if( canMove(index, shift,links.length) ) {
-              var tmp = links[index+shift];
-              links[index+shift] = value;
-              links[index] = tmp;
-              changed = true;
-            }
-          }
-
-          if(changed) {
-            setExistingItems(links);
-            update_results();
+        var links = getExistingItems()
+        for(i=0;i<added_links.length;i++) {
+          var value = added_links[i];
+          if(!is_in(value, links)) {
+            links.push(value);
           }
         }
+        setExistingItems(links);
+        update_results();
+      }
 
-        function move_up_items() {
-          move_items('up');
-        }
+      -->">
+    </script>
+    <script type="text/javascript">
+      <!--
+      function open_search_dialog() {
+        selector_window = window.open(base_url + 'popup_internallinks_form'+
+        '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
+        'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,' +
+        'dependent=1,width=500,height=300');
+        if (! selector_window.opener)
+          selector_window.opener = window
+      }
+      -->
+    </script>
+    <div tal:attributes="id string:div_all_${id}">
+      <tal:block content="structure python:here.results_html_render(results=values, no_form=0)" />
+      <div tal:attributes="id string:div_${id}"></div>
+    </div>
 
-         function move_down_items() {
-          move_items('down');
-        }
-
-        function update_links(added_links) {
-
-          var links = getExistingItems()
-          for(i=0;i<added_links.length;i++) {
-            var value = added_links[i];
-            if(!is_in(value, links)) {
-              links.push(value);
-            }
-          }
-          setExistingItems(links);
-          update_results();
-        }
-
-        -->">
-      </script>
-      <script type="text/javascript">
-        <!--
-        function open_search_dialog() {
-          selector_window = window.open(base_url + 'popup_internallinks_form'+
-          '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
-          'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,' +
-          'dependent=1,width=500,height=300');
-          if (! selector_window.opener)
-            selector_window.opener = window
-        }
-        -->
-      </script>
-      <div tal:attributes="id string:div_all_${id}">
-        <tal:block content="structure python:here.results_html_render(results=values, no_form=0)" />
-        <div tal:attributes="id string:div_${id}"></div>
-      </div>
-
-      <input type="button" name="del_item" value="action_delete" i18n:attributes="value"
-        onClick="delete_items()">
-      <input type="button" name="move_up" value="button_move_up" i18n:attributes="value"
-        onClick="move_up_items()">
-      <input type="button" name="move_down" value="button_move_down" i18n:attributes="value"
-        onClick="move_down_items()">
-      <input type="button" name="search_item" value="button_search" i18n:attributes="value"
-        onClick="open_search_dialog()"><br/>
-      <textarea cols="2" style="width: 90%;visibility:hidden"
-                tal:define="html_id here/getHtmlWidgetId;
-                            links python:'\n'.join(values)"
-                tal:attributes="name string:${html_id}:lines;
-                                id id;
-                                rows python:test(here.size, here.size, None)"
-                tal:content="links"></textarea>
-    </tal:block>
+    <input type="button" name="del_item" value="action_delete" i18n:attributes="value"
+      onClick="delete_items()">
+    <input type="button" name="move_up" value="button_move_up" i18n:attributes="value"
+      onClick="move_up_items()">
+    <input type="button" name="move_down" value="button_move_down" i18n:attributes="value"
+      onClick="move_down_items()">
+    <input type="button" name="search_item" value="button_search" i18n:attributes="value"
+      onClick="open_search_dialog()"><br/>
+    <textarea cols="2" style="width: 90%;visibility:hidden"
+              tal:define="html_id here/getHtmlWidgetId;
+                          links python:'\n'.join(values)"
+              tal:attributes="name string:${html_id}:lines;
+                              id id;
+                              rows python:test(here.size, here.size, None)"
+              tal:content="links"></textarea>
   </tal:block>
 </tal:block>

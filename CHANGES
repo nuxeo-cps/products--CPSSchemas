@@ -27,6 +27,7 @@ Bug fixes:
   sites".
 - Password widget accepted a blank value when widget was not required even if
   a minimum size was set.
+- Replaced incorrect code producing broken urls using virtual hosting.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The secure module importer ('modules') is available in the expression
