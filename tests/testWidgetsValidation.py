@@ -4,7 +4,6 @@
 
 import os
 import unittest
-from Testing.ZopeTestCase import ZopeLite
 
 from Acquisition import Implicit
 from OFS.Image import File
