@@ -128,9 +128,12 @@ class DataModel(UserDict):
             schema = adapter.getSchema()
             for fieldid, field in schema.items():
                 if fields.has_key(fieldid):
+                    sids = [a._schema.getId() for a in adapters
+                            if fieldid in a._schema.keys()]
                     LOG('DataModel.__init__', WARNING,
-                        "Two schemas have field id '%s', ignoring schema '%s'"
-                        % (fieldid, schema.getId()))
+                        "Field '%s' is in schema %s but also in schema%s %s."
+                        % (fieldid, sids[0], len(sids) > 2 and 's' or '',
+                           ', '.join(sids[1:])))
                     continue
                 fields[fieldid] = field
             schemas.append(schema)
