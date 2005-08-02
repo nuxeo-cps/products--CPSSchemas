@@ -85,7 +85,6 @@ class PloneInstaller:
 
     def logout(self):
         noSecurityManager()
-        get_transaction().commit()
         if not self._quiet:
             ZopeTestCase._print('done (%.3fs)\n'
                 % (time.time() - self._start,))

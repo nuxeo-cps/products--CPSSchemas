@@ -21,6 +21,16 @@
 # registered attributes are volatile, and that there is no 
 # default implementation of _finish() and _abort().
 
+try:
+    import transaction
+except ImportError:
+    # BBB: for Zope 2.7
+    from Products.CMFCore.utils import transaction
+    # The following is missing from CMF 1.5.2
+    def BBBget():
+        return get_transaction()
+    transaction.get = BBBget
+
 class VTM:
     """Mix-in class that provides transaction management support
 
@@ -45,7 +55,7 @@ class VTM:
     def _register(self):
         if not self._v_registered:
             try:
-                get_transaction().register(Surrogate(self))
+                transaction.get().register(Surrogate(self))
                 self._begin()
                 self._v_registered = 1
                 self._v_finalize = 0
