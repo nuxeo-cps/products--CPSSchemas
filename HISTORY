@@ -1,4 +1,43 @@
 *******************************************
+** CPSSchemas V0.44.0 [R1 build 2005/08/05-13:58 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 25426
+Requires:
+~~~~~~~~~
+- CPSUtil > 0.5.3
+New features:
+~~~~~~~~~~~~~
+- Added the possibility for a widget to specify if it has a input area (ie for
+  user input). Using information about a potential input area is important for
+  accessibility: it is used to associate the widget label with a potential input
+  area. To test this, just "click" on the "title" label of any CPS document
+  layout and your pointer will jump to the user field.
+- CPSIdentifierWidget: the regular expression is now a string property, this allow
+  you to change it if you need a special pattern for user ids
+- PropertiesPostProcessor now lives in CPSUtil.
+Bug fixes:
+~~~~~~~~~~
+- Removed the debian directory of this product since this product will never be
+  packaged on its own as a Debian package.
+- i18n: added missing translations for fr & en
+- Taking advantage of the new centralized CPSI18n.tests.translations module.
+- Fixed translation files through the CPSI18n/bin/fix_pos script.
+- Added absolute url to the photo popup call so that it works from a box
+  (where the context is not the image itself)
+- related to #297 : do not loose file title on the attached file widget when a
+  new file is loaded
+- Modified some ZPT files so that they are valid XHTML 1.0 Strict. This is a
+  work in progress to fix #773 "Using XHTML 1.0 Strict by default for CPS
+  sites".
+- Password widget accepted a blank value when widget was not required even if
+  a minimum size was set.
+- Replaced incorrect code producing broken urls using virtual hosting.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- The secure module importer ('modules') is available in the expression
+  context of field, widget and layout expressions.
+- Added unit tests for CPSDateTime widget
+
+*******************************************
 ** CPSSchemas V0.43.0 [R1 build 2005/06/02-09:34 by fguillaume]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 22058
 Requires:
