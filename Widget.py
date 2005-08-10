@@ -334,6 +334,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         information about a potential input area is important for accessibility:
         it is used to associate the widget label with a potential input area.
         """
+        return
+        # XXX Extremely stupid code removed. Will have to be refactored.
         self.input_area_id = input_area_id
 
     #
