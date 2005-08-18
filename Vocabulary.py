@@ -53,7 +53,7 @@ class Vocabulary(Persistent, Implicit):
     security = ClassSecurityInfo()
 
     def __init__(self, tuples=None, list=None, dict=None, sort_function=None):
-        """Initialize a vocabularies.
+        """Initialize a vocabulary.
 
         Allowed parameter syntaxes are:
 

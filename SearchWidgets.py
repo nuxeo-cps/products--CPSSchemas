@@ -41,9 +41,9 @@ class CPSSearchZCTextWidget(CPSWidget):
     """
     meta_type = "CPS Search ZCText Widget"
     _properties = CPSWidget._properties
-    field_types = ('CPS String Field','CPS String Field',
-                   'CPS String Field','CPS String Field',
-                   )                    # can handle query up to 4 Zctextindex
+    field_types = ('CPS String Field', 'CPS String Field',
+                   'CPS String Field', 'CPS String Field',
+                   ) # can handle query up to 4 Zctextindex
     operators = ('and', 'exact', 'or', 'not')
 
     def prepare(self, datastructure, **kw):
@@ -110,8 +110,6 @@ class CPSSearchZCTextWidgetType(CPSWidgetType):
 
 InitializeClass(CPSSearchZCTextWidgetType)
 
-
-
 #
 # Modified widget
 #
@@ -124,7 +122,7 @@ class CPSSearchModifiedWidget(CPSWidget):
     _properties = CPSWidget._properties
     field_types = ('CPS String Field',  # the date
                    'CPS String Field',  # the modified-usage
-                   )
+                  )
     times = [0, 1, 30, 91, 182, 365]
 
     def prepare(self, datastructure, **kw):

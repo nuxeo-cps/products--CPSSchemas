@@ -66,9 +66,11 @@ DEFAULT_VALUE_MARKER = DefaultValue()
 
 class AccessError(ValueError):
     """Raised by a field when access is denied."""
+
     def __init__(self, field, message=''):
         self.field = field
         self.message = message
+
     def __str__(self):
         s = "%s access to %s denied" % (self.type, self.field)
         if self.message:
@@ -190,10 +192,10 @@ class DataModel(UserDict):
         self.checkReadAccess(key)
         return key, item
 
-    def pop(self, key):
+    def pop(self, key, *args):
         # python2.3
         self.checkReadAccess(key)
-        return self.data.pop(key)
+        return self.data.pop(key, *args)
 
     def __setitem__(self, key, item):
         self.checkWriteAccess(key)

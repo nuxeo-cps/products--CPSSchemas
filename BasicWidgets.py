@@ -117,8 +117,8 @@ def cleanFileName(current_name):
         r"'\;/ &:ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ",
         r"_______AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")
     current_name = current_name.translate(translation_table)
-    acceptedChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_.'
-    current_name = ''.join([c for c in current_name if c in acceptedChars])
+    accepted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_.'
+    current_name = ''.join([c for c in current_name if c in accepted_chars])
     while current_name.startswith('_') or current_name.startswith('.'):
         current_name = current_name[1:]
     while current_name.endswith('_'):
@@ -813,7 +813,7 @@ class CPSTextAreaWidget(CPSWidget):
                 ret = value
             else:
                 raise RuntimeError("unknown render_format '%s' for '%s'" %
-                                   (render_format, self.getId()))
+                                   (rformat, self.getId()))
         else:
             raise RuntimeError('unknown mode %s' % mode)
 
