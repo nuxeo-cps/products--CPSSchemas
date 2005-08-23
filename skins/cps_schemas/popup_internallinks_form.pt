@@ -70,9 +70,11 @@
    <tal:block define="SearchableText python:request.get('SearchableText','');
                        sort_by python:request.get('sort_by', '');
                        direction python:request.get('direction', '');
+                       folder_prefix python:request.get('folder_prefix', '');
                        items python:here.search(query=request.form,
                                                 sort_by=sort_by,
-                                                direction=direction);
+                                                direction=direction,
+                                                folder_prefix=folder_prefix);
                        nav_action string:search_form;
                        no_form nothing;
                        site_wide python:1;
