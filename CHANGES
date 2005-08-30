@@ -9,6 +9,6 @@ Bug fixes:
 - Fixed the search popup for Internal Links box to search only in the current
   path using the "here" option (it used to search on the entire site)
 - The title in the link widget was rendered as escaped (#898)
-eew internal features:
+New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
