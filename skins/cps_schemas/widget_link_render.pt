@@ -12,7 +12,7 @@
     <img tal:replace="structure python:here.getImgTag('link_icon.png')" />
     <a href="" tal:attributes="href href_url;title title|nothing;
       target python: test(href_url.startswith('http'), 'CPS_Link', nothing);">
-      <strong tal:content="python: test(content, content, href_url)" />
+      <strong tal:content="structure python: test(content, content, href_url)" />
     </a>
     <div style="padding-left: 1.5em;">
       <span tal:condition="title" tal:content="structure title" />
