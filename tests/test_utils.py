@@ -18,7 +18,8 @@
 # 02111-1307, USA.
 #
 # $Id$
-import unittest, os
+
+import unittest
 from Testing.ZopeTestCase import ZopeTestCase
 from Products.CPSSchemas.utils import getHumanReadableSize
 
@@ -41,7 +42,6 @@ class UtilsTestCase(ZopeTestCase):
 
         str_size = getHumanReadableSize(1024)
         self.assertEquals(str_size, (1, 'cpsschemas_unit_kilo_bytes'))
-
 
         str_size = getHumanReadableSize(1048576)
         self.assertEquals(str_size, (1, 'cpsschemas_unit_mega_bytes'))
