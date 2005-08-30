@@ -215,12 +215,32 @@ function getLayoutMode() {
 
     def test_CPSIdentifierWidget(self):
        from Products.CPSSchemas.BasicWidgets import CPSIdentifierWidget
-       wi = CPSIdentifierWidget('widget_id', 'notype').__of__(fakePortal)
+       wi = CPSIdentifierWidget('widget_id', 'notype')
        self.assert_(not wi._checkIdentifier('136ll'))
        self.assert_(not wi._checkIdentifier('é"136ll'))
        wi.id_pat = r'[a-zA-Z0-9@\-\._]*$'
        self.assert_(wi._checkIdentifier('136ll'))
        self.assert_(not wi._checkIdentifier('é"136ll'))
+
+    def test_CPSSearchZCTextWidget(self):
+        from Products.CPSSchemas.SearchWidgets import CPSSearchZCTextWidget
+        widget = CPSSearchZCTextWidget('foo', 'notype').__of__(fakePortal)
+        # XXX: add more tests here
+
+    def test_CPSSearchModifiedWidget(self):
+        from Products.CPSSchemas.SearchWidgets import CPSSearchModifiedWidget
+        widget = CPSSearchModifiedWidget('foo', 'notype').__of__(fakePortal)
+        # XXX: add more tests here
+
+    def test_CPSSearchLanguageWidget(self):
+        from Products.CPSSchemas.SearchWidgets import CPSSearchLanguageWidget
+        widget = CPSSearchLanguageWidget('foo', 'notype').__of__(fakePortal)
+        # XXX: add more tests here
+
+    def test_CPSSearchSortWidget(self):
+        from Products.CPSSchemas.SearchWidgets import CPSSearchSortWidget
+        widget = CPSSearchSortWidget('foo', 'notype').__of__(fakePortal)
+        # XXX: add more tests here
 
 def test_suite():
     return unittest.TestSuite((
