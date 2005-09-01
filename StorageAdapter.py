@@ -204,13 +204,13 @@ class AttributeStorageAdapter(BaseStorageAdapter):
     This adapter simply gets and sets data from/to an attribute.
     """
 
-    def __init__(self, schema, ob, **kw):
+    def __init__(self, schema, ob, proxy=None, **kw):
         """Create an Attribute Storage Adapter for a schema.
 
         The object passed is the one on which to get/set attributes.
         """
         self._ob = ob
-        self._proxy = None
+        self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
     def getContextObject(self):
@@ -291,9 +291,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         'Relation': ACCESSOR,
         }
 
-    def __init__(self, schema, ob, **kw):
+    def __init__(self, schema, ob, proxy=None, **kw):
         self._ob = ob
-        self._proxy = None
+        self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
     def getContextObject(self):
