@@ -52,6 +52,9 @@ class Vocabulary(Persistent, Implicit):
 
     security = ClassSecurityInfo()
 
+    # For backwards compatibility
+    _sort_fonction = None
+
     def __init__(self, tuples=None, list=None, dict=None, sort_function=None):
         """Initialize a vocabulary.
 
