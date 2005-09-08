@@ -230,26 +230,28 @@
       function open_search_dialog() {
         selector_window = window.open(base_url + 'popup_internallinks_form'+
         '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
-        'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,' +
-        'dependent=1,width=500,height=300');
+        'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,' +
+        'dependent=1,width=600,height=600');
         if (! selector_window.opener)
           selector_window.opener = window
       }
       -->
     </script>
     <div tal:attributes="id string:div_all_${id}">
-      <tal:block content="structure python:here.results_html_render(results=values, no_form=0)" />
+      <tal:block content="structure
+        python:here.results_html_render(results=values, no_form=0)" />
       <div tal:attributes="id string:div_${id}"></div>
     </div>
 
-    <input type="button" name="del_item" value="action_delete" i18n:attributes="value"
-      onClick="delete_items()">
-    <input type="button" name="move_up" value="button_move_up" i18n:attributes="value"
-      onClick="move_up_items()">
-    <input type="button" name="move_down" value="button_move_down" i18n:attributes="value"
-      onClick="move_down_items()">
-    <input type="button" name="search_item" value="button_search" i18n:attributes="value"
-      onClick="open_search_dialog()"><br/>
+    <input type="button" name="del_item" value="action_delete"
+      i18n:attributes="value" onClick="delete_items()" />
+    <input type="button" name="move_up" value="button_move_up"
+      i18n:attributes="value" onClick="move_up_items()" />
+      <input type="button" name="move_down" value="button_move_down"
+        i18n:attributes="value" onClick="move_down_items()" />
+      <input type="button" name="search_item" value="button_search"
+        i18n:attributes="value" onClick="open_search_dialog()" />
+    <br/>
     <textarea cols="2" style="width: 90%;visibility:hidden"
               tal:define="html_id here/getHtmlWidgetId;
                           links python:'\n'.join(values)"
