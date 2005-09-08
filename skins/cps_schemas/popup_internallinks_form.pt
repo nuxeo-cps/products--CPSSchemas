@@ -1,103 +1,105 @@
 <metal:html tal:define="emptybody python:1;
-                        textarea request/textarea|string:;
-                        searching python:request.has_key('Title');
-			            use_radio python:0;
-                       ">
-                       
-<metal:block define-macro="popup_internallinks" tal:define="use_radio use_radio|nothing">
-<metal:body use-macro="here/main_template/macros/master">
-<metal:head fill-slot="head_slot">
+  textarea request/textarea|string:;
+  searching python:request.has_key('Title');
+  use_radio python:0;
+  ">
 
-<tal:block condition="searching">
-  <script type="text/javascript" tal:condition="not:use_radio" >
-  <!--
-     function set_parent_value(parent_id) {
-      var links = new Array()
-      links_html = ''
-      params = ''
-      
-      selected = document.form_name.elements
-      for (i = 0; i < selected.length; i++) {
+  <metal:block define-macro="popup_internallinks"
+    tal:define="use_radio use_radio|nothing">
+    <metal:body use-macro="here/main_template/macros/master">
+      <metal:head fill-slot="head_slot">
+
+        <tal:block condition="searching">
+          <script type="text/javascript" tal:condition="not:use_radio" >
+            <!--
+function set_parent_value(parent_id) {
+    var links = new Array()
+    links_html = ''
+    params = ''
+
+    selected = document.form_name.elements
+    for (i = 0; i < selected.length; i++) {
         checkbox = selected[i];
-        if (checkbox.checked) {
-	  links.push(checkbox.value)
-        }
-      }
-      opener.update_links(links)
-      self.close()
+        if (checkbox.checked)
+            links.push(checkbox.value)
     }
-   -->
-  </script>
-  
-  <script type="text/javascript" tal:condition="use_radio">
-  <!--
-    function set_parent_value(parent_id){
-        var doc = ''
-	selected = document.form_name.elements
-	for (i=0; i<selected.length; i++){
-          radiobox = selected[i]
-          if (radiobox.checked)
-              doc = radiobox.value
-        }
-	opener.update_doc(doc)
-        self.close()
+    opener.update_links(links)
+    self.close()
+}
+            -->
+          </script>
+
+          <script type="text/javascript" tal:condition="use_radio">
+            <!--
+function set_parent_value(parent_id){
+    var doc = ''
+    selected = document.form_name.elements
+    for (i=0; i<selected.length; i++){
+        radiobox = selected[i]
+        if (radiobox.checked)
+            doc = radiobox.value
     }
-  -->
-  </script>
-</tal:block>
- 
-</metal:head>
-<metal:main fill-slot="body">
+    opener.update_doc(doc)
+    self.close()
+}
+              -->
+          </script>
+        </tal:block>
+      </metal:head>
 
-<tal:notSelected condition="not:searching">
-  <form action="" method="get"
-        tal:attributes="action string:${here_url}/${template/id}">
-    <input type="hidden" name="textarea" value=""
-           tal:attributes="value textarea" />
-    <input type="hidden" name="use_radio" value="" tal:attributes="value use_radio">
-    <metal:block use-macro="here/generic_lib_search_form/macros/search_form" />
-  </form>
-</tal:notSelected>
+      <metal:main fill-slot="body">
+        <div class="popup">
+
+          <tal:notSelected condition="not:searching">
+            <form action="" method="get"
+              tal:attributes="action string:${here_url}/${template/id}">
+              <input type="hidden" name="textarea" value=""
+                tal:attributes="value textarea" />
+              <input type="hidden" name="use_radio" value=""
+                tal:attributes="value use_radio" />
+              <metal:block
+                use-macro="here/generic_lib_search_form/macros/search_form" />
+            </form>
+          </tal:notSelected>
 
 
-<tal:selected condition="searching">
+          <tal:selected condition="searching">
+            <form name="form_name" onsubmit="javascript:set_parent_value"
+              tal:attributes="
+              onsubmit string:javascript:set_parent_value('${textarea}');;
+              ">
+              <tal:block define="
+                SearchableText python:request.get('SearchableText','');
+                sort_by python:request.get('sort_by', '');
+                direction python:request.get('direction', '');
+                folder_prefix python:request.get('folder_prefix', '');
+                items python:here.search(query=request.form,
+                sort_by=sort_by,
+                direction=direction,
+                folder_prefix=folder_prefix);
+                nav_action string:search_form;
+                no_form nothing;
+                site_wide python:1;
+                items_per_page python:10666;">
+                <div
+                  tal:condition="not:items"
+                  i18n:translate="legend_no_search_result"
+                  style="margin: 10px 0 0 5px;">No items found.</div>
+                <metal:block use-macro="here/content_lib_display_contents/macros/display_contents" />
+              </tal:block>
 
-  <form name="form_name" onsubmit="javascript:set_parent_value"
-    tal:attributes="onsubmit string:javascript:set_parent_value('${textarea}');;
-                   ">
-    
-  
-   <tal:block define="SearchableText python:request.get('SearchableText','');
-                       sort_by python:request.get('sort_by', '');
-                       direction python:request.get('direction', '');
-                       folder_prefix python:request.get('folder_prefix', '');
-                       items python:here.search(query=request.form,
-                                                sort_by=sort_by,
-                                                direction=direction,
-                                                folder_prefix=folder_prefix);
-                       nav_action string:search_form;
-                       no_form nothing;
-                       site_wide python:1;
-                       items_per_page python:10666;">
-      <div 
-        tal:condition="not:items" 
-        i18n:translate="legend_no_search_result"
-        style="margin: 10px 0 0 5px;">No items found.</div>                   
+              <hr/>
 
-        <metal:block use-macro="here/content_lib_display_contents/macros/display_contents" />
+              <input type="button" class="standalone" value="button_back"
+                onclick="javascript:history.back()" i18n:attributes="value" />
+              <input type="submit" class="context" value="button_ok"
+                i18n:attributes="value" />
 
-    </tal:block>
-    <hr>
-    
-    <input type="button" class="standalone" value="button_back"
-           onclick="javascript:history.back()" i18n:attributes="value" />
-    <input type="submit" class="context" value="button_ok"
-           i18n:attributes="value" />
-	   
-  </form>
-</tal:selected>
+            </form>
+          </tal:selected>
 
-</metal:main>
-</metal:body>
-</metal:block>
+        </div>
+      </metal:main>
+    </metal:body>
+  </metal:block>
 </metal:html>
