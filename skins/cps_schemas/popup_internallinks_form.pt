@@ -23,8 +23,8 @@ function set_parent_value(parent_id) {
         if (checkbox.checked)
             links.push(checkbox.value)
     }
-    opener.update_links(links)
-    self.close()
+    opener.update_links(links);
+    self.close();
 }
             -->
           </script>
@@ -40,7 +40,7 @@ function set_parent_value(parent_id){
             doc = radiobox.value
     }
     opener.update_doc(doc)
-    self.close()
+    self.hide()
 }
               -->
           </script>

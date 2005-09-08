@@ -45,7 +45,6 @@
        //   alert('Veuillez mettre à jour votre navigateur si vous désirez accéder à toutes les fonctionnalités de cette page')
         }
       }
-
       var base_url = '${base_url}';
       var intlinks_w_id = '${id}';
       var links_div_id = 'div_${id}';
@@ -82,8 +81,11 @@
 
           xmlhttp.open('GET', url, false);
           xmlhttp.send(null);
-
           var links_html = xmlhttp.responseText;
+          xmlhttp.abort()
+          // abort is required for firefox and opera since we call self.close()
+          // in the popup search form. see:
+          // https://bugzilla.mozilla.org/show_bug.cgi?id=305855
 
           links_div.innerHTML = links_html;
 
@@ -120,7 +122,7 @@
       }
 
       function setExistingItems(items) {
-        // put items in textare form cache if value not ''
+        // put items in textarea form cache if value not ''
         textareaElement = document.getElementById(intlinks_w_id);
 
         var value = '';
