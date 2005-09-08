@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout-tool xmlns:tal="http://xml.zope.org/namespaces/tal">
+  <layout id="LAYOUT_ID"
+          tal:repeat="info here/getLayoutToolInfo"
+          tal:attributes="id info/id;
+                          filename info/filename | default;
+                          " />
+</layout-tool>
