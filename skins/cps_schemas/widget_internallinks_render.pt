@@ -13,8 +13,6 @@
                    display_description python:1;
                    item_per_page python:10666;
                   ">
-                  <p>absolute: <span tal:content="absolute"/></p>
-                  <p>base_url: <span tal:content="base_url"/></p>
   <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
     <metal:items use-macro="here/content_lib_display_contents/macros/display_contents"></metal:items>
   </tal:block>
