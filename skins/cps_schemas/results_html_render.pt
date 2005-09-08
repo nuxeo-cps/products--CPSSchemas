@@ -1,17 +1,14 @@
 <tal:comment condition="nothing"><!--
-  Render document items for InternalLinks widget
-
-  the absolute flag allow links url to be absolute urls. This is useful for the
-  Newsletter document type.
+  Render document items for InternalLinks widget through a XMLHttpRequest
+  object
   --></tal:comment>
 <tal:block define="results python:request and request.get('results',[]) or options.get('results',[]);
                    items python:here.getObjectsFromPath(path_list=results);
                    cpsmcat nocall:here/translation_service;
                    utool nocall:here/portal_url;
-                   absolute absolute|python:False;
-                   base_url python:test(absolute and utool()+'/' or utool.getBaseUrl());
                    site_wide python:1;
                    no_form request/no_form|options/no_form|python:1;
+                   base_url utool/getBaseUrl;
                    format string:simple;
                    display_description python:1;
                    items_per_page python:10666;">
