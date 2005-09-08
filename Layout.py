@@ -140,7 +140,7 @@ class Layout(PropertiesPostProcessor,
     layout_create_method = ''
     layout_edit_method = ''
     layout_view_method = ''
-    flexible_widgets = []
+    flexible_widgets = ()
     validate_values_expr = ''
     validate_values_expr_c = None
 
