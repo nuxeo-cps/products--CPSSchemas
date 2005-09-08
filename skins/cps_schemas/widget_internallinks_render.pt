@@ -1,16 +1,20 @@
 <tal:block define="mode options/mode;
-                   absolute options/absolute|nothing;
                    datastructure options/datastructure;
                    id here/getWidgetId;
                    values datastructure/?id;
                    cpsmcat nocall:here/translation_service;
                    utool nocall:here/portal_url;
-                   base_url python:utool.getBaseUrl();
+                   absolute here/absolute|python:False;
+                   base_url python:test(absolute,
+                                        utool()+'/',
+                                        utool.getBaseUrl());
                    items python:here.getObjectsFromPath(values);
                    format string:simple;
                    display_description python:1;
                    item_per_page python:10666;
                   ">
+                  <p>absolute: <span tal:content="absolute"/></p>
+                  <p>base_url: <span tal:content="base_url"/></p>
   <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
     <metal:items use-macro="here/content_lib_display_contents/macros/display_contents"></metal:items>
   </tal:block>
@@ -95,7 +99,8 @@
 
 
       function getSelectedItems() {
-         var selected = document.form.elements;
+         var form = document.getElementById(intlinks_w_id).form
+         var selected = form.elements;
          var selected_items = new Array();
          for (i = 0; i < selected.length; i++) {
            var checkbox = selected[i];
@@ -138,7 +143,6 @@
 
       function delete_items() {
 
-        var selected = document.form.elements;
         var links = getExistingItems();
         var deleted_links = getSelectedItems();
 
