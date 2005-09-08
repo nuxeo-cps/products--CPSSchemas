@@ -731,9 +731,12 @@ class CPSInternalLinksWidget(CPSWidget):
          'label': 'Display in a new window'},
         {'id': 'size', 'type': 'int', 'mode': 'w',
          'label': 'Links displayed'},
+        {'id': 'absolute', 'type': 'boolean', 'mode': 'w',
+         'label': 'Links displayed with absolute URL'},
         )
     new_window = 0
     size = 0
+    absolute = False
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
