@@ -40,7 +40,7 @@ function set_parent_value(parent_id){
             doc = radiobox.value
     }
     opener.update_doc(doc)
-    self.hide()
+    self.close()
 }
               -->
           </script>
