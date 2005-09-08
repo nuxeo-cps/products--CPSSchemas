@@ -18,5 +18,5 @@
 """Handlers for CMFSetup.
 """
 
-from schemas import importSchemaTool
-from schemas import exportSchemaTool
+from schema import importSchemaTool
+from schema import exportSchemaTool
