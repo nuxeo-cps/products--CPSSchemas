@@ -23,7 +23,7 @@
         selector_window = window.open(base_url + 'popup_extendedselect_form' + 
         '?source=' + voc_id + '&input=' + extsel_w_id + '&previous=' + key,
         'popup_select', 'toolbar=0,scrollbars=1,location=0,statusbar=0,' +
-        'menubar=0,resizable=0,dependent=1,width=400,height=300');
+        'menubar=0,resizable=1,dependent=1,width=400,height=300');
         if (! selector_window.opener)
           selector_window.opener = window
       }

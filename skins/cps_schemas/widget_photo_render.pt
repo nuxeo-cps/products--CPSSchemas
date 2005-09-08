@@ -30,7 +30,7 @@
                          ',width=%s'%str(int(original_width)+40) +
                          ',height=%s'%str(int(original_height) + 40) +
                          ',location=no,menubar=no' +
-                         ',personalbar=no,toolbar=no,status=no,resizable=no' +
+                         ',personalbar=no,toolbar=no,status=no,resizable=yes' +
                          ',scrollbars=yes\')'"><img tal:replace="structure image_tag" /></a>
       </tal:block>
       <tal:block condition="not: original_photo">
