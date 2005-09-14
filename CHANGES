@@ -14,6 +14,7 @@ Bug fixes:
 - internallinks popup now works on mozilla/firefox and looks better
 - added an option to InternalLinks widget to display absolute urls in links
   (useful for CPSNewsletter)
+- removed "target=CPS_Link" for external links.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
