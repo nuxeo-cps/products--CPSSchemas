@@ -152,13 +152,13 @@ msgstr "Pozitie: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "toutes les langues"
+msgstr "toate limbile"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "la ou les langues suivantes"
+msgstr "limba/limbile urmatoare"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -402,10 +402,10 @@ msgid "cpsschemas_err_zippedhtml_html_not_found"
 msgstr "Nu a fost gasit nici un fisier HTML in arhiva"
 
 msgid "jscalendar_date_fmt"
-msgstr "d/m/y"
+msgstr "z/l/a"
 
 msgid "cpsschemas_rposition_normal"
-msgstr "Latime paginii"
+msgstr "Latimea paginii"
 
 msgid "cpsschemas_rposition_col_right"
 msgstr "Coloana din dreapta"
@@ -581,7 +581,7 @@ msgstr "Animatie Flash (swf)"
 
 #, fuzzy
 #~ msgid "button_back"
-#~ msgstr "Fermer"
+#~ msgstr "Inchide"
 
 #~ msgid "cpsschemas_search_language_or"
 #~ msgstr "sau"
