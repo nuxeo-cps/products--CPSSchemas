@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- image and photo widgets now display dims in pixels and show the current dim
+  as preselected option in the resize control
 Bug fixes:
 ~~~~~~~~~~
 - Fixed the search popup for Internal Links box to search only in the current

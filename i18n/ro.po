@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-24 15:44default\n"
+"POT-Creation-Date: 2005-09-15 20:09default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -19,6 +19,15 @@ msgstr ""
 "Language-Name: Romanian\n"
 "Domain: default\n"
 
+#.   <option attributes="value op/id" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#.   <option attributes="value op/id;
+#.                 selected python: op['size'] and (op['size'][0]==image_width
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "<span replace=\"op/id\" /> ${dim}"
+msgstr ""
+
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
@@ -29,13 +38,13 @@ msgstr "Fals"
 msgid "True"
 msgstr "Adevarat"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -50,11 +59,11 @@ msgstr "la"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
 #.           (preview)
 #.         </a>
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}" href="http://url..." target="_blank">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -62,7 +71,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(previzualizare)"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -103,7 +112,7 @@ msgstr "Schimba"
 msgid "cpsschemas_label_file_delete"
 msgstr "Sterge"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -152,13 +161,13 @@ msgstr "Pozitie: "
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "toate limbile"
+msgstr "toutes les langues"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
 #, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "limba/limbile urmatoare"
+msgstr "la ou les langues suivantes"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -232,7 +241,7 @@ msgid "description_vocabulary_manage_form"
 msgstr ""
 "Aceasta pagina iti permite sa administrezi vocabularele si intrarile lor."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -440,23 +449,29 @@ msgstr "Original"
 msgid "img_auto_size"
 msgstr "Automat"
 
-msgid "img_icon"
-msgstr "Imagine"
+#, fuzzy
+msgid "img_icon ${dim}"
+msgstr "Vignette ${dim}"
 
-msgid "img_xsmall"
-msgstr "Foarte mica"
+#, fuzzy
+msgid "img_xsmall ${dim}"
+msgstr "Très petite ${dim}"
 
-msgid "img_small"
-msgstr "Mica"
+#, fuzzy
+msgid "img_small ${dim}"
+msgstr "Petite ${dim}"
 
-msgid "img_medium"
-msgstr "Mediu"
+#, fuzzy
+msgid "img_medium ${dim}"
+msgstr "Moyenne ${dim}"
 
-msgid "img_large"
-msgstr "Mare"
+#, fuzzy
+msgid "img_large ${dim}"
+msgstr "Grande ${dim}"
 
-msgid "img_xlarge"
-msgstr "Foarte mare"
+#, fuzzy
+msgid "img_xlarge ${dim}"
+msgstr "Très grande ${dim}"
 
 msgid "cpsschemas_label_false"
 msgstr "Nu"
@@ -580,8 +595,8 @@ msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animatie Flash (swf)"
 
 #, fuzzy
-#~ msgid "button_back"
-#~ msgstr "Inchide"
+msgid "button_back"
+msgstr "Retour"
 
 #~ msgid "cpsschemas_search_language_or"
 #~ msgstr "sau"

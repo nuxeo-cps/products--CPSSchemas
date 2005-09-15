@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-24 15:44default\n"
+"POT-Creation-Date: 2005-09-15 20:09default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -27,6 +27,15 @@ msgstr ""
 "Language-Name: French\n"
 "Domain: default\n"
 
+#.   <option attributes="value op/id" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#.   <option attributes="value op/id;
+#.                 selected python: op['size'] and (op['size'][0]==image_width
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "<span replace=\"op/id\" /> ${dim}"
+msgstr ""
+
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
@@ -37,13 +46,13 @@ msgstr "Non"
 msgid "True"
 msgstr "Oui"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr "Utiliser l'éditeur"
@@ -58,11 +67,11 @@ msgstr "à"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
 #.           (preview)
 #.         </a>
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}" href="http://url..." target="_blank">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -70,7 +79,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(prévisualisation)"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -111,7 +120,7 @@ msgstr "Charger"
 msgid "cpsschemas_label_file_delete"
 msgstr "Supprimer"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -237,7 +246,7 @@ msgstr "Valeur&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr "Cette page vous permet de gérer les vocabulaires et leurs entrées."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -445,23 +454,23 @@ msgstr "Original"
 msgid "img_auto_size"
 msgstr "Automatique"
 
-msgid "img_icon"
-msgstr "Vignette"
+msgid "img_icon ${dim}"
+msgstr "Vignette ${dim}"
 
-msgid "img_xsmall"
-msgstr "Très petite"
+msgid "img_xsmall ${dim}"
+msgstr "Très petite ${dim}"
 
-msgid "img_small"
-msgstr "Petite"
+msgid "img_small ${dim}"
+msgstr "Petite ${dim}"
 
-msgid "img_medium"
-msgstr "Moyenne"
+msgid "img_medium ${dim}"
+msgstr "Moyenne ${dim}"
 
-msgid "img_large"
-msgstr "Grande"
+msgid "img_large ${dim}"
+msgstr "Grande ${dim}"
 
-msgid "img_xlarge"
-msgstr "Très grande"
+msgid "img_xlarge ${dim}"
+msgstr "Très grande ${dim}"
 
 msgid "cpsschemas_label_false"
 msgstr "Non"

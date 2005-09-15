@@ -8,6 +8,8 @@
   size options/size;
   content_url options/content_url;
   last_modified options/last_modified;
+  image_width options/width;
+  image_height options/height;
   image_tag options/image_tag;
   ">
   <img tal:condition="python: mode == 'view' and not empty_file"
@@ -53,8 +55,14 @@
               tal:define="wid_size python:(here.display_width, here.display_height);
               sizes python:[s for s in here.getImgSizes() if not wid_size[0] or s['size'] < wid_size]">
               <option tal:repeat="op sizes"
-                      tal:attributes="value op/id"
-                      tal:content="op/id" i18n:translate="" />
+                tal:attributes="value op/id;
+                selected python: op['size'] and (op['size'][0]==image_width
+                                               or op['size'][1]==image_height)"
+                i18n:translate=""
+                ><span tal:replace="op/id" /> <span tal:condition="op/size"
+                  i18n:name="dim"
+                  tal:content="python:'(%sx%s)' % op['size']">
+                  640x480</span></option>
             </select>
           </tal:block>
         </metal:block>

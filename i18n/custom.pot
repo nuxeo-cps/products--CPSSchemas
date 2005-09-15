@@ -169,22 +169,22 @@ msgstr ""
 msgid "img_auto_size"
 msgstr ""
 
-msgid "img_icon"
+msgid "img_icon ${dim}"
 msgstr ""
 
-msgid "img_xsmall"
+msgid "img_xsmall ${dim}"
 msgstr ""
 
-msgid "img_small"
+msgid "img_small ${dim}"
 msgstr ""
 
-msgid "img_medium"
+msgid "img_medium ${dim}"
 msgstr ""
 
-msgid "img_large"
+msgid "img_large ${dim}"
 msgstr ""
 
-msgid "img_xlarge"
+msgid "img_xlarge ${dim}"
 msgstr ""
 
 msgid "cpsschemas_label_false"
