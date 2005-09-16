@@ -26,8 +26,7 @@ from Products.CPSSchemas.utils import getHumanReadableSize
 class UtilsTestCase(ZopeTestCase):
 
     def test_getHumanReadableSize(self):
-        """ testing human readable size getter
-        """
+        # testing human readable size getter
         str_size = getHumanReadableSize(-1)
         self.assertEquals(str_size, (0, 'cpsschemas_unit_mega_bytes'))
 
