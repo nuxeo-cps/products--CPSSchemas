@@ -21,12 +21,15 @@ import unittest
 from Testing.ZopeTestCase import ZopeTestCase
 
 from Acquisition import Implicit
-from Products.CPSSchemas.StorageAdapter import \
-     AttributeStorageAdapter, MetaDataStorageAdapter, MappingStorageAdapter
+from DateTime.DateTime import DateTime
+from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
+from Products.CPSSchemas.StorageAdapter import MetaDataStorageAdapter
+from Products.CPSSchemas.StorageAdapter import MappingStorageAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 
 
-def sort(l):
+
+def sorted(l):
     l = list(l)
     l.sort()
     return l
@@ -87,10 +90,11 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         adapter = self.adapter
 
         ok_ids = ['f1', 'f2', 'f3', 'f4', 'f5']
-        self.assertEquals(sort(adapter.getFieldIds()), ok_ids)
+        self.assertEquals(sorted(adapter.getFieldIds()), ok_ids)
 
         ok_writable = ['f1', 'f2', 'f3', 'f4', 'f5']
-        self.assertEquals(sort([i[0] for i in adapter.getWritableFieldItems()]),
+        self.assertEquals(sorted([i[0]
+                                  for i in adapter.getWritableFieldItems()]),
                           ok_writable)
 
         ok_default = {'f1': '',
@@ -132,20 +136,65 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         self.assertNotEquals(context_object, None)
 
 
-class TestMetaDataStorageAdapter(TestStorageAdapter):
+class TestMetaDataStorageAdapter(ZopeTestCase):
     def afterSetUp(self):
-        doc = FakeDocument()
+        from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
+        class FakeDCDocument(DefaultDublinCoreImpl, FakeDocument):
+            pass
+
+        doc = FakeDCDocument()
         self.doc = doc
+        doc.creation_date = DateTime('2005-09-01')
+        doc.setModificationDate(DateTime('2005-09-02'))
+        doc.setEffectiveDate(DateTime('2005-09-03'))
+        doc.setExpirationDate(DateTime('2005-09-04'))
         self.doc_proxy = FakeProxy(doc)
 
-        TestStorageAdapter.afterSetUp(self)
+        schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
+        self.schema = schema
+        schema.addField('CreationDate', 'CPS DateTime Field',
+                        write_ignore_storage=True)
+        schema.addField('ModificationDate', 'CPS DateTime Field')
+        schema.addField('EffectiveDate', 'CPS DateTime Field')
+        schema.addField('ExpirationDate', 'CPS DateTime Field')
+
         self.adapter = MetaDataStorageAdapter(self.schema, self.doc)
 
-    def testAccessors(self):
-        # TODO: Later
-        pass
+    def testDCAccessors(self):
+        adapter = self.adapter
 
-    def testMutators(self):
+        ok_ids = ['CreationDate', 'EffectiveDate', 'ExpirationDate',
+                  'ModificationDate']
+        self.assertEquals(sorted(adapter.getFieldIds()), ok_ids)
+
+        ok_writable = ['EffectiveDate', 'ExpirationDate', 'ModificationDate']
+        self.assertEquals(sorted([i[0]
+                                  for i in adapter.getWritableFieldItems()]),
+                          ok_writable)
+
+        ok_data = {'CreationDate': DateTime('2005-09-01'),
+                   'ModificationDate': DateTime('2005-09-02'),
+                   'EffectiveDate': DateTime('2005-09-03'),
+                   'ExpirationDate': DateTime('2005-09-04'),
+                   }
+        data = adapter.getData()
+        adapter.finalizeDefaults(data)
+        self.assertEquals(data, ok_data)
+
+    def testDCMutators(self):
+        adapter = self.adapter
+        doc = self.doc
+        data = {'CreationDate': DateTime('2005-10-01'),
+                'ModificationDate': DateTime('2005-10-02'),
+                'EffectiveDate': DateTime('2005-10-03'),
+                'ExpirationDate': DateTime('2005-10-04'),
+                }
+        adapter.setData(data)
+        self.assertEquals(doc.created(), DateTime('2005-09-01'))
+        self.assertEquals(doc.modified(), DateTime('2005-10-02'))
+        self.assertEquals(doc.effective(), DateTime('2005-10-03'))
+        self.assertEquals(doc.expires(), DateTime('2005-10-04'))
+
         # Checking that the adapter accepts both an object and a proxy as an
         # argument.
         self.adapter.setContextObject(self.doc)

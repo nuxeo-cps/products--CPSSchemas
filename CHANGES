@@ -16,6 +16,8 @@ Bug fixes:
 - added an option to InternalLinks widget to display absolute urls in links
   (useful for CPSNewsletter)
 - #920: removed "target=CPS_Link" for external links.
+- #702: ModificationDate and other *Date fields now return DateTime objects
+  instead of strings.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
