@@ -13,18 +13,18 @@
           <script type="text/javascript" tal:condition="not:use_radio" >
             <!--
 function set_parent_value(parent_id) {
-    var links = new Array()
-    links_html = ''
-    params = ''
-
-    selected = document.form_name.elements
-    for (i = 0; i < selected.length; i++) {
+    var links = new Array();
+    var links_html = '';
+    var params = '';
+    var selected = document.form_name.elements;
+    for (var i = 0; i < selected.length; i++) {
         checkbox = selected[i];
-        if (checkbox.checked)
-            links.push(checkbox.value)
+        if (checkbox.checked) {
+            links.push(checkbox.value);
+        }
     }
-    opener.update_links(links);
-    self.close();
+    window.opener.update_links(links);
+    window.close();
 }
             -->
           </script>
@@ -32,15 +32,16 @@ function set_parent_value(parent_id) {
           <script type="text/javascript" tal:condition="use_radio">
             <!--
 function set_parent_value(parent_id){
-    var doc = ''
-    selected = document.form_name.elements
-    for (i=0; i<selected.length; i++){
-        radiobox = selected[i]
-        if (radiobox.checked)
-            doc = radiobox.value
+    var doc = '';
+    var selected = document.form_name.elements;
+    for (var i=0; i<selected.length; i++){
+        var radiobox = selected[i];
+        if (radiobox.checked) {
+            doc = radiobox.value;
+        }
     }
-    opener.update_doc(doc)
-    self.close()
+    window.opener.update_doc(doc);
+    window.close();
 }
               -->
           </script>
