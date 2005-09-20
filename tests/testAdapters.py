@@ -195,6 +195,18 @@ class TestMetaDataStorageAdapter(ZopeTestCase):
         self.assertEquals(doc.effective(), DateTime('2005-10-03'))
         self.assertEquals(doc.expires(), DateTime('2005-10-04'))
 
+        # Now try with string-dates
+        data = {'CreationDate': '2005-11-01',
+                'ModificationDate': '2005-11-02',
+                'EffectiveDate': '2005-11-03',
+                'ExpirationDate': '2005-11-04',
+                }
+        adapter.setData(data)
+        self.assertEquals(doc.created(), DateTime('2005-09-01'))
+        self.assertEquals(doc.modified(), DateTime('2005-11-02'))
+        self.assertEquals(doc.effective(), DateTime('2005-11-03'))
+        self.assertEquals(doc.expires(), DateTime('2005-11-04'))
+
         # Checking that the adapter accepts both an object and a proxy as an
         # argument.
         self.adapter.setContextObject(self.doc)

@@ -265,7 +265,6 @@ class AttributeStorageAdapter(BaseStorageAdapter):
 
 ACCESSOR = object()
 ACCESSOR_READ_ONLY = object()
-READ_ONLY = object()
 
 class MetaDataStorageAdapter(BaseStorageAdapter):
     """MetaData Storage Adapter
@@ -276,14 +275,14 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
 
     _field_attributes = {
         'Creator': ACCESSOR_READ_ONLY,
-        'CreationDate': ('creation_date', READ_ONLY),
+        'CreationDate': ('creation_date', None),
         'Title': ACCESSOR,
         'Subject': ACCESSOR,
         'Description': ACCESSOR,
         'Contributors': ACCESSOR,
-        'ModificationDate': ('modification_date', None),
-        'EffectiveDate': ('effective_date', None),
-        'ExpirationDate': ('expiration_date', None),
+        'ModificationDate': ('modification_date', 'setModificationDate'),
+        'EffectiveDate': ('effective_date', 'setEffectiveDate'),
+        'ExpirationDate': ('expiration_date', 'setExpirationDate'),
         'Format': ACCESSOR,
         'Language': ACCESSOR,
         'Rights': ACCESSOR,
@@ -343,9 +342,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         elif attr is ACCESSOR_READ_ONLY:
             raise ValueError("Field %s is read-only" % field_id)
         elif isinstance(attr, tuple):
-            if attr[1] is READ_ONLY:
+            if attr[1] is None:
                 raise ValueError("Field %s is read-only" % field_id)
-            setattr(ob, attr[0], value)
+            getattr(ob, attr[1])(value)
         else:
             setattr(ob, attr, value)
 
