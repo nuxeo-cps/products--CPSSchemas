@@ -1,4 +1,32 @@
 *******************************************
+** CPSSchemas V0.45.0 [R1 build 2005/09/21-15:22 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 27306
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- image and photo widgets now display dims in pixels and show the current dim
+  as preselected option in the resize control
+Bug fixes:
+~~~~~~~~~~
+- Fixed the search popup for Internal Links box to search only in the current
+  path using the "here" option (it used to search on the entire site)
+- The title in the link widget was rendered as escaped (#898)
+- #901: Field storage expression context's "proxy" variable is always None in
+  read expressions
+- internallinks popup now works on mozilla/firefox and looks better
+- added an option to InternalLinks widget to display absolute urls in links
+  (useful for CPSNewsletter)
+- #920: removed "target=CPS_Link" for external links.
+- #702: ModificationDate and other *Date fields now return DateTime objects
+  instead of strings.
+- #954 the image caption in the photo widget was not aligned under the image.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.44.0 [R1 build 2005/08/05-13:58 by ben]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 25426
 Requires:
