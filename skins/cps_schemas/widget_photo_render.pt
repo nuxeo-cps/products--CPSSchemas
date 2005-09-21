@@ -18,9 +18,10 @@
   photo_path python:content_url and '/'.join(content_url.split('/')[:-3]) or '';
   original_photo_field python:len(fields)>3 and fields[3] or 'photo_original'
   ">
-  <tal:block condition="python: mode == 'view' and not empty_file" 
-             define="original_photo python:getattr(here,original_photo_field, None)">
-    <div tal:attributes="class python:test(rposition == 'right', 'dright',
+  <div class="photoWidget"
+       tal:condition="python: mode == 'view' and not empty_file" 
+       tal:define="original_photo python:getattr(here,original_photo_field, None)">
+    <p tal:attributes="class python:test(rposition == 'right', 'dright',
                                       test(rposition == 'center', 'dcenter', 'dleft'))">
       <tal:block condition="python: original_photo">
         <a href="#" 
@@ -37,13 +38,13 @@
       <tal:block condition="not: original_photo">
         <img tal:replace="structure image_tag" />
       </tal:block>
-      <div tal:condition="subtitle"
-           style="width: 100px;"
-           tal:attributes="style python:'width: %spx;;' % image_width">
-        <small tal:content="subtitle" />
-      </div>
-    </div>
-  </tal:block>
+      <tal:block condition="subtitle">
+        <br/>
+        <span tal:attributes="style string:width:${image_width}px"
+              tal:content="subtitle" />
+      </tal:block>
+    </p>
+  </div>
 
   <tal:block condition="python: mode == 'edit'">
     <metal:block use-macro="here/widget_image_render/macros/image_title_edit" />

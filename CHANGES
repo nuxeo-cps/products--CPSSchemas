@@ -18,6 +18,7 @@ Bug fixes:
 - #920: removed "target=CPS_Link" for external links.
 - #702: ModificationDate and other *Date fields now return DateTime objects
   instead of strings.
+- #954 the image caption in the photo widget was not aligned under the image.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
