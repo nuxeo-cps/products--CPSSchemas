@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-15 20:09default\n"
-"PO-Revision-Date: 2005-06-17 17:37-0300\n"
+"PO-Revision-Date: 2005-09-29 15:05-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portugues do Brasil <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "<span replace=\"op/id\" /> ${dim}"
-msgstr ""
+msgstr "<span replace=\\\"op/id\\\" /> ${dim}"
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
@@ -51,7 +51,7 @@ msgstr "Verdadeiro"
 #.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
-msgstr ""
+msgstr "Iniciar editor online"
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -448,29 +448,23 @@ msgstr "Original"
 msgid "img_auto_size"
 msgstr "Automático"
 
-#, fuzzy
 msgid "img_icon ${dim}"
-msgstr "Icon ${dim}"
+msgstr "Ícone ${dim}"
 
-#, fuzzy
 msgid "img_xsmall ${dim}"
-msgstr "Extra small ${dim}"
+msgstr "Extra pequeno ${dim}"
 
-#, fuzzy
 msgid "img_small ${dim}"
-msgstr "Small ${dim}"
+msgstr "Pequeno ${dim}"
 
-#, fuzzy
 msgid "img_medium ${dim}"
-msgstr "Medium ${dim}"
+msgstr "Médio ${dim}"
 
-#, fuzzy
 msgid "img_large ${dim}"
-msgstr "Large ${dim}"
+msgstr "Grande ${dim}"
 
-#, fuzzy
 msgid "img_xlarge ${dim}"
-msgstr "Extra large ${dim}"
+msgstr "Extra grande ${dim}"
 
 msgid "cpsschemas_label_false"
 msgstr "Não"
@@ -593,8 +587,4 @@ msgstr "Editar"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animação Flash (swf)"
 
-msgid "button_back"
-msgstr "Voltar"
 
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "ou"
