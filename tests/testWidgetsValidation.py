@@ -438,6 +438,16 @@ class PasswordWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({'is_required': 0, 'size_min': 0}, '')
         self.assertEquals(err, None)
 
+    def test_password_ok_required_2(self):
+        # default value for size_min is 5
+        ret, err, ds = self._validate({'is_required': 0, 'size_min': 0}, 'here')
+        self.assertEquals(err, None)
+
+    def test_password_ok_required_3(self):
+        # Even if there is a size_min, this should not fail
+        ret, err, ds = self._validate({'is_required': 0, 'size_min': 5}, '')
+        self.assertEquals(err, None)
+
     def test_password_nok_required_1(self):
         ret, err, ds = self._validate({'is_required': 1}, '')
         self.assertEquals(err, 'cpsschemas_err_required')
@@ -450,6 +460,12 @@ class PasswordWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({'size_max': 8}, 'foobarfo')
         self.assertEquals(err, None)
 
+    def test_password_ok_size_3(self):
+        # Non-required password fields should not raise an error if empty,
+        # even if min size is set.
+        ret, err, ds = self._validate({'size_min': 5}, '')
+        self.assertEquals(err, None)
+
     def test_password_nok_size_1(self):
         ret, err, ds = self._validate({'size_min': 5}, 'foob')
         self.assertEquals(err, 'cpsschemas_err_password_size_min')
@@ -459,7 +475,7 @@ class PasswordWidgetValidationTest(WidgetValidationTest):
         self.assertEquals(err, 'cpsschemas_err_string_too_long')
 
     def test_password_nok_size_3(self):
-        ret, err, ds = self._validate({'size_min': 5}, '')
+        ret, err, ds = self._validate({'size_min': 5}, 'four')
         self.assertEquals(err, 'cpsschemas_err_password_size_min')
 
     def test_password_ok_lower_1(self):
