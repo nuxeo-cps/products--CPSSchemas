@@ -8,7 +8,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- If you try to update your directory entry you would get an error that the
+  password is too short (#1028).
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved the cleanFileName method from CPSSchemas to CPSUtil.

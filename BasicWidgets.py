@@ -609,10 +609,11 @@ class CPSPasswordWidget(CPSStringWidget):
                 if pv and v != pv:
                     err = 'cpsschemas_err_password_mismatch'
             else:
-                if not v and self.is_required:
-                    datamodel = datastructure.getDataModel()
-                    if not datamodel[self.fields[0]]:
-                        err = 'cpsschemas_err_required'
+                if not v:
+                    if self.is_required:
+                        datamodel = datastructure.getDataModel()
+                        if not datamodel[self.fields[0]]:
+                            err = 'cpsschemas_err_required'
                 else:
                     # checking pw consistancy
                     len_v = len(v)
