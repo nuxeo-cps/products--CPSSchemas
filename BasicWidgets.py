@@ -24,6 +24,7 @@
 Definition of standard widget types.
 """
 
+import string
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_parent, aq_inner
@@ -32,9 +33,11 @@ from types import ListType, TupleType, StringType
 from cgi import escape
 from re import compile, search
 from urlparse import urlparse
+
 from zLOG import LOG, INFO, DEBUG, PROBLEM
 from TAL.TALDefs import attrEscape
-import string
+
+from Products.CPSUtil.id import cleanFileName
 from Products.CPSSchemas.utils import getHumanReadableSize
 
 try:
@@ -93,38 +96,6 @@ def renderHtmlTag(tagname, **kw):
     else:
         res += '>'
     return res
-
-def cleanFileName(current_name):
-    # The attached file current name should not contain special character
-    # otherwise it causes problem when used by the ExternalEditor.
-    # It would be better to use a centralized translation mechanism, that
-    # exists for example in CPSCore, but CPSSchemas is supposed to be
-    # independent of CPSCore :-(
-
-    # FIXME: this is so latin-1 or latin-9 specific!
-    # FIXME: use CPSUtil instead
-
-    # Sometimes the filename is in Unicode
-    if isinstance(current_name, unicode):
-        current_name = current_name.encode('iso-8859-15', 'replace')
-
-    current_name = current_name.replace('Æ', 'AE')
-    current_name = current_name.replace('æ', 'ae')
-    current_name = current_name.replace('¼', 'OE')
-    current_name = current_name.replace('½', 'oe')
-    current_name = current_name.replace('ß', 'ss')
-    translation_table = string.maketrans(
-        r"'\;/ &:ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ",
-        r"_______AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")
-    current_name = current_name.translate(translation_table)
-    accepted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_.'
-    current_name = ''.join([c for c in current_name if c in accepted_chars])
-    while current_name.startswith('_') or current_name.startswith('.'):
-        current_name = current_name[1:]
-    while current_name.endswith('_'):
-        current_name = current_name[:-1]
-
-    return current_name
 
 
 ##################################################
@@ -1783,7 +1754,8 @@ class CPSFileWidget(CPSWidget):
         else:
             empty_file = 1
 
-        # clean current name
+        # Clean the current name to replace special characters. This is
+        # particularly useful for ExternalEditor.
         current_name = cleanFileName(current_name)
 
         # XXX This is a total mess, it needs refactoring.

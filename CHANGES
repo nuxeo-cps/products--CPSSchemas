@@ -11,4 +11,4 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Moved the cleanFileName method from CPSSchemas to CPSUtil.
