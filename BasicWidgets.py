@@ -37,7 +37,7 @@ from urlparse import urlparse
 from zLOG import LOG, INFO, DEBUG, PROBLEM
 from TAL.TALDefs import attrEscape
 
-from Products.CPSUtil.id import cleanFileName
+from Products.CPSUtil.id import generateFileName
 from Products.CPSSchemas.utils import getHumanReadableSize
 
 try:
@@ -96,6 +96,10 @@ def renderHtmlTag(tagname, **kw):
     else:
         res += '>'
     return res
+
+# BBB (remove this in CPS-3.6)
+def cleanFileName(name):
+    return generateFileName(name)
 
 
 ##################################################
