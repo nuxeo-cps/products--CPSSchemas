@@ -1,5 +1,8 @@
 ##parameters=mode, datastructure, post_validate=1
 # $Id$
+"""
+XXX add docstring
+"""
 
 if mode != 'validate':
     # We handle only validation

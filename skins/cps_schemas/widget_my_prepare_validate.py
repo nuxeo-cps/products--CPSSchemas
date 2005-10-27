@@ -1,5 +1,8 @@
 ##parameters=mode, datastructure
 # $Id$
+"""
+XXX add docstring
+"""
 
 datamodel = datastructure.getDataModel()
 
