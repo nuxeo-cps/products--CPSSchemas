@@ -296,7 +296,7 @@ class Layout(PropertiesPostProcessor,
                 # Information about a potential input area is important for
                 # accessibility: it is used to associate the widget label with a
                 # potential input area.
-                if widget.has_input_area:
+                if widget.has_input_area and mode != 'view':
                     input_area_id = widget.getHtmlWidgetId()
                 else:
                     input_area_id = None
