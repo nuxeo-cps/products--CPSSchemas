@@ -2337,7 +2337,9 @@ class CPSCompoundWidget(CPSWidget):
             rendered = widget.render(widget_mode, datastructure, **kw)
             rendered = rendered.strip()
             cell['widget_rendered'] = rendered
-            cells.append(cell)
+            if not widget.hidden_empty or rendered:
+                # do not add widgets to be hidden when empty
+                cells.append(cell)
         return render(mode=mode, datastructure=datastructure,
                       cells=cells, **kw)
 
