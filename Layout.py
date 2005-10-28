@@ -279,6 +279,7 @@ class Layout(PropertiesPostProcessor,
          - widget_css_class
          - widget_rendered
          - widget_javascript
+         - widget_input_area_id
         (In addition to widget_id and ncols of the standard data.)
         """
         layout_structure = self.getLayoutDefinition() # get a copy
@@ -292,7 +293,13 @@ class Layout(PropertiesPostProcessor,
                 mode = widget.getModeFromLayoutMode(layout_mode, datamodel)
                 css_class = widget.getCssClass(layout_mode, datamodel)
                 js_code = widget.getJavaScriptCode(layout_mode, datamodel)
-                input_area_id = widget.getInputAreaId(layout_mode, datamodel)
+                # Information about a potential input area is important for
+                # accessibility: it is used to associate the widget label with a
+                # potential input area.
+                if widget.has_input_area:
+                    input_area_id = widget.getHtmlWidgetId()
+                else:
+                    input_area_id = None
                 widgets[widget_id] = {
                     'widget': widget,
                     'widget_mode': mode,

@@ -147,7 +147,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         ('javascript_expr', 'javascript_expr_c'),
         )
 
-    input_area_id = None
+    has_input_area = False
 
     def __init__(self, id, widgettype, **kw):
         self._setId(id)
@@ -313,30 +313,6 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
                 js_code = js_code_computed
         return js_code
 
-
-    security.declarePrivate('getInputAreaId')
-    def getInputAreaId(self, layout_mode, datamodel):
-        """Return the ID of a potential input area HTML element.
-
-        The HTML code of a widget may produce an HTML element which is an input
-        area (input, textarea, etc.). This method returns the ID of this
-        potential HTML element. Retrieving information about a potential input
-        area is important for accessibility: it is used to associate the widget
-        label with a potential input area.
-        """
-        return self.input_area_id
-
-    security.declarePrivate('getInputAreaId')
-    def setInputAreaId(self, input_area_id):
-        """Set the ID of an potential input area HTML element.
-
-        This method should be used by widgets in their render() method. Setting
-        information about a potential input area is important for accessibility:
-        it is used to associate the widget label with a potential input area.
-        """
-        return
-        # XXX Extremely stupid code removed. Will have to be refactored.
-        self.input_area_id = input_area_id
 
     #
     # May be overloaded.

@@ -248,6 +248,10 @@ class CPSStringWidget(CPSWidget):
          'label': 'Maximum input width'},
         )
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -288,18 +292,15 @@ class CPSStringWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
             # XXX TODO should use an other name than kw !
             # XXX change this everywhere
+            html_widget_id = self.getHtmlWidgetId()
             kw = {'type': 'text',
-                  'id'  : input_area_id,
-                  'name': self.getHtmlWidgetId(),
+                  'id'  : html_widget_id,
+                  'name': html_widget_id,
                   'value': escape(value),
                   'size': self.display_width,
                   }
@@ -824,6 +825,9 @@ class CPSLinesWidget(CPSWidget):
          'label': 'Format for empty list'},
         )
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -854,10 +858,6 @@ class CPSLinesWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -865,9 +865,10 @@ class CPSLinesWidget(CPSWidget):
             # XXX customize view mode, lots of displays are possible
             return ', '.join([escape(i) for i in value])
         elif mode == 'edit':
+            html_widget_id = self.getHtmlWidgetId()
             return renderHtmlTag('textarea',
-                                 id=input_area_id,
-                                 name=self.getHtmlWidgetId()+":lines",
+                                 id=html_widget_id,
+                                 name=html_widget_id + ':lines',
                                  cols=self.width,
                                  rows=self.height,
                                  contents='\n'.join(value))
@@ -970,6 +971,10 @@ class CPSSelectWidget(CPSWidget):
     vocabulary = ''
     translated = False
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         context = datastructure.getDataModel().getContext()
@@ -1016,19 +1021,14 @@ class CPSSelectWidget(CPSWidget):
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.translation_service
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         if mode == 'view':
             if self.translated:
                 return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
         elif mode == 'edit':
-            res = renderHtmlTag('select',
-                                name=self.getHtmlWidgetId(),
-                                id=input_area_id)
+            html_widget_id = self.getHtmlWidgetId()
+            res = renderHtmlTag('select', name=html_widget_id, id=html_widget_id)
             in_selection = 0
             for k, v in vocabulary.items():
                 if self.translated:
@@ -1083,6 +1083,10 @@ class CPSMultiSelectWidget(CPSWidget):
     translated = False
     size = 0
     format_empty = ''
+
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
@@ -1154,10 +1158,6 @@ class CPSMultiSelectWidget(CPSWidget):
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.translation_service
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -1167,9 +1167,9 @@ class CPSMultiSelectWidget(CPSWidget):
                 return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
-            kw = {'name': html_widget_id+':list',
+            kw = {'name': html_widget_id + ':list',
                   'multiple': 'multiple',
-                  'id': input_area_id,
+                  'id': html_widget_id,
                   }
             if self.size:
                 kw['size'] = self.size

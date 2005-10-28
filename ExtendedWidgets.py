@@ -89,6 +89,10 @@ class CPSTextWidget(CPSStringWidget):
     render_format = all_render_formats[0]
     configurable = 'nothing'
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -164,10 +168,6 @@ class CPSTextWidget(CPSStringWidget):
                                % (render_method, self.getId()))
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         rposition = datastructure[widget_id + '_rposition']
         rformat = datastructure[widget_id + '_rformat']
         if mode == 'view':

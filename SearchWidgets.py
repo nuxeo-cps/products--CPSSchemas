@@ -125,6 +125,10 @@ class CPSSearchModifiedWidget(CPSWidget):
                   )
     times = [0, 1, 30, 91, 182, 365]
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         widget_id = self.getWidgetId()
@@ -155,10 +159,6 @@ class CPSSearchModifiedWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         return meth(mode=mode, value=value)
 
 InitializeClass(CPSSearchModifiedWidget)
@@ -273,6 +273,10 @@ class CPSSearchSortWidget(CPSWidget):
                   'relative_path': ('relative_path', ''),
                 }
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         widget_id = self.getWidgetId()
@@ -299,10 +303,6 @@ class CPSSearchSortWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        # Associating the widget label with an input area to improve the widget
-        # accessibility.
-        input_area_id = self.getHtmlWidgetId()
-        self.setInputAreaId(input_area_id)
         return meth(mode=mode, value=value)
 
 InitializeClass(CPSSearchSortWidget)
