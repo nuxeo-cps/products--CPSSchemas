@@ -68,6 +68,10 @@ class Vocabulary(Persistent, Implicit):
 
             Same as first.
 
+          - Vocabulary((('foo', "Foo", 'label_foo'), ('bar', "Bar", 'label_bar')))
+
+            Same as first with message ids (msgids) that can be used for i18n
+
           - Vocabulary(('foo', 'bar'))
 
             Values are same as keys.
