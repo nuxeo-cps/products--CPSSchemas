@@ -303,10 +303,12 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
 
     user_modified = 0
 
-    def __init__(self, id, tuples=None, list=None, dict=None, title='', sort_function=None, **kw):
+    def __init__(self, id, tuples=None, list=None, dict=None, title='',
+                 sort_function=None, **kw):
         self.id = id
         self.title = title
-        vocab = Vocabulary(tuples=tuples, list=list, dict=dict, sort_function=sort_function)
+        vocab = Vocabulary(tuples=tuples, list=list, dict=dict,
+                           sort_function=sort_function)
         self.setVocabulary(vocab)
 
     security.declareProtected(ManagePortal, 'setVocabulary')
