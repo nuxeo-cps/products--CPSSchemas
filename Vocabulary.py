@@ -265,7 +265,7 @@ InitializeClass(Vocabulary)
 
 class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     """Persistent Vocabulary.
-    
+
     XXX Why is this vocabulary said persistent whereas it's "base" class already
     is?
     XXX Why isn't Vocabulary inherited?
@@ -388,7 +388,7 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         """Tell if the vocabulary has been modified by a user.
         """
         return self.user_modified
-    
+
     #
     # ZMI
     #
