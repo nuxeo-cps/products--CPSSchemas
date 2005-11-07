@@ -3,17 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
-  <mario [at] curiango.ipen.br>)
+-
 Bug fixes:
 ~~~~~~~~~~
-- If you try to update your directory entry you would get an error that the
-  password is too short (#1028).
-- Re-enabled the labels and input areas association to increase CPS
-  accessibility. This time the implementation does not generate modifications in
-  the ZODB.
-- Widgets configured to be hidden when empty were not hidden in a compound
-  widget.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Moved the cleanFileName method from CPSSchemas to CPSUtil.
+-
