@@ -31,7 +31,7 @@
  </div>
 </div>
   <input type="button" value="button_cancel" class="context"
-    onClick="window.close()" i18n:attributes="value" />
+    onclick="window.close()" i18n:attributes="value" />
   <input type="submit" value="button_update" class="standalone"
     i18n:attributes="value" />
 </form>

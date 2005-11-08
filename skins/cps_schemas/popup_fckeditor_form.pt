@@ -54,14 +54,10 @@ oFCKeditor.Create();
 </div>
 <div style="margin-top: 0.5em;">
   <input type="button" value="button_cancel" class="context"
-    onClick="window.close()" i18n:attributes="value" />
+    onclick="window.close()" i18n:attributes="value"/>
   <input type="submit" value="button_update" class="standalone"
-    i18n:attributes="value" />
-   <span style="font-family: Tahoma, Arial, Helvetica, Geneva, Helv, Univers, sans-serif; font-size: 12px;">
-    <span style="font-weight:bold;"
-          tal:content="label_edit" i18n:translate="" />
-    &nbsp;mise à jour WYSIWYG.
-   </span>
+    i18n:attributes="value"/>
+</div>
 </form>
 </div>
 </div>

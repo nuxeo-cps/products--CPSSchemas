@@ -1,31 +1,28 @@
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
- * 
+ *
  * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
+ *		http://www.opensource.org/licenses/lgpl-license.php
+ *
  * For further information visit:
- * 		http://www.fckeditor.net/
- * 
+ *		http://www.fckeditor.net/
+ *
  * File Name: fckconfig.js
- * 	Editor configuration settings.
- * 	See the documentation for more info.
- * 
+ *	Editor configuration settings.
+ *	See the documentation for more info.
+ *
  * File Authors:
- * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
- * 
- * Version:  2.0 
+ *		Frederico Caldeira Knabben (fredck@fckeditor.net)
+ *
+ * Version:  2.0
  * Modified: 2005-08-21 tres tard
- * 
+ *
  * File Authors:
- * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
+ *		Frederico Caldeira Knabben (fredck@fckeditor.net)
  *
  * Zope + Plone2 adaptation : Jean-mat Grimaldi - jean-mat@macadames.com
  */
-
-
-
 // basepath example for other Zope Implementation
 // FCKConfig.BasePath = document.location.protocol + '//' + document.location.host + document.location.pathname.substring(0,document.location.pathname.lastIndexOf('/')+1) ;
 
@@ -35,11 +32,11 @@ FCKConfig.CustomConfigurationsPath = '' ;
 // FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css' ;
 FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'plone.css' ;
 
-FCKConfig.DocType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' ;
+FCKConfig.DocType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
 FCKConfig.BaseHref = '' ;
 
-// don't use true with plone 
+// don't use true with plone
 FCKConfig.FullPage = false ;
 
 FCKConfig.Debug = false ;
