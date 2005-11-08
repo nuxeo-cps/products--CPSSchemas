@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added support for FCKeditor as the HTML editor.
 Bug fixes:
 ~~~~~~~~~~
 -
