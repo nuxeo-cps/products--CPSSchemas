@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.47.0 [R1 build 2005/11/08-16:55 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 29274
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added support for FCKeditor as the HTML editor.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.46.0 [R1 build 2005/11/07-15:25 by fguillaume]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 29058
 Requires:
