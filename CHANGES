@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Search ZCText widget rendering was presenting a field selection even if
+  there was only one field available.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
