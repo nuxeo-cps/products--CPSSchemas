@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <layout xmlns:tal="http://xml.zope.org/namespaces/tal">
-  <widget id="WIDGET_ID" kind="KIND"
+  <widget id="WIDGET_ID" type="TYPE"
           tal:repeat="info here/listWidgetInfos"
           tal:attributes="id info/id;
-                          kind info/kind;
+                          type info/type;
                           ">
     <property tal:replace="structure info/propsXML"/>
   </widget>

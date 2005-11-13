@@ -26,7 +26,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFSetup.utils import ConfiguratorBase
+from Products.CMFSetup.utils import ImportConfiguratorBase
+from Products.CMFSetup.utils import ExportConfiguratorBase
 from Products.CMFSetup.utils import CONVERTER, DEFAULT, KEY
 
 _pkgdir = package_home(globals())
@@ -38,7 +39,6 @@ _FILENAME = 'layouts.xml'
 
 def importLayoutTool(context):
     """Import layouts."""
-    raise NotImplementedError
     site = context.getSite()
     encoding = context.getEncoding()
     tool = getToolByName(site, 'portal_layouts')
@@ -69,13 +69,29 @@ def importLayoutTool(context):
 
         layout = tool.manage_addCPSLayout(layout_id)
 
+        # Widgets
         for widget_info in layout_info['widgets']:
             id = widget_info['id']
-            kind = widget_info['kind']
-            widget = layout.manage_addWidget(id, kind)
+            type = widget_info['type']
+            widget = layout.addWidget(id, type)
             for prop_info in widget_info['properties']:
                 lconf.initProperty(widget, prop_info)
             widget._postProcessProperties()
+
+        # Layout properties
+        for prop_info in layout_info['properties']:
+            lconf.initProperty(layout, prop_info)
+        layout._postProcessProperties()
+
+        # Layout table
+        rows = []
+        for rowinfo in layout_info['table']['rows']:
+            row = []
+            for cellinfo in rowinfo['cells']:
+                row.append({'widget_id': cellinfo['id'],
+                            'ncols': cellinfo['ncols']})
+            rows.append(row)
+        layout.setLayoutDefinition({'rows': rows})
 
     return "Layouts imported."
 
@@ -102,12 +118,7 @@ def exportLayoutTool(context):
     return "Layouts exported."
 
 
-class LayoutToolImportConfigurator(ConfiguratorBase):
-    security = ClassSecurityInfo()
-
-    def _getExportTemplate(self): # XXX artefact
-        return None
-
+class LayoutToolImportConfigurator(ImportConfiguratorBase):
     def _getImportMapping(self):
         return {
             'layout-tool': {
@@ -127,7 +138,7 @@ class LayoutToolImportConfigurator(ConfiguratorBase):
 InitializeClass(LayoutToolImportConfigurator)
 
 
-class LayoutToolExportConfigurator(ConfiguratorBase):
+class LayoutToolExportConfigurator(ExportConfiguratorBase):
     security = ClassSecurityInfo()
 
     security.declareProtected(ManagePortal, 'getLayoutToolInfo')
@@ -149,28 +160,40 @@ class LayoutToolExportConfigurator(ConfiguratorBase):
 InitializeClass(LayoutToolExportConfigurator)
 
 
-class LayoutImportConfigurator(ConfiguratorBase):
+class LayoutImportConfigurator(ImportConfiguratorBase):
     """Layout import configurator.
     """
-    def _getExportTemplate(self): # XXX artefact
-        return None
-
     def _getImportMapping(self):
         return {
             'layout': {
                 'widget': {KEY: 'widgets', DEFAULT: ()},
+                'table': {CONVERTER: self._convertToUnique},
+                'property': {KEY: 'properties', DEFAULT: ()},
                 },
             'widget': {
                 'id': {},
-                'kind': {},
+                'type': {},
                 'property': {KEY: 'properties', DEFAULT: ()},
                 },
+            'table': {
+                'row': {KEY: 'rows', DEFAULT: ()},
+                },
+            'row': {
+                'cell': {KEY: 'cells', DEFAULT: ()},
+                },
+            'cell': {
+                'id': {},
+                'ncols': {CONVERTER: self._convertToInt, DEFAULT: 1},
+                },
             }
+
+    def _convertToInt(self, val):
+        return int(val)
 
 InitializeClass(LayoutImportConfigurator)
 
 
-class LayoutExportConfigurator(ConfiguratorBase):
+class LayoutExportConfigurator(ExportConfiguratorBase):
     """Layout export configurator for a given layout.
     """
     security = ClassSecurityInfo()
@@ -190,11 +213,6 @@ class LayoutExportConfigurator(ConfiguratorBase):
                 continue
             value = ob.getProperty(prop_id)
             class_value = getattr(ob.__class__, prop_id, marker)
-            # Old Zopes stored lists, not tuples
-            #if isinstance(class_value, list):
-            #    class_value = tuple(class_value)
-            #if isinstance(value, list):
-            #    value = tuple(value)
             if value == class_value:
                 continue
             if (prop_map['type'] == 'boolean'
@@ -243,7 +261,7 @@ class LayoutExportConfigurator(ConfiguratorBase):
             propsXML = self.reindent(propsXML, '  ')
             info = {
                 'id': widget_id,
-                'kind': widget.meta_type,
+                'type': widget.meta_type,
                 'propsXML': propsXML,
                 }
             result.append(info)
