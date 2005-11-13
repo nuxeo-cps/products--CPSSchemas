@@ -449,10 +449,6 @@ class Layout(PropertiesPostProcessor,
                                 **kw)
         return rendered
 
-    def __repr__(self):
-        return '<Layout %s>' % `self.getLayoutDefinition()`
-
-
 InitializeClass(Layout)
 
 

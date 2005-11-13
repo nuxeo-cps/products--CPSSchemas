@@ -135,9 +135,6 @@ class Vocabulary(Persistent, Implicit):
         self._msgids = m
         self._sort_fonction = sort_function
 
-    def __repr__(self):
-        return '<Vocabulary %s>' % repr(self._dict)
-
     def clear(self):
         """Clear the vocabulary."""
         self._list = []
