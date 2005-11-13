@@ -121,19 +121,18 @@ class Layout(PropertiesPostProcessor,
     """
 
     _properties = (
-        {'id': 'style_prefix', 'type': 'string', 'mode': 'w',
-         'label': 'Prefix for zpt'},
         {'id': 'layout_create_method', 'type': 'string', 'mode': 'w',
-         'label': 'ZPT in charge of layout when in create mode'},
+         'label': 'Layout method for create mode'},
         {'id': 'layout_edit_method', 'type': 'string', 'mode': 'w',
-         'label': 'ZPT in charge of layout when in edit mode'},
+         'label': 'Layout method for edit mode'},
         {'id': 'layout_view_method', 'type': 'string', 'mode': 'w',
-         'label': 'ZPT in charge of layout when in view mode'},
+         'label': 'Layout method for view mode'},
+        {'id': 'style_prefix', 'type': 'string', 'mode': 'w',
+         'label': 'Layout method prefix for default'},
         {'id': 'flexible_widgets', 'type': 'tokens', 'mode': 'w',
          'label': 'Allowed widgets in flexible'},
         {'id': 'validate_values_expr', 'type': 'text', 'mode': 'w',
-         'label': 'Validates layout values with the given expression, \
-             see documentation'},
+         'label': 'Layout validation expression'},
         )
 
     style_prefix = 'layout_default_'
