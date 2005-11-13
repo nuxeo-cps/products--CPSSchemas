@@ -27,9 +27,9 @@ from Globals import InitializeClass
 from DateTime import DateTime
 
 from Products.CMFCore.utils import getToolByName
-from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
-from Products.CPSSchemas.Widget import CPSWidgetType, CPSWidget
-
+from Products.CPSSchemas.Widget import CPSWidget
+from Products.CPSSchemas.Widget import widgetRegistry
+from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 
 #
 # Search ZCText widget
@@ -39,8 +39,7 @@ class CPSSearchZCTextWidget(CPSWidget):
 
     This widget should be used only on edit mode to buid search form.
     """
-    meta_type = "CPS Search ZCText Widget"
-    _properties = CPSWidget._properties
+    meta_type = 'Search ZCText Widget'
     field_types = ('CPS String Field', 'CPS String Field',
                    'CPS String Field', 'CPS String Field',
                    ) # can handle query up to 4 Zctextindex
@@ -102,13 +101,7 @@ class CPSSearchZCTextWidget(CPSWidget):
 
 InitializeClass(CPSSearchZCTextWidget)
 
-
-class CPSSearchZCTextWidgetType(CPSWidgetType):
-    """Widget Type."""
-    meta_type = "CPS Search ZCText Widget Type"
-    cls = CPSSearchZCTextWidget
-
-InitializeClass(CPSSearchZCTextWidgetType)
+widgetRegistry.register(CPSSearchZCTextWidget)
 
 #
 # Modified widget
@@ -118,8 +111,7 @@ class CPSSearchModifiedWidget(CPSWidget):
 
     This widget should be used only on edit mode to buid search form.
     """
-    meta_type = "CPS Search Modified Widget"
-    _properties = CPSWidget._properties
+    meta_type = 'Search Modified Widget'
     field_types = ('CPS String Field',  # the date
                    'CPS String Field',  # the modified-usage
                   )
@@ -163,13 +155,7 @@ class CPSSearchModifiedWidget(CPSWidget):
 
 InitializeClass(CPSSearchModifiedWidget)
 
-
-class CPSSearchModifiedWidgetType(CPSWidgetType):
-    """Widget Type."""
-    meta_type = "CPS Search Modified Widget Type"
-    cls = CPSSearchModifiedWidget
-
-InitializeClass(CPSSearchModifiedWidgetType)
+widgetRegistry.register(CPSSearchModifiedWidget)
 
 #
 # Language widget
@@ -179,8 +165,7 @@ class CPSSearchLanguageWidget(CPSWidget):
 
     This widget should be used only on edit mode to build search forms.
     """
-    meta_type = "CPS Search Language Widget"
-    _properties = CPSWidget._properties
+    meta_type = 'Search Language Widget'
     field_types = ('CPS String List Field',)
 
 
@@ -232,15 +217,7 @@ class CPSSearchLanguageWidget(CPSWidget):
 
 InitializeClass(CPSSearchLanguageWidget)
 
-
-class CPSSearchLanguageWidgetType(CPSWidgetType):
-    """Widget Type."""
-    meta_type = "CPS Search Language Widget Type"
-    cls = CPSSearchLanguageWidget
-
-InitializeClass(CPSSearchLanguageWidgetType)
-
-
+widgetRegistry.register(CPSSearchLanguageWidget)
 
 #
 # Sort widget
@@ -250,7 +227,7 @@ class CPSSearchSortWidget(CPSWidget):
 
     This widget should be used only on edit mode to buid search form.
     """
-    meta_type = "CPS Search Sort Widget"
+    meta_type = 'Search Sort Widget'
     _properties = CPSWidget._properties + (
         {'id': 'sort_limit', 'type': 'int', 'mode': 'w',
          'label': 'Maximum number of result'},
@@ -307,22 +284,30 @@ class CPSSearchSortWidget(CPSWidget):
 
 InitializeClass(CPSSearchSortWidget)
 
-
-class CPSSearchSortWidgetType(CPSWidgetType):
-    """Widget Type."""
-    meta_type = "CPS Search Sort Widget Type"
-    cls = CPSSearchSortWidget
-
-InitializeClass(CPSSearchSortWidgetType)
-
+widgetRegistry.register(CPSSearchSortWidget)
 
 ##################################################
 
-WidgetTypeRegistry.register(CPSSearchZCTextWidgetType,
-                            CPSSearchZCTextWidget)
-WidgetTypeRegistry.register(CPSSearchModifiedWidgetType,
-                            CPSSearchModifiedWidget)
-WidgetTypeRegistry.register(CPSSearchLanguageWidgetType,
-                            CPSSearchLanguageWidget)
-WidgetTypeRegistry.register(CPSSearchSortWidgetType,
-                            CPSSearchSortWidget)
+class CPSSearchWidget(CPSProgrammerCompoundWidget):
+    """Widget for advanced search.
+    """
+    meta_type = 'Search Widget'
+    render_method = 'widget_search_render'
+    prepare_validate_method = ''
+
+InitializeClass(CPSSearchWidget)
+
+widgetRegistry.register(CPSSearchWidget)
+
+
+class CPSSearchLocationWidget(CPSProgrammerCompoundWidget):
+    """Widget to display a search location.
+    """
+    meta_type = 'Search Location Widget'
+    render_method = 'widget_searchlocation_render'
+    prepare_validate_method = 'widget_searchlocation_prepare_validate'
+    field_types = ('CPS String Field',)
+
+InitializeClass(CPSSearchLocationWidget)
+
+widgetRegistry.register(CPSSearchLocationWidget)

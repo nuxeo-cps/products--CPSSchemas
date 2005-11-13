@@ -25,8 +25,6 @@ from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
-from Products.CPSSchemas.BasicWidgets import CPSStringWidgetType
-from Products.CPSSchemas.BasicWidgets import CPSIntWidgetType
 
 
 class FakePortal(Implicit):
@@ -39,18 +37,6 @@ class FakeUrlTool(Implicit):
 fakeUrlTool = FakeUrlTool()
 fakePortal.portal_url = fakeUrlTool
 
-class FakeWidgetTypesTool(Implicit):
-    def __getitem__(self,name):
-        if name == 'Int Widget':
-            # TODO should use fake widgets
-            return CPSIntWidgetType('int_factory')
-        elif name == 'String Widget':
-            return CPSStringWidgetType('string_factory')
-        else:
-            return None
-
-fakeWidgetTypeTool = FakeWidgetTypesTool()
-fakePortal.portal_widget_types = fakeWidgetTypeTool
 
 class FakeDocument:
     f1 = 'f1class'

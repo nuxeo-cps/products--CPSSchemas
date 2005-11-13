@@ -21,6 +21,8 @@
 
 import unittest
 from Acquisition import Implicit
+from OFS.Folder import Folder
+from OFS.SimpleItem import SimpleItem
 
 from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.Widget import Widget
@@ -38,6 +40,18 @@ class FakeTranslationService:
     def getSelectedLanguage(self):
         return 'fr'
 
+class FakeWidget(SimpleItem):
+    hidden_empty = False
+    def __init__(self, id, field_ids):
+        self.id = id
+        self.field_ids = field_ids
+    def render(self, widget_mode, ds, **kw):
+        return 'FakeWidget %s mode=%s val=%s' % (self.id, widget_mode,
+                                                 ds[self.field_ids[0]])
+
+class FakeLayout(Folder):
+    pass
+
 fakePortal.portal_url = FakeUrlTool()
 fakePortal.portal_workflow = None
 fakePortal.translation_service = FakeTranslationService()
@@ -46,32 +60,32 @@ class TestWidgets(unittest.TestCase):
 
     def testStringWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSStringWidget
-        widget = CPSStringWidget('foo', 'notype')
+        widget = CPSStringWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS String Field',))
 
     def testIntWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSIntWidget
-        widget = CPSIntWidget('foo', 'notype')
+        widget = CPSIntWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Int Field',))
 
     def testLongWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSLongWidget
-        widget = CPSLongWidget('foo', 'notype')
+        widget = CPSLongWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Long Field',))
 
     def testFloatWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSFloatWidget
-        widget = CPSFloatWidget('foo', 'notype')
+        widget = CPSFloatWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Float Field',))
 
     def testDateTimeWidget_getDateTimeInfo(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
         from DateTime.DateTime import DateTime
-        widget = CPSDateTimeWidget('foo', 'notype').__of__(fakePortal)
+        widget = CPSDateTimeWidget('foo').__of__(fakePortal)
 
         #
         # None value
@@ -111,14 +125,14 @@ class TestWidgets(unittest.TestCase):
 
     def testFlashWidget(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
-        widget = CPSFlashWidget('foo', 'notype')
+        widget = CPSFlashWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS File Field',))
 
     def test_getCssClass(self):
         # create a bare widget, and set it in the portal to be able to create
         # the expression namespace
-        widget = Widget('widget_id', 'notype').__of__(fakePortal)
+        widget = Widget('widget_id').__of__(fakePortal)
         dm = DataModel(ob=None, proxy=None)
 
         # just use css_class
@@ -168,7 +182,7 @@ class TestWidgets(unittest.TestCase):
     def test_getJavaScriptCode(self):
         # create a bare widget, and set it in the portal to be able to create
         # the expression namespace
-        widget = Widget('widget_id', 'notype').__of__(fakePortal)
+        widget = Widget('widget_id').__of__(fakePortal)
         dm = DataModel(ob=None, proxy=None)
 
         # dummy tests, sorry, no JavaScript inspiration :)
@@ -210,7 +224,7 @@ function getLayoutMode() {
 
     def test_CPSIdentifierWidget(self):
        from Products.CPSSchemas.BasicWidgets import CPSIdentifierWidget
-       wi = CPSIdentifierWidget('widget_id', 'notype')
+       wi = CPSIdentifierWidget('widget_id')
        self.assert_(not wi._checkIdentifier('136ll'))
        self.assert_(not wi._checkIdentifier('é"136ll'))
        wi.id_pat = r'[a-zA-Z0-9@\-\._]*$'
@@ -219,23 +233,92 @@ function getLayoutMode() {
 
     def test_CPSSearchZCTextWidget(self):
         from Products.CPSSchemas.SearchWidgets import CPSSearchZCTextWidget
-        widget = CPSSearchZCTextWidget('foo', 'notype').__of__(fakePortal)
+        widget = CPSSearchZCTextWidget('foo').__of__(fakePortal)
         # XXX: add more tests here
 
     def test_CPSSearchModifiedWidget(self):
         from Products.CPSSchemas.SearchWidgets import CPSSearchModifiedWidget
-        widget = CPSSearchModifiedWidget('foo', 'notype').__of__(fakePortal)
+        widget = CPSSearchModifiedWidget('foo').__of__(fakePortal)
         # XXX: add more tests here
 
     def test_CPSSearchLanguageWidget(self):
         from Products.CPSSchemas.SearchWidgets import CPSSearchLanguageWidget
-        widget = CPSSearchLanguageWidget('foo', 'notype').__of__(fakePortal)
+        widget = CPSSearchLanguageWidget('foo').__of__(fakePortal)
         # XXX: add more tests here
 
     def test_CPSSearchSortWidget(self):
         from Products.CPSSchemas.SearchWidgets import CPSSearchSortWidget
-        widget = CPSSearchSortWidget('foo', 'notype').__of__(fakePortal)
+        widget = CPSSearchSortWidget('foo').__of__(fakePortal)
         # XXX: add more tests here
+
+    def test_CPSCompoundWidget(self):
+        from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
+        widget = CPSCompoundWidget('foo')
+        widget.widget_ids = ['w1', 'w2']
+        widget.field_ids = [] # some widgets are badly configured
+        w1 = FakeWidget('w1', ['f1'])
+        w2 = FakeWidget('w2', ['f2'])
+        layout = FakeLayout('layout')
+        layout._setObject('w1', w1)
+        layout._setObject('w2', w2)
+        def render_method(mode=None, datastructure=None, cells=None, **kw):
+            s = ['mode %s' % mode]
+            for cell in cells:
+                s.append(cell['widget_rendered'])
+            return '|'.join(s)
+        widget.widget_compound_default_render = render_method
+        layout = layout.__of__(fakePortal)
+        widget = widget.__of__(layout)
+        widget_infos = {
+            'w1': {'widget': w1, 'widget_mode': 'view', 'css_class': ''},
+            'w2': {'widget': w2, 'widget_mode': 'view', 'css_class': ''},
+            }
+        ds = {'f1': 'Foo',
+              'f2': 'Bar'}
+        rendered = widget.render('view', ds, widget_infos=widget_infos)
+        self.assertEquals(rendered,
+                          'mode view|'
+                          'FakeWidget w1 mode=view val=Foo|'
+                          'FakeWidget w2 mode=view val=Bar')
+
+    def test_CPSCompoundWidget_old_LinkWidget(self):
+        from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
+        widget = CPSCompoundWidget('foo')
+        widget.widget_type = 'Link Widget'
+        widget.widget_ids = ['w1', 'w2', 'w3']
+        widget.field_ids = [] # some widgets were badly configured
+        w1 = FakeWidget('w1', ['f1'])
+        w2 = FakeWidget('w2', ['f2'])
+        w3 = FakeWidget('w3', ['f3'])
+        layout = FakeLayout('layout')
+        layout._setObject('w1', w1)
+        layout._setObject('w2', w2)
+        layout._setObject('w3', w3)
+        def render_method(mode=None, datastructure=None, cells=None, **kw):
+            s = ['mode %s' % mode]
+            for cell in cells:
+                s.append(cell['widget_rendered'])
+            return '|'.join(s)
+        widget.widget_link_render = render_method
+        layout = layout.__of__(fakePortal)
+        widget = widget.__of__(layout)
+        widget_infos = {
+            'w1': {'widget': w1, 'widget_mode': 'view', 'css_class': ''},
+            'w2': {'widget': w2, 'widget_mode': 'view', 'css_class': ''},
+            'w3': {'widget': w3, 'widget_mode': 'view', 'css_class': ''},
+            }
+        ds = {'f1': 'http://foo',
+              'f2': 'Foo',
+              'f3': "The foo."}
+        rendered = widget.render('view', ds, widget_infos=widget_infos)
+        self.assertEquals(rendered,
+                          'mode view|'
+                          'FakeWidget w1 mode=view val=http://foo|'
+                          'FakeWidget w2 mode=view val=Foo|'
+                          'FakeWidget w3 mode=view val=The foo.')
+
+
+
 
 def test_suite():
     return unittest.TestSuite((

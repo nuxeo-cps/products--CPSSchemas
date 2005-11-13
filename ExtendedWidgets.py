@@ -36,20 +36,25 @@ from zLOG import LOG, DEBUG, TRACE
 from zipfile import ZipFile, BadZipfile
 from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
-from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
-from Products.CPSSchemas.Widget import CPSWidget, CPSWidgetType
-from Products.CPSSchemas.BasicWidgets import CPSNoneWidget, \
-     CPSSelectWidget, CPSMultiSelectWidget, \
-     CPSStringWidget, CPSImageWidget, CPSFileWidget, \
-     _isinstance, renderHtmlTag
+from Products.CPSSchemas.Widget import CPSWidget
+from Products.CPSSchemas.Widget import widgetRegistry
+from Products.CPSSchemas.BasicWidgets import CPSNoneWidget
+from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
+from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget
+from Products.CPSSchemas.BasicWidgets import CPSStringWidget
+from Products.CPSSchemas.BasicWidgets import CPSImageWidget
+from Products.CPSSchemas.BasicWidgets import CPSFileWidget
+from Products.CPSSchemas.BasicWidgets import _isinstance
+from Products.CPSSchemas.BasicWidgets import renderHtmlTag
+from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 
-from swfHeaderData import analyseContent
+from Products.CPSSchemas.swfHeaderData import analyseContent
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
 class CPSTextWidget(CPSStringWidget):
     """Text widget."""
-    meta_type = "CPS Text Widget"
+    meta_type = 'Text Widget'
 
     # Warning if configurable the widget require field[1] and field[2]
     field_types = ('CPS String Field',  # text value
@@ -189,15 +194,7 @@ class CPSTextWidget(CPSStringWidget):
 
 InitializeClass(CPSTextWidget)
 
-
-class CPSTextWidgetType(CPSWidgetType):
-    """Text widget type."""
-    meta_type = "CPS Text Widget Type"
-    cls = CPSTextWidget
-
-InitializeClass(CPSTextWidgetType)
-
-
+widgetRegistry.register(CPSTextWidget)
 
 ##################################################
 # previously named CPSDateWidget in BasicWidget r1.78
@@ -209,7 +206,7 @@ class CPSDateTimeWidget(CPSWidget):
     or in a localized format (mm/dd/YYYY for English and dd/mm/YYYY for the rest
     of the world) cf. http://www.w3.org/TR/NOTE-datetime
     """
-    meta_type = "CPS DateTime Widget"
+    meta_type = 'DateTime Widget'
 
     field_types = ('CPS DateTime Field',)
 
@@ -364,20 +361,12 @@ class CPSDateTimeWidget(CPSWidget):
 
 InitializeClass(CPSDateTimeWidget)
 
-
-class CPSDateTimeWidgetType(CPSWidgetType):
-    """DateTime widget type."""
-    meta_type = "CPS DateTime Widget Type"
-    cls = CPSDateTimeWidget
-
-InitializeClass(CPSDateTimeWidgetType)
-
-
+widgetRegistry.register(CPSDateTimeWidget)
 
 ##################################################
 class CPSAttachedFileWidget(CPSFileWidget):
     """AttachedFile widget."""
-    meta_type = "CPS AttachedFile Widget"
+    meta_type = 'AttachedFile Widget'
 
     # XXX The second and third fields are actually optional...
     field_types = ('CPS File Field', 'CPS String Field', 'CPS File Field')
@@ -521,14 +510,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
 
 InitializeClass(CPSAttachedFileWidget)
 
-
-class CPSAttachedFileWidgetType(CPSWidgetType):
-    """AttachedFile widget type."""
-    meta_type = "CPS AttachedFile Widget Type"
-    cls = CPSAttachedFileWidget
-
-InitializeClass(CPSAttachedFileWidgetType)
-
+widgetRegistry.register(CPSAttachedFileWidget)
 
 ##################################################
 class CPSZippedHtmlWidget(CPSAttachedFileWidget):
@@ -537,7 +519,7 @@ class CPSZippedHtmlWidget(CPSAttachedFileWidget):
     A zip file that contains html which can be viewed online.
     Use index.html or any html file from the zip as preview page.
     """
-    meta_type = "CPS ZippedHtml Widget"
+    meta_type = 'ZippedHtml Widget'
     size_max = 1024*1024
 
     # XXX don't knwo why this does not work ?
@@ -597,15 +579,7 @@ class CPSZippedHtmlWidget(CPSAttachedFileWidget):
 
 InitializeClass(CPSZippedHtmlWidget)
 
-
-class CPSZippedHtmlWidgetType(CPSWidgetType):
-    """ZippedHtml widget type."""
-    meta_type = "CPS ZippedHtml Widget Type"
-    cls = CPSZippedHtmlWidget
-
-InitializeClass(CPSZippedHtmlWidgetType)
-
-
+widgetRegistry.register(CPSZippedHtmlWidget)
 
 #################################################
 
@@ -615,7 +589,7 @@ class CPSRichTextEditorWidget(CPSWidget):
     This widget should not be used. Use the Text Widget which provides both HTML
     and text formats.
     """
-    meta_type = "CPS Rich Text Editor Widget"
+    meta_type = 'Rich Text Editor Widget'
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -675,19 +649,13 @@ class CPSRichTextEditorWidget(CPSWidget):
 
 InitializeClass(CPSRichTextEditorWidget)
 
-class CPSRichTextEditorWidgetType(CPSWidgetType):
-    """RTE widget type"""
-    meta_type = "CPS Rich Text Editor Widget Type"
-    cls = CPSRichTextEditorWidget
-
-InitializeClass(CPSRichTextEditorWidgetType)
-
+widgetRegistry.register(CPSRichTextEditorWidget)
 
 ##########################################
 
 class CPSExtendedSelectWidget(CPSSelectWidget):
     """Extended Select widget."""
-    meta_type = "CPS ExtendedSelect Widget"
+    meta_type = 'ExtendedSelect Widget'
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -710,18 +678,13 @@ class CPSExtendedSelectWidget(CPSSelectWidget):
 
 InitializeClass(CPSExtendedSelectWidget)
 
-class CPSExtendedSelectWidgetType(CPSWidgetType):
-    """Extended Select widget type."""
-    meta_type = "CPS ExtendedSelect Widget Type"
-    cls = CPSExtendedSelectWidget
-
-InitializeClass(CPSExtendedSelectWidgetType)
+widgetRegistry.register(CPSExtendedSelectWidget)
 
 ##########################################
 
 class CPSInternalLinksWidget(CPSWidget):
     """Internal Links widget."""
-    meta_type = "CPS InternalLinks Widget"
+    meta_type = 'InternalLinks Widget'
 
     field_types = ('CPS String List Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -778,18 +741,13 @@ class CPSInternalLinksWidget(CPSWidget):
 
 InitializeClass(CPSInternalLinksWidget)
 
-class CPSInternalLinksWidgetType(CPSWidgetType):
-    """Internal links widget type."""
-    meta_type = "CPS InternalLinks Widget Type"
-    cls = CPSInternalLinksWidget
-
-InitializeClass(CPSInternalLinksWidgetType)
+widgetRegistry.register(CPSInternalLinksWidget)
 
 ##################################################
 
 class CPSPhotoWidget(CPSImageWidget):
     """Photo widget."""
-    meta_type = "CPS Photo Widget"
+    meta_type = 'Photo Widget'
 
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Sub title
@@ -969,28 +927,13 @@ class CPSPhotoWidget(CPSImageWidget):
 
 InitializeClass(CPSPhotoWidget)
 
-
-class CPSPhotoWidgetType(CPSWidgetType):
-    """Photo widget type."""
-    meta_type = "CPS Photo Widget Type"
-    cls = CPSPhotoWidget
-
-    # XXX: TBD
-
-InitializeClass(CPSPhotoWidgetType)
-
-##################################################
-class CPSLinkWidget(CPSNoneWidget):
-    """Deprecated Link Widget now using compound widget."""
-    meta_type = "CPS Link Widget"
-
-InitializeClass(CPSLinkWidget)
+widgetRegistry.register(CPSPhotoWidget)
 
 ##################################################
 
 class CPSGenericSelectWidget(CPSWidget):
     """Generic Select widget."""
-    meta_type = "CPS Generic Select Widget"
+    meta_type = 'Generic Select Widget'
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -1244,20 +1187,13 @@ class CPSGenericSelectWidget(CPSWidget):
 
 InitializeClass(CPSGenericSelectWidget)
 
-
-class CPSGenericSelectWidgetType(CPSWidgetType):
-    """Generic Select widget type."""
-    meta_type = "CPS Generic Select Widget Type"
-    cls = CPSGenericSelectWidget
-
-InitializeClass(CPSGenericSelectWidgetType)
-
+widgetRegistry.register(CPSGenericSelectWidget)
 
 ##################################################
 
 class CPSGenericMultiSelectWidget(CPSWidget):
     """Generic MultiSelect widget."""
-    meta_type = "CPS Generic MultiSelect Widget"
+    meta_type = 'Generic MultiSelect Widget'
 
     field_types = ('CPS String List Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -1467,20 +1403,13 @@ class CPSGenericMultiSelectWidget(CPSWidget):
 
 InitializeClass(CPSGenericMultiSelectWidget)
 
-
-class CPSGenericMultiSelectWidgetType(CPSWidgetType):
-    """Generic MultiSelect widget type."""
-    meta_type = "CPS Generic MultiSelect Widget Type"
-    cls = CPSGenericMultiSelectWidget
-
-InitializeClass(CPSGenericMultiSelectWidgetType)
-
+widgetRegistry.register(CPSGenericMultiSelectWidget)
 
 ##################################################
 
 class CPSRangeListWidget(CPSWidget):
     """Range List widget."""
-    meta_type = "CPS Range List Widget"
+    meta_type = 'Range List Widget'
 
     field_types = ('CPS Range List Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -1564,19 +1493,13 @@ class CPSRangeListWidget(CPSWidget):
 
 InitializeClass(CPSRangeListWidget)
 
-
-class CPSRangeListWidgetType(CPSWidgetType):
-    """Range List widget type."""
-    meta_type = "CPS Range List Widget Type"
-    cls = CPSRangeListWidget
-
-InitializeClass(CPSRangeListWidgetType)
+widgetRegistry.register(CPSRangeListWidget)
 
 ##################################################
 
 class CPSDocumentLanguageSelectWidget(CPSWidget):
     """Document Language Selection widget."""
-    meta_type = "CPS Document Language Select Widget"
+    meta_type = 'Document Language Select Widget'
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 0,},)
@@ -1633,14 +1556,7 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
 
 InitializeClass(CPSDocumentLanguageSelectWidget)
 
-
-class CPSDocumentLanguageSelectWidgetType(CPSWidgetType):
-    """Document Language Select widget type."""
-    meta_type = "CPS Document Language Select Widget Type"
-    cls = CPSDocumentLanguageSelectWidget
-
-InitializeClass(CPSDocumentLanguageSelectWidgetType)
-
+widgetRegistry.register(CPSDocumentLanguageSelectWidget)
 
 ##################################################
 
@@ -1651,7 +1567,7 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
     derives, except in "view" mode where the listed entries have link on them
     to other documents on the portal which have the same subjects.
     """
-    meta_type = "CPS Subject Widget"
+    meta_type = 'Subject Widget'
 
     def getEntriesHtml(self, entries, vocabulary, translated=False):
         entries_html_list = []
@@ -1685,25 +1601,16 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
         """
         return "%s/search_form?Subject=%s" % (self.portal_url(), subject_name)
 
-
 InitializeClass(CPSSubjectWidget)
 
+widgetRegistry.register(CPSSubjectWidget)
 
-class CPSSubjectWidgetType(CPSWidgetType):
-    """Subject widget type."""
-    meta_type = "CPS Subject Widget Type"
-    cls = CPSSubjectWidget
-
-InitializeClass(CPSSubjectWidgetType)
-
-##################################################
 ##################################################
 
 class CPSFlashWidget(CPSFileWidget):
-    """CPS Flash Widget
+    """Flash Widget.
     """
-
-    meta_type = "CPS Flash Widget"
+    meta_type = 'Flash Widget'
 
     def _flash_validate(self, datastructure, **kw):
         """Check that this is a Flash animation
@@ -1750,30 +1657,41 @@ class CPSFlashWidget(CPSFileWidget):
 
 InitializeClass(CPSFlashWidget)
 
-class CPSFlashWidgetType(CPSWidgetType):
-    """CPS Flash Widget Type
-    """
-    meta_type = "CPS Flash Widget Type"
-    cls = CPSFlashWidget
-
-InitializeClass(CPSFlashWidgetType)
+widgetRegistry.register(CPSFlashWidget)
 
 ##################################################
-#
-# Register widget types.
-#
-WidgetTypeRegistry.register(CPSTextWidgetType)
-WidgetTypeRegistry.register(CPSDateTimeWidgetType)
-WidgetTypeRegistry.register(CPSAttachedFileWidgetType)
-WidgetTypeRegistry.register(CPSZippedHtmlWidgetType)
-WidgetTypeRegistry.register(CPSRichTextEditorWidgetType)
-WidgetTypeRegistry.register(CPSExtendedSelectWidgetType)
-WidgetTypeRegistry.register(CPSInternalLinksWidgetType)
-WidgetTypeRegistry.register(CPSPhotoWidgetType)
-WidgetTypeRegistry.register(CPSGenericSelectWidgetType)
-WidgetTypeRegistry.register(CPSGenericMultiSelectWidgetType)
-WidgetTypeRegistry.register(CPSRangeListWidgetType)
-WidgetTypeRegistry.register(CPSDocumentLanguageSelectWidgetType)
-WidgetTypeRegistry.register(CPSSubjectWidgetType)
-WidgetTypeRegistry.register(CPSFlashWidgetType)
 
+class CPSLinkWidget(CPSProgrammerCompoundWidget):
+    """Widget for an HTTP link.
+    """
+    meta_type = 'Link Widget'
+    render_method = 'widget_link_render'
+    prepare_validate_method = ''
+
+InitializeClass(CPSLinkWidget)
+
+widgetRegistry.register(CPSLinkWidget)
+
+
+class CPSTextImageWidget(CPSProgrammerCompoundWidget):
+    """Widget for text+image.
+    """
+    meta_type = 'Text Image Widget'
+    render_method = 'widget_textimage_render'
+    prepare_validate_method = 'widget_textimage_prepare_validate'
+
+InitializeClass(CPSTextImageWidget)
+
+widgetRegistry.register(CPSTextImageWidget)
+
+
+class CPSImageLinkWidget(CPSProgrammerCompoundWidget):
+    """
+    """
+    meta_type = 'Image Link Widget'
+    render_method = 'widget_imagelink_render'
+    prepare_validate_method = 'widget_imagelink_prepare_validate'
+
+InitializeClass(CPSImageLinkWidget)
+
+widgetRegistry.register(CPSImageLinkWidget)

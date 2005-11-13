@@ -1,14 +1,13 @@
-<dtml-let swtid="REQUEST.other['traverse_subpath'][0]"
-          wtid="getUnstrippedWidgetTypeId(swtid)"
-          wt="portal_widget_types[wtid]">
+<dtml-let smt="REQUEST.other['traverse_subpath'][0]"
+          mt="getUnstrippedWidgetMetaType(smt)">
 <dtml-var manage_page_header>
 
-<dtml-let form_title="'Add ' + wt.title_or_id()">
+<dtml-let form_title="'Add ' + mt">
 <dtml-var manage_form_title>
 </dtml-let>
 
 <form action="&dtml-URL1;/manage_addCPSWidget" method="POST">
-<input type="hidden" name="swtid" value="&dtml-swtid;" />
+<input type="hidden" name="meta_type" value="&dtml-mt;" />
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">

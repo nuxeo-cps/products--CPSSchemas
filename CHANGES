@@ -10,4 +10,9 @@ Bug fixes:
   there was only one field available.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- The Widget Types Tool has been removed. Widget code and registration
+  gets simpler. The Compound Widget now also takes the role of the
+  previous Customizable Widget.
+- Previous standard Compound or Customizable widget types (Link Widget,
+  Text Image Widget, Image Link Widget, Search Widget, Search Location
+  Widget) are now defined in code using CPSProgrammerCompoundWidget.

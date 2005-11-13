@@ -39,8 +39,8 @@ from Products.CMFCore.Expression import SecureModuleImporter
 
 from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
-from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.DataModel import ReadAccessError
+from Products.CPSSchemas.Widget import widgetRegistry
 
 class LayoutContainer(Folder):
     """Layout Tool
@@ -468,11 +468,10 @@ class CPSLayout(Layout):
         Layout.__init__(self, **kw)
 
     security.declarePrivate('addWidget')
-    def addWidget(self, id, wtid, **kw):
+    def addWidget(self, id, meta_type, **kw):
         """Add a new widget instance."""
-        wtool = getToolByName(self, 'portal_widget_types')
-        widget_type = wtool[wtid]
-        widget = widget_type.makeInstance(id, **kw)
+        class_ = widgetRegistry.getClass(meta_type)
+        widget = class_(id, **kw)
         return self.addSubObject(widget)
 
     #
@@ -482,19 +481,18 @@ class CPSLayout(Layout):
     def all_meta_types(self):
         # List of meta types contained in Folder, for copy/paste support.
         return [
-            {'name': WidgetTypeRegistry.getClass(wt).meta_type,
+            {'name': mt,
              'action': '',
              'permission': ManagePortal}
-            for wt in WidgetTypeRegistry.listWidgetTypes()]
+            for mt in widgetRegistry.listWidgetMetaTypes()]
 
     def filtered_meta_types(self):
         # List of types available in Folder menu.
-        wtool = getToolByName(self, 'portal_widget_types')
         return [
-            {'name': wtid,
-             'action': 'manage_addCPSWidgetForm/'+wtid.replace(' ', ''),
+            {'name': mt,
+             'action': 'manage_addCPSWidgetForm/'+mt.replace(' ', ''),
              'permission': ManagePortal}
-            for wtid in wtool.objectIds()]
+            for mt in widgetRegistry.listWidgetMetaTypes()]
 
     manage_options = (
         {'label': 'Widgets',
@@ -518,26 +516,24 @@ class CPSLayout(Layout):
     security.declareProtected(ManagePortal, 'manage_addCPSWidgetForm')
     manage_addCPSWidgetForm = DTMLFile('zmi/widget_addform', globals())
 
-    security.declareProtected(ManagePortal, 'getUnstrippedWidgetTypeId')
-    def getUnstrippedWidgetTypeId(self, swtid):
-        """Get an unstripped version of a widget type id."""
-        wtool = getToolByName(self, 'portal_widget_types')
-        twtid = swtid.replace(' ', '')
-        for wtid in wtool.objectIds():
-            if wtid.replace(' ', '') == twtid:
-                return wtid
-        raise ValueError(swtid)
+    security.declareProtected(ManagePortal, 'getUnstrippedWidgetMetaType')
+    def getUnstrippedWidgetMetaType(self, smt):
+        """Get an unstripped version of a widget meta type."""
+        smt = smt.replace(' ', '')
+        for mt in widgetRegistry.listWidgetMetaTypes():
+            if mt.replace(' ', '') == smt:
+                return mt
+        raise ValueError(smt)
 
     security.declareProtected(ManagePortal, 'manage_addCPSWidget')
-    def manage_addCPSWidget(self, id, swtid, REQUEST=None, **kw):
+    def manage_addCPSWidget(self, id, meta_type, REQUEST=None, **kw):
         """Add a widget, called from the ZMI."""
         if REQUEST is not None:
             kw.update(REQUEST.form)
-            for key in ('id', 'swtid'):
-                if kw.has_key(key):
+            for key in ('id', 'meta_type'):
+                if key in kw:
                     del kw[key]
-        wtid = self.getUnstrippedWidgetTypeId(swtid)
-        widget = self.addWidget(id, wtid, **kw)
+        widget = self.addWidget(id, meta_type, **kw)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(widget.absolute_url()+
                                       '/manage_workspace')

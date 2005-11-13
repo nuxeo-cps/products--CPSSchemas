@@ -130,7 +130,6 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     css_class_expr = ''
     javascript_expr = ''
 
-    widget_type = '' # Not a property by default
     field_types = []
     field_inits = [] # default settings for fields created in flexible mode
                      # using the same order as in field_types
@@ -149,9 +148,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     has_input_area = False
 
-    def __init__(self, id, widgettype, **kw):
+    def __init__(self, id, **kw):
         self._setId(id)
-        self.widget_type = widgettype
         self.manage_changeProperties(**kw)
 
     security.declarePublic('getWidgetId')
@@ -358,10 +356,6 @@ class CPSWidget(Widget):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, id, widgettype, **kw):
-        #self.fields = [id]
-        Widget.__init__(self, id, widgettype, **kw)
-
     security.declarePrivate('isHidden')
     def isHidden(self):
         """Check if the widget is hidden
@@ -395,28 +389,31 @@ def addCPSWidget(container, id, REQUEST=None):
         REQUEST.RESPONSE.redirect(ob.absolute_url() + "/manage_main")
 
 
-class CPSWidgetType(SimpleItemWithProperties):
-    """Persistent Widget Type."""
-    meta_type = "CPS Widget Type"
 
-    security = ClassSecurityInfo()
+class WidgetRegistry:
+    """Registry of the available widgets.
+    """
 
-    cls = None
+    def __init__(self):
+        self._widget_meta_types = []
+        self._widget_classes = {}
 
-    def __init__(self, id):
-        self._setId(id)
+    def register(self, class_):
+        """Register a widget class.
+        """
+        mt = class_.meta_type
+        self._widget_meta_types.append(mt)
+        self._widget_classes[mt] = class_
 
-    security.declarePrivate('makeInstance')
-    def makeInstance(self, id, **kw):
-        """Create an instance of this widget type."""
-        return self.cls(id, self.getId(), **kw)
+    def listWidgetMetaTypes(self):
+        """Return the list of widget meta types.
+        """
+        return list(self._widget_meta_types)
 
-    #
-    # ZMI
-    #
-    title = ''
-    _properties = (
-        {'id': 'title', 'type': 'string', 'mode': 'w', 'label': 'Title'},
-        )
+    def getClass(self, meta_type):
+        """Get the class for a widget of the given meta type.
+        """
+        return self._widget_classes[meta_type]
 
-InitializeClass(CPSWidgetType)
+# Singleton
+widgetRegistry = WidgetRegistry()

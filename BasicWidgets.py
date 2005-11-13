@@ -57,8 +57,7 @@ from Products.CMFCore.permissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.Widget import CPSWidgetType
-from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
+from Products.CPSSchemas.Widget import widgetRegistry
 
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
 
@@ -109,7 +108,7 @@ class CPSNoneWidget(CPSWidget):
     Deprecated widget can inherit form this widget, they will
     disapear without breaking the rest of the document.
     """
-    meta_type = "CPS None Widget"
+    meta_type = 'None Widget'
 
     def isHidden(self):
         return 1
@@ -132,7 +131,7 @@ InitializeClass(CPSNoneWidget)
 
 class CPSHtmlWidget(CPSWidget):
     """Html widget."""
-    meta_type = "CPS Html Widget"
+    meta_type = 'Html Widget'
 
     _properties = CPSWidget._properties + (
         {'id': 'html_view', 'type': 'text', 'mode': 'w',
@@ -162,21 +161,13 @@ class CPSHtmlWidget(CPSWidget):
 
 InitializeClass(CPSHtmlWidget)
 
-
-class CPSHtmlWidgetType(CPSWidgetType):
-    """Html widget type."""
-    meta_type = "CPS Html Widget Type"
-    cls = CPSHtmlWidget
-
-InitializeClass(CPSHtmlWidgetType)
+widgetRegistry.register(CPSHtmlWidget)
 
 ##################################################
 
 class CPSMethodWidget(CPSWidget):
     """Method widget."""
-    meta_type = "CPS Method Widget"
-
-
+    meta_type = 'Method Widget'
 
     _properties = CPSWidget._properties + (
         {'id': 'render_method', 'type': 'string', 'mode': 'w',
@@ -222,19 +213,13 @@ class CPSMethodWidget(CPSWidget):
 
 InitializeClass(CPSMethodWidget)
 
-
-class CPSMethodWidgetType(CPSWidgetType):
-    """Method widget type."""
-    meta_type = "CPS Method Widget Type"
-    cls = CPSMethodWidget
-
-InitializeClass(CPSMethodWidgetType)
+widgetRegistry.register(CPSMethodWidget)
 
 ##################################################
 
 class CPSStringWidget(CPSWidget):
     """String widget."""
-    meta_type = "CPS String Widget"
+    meta_type = 'String Widget'
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -311,19 +296,13 @@ class CPSStringWidget(CPSWidget):
 
 InitializeClass(CPSStringWidget)
 
-
-class CPSStringWidgetType(CPSWidgetType):
-    """String widget type."""
-    meta_type = "CPS String Widget Type"
-    cls = CPSStringWidget
-
-InitializeClass(CPSStringWidgetType)
+widgetRegistry.register(CPSStringWidget)
 
 ##################################################
 
 class CPSURLWidget(CPSStringWidget):
     """URL widget."""
-    meta_type = "CPS URL Widget"
+    meta_type = 'URL Widget'
     _properties = CPSStringWidget._properties + (
         {'id': 'target', 'type': 'string', 'mode': 'w',
          'label': 'Target for the link'},)
@@ -405,18 +384,13 @@ class CPSURLWidget(CPSStringWidget):
 
 InitializeClass(CPSURLWidget)
 
-class CPSURLWidgetType(CPSWidgetType):
-    """URL widget type."""
-    meta_type = "CPS URL Widget Type"
-    cls = CPSURLWidget
-
-InitializeClass(CPSURLWidgetType)
+widgetRegistry.register(CPSURLWidget)
 
 ##################################################
 
 class CPSEmailWidget(CPSStringWidget):
     """Email widget."""
-    meta_type = "CPS Email Widget"
+    meta_type = 'Email Widget'
     display_width = 72
     size_max = 256
     email_pat = compile(r"^([-\w_.'+])+@(([-\w])+\.)+([\w]{2,4})$")
@@ -449,18 +423,13 @@ class CPSEmailWidget(CPSStringWidget):
 
 InitializeClass(CPSEmailWidget)
 
-class CPSEmailWidgetType(CPSWidgetType):
-    """Email widget type."""
-    meta_type = "CPS Email Widget Type"
-    cls = CPSEmailWidget
-
-InitializeClass(CPSEmailWidgetType)
+widgetRegistry.register(CPSEmailWidget)
 
 ##################################################
 
 class CPSIdentifierWidget(CPSStringWidget):
     """Identifier widget."""
-    meta_type = "CPS Identifier Widget"
+    meta_type = 'Identifier Widget'
     display_width = 30
     size_max = 256
 
@@ -494,19 +463,13 @@ class CPSIdentifierWidget(CPSStringWidget):
 
 InitializeClass(CPSIdentifierWidget)
 
-class CPSIdentifierWidgetType(CPSWidgetType):
-    """Identifier widget type."""
-    meta_type = "CPS Identifier Widget Type"
-    cls = CPSIdentifierWidget
-
-InitializeClass(CPSIdentifierWidgetType)
-
+widgetRegistry.register(CPSIdentifierWidget)
 
 ##################################################
 
 class CPSHeadingWidget(CPSStringWidget):
     """HTML Heading widget like H1 H2..."""
-    meta_type = "CPS Heading Widget"
+    meta_type = 'Heading Widget'
     display_width = 72
     size_max = 128
     _properties = CPSStringWidget._properties + (
@@ -528,13 +491,7 @@ class CPSHeadingWidget(CPSStringWidget):
 
 InitializeClass(CPSHeadingWidget)
 
-class CPSHeadingWidgetType(CPSWidgetType):
-    """CPS Heading widget type."""
-    meta_type = "CPS Heading Widget Type"
-    cls = CPSHeadingWidget
-
-InitializeClass(CPSHeadingWidgetType)
-
+widgetRegistry.register(CPSHeadingWidget)
 
 ##################################################
 
@@ -547,7 +504,7 @@ class CPSPasswordWidget(CPSStringWidget):
     When validating, it doesn't update data if the user entry is empty.
     """
 
-    meta_type = "CPS Password Widget"
+    meta_type = 'Password Widget'
     _properties = CPSStringWidget._properties + (
         {'id': 'password_widget', 'type': 'string', 'mode': 'w',
          'label': 'Password widget to compare with'},
@@ -647,19 +604,14 @@ class CPSPasswordWidget(CPSStringWidget):
 
 InitializeClass(CPSPasswordWidget)
 
-class CPSPasswordWidgetType(CPSStringWidgetType):
-    """Password widget type."""
-    meta_type = "CPS Password Widget Type"
-    cls = CPSPasswordWidget
-
-InitializeClass(CPSPasswordWidgetType)
+widgetRegistry.register(CPSPasswordWidget)
 
 ##################################################
 
 class CPSCheckBoxWidget(CPSWidget):
     """CheckBox widget.
        Deprecated, use CPS Boolean Widget !!!"""
-    meta_type = "CPS CheckBox Widget"
+    meta_type = 'CheckBox Widget'
 
     field_types = ('CPS Int Field',)
 
@@ -710,13 +662,7 @@ class CPSCheckBoxWidget(CPSWidget):
 
 InitializeClass(CPSCheckBoxWidget)
 
-
-class CPSCheckBoxWidgetType(CPSStringWidgetType):
-    """CheckBox widget type."""
-    meta_type = "CPS CheckBox Widget Type"
-    cls = CPSCheckBoxWidget
-
-InitializeClass(CPSCheckBoxWidgetType)
+widgetRegistry.register(CPSCheckBoxWidget)
 
 ##################################################
 # Warning textarea widget code is back to r1.75
@@ -725,7 +671,7 @@ InitializeClass(CPSCheckBoxWidgetType)
 
 class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
-    meta_type = "CPS TextArea Widget"
+    meta_type = 'TextArea Widget'
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -795,19 +741,13 @@ class CPSTextAreaWidget(CPSWidget):
 
 InitializeClass(CPSTextAreaWidget)
 
-
-class CPSTextAreaWidgetType(CPSWidgetType):
-    """TextArea widget type."""
-    meta_type = "CPS TextArea Widget Type"
-    cls = CPSTextAreaWidget
-
-InitializeClass(CPSTextAreaWidgetType)
+widgetRegistry.register(CPSTextAreaWidget)
 
 ##################################################
 
 class CPSLinesWidget(CPSWidget):
     """Lines widget."""
-    meta_type = "CPS Lines Widget"
+    meta_type = 'Lines Widget'
 
     field_types = ('CPS String List Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -876,20 +816,13 @@ class CPSLinesWidget(CPSWidget):
 
 InitializeClass(CPSLinesWidget)
 
-
-class CPSLinesWidgetType(CPSWidgetType):
-    """Lines widget type."""
-    meta_type = "CPS Lines Widget Type"
-    cls = CPSLinesWidget
-
-InitializeClass(CPSLinesWidgetType)
-
+widgetRegistry.register(CPSLinesWidget)
 
 ##################################################
 
 class CPSListWidget(CPSLinesWidget):
     """Abstract list widget"""
-    meta_type = "CPS List Widget"
+    meta_type = 'List Widget'
     display = None
 
     def render(self, mode, datastructure, **kw):
@@ -906,57 +839,33 @@ class CPSListWidget(CPSLinesWidget):
 
 InitializeClass(CPSListWidget)
 
-
-class CPSListWidgetType(CPSLinesWidgetType):
-    """Abstract list widget type."""
-    meta_type = "CPS List Widget Type"
-    cls = CPSListWidget
-
-InitializeClass(CPSListWidgetType)
-
-
 ##################################################
 
 class CPSOrderedListWidget(CPSListWidget):
     """Ordered list widget"""
-    meta_type = "CPS Ordered List Widget"
+    meta_type = 'Ordered List Widget'
     display = 'ordered'
 
 InitializeClass(CPSOrderedListWidget)
 
-
-class CPSOrderedListWidgetType(CPSListWidgetType):
-    """Ordered list widget type"""
-    meta_type = "CPS Ordered List Widget Type"
-    cls = CPSOrderedListWidget
-
-InitializeClass(CPSOrderedListWidgetType)
-
+widgetRegistry.register(CPSOrderedListWidget)
 
 ##################################################
 
 class CPSUnorderedListWidget(CPSListWidget):
     """Unordered list widget"""
-    meta_type = "CPS Unordered List Widget"
+    meta_type = 'Unordered List Widget'
     display = 'unordered'
 
-InitializeClass(CPSOrderedListWidget)
+InitializeClass(CPSUnorderedListWidget)
 
-
-class CPSUnorderedListWidgetType(CPSListWidgetType):
-    """Unordered list widget type"""
-    meta_type = "CPS Unordered List Widget Type"
-    cls = CPSUnorderedListWidget
-
-InitializeClass(CPSUnorderedListWidgetType)
-
-
+widgetRegistry.register(CPSUnorderedListWidget)
 
 ##################################################
 
 class CPSSelectWidget(CPSWidget):
     """Select widget."""
-    meta_type = "CPS Select Widget"
+    meta_type = 'Select Widget'
 
     field_types = ('CPS String Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -1051,19 +960,13 @@ class CPSSelectWidget(CPSWidget):
 
 InitializeClass(CPSSelectWidget)
 
-
-class CPSSelectWidgetType(CPSWidgetType):
-    """Select widget type."""
-    meta_type = "CPS Select Widget Type"
-    cls = CPSSelectWidget
-
-InitializeClass(CPSSelectWidgetType)
+widgetRegistry.register(CPSSelectWidget)
 
 ##################################################
 
 class CPSMultiSelectWidget(CPSWidget):
     """MultiSelect widget."""
-    meta_type = "CPS MultiSelect Widget"
+    meta_type = 'MultiSelect Widget'
 
     field_types = ('CPS String List Field',)
     field_inits = ({'is_searchabletext': 1,},)
@@ -1196,19 +1099,13 @@ class CPSMultiSelectWidget(CPSWidget):
 
 InitializeClass(CPSMultiSelectWidget)
 
-
-class CPSMultiSelectWidgetType(CPSWidgetType):
-    """MultiSelect widget type."""
-    meta_type = "CPS MultiSelect Widget Type"
-    cls = CPSMultiSelectWidget
-
-InitializeClass(CPSMultiSelectWidgetType)
+widgetRegistry.register(CPSMultiSelectWidget)
 
 ##################################################
 
 class CPSBooleanWidget(CPSWidget):
     """Boolean widget."""
-    meta_type = "CPS Boolean Widget"
+    meta_type = 'Boolean Widget'
 
     field_types = ('CPS Int Field',)
 
@@ -1274,19 +1171,13 @@ class CPSBooleanWidget(CPSWidget):
 
 InitializeClass(CPSBooleanWidget)
 
-
-class CPSBooleanWidgetType(CPSWidgetType):
-    """Boolean widget type."""
-    meta_type = "CPS Boolean Widget Type"
-    cls = CPSBooleanWidget
-
-InitializeClass(CPSBooleanWidgetType)
+widgetRegistry.register(CPSBooleanWidget)
 
 ##################################################
 
 class CPSIntWidget(CPSWidget):
     """Integer widget."""
-    meta_type = "CPS Int Widget"
+    meta_type = 'Int Widget'
 
     field_types = ('CPS Int Field',)
 
@@ -1359,19 +1250,13 @@ class CPSIntWidget(CPSWidget):
 
 InitializeClass(CPSIntWidget)
 
-
-class CPSIntWidgetType(CPSWidgetType):
-    """Int widget type."""
-    meta_type = "CPS Int Widget Type"
-    cls = CPSIntWidget
-
-InitializeClass(CPSIntWidgetType)
+widgetRegistry.register(CPSIntWidget)
 
 #######################################################
 
 class CPSLongWidget(CPSWidget):
     """Long Widget with limits"""
-    meta_type = "CPS Long Widget"
+    meta_type = 'Long Widget'
 
     field_types = ('CPS Long Field',)
 
@@ -1447,20 +1332,13 @@ class CPSLongWidget(CPSWidget):
 
 InitializeClass(CPSLongWidget)
 
-
-class CPSLongWidgetType(CPSWidgetType):
-    """Long with limits widget type."""
-    meta_type = "CPS Long Widget Type"
-    cls = CPSLongWidget
-
-InitializeClass(CPSLongWidgetType)
-
+widgetRegistry.register(CPSLongWidget)
 
 ##################################################
 
 class CPSFloatWidget(CPSWidget):
     """Float number widget."""
-    meta_type = "CPS Float Widget"
+    meta_type = 'Float Widget'
 
     field_types = ('CPS Float Field',)
 
@@ -1551,14 +1429,7 @@ class CPSFloatWidget(CPSWidget):
 
 InitializeClass(CPSFloatWidget)
 
-
-class CPSFloatWidgetType(CPSWidgetType):
-    """Float widget type."""
-    meta_type = "CPS Float Widget Type"
-    cls = CPSFloatWidget
-
-InitializeClass(CPSFloatWidgetType)
-
+widgetRegistry.register(CPSFloatWidget)
 
 ##################################################
 # Warning Date widget code is back to r1.49
@@ -1567,7 +1438,7 @@ InitializeClass(CPSFloatWidgetType)
 
 class CPSDateWidget(CPSWidget):
     """Date widget."""
-    meta_type = "CPS Date Widget"
+    meta_type = 'Date Widget'
 
     field_types = ('CPS DateTime Field',)
 
@@ -1699,13 +1570,7 @@ class CPSDateWidget(CPSWidget):
 
 InitializeClass(CPSDateWidget)
 
-
-class CPSDateWidgetType(CPSWidgetType):
-    """Date widget type."""
-    meta_type = "CPS Date Widget Type"
-    cls = CPSDateWidget
-
-InitializeClass(CPSDateWidgetType)
+widgetRegistry.register(CPSDateWidget)
 
 ##################################################
 # Warning File widget code is back to r1.47
@@ -1716,7 +1581,7 @@ InitializeClass(CPSDateWidgetType)
 
 class CPSFileWidget(CPSWidget):
     """File widget."""
-    meta_type = "CPS File Widget"
+    meta_type = 'File Widget'
 
     field_types = ('CPS File Field',)
 
@@ -1907,19 +1772,13 @@ class CPSFileWidget(CPSWidget):
 
 InitializeClass(CPSFileWidget)
 
-
-class CPSFileWidgetType(CPSWidgetType):
-    """File widget type."""
-    meta_type = "CPS File Widget Type"
-    cls = CPSFileWidget
-
-InitializeClass(CPSFileWidgetType)
+widgetRegistry.register(CPSFileWidget)
 
 ##################################################
 
 class CPSImageWidget(CPSFileWidget):
     """Image widget."""
-    meta_type = "CPS Image Widget"
+    meta_type = 'Image Widget'
 
     field_types = ('CPS Image Field',)
 
@@ -2128,205 +1987,111 @@ class CPSImageWidget(CPSFileWidget):
 
 InitializeClass(CPSImageWidget)
 
-
-class CPSImageWidgetType(CPSWidgetType):
-    """Image widget type."""
-    meta_type = "CPS Image Widget Type"
-    cls = CPSImageWidget
-
-    # XXX: TBD
-
-InitializeClass(CPSImageWidgetType)
-
-##################################################
-
-class CPSCustomizableWidget(CPSWidget):
-    """Widget with customizable logic and presentation."""
-    meta_type = "CPS Customizable Widget"
-
-    security = ClassSecurityInfo()
-
-    _properties = CPSWidget._properties + (
-        {'id': 'widget_type', 'type': 'string', 'mode': 'w',
-         'label': 'Widget type'},
-        )
-    widget_type = ''
-
-    security.declarePrivate('_getType')
-    def _getType(self):
-        """Get the type object for this widget."""
-        wtool = getToolByName(self, 'portal_widget_types')
-        return getattr(wtool, self.widget_type)
-
-    security.declarePrivate('getFieldTypes')
-    def getFieldTypes(self):
-        return self._getType().field_types
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        return self._getType().prepare(self, datastructure)
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        return self._getType().validate(self, datastructure)
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-        return self._getType().render(self, mode, datastructure)
-
-InitializeClass(CPSCustomizableWidget)
-
-
-class CPSCustomizableWidgetType(CPSWidgetType):
-    """Customizable widget type."""
-    meta_type = "CPS Customizable Widget Type"
-    cls = CPSCustomizableWidget
-
-    security = ClassSecurityInfo()
-
-    _properties = CPSWidgetType._properties + (
-        {'id': 'field_types', 'type': 'lines', 'mode': 'w',
-         'label': 'Field types'},
-        {'id': 'prepare_validate_method', 'type': 'string', 'mode': 'w',
-         'label': 'Prepare & Validate Method'},
-        {'id': 'render_method', 'type': 'string', 'mode': 'w',
-         'label': 'Render Method'},
-        )
-    field_types = []
-    prepare_validate_method = ''
-    render_method = ''
-    _class_props = [p['id'] for p in _properties]
-
-    # Make properties editable.
-
-    def manage_propertiesForm(self, REQUEST, *args, **kw):
-        """Override to make the properties editable."""
-        return PropertyManager.manage_propertiesForm(
-            self, self, REQUEST, *args, **kw)
-
-    security.declareProtected(ManageProperties, 'manage_addProperty')
-    security.declareProtected(ManageProperties, 'manage_delProperties')
-
-    # API
-
-    security.declarePrivate('makeInstance')
-    def makeInstance(self, id, **kw):
-        """Create an instance of this widget type."""
-        ob = CPSWidgetType.makeInstance(self, id, **kw)
-        # Copy user-added properties to the instance.
-        for prop in self._properties:
-            id = prop['id']
-            if id in self._class_props:
-                continue
-            t = prop['type']
-            ob.manage_addProperty(id, '', t)
-        return ob
-
-    security.declarePrivate('prepare')
-    def prepare(self, widget, datastructure):
-        """Prepare datastructure from datamodel."""
-        if not self.prepare_validate_method:
-            raise RuntimeError("Missing Prepare Method in widget type %s"
-                               % self.getId())
-        meth = getattr(widget, self.prepare_validate_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Prepare Method %s for widget type %s"
-                               % (self.prepare_validate_method, self.getId()))
-        return meth('prepare', datastructure)
-
-    security.declarePrivate('validate')
-    def validate(self, widget, datastructure):
-        """Validate datastructure and update datamodel."""
-        if not self.prepare_validate_method:
-            raise RuntimeError("Missing Validate Method in widget type %s"
-                               % self.getId())
-        meth = getattr(widget, self.prepare_validate_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Validate Method %s for widget type %s"
-                               % (self.prepare_validate_method, self.getId()))
-        return meth('validate', datastructure)
-
-    security.declarePrivate('render')
-    def render(self, widget, mode, datastructure):
-        """Render a widget from the datastructure or datamodel."""
-        if not self.render_method:
-            raise RuntimeError("Missing Render Method in widget type %s"
-                               % self.getId())
-        meth = getattr(widget, self.render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (self.render_method, self.getId()))
-        return meth(mode=mode, datastructure=datastructure)
-
-InitializeClass(CPSCustomizableWidgetType)
-
+widgetRegistry.register(CPSImageWidget)
 
 ##################################################
 
 class CPSCompoundWidget(CPSWidget):
-    """Widget aggregating several widgets."""
-    meta_type = "CPS Compound Widget"
+    """Widget with customizable logic and presentation.
 
-    security = ClassSecurityInfo()
+    Allows the use of other widgets to do the rendering.
+    """
+    meta_type = 'Compound Widget'
 
     _properties = (
         CPSWidget._properties[:2] + (
         {'id': 'widget_ids', 'type': 'tokens', 'mode': 'w',
          'label': 'Widget ids'},
-        {'id': 'widget_type', 'type': 'string', 'mode': 'w',
-         'label': 'Widget type'},
+        {'id': 'render_method', 'type': 'string', 'mode': 'w',
+         'label': 'Render Method'},
+        {'id': 'prepare_validate_method', 'type': 'string', 'mode': 'w',
+         'label': 'Prepare & Validate Method'},
         ) + CPSWidget._properties[2:]
         )
     widget_ids = []
-    widget_type = ''
+    widget_type = None # Compat with old instances
+    render_method = 'widget_compound_default_render'
+    prepare_validate_method = ''
 
-    security.declarePrivate('_getType')
-    def _getType(self):
-        """Get the type object for this widget."""
-        wtool = getToolByName(self, 'portal_widget_types')
-        return getattr(wtool, self.widget_type)
+    _old_render_methods = {
+        'Link Widget': 'widget_link_render',
+        'Text Image Widget': 'widget_textimage_render',
+        'Search Widget': 'widget_search_render',
+        'Image Link Widget': 'widget_imagelink_render',
+        'Search Location Widget': 'widget_searchlocation_render',
+        }
 
-    security.declarePrivate('_getRenderMethod')
     def _getRenderMethod(self):
         """Get the render method."""
-        wtool = getToolByName(self, 'portal_widget_types')
-        wt = getattr(wtool, self.widget_type)
-        return wt.getRenderMethod(self)
+        name = self._old_render_methods.get(self.widget_type,
+                                            self.render_method)
+        meth = getattr(self, name, None)
+        if meth is None:
+            raise RuntimeError("Unknown render method %r for widget %s" %
+                               (name, self.getWidgetId()))
+        return meth
 
-    security.declarePrivate('getFieldTypes')
+    _old_prepare_validate_methods = {
+        'Link Widget': '',
+        'Text Image Widget': 'widget_textimage_prepare_validate',
+        'Search Widget': '',
+        'Image Link Widget': 'widget_imagelink_prepare_validate',
+        'Search Location Widget': 'widget_searchlocation_prepare_validate',
+        }
+
+
+    def _getPrepareValidateMethod(self):
+        """Get the prepare/validate method."""
+        # Compatibility for old instances
+        name = self._old_prepare_validate_methods.get(self.widget_type,
+                                               self.prepare_validate_method)
+        if not name:
+            meth = lambda *args, **kw: True
+        else:
+            meth = getattr(self, name, None)
+        if meth is None:
+            raise RuntimeError("Unknown prepare/validate method '%s' "
+                               "for widget %s" % (name, self.getWidgetId()))
+        return meth
+
     def getFieldTypes(self):
         """Get field types from the underlying widgets."""
-        return []
+        return [] #X XXX
 
-    security.declarePrivate('getFieldInits')
     def getFieldInits(self):
         """Get field inits from the underlying widgets."""
-        return []
+        return [] # XXX
 
     def prepare(self, datastructure, **kw):
         """Prepare the underlying widgets."""
+        # Prepare each widget
         layout = aq_parent(aq_inner(self))
         for widget_id in self.widget_ids:
             widget = layout[widget_id]
             widget.prepare(datastructure, **kw)
-        self._getType().prepare(self, datastructure)
+        # Now prepare compound
+        prepare = self._getPrepareValidateMethod()
+        return prepare('prepare', datastructure)
 
     def validate(self, datastructure, **kw):
         """Validate the underlying widgets."""
+        validate = self._getPrepareValidateMethod()
+        # Pre-validate compound (not really a validation, just gives
+        # the opportunity to fixup the datastructure)
+        validate('validate', datastructure, post_validate=0)
+        # Now validate each widget
         layout = aq_parent(aq_inner(self))
-        ret = 1
-        self._getType().validate(self, datastructure, post_validate=0)
+        ret = True
         for widget_id in self.widget_ids:
             widget = layout[widget_id]
             ret = widget.validate(datastructure, **kw) and ret
-
-        return ret and self._getType().validate(self, datastructure)
+        # Post-validate
+        return ret and validate('validate', datastructure)
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         layout = aq_parent(aq_inner(self))
         widget_infos = kw['widget_infos']
-        render = self._getRenderMethod()
         cells = []
         for widget_id in self.widget_ids:
             cell = {}
@@ -2340,91 +2105,39 @@ class CPSCompoundWidget(CPSWidget):
             if not widget.hidden_empty or rendered:
                 # do not add widgets to be hidden when empty
                 cells.append(cell)
+        render = self._getRenderMethod()
         return render(mode=mode, datastructure=datastructure,
                       cells=cells, **kw)
 
 InitializeClass(CPSCompoundWidget)
 
+widgetRegistry.register(CPSCompoundWidget)
 
-class CPSCompoundWidgetType(CPSWidgetType):
-    """Compound widget type."""
-    meta_type = "CPS Compound Widget Type"
-    cls = CPSCompoundWidget
 
-    security = ClassSecurityInfo()
+class CPSProgrammerCompoundWidget(CPSCompoundWidget):
+    """Base class for compound widgets defined in code.
 
-    _properties = CPSWidgetType._properties + (
-        {'id': 'render_method', 'type': 'string', 'mode': 'w',
-         'label': 'Render Method'},
-        {'id': 'prepare_validate_method', 'type': 'string', 'mode': 'w',
-         'label': 'Prepare & Validate Method'},
+    They don't need to have the "method" fields customizable,
+    because these are defined by their class.
+    """
+    meta_type = 'Code Compound Widget'
+    _properties = (
+        CPSCompoundWidget._properties[:3] +
+        # skip render_method
+        # skip prepare_validate_method
+        CPSCompoundWidget._properties[5:]
         )
-    render_method = ''
-    prepare_validate_method = None
+    field_types = ()
 
-    # API
-    security.declarePrivate('getRenderMethod')
-    def getRenderMethod(self, widget):
-        """Get the render method."""
-        if not self.render_method:
-            render_method = 'widget_compound_default_render'
-            meth = getattr(self, render_method, None)
-        else:
-            meth = getattr(widget, self.render_method, None)
-        if meth is None:
-            raise RuntimeError("Unknown Render Method %s for widget type %s"
-                               % (self.render_method, self.getId()))
-        return meth
-
-    def prepare(self, widget, datastructure):
-        if not self.prepare_validate_method:
-            return
-        meth = getattr(widget, self.prepare_validate_method, None)
-        if meth:
-            return meth('prepare', datastructure)
-        raise RuntimeError("Unknown Validate Method %s for widget type %s"
-                           % (self.prepare_validate_method, self.getId()))
-
-    def validate(self, widget, datastructure, post_validate=1):
-        if not self.prepare_validate_method:
-            return 1
-        meth = getattr(widget, self.prepare_validate_method, None)
-        if meth:
-            return meth('validate', datastructure, post_validate)
-        raise RuntimeError("Unknown Validate Method %s for widget type %s"
-                           % (self.prepare_validate_method, self.getId()))
+InitializeClass(CPSProgrammerCompoundWidget)
 
 
-InitializeClass(CPSCompoundWidgetType)
+class CPSCustomizableWidget(CPSCompoundWidget):
+    """Obsolete customizable widget.
 
+    Obsolete, kept for old instances. CPSCompoundWidget should
+    be used for new widgets.
+    """
+    meta_type = 'Obsolete Customizable Widget'
 
-##################################################
-
-#
-# Register widget types.
-#
-
-WidgetTypeRegistry.register(CPSCustomizableWidgetType)
-WidgetTypeRegistry.register(CPSCompoundWidgetType)
-WidgetTypeRegistry.register(CPSStringWidgetType)
-WidgetTypeRegistry.register(CPSURLWidgetType)
-WidgetTypeRegistry.register(CPSEmailWidgetType)
-WidgetTypeRegistry.register(CPSIdentifierWidgetType)
-WidgetTypeRegistry.register(CPSHeadingWidgetType)
-WidgetTypeRegistry.register(CPSPasswordWidgetType)
-WidgetTypeRegistry.register(CPSCheckBoxWidgetType)
-WidgetTypeRegistry.register(CPSTextAreaWidgetType)
-WidgetTypeRegistry.register(CPSLinesWidgetType)
-WidgetTypeRegistry.register(CPSBooleanWidgetType)
-WidgetTypeRegistry.register(CPSIntWidgetType)
-WidgetTypeRegistry.register(CPSLongWidgetType)
-WidgetTypeRegistry.register(CPSFloatWidgetType)
-WidgetTypeRegistry.register(CPSDateWidgetType)
-WidgetTypeRegistry.register(CPSFileWidgetType)
-WidgetTypeRegistry.register(CPSImageWidgetType)
-WidgetTypeRegistry.register(CPSHtmlWidgetType)
-WidgetTypeRegistry.register(CPSMethodWidgetType)
-WidgetTypeRegistry.register(CPSSelectWidgetType)
-WidgetTypeRegistry.register(CPSMultiSelectWidgetType)
-WidgetTypeRegistry.register(CPSOrderedListWidgetType)
-WidgetTypeRegistry.register(CPSUnorderedListWidgetType)
+InitializeClass(CPSCustomizableWidget)

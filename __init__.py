@@ -78,7 +78,6 @@ tools = (
     VocabulariesTool.VocabulariesTool,
     SchemasTool.SchemasTool,
     LayoutsTool.LayoutsTool,
-    WidgetTypesTool.WidgetTypesTool,
     )
 
 registerDirectory('skins', globals())

@@ -40,8 +40,7 @@ class WidgetValidationTest(unittest.TestCase):
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,)})
-        widget = self.widget_type(id, self.default_value).__of__(fakePortal)
-        widget.manage_changeProperties(**properties)
+        widget = self.widget_type(id, **properties).__of__(fakePortal)
 
         ret = widget.validate(ds)
         err = ds.getError(id)
@@ -551,8 +550,7 @@ class FlashWidgetValidationTest(WidgetValidationTest):
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,),})
-        widget = self.widget_type(id, self.default_value)
-        widget.manage_changeProperties(**properties)
+        widget = self.widget_type(id, **properties)
 
         # Just test the internal validation related to swf
         ret = widget._flash_validate(ds)
@@ -577,8 +575,7 @@ class DateTimeWidgetValidationTest(WidgetValidationTest):
             }
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,)})
-        widget = self.widget_type(id, self.default_value).__of__(fakePortal)
-        widget.manage_changeProperties(**properties)
+        widget = self.widget_type(id, **properties).__of__(fakePortal)
         ret = widget.validate(ds)
         err = ds.getError(id)
         return ret, err, ds

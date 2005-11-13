@@ -80,8 +80,6 @@ def install(self):
     # Tools
     installer.verifyTool('portal_schemas', 'CPSSchemas',
                          'CPS Schemas Tool')
-    installer.verifyTool('portal_widget_types', 'CPSSchemas',
-                         'CPS Widget Types Tool')
     installer.verifyTool('portal_layouts', 'CPSSchemas',
                          'CPS Layouts Tool')
     installer.verifyTool('portal_vocabularies', 'CPSSchemas',
