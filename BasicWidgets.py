@@ -2076,9 +2076,11 @@ class CPSCompoundWidget(CPSWidget):
     def validate(self, datastructure, **kw):
         """Validate the underlying widgets."""
         validate = self._getPrepareValidateMethod()
-        # Pre-validate compound (not really a validation, just gives
-        # the opportunity to fixup the datastructure)
-        validate('validate', datastructure, post_validate=0)
+        # Pre-validate compound (may fixup the datastructure)
+        ret = validate('prevalidate', datastructure)
+        if not ret and ret is not None:
+            # None is allowed to mean "ok"
+            return False
         # Now validate each widget
         layout = aq_parent(aq_inner(self))
         ret = True
