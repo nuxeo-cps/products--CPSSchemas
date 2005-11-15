@@ -22,9 +22,8 @@ if mode == 'prepare':
     datastructure.set(widget_id, rpath)
     datastructure.set(widget_id+'_select', 'site')
     return
-else:
-    # Validate
-    ret = 1
+
+if mode == 'validate':
     value = datastructure.get(widget_id, '')
     value_select = datastructure.get(widget_id+'_select', '')
     if value_select == 'here' and value:
@@ -32,4 +31,4 @@ else:
         # check that value is valid
         # datastructure.setError(widget_id, '')
         datamodel.set(field_id, value)
-    return ret
+    return True

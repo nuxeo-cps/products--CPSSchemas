@@ -16,3 +16,5 @@ New internal features:
 - Previous standard Compound or Customizable widget types (Link Widget,
   Text Image Widget, Image Link Widget, Search Widget, Search Location
   Widget) are now defined in code using CPSProgrammerCompoundWidget.
+- The prepare/validate method of the Compound Widget has a new
+  'prevalidate' phase.

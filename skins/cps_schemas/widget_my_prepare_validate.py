@@ -12,7 +12,8 @@ field_id = context.fields[0]
 if mode == 'prepare':
     datastructure.set(widget_id, datamodel[field_id])
     return
-else: # Validate
+
+if mode == 'validate':
     value = datastructure.get(widget_id, '')
     if not value.startswith('my'):
         datastructure.setError(widget_id,
