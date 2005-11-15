@@ -36,5 +36,7 @@
   </tal:block>
 </span>
 </div>
+<tal:comment condition="nothing"> Safari tweak: </tal:comment>
+<div class="row"></div>
 </fieldset>
 
