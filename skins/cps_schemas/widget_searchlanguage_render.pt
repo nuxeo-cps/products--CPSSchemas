@@ -37,6 +37,6 @@
 </span>
 </div>
 <tal:comment condition="nothing"> Safari tweak: </tal:comment>
-<div class="row"></div>
+<div style="clear:both"></div>
 </fieldset>
 
