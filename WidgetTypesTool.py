@@ -43,6 +43,9 @@ class WidgetTypeRegistryClass(object):
         import warnings
         if cls is None:
             cls = tcls.cls
+        # Hack around changes between type registration and meta_type
+        if cls.meta_type.startswith('CPS '):
+            cls.meta_type = cls.meta_type[4:]
         widgetRegistry.register(cls)
         warnings.warn("WidgetTypeRegistry.register for %r is deprecated, "
                       "please use widgetRegistry.register instead" %
