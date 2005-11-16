@@ -10,6 +10,7 @@ from Products.CPSSchemas.DataModel import DataModel, ValidationError
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.BasicFields import CPSStringField
+from Products.CPSSchemas import FieldNamespace
 #from Products.CPSSchemas.Schema import Schema
 #from Products.CPSSchemas.Fields.TextField import TextField
 #from Products.CPSSchemas.Fields.SelectionField import SelectionField
@@ -75,6 +76,13 @@ class TestDataModel(unittest.TestCase):
                         read_ignore_storage=True,
                         read_process_expr='python: proxy',
                         )
+        def dummyMethod(self, text):
+            return self.portal_url and text or "failed acquisition"
+        FieldNamespace.registerMethod('dummy', dummyMethod)
+        schema.addField('f7', 'CPS String Field',
+                        read_ignore_storage=True,
+                        read_process_expr='python:util.dummy("some text")',
+                        )
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
@@ -91,6 +99,7 @@ class TestDataModel(unittest.TestCase):
               'f4': 'f4changed',
               'f5': 'f2inst_yo',
               'f6': None,
+              'f7': 'some text'
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -99,6 +108,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm['f4'], ok['f4'])
         self.assertEquals(dm['f5'], ok['f5'])
         self.assertEquals(dm['f6'], ok['f6'])
+        self.assertEquals(dm['f7'], ok['f7'])
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 
@@ -112,6 +122,7 @@ class TestDataModel(unittest.TestCase):
               'f4': '',
               'f5': '_yo',
               'f6': None,
+              'f7': 'some text'
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -120,6 +131,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm['f4'], ok['f4'])
         self.assertEquals(dm['f5'], ok['f5'])
         self.assertEquals(dm['f6'], ok['f6'])
+        self.assertEquals(dm['f7'], ok['f7'])
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 

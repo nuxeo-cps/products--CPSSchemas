@@ -43,6 +43,7 @@ from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
 from Products.CPSSchemas.DataModel import ReadAccessError
 from Products.CPSSchemas.DataModel import WriteAccessError
 from Products.CPSSchemas.DataModel import ValidationError # used by cpsdir
+from Products.CPSSchemas import FieldNamespace
 
 
 class Field(PropertiesPostProcessor, SimpleItemWithProperties):
@@ -229,12 +230,15 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         for k, v in mapping.items():
             if v is DEFAULT_VALUE_MARKER:
                 mapping[k] = '' # XXX should be field's default
+        portal = getToolByName(self, "portal_url").getPortalObject()
+        # Wrapping util in the current acquisition context
+        util = FieldNamespace.util.__of__(portal)
         mapping.update({
             'value': value,
             'data': data,
             'field': self,
             'user': getSecurityManager().getUser(),
-            'portal': getToolByName(self, 'portal_url').getPortalObject(),
+            'portal': portal,
             'modules': SecureModuleImporter,
             'DateTime': DateTime,
             'nothing': None,
@@ -243,6 +247,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             'proxy': proxy,
             # Deprecated: use the 'object' name instead
             'context': context,
+            # Methods registry
+            'util': util,
             })
         return getEngine().getContext(mapping)
 
