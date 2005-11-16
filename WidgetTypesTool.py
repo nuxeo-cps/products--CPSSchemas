@@ -25,6 +25,8 @@ from Globals import InitializeClass
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import SimpleItemWithProperties
 
+from Products.CPSSchemas.Widget import widgetRegistry
+
 class WidgetTypesTool(UniqueObject, SimpleItemWithProperties):
     """Obsolete Widget Types Tool
     """
@@ -33,3 +35,16 @@ class WidgetTypesTool(UniqueObject, SimpleItemWithProperties):
     title = "Obsolete Tool, remove this"
 
 InitializeClass(WidgetTypesTool)
+
+
+# BBB compatibility code, will be removed in CPS 3.4.1
+class WidgetTypeRegistryClass(object):
+    def register(self, tcls, cls=None):
+        import warnings
+        warnings.warn("WidgetTypeRegistry.register is deprecated, "
+                      "please use widgetRegistry.register instead",
+                      DeprecationWarning, stacklevel=2)
+        if cls is None:
+            cls = tcls.cls
+        widgetRegistry.register(cls)
+WidgetTypeRegistry = WidgetTypeRegistryClass()

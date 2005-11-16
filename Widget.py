@@ -417,3 +417,8 @@ class WidgetRegistry:
 
 # Singleton
 widgetRegistry = WidgetRegistry()
+
+
+# BBB compatibility code, will be removed in CPS 3.4.1
+class WidgetType(object):
+    cls = None
