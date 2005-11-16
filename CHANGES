@@ -18,3 +18,4 @@ New internal features:
   Widget) are now defined in code using CPSProgrammerCompoundWidget.
 - The prepare/validate method of the Compound Widget has a new
   'prevalidate' phase.
+- Removed unused 'sort_function' code of vocabularies.

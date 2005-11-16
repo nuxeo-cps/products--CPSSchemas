@@ -183,10 +183,9 @@ class LocalVocabulary(CPSVocabulary):
                    )
 
     def __init__(self, id, tuples=None, list=None, dict=None, title='',
-                 sort_function=None,
                  inheritance_type='inherit',
                  merge_behaviour='None'):
-        CPSVocabulary.__init__(self, id, tuples, list, dict, title, sort_function)
+        CPSVocabulary.__init__(self, id, tuples, list, dict, title)
         self.inheritance_type = inheritance_type
         self.merge_behaviour = merge_behaviour
 
