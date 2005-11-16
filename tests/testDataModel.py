@@ -10,7 +10,7 @@ from Products.CPSSchemas.DataModel import DataModel, ValidationError
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.BasicFields import CPSStringField
-from Products.CPSSchemas import FieldNamespace
+from Products.CPSSchemas.FieldNamespace import fieldStorageNamespace
 #from Products.CPSSchemas.Schema import Schema
 #from Products.CPSSchemas.Fields.TextField import TextField
 #from Products.CPSSchemas.Fields.SelectionField import SelectionField
@@ -78,7 +78,7 @@ class TestDataModel(unittest.TestCase):
                         )
         def dummyMethod(self, text):
             return self.portal_url and text or "failed acquisition"
-        FieldNamespace.registerMethod('dummy', dummyMethod)
+        fieldStorageNamespace.register('dummy', dummyMethod)
         schema.addField('f7', 'CPS String Field',
                         read_ignore_storage=True,
                         read_process_expr='python:util.dummy("some text")',

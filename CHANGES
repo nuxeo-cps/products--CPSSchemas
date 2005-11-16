@@ -22,7 +22,7 @@ New internal features:
 - The prepare/validate method of the Compound Widget has a new
   'prevalidate' phase.
 - Removed unused 'sort_function' code of vocabularies.
-- added a singleton object FieldNamespace.util to register methods made
-  available in read/write_process_expression of Field objects. This is intended
-  to be used by CPSDirectory to register dirCross(G|S)etList methods in String
-  List Fields (cross references between directories).
+- added a singleton object FieldNamespace.fieldStorageNamespace to register
+  methods made available in read/write_process_expression of Field objects. This
+  is intended to be used by CPSDirectory to register dirCross(G|S)etList methods
+  in String List Fields (cross references between directories).

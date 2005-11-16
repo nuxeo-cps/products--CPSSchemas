@@ -43,7 +43,7 @@ from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
 from Products.CPSSchemas.DataModel import ReadAccessError
 from Products.CPSSchemas.DataModel import WriteAccessError
 from Products.CPSSchemas.DataModel import ValidationError # used by cpsdir
-from Products.CPSSchemas import FieldNamespace
+from Products.CPSSchemas.FieldNamespace import fieldStorageNamespace
 
 
 class Field(PropertiesPostProcessor, SimpleItemWithProperties):
@@ -232,7 +232,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
                 mapping[k] = '' # XXX should be field's default
         portal = getToolByName(self, "portal_url").getPortalObject()
         # Wrapping util in the current acquisition context
-        util = FieldNamespace.util.__of__(portal)
+        util = fieldStorageNamespace.__of__(portal)
         mapping.update({
             'value': value,
             'data': data,

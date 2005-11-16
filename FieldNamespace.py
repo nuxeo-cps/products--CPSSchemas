@@ -24,6 +24,7 @@ expressions namespaces
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import Implicit
+from Globals import InitializeClass
 
 class FieldStorageNamespace(Implicit):
     """Method registry to be made available in read/write_process_expr
@@ -32,14 +33,18 @@ class FieldStorageNamespace(Implicit):
     # expressions
     security = ClassSecurityInfo()
     security.declareObjectPublic()
+    security.setDefaultAccess('allow')
 
 
-def registerMethod(name, method):
-    """Add a new method to the registry
-    """
-    setattr(FieldStorageNamespace, name, method)
-    setattr(FieldStorageNamespace, "%s__roles__" % name, None)
+    def register(cls, name, method):
+        """Add a new method to the registry
+        """
+        setattr(cls, name, method)
+
+    register = classmethod(register)
+
+InitializeClass(FieldStorageNamespace)
 
 # Singleton object publicly available in fields
-util = FieldStorageNamespace()
+fieldStorageNamespace = FieldStorageNamespace()
 
