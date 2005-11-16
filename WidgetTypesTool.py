@@ -41,10 +41,10 @@ InitializeClass(WidgetTypesTool)
 class WidgetTypeRegistryClass(object):
     def register(self, tcls, cls=None):
         import warnings
-        warnings.warn("WidgetTypeRegistry.register is deprecated, "
-                      "please use widgetRegistry.register instead",
-                      DeprecationWarning, stacklevel=2)
         if cls is None:
             cls = tcls.cls
         widgetRegistry.register(cls)
+        warnings.warn("WidgetTypeRegistry.register for %r is deprecated, "
+                      "please use widgetRegistry.register instead" %
+                      cls.meta_type, DeprecationWarning, stacklevel=2)
 WidgetTypeRegistry = WidgetTypeRegistryClass()
