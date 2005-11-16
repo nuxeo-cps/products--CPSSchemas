@@ -39,7 +39,6 @@ oFCKeditor.BasePath='${portal_path}';
 oFCKeditor.Value=opener.document.getElementById('${input_id}').value;
 oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
 oFCKeditor.ToolbarSet='Semantic';
-oFCKeditor.Config['EditorAreaCSS']='${portal_path}nuxeo_css1.css';
 oFCKeditor.Config['LinkBrowserURL'] = pathUser + 'fck_browse_files.html';
 oFCKeditor.Config['ImageBrowserURL'] = pathUser + 'fck_browse_images.html';
 oFCKeditor.Config['FlashBrowserURL'] = pathUser + 'fck_browse_files.html';

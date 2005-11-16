@@ -15,14 +15,13 @@
  * File Authors:
  *		Frederico Caldeira Knabben (fredck@fckeditor.net)
  *
- * Version:  2.0
- * Modified: 2005-08-21 tres tard
- *
- * File Authors:
- *		Frederico Caldeira Knabben (fredck@fckeditor.net)
- *
  * Zope + Plone2 adaptation : Jean-mat Grimaldi - jean-mat@macadames.com
+ *
+ * $Id$
  */
+
+FCKConfig.Debug = false;
+
 // basepath example for other Zope Implementation
 // FCKConfig.BasePath = document.location.protocol + '//' + document.location.host + document.location.pathname.substring(0,document.location.pathname.lastIndexOf('/')+1) ;
 
@@ -30,7 +29,7 @@ FCKConfig.CustomConfigurationsPath = '' ;
 
 // Style File to be used in the editable area for Plone (plone.css or ploneCustom.css ...)
 // FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css' ;
-FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'plone.css' ;
+FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'default.css' ;
 
 FCKConfig.DocType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
@@ -39,15 +38,14 @@ FCKConfig.BaseHref = '' ;
 // don't use true with plone
 FCKConfig.FullPage = false ;
 
-FCKConfig.Debug = false ;
-
 // Set the path for the skin files to use.
 // Change for Zope CMF because 'skins'is a folder name reserved
 FCKConfig.SkinPath = FCKConfig.BasePath + 'fck_skins/default/' ;
 
 FCKConfig.PluginsPath = FCKConfig.BasePath + 'plugins/' ;
 
-// FCKConfig.Plugins.Add( 'placeholder', 'en,it' ) ;
+//FCKConfig.Plugins.Add('placeholder', 'en,it');
+//FCKConfig.Plugins.Add('semantic', 'en,fr');
 
 FCKConfig.AutoDetectLanguage	= true ;
 FCKConfig.DefaultLanguage		= 'en' ;
@@ -66,7 +64,8 @@ FCKConfig.FormatSource		= true ;
 FCKConfig.FormatOutput		= true ;
 FCKConfig.FormatIndentator	= '    ' ;
 
-FCKConfig.GeckoUseSPAN	= true ;
+//FCKConfig.GeckoUseSPAN	= true ;
+FCKConfig.GeckoUseSPAN	= false;
 FCKConfig.StartupFocus	= false ;
 FCKConfig.ForcePasteAsPlainText	= false ;
 FCKConfig.ForceSimpleAmpersand	= false ;
@@ -127,8 +126,16 @@ FCKConfig.ToolbarSets["SmallZopeCmf"] = [
 	['About']
 ] ;
 
-FCKConfig.ToolbarSets["Semantic"] = [
-	['Style','Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','Undo','Redo']
+// The semantic toolbar using the "semantic" plugin
+// FCKConfig.ToolbarSets['Semantic'] = [
+//     ['Strong','Emphasis','Lang','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
+//     ['RemoveFormat','Undo','Redo','Source'],
+// ] ;
+
+// The semantic toolbar without the "semantic" plugin
+FCKConfig.ToolbarSets['Semantic'] = [
+    ['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
+    ['RemoveFormat','Undo','Redo','Source'],
 ] ;
 
 FCKConfig.ToolbarSets["Basic"] = [

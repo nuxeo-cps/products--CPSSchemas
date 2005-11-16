@@ -8,6 +8,9 @@ Bug fixes:
 ~~~~~~~~~~
 - Search ZCText widget rendering was presenting a field selection even if
   there was only one field available.
+- Moved the "EditorAreaCSS" property from the template popup_fckeditor_form.pt
+  to the FCKeditor config file ckconfig-cps.js. This will ease customization
+  that will only have to be done in the ckconfig-cps.js file.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
