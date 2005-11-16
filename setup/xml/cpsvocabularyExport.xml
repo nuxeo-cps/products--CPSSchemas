@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<vocabulary type="TYPE"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    tal:define="info here/getVocabularyInfo;
+                dummy python:request.RESPONSE.setHeader('Content-Type', 'application/xml;; charset=UTF-8')
+                "
+    tal:attributes="type info/type">
+  <item key="KEY" value="VALUE"
+        tal:repeat="vocitem info/vocitems"
+        tal:attributes="key vocitem/key;
+                        value vocitem/value;
+                        msgid vocitem/msgid | default
+                        "
+        />
+</vocabulary>

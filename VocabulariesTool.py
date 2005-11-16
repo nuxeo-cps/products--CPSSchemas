@@ -23,7 +23,8 @@ from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.permissions import ManagePortal, View
-from Products.CPSSchemas.LocalVocabulary import LOCAL_VOCABULARY_CONTAINER_ID
+
+LOCAL_VOCABULARY_CONTAINER_ID = '.cps_vocabularies'
 
 class VocabulariesTool(UniqueObject, Folder):
     """Vocabularies Tool
@@ -115,11 +116,14 @@ class VocabularyTypeRegistry:
 
     def __init__(self):
         self._types = {}
+        self._exporters = {}
 
-    def register(self, cls):
+    def register(self, cls, exporter=None):
         """Register a vocabulary type."""
         mt = cls.meta_type.replace(' ', '')
         self._types[mt] = cls
+        if exporter is not None:
+            self._exporters[mt] = exporter
 
     def listTypes(self):
         """List vocabulary types."""
@@ -131,6 +135,11 @@ class VocabularyTypeRegistry:
         """Get a vocabulary type."""
         mt = meta_type.replace(' ', '')
         return self._types[mt]
+
+    def getExporter(self, meta_type):
+        """Get a vocabulary exporter."""
+        mt = meta_type.replace(' ', '')
+        return self._exporters.get(mt)
 
 # Singleton
 VocabularyTypeRegistry = VocabularyTypeRegistry()

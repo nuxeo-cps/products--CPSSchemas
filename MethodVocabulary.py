@@ -28,6 +28,9 @@ from Acquisition import Implicit
 from Products.CMFCore.permissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 
+from Products.CPSSchemas.VocabulariesTool import VocabularyTypeRegistry
+
+
 class MethodVocabulary(SimpleItemWithProperties):
     """Method Vocabulary
 
@@ -156,6 +159,8 @@ class MethodVocabulary(SimpleItemWithProperties):
         return 0
 
 InitializeClass(MethodVocabulary)
+
+VocabularyTypeRegistry.register(MethodVocabulary)
 
 
 class MethodVocabularyWithContext(Implicit):

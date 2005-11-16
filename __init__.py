@@ -44,9 +44,6 @@ import Schema
 import Layout
 
 import VocabulariesTool
-from VocabulariesTool import VocabularyTypeRegistry
-from Vocabulary import CPSVocabulary
-from MethodVocabulary import MethodVocabulary
 
 import SchemasTool
 import LayoutsTool
@@ -107,5 +104,3 @@ def initialize(registrar):
         tools = tools,
         icon = 'tool.png',
         ).initialize(registrar)
-    VocabularyTypeRegistry.register(CPSVocabulary)
-    VocabularyTypeRegistry.register(MethodVocabulary)

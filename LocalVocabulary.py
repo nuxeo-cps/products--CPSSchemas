@@ -22,8 +22,8 @@ from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSSchemas.Vocabulary import CPSVocabulary, Vocabulary
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ManagePortal
+from Products.CPSSchemas.VocabulariesTool import LOCAL_VOCABULARY_CONTAINER_ID
 
-LOCAL_VOCABULARY_CONTAINER_ID = '.cps_vocabularies'
 INHERITANCE_TYPES = ('inherit', 'global')
 MERGE_BEHAVIOURS = ('None', 'union')
 

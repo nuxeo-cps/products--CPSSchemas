@@ -34,8 +34,8 @@ from Acquisition import Implicit
 
 from Products.CMFCore.permissions import View, ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties, getToolByName
-
 from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CPSSchemas.VocabulariesTool import VocabularyTypeRegistry
 
 from IVocabulary import IVocabulary
 
@@ -465,3 +465,6 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
             return self.manage_main(REQUEST, manage_tabs_message='Deleted.')
 
 InitializeClass(CPSVocabulary)
+
+VocabularyTypeRegistry.register(CPSVocabulary)
+# Exporter is registered in setup/vocabulary.py
