@@ -5,6 +5,12 @@
                         rte_value request/rte_value|nothing;">
 
 <metal:body use-macro="here/main_template_popup/macros/master">
+
+<metal:headslot fill-slot="css_slot">
+  <link rel="stylesheet" type="text/css" media="all"
+        tal:attributes="href string:${base_url}fckeditor_wysiwyg.css" />
+</metal:headslot>
+
 <metal:headslot fill-slot="head_slot" tal:condition="rte_value">
  <script type="text/javascript"
   tal:define="js_rte_value python:here.encodeJsString(rte_value)"
@@ -17,19 +23,19 @@
 </metal:headslot>
 
 <metal:main fill-slot="body">
-<div style="margin: 0 1em 0 1em;">
+<h1 tal:content="label_edit" i18n:translate="">Edit</h1>
 <div class="document">
 <form action="" method="post"
       tal:attributes="action string:${here_url}/popup_fckeditor_form">
 <div class="row">
  <div class="field">
- <h3 tal:content="label_edit" i18n:translate="" />
   <input type="hidden" name="input_id" tal:attributes="value input_id" />
 
   <tal:block tal:define="portal_url here/portal_url;
                          parent_url python:here.aq_parent.absolute_url();
                          server_path  request/BASE0;
                          portal_path python:portal_url.replace(server_path, '')+'/';">
+
    <script type="text/javascript" src=""
                  tal:attributes="src string:${portal_path}fckeditor.js">
    </script>
@@ -51,14 +57,17 @@ oFCKeditor.Create();
   </tal:block>
  </div>
 </div>
-<div style="margin-top: 0.5em;">
-  <input type="submit" value="button_update" class="standalone"
-    i18n:attributes="value"/>
-  <input type="button" value="button_cancel" class="context"
-    onclick="window.close()" i18n:attributes="value"/>
+<div class="BackColor">
+  <button type="submit" i18n:translate="button_update"
+          class="Button">
+    Update
+  </button>
+  <button type="button" onclick="window.close()" i18:translate="button_cancel"
+          class="Button">
+    Cancel
+  </button>
 </div>
 </form>
-</div>
 </div>
 </metal:main>
 </metal:body>
