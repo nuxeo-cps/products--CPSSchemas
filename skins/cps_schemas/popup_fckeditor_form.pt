@@ -3,18 +3,19 @@
                         value request/value|string:;
                         label_edit request/label_edit|string:;
                         rte_value request/rte_value|nothing;">
+
 <metal:body use-macro="here/main_template_popup/macros/master">
 <metal:headslot fill-slot="head_slot" tal:condition="rte_value">
  <script type="text/javascript"
   tal:define="js_rte_value python:here.encodeJsString(rte_value)"
   tal:content='structure string:
-  <!--
       var dest;
       dest = opener.document.getElementById("${input_id}");
       dest.value = "${js_rte_value}";
       window.close();
-  -->' />
+        '/>
 </metal:headslot>
+
 <metal:main fill-slot="body">
 <div style="margin: 0 1em 0 1em;">
 <div class="document">
@@ -29,33 +30,32 @@
                          parent_url python:here.aq_parent.absolute_url();
                          server_path  request/BASE0;
                          portal_path python:portal_url.replace(server_path, '')+'/';">
-   <script type="text/javascript" src="" tal:attributes="src string:${portal_path}fckeditor.js">
+   <script type="text/javascript" src=""
+                 tal:attributes="src string:${portal_path}fckeditor.js">
    </script>
    <script type="text/javascript" tal:content="structure string:
-&lt;!--
-var oFCKeditor=new FCKeditor('rte_value');
+var oFCKeditor = new FCKeditor('rte_value');
 var pathUser = '${request/URLPATH2}/';
-oFCKeditor.BasePath='${portal_path}';
-oFCKeditor.Value=opener.document.getElementById('${input_id}').value;
+oFCKeditor.BasePath = '${portal_path}';
+oFCKeditor.Value = opener.document.getElementById('${input_id}').value;
 oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
 oFCKeditor.ToolbarSet='Semantic';
 oFCKeditor.Config['LinkBrowserURL'] = pathUser + 'fck_browse_files.html';
 oFCKeditor.Config['ImageBrowserURL'] = pathUser + 'fck_browse_images.html';
 oFCKeditor.Config['FlashBrowserURL'] = pathUser + 'fck_browse_files.html';
-oFCKeditor.Width=610;
-oFCKeditor.Height=410;
+oFCKeditor.Width = 610;
+oFCKeditor.Height = 410;
 oFCKeditor.Create();
---&gt;
 ">
    </script>
   </tal:block>
  </div>
 </div>
 <div style="margin-top: 0.5em;">
-  <input type="button" value="button_cancel" class="context"
-    onclick="window.close()" i18n:attributes="value"/>
   <input type="submit" value="button_update" class="standalone"
     i18n:attributes="value"/>
+  <input type="button" value="button_cancel" class="context"
+    onclick="window.close()" i18n:attributes="value"/>
 </div>
 </form>
 </div>
