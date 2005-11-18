@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+$Id$
+-->
+<Styles>
+  <Style name="h2" element="h2" />
+  <Style name="h3" element="h3" />
+  <Style name="h4" element="h4" />
+  <Style name="h5" element="h5" />
+  <Style name="h6" element="h6" />
+</Styles>

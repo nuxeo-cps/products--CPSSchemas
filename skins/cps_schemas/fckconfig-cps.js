@@ -128,13 +128,13 @@ FCKConfig.ToolbarSets["SmallZopeCmf"] = [
 
 // The semantic toolbar using the "semantic" plugin
 FCKConfig.ToolbarSets['Semantic'] = [
-    ['Strong','Emphasis','Lang','-','OrderedList','UnorderedList','-','Link','Unlink'],
+    ['Strong','Emphasis','Lang','Style','-','OrderedList','UnorderedList','-','Link','Unlink'],
     ['RemoveFormat','Undo','Redo','Source']
 ] ;
 
 // The semantic toolbar without the "semantic" plugin
 // FCKConfig.ToolbarSets['Semantic'] = [
-//     ['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
+//     ['Bold','Italic','Style','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
 //     ['RemoveFormat','Undo','Redo','Source']
 // ] ;
 
@@ -150,7 +150,8 @@ FCKConfig.FontNames		= 'Arial, Geneva, Helvetica, Helv, sans-serif;Verdana, Aria
 FCKConfig.FontSizes		= '1/xx-small;2/x-small;3/small;4/medium;5/large;6/x-large;7/xx-large' ;
 FCKConfig.FontFormats		= 'p;div;pre;address;h1;h2;h3;h4;h5;h6' ;
 
-FCKConfig.StylesXmlPath		= FCKConfig.EditorPath + 'fckstyles.xml' ;
+//FCKConfig.StylesXmlPath		= FCKConfig.EditorPath + 'fckstyles.xml' ;
+FCKConfig.StylesXmlPath		= FCKConfig.EditorPath + 'fckstyles-cps.xml' ;
 FCKConfig.TemplatesXmlPath	= FCKConfig.EditorPath + 'fcktemplates.xml' ;
 
 FCKConfig.SpellChecker			= 'ieSpell' ;	// 'ieSpell' | 'SpellerPages'
