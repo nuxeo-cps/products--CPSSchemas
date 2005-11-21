@@ -128,14 +128,15 @@ FCKConfig.ToolbarSets["SmallZopeCmf"] = [
 
 // The semantic toolbar using the "semantic" plugin
 FCKConfig.ToolbarSets['Semantic'] = [
-    ['Strong','Emphasis','Lang','Style','-','OrderedList','UnorderedList','-','Link','Unlink'],
+    ['Emphasis','Strong','Lang','Abbr','Acronym','Cite','Q','Style'],
+    ['-','OrderedList','UnorderedList','-','Link','Unlink'],
     '/',
     ['RemoveFormat','Undo','Redo','Source']
 ] ;
 
 // The semantic toolbar without the "semantic" plugin
 // FCKConfig.ToolbarSets['Semantic'] = [
-//     ['Bold','Italic','Style','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
+//     ['Italic','Bold','Style','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
 //     ['RemoveFormat','Undo','Redo','Source']
 // ] ;
 
