@@ -29,7 +29,7 @@ FCKConfig.CustomConfigurationsPath = '' ;
 
 // Style File to be used in the editable area for Plone (plone.css or ploneCustom.css ...)
 // FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css' ;
-FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'default.css' ;
+FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'fckeditor_wysiwyg.css' ;
 
 FCKConfig.DocType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 

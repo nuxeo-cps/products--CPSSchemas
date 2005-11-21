@@ -8,7 +8,7 @@
 
 <metal:headslot fill-slot="css_slot">
   <link rel="stylesheet" type="text/css" media="all"
-        tal:attributes="href string:${base_url}fckeditor_wysiwyg.css" />
+        tal:attributes="href string:${base_url}popup_fckeditor_form.css" />
 </metal:headslot>
 
 <metal:headslot fill-slot="head_slot" tal:condition="rte_value">

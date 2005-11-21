@@ -9,13 +9,29 @@ $Id$
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-@import "<dtml-var expr="getBaseUrl()">editor/css/fck_skins/default/fck_dialog.css";
+<dtml-let base_url="portal_url.getBaseUrl()">
 
-button {
-  font-size: 11px;
-  font-family: 'Microsoft Sans Serif' , Arial, Helvetica, Verdana, sans-serif;
+.langSwitch {
+  background-color: #99ff99;
 }
 
-button:hover {
-  background-color: #d7d79f;
+<dtml-in "['ae', 'am', 'qa', 'en', 'qc', 'iq', 'is', 'ye', 'un', 'mx', 'bh',
+           'yu', 'fi', 'br', 'jp', 'no', 'ca', 'sa', 'km', 'cu', 'gr', 'si',
+           'sk', 'so', 'kw', 'su', 'sy', 'lb', 'dj', 'th', 'hu', 'dz', 'lt',
+           'tn', 'ps', 'tr', 'pt_BR', 'ee', 'eg', 'ma', 'ar', 'mg', 'at',
+           'il', 'ua', 'mk', 'es', 'eu', 'az', 'it', 'uk', 'be', 'us', 'bg',
+           'uy', 'fr', 'jo', 'nl', 'by', 'ro', 'vn', 'ru', 'ch', 'ge', 'om',
+           'cz', 'sv', 'de', 'la', 'dk', 'hr', 'pl', 'pt', 'ly'
+]">
+<dtml-let>
+.lang-<dtml-var sequence-item> {
+  background-image: url(<dtml-var expr="base_url">cpsskins_images/flag-<dtml-var sequence-item>.png);
+  background-repeat: no-repeat;
+  background-position: center right;
+  padding-right: 18px;
 }
+
+</dtml-let>
+</dtml-in>
+
+</dtml-let>
