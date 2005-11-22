@@ -8,5 +8,6 @@ $Id$
   <Style name="h4" element="h4" />
   <Style name="h5" element="h5" />
   <Style name="h6" element="h6" />
+  <Style name="paragraph" element="p" />
   <Style name="blockquote" element="blockquote" />
 </Styles>
