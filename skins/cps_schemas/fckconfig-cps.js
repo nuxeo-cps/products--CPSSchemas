@@ -64,7 +64,7 @@ FCKConfig.FormatSource		= true ;
 FCKConfig.FormatOutput		= true ;
 FCKConfig.FormatIndentator	= '    ' ;
 
-FCKConfig.GeckoUseSPAN	= true ;
+FCKConfig.GeckoUseSPAN	= false;
 FCKConfig.StartupFocus	= false ;
 FCKConfig.ForcePasteAsPlainText	= true ;
 FCKConfig.ForceSimpleAmpersand	= false ;
