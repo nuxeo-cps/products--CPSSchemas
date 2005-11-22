@@ -64,10 +64,9 @@ FCKConfig.FormatSource		= true ;
 FCKConfig.FormatOutput		= true ;
 FCKConfig.FormatIndentator	= '    ' ;
 
-//FCKConfig.GeckoUseSPAN	= true ;
-FCKConfig.GeckoUseSPAN	= false;
+FCKConfig.GeckoUseSPAN	= true ;
 FCKConfig.StartupFocus	= false ;
-FCKConfig.ForcePasteAsPlainText	= false ;
+FCKConfig.ForcePasteAsPlainText	= true ;
 FCKConfig.ForceSimpleAmpersand	= false ;
 FCKConfig.TabSpaces		= 0 ;
 FCKConfig.ShowBorders	= true ;
@@ -128,7 +127,7 @@ FCKConfig.ToolbarSets["SmallZopeCmf"] = [
 
 // The semantic toolbar using the "semantic" plugin
 FCKConfig.ToolbarSets['Semantic'] = [
-    ['Emphasis','Strong','Lang','Abbr','Acronym','Cite','Q','Style'],
+    ['Italic','Bold','Lang','Abbr','Acronym','Cite','Q','Style'],
     ['-','OrderedList','UnorderedList','-','Link','Unlink'],
     '/',
     ['RemoveFormat','Undo','Redo','Source']
