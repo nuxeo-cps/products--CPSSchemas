@@ -169,7 +169,7 @@ FCKConfig.ImageDlgHideAdvanced	= false ;
 FCKConfig.FlashDlgHideAdvanced	= false ;
 
 // Link Browsing
-FCKConfig.LinkBrowser = true ;
+FCKConfig.LinkBrowser = false;
 FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "fck_browse_files.html" ;
 // Pour utiliser le browsing standard de FCK (plus evolue) commenter la ligne precedente et decommenter la ligne ci-dessous
 // Dans Plone les fck_wysiwyg_support appellent ce browser
