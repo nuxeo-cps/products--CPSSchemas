@@ -11,6 +11,7 @@ Bug fixes:
 - Moved the "EditorAreaCSS" property from the template popup_fckeditor_form.pt
   to the FCKeditor config file ckconfig-cps.js. This will ease customization
   that will only have to be done in the ckconfig-cps.js file.
+- #1143 removed dependency on CPSBoxes in the popup forms
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
