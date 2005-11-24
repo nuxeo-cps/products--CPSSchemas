@@ -11,7 +11,7 @@ HOWTO_make_epoz_output_xhtml.txt
 HOWTO_write_a_widget.txt
 
 intro-cpsschemas.odt:
-  Tutorial on using CPSSchemas.
+  Tutorial on using CPSSchemas contributed by JoseLuis de la Rosa.
   
 intro-cpsschemas.zuml: 
   UML diagram for CPSSchemas in source form, editable with Poseidon for UML
