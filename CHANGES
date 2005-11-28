@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Made CPS use the "semantic" plugin if FCKeditor is used.
+- Made CPS use the "semantic" plugin if FCKeditor is used. This Fixes #502.
 Bug fixes:
 ~~~~~~~~~~
 - Search ZCText widget rendering was presenting a field selection even if
