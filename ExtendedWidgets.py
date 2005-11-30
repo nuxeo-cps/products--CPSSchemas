@@ -23,10 +23,11 @@
 Definition of extended widget types.
 """
 
+import warnings
 from cgi import escape
 from re import match
 from Globals import InitializeClass
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_parent, aq_inner
 from types import ListType, TupleType, StringType
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
@@ -586,8 +587,9 @@ widgetRegistry.register(CPSZippedHtmlWidget)
 class CPSRichTextEditorWidget(CPSWidget):
     """Rich Text Editor widget.
 
-    This widget should not be used. Use the Text Widget which provides both HTML
-    and text formats.
+    THIS WIDGET SHOULD NOT BE USED AND IS DEPRECATED.
+
+    Use the Text Widget which provides both HTML and text formats.
     """
     meta_type = 'Rich Text Editor Widget'
 
@@ -602,7 +604,6 @@ class CPSRichTextEditorWidget(CPSWidget):
         {'id': 'height', 'type': 'int', 'mode': 'w',
          'label': 'Height'},
         )
-
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -626,12 +627,14 @@ class CPSRichTextEditorWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        # XXXX
-        # Not finished !! Just for tests
+        warnings.warn("The Rich Text Editor Widget (%s/%s) is deprecated "
+                      "and will be removed in CPS 3.5.0. Use a Text Widget "
+                      "instead" % (aq_parent(aq_inner(self)).getId(),
+                                   self.getWidgetId()), DeprecationWarning)
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            # To change
-            return structured_text(value)
+            # Return HTML directly
+            return value
         elif mode == 'edit':
             render_method = 'widget_rte_render'
             meth = getattr(self, render_method, None)
