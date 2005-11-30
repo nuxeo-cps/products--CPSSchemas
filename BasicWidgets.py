@@ -24,6 +24,7 @@
 Definition of standard widget types.
 """
 
+import warnings
 import string
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
@@ -1200,45 +1201,52 @@ class CPSIntWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        v = datamodel[self.fields[0]]
+        if v is None:
+            value = ''
+        else:
+            value = str(v)
+            if self.thousands_separator:
+                thousands = []
+                while value:
+                    thousands.insert(0, value[-3:])
+                    value = value[:-3]
+                value = self.thousands_separator.join(thousands)
+        datastructure[self.getWidgetId()] = value
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        value = datastructure[self.getWidgetId()]
-
-        #put value back in a python-parsable state as thousands
-        #separator might not be std representations understood by python
-        if self.thousands_separator:
-            value = value.replace(self.thousands_separator,'')
-
-        try:
-            v = int(value)
-        except (ValueError, TypeError):
-            datastructure.setError(self.getWidgetId(),
-                                   "cpsschemas_err_int")
-            return 0
-
-        if self.is_limited:
-            if (v < self.min_value) or (v > self.max_value):
-                datastructure.setError(self.getWidgetId(),
-                                       "cpsschemas_err_int_range")
-                return 0
-
         datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id].strip()
+        datastructure[widget_id] = value
+
+        if self.thousands_separator:
+            value = value.replace(self.thousands_separator, '')
+
+        if not value:
+            if self.is_required:
+                datastructure.setError(widget_id, 'cpsschemas_err_required')
+                return False
+            v = None
+        else:
+            try:
+                v = int(value)
+            except (ValueError, TypeError):
+                datastructure.setError(widget_id, 'cpsschemas_err_int')
+                return False
+            if self.is_limited:
+                if (v < self.min_value) or (v > self.max_value):
+                    datastructure.setError(widget_id,
+                                           'cpsschemas_err_int_range')
+                    return False
+
         datamodel[self.fields[0]] = v
-        return 1
+        return True
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = str(datastructure[self.getWidgetId()])
-        #format number according to widget prefs
-        if self.thousands_separator:
-            thousands = []
-            while value:
-                thousands.insert(0, value[-3:])
-                value = value[:-3]
-            value = self.thousands_separator.join(thousands)
-
+        value = datastructure[self.getWidgetId()]
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':
@@ -1254,81 +1262,20 @@ widgetRegistry.register(CPSIntWidget)
 
 #######################################################
 
-class CPSLongWidget(CPSWidget):
-    """Long Widget with limits"""
+class CPSLongWidget(CPSIntWidget):
+    """Long Widget
+
+    This widget is DEPRECATED, use the identical Int Widget instead.
+    """
     meta_type = 'Long Widget'
-
-    field_types = ('CPS Long Field',)
-
-    _properties = CPSWidget._properties + (
-        {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
-         'label': 'Value must be in range'},
-        {'id': 'min_value', 'type': 'int', 'mode': 'w',
-         'label': 'Range minimum value'},
-        {'id': 'max_value', 'type': 'int', 'mode': 'w',
-         'label': 'Range maximum  value'},
-        {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
-         'label': 'Thousands separator'},
-        )
-
-    is_limited = 0
-    min_value = 0
-    max_value = 0
-    thousands_separator = ''
-
-    def prepare(self, datastructure, **kw):
-        """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
-
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        datamodel = datastructure.getDataModel()
-        widget_id = self.getWidgetId()
-        value = datastructure[widget_id]
-
-        #put value back in a python-parsable state as thousands
-        #separator might not be std representations understood by python
-        if self.thousands_separator:
-            value = value.replace(self.thousands_separator,'')
-
-        if not value and self.is_required:
-            datastructure[widget_id] = 0
-            datastructure.setError(widget_id, "cpsschemas_err_required")
-            return 0
-        try:
-            v = long(value)
-        except (ValueError, TypeError):
-            datastructure.setError(widget_id, "cpsschemas_err_int")
-            ok = 0
-        else:
-            if self.is_limited and (v < self.min_value or v > self.max_value):
-                datastructure.setError(widget_id,
-                                       "cpsschemas_err_long_range")
-                ok = 0
-            else:
-                datamodel[self.fields[0]] = v
-                ok = 1
-        return ok
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = str(datastructure[self.getWidgetId()])
-        #format number according to widget prefs
-        if self.thousands_separator:
-            thousands = []
-            while value:
-                thousands.insert(0, value[-3:])
-                value = value[:-3]
-            value = self.thousands_separator.join(thousands)
-        if mode == 'view':
-            return escape(value)
-        elif mode == 'edit':
-            return renderHtmlTag('input',
-                                 type='text',
-                                 name=self.getHtmlWidgetId(),
-                                 value=value)
-        raise RuntimeError('unknown mode %s' % mode)
+        warnings.warn("The Long Widget (%s/%s) is deprecated and will be "
+                      "removed in CPS 3.5.0. Use a Int Widget instead" %
+                      (aq_parent(aq_inner(self)).getId(), self.getWidgetId()),
+                      DeprecationWarning)
+        CPSIntWidget.render(self, mode, datastructure, **kw)
 
 InitializeClass(CPSLongWidget)
 

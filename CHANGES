@@ -29,3 +29,6 @@ New internal features:
   dirCross(G|S)etList methods in String List Fields (cross references
   between directories).
 - RichTextEditorWidget is deprecated. TextWidget should be used instead.
+- Long Field and Long Widget are deprecated. Use the Int equivalents.
+- Int Widget now stores None if it's not required and an empty string is
+  entered.

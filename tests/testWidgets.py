@@ -56,6 +56,15 @@ fakePortal.portal_url = FakeUrlTool()
 fakePortal.portal_workflow = None
 fakePortal.translation_service = FakeTranslationService()
 
+class FakeDataStructure(dict):
+    def __init__(self, datamodel):
+        self.errs = {}
+        self.datamodel = datamodel
+    def getDataModel(self):
+        return self.datamodel
+    def setError(self, id, err):
+        self.errs[id] = err
+
 class TestWidgets(unittest.TestCase):
 
     def testStringWidget(self):
@@ -67,14 +76,73 @@ class TestWidgets(unittest.TestCase):
     def testIntWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSIntWidget
         widget = CPSIntWidget('foo')
+        widget.fields = ['foo']
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Int Field',))
+        dm = {}
+        ds = FakeDataStructure(dm)
+
+        ds['foo'] = '123 '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 123)
+
+        ds['foo'] = ' 0 '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 0)
+
+        ds['foo'] = '0ab '
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        self.assertEquals(ds['foo'], '0ab')
+
+        widget.is_required = False
+        ds['foo'] = ' '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(ds['foo'], '')
+        self.assertEquals(dm['foo'], None)
+
+        widget.is_required = True
+        ds['foo'] = ' '
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        self.assertEquals(ds['foo'], '')
+
+        widget.is_limited = True
+        widget.min_value = 10
+        widget.max_value = 20
+        ds['foo'] = '123'
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        ds['foo'] = '15'
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 15)
+
+        # prepare
+
+        dm['foo'] = 12345678901234567890
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '12345678901234567890')
+
+        widget.thousands_separator = ','
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '12,345,678,901,234,567,890')
+
+        dm['foo'] = 0
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '0')
+
+        dm['foo'] = None
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '')
 
     def testLongWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSLongWidget
         widget = CPSLongWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
-        self.assertEquals(widget.getFieldTypes(), ('CPS Long Field',))
 
     def testFloatWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSFloatWidget

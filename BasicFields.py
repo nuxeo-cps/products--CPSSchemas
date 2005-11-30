@@ -23,6 +23,7 @@ Definition of standard field types.
 
 from zLOG import LOG, DEBUG, WARNING
 import sys
+import warnings
 from types import IntType, FloatType, LongType, BooleanType, \
                   StringType, UnicodeType, \
                   ListType, DictType, TupleType
@@ -127,32 +128,18 @@ class CPSBooleanField(CPSField):
 InitializeClass(CPSBooleanField)
 
 
-class CPSLongField(CPSField):
-    """Long field."""
+class CPSLongField(CPSIntField):
+    """Long field
+
+    This field is DEPRECATED, use the identical Int Field instead.
+    """
     meta_type = "CPS Long Field"
-
-    default_expr = 'python:0L'
-    default_expr_c = Expression(default_expr)
-
-    # XXX this is never called yet.
-    def validate(self, value):
-        if isinstance(value, LongType):
-            return value
-        raise ValidationError('Not an long integer: %s' % repr(value))
-
-    def convertToLDAP(self, value):
-        """Convert a value to LDAP attribute values."""
-        return [str(value)]
-
-    def convertFromLDAP(self, values):
-        """Convert a value from LDAP attribute values."""
-        try:
-            if len(values) != 1:
-                raise ValueError
-            return long(values[0])
-        except (ValueError, TypeError):
-            raise ValidationError("Incorrect Long value from LDAP: %s"
-                                  % `values`)
+    def __init__(self, id, **kw):
+        warnings.warn("The Long Field (%s/%s) is deprecated and will be "
+                      "removed in CPS 3.5.0. Use a Int Field instead" %
+                      (aq_parent(aq_inner(self)).getId(), self.getFieldId()),
+                      DeprecationWarning)
+        CPSIntField(self, id, **kw)
 
 InitializeClass(CPSLongField)
 
@@ -759,7 +746,7 @@ FieldRegistry.register(CPSPasswordField)
 FieldRegistry.register(CPSIntListListField)
 FieldRegistry.register(CPSStringListField)
 FieldRegistry.register(CPSIntField)
-FieldRegistry.register(CPSLongField)
+FieldRegistry.register(CPSLongField) # deprecated
 FieldRegistry.register(CPSFloatField)
 FieldRegistry.register(CPSDateTimeField)
 FieldRegistry.register(CPSFileField)

@@ -74,10 +74,9 @@ class BasicFieldTests(unittest.TestCase):
 
     def testLongField(self):
         field = self.makeOne(BasicFields.CPSLongField)
-        self.assertEquals(field.getDefault(), 0L)
-        self.assertEquals(field.validate(121L), 121L)
+        self.assertEquals(field.getDefault(), 0)
+        self.assertEquals(field.validate(121), 121)
         self.assertRaises(ValueError, field.validate, "1")
-        self.assertRaises(ValueError, field.validate, 1) # XXX
 
     def testFloatField(self):
         field = self.makeOne(BasicFields.CPSFloatField)
