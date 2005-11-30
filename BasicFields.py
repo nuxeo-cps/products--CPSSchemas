@@ -299,7 +299,11 @@ class CPSStringListField(CPSListField):
 InitializeClass(CPSStringListField)
 
 class CPSListListField(CPSListField):
-    """List of List field."""
+    """List of List field.
+
+    This doesn't give enough type information so is not really
+    registered as a field type. This is an abstract base class.
+    """
     meta_type = "CPS List List Field"
 
     validation_error_msg = 'Not a list of list: '
@@ -751,6 +755,7 @@ class CPSCoupleField(CPSListField):
 FieldRegistry.register(CPSBooleanField)
 FieldRegistry.register(CPSStringField)
 FieldRegistry.register(CPSPasswordField)
+#FieldRegistry.register(CPSListListField) # Not registered on purpose
 FieldRegistry.register(CPSIntListListField)
 FieldRegistry.register(CPSStringListField)
 FieldRegistry.register(CPSIntField)
