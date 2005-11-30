@@ -34,3 +34,4 @@ New internal features:
 - RichTextEditorWidget is deprecated. TextWidget should be used instead.
 - Long Field and Long Widget are deprecated. Use the Int equivalents.
 - Float Widget's default decimal separator is now '.'
+- Added getReadableFieldIds method to storage adapters.
