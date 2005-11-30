@@ -12,6 +12,9 @@ Bug fixes:
   to the FCKeditor config file ckconfig-cps.js. This will ease customization
   that will only have to be done in the ckconfig-cps.js file.
 - #1143 removed dependency on CPSBoxes in the popup forms
+- #496: handling of empty values for Int and Float Widgets: None is now
+  stored if the widgets are not required and an empty string is entered
+- #1145: Made photo widget more robust.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
@@ -30,6 +33,4 @@ New internal features:
   between directories).
 - RichTextEditorWidget is deprecated. TextWidget should be used instead.
 - Long Field and Long Widget are deprecated. Use the Int equivalents.
-- Int and Float Widgets now stores None if it's not required and an
-  empty string is entered.
 - Float Widget's default decimal separator is now '.'

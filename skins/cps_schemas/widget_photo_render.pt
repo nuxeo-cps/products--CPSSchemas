@@ -25,8 +25,8 @@
                                       test(rposition == 'center', 'dcenter', 'dleft'))">
       <tal:block condition="python: original_photo">
         <a href="#" 
-          tal:define="original_width python:original_photo.width; 
-                      original_height python:original_photo.height"
+          tal:define="original_width python:original_photo.width or 100;
+                      original_height python:original_photo.height or 100"
           tal:attributes="onClick python:'window.open(\'%s/popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(photo_path,original_photo_field,str(int(original_width)+40)) +
                          ',innerheight=%s'%str(int(original_height) + 40) +
                          ',width=%s'%str(int(original_width)+40) +
