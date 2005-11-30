@@ -30,5 +30,6 @@ New internal features:
   between directories).
 - RichTextEditorWidget is deprecated. TextWidget should be used instead.
 - Long Field and Long Widget are deprecated. Use the Int equivalents.
-- Int Widget now stores None if it's not required and an empty string is
-  entered.
+- Int and Float Widgets now stores None if it's not required and an
+  empty string is entered.
+- Float Widget's default decimal separator is now '.'

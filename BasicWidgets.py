@@ -1309,62 +1309,68 @@ class CPSFloatWidget(CPSWidget):
     max_value = 0.0
     # XXX: find a way to localized thousands_separator and decimals_separator
     thousands_separator = ''
-    decimals_separator = ','
+    decimals_separator = '.'
     decimals_number = 0
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        v = datamodel[self.fields[0]]
+        if v is None:
+            value = ''
+        else:
+            if self.decimals_number:
+                value = ('%%0.%df' % self.decimals_number) % v
+            else:
+                value = str(v)
+            if self.thousands_separator:
+                intpart, decpart = value.split('.')
+                thousands = []
+                while intpart:
+                    thousands.insert(0, intpart[-3:])
+                    intpart = intpart[:-3]
+                value = (self.thousands_separator.join(thousands) + '.' +
+                         decpart)
+            if self.decimals_separator:
+                value = value.replace('.', self.decimals_separator)
+        datastructure[self.getWidgetId()] = value
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        widget_id = self.getWidgetId()
-        value = datastructure[widget_id]
-
-        if not value and self.is_required:
-            datastructure[widget_id] = 0.0
-            datastructure.setError(widget_id, "cpsschemas_err_required")
-            return 0
-
-        #put value back in a python-parsable state as decimal/thousands
-        #separators might not be std representations understood by python
-        if self.thousands_separator:
-            value = value.replace(self.thousands_separator,'')
-        if self.decimals_separator:
-            value = value.replace(self.decimals_separator,'.')
-
-        try:
-            v = float(value)
-        except (ValueError, TypeError):
-            datastructure.setError(widget_id, "cpsschemas_err_float")
-            return 0
-
-        if self.is_limited:
-            if (v < self.min_value) or (v > self.max_value):
-                datastructure.setError(widget_id, "cpsschemas_err_float_range")
-                return 0
-
         datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id].strip()
+        datastructure[widget_id] = value
+
+        if self.thousands_separator:
+            value = value.replace(self.thousands_separator, '')
+        if self.decimals_separator:
+            value = value.replace(self.decimals_separator, '.')
+
+        if not value:
+            if self.is_required:
+                datastructure.setError(widget_id, 'cpsschemas_err_required')
+                return False
+            v = None
+        else:
+            try:
+                v = float(value)
+            except (ValueError, TypeError):
+                datastructure.setError(widget_id, 'cpsschemas_err_float')
+                return False
+
+            if self.is_limited:
+                if (v < self.min_value) or (v > self.max_value):
+                    datastructure.setError(widget_id,
+                                           'cpsschemas_err_float_range')
+                    return False
+
         datamodel[self.fields[0]] = v
-        return 1
+        return True
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = str(datastructure[self.getWidgetId()])
-        #format number according to widget prefs
-        if self.decimals_number:
-            value = ("%0." + str(self.decimals_number) + "f") % float(value)
-        if self.thousands_separator:
-            intpart, decpart = value.split('.')
-            thousands = []
-            while intpart:
-                thousands.insert(0, intpart[-3:])
-                intpart = intpart[:-3]
-            value = '.'.join([self.thousands_separator.join(thousands), decpart])
-        if self.decimals_separator:
-            value = value.replace('.', self.decimals_separator)
-
+        value = datastructure[self.getWidgetId()]
         if mode == 'view':
             return escape(value)
         elif mode == 'edit':

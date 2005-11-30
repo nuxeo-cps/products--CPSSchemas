@@ -27,7 +27,6 @@ import warnings
 from types import IntType, FloatType, LongType, BooleanType, \
                   StringType, UnicodeType, \
                   ListType, DictType, TupleType
-
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -135,11 +134,10 @@ class CPSLongField(CPSIntField):
     """
     meta_type = "CPS Long Field"
     def __init__(self, id, **kw):
-        warnings.warn("The Long Field (%s/%s) is deprecated and will be "
+        warnings.warn("The Long Field (%s) is deprecated and will be "
                       "removed in CPS 3.5.0. Use a Int Field instead" %
-                      (aq_parent(aq_inner(self)).getId(), self.getFieldId()),
-                      DeprecationWarning)
-        CPSIntField(self, id, **kw)
+                      id, DeprecationWarning)
+        CPSIntField.__init__(self, id, **kw)
 
 InitializeClass(CPSLongField)
 

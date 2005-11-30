@@ -147,8 +147,81 @@ class TestWidgets(unittest.TestCase):
     def testFloatWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSFloatWidget
         widget = CPSFloatWidget('foo')
+        widget.fields = ['foo']
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS Float Field',))
+
+        dm = {}
+        ds = FakeDataStructure(dm)
+
+        ds['foo'] = '123 '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 123.0)
+
+        ds['foo'] = ' 0 '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 0.0)
+
+        ds['foo'] = '12.34'
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 12.34)
+
+        ds['foo'] = '0ab '
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        self.assertEquals(ds['foo'], '0ab')
+
+        widget.is_required = False
+        ds['foo'] = ' '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(ds['foo'], '')
+        self.assertEquals(dm['foo'], None)
+
+        widget.is_required = True
+        ds['foo'] = ' '
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        self.assertEquals(ds['foo'], '')
+
+        widget.is_limited = True
+        widget.min_value = 10.0
+        widget.max_value = 20.0
+        ds['foo'] = '123.5'
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        ds['foo'] = '12.5'
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 12.5)
+
+        # prepare
+
+        dm['foo'] = 123456
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '123456')
+
+        widget.decimals_number = 2
+        widget.decimals_separator = '.'
+        dm['foo'] = 123456
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '123456.00')
+
+        widget.thousands_separator = ','
+        dm['foo'] = 123456
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '123,456.00')
+
+        dm['foo'] = 0
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '0.00')
+
+        dm['foo'] = None
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], '')
 
     def testDateTimeWidget_getDateTimeInfo(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget

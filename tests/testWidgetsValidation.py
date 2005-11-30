@@ -73,7 +73,7 @@ class FloatWidgetValidationTest(WidgetValidationTest):
 
     def test_float_nok_1(self):
         ret, err, ds = self._validate({}, '12345,803')
-        self.assert_(ret, err)
+        self.assert_(err)
 
     def test_float_nok_2(self):
         ret, err, ds = self._validate({'decimals_separator': ','}, '12345.803')
