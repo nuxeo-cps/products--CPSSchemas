@@ -215,7 +215,7 @@ InitializeClass(Vocabulary)
 class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
     """Persistent Vocabulary.
 
-    XXX Why is this vocabulary said persistent whereas it's "base" class already
+    XXX Why is this vocabulary said persistent whereas its "base" class already
     is?
     XXX Why isn't Vocabulary inherited?
     """
