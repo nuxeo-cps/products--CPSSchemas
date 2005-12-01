@@ -401,9 +401,9 @@ class WidgetRegistry:
     def register(self, class_):
         """Register a widget class.
         """
-        mt = class_.meta_type
-        self._widget_meta_types.append(mt)
-        self._widget_classes[mt] = class_
+        meta_type = class_.meta_type
+        self._widget_meta_types.append(meta_type)
+        self._widget_classes[meta_type] = class_
 
     def listWidgetMetaTypes(self):
         """Return the list of widget meta types.
