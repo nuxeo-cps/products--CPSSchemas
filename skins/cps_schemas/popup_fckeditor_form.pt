@@ -30,31 +30,26 @@
 <div class="row">
  <div class="field">
   <input type="hidden" name="input_id" tal:attributes="value input_id" />
-
-  <tal:block tal:define="portal_url here/portal_url;
-                         parent_url python:here.aq_parent.absolute_url();
-                         server_path  request/BASE0;
-                         portal_path python:portal_url.replace(server_path, '')+'/';">
-
-   <script type="text/javascript" src=""
-                 tal:attributes="src string:${portal_path}fckeditor.js">
-   </script>
-   <script type="text/javascript" tal:content="structure string:
+  <script type="text/javascript" src=""
+                tal:attributes="src string:${base_url}fckeditor.js">
+  </script>
+  <script type="text/javascript"
+                tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
+                tal:content="structure string:
 var oFCKeditor = new FCKeditor('rte_value');
-var pathUser = '${request/URLPATH2}/';
-oFCKeditor.BasePath = '${portal_path}';
+var pathUser = '${parent_path}';
+oFCKeditor.BasePath = '${base_url}';
 oFCKeditor.Value = opener.document.getElementById('${input_id}').value;
 oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
 oFCKeditor.ToolbarSet='Semantic';
-oFCKeditor.Config['LinkBrowserURL'] = pathUser + 'fck_browse_files.html';
-oFCKeditor.Config['ImageBrowserURL'] = pathUser + 'fck_browse_images.html';
-oFCKeditor.Config['FlashBrowserURL'] = pathUser + 'fck_browse_files.html';
+oFCKeditor.Config['LinkBrowserURL'] = pathUser + '/fck_browse_files.html';
+oFCKeditor.Config['ImageBrowserURL'] = pathUser + '/fck_browse_images.html';
+oFCKeditor.Config['FlashBrowserURL'] = pathUser + '/fck_browse_files.html';
 oFCKeditor.Width = 610;
 oFCKeditor.Height = 410;
 oFCKeditor.Create();
 ">
    </script>
-  </tal:block>
  </div>
 </div>
 <div class="BackColor">
