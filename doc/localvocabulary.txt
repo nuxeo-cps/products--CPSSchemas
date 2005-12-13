@@ -1,71 +1,100 @@
+================
+Local Vocabulary
+================
+
+:Revision: $Id$
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+
 Architecture
-==============================
+============
 
 There are local vocabulary container and local vocabulary.
 By default container is created with id '.cps_vocabularies'
 
 Local vocabulary has two string properties that control behaviour how
 values for given local vocabulary are computed, they are:
-inheritance_type - may be 'inherit' or 'global'
-merge_behaviour  - 'None' which is actually empty string or 'union'. Future
-                   possible additions are 'intersection' and 'difference'.
 
-Combining values of above two properties we define the way how we are going get
-values for our local vocabulary.
+- inheritance_type - may be 'inherit' or 'global'
 
-Case 1: local vocabulary with given id is present in local vocabulary container
+- merge_behaviour - 'None' which is actually empty string or
+  'union'. Future possible additions are 'intersection' and
+  'difference'.
 
-a) inheritance_type = 'inherit'
-   merge_behaviour = 'None'
+Combining values of above two properties we define the way how we
+are going get values for our local vocabulary.
 
-Only the content of this local vocabulary is used.
+Case 1
+------
 
-b) inheritance_type = 'inherit'
-   merge_behaviour = 'union'
+Local vocabulary with given id is present in local vocabulary
+container.
 
-Union with the 'above' local vocabulary, which itself may be defined as it sees
-fit.
+1. inheritance_type = 'inherit' AND merge_behaviour = 'None'
 
-c) inheritance_type = 'global'
-   merge_behaviour = 'None'
+   Only the content of this local vocabulary is used.
 
-Local vocabulary is ignored and the global one is used.
+2. inheritance_type = 'inherit' AND merge_behaviour = 'union'
 
-d) inheritance_type = 'global'
-   merge_behaviour = 'union'
+   Union with the 'above' local vocabulary, which itself may be
+   defined as it sees fit.
 
-Union with the global vocabulary
+3. inheritance_type = 'global' AND merge_behaviour = 'None'
+
+   Local vocabulary is ignored and the global one is used.
+
+4. inheritance_type = 'global' AND merge_behaviour = 'union'
+
+   Union with the global vocabulary
 
 
-Local vocabulary container itself has same two properties as local vocabulary,
-which are used to determine behaviour in case there is no local vocabulary with
-given id in container, so we have case 2.
+Local vocabulary container itself has the same two properties as
+local vocabulary, which are used to determine behaviour in case
+there is no local vocabulary with given id in container, so we
+have case 2.
 
-Case 2: there is no local vocabulary with given id in container. Further
+Case 2
+------
+
+There is no local vocabulary with given id in container. Further
 behaviour is defined by properties of container. In this case only
 inheritance_type does matter.
 
-a) inheritance_type = 'inherit'
+1. inheritance_type = 'inherit'
 
-Use 'above' local vocabulary, which itself may be defined as it sees fit.
+   Use 'above' local vocabulary, which itself may be defined as it
+   sees fit.
 
-b) inheritance_type = 'global'
+2. inheritance_type = 'global'
 
-Use global vocabulary.
-
+   Use global vocabulary.
 
 N.B. The global vocabulary always will be the default when inheriting and
 nothing is found in the above containers.
 
 
 ZMI
-==============================
-From ZMI you can add local vocabulary container which will have
-'Global vocabularies' tab listing all global vocabularies you can customize.
-After creation you can edit local vocabulary same as global one.
+===
+
+From the ZMI, you can add local vocabulary container, which will
+have a 'Global vocabularies' tab that lists all global
+vocabularies you can customize.  After creation you can edit local
+vocabulary same as global one.
+
 
 API
-==============================
+===
 
-VocabulariesTool provides method getVocabularyFor(context. voc_id) that returns
-local vocabulary for passed context.
+VocabulariesTool provides method ``getVocabularyFor(context. voc_id)``
+that returns local vocabulary for passed context.
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
+
