@@ -1,21 +1,40 @@
-$Id$
+=======================================
+Configuring Epoz to Produce Valid XHTML
+=======================================
 
-This doc describe how to configure Epoz editor used by Text and RichText widgets
-to produce valid xhtml instead of dirty browser html code.
+:Revision: $Id$
 
-The installation described here works at least with Epoz 0.8.1 to Epoz 0.8.5.
-For more information see Epoz doc.
-
-You need to install utidylib this requires the following steps::
-
-  apt-get install tidy
-  apt-get install python2.3-ctypes
-  wget http://download.berlios.de/utidylib/uTidylib-0.2.zip
-  unzip and 'python setup.py install'
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
 
 
-The content produced by Epoz is tidied up using XML-RPC cf. __init__ and
-skins/epoz/epoz_script_main.js.dtml
+This document describe how to configure Epoz editor used by Text
+and RichText widgets to produce valid XHTML instead of dirty
+browser HTML code.
 
-An EpozPostTidy-Hook is also available to post process the valid XHTML produce
-by utidylib.
+The installation described here works at least with Epoz 0.8.1 to
+Epoz 0.8.5. For more information see Epoz doc.
+
+You need to install ``utidylib``.  This requires the following
+steps::
+
+    $ apt-get install tidy
+    $ apt-get install python2.3-ctypes
+    $ wget http://download.berlios.de/utidylib/uTidylib-0.2.zip
+    $ unzip ...
+    $ python setup.py install
+
+The content produced by Epoz is tidied up using XML-RPC.  Cf.
+``__init__`` and ``skins/epoz/epoz_script_main.js.dtml``.
+
+An EpozPostTidy-Hook is also available to post process the valid
+XHTML produce by ``utidylib``.
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
+
