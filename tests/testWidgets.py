@@ -66,6 +66,33 @@ class FakeDataStructure(dict):
     def setError(self, id, err):
         self.errs[id] = err
 
+class FakeAdapter(object):
+    def __init__(self, schema):
+        self.schema = schema
+    def getSchema(self):
+        return self.schema
+    def _getContentUrl(self, a, b, c=None):
+        return 'http://url for %s %s %s' % (a, b, c)
+
+class FakeDataModel(dict):
+    _adapters = None
+    proxy = None
+    context = None
+    def __init__(self, dm=None):
+        if dm is not None:
+            self.update(dm)
+    def getProxy(self):
+        return self.proxy
+    def getObject(self):
+        return self.proxy
+    def getContext(self):
+        return self.context
+
+class FakeMimeTypeRegistry(Implicit):
+    def lookupExtension(self, name):
+        return 'testlookup/'+name[name.rfind('.')+1:].upper()
+
+
 class TestWidgets(unittest.TestCase):
 
     def testStringWidget(self):
@@ -495,6 +522,51 @@ function getLayoutMode() {
         finally:
             hook.uninstall()
         self.assertEquals(len(hook.warnings), 1)
+
+
+    def test_CPSFileWidget_getFileInfo(self):
+        from Products.CPSSchemas.BasicWidgets import CPSFileWidget
+        from OFS.Image import File
+        folder = Folder()
+        widget = CPSFileWidget('foo').__of__(folder)
+        folder.mimetypes_registry = FakeMimeTypeRegistry()
+        widget.fields = ['bar']
+        dm = FakeDataModel()
+        dm._adapters = [FakeAdapter({'bar': 'thatsme'})]
+        dm.proxy = 'someproxy'
+        ds = FakeDataStructure(dm)
+        f = File('thefilename.txt', 'thetitle', 'thefilecontent',
+                 content_type='text/x-test')
+        ds['foo'] = f
+        file_info = widget.getFileInfo(ds)
+        self.assertEquals(file_info, {
+            'empty_file': 0,
+            'current_name': 'thefilename.txt',
+            'current_title': 'thetitle',
+            'size': len('thefilecontent'),
+            'last_modified': '',
+            'content_url': 'http://url for someproxy bar thefilename.txt',
+            'mimetype': 'testlookup/TXT',
+            })
+        # Now without proxy nor object, for directory adapters
+        dm.proxy = None
+        context = Folder()
+        context.id_field = 'hah'
+        ds['hah'] = 'someentry'
+        dm.context = context
+        file_info = widget.getFileInfo(ds)
+        self.assertEquals(file_info, {
+            'empty_file': 0,
+            'current_name': 'thefilename.txt',
+            'current_title': 'thetitle',
+            'size': len('thefilecontent'),
+            'last_modified': '',
+            'content_url': 'http://url for someentry bar None',
+            'mimetype': 'testlookup/TXT',
+            })
+
+        return
+
 
 
 def test_suite():
