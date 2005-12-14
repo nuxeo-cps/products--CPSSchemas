@@ -29,6 +29,7 @@ It can then be rendered by passing it a datastructure.
 """
 
 from zLOG import LOG, DEBUG
+from Persistence import Persistent
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 
@@ -429,8 +430,8 @@ class WidgetRegistry:
         name = class_.__name__+'Type'
         if name in module.__dict__:
             return
-        code = "class %s(object): cls = None" % name
-        glob = {}
+        code = "class %s(Persistent): cls = None" % name
+        glob = {'Persistent': Persistent}
         eval(compile(code, 'CPSSchemas/Widget.py', 'exec'), glob)
         setattr(module, name, glob[name])
 
@@ -439,5 +440,5 @@ widgetRegistry = WidgetRegistry()
 
 
 # BBB compatibility code, will be removed in CPS 3.4.1
-class CPSWidgetType(object):
+class CPSWidgetType(Persistent):
     cls = None
