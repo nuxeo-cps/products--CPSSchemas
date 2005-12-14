@@ -404,6 +404,7 @@ class WidgetRegistry:
         meta_type = class_.meta_type
         self._widget_meta_types.append(meta_type)
         self._widget_classes[meta_type] = class_
+        self.BBB_register_widget_type(class_)
 
     def listWidgetMetaTypes(self):
         """Return the list of widget meta types.
@@ -414,6 +415,24 @@ class WidgetRegistry:
         """Get the class for a widget of the given meta type.
         """
         return self._widget_classes[meta_type]
+
+    def BBB_register_widget_type(self, class_):
+        """BBB code so that old widget types can still be imported.
+
+        Creates an empty class CPSxyzWidgetType in the same module
+        as the class.
+
+        Will be removed in CPS 3.4.1.
+        """
+        module = __import__(class_.__module__, globals(), globals(),
+                            ['__doc__'])
+        name = class_.__name__+'Type'
+        if name in module.__dict__:
+            return
+        code = "class %s(object): cls = None" % name
+        glob = {}
+        eval(compile(code, 'CPSSchemas/Widget.py', 'exec'), glob)
+        setattr(module, name, glob[name])
 
 # Singleton
 widgetRegistry = WidgetRegistry()
