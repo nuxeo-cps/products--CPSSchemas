@@ -9,14 +9,12 @@
 
 <tal:block condition="python:mode == 'edit'">
   <tal:block define="
-    true_checked python:test(value and value != '0', 1, 0);
-    false_checked python:test(not value or value == '0', 1, 0);
+    true_checked python:value and value != '0';
     ">
 
     <tal:checkbox condition="python:render_format == 'checkbox'">
-      <input type="checkbox"
+      <input type="checkbox" value="1"
              tal:attributes="checked true_checked;
-                             value value;
                              name here/getHtmlWidgetId;" />
       <input type="hidden" value=""
              tal:attributes="name string:${here/getHtmlWidgetId}:default;" />
@@ -31,7 +29,7 @@
              tal:attributes="for string:${here/getHtmlWidgetId}_true"
              i18n:translate="" > True </label><br/>
       <input type="radio" value="0"
-             tal:attributes="checked false_checked;
+             tal:attributes="checked not:true_checked;
                              id string:${here/getHtmlWidgetId}_false;
                              name here/getHtmlWidgetId;" />
       <label tal:content="here/label_false"
@@ -46,7 +44,7 @@
                 tal:content="here/label_true"
                 i18n:translate="" />
         <option value="0"
-                tal:attributes="selected false_checked"
+                tal:attributes="selected not:true_checked"
                 tal:content="here/label_false"
                 i18n:translate="" />
       </select>

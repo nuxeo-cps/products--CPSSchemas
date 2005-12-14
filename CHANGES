@@ -15,6 +15,7 @@ Bug fixes:
 - #496: handling of empty values for Int and Float Widgets: None is now
   stored if the widgets are not required and an empty string is entered
 - #1145: Made photo widget more robust.
+- #1188: Fixed boolean widget in checkbox mode.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
