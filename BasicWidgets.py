@@ -1168,7 +1168,8 @@ class CPSBooleanWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        return meth(mode=mode, value=value, label_value=label_value, render_format=render_format)
+        return meth(mode=mode, value=value, label_value=label_value,
+                    render_format=render_format)
 
 InitializeClass(CPSBooleanWidget)
 
