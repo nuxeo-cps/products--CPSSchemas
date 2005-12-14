@@ -20,21 +20,6 @@
 
 from zLOG import LOG, INFO
 
-# PATCH For Plone
-
-try:
-    from Products.CMFPlone.Portal import PloneSite
-    import PlacelessTranslationServicePatch
-    LOG("Patch PlacelessTranslationService for CPS compatiblity",
-        INFO,
-        "translate() accessible through restricted code on PLTS"
-        "Patch CMF / Plone portal to have a fake Localizer access point")
-except ImportError:
-    # CMF / CPS instance
-    pass
-
-# EOF
-
 import Products.CMFCore
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.CMFCore.permissions import ManagePortal
