@@ -18,6 +18,7 @@
 # $Id$
 
 import unittest
+from ZODB.tests.warnhook import WarningsHook
 
 from Acquisition import Implicit
 from OFS.Image import Image, File
@@ -49,9 +50,17 @@ class BasicFieldTests(unittest.TestCase):
         return field
 
     def testCreation(self):
+        hook = WarningsHook()
         for field_type in FieldRegistry.listFieldTypes():
             field_id = field_type.lower().replace(" ", "")
-            field = FieldRegistry.makeField(field_type, field_id)
+            hook.install()
+            try:
+                field = FieldRegistry.makeField(field_type, field_id)
+            finally:
+                hook.uninstall()
+            warning_expected = int(field_type == 'CPS Long Field')
+            self.assertEquals(len(hook.warnings), warning_expected)
+            hook.clear()
             # Acquisition is needed for expression context computation
             # during fetch
             field = field.__of__(fakePortal)
@@ -73,7 +82,13 @@ class BasicFieldTests(unittest.TestCase):
         self.assertRaises(ValueError, field.validate, "1")
 
     def testLongField(self):
-        field = self.makeOne(BasicFields.CPSLongField)
+        hook = WarningsHook()
+        hook.install()
+        try:
+            field = self.makeOne(BasicFields.CPSLongField)
+        finally:
+            hook.uninstall()
+        self.assertEquals(len(hook.warnings), 1)
         self.assertEquals(field.getDefault(), 0)
         self.assertEquals(field.validate(121), 121)
         self.assertRaises(ValueError, field.validate, "1")
