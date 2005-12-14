@@ -420,6 +420,9 @@ class FieldRegistry:
     def register(self, cls):
         """Register a class for a field."""
         field_type = cls.meta_type
+        if field_type in self._field_types:
+            return
+        # Avoid duplicate registrations during convoluted imports
         self._field_types.append(field_type)
         self._field_classes[field_type] = cls
 
