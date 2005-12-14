@@ -35,6 +35,7 @@ ZMI.
 
 """
 
+import warnings
 from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
 from OFS.ObjectManager import ObjectManager
@@ -44,12 +45,10 @@ from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
 
 def _isinstance(ob, cls):
-    try:
-        return isinstance(ob, cls)
-    except TypeError:
-        # In python 2.1 isinstance() raises TypeError
-        # instead of returning 0 for ExtensionClasses.
-        return 0
+    warnings.warn("_isinstance() is deprecated and will be removed in "
+                  "CPS 3.4.1. Use isinstance() instead.",
+                  DeprecationWarning, stacklevel=2)
+    return isinstance(ob, cls)
 
 class BaseStorageAdapter:
     """Base Storage Adapter
@@ -236,7 +235,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if not hasattr(aq_base(ob), field_id):
             # Use default from field.
             return DEFAULT_VALUE_MARKER
-        if _isinstance(field, CPSSubObjectsField):
+        if isinstance(field, CPSSubObjectsField):
             return field.getFromAttribute(ob, field_id)
         else:
             return getattr(ob, field_id)
@@ -246,7 +245,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         # No kw arguments are expected.
         ob = self._ob
         field = self._schema[field_id] # XXX should be an arg
-        if _isinstance(field, CPSSubObjectsField):
+        if isinstance(field, CPSSubObjectsField):
             field.setAsAttribute(ob, field_id, value)
         else:
 

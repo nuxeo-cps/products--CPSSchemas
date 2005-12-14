@@ -24,7 +24,6 @@ computed source.
 """
 
 from zLOG import LOG, DEBUG
-from types import StringType
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
@@ -95,7 +94,7 @@ class Vocabulary(Persistent, Implicit):
         m = {}
         # We suppose that initial vocabulary is sorted
         if tuples is not None:
-            if tuples and isinstance(tuples[0], StringType):
+            if tuples and isinstance(tuples[0], str):
                 # Vocabulary(('foo', 'bar'))
                 l = builtins_list(tuples)
                 for k in l:

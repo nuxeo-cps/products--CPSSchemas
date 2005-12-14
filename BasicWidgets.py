@@ -30,7 +30,6 @@ from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo
-from types import ListType, TupleType, StringType
 from cgi import escape
 from re import compile, search
 from urlparse import urlparse
@@ -63,12 +62,10 @@ from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
 
 def _isinstance(ob, cls):
-    try:
-        return isinstance(ob, cls)
-    except TypeError:
-        # In python 2.1 isinstance() raises TypeError
-        # instead of returning 0 for ExtensionClasses.
-        return 0
+    warnings.warn("_isinstance() is deprecated and will be removed in "
+                  "CPS 3.4.1. Use isinstance() instead.",
+                  DeprecationWarning, stacklevel=2)
+    return isinstance(ob, cls)
 
 def renderHtmlTag(tagname, **kw):
     """Render an HTML tag."""
@@ -888,7 +885,7 @@ class CPSSelectWidget(CPSWidget):
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
         context = datastructure.getDataModel().getContext()
-        if not type(self.vocabulary) is StringType:
+        if not isinstance(self.vocabulary, str):
             # this is in case vocabulary directly holds
             # a vocabulary object
             vocabulary = self.vocabulary
@@ -1015,8 +1012,7 @@ class CPSMultiSelectWidget(CPSWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        if (not _isinstance(value, ListType) and
-            not _isinstance(value, TupleType)):
+        if not isinstance(value, (list, tuple)):
             datastructure.setError(widget_id, "cpsschemas_err_multiselect")
             return 0
         vocabulary = self._getVocabulary(datastructure)
@@ -1567,7 +1563,7 @@ class CPSFileWidget(CPSWidget):
         last_modified = ''
         if file:
             empty_file = 0
-            if _isinstance(file, File):
+            if isinstance(file, File):
                 current_name = file.getId()
                 current_title = file.title
                 size = file.get_size()
@@ -1681,7 +1677,7 @@ class CPSFileWidget(CPSWidget):
                     file.manage_changeProperties(title=filetitle)
         elif choice == 'change' and datastructure.get(widget_id):
             file = datastructure[widget_id]
-            if not _isinstance(file, FileUpload):
+            if not isinstance(file, FileUpload):
                 err = 'cpsschemas_err_file'
             else:
                 ms = self.size_max
@@ -1760,7 +1756,7 @@ class CPSImageWidget(CPSFileWidget):
         else:
             image = datastructure[self.getWidgetId()]
             if image:
-                if not _isinstance(image, Image):
+                if not isinstance(image, Image):
                     image = Image(self.getWidgetId(), '', image)
 
             # Fix the BMP bug (#305): Zope is unable to detect height and
@@ -1880,9 +1876,9 @@ class CPSImageWidget(CPSFileWidget):
                     datamodel[field_id] = file
         elif choice == 'change' and datastructure.get(widget_id):
             file = datastructure[widget_id]
-            if type(file) is StringType:
+            if isinstance(file, str):
                 file = Image('-', '', file)
-            elif not _isinstance(file, FileUpload):
+            elif not isinstance(file, FileUpload):
                 err = 'cpsschemas_err_file'
             else:
                 ms = self.size_max

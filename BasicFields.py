@@ -24,9 +24,6 @@ Definition of standard field types.
 from zLOG import LOG, DEBUG, WARNING
 import sys
 import warnings
-from types import IntType, FloatType, LongType, BooleanType, \
-                  StringType, UnicodeType, \
-                  ListType, DictType, TupleType
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -43,12 +40,10 @@ from Products.CPSSchemas.DiskFile import DiskFile
 
 
 def _isinstance(ob, cls):
-    try:
-        return isinstance(ob, cls)
-    except TypeError:
-        # In python 2.1 isinstance() raises TypeError
-        # instead of returning 0 for ExtensionClasses.
-        return 0
+    warnings.warn("_isinstance() is deprecated and will be removed in "
+                  "CPS 3.4.1. Use isinstance() instead.",
+                  DeprecationWarning, stacklevel=2)
+    return isinstance(ob, cls)
 
 #
 # UTF-8
@@ -59,7 +54,7 @@ if default_encoding == 'ascii':
     default_encoding = 'iso-8859-15'
 
 def toUTF8(s):
-    if not isinstance(s, UnicodeType):
+    if not isinstance(s, unicode):
         s = unicode(s, default_encoding)
     return s.encode('utf-8')
 
@@ -76,7 +71,7 @@ class CPSIntField(CPSField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, IntType):
+        if isinstance(value, int):
             return value
         raise ValidationError('Not an integer: %s' % repr(value))
 
@@ -106,7 +101,7 @@ class CPSBooleanField(CPSField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, BooleanType):
+        if isinstance(value, bool):
             return value
         raise ValidationError('Not a boolean: %s' % repr(value))
 
@@ -151,7 +146,7 @@ class CPSFloatField(CPSField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, FloatType):
+        if isinstance(value, float):
             return value
         raise ValidationError('Not an real number: %s' % repr(value))
 
@@ -181,7 +176,7 @@ class CPSStringField(CPSField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, StringType):
+        if isinstance(value, str):
             return value
         raise ValidationError('Not a string: %s' % repr(value))
 
@@ -227,7 +222,7 @@ class CPSListField(CPSField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, ListType):
+        if isinstance(value, list):
             for v in value:
                 if not self.verifyType(v):
                     raise ValidationError(self.validation_error_msg +
@@ -261,7 +256,7 @@ class CPSStringListField(CPSListField):
 
     def verifyType(self, value):
         """Verify the type of the value"""
-        return isinstance(value, StringType)
+        return isinstance(value, str)
 
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
@@ -295,16 +290,16 @@ class CPSListListField(CPSListField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, ListType):
-            for list in value:
-                if isinstance(list, ListType):
-                    for e in list:
+        if isinstance(value, list):
+            for l in value:
+                if isinstance(l, list):
+                    for e in l:
                         if not self.verifyType(e):
                             raise ValidationError(self.validation_error_msg +
                                             repr(value) + '=>' + repr(e))
                 else:
                     raise ValidationError(self.validation_error_msg +
-                                          repr(value) + '=>' + repr(list))
+                                          repr(value) + '=>' + repr(l))
             return value
         raise ValidationError(self.validation_error_msg + repr(value))
 
@@ -328,7 +323,7 @@ class CPSIntListListField(CPSListListField):
 
     def verifyType(self, value):
         """Verify the type of the value"""
-        return isinstance(value, IntType)
+        return isinstance(value, int)
 
 InitializeClass(CPSIntListListField)
 
@@ -479,7 +474,7 @@ class CPSFileField(CPSField):
     def validate(self, value):
         if not value:
             return None
-        if _isinstance(value, File):
+        if isinstance(value, File):
             return value
         raise ValidationError('Not a file: %s' % repr(value))
 
@@ -529,7 +524,7 @@ class CPSDiskFileField(CPSFileField):
         """
         field_id = self.getFieldId()
         file = data[field_id] # May be None.
-        if _isinstance(file, File) and not _isinstance(file, DiskFile):
+        if isinstance(file, File) and not isinstance(file, DiskFile):
             file = DiskFile(file.getId(), file.title, file.data,
                             file.content_type, self.getStoragePath())
             data[field_id] = file
@@ -571,7 +566,7 @@ class CPSDiskFileField(CPSFileField):
     def validate(self, value):
         if not value:
             return None
-        if _isinstance(value, File):
+        if isinstance(value, File):
             return value
         raise ValidationError('Not a file: %s' % repr(value))
 
@@ -628,7 +623,7 @@ class CPSSubObjectsField(CPSField):
     def validate(self, value):
         if value is None:
             return None
-        if _isinstance(value, DictType):
+        if isinstance(value, dict):
             return value
         raise ValidationError('Not SubObjects: %s' % repr(value))
 
@@ -647,7 +642,7 @@ class CPSImageField(CPSField):
     def validate(self, value):
         if not value:
             return None
-        if _isinstance(value, Image):
+        if isinstance(value, Image):
             return value
         raise ValidationError('Not an image: %s' % repr(value))
 
@@ -676,9 +671,9 @@ class CPSRangeListField(CPSListField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, ListType):
+        if isinstance(value, list):
             for v in value:
-                if not isinstance(v, TupleType):
+                if not isinstance(v, tuple):
                     raise ValidationError(self.validation_error_msg +
                                           "%s is not a tuple in %s" %
                                           (repr(v),
@@ -699,7 +694,7 @@ class CPSRangeListField(CPSListField):
 
     def verifyType(self, value):
         """Verify the type of the value"""
-        return isinstance(value, IntType)
+        return isinstance(value, int)
 
 InitializeClass(CPSRangeListField)
 
@@ -724,12 +719,12 @@ class CPSCoupleField(CPSListField):
         Has to be a list of 2 integer values within a list
         """
 
-        if (isinstance(value, ListType) and
+        if (isinstance(value, list) and
             len(value) == 2):
             return value
 
         # Default case
-        elif (isinstance(value, ListType) and
+        elif (isinstance(value, list) and
               len(value) == 0):
             return value
 

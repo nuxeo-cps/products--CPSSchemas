@@ -79,7 +79,7 @@ def LocalizerStringIO_write(self, s):
 def LocalizerStringIO_getvalue(self):
     if self.buflist:
         for buf in self.buflist:
-            if type(buf) == UnicodeType:
+            if isinstance(buf, unicode):
                 self.buf += buf.encode('iso-8859-15')
             else:
                 self.buf += buf

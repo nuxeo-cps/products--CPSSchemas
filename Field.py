@@ -292,8 +292,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
 
     def _checkAccess(self, datamodel, context,
                      acl_permissions, acl_roles, acl_expr_c,
-                     exception,
-                     StringType=type('')):
+                     exception):
         """Check that field can be accesed.
 
         Raises an exception if not.
@@ -308,7 +307,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
                 ok = perms_cache.get(perm)
                 if ok is None:
                     roles = rolesForPermissionOn(perm, context)
-                    if type(roles) is StringType:
+                    if isinstance(roles, str):
                         roles = [roles]
                     ok = user.allowed(context, roles)
                     perms_cache[perm] = ok

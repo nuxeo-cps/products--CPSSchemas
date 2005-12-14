@@ -27,7 +27,7 @@ from OFS.Image import File, Image
 
 def copyFile(file_src):
     """Return a copy of a file object."""
-    if type(file_src) is not File:
+    if not isinstance(file_src, File):
         LOG('CPSSchemas.utils:copyFile', DEBUG,
             'file_src %s is not a File object' % str(file_src))
         return
@@ -39,7 +39,7 @@ def copyFile(file_src):
 
 def copyImage(file_src):
     """Return a copy of an image object."""
-    if type(file_src) is not Image:
+    if not isinstance(file_src, Image):
         LOG('CPSSchemas.utils:copyImage', DEBUG,
             'file_src %s is not an Image object' % str(file_src))
         return

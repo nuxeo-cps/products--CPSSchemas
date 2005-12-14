@@ -21,7 +21,6 @@ Widget used to build search forms.
 """
 
 from zLOG import LOG, DEBUG, TRACE
-from types import StringType
 from cgi import escape
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -188,7 +187,7 @@ class CPSSearchLanguageWidget(CPSWidget):
         values = datastructure[widget_id]
         if selected != 'yes' or not values:
             return 1
-        if isinstance(values, StringType):
+        if isinstance(values, str):
             values = [values]
         vocabulary = self._getLanguageVoc()
         languages = vocabulary.keys()
