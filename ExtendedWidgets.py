@@ -28,7 +28,6 @@ from cgi import escape
 from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
-from types import ListType, TupleType, StringType
 from DateTime.DateTime import DateTime
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
@@ -45,7 +44,6 @@ from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
 from Products.CPSSchemas.BasicWidgets import CPSImageWidget
 from Products.CPSSchemas.BasicWidgets import CPSFileWidget
-from Products.CPSSchemas.BasicWidgets import _isinstance
 from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 
@@ -252,7 +250,7 @@ class CPSDateTimeWidget(CPSWidget):
         if value:
             # Backward compatibility test, this logic is not used by the
             # current code.
-            if type(value) is StringType:
+            if isinstance(value, str):
                 value = DateTime(value)
             d = str(value.day())
             m = str(value.month())
@@ -437,7 +435,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     datamodel[field_id] = file
         elif choice == 'change' and datastructure.get(widget_id):
             fileUpload = datastructure[widget_id]
-            if not _isinstance(fileUpload, FileUpload):
+            if not isinstance(fileUpload, FileUpload):
                 return self.doesNotValidate('cpsschemas_err_file',
                                             None, file, datastructure)
             file_base, file_suffix = os.path.splitext(fileUpload.filename)
@@ -533,7 +531,7 @@ class CPSZippedHtmlWidget(CPSAttachedFileWidget):
         if choice == 'change':
             # looking for an html index
             file_upload = datastructure.get(widget_id)
-            if _isinstance(file_upload, FileUpload):
+            if isinstance(file_upload, FileUpload):
                 try:
                     zf = ZipFile(file_upload, 'r')
                 except BadZipfile:
@@ -848,9 +846,9 @@ class CPSPhotoWidget(CPSImageWidget):
                         datamodel[field_id] = file
             elif choice == 'change' and datastructure.get(widget_id):
                 file = datastructure[widget_id]
-                if type(file) is StringType:
+                if isinstance(file, str):
                     file = Image('-', '', file)
-                elif not _isinstance(file, FileUpload):
+                elif not isinstance(file, FileUpload):
                     err = 'cpsschemas_err_file'
                 else:
                     ms = self.size_max
@@ -989,8 +987,7 @@ class CPSGenericSelectWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
-        if (_isinstance(value, ListType) or
-            _isinstance(value, TupleType)):
+        if isinstance(value, (list, tuple)):
             LOG('CPSGenericSelectWidget.prepare', TRACE,
                 'expected String got Typle %s use first element' % value)
             if len(value):
@@ -1244,7 +1241,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
-        if _isinstance(value, StringType):
+        if isinstance(value, str):
             LOG('CPSGenericMultiSelectWidget.prepare', TRACE,
                 'expected List got String %s converting into list' % value)
             if value:
@@ -1258,8 +1255,7 @@ class CPSGenericMultiSelectWidget(CPSWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        if (not _isinstance(value, ListType) and
-            not _isinstance(value, TupleType)):
+        if not isinstance(value, (list, tuple)):
             datastructure.setError(widget_id, "cpsschemas_err_multiselect")
             return 0
         vocabulary = self._getVocabulary(datastructure)
@@ -1438,7 +1434,7 @@ class CPSRangeListWidget(CPSWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        if not _isinstance(value, ListType):
+        if not isinstance(value, list):
             datastructure.setError(widget_id, "cpsschemas_err_rangelist")
             return 0
         v = []
@@ -1475,7 +1471,7 @@ class CPSRangeListWidget(CPSWidget):
         res = ''
 
         for i in value:
-            if isinstance(i, StringType):
+            if isinstance(i, str):
                 res += i + ' '
             elif len(i) == 1:
                 res += str(i[0]) + ' '
