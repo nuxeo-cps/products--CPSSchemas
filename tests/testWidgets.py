@@ -22,9 +22,11 @@
 import unittest
 from ZODB.tests.warnhook import WarningsHook
 from Acquisition import Implicit
+from cStringIO import StringIO
 from OFS.Image import File
 from OFS.Folder import Folder
 from OFS.SimpleItem import SimpleItem
+from ZPublisher.HTTPRequest import FileUpload
 
 from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.Widget import Widget
@@ -93,6 +95,15 @@ class FakeMimeTypeRegistry(Implicit):
     def lookupExtension(self, name):
         return 'testlookup/'+name[name.rfind('.')+1:].upper()
 
+class FakeFieldStorage:
+    def __init__(self, file, filename, headers=None):
+        self.file = file
+        self.filename = filename
+        self.headers = headers or {}
+    def read(self, n):
+        return self.file.read(n)
+    def seek(self, n):
+        return self.file.seek(n)
 
 class TestWidgets(unittest.TestCase):
 
@@ -627,17 +638,68 @@ function getLayoutMode() {
         from Products.CPSSchemas.BasicWidgets import CPSFileWidget
         widget = CPSFileWidget('foo')
         widget.fields = ['bar']
-        dm = {'bar': 'previousfile'}
+        dm = {}
         ds = FakeDataStructure(dm)
 
-        f = File('thefilename.txt', 'thetitle', 'thefilecontent',
-                 content_type='text/x-test')
-        ds['foo'] = f
-        ds['foo_title'] = 'thetitle'
-        ds['foo_filename'] = 'thefilename'
+        return # XXXXXXXXXXXXXXXXXXX will be revisited later
+
+        # Initial change
         ds['foo_choice'] = 'change'
+        f = StringIO('filecontent')
+        fu = FileUpload(FakeFieldStorage(f, 'thefilename.txt'))
+        ds['foo'] = fu
+        ds['foo_title'] = 'filetitle'
+        ds['foo_filename'] = 'unusedfilename'
         res = widget.validate(ds)
-        # XXX to be continued
+        self.assert_(res)
+        self.assertEquals(dm.keys(), ['bar'])
+        self.assertEquals(type(dm['bar']), File)
+        self.assertEquals(dm['bar'].getId(), 'thefilename.txt')
+        self.assertEquals(dm['bar'].title, 'thefilename.txt') # XXX filetitle
+        self.assertEquals(str(dm['bar']), 'filecontent')
+
+        # Change info about file
+        ds['foo_choice'] = 'keep'
+        ds['foo_title'] = 'newtitle'
+        ds['foo_filename'] = 'newfilename.doc'
+        res = widget.validate(ds)
+        self.assert_(res)
+        self.assertEquals(dm.keys(), ['bar'])
+        self.assertEquals(type(dm['bar']), File)
+        self.assertEquals(dm['bar'].getId(), 'thefilename.txt')
+        self.assertEquals(dm['bar'].title, 'newtitle')
+        self.assertEquals(str(dm['bar']), 'filecontent')
+
+        # Change just info but after a session was saved
+        ds['restored_items'] = {'foo': File('id1', 't1', 'content')}
+        ds['foo_choice'] = 'keep'
+        ds['foo_title'] = 'othertitle'
+        ds['foo_filename'] = 'newfilename.doc'
+        res = widget.validate(ds)
+        self.assert_(res)
+        self.assertEquals(dm.keys(), ['bar'])
+        self.assertEquals(type(dm['bar']), File)
+        self.assertEquals(dm['bar'].getId(), 'thefilename.txt') # XXX
+        self.assertEquals(dm['bar'].title, 'othertitle')
+        self.assertEquals(str(dm['bar']), 'filecontent') # XXX 'content'
+
+        # Change the whole file after a session was saved
+        ds['restored_items'] = {'foo': File('id2', 't2', 'anothercontent')}
+        ds['foo_choice'] = 'change'
+        f = StringIO('mycontent')
+        fu = FileUpload(FakeFieldStorage(f, 'filename.txt'))
+        ds['foo'] = fu
+        ds['foo_title'] = 'anothertitle'
+        ds['foo_filename'] = 'anewfilename.doc'
+        res = widget.validate(ds)
+        self.assert_(res)
+        self.assertEquals(dm.keys(), ['bar'])
+        self.assertEquals(type(dm['bar']), File)
+        self.assertEquals(dm['bar'].getId(), 'filename.txt')
+        self.assertEquals(dm['bar'].title, 'filename.txt') # XXX 'anothertitle'
+        self.assertEquals(str(dm['bar']), 'mycontent')
+
+        # Delete a file after a session was saved
 
 
 def test_suite():

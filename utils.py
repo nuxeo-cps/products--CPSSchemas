@@ -21,12 +21,16 @@
 """Miscellaneous utility functions.
 """
 
+import warnings
 from zLOG import LOG, INFO, DEBUG
 from cStringIO import StringIO
 from OFS.Image import File, Image
 
+# BBB goes away in 3.5.0
 def copyFile(file_src):
     """Return a copy of a file object."""
+    warnings.warn("copyFile is deprecated, use untieFromDatabase",
+                  DeprecationWarning, 2)
     if not isinstance(file_src, File):
         LOG('CPSSchemas.utils:copyFile', DEBUG,
             'file_src %s is not a File object' % str(file_src))
@@ -37,8 +41,11 @@ def copyFile(file_src):
     file_dest.manage_changeProperties(content_type=file_src.content_type)
     return file_dest
 
+# BBB goes away in 3.5.0
 def copyImage(file_src):
     """Return a copy of an image object."""
+    warnings.warn("copyImage is deprecated, use untieFromDatabase",
+                  DeprecationWarning, 2)
     if not isinstance(file_src, Image):
         LOG('CPSSchemas.utils:copyImage', DEBUG,
             'file_src %s is not an Image object' % str(file_src))
@@ -48,6 +55,22 @@ def copyImage(file_src):
     file_dest = Image(file_src.id(), file_src.title, data)
     file_dest.manage_changeProperties(content_type=file_src.content_type)
     return file_dest
+
+def untieFromDatabase(ob):
+    """Untie an object from the database.
+
+    Used to copy objects from/to a session.
+    """
+    if getattr(ob, '_p_jar', None) is None:
+        return ob
+    klass = type(ob)
+    if klass in (File, Image):
+        f = klass(ob.id(), ob.title, str(ob.data),
+                  content_type=ob.content_type,
+                  precondition=ob.precondition)
+        return f
+    else:
+        raise ValueError("untieFromDatabase can't untie %r" % (ob,))
 
 def getHumanReadableSize(octet_size):
     """ returns a human readable file size

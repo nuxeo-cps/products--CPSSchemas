@@ -28,7 +28,10 @@ from UserDict import UserDict
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
+from Products.CPSSchemas.utils import untieFromDatabase
 from Products.CPSSchemas.Widget import widgetname
+
+_SESSION_DATASTRUCTURE_KEY = 'CPS_DATASTRUCTURE'
 
 
 class DataStructure(UserDict):
@@ -150,5 +153,69 @@ class DataStructure(UserDict):
         """Return the datamodel associated with this datastructure."""
         return self.datamodel
 
+    def _getAllData(self):
+        """Get a non-persistent copy with all info.
+
+        Needed because persistent objects like Files stored in a session
+        must not be tied to a database.
+        """
+        data = {}
+        errors = {}
+        error_mappings = {}
+        for key, value in self.data.items():
+            data[key] = untieFromDatabase(value)
+        for key, value in self.errors.items():
+            errors[key] = untieFromDatabase(value)
+        for key, value in self.error_mappings.items():
+            error_mappings[key] = untieFromDatabase(value)
+        return (data, errors, error_mappings)
+
+    def _setAllData(self, data):
+        data, errors, error_mappings = data
+        self.data = {}
+        self.errors = {}
+        self.error_mappings = {}
+        for key, value in data.items():
+            self.data[key] = untieFromDatabase(value)
+        for key, value in errors.items():
+            self.errors[key] = untieFromDatabase(value)
+        for key, value in error_mappings.items():
+            self.error_mappings[key] = untieFromDatabase(value)
+
+    def _saveToSession(self, request):
+        """Save this datastructure into the session.
+        """
+        if request is None:
+            return
+        data = self._getAllData()
+        request.SESSION[_SESSION_DATASTRUCTURE_KEY] = data
+
+    def _loadFromSession(self, request):
+        """Load this datastructure from the session.
+        """
+        if request is None:
+            return
+        # XXX don't create a new session if none is present,
+        # be more subtle by checking request._lazies and request.other
+        # for a SESSION key.
+        if not request.SESSION.has_key(_SESSION_DATASTRUCTURE_KEY):
+            return
+        data = request.SESSION[_SESSION_DATASTRUCTURE_KEY]
+        if data is None:
+            return
+        # XXX should have some sanity checks about schemas etc.
+        self._setAllData(data)
+
+    def _removeFromSession(self, request):
+        """Remove saved data for this datastructure from the session.
+        """
+        if request is None:
+            return
+        # XXX don't create a new session if none is present,
+        # be more subtle by checking request._lazies and request.other
+        # for a SESSION key.
+        if not request.SESSION.has_key(_SESSION_DATASTRUCTURE_KEY):
+            return
+        del request.SESSION[_SESSION_DATASTRUCTURE_KEY]
 
 InitializeClass(DataStructure)
