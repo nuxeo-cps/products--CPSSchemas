@@ -22,12 +22,11 @@ from Products.CPSSchemas.LocalVocabulary import LocalVocabulary
 from Products.CPSSchemas.LocalVocabulary import union
 from Products.CPSSchemas.LocalVocabulary import LOCAL_VOCABULARY_CONTAINER_ID
 from Products.CPSSchemas.Vocabulary import CPSVocabulary
-from Products.CPSDefault.tests import CPSTestCase
 from Testing import ZopeTestCase
 from Products.CPSSchemas.tests.testVocabulary import BasicVocabularyTests
 
-ZopeTestCase.installProduct('CPSSchemas')
-CPSTestCase.setupPortal()
+from OFS.Folder import Folder
+
 
 class LocalVocabularyTests(BasicVocabularyTests):
 
@@ -42,12 +41,22 @@ class LocalVocabularyTests(BasicVocabularyTests):
         self.assertEqual(voc.merge_behaviour, 'None')
 
 
-class LocalVocabularyContainerTests(CPSTestCase.CPSTestCase):
+class LocalVocabularyContainerTests(ZopeTestCase.PortalTestCase):
+
+    def getPortal(self):
+        return Folder('portal')
+
+    def _setupHomeFolder(self):
+        pass
+
     def afterSetUp(self):
-        self.login('manager')
-        self.ws = self.portal.workspaces
-        self.ws.invokeFactory('Workspace', 'pfolder')
-        self.pfolder = getattr(self.ws, 'pfolder')
+        from Products.CPSSchemas.VocabulariesTool import VocabulariesTool
+        self.portal.ws = Folder('workspaces')
+        self.portal.ws.pfolder = Folder('pfolder')
+        self.ws = self.portal.ws
+        self.pfolder = self.portal.ws.pfolder
+        self.portal.portal_vocabularies = VocabulariesTool()
+
         addLocalVocabularyContainer(self.pfolder)
         self.vocabcontainer = getattr(self.pfolder,
                                       LOCAL_VOCABULARY_CONTAINER_ID)
@@ -56,9 +65,6 @@ class LocalVocabularyContainerTests(CPSTestCase.CPSTestCase):
         for key in list(vocobj.keys()):
             vocobj.set(key, vocobj[key], key + '_dummymsgid')
         self.portal.portal_vocabularies._setObject('dummylanguage_voc', vocobj)
-
-    def beforeTearDown(self):
-        self.logout()
 
     def _makeUpperVocabulary(self):
         addLocalVocabularyContainer(self.ws)
