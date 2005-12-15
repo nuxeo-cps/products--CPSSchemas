@@ -168,30 +168,29 @@ class BooleanWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, True)
         self.assert_(ret, err)
 
-    def test_boolean_nok_1(self):
+    def test_boolean_ok_5(self):
         ret, err, ds = self._validate({}, 2)
-        self.assertEquals(err, 'cpsschemas_err_boolean')
+        self.assert_(ret, err)
 
-    def test_boolean_nok_2(self):
+    def test_boolean_ok_6(self):
         ret, err, ds = self._validate({}, -1)
-        self.assertEquals(err, 'cpsschemas_err_boolean')
+        self.assert_(ret, err)
 
-# XXX bug to fix
-#    def test_boolean_nok_3(self):
-#        ret, err, ds = self._validate({}, '')
-#        self.assertEquals(err, 'cpsschemas_err_boolean')
+    def test_boolean_ok_7(self):
+        ret, err, ds = self._validate({}, '')
+        self.assert_(ret, err)
 
-    def test_boolean_nok_4(self):
+    def test_boolean_ok_8(self):
         ret, err, ds = self._validate({}, None)
-        self.assertEquals(err, 'cpsschemas_err_boolean')
+        self.assert_(ret, err)
 
-    def test_boolean_nok_5(self):
+    def test_boolean_ok_9(self):
         ret, err, ds = self._validate({}, 'foo')
-        self.assertEquals(err, 'cpsschemas_err_boolean')
+        self.assert_(ret, err)
 
-    def test_boolean_nok_5(self):
+    def test_boolean_ok_10(self):
         ret, err, ds = self._validate({}, {'foo': 'sk'})
-        self.assertEquals(err, 'cpsschemas_err_boolean')
+        self.assert_(ret, err)
 
 class TextWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSTextWidget

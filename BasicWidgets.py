@@ -1123,7 +1123,7 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
+        datastructure[self.getWidgetId()] = bool(datamodel[self.fields[0]])
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -1132,16 +1132,9 @@ class CPSBooleanWidget(CPSWidget):
         if self.render_format not in self.render_formats:
             self.render_format = 'select'
 
-        if self.render_format == 'checkbox' and value == '':
-            value = 0
-
         try:
-            v = int(value)
+            v = bool(value)
         except (ValueError, TypeError):
-            datastructure.setError(self.getWidgetId(),
-                                   "cpsschemas_err_boolean")
-            return 0
-        if v not in (0, 1):
             datastructure.setError(self.getWidgetId(),
                                    "cpsschemas_err_boolean")
             return 0
@@ -1152,7 +1145,7 @@ class CPSBooleanWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
-        if value and value != '0':
+        if value:
             label_value = self.label_true
         else:
             label_value = self.label_false
