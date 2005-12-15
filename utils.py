@@ -24,7 +24,8 @@
 import warnings
 from zLOG import LOG, INFO, DEBUG
 from cStringIO import StringIO
-from OFS.Image import File, Image
+from OFS.Image import File, Image, cookId
+from ZPublisher.HTTPRequest import FileUpload
 
 # BBB goes away in 3.5.0
 def copyFile(file_src):
@@ -60,17 +61,28 @@ def untieFromDatabase(ob):
     """Untie an object from the database.
 
     Used to copy objects from/to a session.
+
+    A FileUpload objects is turned into a File (or None).
     """
+    if isinstance(ob, FileUpload):
+        # A FileUpload is a braindead object holding references
+        # to bound functions and thus not picklable... <sigh>
+        # We'll replace it with a File, or None if it's empty.
+        if not ob:
+            return None
+        id, title = cookId('', '', ob)
+        id = id or 'file' # Don't keep an empty id
+        f = File(id, title, ob)
+        return f
     if getattr(ob, '_p_jar', None) is None:
         return ob
-    klass = type(ob)
-    if klass in (File, Image):
+    if isinstance(ob, File): # including Image
+        klass = ob.__class__
         f = klass(ob.id(), ob.title, str(ob.data),
                   content_type=ob.content_type,
                   precondition=ob.precondition)
         return f
-    else:
-        raise ValueError("untieFromDatabase can't untie %r" % (ob,))
+    raise ValueError("untieFromDatabase can't untie %r" % (ob,))
 
 def getHumanReadableSize(octet_size):
     """ returns a human readable file size
