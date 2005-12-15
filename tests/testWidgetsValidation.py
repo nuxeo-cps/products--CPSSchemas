@@ -160,6 +160,14 @@ class BooleanWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, 1)
         self.assert_(ret, err)
 
+    def test_boolean_ok_3(self):
+        ret, err, ds = self._validate({}, False)
+        self.assert_(ret, err)
+
+    def test_boolean_ok_4(self):
+        ret, err, ds = self._validate({}, True)
+        self.assert_(ret, err)
+
     def test_boolean_nok_1(self):
         ret, err, ds = self._validate({}, 2)
         self.assertEquals(err, 'cpsschemas_err_boolean')
