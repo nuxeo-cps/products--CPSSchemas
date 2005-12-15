@@ -264,47 +264,47 @@ class TestWidgets(unittest.TestCase):
         ds['foo'] = 0
         res = widget.validate(ds)
         self.assertEquals(res, True)
-        self.assertEquals(isinstance(dm['foo'], bool), True)
+        self.assert_(isinstance(dm['foo'], bool))
         self.assertEquals(dm['foo'], 0)
 
         ds['foo'] = 1
         res = widget.validate(ds)
         self.assertEquals(res, True)
-        self.assertEquals(isinstance(dm['foo'], bool), True)
+        self.assert_(isinstance(dm['foo'], bool))
         self.assertEquals(dm['foo'], 1)
 
         ds['foo'] = False
         res = widget.validate(ds)
         self.assertEquals(res, True)
-        self.assertEquals(isinstance(dm['foo'], bool), True)
+        self.assert_(isinstance(dm['foo'], bool))
         self.assertEquals(ds['foo'], 0)
 
         ds['foo'] = True
         res = widget.validate(ds)
         self.assertEquals(res, True)
-        self.assertEquals(isinstance(dm['foo'], bool), True)
+        self.assert_(isinstance(dm['foo'], bool))
         self.assertEquals(dm['foo'], 1)
 
         # prepare
 
         dm['foo'] = 0
         widget.prepare(ds)
-        self.assertEquals(isinstance(ds['foo'], bool), True)
+        self.assert_(isinstance(ds['foo'], bool))
         self.assertEquals(ds['foo'], False)
 
         dm['foo'] = 1
         widget.prepare(ds)
-        self.assertEquals(isinstance(ds['foo'], bool), True)
+        self.assert_(isinstance(ds['foo'], bool))
         self.assertEquals(ds['foo'], True)
 
         dm['foo'] = False
         widget.prepare(ds)
-        self.assertEquals(isinstance(ds['foo'], bool), True)
+        self.assert_(isinstance(ds['foo'], bool))
         self.assertEquals(ds['foo'], False)
 
         dm['foo'] = True
         widget.prepare(ds)
-        self.assertEquals(isinstance(ds['foo'], bool), True)
+        self.assert_(isinstance(ds['foo'], bool))
         self.assertEquals(ds['foo'], True)
 
 
