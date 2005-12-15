@@ -22,6 +22,7 @@
 import unittest
 from ZODB.tests.warnhook import WarningsHook
 from Acquisition import Implicit
+from OFS.Image import File
 from OFS.Folder import Folder
 from OFS.SimpleItem import SimpleItem
 
@@ -526,7 +527,6 @@ function getLayoutMode() {
 
     def test_CPSFileWidget_getFileInfo(self):
         from Products.CPSSchemas.BasicWidgets import CPSFileWidget
-        from OFS.Image import File
         folder = Folder()
         widget = CPSFileWidget('foo').__of__(folder)
         folder.mimetypes_registry = FakeMimeTypeRegistry()
@@ -567,6 +567,21 @@ function getLayoutMode() {
 
         return
 
+    def test_CPSFileWidget_validate(self):
+        from Products.CPSSchemas.BasicWidgets import CPSFileWidget
+        widget = CPSFileWidget('foo')
+        widget.fields = ['bar']
+        dm = {'bar': 'previousfile'}
+        ds = FakeDataStructure(dm)
+
+        f = File('thefilename.txt', 'thetitle', 'thefilecontent',
+                 content_type='text/x-test')
+        ds['foo'] = f
+        ds['foo_title'] = 'thetitle'
+        ds['foo_filename'] = 'thefilename'
+        ds['foo_choice'] = 'change'
+        res = widget.validate(ds)
+        # XXX to be continued
 
 
 def test_suite():
