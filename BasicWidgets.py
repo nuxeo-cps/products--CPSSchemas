@@ -1123,7 +1123,7 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""

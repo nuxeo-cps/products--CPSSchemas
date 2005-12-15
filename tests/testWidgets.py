@@ -252,6 +252,54 @@ class TestWidgets(unittest.TestCase):
         widget.prepare(ds)
         self.assertEquals(ds['foo'], '')
 
+    def testBooleanWidget(self):
+        from Products.CPSSchemas.BasicWidgets import CPSBooleanWidget
+        widget = CPSBooleanWidget('foo')
+        widget.fields = ['foo']
+        self.assertEquals(widget.getWidgetId(), 'foo')
+        self.assertEquals(widget.getFieldTypes(), ('CPS Int Field',))
+        dm = {}
+        ds = FakeDataStructure(dm)
+
+        ds['foo'] = 0
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 0)
+
+        ds['foo'] = 1
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 1)
+
+        ds['foo'] = False
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(ds['foo'], 0)
+
+        ds['foo'] = True
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 1)
+
+        # prepare
+
+        dm['foo'] = 0
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], 0)
+
+        dm['foo'] = 1
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], 1)
+
+        dm['foo'] = False
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], 0)
+
+        dm['foo'] = True
+        widget.prepare(ds)
+        self.assertEquals(ds['foo'], 1)
+
+
     def testDateTimeWidget_getDateTimeInfo(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
         from DateTime.DateTime import DateTime

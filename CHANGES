@@ -16,6 +16,7 @@ Bug fixes:
   stored if the widgets are not required and an empty string is entered
 - #1145: Made photo widget more robust.
 - #1188: Fixed boolean widget in checkbox mode.
+- Made the BooleanWidget return int values instead of string values.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
