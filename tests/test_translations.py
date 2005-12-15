@@ -23,18 +23,11 @@ from Products.CPSI18n.tests.translations import TranslationsTestCase
 from Testing import ZopeTestCase
 import unittest
 
-product_name = __name__.split('.')[0]
-
-# We need to install this product because the TranslationsTestCase will later on
-# find the .pot and .po files from this installed product.
-ZopeTestCase.installProduct(product_name)
-
 
 class Test(TranslationsTestCase):
 
     def setUp(self):
-        self.product_name = product_name
-
+        self.product_name = 'CPSSchemas'
 
 def test_suite():
     loader = unittest.TestLoader()
