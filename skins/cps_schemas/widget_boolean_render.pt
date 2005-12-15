@@ -15,30 +15,30 @@
     <tal:checkbox condition="python:render_format == 'checkbox'">
       <input type="checkbox" value="1"
              tal:attributes="checked true_checked;
-                             name here/getHtmlWidgetId;" />
+                             name string:{here/getHtmlWidgetId}:int;" />
       <input type="hidden" value=""
-             tal:attributes="name string:${here/getHtmlWidgetId}:default;" />
+             tal:attributes="name string:${here/getHtmlWidgetId}:int:default;" />
     </tal:checkbox>
 
     <tal:radio condition="python:render_format == 'radio'">
       <input type="radio" value="1"
              tal:attributes="checked true_checked;
                              id string:${here/getHtmlWidgetId}_true;
-                             name here/getHtmlWidgetId;" />
+                             name string:{here/getHtmlWidgetId}:int;" />
       <label tal:content="here/label_true"
              tal:attributes="for string:${here/getHtmlWidgetId}_true"
              i18n:translate="" > True </label><br/>
       <input type="radio" value="0"
              tal:attributes="checked not:true_checked;
                              id string:${here/getHtmlWidgetId}_false;
-                             name here/getHtmlWidgetId;" />
+                             name string:{here/getHtmlWidgetId}:int;" />
       <label tal:content="here/label_false"
              tal:attributes="for string:${here/getHtmlWidgetId}_false"
              i18n:translate="" > False </label><br/>
     </tal:radio>
 
     <tal:select condition="python:render_format == 'select'">
-      <select tal:attributes="name here/getHtmlWidgetId;">
+      <select tal:attributes="name string:${here/getHtmlWidgetId}:int;">
         <option value="1"
                 tal:attributes="selected true_checked"
                 tal:content="here/label_true"
