@@ -112,6 +112,12 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 
+        # Test has_key and __contains__
+        self.assert_(dm.has_key('f1'))
+        self.assert_('f1' in dm)
+        self.failIf(dm.has_key('lol'))
+        self.failIf('lol' in dm)
+
     def testCreation(self):
         dm = self.makeOne()
         dm._setObject(None) # What we have for creation

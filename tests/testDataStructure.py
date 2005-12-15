@@ -35,6 +35,12 @@ class TestDataStructure(unittest.TestCase):
         ds.set('f1', 'New value')
         self.assertEquals(ds['f1'], 'New value')
 
+        # Test has_key and __contains__
+        self.assert_(ds.has_key('f1'))
+        self.assert_('f1' in ds)
+        self.failIf(ds.has_key('lol'))
+        self.failIf('lol' in ds)
+
         # Test clear()
         ds.clear()
         self.assertEquals(ds.data, {})
