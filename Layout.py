@@ -397,6 +397,8 @@ class Layout(PropertiesPostProcessor,
                           **kw):
         """Applies the layout style method to the rendered widgets.
 
+        ``context`` is used to find the layout method.
+
         Returns the rendered string. The rendered string is computed according
         to the following properties and in decreasing order of precedence:
         "layout_create_method", "layout_edit_method", "layout_view_method"
