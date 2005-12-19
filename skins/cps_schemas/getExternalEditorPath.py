@@ -1,12 +1,6 @@
 ##parameters=proxy, fileName, widgetId
 # $Id$
 
-from zLOG import LOG, DEBUG
-
-log_key = 'getExternalEditorPath'
-
-LOG(log_key, DEBUG, "proxy=%s, fileName = %s, widgetId = %s" % (proxy, fileName, widgetId))
-
 portal = context.portal_url.getPortalObject()
 portalAbsoluteUrl = portal.absolute_url()
 proxyPhysicalPath = '/'.join(proxy.getPhysicalPath())
@@ -23,7 +17,5 @@ prefix = ''
 external_editor_path = ('%s/%sexternalEdit_?path=%s/downloadFile/%s/%s' %
                         (portalAbsoluteUrl, prefix, proxyPhysicalPath,
                          widgetId, fileName))
-
-LOG(log_key, DEBUG, "external_editor_path = %s" % external_editor_path)
 
 return external_editor_path
