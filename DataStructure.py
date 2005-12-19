@@ -30,6 +30,7 @@ from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 from Products.CPSUtil.file import persistentFixup
+from ZPublisher.HTTPRequest import FileUpload
 
 from Products.CPSSchemas.Widget import widgetname
 
@@ -65,9 +66,11 @@ class DataStructure(UserDict):
         self.error_mappings.update(errors)
         self.datamodel = datamodel
 
-    # Override standard dictionary stuff:
     def clear(self):
         self.data.clear()
+        self.clearErrors()
+
+    def clearErrors(self):
         self.errors.clear()
         self.error_mappings.clear()
 
@@ -104,7 +107,7 @@ class DataStructure(UserDict):
                 self.data[k] = v
 
     def updateFromMapping(self, mapping):
-        """Updates and validates field data from a mapping.
+        """Update field data from a mapping.
 
         This method (unlike the standard update method) will only update
         existing fields. It is used to set the data from request (or indeed
@@ -112,12 +115,16 @@ class DataStructure(UserDict):
 
         No validation is done.
 
-        XXX: explain why <widgetname(key)> is used instead of <key>.
+        Empty FileUpload values are treated as absent.
         """
-        #raise "mapping", str(mapping)
         for key in self.keys():
-            if mapping.has_key(widgetname(key)):
-                self[key] = mapping[widgetname(key)]
+            wkey = widgetname(key) # mapping contains full widget names
+            if mapping.has_key(wkey):
+                value = mapping[wkey]
+                if isinstance(value, FileUpload) and not value:
+                    # Don't overwrite with an empty FileUpload
+                    continue
+                self[key] = value
 
     # Expose setter as method for restricted code.
     def set(self, key, value):
@@ -137,20 +144,6 @@ class DataStructure(UserDict):
     def getErrorMapping(self, key):
         return self.error_mappings.get(key) or {}
 
-    # XXX: Not used, seemingly
-    def delError(self, key):
-        """Removes an error"""
-        if self.errors.has_key(key):
-            del self.errors[key]
-
-    # XXX: Not used, seemingly
-    def getErrorsFields(self):
-        return self.errors.keys()
-
-    # XXX: Not used, seemingly
-    def getErrors(self):
-        return self.errors # XXX Should it return the original or a copy?
-
     def getDataModel(self):
         """Return the datamodel associated with this datastructure."""
         return self.datamodel
@@ -163,11 +156,15 @@ class DataStructure(UserDict):
         data = persistentFixup(self.data) # fixup FileUploads
         return deepcopy((data, self.errors, self.error_mappings))
 
-    def _setAllData(self, data):
+    def _updateAllData(self, data):
         data, errors, error_mappings = deepcopy(data)
-        self.data = data
-        self.errors = errors
-        self.error_mappings = error_mappings
+        for key, value in data.items():
+            if isinstance(value, FileUpload) and not value:
+                # Don't overwrite with an empty FileUpload
+                continue
+            self.data[key] = value
+        self.errors.update(errors)
+        self.error_mappings.update(error_mappings)
 
     def _saveToSession(self, request, formuid):
         """Save this datastructure into the session.
@@ -179,8 +176,8 @@ class DataStructure(UserDict):
         data = self._getAllData()
         request.SESSION[_SESSION_DATASTRUCTURE_KEY] = formuid, data
 
-    def _loadFromSession(self, request, formuid):
-        """Load this datastructure from the session.
+    def _updateFromSession(self, request, formuid):
+        """Update this datastructure from the session.
 
         Uses ``formuid`` to identify the form.
         """
@@ -194,7 +191,7 @@ class DataStructure(UserDict):
         dataformuid, data = request.SESSION[_SESSION_DATASTRUCTURE_KEY]
         if dataformuid != formuid:
             return
-        self._setAllData(data)
+        self._updateAllData(data)
 
     def _removeFromSession(self, request):
         """Remove saved data for this datastructure from the session.

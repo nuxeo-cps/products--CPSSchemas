@@ -36,6 +36,7 @@ from zLOG import LOG, DEBUG, TRACE
 from zipfile import ZipFile, BadZipfile
 from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
+from Products.CPSUtil.file import makeFileUploadFromOFSFile
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSNoneWidget
@@ -367,21 +368,18 @@ class CPSAttachedFileWidget(CPSFileWidget):
     """AttachedFile widget."""
     meta_type = 'AttachedFile Widget'
 
-    # XXX The second and third fields are actually optional...
-    field_types = ('CPS File Field', 'CPS String Field', 'CPS File Field')
+    field_types = ('CPS File Field',   # File
+                   'CPS String Field', # Caption (optional)
+                   'CPS File Field')   # Preview (optional)
     field_inits = ({'is_searchabletext': 0,
                     'suffix_text': '_f1', # _f# are autocomputed field ext
-                    'suffix_html': '_f2',
-                    },
-                   {'is_searchabletext': 1,
-                    },
-                   {'is_searchabletext': 0,
-                    },
+                    'suffix_html': '_f2'},
+                   {'is_searchabletext': 1}, {},
                    )
 
     _properties = CPSFileWidget._properties + (
         {'id': 'allowed_suffixes', 'type': 'tokens', 'mode': 'w',
-         'label': 'Allowed file suffixes (for example: .html .sxw)'},
+         'label': 'Allowed file suffixes (ex: .html .sxw)'},
         )
     allowed_suffixes = []
 
@@ -390,6 +388,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
         CPSFileWidget.prepare(self, datastructure, **kw)
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
+
         # Compute preview info for widget.
         if len(self.fields) > 2 and datamodel.get(self.fields[2]) is not None:
             preview_id = self.fields[2]
@@ -397,103 +396,15 @@ class CPSAttachedFileWidget(CPSFileWidget):
             preview_id = None
         datastructure[widget_id + '_preview'] = preview_id
 
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        datamodel = datastructure.getDataModel()
-        field_id = self.fields[0]
-        widget_id = self.getWidgetId()
-        choice = datastructure[widget_id+'_choice']
-        filetitle = datastructure[widget_id + '_title']
-        file = None
-        err = 0
-        err_mapping = None
-        if choice == 'delete':
-            if self.is_required:
-                return self.doesNotValidate('cpsschemas_err_required',
-                                            None, file, datastructure)
-            datamodel[field_id] = None
-        elif choice == 'keep':
-            if datastructure.has_key('restored_items') and \
-                   widget_id in datastructure['restored_items']:
-                # the file is restored from the session after an invalid layout
-                datamodel[field_id] = datastructure[widget_id]
-                if not datastructure.has_key('backup_items'):
-                    # we may have again an invalid layout
-                    datastructure['backup_items'] = {}
-                datastructure['backup_items'][widget_id] = field_id
-            file = datamodel[field_id]
-            if file is None:
-                if self.is_required:
-                    return self.doesNotValidate('cpsschemas_err_required',
-                                                None, file, datastructure)
-            else:
-                # do not allow empty title: it is used as link text
-                if not filetitle:
-                    filetitle = datastructure[widget_id + '_filename']
-                if filetitle != file.title:
-                    file.manage_changeProperties(title=filetitle)
-                    datamodel[field_id] = file
-        elif choice == 'change' and datastructure.get(widget_id):
-            fileUpload = datastructure[widget_id]
-            if not isinstance(fileUpload, FileUpload):
-                return self.doesNotValidate('cpsschemas_err_file',
-                                            None, file, datastructure)
-            file_base, file_suffix = os.path.splitext(fileUpload.filename)
-            if (self.allowed_suffixes
-                and file_suffix not in self.allowed_suffixes):
+    def checkFileName(self, fileid, mimetype):
+        if self.allowed_suffixes:
+            base, suffix = os.path.splitext(fileid)
+            if suffix not in self.allowed_suffixes:
                 err = 'cpsschemas_err_file_bad_suffix ${allowed_suffixes}'
                 err_mapping = {'allowed_suffixes':
                                ' '.join(self.allowed_suffixes)}
-                return self.doesNotValidate(err, err_mapping,
-                                            file, datastructure)
-            ms = self.size_max
-            if fileUpload.read(1) == '':
-                return self.doesNotValidate('cpsschemas_err_file_empty',
-                                            None, file, datastructure)
-            fileUpload.seek(0)
-            read_size = len(fileUpload.read(ms + 1))
-            if ms and read_size > ms:
-                # Size is expressed in human readable value
-                max_size_str = self.getHumanReadableSize(ms)
-                err = 'cpsschemas_err_file_too_big ${max_size}'
-                err_mapping = {'max_size': max_size_str}
-                return self.doesNotValidate(err, err_mapping,
-                                            file, datastructure)
-            fileUpload.seek(0)
-            # Ignore title value from form;
-            # re-initialize title with fileid value
-            fileid = cookId('', '', fileUpload)[0]
-            file = File(fileid, fileid, fileUpload)
-            registry = getToolByName(self, 'mimetypes_registry')
-            mimetype = registry.lookupExtension(fileid.lower())
-            if mimetype and file.content_type != mimetype.normalized():
-                LOG('CPSAttachedFileWidget', DEBUG,
-                    'Fixing mimetype from %s to %s' % (
-                    file.content_type, mimetype.normalized()))
-                file.manage_changeProperties(
-                    content_type=mimetype.normalized())
-                LOG('CPSAttachedFileWidget', DEBUG,
-                    'validate change set %s' % `file`)
-            # Taking the user suplied file title into account
-            if filetitle and filetitle != file.title:
-                file.manage_changeProperties(title=filetitle)
-            datamodel[field_id] = file
-            # here we ask to backup our file
-            # in case of invalid layout
-            if not datastructure.has_key('backup_items'):
-                datastructure['backup_items'] = {}
-            datastructure['backup_items'][widget_id] = field_id
-        self.prepare(datastructure)
-        return 1
-
-    def doesNotValidate(self, err, err_mapping, file, datastructure):
-        LOG('CPSAttachedFileWidget', DEBUG, 'error %s on %s' % (err, `file`))
-        widget_id = self.getWidgetId ()
-        field_id = self.fields[0]
-        # do not keep rejected file; set error after change
-        datastructure[widget_id] = datastructure.getDataModel()[field_id]
-        datastructure.setError(widget_id, err, err_mapping)
-        return 0
+                return err, err_mapping
+        return '', {}
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -751,7 +662,7 @@ class CPSPhotoWidget(CPSImageWidget):
     meta_type = 'Photo Widget'
 
     field_types = ('CPS Image Field',   # Image
-                   'CPS String Field',  # Sub title
+                   'CPS String Field',  # Caption
                    'CPS String Field',  # render_position if configurable
 		   'CPS Image Field',)  # original photo
     field_inits = ({}, {'is_searchabletext': 1,}, {}, {})
@@ -764,21 +675,22 @@ class CPSPhotoWidget(CPSImageWidget):
          'select_variable': 'all_configurable',
          'label': 'What is user configurable, require extra fields'},
         {'id': 'keep_original', 'type': 'boolean', 'mode': 'w',
-         'label': 'Enable to keep original image'},
+         'label': 'Keep original image'},
         )
     all_configurable = ['nothing', 'position']
     all_render_positions = ['left', 'center', 'right']
 
-    allow_resize = 1
-    configurable = all_configurable[0]
+    allow_resize = True
     render_position = all_render_positions[0]
-    keep_original = 1
+    configurable = all_configurable[0]
+    keep_original = True
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         CPSImageWidget.prepare(self, datastructure, **kw)
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
+
         if len(self.fields) > 1:
             datastructure[widget_id + '_subtitle'] = datamodel[self.fields[1]]
         else:
@@ -795,114 +707,49 @@ class CPSPhotoWidget(CPSImageWidget):
         if self.keep_original and len(self.fields) > 3:
             datastructure[widget_id + '_resize_kept'] = ''
 
-    def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
+    def otherProcessing(self, choice, datastructure):
         datamodel = datastructure.getDataModel()
-        field_id = self.fields[0]
         widget_id = self.getWidgetId()
+
+        # Caption
         subtitle = datastructure[widget_id + '_subtitle']
-        rposition = datastructure[widget_id + '_rposition']
-        # validate items specific to photo widget
         if len(self.fields) > 1:
             datamodel[self.fields[1]] = subtitle
-        if self.configurable != 'nothing':
-            if len(self.fields) > 2:
-                if rposition and rposition in self.all_render_positions:
-                    datamodel[self.fields[2]] = rposition
-        choice = datastructure[widget_id+'_choice']
-        if choice not in ['resize', 'change']:
-            # CPSImage validation resets datastructure
-            ret = CPSImageWidget.validate(self, datastructure, **kw)
-        else:
-            filetitle = datastructure[widget_id + '_title']
-            err = None
-            if choice == 'resize':
-                # figure out if the original size image can be kept
-                can_keep_original = self.keep_original and \
-                                    self.allow_resize and \
-                                    len(self.fields) > 3
-                if can_keep_original:
-                    original_image = datamodel[self.fields[3]]
-                    file = datamodel[field_id]
-                    if original_image is None and file is None:
-                        if self.is_required:
-                            err = 'cpsschemas_err_required'
-                        # else ignore, this should not happen anyway
-                    else:
-                        # file or original_image is not None.
-                        # if original file is not set (upgrade for instance),
-                        # actual file becomes original file
-                        if original_image is None:
-                            original_image = file
-                            datamodel[self.fields[3]] = original_image
-                        # do not allow empty title: it is used as link text
-                        if not filetitle:
-                            filetitle = datastructure[widget_id + '_filename']
-                        # get resized image
-                        fileid = original_image.getId()
-                        resize_op = datastructure[widget_id + '_resize_kept']
-                        file = self.getResizedImage(original_image, fileid,
-                                                    filetitle, resize_op)
-                        datamodel[field_id] = file
-            elif choice == 'change' and datastructure.get(widget_id):
-                file = datastructure[widget_id]
-                if isinstance(file, str):
-                    file = Image('-', '', file)
-                elif not isinstance(file, FileUpload):
-                    err = 'cpsschemas_err_file'
-                else:
-                    ms = self.size_max
-                    if file.read(1) == '':
-                        err = 'cpsschemas_err_file_empty'
-                    elif ms and len(file.read(ms)) == ms:
-                        err = 'cpsschemas_err_file_too_big'
-                    else:
-                        file.seek(0)
-                        fileid = cookId('', '', file)[0]
-                        registry = getToolByName(self, 'mimetypes_registry')
-                        mimetype = registry.lookupExtension(fileid.lower())
-                        if (not mimetype or
-                            not mimetype.normalized().startswith('image')):
-                            err = 'cpsschemas_err_image'
-                        else:
-                            # figure out if the original size image can be kept
-                            can_keep_original = self.keep_original and \
-                                                self.allow_resize and \
-                                                len(self.fields) > 3
-                            original_image = Image(fileid, filetitle, file)
-                            if not self.allow_resize:
-                                file = original_image
-                            else:
-                                if can_keep_original:
-                                    # set original image
-                                    datamodel[self.fields[3]] = original_image
-                                # get resized image
-                                resize_op = datastructure[widget_id + '_resize']
-                                file = self.getResizedImage(original_image, fileid,
-                                                            filetitle, resize_op)
-                            LOG('CPSImageWidget', DEBUG,
-                                'validate change set %s' % `file`)
-                            datamodel[field_id] = file
-                            # here we ask to backup our file
-                            # in case of invalid layout
-                            if not datastructure.has_key('backup_items'):
-                                datastructure['backup_items'] = {}
-                            datastructure['backup_items'][widget_id] = field_id
 
-            if err:
-                LOG('CPSImageWidget', DEBUG,
-                    'error %s on %s' % (err, `file`))
-                # do not keep rejected file; set error after change
-                datastructure[widget_id] = datamodel[field_id]
-                datastructure.setError(widget_id, err)
-            else:
-                # reset datastructure
-                self.prepare(datastructure)
+        # Position
+        rposition = datastructure[widget_id + '_rposition']
+        if self.configurable != 'nothing' and len(self.fields) > 2:
+            if rposition and rposition in self.all_render_positions:
+                datamodel[self.fields[2]] = rposition
 
-            ret = not err
+        # Resize
+        if choice != 'resize':
+            return
+        if not self.canKeepOriginal():
+            return
+        image = datamodel[self.fields[0]]
+        original_image = datamodel[self.fields[3]]
+        if original_image is None and image is None:
+            return
 
-        return ret
+        if original_image is None:
+            original_image = image
+            datamodel[self.fields[3]] = original_image
 
+        fileid = original_image.getId()
+        resize_op = datastructure[widget_id + '_resize_kept']
+        image = self.getResizedImage(original_image, fileid, fileid, resize_op)
+        datamodel[self.fields[0]] = image
+
+    def canKeepOriginal(self):
+        return (self.keep_original and
+                self.allow_resize and
+                len(self.fields) > 3)
+
+    def maybeKeepOriginal(self, image, datastructure):
+        if self.canKeepOriginal():
+            datamodel = datastructure.getDataModel()
+            datamodel[self.fields[3]] = image
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""

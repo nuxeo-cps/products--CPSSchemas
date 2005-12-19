@@ -4,6 +4,7 @@
   current_name options/current_name;
   current_title options/current_title;
   empty_file options/empty_file;
+  session_file options/session_file;
   mimetype options/mimetype;
   size options/size;
   content_url options/content_url;
@@ -16,7 +17,7 @@
                       proxy dm/getProxy;
                       proxy_url proxy/absolute_url;
                       preview_id python:ds[id + '_preview']"
-          tal:condition="preview_id">
+          tal:condition="python: preview_id and not session_file">
       <a href="http://url..."
          tal:define="field_id python:fields[0];
                      field_html python:len(fields)>2 and fields[2] or ''"

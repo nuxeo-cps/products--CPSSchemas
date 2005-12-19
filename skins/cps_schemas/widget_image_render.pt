@@ -4,6 +4,7 @@
   current_name options/current_name;
   current_title options/current_title;
   empty_file options/empty_file;
+  session_file options/session_file;
   mimetype options/mimetype;
   size options/size;
   content_url options/content_url;
@@ -29,7 +30,7 @@
       </metal:block>
     </metal:block>
 
-    <img tal:condition="python: not empty_file"
+    <img tal:condition="python: not empty_file and not session_file"
       tal:replace="structure image_tag" />
 
     <metal:block define-macro="image_edit">

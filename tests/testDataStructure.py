@@ -36,8 +36,10 @@ class TestDataStructure(unittest.TestCase):
         self.assert_(ds.hasError('f2'))
 
         ds.setError('f2', 'New error text')
+        self.assertEquals(ds.getError('f2'), 'New error text')
         self.assert_(ds.hasError('f2'))
-        ds.delError('f2')
+
+        ds.clearErrors()
         self.assert_(not ds.hasError('f2'))
 
         ds.set('f1', 'New value')
@@ -105,7 +107,9 @@ class TestDataStructure(unittest.TestCase):
         # Make sure session is picklable
         p = cPickle.Pickler(StringIO(), 1).dump(request.SESSION)
         ds.clear()
-        ds._loadFromSession(request, '123')
+        ds['goo'] = 'yuck'
+        ds._updateFromSession(request, '123')
+        self.assertEquals(ds['goo'], 'yuck')
         self.assertEquals(ds['foo'], 'bar')
         self.assertEquals(ds['baz'], somedict)
         self.failIf(ds['baz'] is somedict) # was copied

@@ -5,6 +5,7 @@
   current_name options/current_name;
   current_title options/current_title;
   empty_file options/empty_file;
+  session_file options/session_file;
   mimetype options/mimetype;
   size options/size;
   content_url options/content_url;
@@ -49,7 +50,7 @@
   <tal:block condition="python: mode == 'edit'">
     <metal:block use-macro="here/widget_image_render/macros/image_title_edit" />
 
-    <img tal:condition="python: not empty_file"
+    <img tal:condition="python: not empty_file and not session_file"
       tal:replace="structure image_tag" />
 
     <tal:block define="allow_resize here/allow_resize|nothing;
@@ -86,7 +87,7 @@
     </metal:block>
     </tal:block>
 
-    <tal:block condition="python:len(fields) > 2 and configurable.find('position')>=0">
+    <tal:block condition="python:len(fields) > 2 and 'position' in configurable">
       <p tal:define="name here/getHtmlWidgetId;
                      title_name string:${name}_title;">
         <span i18n:translate="cpsschemas_render_position">

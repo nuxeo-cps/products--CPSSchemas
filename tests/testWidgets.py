@@ -556,7 +556,6 @@ function getLayoutMode() {
 
     def test_BBB_register_old_widget(self):
         # Simulate code that was deriving from old widgets.
-        import warnings
         from Products.CPSSchemas.Widget import CPSWidget
         from Products.CPSSchemas.Widget import CPSWidgetType
         from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
@@ -601,13 +600,16 @@ function getLayoutMode() {
         dm = FakeDataModel()
         dm._adapters = [FakeAdapter({'bar': 'thatsme'})]
         dm.proxy = 'someproxy'
+        dm['bar'] = None
         ds = FakeDataStructure(dm)
-        f = File('thefilename.txt', 'thetitle', 'thefilecontent',
-                 content_type='text/x-test')
-        ds['foo'] = f
+        f = StringIO('thefilecontent')
+        fu = FileUpload(FakeFieldStorage(f, 'thefilename.txt'))
+        ds['foo'] = fu
+        ds['foo_title'] = 'thetitle'
         file_info = widget.getFileInfo(ds)
         self.assertEquals(file_info, {
-            'empty_file': 0,
+            'empty_file': False,
+            'session_file': False,
             'current_name': 'thefilename.txt',
             'current_title': 'thetitle',
             'size': len('thefilecontent'),
@@ -623,7 +625,8 @@ function getLayoutMode() {
         dm.context = context
         file_info = widget.getFileInfo(ds)
         self.assertEquals(file_info, {
-            'empty_file': 0,
+            'empty_file': False,
+            'session_file': False,
             'current_name': 'thefilename.txt',
             'current_title': 'thetitle',
             'size': len('thefilecontent'),
