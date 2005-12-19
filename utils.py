@@ -22,16 +22,14 @@
 """
 
 import warnings
-from zLOG import LOG, INFO, DEBUG
+from zLOG import LOG, DEBUG
 from cStringIO import StringIO
-from OFS.Image import File, Image, cookId
-from ZPublisher.HTTPRequest import FileUpload
+from OFS.Image import File, Image
 
 # BBB goes away in 3.5.0
 def copyFile(file_src):
     """Return a copy of a file object."""
-    warnings.warn("copyFile is deprecated, use untieFromDatabase",
-                  DeprecationWarning, 2)
+    warnings.warn("copyFile is deprecated", DeprecationWarning, 2)
     if not isinstance(file_src, File):
         LOG('CPSSchemas.utils:copyFile', DEBUG,
             'file_src %s is not a File object' % str(file_src))
@@ -45,8 +43,7 @@ def copyFile(file_src):
 # BBB goes away in 3.5.0
 def copyImage(file_src):
     """Return a copy of an image object."""
-    warnings.warn("copyImage is deprecated, use untieFromDatabase",
-                  DeprecationWarning, 2)
+    warnings.warn("copyImage is deprecated", DeprecationWarning, 2)
     if not isinstance(file_src, Image):
         LOG('CPSSchemas.utils:copyImage', DEBUG,
             'file_src %s is not an Image object' % str(file_src))
@@ -56,33 +53,6 @@ def copyImage(file_src):
     file_dest = Image(file_src.id(), file_src.title, data)
     file_dest.manage_changeProperties(content_type=file_src.content_type)
     return file_dest
-
-def untieFromDatabase(ob):
-    """Untie an object from the database.
-
-    Used to copy objects from/to a session.
-
-    A FileUpload objects is turned into a File (or None).
-    """
-    if isinstance(ob, FileUpload):
-        # A FileUpload is a braindead object holding references
-        # to bound functions and thus not picklable... <sigh>
-        # We'll replace it with a File, or None if it's empty.
-        if not ob:
-            return None
-        id, title = cookId('', '', ob)
-        id = id or 'file' # Don't keep an empty id
-        f = File(id, title, ob)
-        return f
-    if getattr(ob, '_p_jar', None) is None:
-        return ob
-    if isinstance(ob, File): # including Image
-        klass = ob.__class__
-        f = klass(ob.id(), ob.title, str(ob.data),
-                  content_type=ob.content_type,
-                  precondition=ob.precondition)
-        return f
-    raise ValueError("untieFromDatabase can't untie %r" % (ob,))
 
 def getHumanReadableSize(octet_size):
     """ returns a human readable file size

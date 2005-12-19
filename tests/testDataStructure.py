@@ -4,7 +4,15 @@
 import unittest
 from Testing.ZopeTestCase import ZopeLite
 
+import cPickle
+from cStringIO import StringIO
 from Products.CPSSchemas.DataStructure import DataStructure
+
+
+class FakeRequest(dict):
+    def __init__(self, d={}):
+        self.update(d)
+        self.SESSION = {}
 
 class TestDataStructure(unittest.TestCase):
     """Tests the DataStructure
@@ -83,6 +91,25 @@ class TestDataStructure(unittest.TestCase):
         ds.updateFromMapping(d3)
         self.assertEquals(ds.data['f1'], 'Value1bis')
         self.assert_(not ds.has_key('f4'))
+
+    def testSessionLoadSave(self):
+        ds = DataStructure()
+        somelist = [4, 5]
+        somedict = {1: 2, 3: somelist}
+        ds['foo'] = 'bar'
+        ds['baz'] = somedict
+        request = FakeRequest()
+
+        # Testing
+        ds._saveToSession(request, '123')
+        # Make sure session is picklable
+        p = cPickle.Pickler(StringIO(), 1).dump(request.SESSION)
+        ds.clear()
+        ds._loadFromSession(request, '123')
+        self.assertEquals(ds['foo'], 'bar')
+        self.assertEquals(ds['baz'], somedict)
+        self.failIf(ds['baz'] is somedict) # was copied
+        self.failIf(ds['baz'][3] is somelist) # was copied
 
 
 def test_suite():

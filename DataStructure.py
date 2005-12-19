@@ -23,12 +23,14 @@ A DataStructure holds the form-related data before display or after
 validation returned an error, for redisplay.
 """
 
+from copy import deepcopy
 from UserDict import UserDict
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
-from Products.CPSSchemas.utils import untieFromDatabase
+from Products.CPSUtil.file import persistentFixup
+
 from Products.CPSSchemas.Widget import widgetname
 
 _SESSION_DATASTRUCTURE_KEY = 'CPS_DATASTRUCTURE'
@@ -154,44 +156,33 @@ class DataStructure(UserDict):
         return self.datamodel
 
     def _getAllData(self):
-        """Get a non-persistent copy with all info.
+        """Get a non-persistent copy of this datastructure with all info.
 
-        Needed because persistent objects like Files stored in a session
-        must not be tied to a database.
+        Fixes up FileUploads to be correctly persistable in the session.
         """
-        data = {}
-        errors = {}
-        error_mappings = {}
-        for key, value in self.data.items():
-            data[key] = untieFromDatabase(value)
-        for key, value in self.errors.items():
-            errors[key] = untieFromDatabase(value)
-        for key, value in self.error_mappings.items():
-            error_mappings[key] = untieFromDatabase(value)
-        return (data, errors, error_mappings)
+        data = persistentFixup(self.data) # fixup FileUploads
+        return deepcopy((data, self.errors, self.error_mappings))
 
     def _setAllData(self, data):
-        data, errors, error_mappings = data
-        self.data = {}
-        self.errors = {}
-        self.error_mappings = {}
-        for key, value in data.items():
-            self.data[key] = untieFromDatabase(value)
-        for key, value in errors.items():
-            self.errors[key] = untieFromDatabase(value)
-        for key, value in error_mappings.items():
-            self.error_mappings[key] = untieFromDatabase(value)
+        data, errors, error_mappings = deepcopy(data)
+        self.data = data
+        self.errors = errors
+        self.error_mappings = error_mappings
 
-    def _saveToSession(self, request):
+    def _saveToSession(self, request, formuid):
         """Save this datastructure into the session.
+
+        Uses ``formuid`` to identify the form.
         """
         if request is None:
             return
         data = self._getAllData()
-        request.SESSION[_SESSION_DATASTRUCTURE_KEY] = data
+        request.SESSION[_SESSION_DATASTRUCTURE_KEY] = formuid, data
 
-    def _loadFromSession(self, request):
+    def _loadFromSession(self, request, formuid):
         """Load this datastructure from the session.
+
+        Uses ``formuid`` to identify the form.
         """
         if request is None:
             return
@@ -200,10 +191,9 @@ class DataStructure(UserDict):
         # for a SESSION key.
         if not request.SESSION.has_key(_SESSION_DATASTRUCTURE_KEY):
             return
-        data = request.SESSION[_SESSION_DATASTRUCTURE_KEY]
-        if data is None:
+        dataformuid, data = request.SESSION[_SESSION_DATASTRUCTURE_KEY]
+        if dataformuid != formuid:
             return
-        # XXX should have some sanity checks about schemas etc.
         self._setAllData(data)
 
     def _removeFromSession(self, request):
