@@ -33,6 +33,7 @@ from Products.CPSUtil.file import persistentFixup
 from ZPublisher.HTTPRequest import FileUpload
 
 from Products.CPSSchemas.Widget import widgetname
+from Products.CPSUtil.session import sessionHasKey
 
 _SESSION_DATASTRUCTURE_KEY = 'CPS_DATASTRUCTURE'
 
@@ -181,12 +182,7 @@ class DataStructure(UserDict):
 
         Uses ``formuid`` to identify the form.
         """
-        if request is None:
-            return
-        # XXX don't create a new session if none is present,
-        # be more subtle by checking request._lazies and request.other
-        # for a SESSION key.
-        if not request.SESSION.has_key(_SESSION_DATASTRUCTURE_KEY):
+        if not sessionHasKey(request, _SESSION_DATASTRUCTURE_KEY):
             return
         dataformuid, data = request.SESSION[_SESSION_DATASTRUCTURE_KEY]
         if dataformuid != formuid:
@@ -196,12 +192,7 @@ class DataStructure(UserDict):
     def _removeFromSession(self, request):
         """Remove saved data for this datastructure from the session.
         """
-        if request is None:
-            return
-        # XXX don't create a new session if none is present,
-        # be more subtle by checking request._lazies and request.other
-        # for a SESSION key.
-        if not request.SESSION.has_key(_SESSION_DATASTRUCTURE_KEY):
+        if not sessionHasKey(request, _SESSION_DATASTRUCTURE_KEY):
             return
         del request.SESSION[_SESSION_DATASTRUCTURE_KEY]
 
