@@ -1843,7 +1843,6 @@ class CPSImageWidget(CPSFileWidget):
                               resample=PIL.Image.ANTIALIAS)
                 file.seek(0)
                 img.save(file, format=img.format)
-                file.close()
             except (NameError, IOError, ValueError, SystemError):
                 LOG('CPSImageWidget', PROBLEM,
                     "Failed to resize file %s keep original" \
