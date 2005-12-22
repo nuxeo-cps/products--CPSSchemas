@@ -57,7 +57,7 @@ oFCKeditor.Create();
           class="Button">
     Update
   </button>
-  <button type="button" onclick="window.close()" i18:translate="button_cancel"
+  <button type="button" onclick="window.close()" i18n:translate="button_cancel"
           class="Button">
     Cancel
   </button>
