@@ -36,7 +36,8 @@ from Products.CMFCore.utils import SimpleItemWithProperties, getToolByName
 from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
 from Products.CPSSchemas.VocabulariesTool import VocabularyTypeRegistry
 
-from IVocabulary import IVocabulary
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import ICPSVocabulary
 
 builtins_list = list
 
@@ -46,8 +47,6 @@ class Vocabulary(Persistent, Implicit):
 
     Base class for explicit vocabularies.
     """
-
-    __implements__ = IVocabulary
 
     security = ClassSecurityInfo()
 
@@ -212,14 +211,10 @@ InitializeClass(Vocabulary)
 
 
 class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
-    """Persistent Vocabulary.
-
-    XXX Why is this vocabulary said persistent whereas its "base" class already
-    is?
-    XXX Why isn't Vocabulary inherited?
+    """CPS Vocabulary.
     """
 
-    __implements__ = IVocabulary
+    implements(ICPSVocabulary)
 
     meta_type = "CPS Vocabulary"
 

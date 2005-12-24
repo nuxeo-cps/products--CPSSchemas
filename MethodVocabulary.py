@@ -30,6 +30,9 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 
 from Products.CPSSchemas.VocabulariesTool import VocabularyTypeRegistry
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import IPropertyVocabulary
+
 
 class MethodVocabulary(SimpleItemWithProperties):
     """Method Vocabulary
@@ -45,6 +48,7 @@ class MethodVocabulary(SimpleItemWithProperties):
     'key' argument
     """
 
+    implements(IPropertyVocabulary)
     meta_type = "CPS Method Vocabulary"
 
     security = ClassSecurityInfo()

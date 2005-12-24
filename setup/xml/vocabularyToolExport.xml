@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<vocabulary-tool xmlns:tal="http://xml.zope.org/namespaces/tal">
-  <vocabulary id="VOCABULARY_ID"
-              tal:repeat="info here/getVocabularyToolInfo"
-              tal:attributes="id info/id;
-                              filename info/filename | default;
-                              " />
-</vocabulary-tool>

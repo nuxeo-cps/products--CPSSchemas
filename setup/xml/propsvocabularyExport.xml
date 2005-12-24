@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<vocabulary type="TYPE"
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    tal:attributes="type here/getType"
-    >
-  <property tal:replace="structure here/getVocabularyPropsXML"/>
-</vocabulary>

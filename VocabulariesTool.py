@@ -21,12 +21,18 @@
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
+from OFS.ObjectManager import IFAwareObjectManager
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.permissions import ManagePortal, View
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import IVocabularyTool
+from Products.CPSSchemas.interfaces import IVocabulary
+
+
 LOCAL_VOCABULARY_CONTAINER_ID = '.cps_vocabularies'
 
-class VocabulariesTool(UniqueObject, Folder):
+class VocabulariesTool(UniqueObject, IFAwareObjectManager, Folder):
     """Vocabularies Tool
 
     The Vocabularies Tool stores the definition of vocabularies.
@@ -34,45 +40,13 @@ class VocabulariesTool(UniqueObject, Folder):
     values and their human-readable couterpart (maybe internationalized).
     """
 
+    implements(IVocabularyTool)
+
     id = 'portal_vocabularies'
     meta_type = 'CPS Vocabularies Tool'
+    _product_interfaces = (IVocabulary,)
 
     security = ClassSecurityInfo()
-
-    #
-    # ZMI
-    #
-
-    def all_meta_types(self):
-        # Stripping is done to be able to pass a type in the URL.
-        return [
-            {'name': dt,
-             'action': 'manage_addCPSVocabularyForm/' + dt.replace(' ', ''),
-             'permission': ManagePortal}
-            for dt in VocabularyTypeRegistry.listTypes()]
-
-    security.declareProtected(ManagePortal, 'manage_addCPSVocabularyForm')
-    manage_addCPSVocabularyForm = DTMLFile('zmi/vocabulary_addform', globals())
-
-    security.declareProtected(ManagePortal, 'manage_addCPSVocabulary')
-    def manage_addCPSVocabulary(self, id, meta_type='CPS Vocabulary',
-                                REQUEST=None, **kw):
-        """Add a vocabulary, called from the ZMI."""
-        container = self
-        cls = VocabularyTypeRegistry.getType(meta_type)
-        ob = cls(id, **kw)
-        container._setObject(id, ob)
-        ob = container._getOb(id)
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(ob.absolute_url()+'/manage_workspace'
-                                      '?manage_tabs_message=Added.')
-        else:
-            return ob
-
-    security.declareProtected(ManagePortal, 'getVocabularyMetaType')
-    def getVocabularyMetaType(self, meta_type):
-        """Get an unstripped version of a vocabulary meta type."""
-        return VocabularyTypeRegistry.getType(meta_type).meta_type
 
     security.declareProtected(View, 'getVocabularyFor')
     def getVocabularyFor(self, context, voc_id):
@@ -103,6 +77,17 @@ class VocabulariesTool(UniqueObject, Folder):
             return globvoc
         else:
             return getLocalVocContainer(context).getVocabulary(voc_id)
+
+    # BBB for old installers/importers, will be removed in CPS 3.5
+    security.declarePrivate('manage_addCPSVocabulary')
+    def manage_addCPSVocabulary(self, id, meta_type='CPS Vocabulary', **kw):
+        import Products
+        for mt in Products.meta_types:
+            if mt['name'] == meta_type:
+                klass = mt['instance']
+                self._setObject(id, klass(id, **kw))
+                return self._getOb(id)
+        raise ValueError("Unknown meta_type %r" % meta_type)
 
 InitializeClass(VocabulariesTool)
 
