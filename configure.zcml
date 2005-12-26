@@ -1,68 +1,7 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:five="http://namespaces.zope.org/five">
+    xmlns="http://namespaces.zope.org/zope">
 
-  <adapter
-      factory=".exportimport.vocabulary.VocabularyToolXMLAdapter"
-      provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.IVocabularyTool
-           Products.GenericSetup.interfaces.ISetupEnviron"
-      />
-
-  <adapter
-      factory=".exportimport.vocabulary.PropertyVocabularyXMLAdapter"
-      provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.IPropertyVocabulary
-           Products.GenericSetup.interfaces.ISetupEnviron"
-      />
-
-  <adapter
-      factory=".exportimport.vocabulary.CPSVocabularyXMLAdapter"
-      provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.ICPSVocabulary
-           Products.GenericSetup.interfaces.ISetupEnviron"
-      />
-
-  <five:registerClass
-      class=".Vocabulary.CPSVocabulary"
-      meta_type="CPS Vocabulary"
-      addview="addCPSVocabulary.html"
-      permission="cmf.ManagePortal"
-      global="False"
-      />
-
-  <five:registerClass
-      class=".MethodVocabulary.MethodVocabulary"
-      meta_type="CPS Method Vocabulary"
-      addview="addMethodVocabulary.html"
-      permission="cmf.ManagePortal"
-      global="False"
-      />
-
-  <!-- add views -->
-
-  <five:traversable
-      class="Products.CPSSchemas.VocabulariesTool.VocabulariesTool"/>
-
-  <configure package="Products.GenericSetup.browser">
-
-    <browser:page
-        for="zope.app.container.interfaces.IAdding"
-        name="addCPSVocabulary.html"
-        template="addWithPresettings.pt"
-        class="Products.CPSSchemas.browser.CPSVocabularyAddView"
-        permission="cmf.ManagePortal"
-        />
-
-    <browser:page
-        for="zope.app.container.interfaces.IAdding"
-        name="addMethodVocabulary.html"
-        template="addWithPresettings.pt"
-        class="Products.CPSSchemas.browser.MethodVocabularyAddView"
-        permission="cmf.ManagePortal"
-        />
-
-  </configure>
+  <include file="schema.zcml" />
+  <include file="vocabulary.zcml" />
 
 </configure>

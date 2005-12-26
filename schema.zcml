@@ -1,0 +1,57 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+  <adapter
+      factory=".exportimport.schema.SchemaToolXMLAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for="Products.CPSSchemas.interfaces.ISchemaTool
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+  <adapter
+      factory=".exportimport.schema.SchemaXMLAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for="Products.CPSSchemas.interfaces.ISchema
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+  <adapter
+      factory=".exportimport.schema.FieldXMLAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for="Products.CPSSchemas.interfaces.IField
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+
+  <five:traversable
+      class="Products.CPSSchemas.SchemasTool.SchemasTool"/>
+  <five:traversable
+      class="Products.CPSSchemas.Schema.CPSSchema"/>
+
+  <configure package="Products.GenericSetup.browser">
+
+    <browser:page
+        for="zope.app.container.interfaces.IAdding"
+        name="addCPSSchema.html"
+        template="addWithPresettings.pt"
+        class="Products.CPSSchemas.browser.CPSSchemaAddView"
+        permission="cmf.ManagePortal"
+        />
+
+  </configure>
+
+  <!-- class registration -->
+
+  <five:registerClass
+      class=".Schema.CPSSchema"
+      meta_type="CPS Schema"
+      addview="addCPSSchema.html"
+      permission="cmf.ManagePortal"
+      global="False"
+      />
+
+  <!-- field classes are registered by code -->
+
+</configure>

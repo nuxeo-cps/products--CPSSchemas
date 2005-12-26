@@ -35,6 +35,7 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 from Products.CMFCore.permissions import View
+from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 
@@ -44,6 +45,10 @@ from Products.CPSSchemas.DataModel import ReadAccessError
 from Products.CPSSchemas.DataModel import WriteAccessError
 from Products.CPSSchemas.DataModel import ValidationError # used by cpsdir
 from Products.CPSSchemas.FieldNamespace import fieldStorageNamespace
+
+from zope.interface import implements
+from zope.interface import implementedBy
+from Products.CPSSchemas.interfaces import IField
 
 
 class Field(PropertiesPostProcessor, SimpleItemWithProperties):
@@ -381,7 +386,9 @@ InitializeClass(Field)
 
 
 class CPSField(Field):
-    """Persistent Field."""
+    """CPS Field."""
+
+    implements(IField)
 
     meta_type = "CPS Field"
 
@@ -425,6 +432,18 @@ class FieldRegistry:
         # Avoid duplicate registrations during convoluted imports
         self._field_types.append(field_type)
         self._field_classes[field_type] = cls
+
+        # Five-like registration, will move to ZCML later
+        import Products
+        info = {'name': cls.meta_type,
+                'action': '', # addview and ('+/%s' % addview) or '',
+                'product': 'CPSSchemas', # Five
+                'permission': ManagePortal,
+                'visibility': None,
+                'interfaces': tuple(implementedBy(cls)),
+                'instance': cls,
+                'container_filter': None}
+        Products.meta_types += (info,)
 
     def listFieldTypes(self):
         """Return the list of field types."""

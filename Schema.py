@@ -33,6 +33,9 @@ from Products.CMFCore.permissions import ManagePortal
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.Field import FieldRegistry
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import ISchema
+
 
 class SchemaContainer(Folder):
     """Schema Container
@@ -80,8 +83,9 @@ InitializeClass(SchemaContainer)
 
 
 class CPSSchema(FolderWithPrefixedIds):
-    # XXX: the Schema class is already persistent.
-    """Persistent Schema."""
+    """CPS Schema."""
+
+    implements(ISchema)
 
     meta_type = "CPS Schema"
     prefix = 'f__'

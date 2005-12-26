@@ -26,6 +26,9 @@ from Products.CMFCore.utils import UniqueObject
 
 from Products.CPSSchemas.Schema import SchemaContainer
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import ISchemaTool
+
 
 class SchemasTool(UniqueObject, SchemaContainer):
     """Schemas Tool
@@ -33,6 +36,8 @@ class SchemasTool(UniqueObject, SchemaContainer):
     The Schemas Tool stores the definition of standard schemas.
     A schema describes a set of fields that can store data.
     """
+
+    implements(ISchemaTool)
 
     id = 'portal_schemas'
     meta_type = 'CPS Schemas Tool'

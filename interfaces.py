@@ -22,6 +22,19 @@
 from zope.interface import Interface
 
 
+class ISchemaTool(Interface):
+    """Schema Tool.
+    """
+
+class ISchema(Interface):
+    """Schema.
+    """
+
+class IField(Interface):
+    """Field.
+    """
+
+
 class IVocabularyTool(Interface):
     """Vocabulary Tool.
     """

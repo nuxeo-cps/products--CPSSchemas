@@ -21,9 +21,7 @@ import unittest
 #from CPSSchemasTestCase import CPSSchemasTestCase
 
 from OFS.Folder import Folder
-from Interface.Verify import verifyClass
 from Products.CPSSchemas import Vocabulary
-from Products.CPSSchemas.IVocabulary import IVocabulary
 
 
 class BasicVocabularyTests(unittest.TestCase):
@@ -33,7 +31,8 @@ class BasicVocabularyTests(unittest.TestCase):
             'the_id', (('foo', 'F'), ('bar', 'B'), ('meuh', 'M')))
 
     def testInterface(self):
-        verifyClass(IVocabulary, Vocabulary.Vocabulary)
+        from zope.interface.verify import verifyClass
+        from Products.CPSSchemas.interfaces import IVocabulary
         verifyClass(IVocabulary, Vocabulary.CPSVocabulary)
 
 

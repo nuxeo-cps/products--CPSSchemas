@@ -18,8 +18,17 @@
 # $Id$
 
 from Products.CPSUtil.browser import BaseAddView
+from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.Vocabulary import CPSVocabulary
 from Products.CPSSchemas.MethodVocabulary import MethodVocabulary
+
+
+class CPSSchemaAddView(BaseAddView):
+    """Add view for a CPSSchema.
+    """
+    _dir_name = 'schemas'
+    description = u"A schema describes information organisation."
+    klass = CPSSchema
 
 
 class BaseVocabularyAddView(BaseAddView):
@@ -27,7 +36,6 @@ class BaseVocabularyAddView(BaseAddView):
     """
     _dir_name = 'vocabularies'
     description = u"A directory holds tabular information."
-
 
 class CPSVocabularyAddView(BaseVocabularyAddView):
     """Add view for CPSVocabularyAddView."""
