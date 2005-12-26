@@ -13,6 +13,7 @@ class FakeRequest(dict):
     def __init__(self, d={}):
         self.update(d)
         self.SESSION = {}
+        self.other = {'SESSION': self.SESSION}
 
 class TestDataStructure(unittest.TestCase):
     """Tests the DataStructure
