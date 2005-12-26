@@ -33,12 +33,17 @@ from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.StorageAdapter import MappingStorageAdapter
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import ILayoutTool
+
 
 class LayoutsTool(UniqueObject, LayoutContainer):
     """Layouts Tool
 
     Stores persistent layout objects.
     """
+
+    implements(ILayoutTool)
 
     id = 'portal_layouts'
     meta_type = 'CPS Layouts Tool'

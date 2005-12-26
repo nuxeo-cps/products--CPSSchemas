@@ -42,6 +42,10 @@ from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.DataModel import ReadAccessError
 from Products.CPSSchemas.Widget import widgetRegistry
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import ILayout
+
+
 class LayoutContainer(Folder):
     """Layout Tool
 
@@ -455,6 +459,8 @@ InitializeClass(Layout)
 
 class CPSLayout(Layout):
     """Persistent Layout."""
+
+    implements(ILayout)
 
     meta_type = "CPS Layout"
 

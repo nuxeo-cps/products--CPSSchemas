@@ -35,11 +35,17 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.Expression import Expression, getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 
 from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
 from Products.CPSSchemas.DataModel import WriteAccessError
+
+from zope.interface import implements
+from zope.interface import implementedBy
+from Products.CPSSchemas.interfaces import IWidget
+
 
 def widgetname(id):
     """Return the name of the widget as used in HTML forms."""
@@ -353,6 +359,8 @@ InitializeClass(Widget)
 class CPSWidget(Widget):
     """Persistent Widget."""
 
+    implements(IWidget)
+
     meta_type = "CPS Widget"
 
     security = ClassSecurityInfo()
@@ -406,6 +414,18 @@ class WidgetRegistry:
         self._widget_meta_types.append(meta_type)
         self._widget_classes[meta_type] = class_
         self.BBB_register_widget_type(class_)
+
+        # Five-like registration, will move to ZCML later
+        import Products
+        info = {'name': meta_type,
+                'action': '',
+                'product': 'CPSSchemas',
+                'permission': ManagePortal,
+                'visibility': None,
+                'interfaces': tuple(implementedBy(class_)),
+                'instance': class_,
+                'container_filter': None}
+        Products.meta_types += (info,)
 
     def listWidgetMetaTypes(self):
         """Return the list of widget meta types.

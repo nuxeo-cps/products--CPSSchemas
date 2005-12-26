@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<schema-tool xmlns:tal="http://xml.zope.org/namespaces/tal">
-  <schema id="SCHEMA_ID"
-          tal:repeat="info here/getSchemaToolInfo"
-          tal:attributes="id info/id;
-                          filename info/filename | default;
-                          " />
-</schema-tool>

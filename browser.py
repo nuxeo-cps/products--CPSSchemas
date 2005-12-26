@@ -18,7 +18,9 @@
 # $Id$
 
 from Products.CPSUtil.browser import BaseAddView
+
 from Products.CPSSchemas.Schema import CPSSchema
+from Products.CPSSchemas.Layout import CPSLayout
 from Products.CPSSchemas.Vocabulary import CPSVocabulary
 from Products.CPSSchemas.MethodVocabulary import MethodVocabulary
 
@@ -29,6 +31,14 @@ class CPSSchemaAddView(BaseAddView):
     _dir_name = 'schemas'
     description = u"A schema describes information organisation."
     klass = CPSSchema
+
+
+class CPSLayoutAddView(BaseAddView):
+    """Add view for a CPSLayout.
+    """
+    _dir_name = 'layouts'
+    description = u"A layout describes information organisation."
+    klass = CPSLayout
 
 
 class BaseVocabularyAddView(BaseAddView):

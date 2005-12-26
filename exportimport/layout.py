@@ -16,7 +16,7 @@
 # 02111-1307, USA.
 #
 # $Id$
-"""Schema Tool XML Adapter.
+"""Layout Tool XML Adapter.
 """
 
 from Acquisition import aq_base
@@ -37,18 +37,18 @@ from Products.GenericSetup.interfaces import INode
 from Products.GenericSetup.interfaces import IBody
 from Products.GenericSetup.interfaces import ISetupEnviron
 
-from Products.CPSSchemas.interfaces import ISchemaTool
-from Products.CPSSchemas.interfaces import ISchema
-from Products.CPSSchemas.interfaces import IField
+from Products.CPSSchemas.interfaces import ILayoutTool
+from Products.CPSSchemas.interfaces import ILayout
+from Products.CPSSchemas.interfaces import IWidget
 
 
 _marker = object()
 
-TOOL = 'portal_schemas'
-NAME = 'schemas'
+TOOL = 'portal_layouts'
+NAME = 'layouts'
 
-def exportSchemaTool(context):
-    """Export Schema tool, schemas and fields as a set of XML files.
+def exportLayoutTool(context):
+    """Export Layout tool, layouts and widgets as a set of XML files.
     """
     site = context.getSite()
     tool = getToolByName(site, TOOL, None)
@@ -58,20 +58,19 @@ def exportSchemaTool(context):
         return
     exportObjects(tool, '', context)
 
-def importSchemaTool(context):
-    """Import Schema tool, schemas and fields from XML files.
+def importLayoutTool(context):
+    """Import Layout tool, layouts and widgets from XML files.
     """
     site = context.getSite()
     tool = getToolByName(site, TOOL)
     importObjects(tool, '', context)
 
-
-class SchemaToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers,
+class LayoutToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers,
                            PropertyManagerHelpers):
-    """XML importer and exporter for Schema tool.
+    """XML importer and exporter for Layout tool.
     """
 
-    adapts(ISchemaTool, ISetupEnviron)
+    adapts(ILayoutTool, ISetupEnviron)
     implements(IBody)
 
     _LOGGER_ID = NAME
@@ -82,8 +81,8 @@ class SchemaToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers,
         """
         node = self._getObjectNode('object')
         node.appendChild(self._extractProperties())
-        node.appendChild(self._extractSchemas())
-        self._logger.info("Schema tool exported.")
+        node.appendChild(self._extractLayouts())
+        self._logger.info("Layout tool exported.")
         return node
 
     def _importNode(self, node):
@@ -91,37 +90,36 @@ class SchemaToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers,
         """
         if self.environ.shouldPurge():
             self._purgeProperties()
-            self._purgeSchemas()
+            self._purgeLayouts()
         self._initProperties(node)
-        self._initSchemas(node)
-        self._logger.info("Schema tool imported.")
+        self._initLayouts(node)
+        self._logger.info("Layout tool imported.")
 
     node = property(_exportNode, _importNode)
 
-    def _extractSchemas(self):
+    def _extractLayouts(self):
         fragment = self._doc.createDocumentFragment()
         items = self.context.objectItems()
         items.sort()
         for id, ob in items:
             exporter = zapi.queryMultiAdapter((ob, self.environ), INode)
             if not exporter:
-                raise ValueError("Schema %s cannot be adapted to INode" % ob)
+                raise ValueError("Layout %s cannot be adapted to INode" % ob)
             child = exporter._getObjectNode('object', False)
             fragment.appendChild(child)
         return fragment
 
-    def _purgeSchemas(self):
+    def _purgeLayouts(self):
         self._purgeObjects()
 
-    def _initSchemas(self, node):
+    def _initLayouts(self, node):
         self._initObjects(node)
 
-
-class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
-    """XML importer and exporter for a schema.
+class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
+    """XML importer and exporter for a layout.
     """
 
-    adapts(ISchema, ISetupEnviron)
+    adapts(ILayout, ISetupEnviron)
     implements(IBody)
 
     _LOGGER_ID = NAME
@@ -130,44 +128,51 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         """Export the object as a DOM node.
         """
         node = self._getObjectNode('object')
-        node.appendChild(self._extractFields())
-        self._logger.info("%s schema exported." % self.context.getId())
+        node.appendChild(self._extractProperties())
+        node.appendChild(self._extractWidgets())
+        node.appendChild(self._extractTable())
+        self._logger.info("%s layout exported." % self.context.getId())
         return node
 
     def _importNode(self, node):
         """Import the object from the DOM node.
         """
         if self.environ.shouldPurge():
-            self._purgeFields()
-        self._initFields(node)
-        self._logger.info("%s schema imported." % self.context.getId())
+            self._purgeProperties()
+            self._purgeWidgets()
+            self._purgeTable()
+        self._initProperties(node)
+        self._initWidgets(node)
+        self._initTable(node)
+        self._logger.info("%s layout imported." % self.context.getId())
 
     node = property(_exportNode, _importNode)
 
-    def _extractFields(self):
-        schema = self.context
+    def _extractWidgets(self):
+        layout = self.context
         fragment = self._doc.createDocumentFragment()
-        items = schema.items()
+        items = layout.items()
         items.sort()
-        for field_id, field in items:
-            exporter = zapi.queryMultiAdapter((field, self.environ), INode)
+        for widget_id, widget in items:
+            exporter = zapi.queryMultiAdapter((widget, self.environ), INode)
             if not exporter:
-                raise ValueError("Field %s cannot be adapted to INode" % field)
+                raise ValueError("Widget %s cannot be adapted to INode" %
+                                 widget)
             child = exporter.node
             fragment.appendChild(child)
         return fragment
 
-    def _purgeFields(self):
-        schema = self.context
-        for id in list(schema.objectIds()):
-            schema._delObject(id)
+    def _purgeWidgets(self):
+        layout = self.context
+        for id in list(layout.objectIds()):
+            layout._delObject(id)
 
-    def _initFields(self, node):
-        schema = self.context
+    def _initWidgets(self, node):
+        layout = self.context
         for child in node.childNodes:
-            if child.nodeName != 'field':
+            if child.nodeName != 'widget':
                 continue
-            field_id = str(child.getAttribute('name'))
+            widget_id = str(child.getAttribute('name'))
             meta_type = str(child.getAttribute('meta_type'))
             for mt in Products.meta_types:
                 if mt['name'] == meta_type:
@@ -176,21 +181,63 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
                 raise ValueError("Unknown meta_type %r" % meta_type)
 
             klass = mt['instance']
-            field = klass(field_id)
-            field = schema.addSubObject(field)
+            widget = klass(widget_id)
+            widget = layout.addSubObject(widget)
 
-            importer = zapi.queryMultiAdapter((field, self.environ), INode)
+            importer = zapi.queryMultiAdapter((widget, self.environ), INode)
             if not importer:
-                raise ValueError("Field %s cannot be adapted to INode" % field)
+                raise ValueError("Widget %s cannot be adapted to INode" %
+                                 widget)
 
             importer.node = child # calls _importNode
 
+    def _extractTable(self):
+        layout = self.context
+        layoutdef = layout.getLayoutDefinition()
+        table_node = self._doc.createElement('table')
+        for row in layoutdef['rows']:
+            row_node = self._doc.createElement('row')
+            table_node.appendChild(row_node)
+            for cell in row:
+                cell_node = self._doc.createElement('cell')
+                cell_node.setAttribute('name', cell['widget_id'])
+                ncols = cell.get('ncols', 1)
+                if ncols != 1:
+                    cell_node.setAttribute('ncols', str(ncols))
+                row_node.appendChild(cell_node)
+        return table_node
 
-class FieldXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
-    """XML importer and exporter for a field.
+    def _purgeTable(self):
+        self.context.setLayoutDefinition({'rows': []})
+
+    def _initTable(self, node):
+        rows = []
+        for table_node in node.childNodes:
+            if table_node.nodeName != 'table':
+                continue
+            for row_node in table_node.childNodes:
+                if row_node.nodeName != 'row':
+                    continue
+                row = []
+                for cell_node in row_node.childNodes:
+                    if cell_node.nodeName != 'cell':
+                        continue
+                    name = str(cell_node.getAttribute('name'))
+                    cell = {'widget_id': name}
+                    if cell_node.hasAttribute('ncols'):
+                        ncols = int(cell_node.getAttribute('ncols'))
+                        cell['ncols'] = ncols
+                    row.append(cell)
+                rows.append(row)
+            break
+        self.context.setLayoutDefinition({'rows': rows})
+
+
+class WidgetXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
+    """XML importer and exporter for a widget.
     """
 
-    adapts(IField, ISetupEnviron)
+    adapts(IWidget, ISetupEnviron)
     implements(IBody)
 
     _LOGGER_ID = NAME
@@ -198,11 +245,11 @@ class FieldXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
     def _exportNode(self):
         """Export the object as a DOM node.
         """
-        name = self.context.getFieldId()
-        node = self._getObjectNode('field')
+        name = self.context.getWidgetId()
+        node = self._getObjectNode('widget')
         node.setAttribute('name', name)
         node.appendChild(self._extractProperties(skip_defaults=True))
-        self._logger.info("  %s field exported." % name)
+        self._logger.info("  %s widget exported." % name)
         return node
 
     def _importNode(self, node):
@@ -211,7 +258,7 @@ class FieldXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         if self.environ.shouldPurge():
             self._purgeProperties()
         self._initProperties(node)
-        self._logger.info("  %s field imported." % self.context.getFieldId())
+        self._logger.info("  %s widget imported." % self.context.getWidgetId())
 
     node = property(_exportNode, _importNode)
 

@@ -35,6 +35,19 @@ class IField(Interface):
     """
 
 
+class ILayoutTool(Interface):
+    """Layout Tool.
+    """
+
+class ILayout(Interface):
+    """Layout.
+    """
+
+class IWidget(Interface):
+    """Widget.
+    """
+
+
 class IVocabularyTool(Interface):
     """Vocabulary Tool.
     """
