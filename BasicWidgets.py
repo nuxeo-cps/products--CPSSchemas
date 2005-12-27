@@ -1177,9 +1177,9 @@ class CPSIntWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'is_limited', 'type': 'boolean', 'mode': 'w',
          'label': 'Value must be in range'},
-        {'id': 'min_value', 'type': 'float', 'mode': 'w',
+        {'id': 'min_value', 'type': 'int', 'mode': 'w',
          'label': 'Range minimum value'},
-        {'id': 'max_value', 'type': 'float', 'mode': 'w',
+        {'id': 'max_value', 'type': 'int', 'mode': 'w',
          'label': 'Range maximum value'},
         {'id': 'thousands_separator', 'type': 'string', 'mode': 'w',
          'label': 'Thousands separator'},
