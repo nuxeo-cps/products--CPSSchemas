@@ -34,7 +34,9 @@ from OFS.Image import cookId, File, Image
 import os.path
 from zLOG import LOG, DEBUG, TRACE
 from zipfile import ZipFile, BadZipfile
-from Products.PythonScripts.standard import structured_text, newline_to_br
+from Products.PythonScripts.standard import newline_to_br
+from Products.PythonScripts.standard import structured_text
+from reStructuredText import HTML
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.file import makeFileUploadFromOFSFile
 from Products.CPSSchemas.Widget import CPSWidget
@@ -83,8 +85,7 @@ class CPSTextWidget(CPSStringWidget):
         )
     all_configurable = ['nothing', 'position', 'format', 'position and format']
     all_render_positions = ['normal', 'col_left', 'col_right']
-    all_render_formats = ['text', 'stx', 'html'] # remove 'pre' as we do the
-                                                 # same using text
+    all_render_formats = ['text', 'html', 'rst']
 
     width = 40
     height = 5
@@ -93,6 +94,8 @@ class CPSTextWidget(CPSStringWidget):
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
     configurable = 'nothing'
+    input_encoding = 'iso-8859-15'
+    output_encoding = 'iso-8859-15'
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -176,14 +179,23 @@ class CPSTextWidget(CPSStringWidget):
         rposition = datastructure[widget_id + '_rposition']
         rformat = datastructure[widget_id + '_rformat']
         if mode == 'view':
-            if rformat == 'pre':
-                value = '<pre>' + escape(value) + '</pre>'
-            elif rformat == 'stx':
-                value = structured_text(value)
-            elif rformat == 'text':
+            if rformat == 'text':
                 value = newline_to_br(escape(value))
             elif rformat == 'html':
                 pass
+            elif rformat == 'rst':
+                value = HTML(value,
+                             output_encoding=self.output_encoding,
+                             input_encoding=self.input_encoding,
+                             initial_header_level=2, report_level=0)
+            # The pre render format is not a proposed choice in the UI anymore.
+            # BBB compatibility code, will be removed in CPS 3.5.0.
+            elif rformat == 'pre':
+                value = '<pre>' + escape(value) + '</pre>'
+            # The stx render format is not a proposed choice in the UI anymore.
+            # BBB compatibility code, will be removed in CPS 3.5.0.
+            elif rformat == 'stx':
+                value = structured_text(value)
             else:
                 RuntimeError("unknown render_format '%s' for '%s'" %
                              (rformat, self.getId()))

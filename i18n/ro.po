@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-15 20:09default\n"
+"POT-Creation-Date: 2005-12-28 17:46default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -19,13 +19,20 @@ msgstr ""
 "Language-Name: Romanian\n"
 "Domain: default\n"
 
-#.   <option attributes="value op/id" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#.   <option attributes="value op/id;
+#.                   selected python: op['size'] and (op['size'][0]==image_width
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
 #.   <option attributes="value op/id;
 #.                 selected python: op['size'] and (op['size'][0]==image_width
 #.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "<span replace=\"op/id\" /> ${dim}"
+msgstr ""
+
+#.   <h1 content="label_edit">Edit</h1>
+#: from ../skins/cps_schemas/popup_fckeditor_form.pt
+msgid "Edit"
 msgstr ""
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
@@ -38,13 +45,13 @@ msgstr "Fals"
 msgid "True"
 msgstr "Adevarat"
 
-#.   <button attributes="
+#.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           " type="button">Layout</button>
+#.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -59,11 +66,11 @@ msgstr "la"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
+#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
-#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -71,7 +78,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(previzualizare)"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -112,7 +119,7 @@ msgstr "Schimba"
 msgid "cpsschemas_label_file_delete"
 msgstr "Sterge"
 
-#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -241,7 +248,7 @@ msgid "description_vocabulary_manage_form"
 msgstr ""
 "Aceasta pagina iti permite sa administrezi vocabularele si intrarile lor."
 
-#.   <em content="err" style="color: red">err</em>
+#.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -436,6 +443,10 @@ msgstr "Text"
 
 msgid "cpsschemas_rformat_html"
 msgstr "HTML"
+
+#, fuzzy
+msgid "cpsschemas_rformat_rst"
+msgstr "Texte structuré (reST)"
 
 msgid "cpsschemas_rformat_stx"
 msgstr "Text Zope structurat"

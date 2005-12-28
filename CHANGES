@@ -17,6 +17,7 @@ Bug fixes:
 - #1145: Made photo widget more robust.
 - #1188: Fixed boolean widget in checkbox mode.
 - Made the BooleanWidget return int values instead of string values.
+- Fixed #616: Moving Text Widget to restructured text.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration

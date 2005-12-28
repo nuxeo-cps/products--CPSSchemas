@@ -157,6 +157,9 @@ msgstr ""
 msgid "cpsschemas_rformat_html"
 msgstr ""
 
+msgid "cpsschemas_rformat_rst"
+msgstr ""
+
 msgid "cpsschemas_rformat_stx"
 msgstr ""
 
