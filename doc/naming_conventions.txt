@@ -1,0 +1,69 @@
+================================================
+Vocabulary, schema and layout naming conventions
+================================================
+
+:Revision: $Id$
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+
+Rationale
+=========
+
+It is important that the all the vocabularies, schemas and layouts follow the
+same naming conventions so that CPS and projects based on it have consistent
+code. That makes code more easily understandable.
+
+In a CPS portal the vocabularies, schemas and layouts can respectively be found
+in the portal_vocabularies, portal_schemas and portal_layouts tools.
+
+
+Naming conventions
+==================
+
+Vocabularies
+------------
+
+Vocabulary names should all be lowercase letters with the separator "_" between
+words.
+
+Vocabulary names should not end with any suffix. For example don't put "_voc" or
+"_vocabulary" at the end of your vocabulary names. The fact that they are
+vocabularies is enough to distinguish them since we all retrieve them from
+the portal_vocabularies tool.
+
+At the time of this writing, the vocabulary names in portal_vocabularies are
+not yet consistent between each other and with the naming conventions. This will
+eventually be fixed cf. #700.
+
+Schemas
+-------
+
+Schema names should all be lowercase letters with the separator "_" between
+words.
+
+Schema names should not end with any suffix. For example don't put "_sch" or
+"_schema" at the end of your schema names.  The fact that they are schemas is
+enough to distinguish them since we all retrieve them from the portal_schemas
+tool.
+
+Layouts
+-------
+
+Layout names should all be lowercase letters with the separator "_" between
+words.
+
+Layout names should not end with any suffix. For example don't put "_lay" or
+"_layout" at the end of your schema names. The fact that they are layout is
+enough to distinguish them since we all retrieve them from the portal_layouts
+tool.
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
+
