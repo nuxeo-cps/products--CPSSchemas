@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 12:42default\n"
+"POT-Creation-Date: 2005-12-30 18:26default\n"
 "PO-Revision-Date: 2005-12-19 15:14-0200\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portugues do Brasil <pt@li.org>\n"
@@ -446,12 +446,6 @@ msgstr "HTML"
 #, fuzzy
 msgid "cpsschemas_rformat_rst"
 msgstr "Structured Text (reST)"
-
-msgid "cpsschemas_rformat_stx"
-msgstr "Texto Estruturado Zope"
-
-msgid "cpsschemas_rformat_pre"
-msgstr "HTML preformatado"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Original"

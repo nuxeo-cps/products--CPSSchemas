@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas Italian Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 12:42default\n"
+"POT-Creation-Date: 2005-12-30 18:26default\n"
 "PO-Revision-Date: 2005-11-10 09:13+0100\n"
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
@@ -448,12 +448,6 @@ msgstr "HTML"
 msgid "cpsschemas_rformat_rst"
 msgstr "Texte structuré (reST)"
 
-msgid "cpsschemas_rformat_stx"
-msgstr "Testo strutturato Zope"
-
-msgid "cpsschemas_rformat_pre"
-msgstr "HTML preformattato"
-
 msgid "cpsschemas_rformat_original"
 msgstr "Originale"
 
@@ -598,6 +592,3 @@ msgstr "modifica online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Modifica animazione Flash"
-
-msgid "button_back"
-msgstr "Retour"

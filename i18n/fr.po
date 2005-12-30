@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 12:42default\n"
+"POT-Creation-Date: 2005-12-30 18:26default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -452,12 +452,6 @@ msgstr "HTML"
 msgid "cpsschemas_rformat_rst"
 msgstr "Texte structuré (reST)"
 
-msgid "cpsschemas_rformat_stx"
-msgstr "Texte structuré Zope"
-
-msgid "cpsschemas_rformat_pre"
-msgstr "HTML préformaté"
-
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
 
@@ -602,6 +596,3 @@ msgstr "Modifier en ligne"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animation Flash (swf)"
-
-#~ msgid "button_back"
-#~ msgstr "Retour"

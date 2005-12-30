@@ -160,12 +160,6 @@ msgstr ""
 msgid "cpsschemas_rformat_rst"
 msgstr ""
 
-msgid "cpsschemas_rformat_stx"
-msgstr ""
-
-msgid "cpsschemas_rformat_pre"
-msgstr ""
-
 msgid "cpsschemas_rformat_original"
 msgstr ""
 

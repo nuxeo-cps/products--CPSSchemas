@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-12-30 12:42default\n"
+"POT-Creation-Date: 2005-12-30 18:26default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -432,12 +432,6 @@ msgid "cpsschemas_rformat_html"
 msgstr ""
 
 msgid "cpsschemas_rformat_rst"
-msgstr ""
-
-msgid "cpsschemas_rformat_stx"
-msgstr ""
-
-msgid "cpsschemas_rformat_pre"
 msgstr ""
 
 msgid "cpsschemas_rformat_original"

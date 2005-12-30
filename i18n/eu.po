@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas_en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 12:42default\n"
+"POT-Creation-Date: 2005-12-30 18:26default\n"
 "PO-Revision-Date: 2004-10-04 16:59+0100\n"
 "Last-Translator:  <>\n"
 "Language-Team: Euskara <eu@li.org>\n"
@@ -475,13 +475,6 @@ msgstr "HTML"
 msgid "cpsschemas_rformat_rst"
 msgstr "Structured Text (reST)"
 
-msgid "cpsschemas_rformat_stx"
-msgstr "Testu Egituratua"
-
-#, fuzzy
-msgid "cpsschemas_rformat_pre"
-msgstr "HTML preformateado"
-
 msgid "cpsschemas_rformat_original"
 msgstr "Jatorrizkoa"
 
@@ -654,5 +647,5 @@ msgstr ""
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
 
-msgid "cpsschemas_search_language_or"
-msgstr "o"
+#~ msgid "cpsschemas_search_language_or"
+#~ msgstr "o"
