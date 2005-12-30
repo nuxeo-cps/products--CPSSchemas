@@ -38,3 +38,4 @@ New internal features:
 - Long Field and Long Widget are deprecated. Use the Int equivalents.
 - Float Widget's default decimal separator is now '.'
 - Added getReadableFieldIds method to storage adapters.
+- CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.

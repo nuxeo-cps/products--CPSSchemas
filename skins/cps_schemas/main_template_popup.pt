@@ -28,7 +28,7 @@
     /></metal:block></metal:block>
   <metal:block fill-slot="head_slot"><metal:block define-slot="head_slot"
     /></metal:block>
-  <metal:block fill-slot="css_slot"><metal:block define-slot="css_slot"
+  <metal:block fill-slot="style_slot"><metal:block define-slot="style_slot"
     /></metal:block>
   <metal:block fill-slot="javascript_head_slot"><metal:block
     define-slot="javascript_head_slot"
