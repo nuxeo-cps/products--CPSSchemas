@@ -153,6 +153,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         if not self.default_expr_c:
             return None
         expr_context = self._createDefaultExpressionContext(datamodel)
+        __traceback_info__ = self.default_expr
         return self.default_expr_c(expr_context)
 
     def _createDefaultExpressionContext(self, datamodel):
@@ -264,6 +265,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             return value
         expr_context = self._createStorageExpressionContext(value, data,
                                                             context, proxy)
+        __traceback_info__ = self.read_process_expr
         return self.read_process_expr_c(expr_context)
 
     security.declarePrivate('processValueBeforeWrite')
@@ -273,6 +275,7 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
             return value
         expr_context = self._createStorageExpressionContext(value, data,
                                                             context, proxy)
+        __traceback_info__ = self.write_process_expr
         return self.write_process_expr_c(expr_context)
 
     #
