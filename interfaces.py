@@ -34,6 +34,24 @@ class IField(Interface):
     """Field.
     """
 
+class IFileField(IField):
+    """Field holding a File object.
+    """
+
+class IFieldNodeIO(Interface):
+    """GenericSetup Node I/O methods for a Field.
+    """
+
+    def setNodeValue(node, value, context):
+        """Set a value in an XML node.
+
+        ``context`` is a CPSDocumentXMLAdapter.
+        """
+
+    def getNodeValue(node):
+        """Get a value from an XML node.
+        """
+
 
 class ILayoutTool(Interface):
     """Layout Tool.

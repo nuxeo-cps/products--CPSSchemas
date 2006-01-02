@@ -221,6 +221,20 @@ class DataModel(UserDict):
         self.checkWriteAccess(key)
         return UserDict.setdefault(self, key, failobj=failobj)
 
+    # Unrestricted accessors
+
+    def _itemsWithFields(self):
+        """Get a sequence of (key, value, field) from the current data.
+
+        Keys are sorted.
+        """
+        data = self.data
+        fields = self._fields
+        keys = data.keys()
+        keys.sort()
+        res = [(key, data[key], fields[key]) for key in keys]
+        return res
+
     # XXX python2.2 iterators not done.
 
     #

@@ -38,6 +38,10 @@ from Products.CPSSchemas.FileUtils import convertFileToHtml
 from Products.CPSSchemas.FileUtils import convertFileToText
 from Products.CPSSchemas.DiskFile import DiskFile
 
+from zope.interface import implements
+from Products.CPSSchemas.interfaces import IFileField
+from Products.CPSSchemas.interfaces import IFieldNodeIO
+
 
 def _isinstance(ob, cls):
     warnings.warn("_isinstance() is deprecated and will be removed in "
@@ -66,6 +70,8 @@ class CPSIntField(CPSField):
     """Integer field."""
     meta_type = "CPS Int Field"
 
+    implements(IFieldNodeIO)
+
     default_expr = 'python:0'
     default_expr_c = Expression(default_expr)
 
@@ -89,12 +95,25 @@ class CPSIntField(CPSField):
             raise ValidationError("Incorrect Int value from LDAP: %s"
                                   % `values`)
 
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        context.setNodeValue(node, str(value))
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        text = context.getNodeValue(node)
+        return int(text)
+
 InitializeClass(CPSIntField)
 
 
 class CPSBooleanField(CPSField):
     """Boolean field."""
     meta_type = "CPS Boolean Field"
+
+    implements(IFieldNodeIO)
 
     default_expr = 'python:False'
     default_expr_c = Expression(default_expr)
@@ -119,6 +138,17 @@ class CPSBooleanField(CPSField):
             raise ValidationError("Incorrect Boolean value from LDAP: %s"
                                   % `values`)
 
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        context.setNodeValue(node, str(bool(value)))
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        text = context.getNodeValue(node)
+        return context._convertToBoolean(text)
+
 InitializeClass(CPSBooleanField)
 
 
@@ -140,6 +170,8 @@ InitializeClass(CPSLongField)
 class CPSFloatField(CPSField):
     """Float field."""
     meta_type = "CPS Float Field"
+
+    implements(IFieldNodeIO)
 
     default_expr = 'python:0.0'
     default_expr_c = Expression(default_expr)
@@ -164,12 +196,25 @@ class CPSFloatField(CPSField):
             raise ValidationError("Incorrect Float value from LDAP: %s"
                                   % `values`)
 
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        context.setNodeValue(node, str(value))
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        text = context.getNodeValue(node)
+        return float(text)
+
 InitializeClass(CPSFloatField)
 
 
 class CPSStringField(CPSField):
     """String field."""
     meta_type = "CPS String Field"
+
+    implements(IFieldNodeIO)
 
     default_expr = 'string:'
     default_expr_c = Expression(default_expr)
@@ -203,6 +248,17 @@ class CPSStringField(CPSField):
             pass
         return value
 
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        context.setNodeValue(node, value.decode(default_encoding))
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        text = context.getNodeValue(node)
+        return text.encode(default_encoding)
+
 InitializeClass(CPSStringField)
 
 
@@ -211,6 +267,7 @@ class CPSPasswordField(CPSStringField):
     meta_type = "CPS Password Field"
 
 InitializeClass(CPSPasswordField)
+
 
 class CPSListField(CPSField):
     """Meta list Field"""
@@ -248,9 +305,12 @@ class CPSListField(CPSField):
 
 InitializeClass(CPSListField)
 
+
 class CPSStringListField(CPSListField):
     """String List field."""
     meta_type = "CPS String List Field"
+
+    implements(IFieldNodeIO)
 
     validation_error_msg = 'Not a string list: '
 
@@ -273,6 +333,27 @@ class CPSStringListField(CPSListField):
                 LOG('CPSStringListField.convertFromLDAP', WARNING,
                     'problem recoding %s' % `v`)
                 pass
+            res.append(v)
+        return res
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        for v in value:
+            child = context.createStrictTextElement('e')
+            v = v.decode(default_encoding)
+            context.setNodeValue(child, v)
+            node.appendChild(child)
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        res = []
+        for child in node.childNodes:
+            if child.nodeName != 'e':
+                continue
+            v = context.getNodeValue(child)
+            v = v.encode(default_encoding)
             res.append(v)
         return res
 
@@ -330,6 +411,8 @@ InitializeClass(CPSIntListListField)
 class CPSDateTimeField(CPSField):
     """DateTime field."""
     meta_type = "CPS DateTime Field"
+
+    implements(IFieldNodeIO)
 
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
@@ -393,12 +476,34 @@ class CPSDateTimeField(CPSField):
             raise ValidationError("Incorrect DateTime value from LDAP: %s" %
                                   `values`)
 
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        v = self.convertToLDAP(value)
+        if v:
+            v = v[0]
+        else:
+            v = ''
+        context.setNodeValue(node, v)
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        v = context.getNodeValue(node)
+        if v:
+            value = self.convertFromLDAP([v])
+        else:
+            value = None
+        return value
+
 InitializeClass(CPSDateTimeField)
 
 
 class CPSFileField(CPSField):
     """File field."""
     meta_type = "CPS File Field"
+
+    implements(IFieldNodeIO, IFileField)
 
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
@@ -492,6 +597,17 @@ class CPSFileField(CPSField):
             raise ValidationError("Incorrect File value from LDAP: "
                                   "(%d-element list)" % len(values))
         return File(self.getFieldId(), '', values[0])
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        return
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        # Will be later initialized as a subobject.
+        return None
 
 InitializeClass(CPSFileField)
 
@@ -635,6 +751,8 @@ class CPSImageField(CPSField):
     """Image field."""
     meta_type = "CPS Image Field"
 
+    implements(IFieldNodeIO, IFileField)
+
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
 
@@ -660,6 +778,17 @@ class CPSImageField(CPSField):
             raise ValidationError("Incorrect Image value from LDAP: "
                                   "(%d-element list)" % len(values))
         return Image(self.getFieldId(), '', values[0])
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        return
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        # Will be later initialized as a subobject.
+        return None
 
 InitializeClass(CPSImageField)
 
@@ -701,11 +830,13 @@ InitializeClass(CPSRangeListField)
 class CPSCoupleField(CPSListField):
     """CPS Couple Field
 
-    Holds two values within a list (whatever types)
-    The order matters in a couple for the comparaison.
-    """
+    Holds two non-negative integers within a list. The order matters.
 
+    XXX should be relaxed to allow a tuple (safer), see CPSPortlets.
+    """
     meta_type = "CPS Couple Field"
+
+    implements(IFieldNodeIO)
 
     validation_error_message = "Not a couple : "
 
@@ -729,6 +860,22 @@ class CPSCoupleField(CPSListField):
             return value
 
         raise ValidationError(self._getValidationErrorMessage(value))
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        context.setNodeValue(node, '%d-%d' % (value[0], value[1]))
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        text = context.getNodeValue(node)
+        v0, v1 = text.split('-', 1)
+        return [int(v0), int(v1)]
+
+InitializeClass(CPSCoupleField)
+
+
 
 # Register field classes
 

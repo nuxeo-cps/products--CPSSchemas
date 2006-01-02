@@ -24,6 +24,7 @@ from zope.app import zapi
 from zope.component import adapts
 from zope.interface import implements
 import Products
+from ZODB.loglevels import BLATHER as VERBOSE
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.utils import exportObjects
 from Products.GenericSetup.utils import importObjects
@@ -202,7 +203,8 @@ class FieldXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         node = self._getObjectNode('field')
         node.setAttribute('name', name)
         node.appendChild(self._extractProperties(skip_defaults=True))
-        self._logger.info("  %s field exported." % name)
+        msg = "Field %r exported." % name
+        self._logger.log(VERBOSE, msg)
         return node
 
     def _importNode(self, node):
@@ -211,7 +213,8 @@ class FieldXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         if self.environ.shouldPurge():
             self._purgeProperties()
         self._initProperties(node)
-        self._logger.info("  %s field imported." % self.context.getFieldId())
+        msg = "Field %r imported." % self.context.getFieldId()
+        self._logger.log(VERBOSE, msg)
 
     node = property(_exportNode, _importNode)
 
