@@ -24,6 +24,7 @@ from zope.app import zapi
 from zope.component import adapts
 from zope.interface import implements
 import Products
+from ZODB.loglevels import BLATHER as VERBOSE
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.utils import exportObjects
 from Products.GenericSetup.utils import importObjects
@@ -131,7 +132,7 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         node.appendChild(self._extractProperties())
         node.appendChild(self._extractWidgets())
         node.appendChild(self._extractTable())
-        self._logger.info("%s layout exported." % self.context.getId())
+        self._logger.info("Layout %r exported." % self.context.getId())
         return node
 
     def _importNode(self, node):
@@ -144,7 +145,7 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         self._initProperties(node)
         self._initWidgets(node)
         self._initTable(node)
-        self._logger.info("%s layout imported." % self.context.getId())
+        self._logger.info("Layout %r imported." % self.context.getId())
 
     node = property(_exportNode, _importNode)
 
@@ -249,7 +250,8 @@ class WidgetXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         node = self._getObjectNode('widget')
         node.setAttribute('name', name)
         node.appendChild(self._extractProperties(skip_defaults=True))
-        self._logger.info("  %s widget exported." % name)
+        msg = "Widget %r exported." % name
+        self._logger.log(VERBOSE, msg)
         return node
 
     def _importNode(self, node):
@@ -258,7 +260,8 @@ class WidgetXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         if self.environ.shouldPurge():
             self._purgeProperties()
         self._initProperties(node)
-        self._logger.info("  %s widget imported." % self.context.getWidgetId())
+        msg = "Widget %r imported." % self.context.getWidgetId()
+        self._logger.log(VERBOSE, msg)
 
     node = property(_exportNode, _importNode)
 
