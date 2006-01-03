@@ -19,11 +19,13 @@
       tal:content="structure value" />
   </tal:block>
   <tal:block condition="python: mode == 'edit'">
-      <textarea tal:attributes="id value_name;
+      <textarea class="monospaceFont"
+        tal:attributes="id value_name;
         name value_name;
         cols here/width;
         rows here/height;"
-        tal:content="value" />
+        tal:content="value"
+      />
     <p>
       <tal:block condition="file_uploader">
         <label tal:attributes="for file_upload_id"

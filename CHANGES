@@ -18,6 +18,8 @@ Bug fixes:
 - #1188: Fixed boolean widget in checkbox mode.
 - Made the BooleanWidget return int values instead of string values.
 - Fixed #616: Moving Text Widget to restructured text.
+- Fixed #671: The text area used for editing wiki pages should use monospaced
+  font.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
@@ -39,3 +41,4 @@ New internal features:
 - Float Widget's default decimal separator is now '.'
 - Added getReadableFieldIds method to storage adapters.
 - CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
+- Added a CSS file dedicated to CPSSchemas.
