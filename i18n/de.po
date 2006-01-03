@@ -1,18 +1,16 @@
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: CPSSchemas-de CPS-3.2.4\n"
+"Project-Id-Version: CPSSchemas-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 18:24default\n"
-"PO-Revision-Date: 2005-03-14 11:08+0100\n"
+"POT-Creation-Date: 2005-12-30 18:26default\n"
+"PO-Revision-Date: 2005-10-12 23:16+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: de\n"
-"Language-Name: German\n"
-"Domain: default\n"
 
 #.   <option attributes="value op/id;
 #.                   selected python: op['size'] and (op['size'][0]==image_width
@@ -23,7 +21,7 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "<span replace=\"op/id\" /> ${dim}"
-msgstr ""
+msgstr "<span·replace=\"op/id\"·/>·${dim}"
 
 #.   <h1 content="label_edit">Edit</h1>
 #: from ../skins/cps_schemas/popup_fckeditor_form.pt
@@ -49,7 +47,7 @@ msgstr "Wahr"
 #.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
-msgstr ""
+msgstr "Editor Popup"
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -159,15 +157,13 @@ msgstr "Position: "
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "any language"
+msgstr "eine beliebige Sprache"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "one or more of the following languages"
+msgstr "eine oder mehrere der folgenden Sprachen"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -175,9 +171,8 @@ msgstr "one or more of the following languages"
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
-#, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Maximal size: ${size_max}."
+msgstr "Maximale Grösse: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -238,9 +233,8 @@ msgstr "Wert:"
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "This page allow you to manage vocabularies and their entries."
+msgstr "Auf dieser Seite können Sie Wörterbücher und ihre Einträge bearbeiten."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -290,7 +284,7 @@ msgstr "Titel"
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr ""
+msgstr "Datei ändern"
 
 msgid "cpsschemas_unit_bytes"
 msgstr "m"
@@ -331,9 +325,8 @@ msgstr "Ungültiger Ganz Zahl"
 msgid "cpsschemas_err_date"
 msgstr "Ungültiges Datum"
 
-#, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Date incorrecte"
+msgstr "Datum inkorrekt"
 
 msgid "cpsschemas_err_file"
 msgstr "Ungültige Datei"
@@ -344,9 +337,8 @@ msgstr "Ungültiger Suffix ${allowed_file_suffixes}"
 msgid "cpsschemas_err_file_empty"
 msgstr "Leere Datei"
 
-#, fuzzy
 msgid "cpsschemas_err_file_too_big"
-msgstr "This file is too big"
+msgstr "Diese Datei ist zu groß"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr "Sorry diese Datei ist zu groß "
@@ -404,13 +396,11 @@ msgstr "Nur lesbares Feld"
 msgid "cpsschemas_err_rangelist"
 msgstr "Fehler Wertebereich"
 
-#, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Invalid Zip file"
+msgstr "Ungültige Zip Datei"
 
-#, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "No html document found in the Zip file"
+msgstr "Kein HTML Dokument in der Zip Datei gefunden"
 
 msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
@@ -488,89 +478,68 @@ msgstr "Name des Links"
 msgid "cpsschemas_label_link_title"
 msgstr "Beschreibung"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "all of these words"
+msgstr "jedem dieser Worte"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "any of these words"
+msgstr "einem dieser Worte"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "the exact phrase"
+msgstr "dem exakten Wortlaut"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "none of these words"
+msgstr "keinem dieser Worte"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "in the document"
+msgstr "im Dokument"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "in the title"
+msgstr "im Titel"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "in the description"
+msgstr "in der Beschreibung"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "anytime"
+msgstr "beliebig"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "since yesterday"
+msgstr "seit gestern"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "within the past month"
+msgstr "innerhalb des letzten Monats"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "within the past 3 months"
+msgstr "innerhalb der letzten 3 Monate"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "within the past 6 months"
+msgstr "innerhalb der letzten 6 Monate"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "within a year"
+msgstr "innerhalb des letzten Jahres"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "relevance"
+msgstr "Gewichtung"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "antechronologic"
+msgstr "anti-chronologisch "
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "chronological"
+msgstr "chronologisch"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "expiration date"
+msgstr "Gültigkeits Datum"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "title"
+msgstr "Titel"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "status"
+msgstr "Status"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "location"
+msgstr "Ort"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "type of document"
+msgstr "Dokument Typ"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id existiert schon, wählen Sie eine andere."
@@ -597,17 +566,20 @@ msgid "cpsschemas_psm_vocabulary_updated"
 msgstr "Wörterbuch auf neusten Stand gebracht."
 
 msgid "label_none_selection"
-msgstr "Nichts Selektion"
+msgstr "Null Selektion"
 
 msgid "label_other_selection"
-msgstr "Anders-Selektion"
+msgstr "Andere Selektion"
 
 # ## action =================================================
 msgid "action_edit_online"
-msgstr "Berbeiten online"
+msgstr "Bearbeiten Online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr ""
+msgstr "Flash Animation bearbeiten"
+
+#~ msgid "cpsschemas_rformat_pre"
+#~ msgstr "HTML vorformatiert"
 
 #~ msgid "img_icon"
 #~ msgstr "Icon"
@@ -626,3 +598,6 @@ msgstr ""
 
 #~ msgid "img_xlarge"
 #~ msgstr "Extra Gross"
+
+#~ msgid "button_back"
+#~ msgstr "Zurück"
