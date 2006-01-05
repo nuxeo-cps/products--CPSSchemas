@@ -676,7 +676,7 @@ class CPSPhotoWidget(CPSImageWidget):
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Caption
                    'CPS String Field',  # render_position if configurable
-		   'CPS Image Field',)  # original photo
+           'CPS Image Field',)  # original photo
     field_inits = ({}, {'is_searchabletext': 1,}, {}, {})
 
     _properties = CPSImageWidget._properties + (
@@ -1553,3 +1553,40 @@ class CPSImageLinkWidget(CPSProgrammerCompoundWidget):
 InitializeClass(CPSImageLinkWidget)
 
 widgetRegistry.register(CPSImageLinkWidget)
+
+class CPSAutocompletionStringWidget(CPSStringWidget):
+    """Autocompletion String widget."""
+    meta_type = 'Autocompletion String Widget'
+    server_method = ''
+
+    _properties = CPSStringWidget._properties + (
+        {'id': 'server_method', 'type': 'string', 'mode': 'w',
+         'label': 'Server method',},)
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        render_method = 'widget_autocompletion_string_render'
+        meth = getattr(self, render_method, None)
+        if meth is None:
+            raise RuntimeError("Unknown Render Method %s for widget type %s"
+                               % (render_method, self.getId()))
+
+        if mode not in ('view', 'edit'):
+            raise RuntimeError('unknown mode %s' % mode)
+
+        value = datastructure[self.getWidgetId()]
+        widget_id = self.getWidgetId()
+        html_widget_id = self.getHtmlWidgetId()
+        javascript_caller = ('new Ajax.Autocompleter("%s", "%s_choices", "%s",'
+                             ' {});') % (html_widget_id, html_widget_id,
+                                         self.server_method)
+
+        return meth(mode=mode, widget_id=widget_id,value=value,
+                    size=self.display_width, server_method=self.server_method,
+                    html_widget_id=html_widget_id,
+                    javascript_caller=javascript_caller)
+
+InitializeClass(CPSAutocompletionStringWidget)
+
+widgetRegistry.register(CPSAutocompletionStringWidget)
+

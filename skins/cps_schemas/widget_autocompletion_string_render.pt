@@ -1,0 +1,19 @@
+<tal:block define="mode options/mode;
+                   id here/getWidgetId;
+                   name here/getHtmlWidgetId;
+                   stname python:chr(34)+name+chr(34);
+                   server_method options/server_method;
+                   stserver_method python:chr(34)+server_method+chr(34);
+                   javascript_caller options/javascript_caller;
+                   size options/size;">
+  <tal:block condition="python: mode == 'view'">
+    <input type="text" tal:attributes="id id;name id;size size;value value"/>
+  </tal:block>
+  <tal:block condition="python: mode == 'edit'">
+    <input type="text" tal:attributes="id name;name name;size size" value=""/>
+    <div class="popup" tal:attributes="id python:name+'_choices'"/>
+    <script type="text/javascript" language="javascript"
+            tal:content='string:new Ajax.Autocompleter("${name}", "${name}_choices", "${server_method}", {});'>
+    </script>
+  </tal:block>
+</tal:block>
