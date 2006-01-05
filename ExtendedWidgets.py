@@ -1570,21 +1570,16 @@ class CPSAutocompletionStringWidget(CPSStringWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-
         if mode not in ('view', 'edit'):
             raise RuntimeError('unknown mode %s' % mode)
 
         value = datastructure[self.getWidgetId()]
         widget_id = self.getWidgetId()
         html_widget_id = self.getHtmlWidgetId()
-        javascript_caller = ('new Ajax.Autocompleter("%s", "%s_choices", "%s",'
-                             ' {});') % (html_widget_id, html_widget_id,
-                                         self.server_method)
 
         return meth(mode=mode, widget_id=widget_id,value=value,
                     size=self.display_width, server_method=self.server_method,
-                    html_widget_id=html_widget_id,
-                    javascript_caller=javascript_caller)
+                    html_widget_id=html_widget_id)
 
 InitializeClass(CPSAutocompletionStringWidget)
 

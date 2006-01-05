@@ -1,10 +1,7 @@
 <tal:block define="mode options/mode;
                    id here/getWidgetId;
                    name here/getHtmlWidgetId;
-                   stname python:chr(34)+name+chr(34);
                    server_method options/server_method;
-                   stserver_method python:chr(34)+server_method+chr(34);
-                   javascript_caller options/javascript_caller;
                    size options/size;">
   <tal:block condition="python: mode == 'view'">
     <input type="text" tal:attributes="id id;name id;size size;value value"/>
