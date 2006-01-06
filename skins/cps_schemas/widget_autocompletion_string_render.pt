@@ -9,7 +9,7 @@
   <tal:block condition="python: mode == 'edit'">
     <input type="text" tal:attributes="id name;name name;size size" value=""/>
     <div class="popup" tal:attributes="id python:name+'_choices'"/>
-    <script type="text/javascript" language="javascript"
+    <script type="text/javascript"
             tal:content='string:new Ajax.Autocompleter("${name}", "${name}_choices", "${server_method}", {});'>
     </script>
   </tal:block>
