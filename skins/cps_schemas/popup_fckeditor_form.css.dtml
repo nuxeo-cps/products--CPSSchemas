@@ -9,7 +9,7 @@ $Id$
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-@import "<dtml-var expr="getBaseUrl()">editor/css/fck_skins/default/fck_dialog.css";
+@import "<dtml-var expr="getBaseUrl()">editor/fck_skins/default/fck_dialog.css";
 
 button {
   font-size: 11px;
