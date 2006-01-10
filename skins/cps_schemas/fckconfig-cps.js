@@ -8,6 +8,8 @@
  * For further information visit:
  *		http://www.fckeditor.net/
  *
+ * "Support Open Source software. What about a donation today?"
+ *
  * File Name: fckconfig.js
  *	Editor configuration settings.
  *	See the documentation for more info.
@@ -47,6 +49,11 @@ FCKConfig.PluginsPath = FCKConfig.BasePath + 'plugins/' ;
 //FCKConfig.Plugins.Add('placeholder', 'en,it');
 FCKConfig.Plugins.Add('semantic', 'en,fr');
 
+// You can protect specific tags in source like script tags
+// using a reg exp
+FCKConfig.ProtectedSource.Add( /<script[\s\S]*?\/script>/gi ) ;	// <SCRIPT> tags.
+// FCKConfig.ProtectedSource.Add( /<\?[\s\S]*?\?>/g ) ;	// PHP style server side code <?...?>
+
 FCKConfig.AutoDetectLanguage	= true ;
 FCKConfig.DefaultLanguage		= 'en' ;
 FCKConfig.ContentLangDirection	= 'ltr' ;
@@ -55,7 +62,7 @@ FCKConfig.EnableXHTML		= true ;	// Unsupported: Do not change.
 FCKConfig.EnableSourceXHTML	= true ;	// Unsupported: Do not change.
 
 FCKConfig.ProcessHTMLEntities	= true ;
-FCKConfig.IncludeLatinEntities	= true ;
+FCKConfig.IncludeLatinEntities	= false ;
 FCKConfig.IncludeGreekEntities	= true ;
 
 FCKConfig.FillEmptyBlocks	= true ;
@@ -64,9 +71,11 @@ FCKConfig.FormatSource		= true ;
 FCKConfig.FormatOutput		= true ;
 FCKConfig.FormatIndentator	= '    ' ;
 
-FCKConfig.GeckoUseSPAN	= false;
+FCKConfig.ForceStrongEm = true ;
+FCKConfig.GeckoUseSPAN	= false ;
 FCKConfig.StartupFocus	= false ;
-FCKConfig.ForcePasteAsPlainText	= true ;
+FCKConfig.ForcePasteAsPlainText	= false ;
+FCKConfig.AutoDetectPasteFromWord = true ;	// IE only.
 FCKConfig.ForceSimpleAmpersand	= false ;
 FCKConfig.TabSpaces		= 0 ;
 FCKConfig.ShowBorders	= true ;
@@ -84,13 +93,14 @@ FCKConfig.ToolbarSets["Default"] = [
 	['OrderedList','UnorderedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
 	['Link','Unlink','Anchor'],
-	['Image','Flash','Table','Rule','Smiley','SpecialChar','UniversalKey'],
+	['Image','Flash','Table','Rule','Smiley','SpecialChar','PageBreak','UniversalKey'],
 	['Form','Checkbox','Radio','TextField','Textarea','Select','Button','ImageButton','HiddenField'],
 	'/',
 	['Style','FontFormat','FontName','FontSize'],
 	['TextColor','BGColor'],
 	['About']
 ] ;
+
 
 // toolbars for plone
 // use SmallZopeCmf for small textarea form input (example : a rich description)
@@ -103,7 +113,7 @@ FCKConfig.ToolbarSets["ZopeCmf"] = [
 	['OrderedList','UnorderedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
 	['Link','Unlink','Anchor'],
-	['Image','Flash','Table','Rule','SpecialChar','Smiley','UniversalKey'],
+	['Image','Flash','Table','Rule','SpecialChar','PageBreak','Smiley','UniversalKey'],
 	['Form','Checkbox','Radio','TextField','Textarea','Select','Button','ImageButton','HiddenField'],
 	'/',
 	['Style','FontFormat','FontName','FontSize'],
@@ -149,16 +159,19 @@ FCKConfig.FontColors = '000000,993300,333300,003300,003366,000080,333399,333333,
 
 FCKConfig.FontNames		= 'Arial, Geneva, Helvetica, Helv, sans-serif;Verdana, Arial, Helvetica, sans-serif;Tahoma, Arial, Helvetica, sans-serif;Trebuchet MS, Arial, Helvetica, sans-serif;Comic Sans MS, Arial, Helvetica, sans-serif;Garamond, Times New Roman, Times, Serif;Times New Roman, Times, Roman, Serif;Courier New, Courier;Letter Gothic, LetterGothic, Courier New, Courier;Lucida Console, Courier New, Courier' ;
 FCKConfig.FontSizes		= '1/xx-small;2/x-small;3/small;4/medium;5/large;6/x-large;7/xx-large' ;
-FCKConfig.FontFormats		= 'p;div;pre;address;h1;h2;h3;h4;h5;h6' ;
+FCKConfig.FontFormats	= 'p;div;pre;address;h1;h2;h3;h4;h5;h6' ;
 
 //FCKConfig.StylesXmlPath		= FCKConfig.EditorPath + 'fckstyles.xml' ;
 FCKConfig.StylesXmlPath		= FCKConfig.EditorPath + 'fckstyles-cps.xml' ;
 FCKConfig.TemplatesXmlPath	= FCKConfig.EditorPath + 'fcktemplates.xml' ;
 
-FCKConfig.SpellChecker			= 'ieSpell' ;	// 'ieSpell' | 'SpellerPages'
+FCKConfig.SpellChecker			= 'SpellerPages' ;	// 'ieSpell' | 'SpellerPages'
 FCKConfig.IeSpellDownloadUrl	= 'http://www.iespell.com/rel/ieSpellSetup211325.exe' ;
 
 FCKConfig.MaxUndoLevels = 15 ;
+
+FCKConfig.DisableImageHandles = false ;
+FCKConfig.DisableTableHandles = false ;
 
 FCKConfig.LinkDlgHideTarget		= false ;
 FCKConfig.LinkDlgHideAdvanced	= false ;
@@ -168,63 +181,42 @@ FCKConfig.ImageDlgHideAdvanced	= false ;
 
 FCKConfig.FlashDlgHideAdvanced	= false ;
 
-// Link Browsing
 FCKConfig.LinkBrowser = false;
+// simple dtml-tree browser compatible with all zope cms
+// you can set advanced browser capabilities in wysiwyg templates support (fckeditor_wysiwyg_support for Plone, popup_rte_form for CPS)
+// or you can change it here (uncomment 2nd next line)
 FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "fck_browse_files.html" ;
-// Pour utiliser le browsing standard de FCK (plus evolue) commenter la ligne precedente et decommenter la ligne ci-dessous
-// Dans Plone les fck_wysiwyg_support appellent ce browser
 //FCKConfig.LinkBrowserURL = "/editor/filemanager/browser/zope/browser.html?Connector=connectors/connectorPlone&ServerPath=/&CurrentPath=" + FCKConfig.BasePath ;
-//FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Connector=connectors/zope/zptConnector" ;
-//FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Connector=connectors/asp/connector.asp" ;
-//FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Connector=connectors/asp/connector.asp&ServerPath=/CustomFiles/" ;
-//FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Connector=connectors/aspx/connector.aspx" ;
-//FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Connector=connectors/php/connector.php" ;
-FCKConfig.LinkBrowserWindowWidth	= screen.width * 0.7 ;	// 70%
-FCKConfig.LinkBrowserWindowHeight	= screen.height * 0.7 ;	// 70%
+//FCKConfig.LinkBrowserURL = "/editor/filemanager/browser/zope/browser.html?Connector=connectors/connectorCPS&ServerPath=/&CurrentPath=" + FCKConfig.BasePath ;
+FCKConfig.LinkBrowserWindowWidth	= FCKConfig.ScreenWidth * 0.7 ;	// 70%
+FCKConfig.LinkBrowserWindowHeight	= FCKConfig.ScreenHeight * 0.7 ;// 70%
 
-
-// Image Browsing
-FCKConfig.ImageBrowser = true ;
+FCKConfig.ImageBrowser = false ;
 FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "fck_browse_images.html" ;
-// Pour utiliser le browsing standard de FCK (plus evolue) commenter la ligne precedente et decommenter la ligne ci-dessous
 //FCKConfig.ImageBrowserURL = "/editor/filemanager/browser/zope/browser.html?Type=Image&Connector=connectors/connectorPlone&ServerPath=/&CurrentPath=" + FCKConfig.BasePath ;
-//FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Type=Image&Connector=connectors/asp/connector.asp" ;
-//FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Type=Image&Connector=connectors/aspx/connector.aspx" ;
-//FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/default/browser?Type=Image&Connector=connectors/php/connector.php" ;
-FCKConfig.ImageBrowserWindowWidth  = screen.width * 0.7 ;	// 70% ;
-FCKConfig.ImageBrowserWindowHeight = screen.height * 0.7 ;	// 70% ;
+//FCKConfig.ImageBrowserURL = "/editor/filemanager/browser/zope/browser.html?Type=Image&Connector=connectors/connectorCPS&ServerPath=/&CurrentPath=" + FCKConfig.BasePath ;
+FCKConfig.ImageBrowserWindowWidth  = FCKConfig.ScreenWidth * 0.7 ;	// 70% ;
+FCKConfig.ImageBrowserWindowHeight = FCKConfig.ScreenHeight * 0.7 ;	// 70% ;
 
 FCKConfig.FlashBrowser = true ;
 FCKConfig.FlashBrowserURL = FCKConfig.BasePath + "fck_browse_files.html" ;
-// Pour utiliser le browsing standard de FCK (plus evolue) commenter la ligne precedente et decommenter la ligne ci-dessous
 // FCKConfig.FlashBrowserURL = "/editor/filemanager/browser/zope/browser.html?Type=Flash&Connector=connectors/connectorPlone&ServerPath=/&CurrentPath=" + FCKConfig.BasePath ;
-// ASP FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=connectors/asp/connector.asp' ;
-// ASP.Net		// FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=connectors/aspx/connector.aspx' ;
-// ColdFusion	// FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=connectors/cfm/connector.cfm' ;
-// Perl			// FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=connectors/perl/connector.cgi' ;
-// PHP			// FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=connectors/php/connector.php' ;
-// PHP - mcpuk	// FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/mcpuk/browser.html?Type=Flash&Connector=connectors/php/connector.php' ;
-FCKConfig.FlashBrowserWindowWidth  = screen.width * 0.7 ;	//70% ;
-FCKConfig.FlashBrowserWindowHeight = screen.height * 0.7 ;	//70% ;
+// FCKConfig.FlashBrowserURL = "/editor/filemanager/browser/zope/browser.html?Type=Flash&Connector=connectors/connectorCPS&ServerPath=/&CurrentPath=" + FCKConfig.BasePath ;
+FCKConfig.FlashBrowserWindowWidth  = FCKConfig.ScreenWidth * 0.7 ;	//70% ;
+FCKConfig.FlashBrowserWindowHeight = FCKConfig.ScreenHeight * 0.7 ;	//70% ;
+
+// rapid upload activation
+// called by fckeditor_wysiwyg_support for Plone
 
 FCKConfig.LinkUpload = false ;
-// appele par les wysiwyg_support pour Plone
-// ASP // FCKConfig.LinkUploadURL = FCKConfig.BasePath + 'filemanager/upload/asp/upload.asp' ;
-// PHP // FCKConfig.LinkUploadURL = FCKConfig.BasePath + 'filemanager/upload/php/upload.php' ;
 FCKConfig.LinkUploadAllowedExtensions	= "" ;			// empty for all
 FCKConfig.LinkUploadDeniedExtensions	= ".(php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi)$" ;	// empty for no one
 
 FCKConfig.ImageUpload = false ;
-// appele par les wysiwyg_support pour Plone
-// ASP // FCKConfig.ImageUploadURL = FCKConfig.BasePath + 'filemanager/upload/asp/upload.asp?Type=Image' ;
-// PHP // FCKConfig.ImageUploadURL = FCKConfig.BasePath + 'filemanager/upload/php/upload.php?Type=Image' ;
 FCKConfig.ImageUploadAllowedExtensions	= ".(jpg|gif|jpeg|png)$" ;		// empty for all
 FCKConfig.ImageUploadDeniedExtensions	= "" ;							// empty for no one
 
 FCKConfig.FlashUpload = false ;
-// TODO for Plone
-// ASP // FCKConfig.FlashUploadURL = FCKConfig.BasePath + 'filemanager/upload/asp/upload.asp?Type=Flash' ;
-// PHP // FCKConfig.FlashUploadURL = FCKConfig.BasePath + 'filemanager/upload/php/upload.php?Type=Flash' ;
 FCKConfig.FlashUploadAllowedExtensions	= ".(swf|fla)$" ;		// empty for all
 FCKConfig.FlashUploadDeniedExtensions	= "" ;					// empty for no one
 
