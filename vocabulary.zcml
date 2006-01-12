@@ -6,21 +6,21 @@
   <adapter
       factory=".exportimport.vocabulary.VocabularyToolXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.IVocabularyTool
+      for=".interfaces.IVocabularyTool
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
   <adapter
       factory=".exportimport.vocabulary.PropertyVocabularyXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.IPropertyVocabulary
+      for=".interfaces.IPropertyVocabulary
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
   <adapter
       factory=".exportimport.vocabulary.CPSVocabularyXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.ICPSVocabulary
+      for=".interfaces.ICPSVocabulary
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
@@ -44,7 +44,7 @@
 
 
   <five:traversable
-      class="Products.CPSSchemas.VocabulariesTool.VocabulariesTool"/>
+      class=".VocabulariesTool.VocabulariesTool"/>
 
   <configure package="Products.GenericSetup.browser">
 

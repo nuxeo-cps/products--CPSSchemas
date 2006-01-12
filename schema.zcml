@@ -6,29 +6,29 @@
   <adapter
       factory=".exportimport.schema.SchemaToolXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.ISchemaTool
+      for=".interfaces.ISchemaTool
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
   <adapter
       factory=".exportimport.schema.SchemaXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.ISchema
+      for=".interfaces.ISchema
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
   <adapter
       factory=".exportimport.schema.FieldXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.IField
+      for=".interfaces.IField
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
 
   <five:traversable
-      class="Products.CPSSchemas.SchemasTool.SchemasTool"/>
+      class=".SchemasTool.SchemasTool"/>
   <five:traversable
-      class="Products.CPSSchemas.Schema.CPSSchema"/>
+      class=".Schema.CPSSchema"/>
 
   <configure package="Products.GenericSetup.browser">
 

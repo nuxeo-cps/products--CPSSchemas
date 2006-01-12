@@ -6,29 +6,29 @@
   <adapter
       factory=".exportimport.layout.LayoutToolXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.ILayoutTool
+      for=".interfaces.ILayoutTool
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
   <adapter
       factory=".exportimport.layout.LayoutXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.ILayout
+      for=".interfaces.ILayout
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
   <adapter
       factory=".exportimport.layout.WidgetXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
-      for="Products.CPSSchemas.interfaces.IWidget
+      for=".interfaces.IWidget
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
 
   <five:traversable
-      class="Products.CPSSchemas.LayoutsTool.LayoutsTool"/>
+      class=".LayoutsTool.LayoutsTool"/>
   <five:traversable
-      class="Products.CPSSchemas.Layout.CPSLayout"/>
+      class=".Layout.CPSLayout"/>
 
   <configure package="Products.GenericSetup.browser">
 
