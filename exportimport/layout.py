@@ -183,7 +183,8 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
 
             klass = mt['instance']
             widget = klass(widget_id)
-            widget = layout.addSubObject(widget)
+            if not layout.has_key(widget_id):
+                widget = layout.addSubObject(widget)
 
             importer = zapi.queryMultiAdapter((widget, self.environ), INode)
             if not importer:

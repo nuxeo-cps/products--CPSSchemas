@@ -178,7 +178,8 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
 
             klass = mt['instance']
             field = klass(field_id)
-            field = schema.addSubObject(field)
+            if not schema.has_key(field_id):
+                field = schema.addSubObject(field)
 
             importer = zapi.queryMultiAdapter((field, self.environ), INode)
             if not importer:
