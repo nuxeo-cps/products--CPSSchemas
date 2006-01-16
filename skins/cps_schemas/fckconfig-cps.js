@@ -139,6 +139,7 @@ FCKConfig.ToolbarSets["SmallZopeCmf"] = [
 FCKConfig.ToolbarSets['Semantic'] = [
     ['Italic','Bold','Lang','Abbr','Acronym','Cite','Q','Style'],
     ['-','OrderedList','UnorderedList','-','Link','Unlink'],
+    ['Image','Table','Rule'],
     '/',
     ['RemoveFormat','Undo','Redo','Source']
 ] ;
