@@ -201,13 +201,19 @@ class CPSFloatField(CPSField):
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
         """
-        context.setNodeValue(node, str(value))
+        if value is None:
+           value = ""
+        else:
+           value = str(value)
+        context.setNodeValue(node, value)
 
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.
         """
-        text = context.getNodeValue(node) or "0.0"
-        return float(text)
+        text = context.getNodeValue(node)
+        if text:
+            return float(text)
+        return None
 
 InitializeClass(CPSFloatField)
 
