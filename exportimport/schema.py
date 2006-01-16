@@ -180,12 +180,14 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             field = klass(field_id)
             if not schema.has_key(field_id):
                 field = schema.addSubObject(field)
+            else:
+                field = schema[field_id]
 
-                importer = zapi.queryMultiAdapter((field, self.environ), INode)
-                if not importer:
-                    raise ValueError("Field %s cannot be adapted to INode" % field)
+            importer = zapi.queryMultiAdapter((field, self.environ), INode)
+            if not importer:
+                raise ValueError("Field %s cannot be adapted to INode" % field)
 
-                importer.node = child # calls _importNode
+            importer.node = child # calls _importNode
 
 
 class FieldXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):

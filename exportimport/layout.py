@@ -185,12 +185,14 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             widget = klass(widget_id)
             if not layout.has_key(widget_id):
                 widget = layout.addSubObject(widget)
-                importer = zapi.queryMultiAdapter((widget, self.environ), INode)
-                if not importer:
-                    raise ValueError("Widget %s cannot be adapted to INode" %
-                                     widget)
+            else:
+                widget = layout[widget_id]
+            importer = zapi.queryMultiAdapter((widget, self.environ), INode)
+            if not importer:
+                raise ValueError("Widget %s cannot be adapted to INode" %
+                                 widget)
 
-                importer.node = child # calls _importNode
+            importer.node = child # calls _importNode
 
     def _extractTable(self):
         layout = self.context
