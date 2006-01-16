@@ -174,16 +174,17 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             if child.nodeName != 'widget':
                 continue
             widget_id = str(child.getAttribute('name'))
-            meta_type = str(child.getAttribute('meta_type'))
-            for mt in Products.meta_types:
-                if mt['name'] == meta_type:
-                    break
-            else:
-                raise ValueError("Unknown meta_type %r" % meta_type)
-
-            klass = mt['instance']
-            widget = klass(widget_id)
             if not layout.has_key(widget_id):
+                meta_type = str(child.getAttribute('meta_type'))
+                for mt in Products.meta_types:
+                    if mt['name'] == meta_type:
+                        break
+                else:
+                    raise ValueError("Unknown meta_type %r" % meta_type)
+
+                klass = mt['instance']
+                widget = klass(widget_id)
+
                 widget = layout.addSubObject(widget)
             else:
                 widget = layout[widget_id]

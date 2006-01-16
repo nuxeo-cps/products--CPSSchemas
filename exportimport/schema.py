@@ -169,16 +169,17 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             if child.nodeName != 'field':
                 continue
             field_id = str(child.getAttribute('name'))
-            meta_type = str(child.getAttribute('meta_type'))
-            for mt in Products.meta_types:
-                if mt['name'] == meta_type:
-                    break
-            else:
-                raise ValueError("Unknown meta_type %r" % meta_type)
-
-            klass = mt['instance']
-            field = klass(field_id)
             if not schema.has_key(field_id):
+                meta_type = str(child.getAttribute('meta_type'))
+                for mt in Products.meta_types:
+                    if mt['name'] == meta_type:
+                        break
+                else:
+                    raise ValueError("Unknown meta_type %r" % meta_type)
+
+                klass = mt['instance']
+                field = klass(field_id)
+
                 field = schema.addSubObject(field)
             else:
                 field = schema[field_id]
