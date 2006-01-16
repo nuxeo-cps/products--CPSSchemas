@@ -613,7 +613,7 @@ class CPSCheckBoxWidget(CPSWidget):
        Deprecated, use CPS Boolean Widget !!!"""
     meta_type = 'CheckBox Widget'
 
-    field_types = ('CPS Int Field',)
+    field_types = ('CPS Boolean Field',)
 
     _properties = CPSWidget._properties + (
         {'id': 'display_true', 'type': 'string', 'mode': 'w',

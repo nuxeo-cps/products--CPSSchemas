@@ -79,6 +79,8 @@ class CPSIntField(CPSField):
     def validate(self, value):
         if isinstance(value, int):
             return value
+        if isinstance(value, bool):
+            return int(value)
         raise ValidationError('Not an integer: %s' % repr(value))
 
     def convertToLDAP(self, value):
@@ -98,7 +100,7 @@ class CPSIntField(CPSField):
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
         """
-        context.setNodeValue(node, str(value))
+        context.setNodeValue(node, str(int(value)))
 
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.

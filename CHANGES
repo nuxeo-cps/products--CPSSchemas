@@ -21,7 +21,7 @@ Bug fixes:
 - Fixed #671: The text area used for editing wiki pages should use monospaced
   font.
 - #1258: added a fallback value the Float field importer.
-
+- Made the Boolean Widget use a Boolean Field.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
