@@ -204,7 +204,7 @@ class CPSFloatField(CPSField):
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.
         """
-        text = context.getNodeValue(node)
+        text = context.getNodeValue(node) or "0.0"
         return float(text)
 
 InitializeClass(CPSFloatField)

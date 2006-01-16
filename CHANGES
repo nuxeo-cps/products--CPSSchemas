@@ -20,6 +20,8 @@ Bug fixes:
 - Fixed #616: Moving Text Widget to restructured text.
 - Fixed #671: The text area used for editing wiki pages should use monospaced
   font.
+- #1258: added a fallback value the Float field importer.
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - The Widget Types Tool has been removed. Widget code and registration
