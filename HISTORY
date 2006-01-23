@@ -1,4 +1,54 @@
 *******************************************
+** CPSSchemas V0.48.0 [R1 build 2006/01/23-17:30 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 31976
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Made CPS use the "semantic" plugin if FCKeditor is used. This Fixes #502.
+Bug fixes:
+~~~~~~~~~~
+- Search ZCText widget rendering was presenting a field selection even if
+  there was only one field available.
+- Moved the "EditorAreaCSS" property from the template popup_fckeditor_form.pt
+  to the FCKeditor config file ckconfig-cps.js. This will ease customization
+  that will only have to be done in the ckconfig-cps.js file.
+- #1143 removed dependency on CPSBoxes in the popup forms
+- #496: handling of empty values for Int and Float Widgets: None is now
+  stored if the widgets are not required and an empty string is entered
+- #1145: Made photo widget more robust.
+- #1188: Fixed boolean widget in checkbox mode.
+- Made the BooleanWidget return int values instead of string values.
+- Fixed #616: Moving Text Widget to restructured text.
+- Fixed #671: The text area used for editing wiki pages should use monospaced
+  font.
+- #1258: added a fallback value the Float field importer.
+- Made the Boolean Widget use a Boolean Field.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- The Widget Types Tool has been removed. Widget code and registration
+  gets simpler. The Compound Widget now also takes the role of the
+  previous Customizable Widget.
+- Previous standard Compound or Customizable widget types (Link Widget,
+  Text Image Widget, Image Link Widget, Search Widget, Search Location
+  Widget) are now defined in code using CPSProgrammerCompoundWidget.
+- The prepare/validate method of the Compound Widget has a new
+  'prevalidate' phase.
+- Removed unused 'sort_function' code of vocabularies.
+- added a singleton object FieldNamespace.fieldStorageNamespace to
+  register methods made available in read/write_process_expression of
+  Field objects. This is intended to be used by CPSDirectory to register
+  dirCross(G|S)etList methods in String List Fields (cross references
+  between directories).
+- RichTextEditorWidget is deprecated. TextWidget should be used instead.
+- Long Field and Long Widget are deprecated. Use the Int equivalents.
+- Float Widget's default decimal separator is now '.'
+- Added getReadableFieldIds method to storage adapters.
+- CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
+- Added a CSS file dedicated to CPSSchemas.
+
+*******************************************
 ** CPSSchemas V0.47.0 [R1 build 2005/11/08-16:55 by fguillaume]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 29274
 Requires:
