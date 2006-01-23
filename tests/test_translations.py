@@ -23,11 +23,12 @@ from Products.CPSI18n.tests.translations import TranslationsTestCase
 from Testing import ZopeTestCase
 import unittest
 
+product_name = [c for c in __name__.split('.') if c != 'Products'][0]
 
 class Test(TranslationsTestCase):
 
     def setUp(self):
-        self.product_name = 'CPSSchemas'
+        self.product_name = product_name
 
 def test_suite():
     loader = unittest.TestLoader()
