@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- For FCKeditor configuration, used the FontFormat menu item instead of the
+  Style menu item. Fixes #1285: Usability issue with titles.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Disabled the semantic plugin for FCKeditor by default.

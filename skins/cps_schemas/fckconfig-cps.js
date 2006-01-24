@@ -47,7 +47,7 @@ FCKConfig.SkinPath = FCKConfig.BasePath + 'fck_skins/default/' ;
 FCKConfig.PluginsPath = FCKConfig.BasePath + 'plugins/' ;
 
 //FCKConfig.Plugins.Add('placeholder', 'en,it');
-FCKConfig.Plugins.Add('semantic', 'en,fr');
+//FCKConfig.Plugins.Add('semantic', 'en,fr');
 
 // You can protect specific tags in source like script tags
 // using a reg exp
@@ -136,19 +136,22 @@ FCKConfig.ToolbarSets["SmallZopeCmf"] = [
 ] ;
 
 // The semantic toolbar using the "semantic" plugin
+// FCKConfig.ToolbarSets['Semantic'] = [
+//     ['Italic','Bold','Lang','Abbr','Acronym','Cite','Q','FontFormat'],
+//     ['-','OrderedList','UnorderedList','-','Link','Unlink'],
+//     ['Image','Table','Rule'],
+//     '/',
+//     ['RemoveFormat','Undo','Redo','Source']
+// ] ;
+
+// The semantic toolbar without the "semantic" plugin
 FCKConfig.ToolbarSets['Semantic'] = [
-    ['Italic','Bold','Lang','Abbr','Acronym','Cite','Q','Style'],
+    ['Italic','Bold','FontFormat'],
     ['-','OrderedList','UnorderedList','-','Link','Unlink'],
     ['Image','Table','Rule'],
     '/',
     ['RemoveFormat','Undo','Redo','Source']
 ] ;
-
-// The semantic toolbar without the "semantic" plugin
-// FCKConfig.ToolbarSets['Semantic'] = [
-//     ['Italic','Bold','Style','-','OrderedList','UnorderedList','-','Link','Unlink','-','Style'],
-//     ['RemoveFormat','Undo','Redo','Source']
-// ] ;
 
 FCKConfig.ToolbarSets["Basic"] = [
 	['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','About']
