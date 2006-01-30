@@ -14,3 +14,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Disabled the semantic plugin for FCKeditor by default.
+- Flash Animation Widget refactoring needed for using it in a flexible document

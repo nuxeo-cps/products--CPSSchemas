@@ -364,7 +364,7 @@ class TestWidgets(unittest.TestCase):
         from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
         widget = CPSFlashWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
-        self.assertEquals(widget.getFieldTypes(), ('CPS File Field',))
+        self.assertEquals(widget.getFieldTypes(), ('CPS File Field', 'CPS String Field', 'CPS File Field'))
 
     def test_getCssClass(self):
         # create a bare widget, and set it in the portal to be able to create

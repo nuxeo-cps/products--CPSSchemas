@@ -51,8 +51,30 @@ class FakeFieldStorage:
         self.headers = headers or {}
     def read(self, n):
         return self.file.read(n)
-    def seek(self, n):
-        return self.file.seek(n)
+    def seek(self, n, m):
+        return self.file.seek(n, m)
+
+class FakeAdapter(object):
+    def __init__(self, schema):
+        self.schema = schema
+    def getSchema(self):
+        return self.schema
+    def _getContentUrl(self, a, b, c=None):
+        return 'http://url for %s %s %s' % (a, b, c)
+
+class FakeDataModel(dict):
+    _adapters = None
+    proxy = None
+    context = None
+    def __init__(self, dm=None):
+        if dm is not None:
+            self.update(dm)
+    def getProxy(self):
+        return self.proxy
+    def getObject(self):
+        return self.proxy
+    def getContext(self):
+        return self.context
 
 class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
@@ -572,14 +594,19 @@ class FlashWidgetValidationTest(WidgetValidationTest):
 
     widget_type = CPSFlashWidget
 
-    data = open(TEST_SWF, 'r').read()
-    f = File('fake', '', data)
+    f = open(TEST_SWF, 'r')
     default_value = FileUpload(FakeFieldStorage(f, 'test.swf'))
+    default_value._p_mtime = ''
 
     def _validate(self, properties, value):
         id = 'ff'
-        data = {id: value}
-        ds = DataStructure(data, datamodel=data)
+        choice = 'change'
+        title = 'title'
+        
+        data = {id: value, id+'_choice': choice, id+'_title': title}
+        dm = FakeDataModel(data)
+        dm._adapters = [FakeAdapter({id: 'foo'})]
+        ds = DataStructure(data, datamodel=dm)
         properties.update({'fields': (id,),})
         
         folder = Folder()

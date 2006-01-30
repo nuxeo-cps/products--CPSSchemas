@@ -1465,32 +1465,40 @@ widgetRegistry.register(CPSSubjectWidget)
 
 ##################################################
 
-class CPSFlashWidget(CPSFileWidget):
+class CPSFlashWidget(CPSAttachedFileWidget):
     """Flash Widget.
     """
     meta_type = 'Flash Widget'
 
+    field_types = ('CPS File Field',   # File
+                   'CPS String Field', # Caption (optional)
+                   'CPS File Field')   # Preview (optional)
+    field_inits = ({'is_searchabletext': 0,
+                    'suffix_text': '_f1', # _f# are autocomputed field ext
+                    'suffix_html': '_f2'},
+                   {'is_searchabletext': 1}, {},
+                   )
+
     def _flash_validate(self, datastructure, **kw):
         """Check that this is a Flash animation
         """
-        file = datastructure[self.getWidgetId()]
-        if file is not None:
-            fileid = cookId('', '', file)[0].strip()
-            if not fileid:
-                fileid = 'file.bin'
-            registry = getToolByName(self, 'mimetypes_registry')
-            mimetype = registry.lookupExtension(fileid.lower())
-            cond = mimetype == 'application/x-shockwave-flash'
-            if not cond:
-                datastructure.setError(self.getWidgetId(),
-                                       'cpsschemas_err_file')
-                return False
+        widget_id = self.getWidgetId()
+        choice = datastructure[widget_id+'_choice']
+        if choice == 'change':
+            fileinfo = self.getFileInfo(datastructure)
+            if fileinfo is not None:
+                LOG('CPSFlashWidget', DEBUG, 'file %s' % fileinfo)
+                cond = fileinfo['mimetype'] == 'application/x-shockwave-flash'
+                if not cond:
+                    datastructure.setError(self.getWidgetId(),
+                                           'cpsschemas_err_file')
+                    return False
         return True
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel.
         """
-        return (CPSFileWidget.validate(self, datastructure, **kw) and
+        return (CPSAttachedFileWidget.validate(self, datastructure, **kw) and
                 self._flash_validate(datastructure, **kw))
 
     def render(self, mode, datastructure, **kw):
