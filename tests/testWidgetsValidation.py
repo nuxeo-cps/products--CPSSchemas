@@ -7,6 +7,9 @@ import unittest
 
 from Acquisition import Implicit
 from OFS.Image import File
+from OFS.Folder import Folder
+
+from ZPublisher.HTTPRequest import FileUpload
 
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
@@ -21,6 +24,7 @@ TEST_SWF = os.path.join(cpsschemas_tests.__path__[0], 'test.swf')
 
 from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
 
+
 class FakePortal(Implicit):
     pass
 fakePortal = FakePortal()
@@ -29,6 +33,26 @@ class FakeTranslationService:
     def getSelectedLanguage(self):
         return 'fr'
 fakePortal.translation_service = FakeTranslationService()
+
+class FakeMimeTypeRegistry(Implicit):
+    def lookupExtension(self, name):
+        mimetypes = {}
+        mimetypes['SWF'] = 'application/x-shockwave-flash'
+        extension = name[name.rfind('.')+1:].upper()
+        if extension in mimetypes:
+            return mimetypes[extension]
+        else:
+            return 'testlookup/'+name[name.rfind('.')+1:].upper()
+
+class FakeFieldStorage:
+    def __init__(self, file, filename, headers=None):
+        self.file = file
+        self.filename = filename
+        self.headers = headers or {}
+    def read(self, n):
+        return self.file.read(n)
+    def seek(self, n):
+        return self.file.seek(n)
 
 class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
@@ -548,20 +572,19 @@ class FlashWidgetValidationTest(WidgetValidationTest):
 
     widget_type = CPSFlashWidget
 
-    folder = Folder()
-    folder.mimetypes_registry = FakeMimeTypeRegistry()
-
     data = open(TEST_SWF, 'r').read()
-    default_value = File('fake', '', data)
-    # XXX: this should be changed as it's no longer the way FlashWidget 
-    # checks the content_type
-    default_value.content_type = 'application/x-shockwave-flash'
+    f = File('fake', '', data)
+    default_value = FileUpload(FakeFieldStorage(f, 'test.swf'))
 
     def _validate(self, properties, value):
         id = 'ff'
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,),})
+        
+        folder = Folder()
+        folder.mimetypes_registry = FakeMimeTypeRegistry()
+        
         widget = self.widget_type(id, **properties).__of__(folder)
 
         # Just test the internal validation related to swf
