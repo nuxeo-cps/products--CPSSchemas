@@ -8,6 +8,9 @@ Bug fixes:
 ~~~~~~~~~~
 - For FCKeditor configuration, used the FontFormat menu item instead of the
   Style menu item. Fixes #1285: Usability issue with titles.
+- Fix File Widget's validate function: bad definition for checkFileName 
+  function
+- Fixed #1309: Error when creating Flash Animation object
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Disabled the semantic plugin for FCKeditor by default.

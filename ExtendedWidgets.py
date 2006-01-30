@@ -1475,7 +1475,12 @@ class CPSFlashWidget(CPSFileWidget):
         """
         file = datastructure[self.getWidgetId()]
         if file is not None:
-            cond = file.getContentType() == 'application/x-shockwave-flash'
+            fileid = cookId('', '', file)[0].strip()
+            if not fileid:
+                fileid = 'file.bin'
+            registry = getToolByName(self, 'mimetypes_registry')
+            mimetype = registry.lookupExtension(fileid.lower())
+            cond = mimetype == 'application/x-shockwave-flash'
             if not cond:
                 datastructure.setError(self.getWidgetId(),
                                        'cpsschemas_err_file')
@@ -1507,7 +1512,7 @@ class CPSFlashWidget(CPSFileWidget):
         if file is not None:
             try:
                 file_info.update(analyseContent(
-                    str(file.data), file_info['size']))
+                    str(file.read()), file_info['size']))
             except TypeError:
                 pass
 

@@ -1644,7 +1644,7 @@ class CPSFileWidget(CPSWidget):
         # Remove costly things already stored from the datastructure
         del datastructure[self.getWidgetId()]
 
-    def checkFileName(self, fileid):
+    def checkFileName(self, fileid, mimetype):
         return '', {}
 
     def makeFile(self, fileid, fileupload, datastructure):
