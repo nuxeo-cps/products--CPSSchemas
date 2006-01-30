@@ -548,8 +548,13 @@ class FlashWidgetValidationTest(WidgetValidationTest):
 
     widget_type = CPSFlashWidget
 
+    folder = Folder()
+    folder.mimetypes_registry = FakeMimeTypeRegistry()
+
     data = open(TEST_SWF, 'r').read()
     default_value = File('fake', '', data)
+    # XXX: this should be changed as it's no longer the way FlashWidget 
+    # checks the content_type
     default_value.content_type = 'application/x-shockwave-flash'
 
     def _validate(self, properties, value):
@@ -557,7 +562,7 @@ class FlashWidgetValidationTest(WidgetValidationTest):
         data = {id: value}
         ds = DataStructure(data, datamodel=data)
         properties.update({'fields': (id,),})
-        widget = self.widget_type(id, **properties)
+        widget = self.widget_type(id, **properties).__of__(folder)
 
         # Just test the internal validation related to swf
         ret = widget._flash_validate(ds)
