@@ -15,3 +15,5 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Disabled the semantic plugin for FCKeditor by default.
 - Flash Animation Widget refactoring needed for using it in a flexible document
+- Added Byline Widget which will be used in folder_contents instead of the 
+  byline macro
