@@ -2046,31 +2046,13 @@ class CPSBylineWidget(CPSWidget):
     """Byline widget showing credentials and document status."""
     meta_type = 'Byline Widget'
 
-    field_types = ('CPS String Field',)
-    field_inits = ({'is_searchabletext': 0,},)
-
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
-        datamodel = datastructure.getDataModel()
-        if len(self.fields):
-            datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
-        else:
-            datastructure[self.getWidgetId()] = None
-    
+        pass
+            
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        widget_id = self.getWidgetId()
-        err = 0
-        v = datastructure[widget_id]
-        if err:
-            datastructure.setError(widget_id, err)
-            datastructure[widget_id] = v
-        else:
-            datamodel = datastructure.getDataModel()
-            if len(self.fields):
-                datamodel[self.fields[0]] = v
-
-        return not err
+        return 1
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
