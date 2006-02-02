@@ -2061,7 +2061,10 @@ class CPSBylineWidget(CPSWidget):
         """Render in mode from datastructure."""
         datamodel = datastructure.getDataModel()
         # get the object containing this widget
-        value = datamodel.getObject().aq_inner.aq_parent
+        if datamodel.getObject():
+            value = datamodel.getObject().aq_inner.aq_parent
+        else:
+            value = None
         render_method = 'widget_byline_render'
         meth = getattr(self, render_method, None)
         if meth is None:
