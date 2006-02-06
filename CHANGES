@@ -11,6 +11,8 @@ Bug fixes:
 - Fix File Widget's validate function: bad definition for checkFileName 
   function
 - Fixed #1309: Error when creating Flash Animation object
+- Fixed #1361: Error when trying to select an vocabulary without first 
+  selecting it's id
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Disabled the semantic plugin for FCKeditor by default.
