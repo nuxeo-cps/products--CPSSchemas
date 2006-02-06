@@ -79,7 +79,7 @@ class VocabulariesTool(UniqueObject, IFAwareObjectManager, Folder):
             return getLocalVocContainer(context).getVocabulary(voc_id)
 
     # BBB for old installers/importers, will be removed in CPS 3.5
-    security.declarePrivate('manage_addCPSVocabulary')
+    security.declareProtected(ManagePortal, 'manage_addCPSVocabulary')
     def manage_addCPSVocabulary(self, id, meta_type='CPS Vocabulary', **kw):
         import Products
         for mt in Products.meta_types:
