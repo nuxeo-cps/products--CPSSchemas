@@ -6,7 +6,6 @@
                    isAnon mtool/isAnonymousUser;
                   ">
 <tal:block condition="python: mode == 'view'">
-  <div style="padding:0px 0px 10px 10px;">
   <small>
   <tal:block condition="not:isAnon"
     define="
@@ -44,6 +43,5 @@
     <tal:block content="python:here.getDateStr(doc.modification_date, 'medium')"/>
   </tal:block>
   </small>
-  </div>
 </tal:block>
 </tal:block>
