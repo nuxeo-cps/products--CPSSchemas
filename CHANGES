@@ -14,6 +14,7 @@ Bug fixes:
 - Fixed #1361: Error when trying to select an vocabulary without first 
   selecting it's id
 - Fixed #1367: wrong security for manage_addCPSVocabulary
+- Fixed #1374: addink Link to a flexible document produced error
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Disabled the semantic plugin for FCKeditor by default.
