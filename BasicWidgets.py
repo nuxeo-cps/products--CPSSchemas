@@ -487,7 +487,7 @@ class CPSHeadingWidget(CPSStringWidget):
             dm = datastructure.getDataModel()
             obj = dm.getObject()
             kw = {'contents': value,
-                  'style': 'background:url(%s) no-repeat 0px 0px' % obj.getIcon(1)}
+                  'style': 'background:url(%s) no-repeat 0px 4px' % obj.getIcon(1)}
             return renderHtmlTag('h%s' % self.level, **kw)
         return CPSStringWidget.render(self, mode, datastructure, **kw)
 
