@@ -10,7 +10,7 @@
   content_url options/content_url;
   last_modified options/last_modified;
   ">
-  <div tal:condition="python: mode == 'view' and not empty_file">
+  <tal:block condition="python: mode == 'view' and not empty_file">
     <metal:block use-macro="here/widget_file_render/macros/file_view" />
     <span tal:define="ds options/datastructure;
                       dm ds/getDataModel;
@@ -31,7 +31,7 @@
         (printable version)
       </a>
     </span>
-  </div>
+  </tal:block>
 
   <tal:block condition="python: mode == 'edit'">
 
