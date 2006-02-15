@@ -539,10 +539,10 @@ msgid "cpsschemas_label_searchsort_relevance"
 msgstr "relevance"
 
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "antechronologic"
+msgstr "date (reversed)"
 
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "chronological"
+msgstr "date"
 
 msgid "cpsschemas_label_searchsort_expires"
 msgstr "expiration date"
@@ -557,7 +557,7 @@ msgid "cpsschemas_label_searchsort_relative_path"
 msgstr "location"
 
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "type of document"
+msgstr "document type"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id already exist, choose another one."

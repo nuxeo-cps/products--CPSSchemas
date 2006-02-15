@@ -525,25 +525,25 @@ msgid "cpsschemas_label_modified_since_1"
 msgstr "depuis hier"
 
 msgid "cpsschemas_label_modified_since_30"
-msgstr "au cours du mois"
+msgstr "depuis un mois"
 
 msgid "cpsschemas_label_modified_since_91"
-msgstr "au cours des 3 derniers mois"
+msgstr "depuis 3 mois"
 
 msgid "cpsschemas_label_modified_since_182"
-msgstr "au cours des 6 derniers mois"
+msgstr "depuis 6 mois"
 
 msgid "cpsschemas_label_modified_since_365"
-msgstr "depuis un an"
+msgstr "depuis 1 an"
 
 msgid "cpsschemas_label_searchsort_relevance"
 msgstr "pertinence"
 
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "antechronologique"
+msgstr "date (inversée)"
 
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "chronologique"
+msgstr "date"
 
 msgid "cpsschemas_label_searchsort_expires"
 msgstr "date d'expiration"
