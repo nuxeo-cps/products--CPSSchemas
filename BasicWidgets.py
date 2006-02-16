@@ -670,7 +670,7 @@ widgetRegistry.register(CPSCheckBoxWidget)
 ##################################################
 # Warning textarea widget code is back to r1.75
 # refactored textarea with position and format is now located in
-# ExtendWidgets and named CPSTextWidget
+# ExtendedWidgets and named CPSTextWidget
 
 class CPSTextAreaWidget(CPSWidget):
     """TextArea widget."""
