@@ -118,7 +118,9 @@ class FloatWidgetValidationTest(WidgetValidationTest):
         self.assert_(ret, err)
 
     def test_float_nok_1(self):
-        ret, err, ds = self._validate({}, '12345,803')
+        # this would work with locale fr_FR et etc/zope.conf...
+        # ret, err, ds = self._validate({}, '12345,803')
+        ret, err, ds = self._validate({}, '12345;803')
         self.assert_(err)
 
     def test_float_nok_2(self):
