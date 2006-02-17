@@ -2,8 +2,7 @@
   id here/getWidgetId;
   value_name here/getHtmlWidgetId;
   fields here/fields;
-  current_name options/current_name;
-  current_title options/current_title;
+  current_filename options/current_filename;
   empty_file options/empty_file;
   session_file options/session_file;
   mimetype options/mimetype;
@@ -88,8 +87,7 @@
     </tal:block>
 
     <tal:block condition="python:len(fields) > 2 and 'position' in configurable">
-      <p tal:define="name here/getHtmlWidgetId;
-                     title_name string:${name}_title;">
+      <p tal:define="name here/getHtmlWidgetId">
         <span i18n:translate="cpsschemas_render_position">
           Render position
         </span>

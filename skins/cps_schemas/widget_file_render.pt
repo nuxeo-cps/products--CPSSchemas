@@ -1,7 +1,6 @@
 <tal:block define="mode options/mode;
   id here/getWidgetId;
-  current_name options/current_name;
-  current_title options/current_title;
+  current_filename options/current_filename;
   empty_file options/empty_file;
   session_file options/session_file;
   mimetype options/mimetype;
@@ -18,7 +17,7 @@
           title=mimetype.name())" /></a>
       <a class="strong"
         tal:attributes="href string:${content_url}?nocache=${last_modified}">
-        <tal:block replace="current_title" /></a>
+        <tal:block replace="current_filename" /></a>
       <span tal:condition="size" class="note"
         tal:define="str_size python:here.getHumanReadableSize(size);">
         <tal:block content="str_size"/>
@@ -42,7 +41,7 @@
 
     <metal:block define-macro="file_title_edit">
       <p tal:define="name here/getHtmlWidgetId;
-                     title_name string:${name}_title;">
+                     title_name string:${name}_filename;">
         <metal:block define-slot="label_title">
         <span i18n:translate="label_title">
           The title
@@ -50,7 +49,7 @@
         </metal:block>
         <input style="margin-left: 5px" type="text" size="30" maxlength="80"
                tal:attributes="name title_name;
-                               value current_title" />
+                               value current_filename" />
       </p>
     </metal:block>
 
@@ -78,7 +77,7 @@
               <tal:block condition="mimetype"
                 replace="structure python:here.getImgTag(mimetype.icon_path,
                   title=mimetype.name())" />
-              <tal:block replace="current_name" />
+              <tal:block replace="current_filename" />
             </a>
             <tal:block condition="python:not empty_file and not session_file and modules['Products.CPSUtil.integration'].isProductPresent('Products.ExternalEditor')">
               <tal:block define="ds options/datastructure;

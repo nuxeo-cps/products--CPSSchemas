@@ -610,8 +610,7 @@ function getLayoutMode() {
         self.assertEquals(file_info, {
             'empty_file': False,
             'session_file': False,
-            'current_name': 'thefilename.txt',
-            'current_title': 'thetitle',
+            'current_filename': 'thefilename.txt',
             'size': len('thefilecontent'),
             'last_modified': '',
             'content_url': 'http://url for someproxy bar thefilename.txt',
@@ -627,8 +626,7 @@ function getLayoutMode() {
         self.assertEquals(file_info, {
             'empty_file': False,
             'session_file': False,
-            'current_name': 'thefilename.txt',
-            'current_title': 'thetitle',
+            'current_filename': 'thefilename.txt',
             'size': len('thefilecontent'),
             'last_modified': '',
             'content_url': 'http://url for someentry bar None',
@@ -639,70 +637,82 @@ function getLayoutMode() {
 
     def test_CPSFileWidget_validate(self):
         from Products.CPSSchemas.BasicWidgets import CPSFileWidget
-        widget = CPSFileWidget('foo')
+        from Products.CPSUtil.file import makeFileUploadFromOFSFile
+        from Products.CPSUtil.file import persistentFixup
+
+        folder = Folder()
+        widget = CPSFileWidget('foo').__of__(folder)
+        folder.mimetypes_registry = FakeMimeTypeRegistry()
+
         widget.fields = ['bar']
         dm = {}
         ds = FakeDataStructure(dm)
 
-        return # XXXXXXXXXXXXXXXXXXX will be revisited later
-
-        # Initial change
+        # Initial upload
+        dm['bar'] = None
         ds['foo_choice'] = 'change'
         f = StringIO('filecontent')
         fu = FileUpload(FakeFieldStorage(f, 'thefilename.txt'))
         ds['foo'] = fu
-        ds['foo_title'] = 'filetitle'
-        ds['foo_filename'] = 'unusedfilename'
+        ds['foo_filename'] = 'somefilename.txt'
         res = widget.validate(ds)
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].getId(), 'thefilename.txt')
-        self.assertEquals(dm['bar'].title, 'thefilename.txt') # XXX filetitle
+        self.assertEquals(dm['bar'].getId(), 'bar')
+        self.assertEquals(dm['bar'].title, 'somefilename.txt')
         self.assertEquals(str(dm['bar']), 'filecontent')
 
-        # Change info about file
+        # Change filename (stored in File title)
+        ds['foo'] = makeFileUploadFromOFSFile(dm['bar']) # prepare
         ds['foo_choice'] = 'keep'
-        ds['foo_title'] = 'newtitle'
         ds['foo_filename'] = 'newfilename.doc'
         res = widget.validate(ds)
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].getId(), 'thefilename.txt')
-        self.assertEquals(dm['bar'].title, 'newtitle')
+        self.assertEquals(dm['bar'].title, 'newfilename.txt') # keeps old ext
         self.assertEquals(str(dm['bar']), 'filecontent')
+        # datastructure doesn't retain the fileupload, which we don't need
+        # to save in session as it's unchanged from ZODB data
+        self.failIf('foo' in ds, ds.keys())
 
-        # Change just info but after a session was saved
-        ds['restored_items'] = {'foo': File('id1', 't1', 'content')}
+        # Change filename (stored in File title) after validation error
+        # which kept the file in the session
+        ds['foo'] = makeFileUploadFromOFSFile(dm['bar']) # prepare
+        persistentFixup(ds) # prepare was from session
         ds['foo_choice'] = 'keep'
-        ds['foo_title'] = 'othertitle'
-        ds['foo_filename'] = 'newfilename.doc'
+        ds['foo_filename'] = 'okfilename.doc'
         res = widget.validate(ds)
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].getId(), 'thefilename.txt') # XXX
-        self.assertEquals(dm['bar'].title, 'othertitle')
-        self.assertEquals(str(dm['bar']), 'filecontent') # XXX 'content'
+        self.assertEquals(dm['bar'].title, 'okfilename.txt') # keeps old ext
+        self.assertEquals(str(dm['bar']), 'filecontent')
+        # datastructure has the fileupload, which is not the same
+        # as ZODB data so has to be saved in session if needed
+        self.assert_('foo' in ds, ds.keys())
 
-        # Change the whole file after a session was saved
-        ds['restored_items'] = {'foo': File('id2', 't2', 'anothercontent')}
+        # Upload new file without filename change
         ds['foo_choice'] = 'change'
-        f = StringIO('mycontent')
-        fu = FileUpload(FakeFieldStorage(f, 'filename.txt'))
+        f = StringIO('tous les hommes naissent...')
+        fu = FileUpload(FakeFieldStorage(f, 'declaration.txt'))
         ds['foo'] = fu
-        ds['foo_title'] = 'anothertitle'
-        ds['foo_filename'] = 'anewfilename.doc'
+        ds['foo_filename'] = 'okfilename.txt' # unchanged from previous
         res = widget.validate(ds)
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].getId(), 'filename.txt')
-        self.assertEquals(dm['bar'].title, 'filename.txt') # XXX 'anothertitle'
-        self.assertEquals(str(dm['bar']), 'mycontent')
+        self.assertEquals(dm['bar'].title, 'declaration.txt')
+        self.assertEquals(str(dm['bar']), 'tous les hommes naissent...')
 
-        # Delete a file after a session was saved
+        # Delete
+        ds['foo_choice'] = 'delete'
+        ds['foo'] = None
+        res = widget.validate(ds)
+        self.assert_(res)
+        self.assertEquals(dm.keys(), ['bar'])
+        self.assertEquals(dm['bar'], None)
 
 
 def test_suite():

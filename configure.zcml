@@ -1,8 +1,17 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope">
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:cps="http://namespaces.nuxeo.org/cps">
 
   <include file="schema.zcml" />
   <include file="layout.zcml" />
   <include file="vocabulary.zcml" />
+
+  <!-- CPS 3.4.0 upgrades -->
+
+  <cps:upgradeStep
+      title="Fix attached file names"
+      source="3.3.8" destination="3.4.0"
+      handler=".upgrade.fix_338_340_attached_files"
+      />
 
 </configure>

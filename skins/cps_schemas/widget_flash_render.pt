@@ -1,7 +1,6 @@
 <tal:block define="mode options/mode;
   id here/getWidgetId;
-  current_name options/current_name;
-  current_title options/current_title;
+  current_filename options/current_filename;
   empty_file options/empty_file;
   session_file options/session_file;
   mimetype options/mimetype;
@@ -46,7 +45,7 @@
 
     <metal:block define-macro="file_title_edit">
       <p tal:define="name here/getHtmlWidgetId;
-                     title_name string:${name}_title;">
+                     title_name string:${name}_filename;">
         <metal:block define-slot="label_title">
         <span i18n:translate="label_title">
           The title
@@ -54,9 +53,9 @@
         </metal:block>
         <input style="margin-left: 5px" type="text" size="30" maxlength="80"
                tal:attributes="name title_name;
-                               value current_title" />
+                               value current_filename" />
         <input type="hidden" tal:attributes="name string:${name}_filename;
-                                             value current_name" />
+                                             value current_filename" />
       </p>
     </metal:block>
 
@@ -84,7 +83,7 @@
               <tal:block condition="mimetype"
                 replace="structure python:here.getImgTag(mimetype.icon_path,
                   title=mimetype.name())" />
-              <tal:block replace="current_name" />
+              <tal:block replace="current_filename" />
             </a>
 
           </metal:block>

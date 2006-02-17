@@ -1527,12 +1527,13 @@ class CPSFileWidget(CPSWidget):
 
     The DataStructure stores either a FileUpload or None.
 
-    A FileUpload itself has a filename. In addition, the DataStructure
-    hold a title.
+    A FileUpload itself has a filename.
 
-    When stored in the DataModel, the filename is used as File id
-    and the title as File title.
+    When stored in the DataModel, the filename is stored as the File
+    title. The File id is fixed to the id under which its parent
+    container knows it.
     """
+
     meta_type = 'File Widget'
 
     field_types = ('CPS File Field',)
@@ -1560,8 +1561,7 @@ class CPSFileWidget(CPSWidget):
         if fileupload:
             empty_file = False
             session_file = isinstance(fileupload, PersistableFileUpload)
-            current_name = cleanFileName(fileupload.filename)
-            current_title = datastructure[widget_id + '_title']
+            current_filename = cleanFileName(fileupload.filename)
             fileupload.seek(0, 2) # end of file
             size = fileupload.tell()
             fileupload.seek(0)
@@ -1573,8 +1573,7 @@ class CPSFileWidget(CPSWidget):
         else:
             empty_file = True
             session_file = False
-            current_name = ''
-            current_title = ''
+            current_filename = ''
             size = 0
             last_modified = ''
 
@@ -1610,18 +1609,18 @@ class CPSFileWidget(CPSWidget):
                 if getattr(adapter, '_getContentUrl', None) is not None:
                     content_url = adapter._getContentUrl(entry_id, field_id)
         else:
-            content_url = adapter._getContentUrl(ob, field_id, current_name)
+            content_url = adapter._getContentUrl(ob, field_id,
+                                                 current_filename)
 
         # get the mimetype
         registry = getToolByName(self, 'mimetypes_registry')
-        mimetype = (registry.lookupExtension(current_name.lower()) or
+        mimetype = (registry.lookupExtension(current_filename.lower()) or
                     registry.lookupExtension('file.bin'))
 
         file_info = {
             'empty_file': empty_file,
             'session_file': session_file,
-            'current_name': current_name,
-            'current_title': current_title,
+            'current_filename': current_filename,
             'size': size,
             'last_modified': last_modified,
             'content_url': content_url,
@@ -1641,28 +1640,50 @@ class CPSFileWidget(CPSWidget):
             title = file.title
         else:
             title = ''
-        datastructure[widget_id + '_title'] = title
+        datastructure[widget_id + '_filename'] = title
 
     def unprepare(self, datastructure):
         # Remove costly things already stored from the datastructure
         del datastructure[self.getWidgetId()]
 
-    def checkFileName(self, fileid, mimetype):
+    def getFileName(self, fileupload, datastructure, choice, old_filename=''):
+        filename = datastructure[self.getWidgetId()+'_filename'].strip()
+        if choice == 'change' and filename == old_filename:
+            # if upload with input field unchanged, use fileupload filename
+            filename = cookId('', '', fileupload)[0].strip()
+        filename = cleanFileName(filename or 'file.bin')
+        # Keep old extension
+        if '.' in old_filename:
+            old_ext = old_filename[old_filename.rfind('.'):]
+            if not filename.endswith(old_ext):
+                if '.' in filename:
+                    filename = filename[:filename.rfind('.')]
+                filename += old_ext
+        return filename
+
+    def checkFileName(self, filename, mimetype):
         return '', {}
 
-    def makeFile(self, fileid, fileupload, datastructure):
-        return File(fileid, fileid, fileupload)
+    def makeFile(self, filename, fileupload, datastructure):
+        return File(self.fields[0], filename, fileupload)
 
     def otherProcessing(self, choice, datastructure):
         return
 
     def validate(self, datastructure, **kw):
-        """Update datamodel from user data in datastructure."""
+        """Update datamodel from user data in datastructure.
+        """
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
         choice = datastructure[widget_id+'_choice']
         store = False
+        fileupload = None
+        old_file = datamodel[field_id]
+        if old_file is not None:
+            old_filename = old_file.title
+        else:
+            old_filename = ''
 
         if choice == 'delete':
             if self.is_required:
@@ -1677,7 +1698,8 @@ class CPSFileWidget(CPSWidget):
                 store = True
             else:
                 # Nothing to change, don't pollute datastructure
-                # with something costly already stored
+                # with something costly already stored, which therefore
+                # doesn't need to be kept in the session.
                 self.unprepare(datastructure)
         elif choice == 'change':
             fileupload = datastructure[widget_id]
@@ -1701,35 +1723,30 @@ class CPSFileWidget(CPSWidget):
 
         self.otherProcessing(choice, datastructure)
 
+        # Find filename
+        if fileupload is not None:
+            filename = self.getFileName(fileupload, datastructure, choice,
+                                        old_filename)
+            if filename != old_filename:
+                registry = getToolByName(self, 'mimetypes_registry')
+                mimetype = str(registry.lookupExtension(filename.lower()))
+                err, err_mapping = self.checkFileName(filename, mimetype)
+                if err:
+                    return self.validateError(err, err_mapping, datastructure)
+
+        # Set/update data
         if store:
-            # Find file id
-            fileupload.seek(0)
-            fileid = cookId('', '', fileupload)[0].strip()
-            if not fileid:
-                fileid = 'file.bin'
-            registry = getToolByName(self, 'mimetypes_registry')
-            mimetype = registry.lookupExtension(fileid.lower())
-            err, err_mapping = self.checkFileName(fileid, mimetype)
-            if err:
-                return self.validateError(err, err_mapping, datastructure)
             # Create file
-            file = self.makeFile(fileid, fileupload, datastructure)
+            file = self.makeFile(filename, fileupload, datastructure)
             # Fixup mimetype
-            if mimetype and file.content_type != mimetype.normalized():
-                file.content_type = mimetype.normalized()
+            if mimetype and file.content_type != mimetype:
+                file.content_type = mimetype
             # Store
             datamodel[field_id] = file
-
-        # Update title
-
-        file = datamodel[field_id]
-        if file is not None and choice != 'change':
-            title = datastructure[widget_id + '_title'].strip()
-            if not title:
-                title = file.getId()
-            title = cleanFileName(title)
-            if title != file.title:
-                file.title = title
+        elif datamodel[field_id] is not None:
+            # Change filename
+            if datamodel[field_id].title != filename:
+                datamodel[field_id].title = filename
 
         return True
 
@@ -1811,7 +1828,7 @@ class CPSImageWidget(CPSFileWidget):
                     width = int(zoom * width)
                     height = int(zoom * height)
 
-            title = image_info['current_title']
+            title = image_info['current_filename']
             alt = title or ''
             if height is None or width is None:
                 tag = renderHtmlTag('img', src=image_info['content_url'],
@@ -1826,7 +1843,7 @@ class CPSImageWidget(CPSFileWidget):
         image_info['image_tag'] = tag
         return image_info
 
-    def getResizedImage(self, file, fileid, filetitle, resize_op):
+    def getResizedImage(self, file, filename, resize_op):
         """Get the resized image from information in datastructure"""
         file = StringIO(str(file.data)) # XXX use OFSFileIO
         size = (self.display_width,
@@ -1849,8 +1866,8 @@ class CPSImageWidget(CPSFileWidget):
             except (NameError, IOError, ValueError, SystemError):
                 LOG('CPSImageWidget', PROBLEM,
                     "Failed to resize file %s keep original" \
-                    % fileid)
-        image = Image(fileid, filetitle, file)
+                    % filename)
+        image = Image(self.fields[0], filename, file)
         return image
 
     def prepare(self, datastructure, **kw):
@@ -1862,16 +1879,16 @@ class CPSImageWidget(CPSFileWidget):
     def maybeKeepOriginal(self, image, datastructure):
         return
 
-    def makeFile(self, fileid, fileupload, datastructure):
-        image = Image(fileid, fileid, fileupload)
+    def makeFile(self, filename, fileupload, datastructure):
+        image = Image(self.fields[0], filename, fileupload)
         if self.allow_resize:
             self.maybeKeepOriginal(image, datastructure)
             resize_op = datastructure[self.getWidgetId() + '_resize']
-            image = self.getResizedImage(image, fileid, fileid, resize_op)
+            image = self.getResizedImage(image, filename, resize_op)
         return image
 
-    def checkFileName(self, fileid, mimetype):
-        if mimetype and mimetype.normalized().startswith('image'):
+    def checkFileName(self, filename, mimetype):
+        if mimetype and mimetype.startswith('image'):
             return '', {}
         return 'cpsschemas_err_image', {}
 

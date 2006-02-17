@@ -750,7 +750,7 @@ class CPSPhotoWidget(CPSImageWidget):
 
         fileid = original_image.getId()
         resize_op = datastructure[widget_id + '_resize_kept']
-        image = self.getResizedImage(original_image, fileid, fileid, resize_op)
+        image = self.getResizedImage(original_image, fileid, resize_op)
         datamodel[self.fields[0]] = image
 
     def canKeepOriginal(self):
