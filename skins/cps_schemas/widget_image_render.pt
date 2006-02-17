@@ -61,7 +61,7 @@
                 i18n:translate=""
                 ><span tal:replace="op/id" /> <span tal:condition="op/size"
                   i18n:name="dim"
-                  tal:content="python:'(%sx%s)' % op['size']">
+                  tal:replace="python:'(%sx%s)' % op['size']">
                   640x480</span></option>
             </select>
           </tal:block>
