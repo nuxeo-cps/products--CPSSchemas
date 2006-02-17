@@ -6,20 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- For FCKeditor configuration, used the FontFormat menu item instead of the
-  Style menu item. Fixes #1285: Usability issue with titles.
-- Fix File Widget's validate function: bad definition for checkFileName 
-  function
-- Fixed #1309: Error when creating Flash Animation object
-- Fixed #1361: Error when trying to select an vocabulary without first 
-  selecting it's id
-- Fixed #1367: wrong security for manage_addCPSVocabulary
-- Fixed #1374: addink Link to a flexible document produced error
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Disabled the semantic plugin for FCKeditor by default.
-- Flash Animation Widget refactoring needed for using it in a flexible document
-- Added Byline Widget which will be used in folder_contents instead of the 
-  byline macro
-- Heading Widget now renders the document icon also
-- #1403: Byline widget will show only the creator/date in workspaces
+-
