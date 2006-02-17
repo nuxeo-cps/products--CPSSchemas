@@ -1729,7 +1729,9 @@ class CPSFileWidget(CPSWidget):
                                         old_filename)
             if filename != old_filename:
                 registry = getToolByName(self, 'mimetypes_registry')
-                mimetype = str(registry.lookupExtension(filename.lower()))
+                mimetype = registry.lookupExtension(filename.lower())
+                if mimetype is not None:
+                    mimetype = str(mimetype) # normalize
                 err, err_mapping = self.checkFileName(filename, mimetype)
                 if err:
                     return self.validateError(err, err_mapping, datastructure)
