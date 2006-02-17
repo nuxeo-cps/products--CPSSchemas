@@ -20,10 +20,10 @@
       tal:attributes="href string:mailto:${email}?subject=[${doc/title}]; title email"
       tal:content="cname" i18n:name="item_creator">Creator</a>.
     Last modified
-    <tal:block content="python:here.getDateStr(doc.modification_date, 'medium')"
+    <tal:block content="python:here.getDateStr(doc.modification_date, 'short')"
       i18n:name="item_modification"/>.
   </span>
-  <tal:block condition="info">
+  <tal:block condition="python: info and not doc.isInWorkspacesTree()">
     <span i18n:translate="label_status">Label Status</span>
     <span tal:content="info/review_state" tal:attributes="class
       info/review_state" i18n:translate="">Work</span>

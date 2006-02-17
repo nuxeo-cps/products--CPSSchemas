@@ -22,3 +22,4 @@ New internal features:
 - Added Byline Widget which will be used in folder_contents instead of the 
   byline macro
 - Heading Widget now renders the document icon also
+- #1403: Byline widget will show only the creator/date in workspaces
