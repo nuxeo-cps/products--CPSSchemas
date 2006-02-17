@@ -1679,6 +1679,7 @@ class CPSFileWidget(CPSWidget):
         choice = datastructure[widget_id+'_choice']
         store = False
         fileupload = None
+        mimetype = None
         old_file = datamodel[field_id]
         if old_file is not None:
             old_filename = old_file.title
