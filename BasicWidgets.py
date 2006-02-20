@@ -757,6 +757,7 @@ class CPSLinesWidget(CPSWidget):
 
     width = 40
     height = 5
+    view_mode_separator = ', '
     format_empty = ''
 
     _properties = CPSWidget._properties + (
@@ -766,6 +767,8 @@ class CPSLinesWidget(CPSWidget):
          'label': 'Height'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
+        {'id': 'view_mode_separator', 'type': 'string', 'mode': 'w',
+         'label': 'Separator in view mode'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -806,7 +809,7 @@ class CPSLinesWidget(CPSWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            return ', '.join([escape(i) for i in value])
+            return self.view_mode_separator.join([escape(i) for i in value])
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             return renderHtmlTag('textarea',
@@ -2072,7 +2075,7 @@ class CPSBylineWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         pass
-            
+
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         return 1
