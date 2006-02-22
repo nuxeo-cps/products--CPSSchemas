@@ -1739,6 +1739,9 @@ class CPSFileWidget(CPSWidget):
                 err, err_mapping = self.checkFileName(filename, mimetype)
                 if err:
                     return self.validateError(err, err_mapping, datastructure)
+        elif datamodel[field_id] is not None:
+            # FIXME: not correct in the case of change=='resize' (CPSPhotoWidget)
+            filename = datamodel[field_id].title
 
         # Set/update data
         if store:
