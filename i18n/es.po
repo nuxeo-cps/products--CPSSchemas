@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-03 14:45default\n"
+"POT-Creation-Date: 2006-02-22 16:17default\n"
 "PO-Revision-Date: 2005-05-18 17:34+0100\n"
 "Last-Translator: Jesús <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #.   <option attributes="value op/id;
 #.                   selected python: op['size'] and (op['size'][0]==image_width
-#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal condition="op/size" replace="python:'(%sx%s)' % op['size']")}</option>
 #.   <option attributes="value op/id;
 #.                 selected python: op['size'] and (op['size'][0]==image_width
 #.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
@@ -48,13 +48,13 @@ msgstr "Falso"
 msgid "True"
 msgstr "Verdadero"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -71,11 +71,11 @@ msgstr "a"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
 #.           (preview)
 #.         </a>
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
+#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -83,7 +83,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(previsualización)"
 
-#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -130,7 +130,7 @@ msgstr "Cambiar"
 msgid "cpsschemas_label_file_delete"
 msgstr "Borrar"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -151,6 +151,15 @@ msgstr "Guardar"
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Ninguno"
+
+#.   <span>
+#.             Filename
+#.           </span>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+#, fuzzy
+msgid "cpsschemas_label_filename"
+msgstr "None"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
@@ -277,7 +286,7 @@ msgid "description_vocabulary_manage_form"
 msgstr "Esta página le permite administrar vocabularios y sus entradas."
 
 #    <em content="err" style="color: red">err</em>
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -313,13 +322,6 @@ msgstr ""
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
 msgstr "etiqueta"
-
-#.   <span>
-#.               The alternative text
-#.             </span>
-#: from ../skins/cps_schemas/widget_image_render.pt
-msgid "label_alt_text"
-msgstr "Texto alternativo"
 
 #.   <label attributes="for file_upload_id">
 #.             File to use to fill the text area:</label>
@@ -631,3 +633,6 @@ msgstr "Editar en línea"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
+
+msgid "label_alt_text"
+msgstr "Texto alternativo"
