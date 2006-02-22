@@ -46,11 +46,9 @@
     <metal:block define-macro="file_title_edit">
       <p tal:define="name here/getHtmlWidgetId;
                      title_name string:${name}_filename;">
-        <metal:block define-slot="label_title">
-        <span i18n:translate="label_title">
-          The title
+        <span i18n:translate="cpsschemas_label_filename">
+          Filename
         </span>
-        </metal:block>
         <input style="margin-left: 5px" type="text" size="30" maxlength="80"
                tal:attributes="name title_name;
                                value current_filename" />

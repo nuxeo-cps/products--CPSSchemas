@@ -10,3 +10,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Lines Widget now has a configurable separator in view mode
+- The various file and image widgets macros don't have a label_title slot anymore.

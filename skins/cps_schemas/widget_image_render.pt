@@ -21,11 +21,6 @@
 
     <metal:block define-macro="image_title_edit">
       <metal:block use-macro="here/widget_file_render/macros/file_title_edit">
-        <metal:block fill-slot="label_title">
-          <span i18n:translate="label_alt_text">
-            The alternative text
-          </span>
-        </metal:block>
       </metal:block>
     </metal:block>
 
