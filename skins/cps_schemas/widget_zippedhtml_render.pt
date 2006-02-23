@@ -8,6 +8,7 @@
   content_url options/content_url;
   last_modified options/last_modified;
   index_path options/index_path;
+  session_file options/session_file;
   ">
   <div tal:condition="python: mode == 'view' and not empty_file">
     <metal:block use-macro="here/widget_file_render/macros/file_view" />
