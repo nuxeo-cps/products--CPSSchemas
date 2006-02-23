@@ -23,9 +23,13 @@
 Definition of extended widget types.
 """
 
+import StringIO
 import warnings
+import zipfile
+
 from cgi import escape
 from re import match
+
 from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
 from DateTime.DateTime import DateTime
@@ -33,7 +37,7 @@ from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 import os.path
 from zLOG import LOG, DEBUG, TRACE
-from zipfile import ZipFile, BadZipfile
+
 from Products.PythonScripts.standard import newline_to_br
 from Products.PythonScripts.standard import structured_text
 from reStructuredText import HTML
@@ -444,59 +448,60 @@ class CPSZippedHtmlWidget(CPSAttachedFileWidget):
     meta_type = 'ZippedHtml Widget'
     size_max = 1024*1024
 
-    # XXX don't knwo why this does not work ?
-    # allowed_suffixes = ['zip']
+    #  XXX : check this
+    #    allowed_suffixes = ['zip']
+
+    def _is_zipfile(self, datastructure, **kw):
+        # Check the zip file validity
+        choice = datastructure[self.getWidgetId()+'_choice']
+        if choice == 'change':
+            validated = False
+            file_upload = datastructure.get(self.getWidgetId())
+            try:
+                zf = zipfile.ZipFile(file_upload, 'r')
+            except zipfile.BadZipfile:
+                pass
+            else:
+                if zf.testzip() is None:
+                    validated = True
+                    zf.close()
+            return validated
+        return True
 
     def validate(self, datastructure, **kw):
-        """Validate datastructure and update datamodel."""
-        widget_id = self.getWidgetId()
-        choice = datastructure[widget_id+'_choice']
-        if choice == 'change':
-            # looking for an html index
-            file_upload = datastructure.get(widget_id)
-            if isinstance(file_upload, FileUpload):
-                try:
-                    zf = ZipFile(file_upload, 'r')
-                except BadZipfile:
-                    return self.doesNotValidate(
-                        'cpsschemas_err_zippedhtml_invalid_zip',
-                        None, file_upload, datastructure)
-                all_files = [info.filename for info in zf.infolist()]
-                html_files = [f for f in all_files
-                              if (f.lower().endswith('.html') or
-                                  f.lower().endswith('.htm'))]
-                index_files = [f for f in html_files
-                               if f.lower().find('index.htm') >= 0]
-                index_path = None
-                if index_files:
-                    index_path = index_files[0]
-                elif html_files:
-                    index_path = html_files[0]
-                if not index_path:
-                    return self.doesNotValidate(
-                        'cpsschemas_err_zippedhtml_html_not_found',
-                        None, file_upload, datastructure)
-        # std attached file validation
-        ret = CPSAttachedFileWidget.validate(self, datastructure, **kw)
-        if ret and choice == 'change':
-            field_id = self.fields[0]
-            datamodel = datastructure.getDataModel()
-            # adding attribute to file ofs
-            file = datamodel[field_id]
-            file._zip_index_path = index_path
-            datamodel[field_id] = file
-        return ret
+        # Validate datastructure and update datamodel.
+        return (CPSAttachedFileWidget.validate(self, datastructure, **kw) and
+                self._is_zipfile(datastructure, **kw))
+
+    def _getIndexPath(self, datastructure):
+        file_upload = datastructure.get(self.getWidgetId())
+        # Creation time
+        if not file_upload:
+            return ''
+        # Here the zipfile has been validated already.
+        zf = zipfile.ZipFile(file_upload, 'r')
+        all_files = [info.filename for info in zf.infolist()]
+        html_files = [f for f in all_files
+                      if (f.lower().endswith('.html') or
+                          f.lower().endswith('.htm'))]
+        index_files = [f for f in html_files
+                       if f.lower().find('index.htm') >= 0]
+        index_path = None
+        if index_files:
+            index_path = index_files[0]
+        elif html_files:
+            index_path = html_files[0]
+        zf.close()
+        return index_path
 
     def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
         render_method = 'widget_zippedhtml_render'
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
         file_info = self.getFileInfo(datastructure)
-        file_info['index_path'] = getattr(datastructure[self.getWidgetId()],
-                                          '_zip_index_path', '')
+        file_info['index_path'] = self._getIndexPath(datastructure)
         return meth(mode=mode, datastructure=datastructure, **file_info)
 
 InitializeClass(CPSZippedHtmlWidget)
