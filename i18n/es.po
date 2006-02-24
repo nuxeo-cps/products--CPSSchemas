@@ -1,19 +1,16 @@
-# translation of es.po to
-# Álvaro Tejero Cantero <alvaro@antalia.com>, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 16:17default\n"
-"PO-Revision-Date: 2005-05-18 17:34+0100\n"
-"Last-Translator: Jesús <jesusmartin@lasalle.es>\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
+"PO-Revision-Date: 2006-02-22 22:24+0100\n"
+"Last-Translator: Jesús Martín <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Preferred-encodings: utf-8 latin1\n"
-"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-sv es-gt es-"
-"hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 "X-Generator: KBabel 1.3.1\n"
 "Domain: default\n"
 "Language-Code: es\n"
@@ -22,20 +19,13 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 
-#.   <option attributes="value op/id;
-#.                   selected python: op['size'] and (op['size'][0]==image_width
-#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal condition="op/size" replace="python:'(%sx%s)' % op['size']")}</option>
+#.   <option attributes="value op/id" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
 #.   <option attributes="value op/id;
 #.                 selected python: op['size'] and (op['size'][0]==image_width
 #.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "<span replace=\"op/id\" /> ${dim}"
-msgstr ""
-
-#.   <h1 content="label_edit">Edit</h1>
-#: from ../skins/cps_schemas/popup_fckeditor_form.pt
-msgid "Edit"
 msgstr ""
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
@@ -48,34 +38,32 @@ msgstr "Falso"
 msgid "True"
 msgstr "Verdadero"
 
-#.   <button attributes="
+#.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           " type="button">Layout</button>
+#.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
-msgstr ""
+msgstr "Utilizar el editor"
 
-#    <span>at</span>
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
 msgstr "a"
 
-#    <span>h</span>
 #.   <label attributes="for elt_hour_id">h</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
+#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
-#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -83,14 +71,13 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(previsualización)"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_printable_version"
 msgstr "(versión imprimible)"
 
-#    <span>mn</span>
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_minute"
@@ -103,18 +90,13 @@ msgstr "mn"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr ""
-"Los archivos deben tener uno de los siguientes sufijos: "
-"${allowed_file_suffixes}."
+msgstr "Los archivos deben tener uno de los siguientes sufijos: ${allowed_file_suffixes}."
 
-#    <span>resize</span>
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "y redimensionar: "
 
-#    <label>Change</label>
-#    <label attributes="for string:${radio_name}_change">Change</label>
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
@@ -122,51 +104,36 @@ msgstr "y redimensionar: "
 msgid "cpsschemas_label_file_change"
 msgstr "Cambiar"
 
-#    <label>Delete</label>
-#    <label attributes="for string:${radio_name}_delete">Delete</label>
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_delete"
 msgstr "Borrar"
 
-#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_edit_online"
 msgstr "Editar en línea"
 
-#    <label>Keep</label>
-#    <label condition="not: empty_file" attributes="for string:${radio_name}_keep">Keep</label>
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_keep"
 msgstr "Guardar"
 
-#    <label condition="empty_file" attributes="for string:${radio_name}_keep">None</label>
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Ninguno"
 
-#.   <span>
-#.             Filename
-#.           </span>
-#: from ../skins/cps_schemas/widget_file_render.pt
-#: ../skins/cps_schemas/widget_flash_render.pt
-#, fuzzy
-msgid "cpsschemas_label_filename"
-msgstr "None"
-
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_label_image_resize"
 msgstr "Redimensionar como"
 
-#    <span>cpsschemas_photo_subtitle</span>
 #.   <span>
 #.           Photo subtitle
 #.         </span>
@@ -174,14 +141,11 @@ msgstr "Redimensionar como"
 msgid "cpsschemas_photo_subtitle"
 msgstr "Pie de imagen:"
 
-#    <span>cpsschemas_render_format</span>
 #.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Formato: "
 
-#    <div class="label">cpsschemas_render_position</div>
-#    <span>cpsschemas_render_position</span>
 #.   <span>
 #.             Render position
 #.           </span>
@@ -210,71 +174,58 @@ msgstr "uno o más de los siguientes idiomas"
 msgid "cpsschemas_size_max ${size_max}"
 msgstr "Tamaño máximo: ${size_max}."
 
-#    <h2>cpsschemas_vocabulary_add</h2>
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
 msgstr "Añadir un vocabulario"
 
-#    <h2>cpsschemas_vocabulary_available</h2>
 #.   <h2>cpsschemas_vocabulary_available</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_available"
 msgstr "Vocabularios disponibles"
 
-#    <span class="description">cpsschemas_vocabulary_contains
-#      ${voc_entries (tal replace="python:len(keys)")}
-#      entry(ies)</span>
 #.   <span class="description">cpsschemas_vocabulary_contains
 #.     ${voc_entries (tal replace="python:len(keys)")}
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
-msgstr "Este vocabulario contiene ${voc_entries}·entrada(s)"
+msgstr "Este vocabulario contiene ${voc_entries} entrada(s)"
 
-#    <h2>cpsschemas_vocabulary_delete</h2>
 #.   <h2>cpsschemas_vocabulary_delete</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_delete"
 msgstr "Borrar"
 
-#    <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
-msgstr "Edición del vocabulario «&nbsp;,${voc_id}&nbsp;»"
+msgstr "Editar vocabulario \"${voc_id}\""
 
-#    <h1>cpsschemas_vocabulary_entry_add</h1>
 #.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
 msgstr "Añadir una entrada"
 
-#    <th>Id:</th>
 #.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_id"
 msgstr "Id:"
 
-#    <th>Key:</th>
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
 msgstr "Clave: "
 
-#    <h1>cpsschemas_vocabulary_manage</h1>
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_manage"
 msgstr "Gestión de vocabularios"
 
-#    <th>MsgId:</th>
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
 msgstr "MsgId"
 
-#    <th>Value:</th>
 #.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_value"
@@ -285,8 +236,7 @@ msgstr "Valor: "
 msgid "description_vocabulary_manage_form"
 msgstr "Esta página le permite administrar vocabularios y sus entradas."
 
-#    <em content="err" style="color: red">err</em>
-#.   <em content="err" style="color: red">err</em>
+#.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -323,25 +273,28 @@ msgstr ""
 msgid "label"
 msgstr "etiqueta"
 
+#.   <span>
+#.               The alternative text
+#.             </span>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "label_alt_text"
+msgstr "Texto alternativo"
+
 #.   <label attributes="for file_upload_id">
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr ""
+msgstr "Archivo utilizado para llenar un área de texto:"
 
-#, fuzzy
 msgid "cpsschemas_unit_bytes"
 msgstr "bytes"
 
-#, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
 msgstr "Kb"
 
-#, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
 msgstr "Mb"
 
-#, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
 msgstr "Gb"
 
@@ -379,9 +332,7 @@ msgid "cpsschemas_err_file"
 msgstr "Fichero no válido"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr ""
-"Este archivo no tiene un sufijo válido. Los sufijos válidos son: "
-"${allowed_file_suffixes}."
+msgstr "Este archivo no tiene un sufijo válido. Los sufijos válidos son: ${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "fichero vacío"
@@ -390,8 +341,7 @@ msgid "cpsschemas_err_file_too_big"
 msgstr "Este archivo es demasiado grande"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr ""
-"Este archivo es demasiado grande; el tamaño máximo admitido es ${max_size}Mb."
+msgstr "Este archivo es demasiado grande; el tamaño máximo admitido es ${max_size}Mb."
 
 msgid "cpsschemas_err_image"
 msgstr "Imagen no válida"
@@ -430,9 +380,7 @@ msgid "cpsschemas_err_password_digit"
 msgstr "Su contraseña debe contener al menos una cifra"
 
 msgid "cpsschemas_err_password_extra"
-msgstr ""
-"Su contraseña debe contener al menos un carácter especial distinto de letras "
-"o cifras"
+msgstr "Su contraseña debe contener al menos un carácter especial distinto de letras o cifras"
 
 msgid "cpsschemas_err_identifier"
 msgstr "Identificador no válido"
@@ -479,9 +427,11 @@ msgstr "Texto"
 msgid "cpsschemas_rformat_html"
 msgstr "HTML"
 
-#, fuzzy
-msgid "cpsschemas_rformat_rst"
-msgstr "Structured Text (reST)"
+msgid "cpsschemas_rformat_stx"
+msgstr "Texto estructurado Zope"
+
+msgid "cpsschemas_rformat_pre"
+msgstr "HTML preformateado"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
@@ -489,29 +439,23 @@ msgstr "Original"
 msgid "img_auto_size"
 msgstr "Automático"
 
-#, fuzzy
 msgid "img_icon ${dim}"
-msgstr "Icon ${dim}"
+msgstr "Icono ${dim}"
 
-#, fuzzy
 msgid "img_xsmall ${dim}"
-msgstr "Extra small ${dim}"
+msgstr "Muy pequeño ${dim}"
 
-#, fuzzy
 msgid "img_small ${dim}"
-msgstr "Small ${dim}"
+msgstr "Pequeño ${dim}"
 
-#, fuzzy
 msgid "img_medium ${dim}"
-msgstr "Medium ${dim}"
+msgstr "Medio ${dim}"
 
-#, fuzzy
 msgid "img_large ${dim}"
-msgstr "Large ${dim}"
+msgstr "Grande ${dim}"
 
-#, fuzzy
 msgid "img_xlarge ${dim}"
-msgstr "Extra large ${dim}"
+msgstr "Extra grande ${dim}"
 
 msgid "cpsschemas_label_false"
 msgstr "No"
@@ -627,12 +571,9 @@ msgstr "--Vacío--"
 msgid "label_other_selection"
 msgstr "Otro, por favor, especifique:"
 
-# ## action =================================================
 msgid "action_edit_online"
 msgstr "Editar en línea"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr ""
+msgstr "Animación flash (swf)"
 
-msgid "label_alt_text"
-msgstr "Texto alternativo"
