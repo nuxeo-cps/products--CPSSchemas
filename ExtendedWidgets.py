@@ -438,17 +438,21 @@ InitializeClass(CPSAttachedFileWidget)
 widgetRegistry.register(CPSAttachedFileWidget)
 
 ##################################################
+
 class CPSZippedHtmlWidget(CPSAttachedFileWidget):
-    """ZippedHtml widget.
+    """CPS ZippedHtml widget.
 
     A zip file that contains html which can be viewed online.
     Use index.html or any html file from the zip as preview page.
     """
+
     meta_type = 'ZippedHtml Widget'
+
     size_max = 1024*1024
 
-    #  XXX : check this
-    #    allowed_suffixes = ['zip']
+    # FIXME checkFileName() from ancestor is never called after changeset [30791]
+    # We need to fix it over there.
+    #allowed_suffixes = ['.zip']
 
     def _is_zipfile(self, datastructure, **kw):
         # Check the zip file validity
