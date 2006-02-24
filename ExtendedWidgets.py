@@ -23,7 +23,6 @@
 Definition of extended widget types.
 """
 
-import StringIO
 import warnings
 import zipfile
 
