@@ -174,6 +174,7 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             if child.nodeName != 'widget':
                 continue
             widget_id = str(child.getAttribute('name'))
+            __traceback_info__ = 'widget: %s' % widget_id
             if not layout.has_key(widget_id):
                 meta_type = str(child.getAttribute('meta_type'))
                 for mt in Products.meta_types:
