@@ -129,6 +129,14 @@ msgstr "Guardar"
 msgid "cpsschemas_label_file_none"
 msgstr "Ninguno"
 
+#.   <span>
+#.             Filename
+#.           </span>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+msgid "cpsschemas_label_filename"
+msgstr "Archivo"
+
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_label_image_resize"
@@ -272,13 +280,6 @@ msgstr ""
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
 msgstr "etiqueta"
-
-#.   <span>
-#.               The alternative text
-#.             </span>
-#: from ../skins/cps_schemas/widget_image_render.pt
-msgid "label_alt_text"
-msgstr "Texto alternativo"
 
 #.   <label attributes="for file_upload_id">
 #.             File to use to fill the text area:</label>
