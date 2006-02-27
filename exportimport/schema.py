@@ -169,8 +169,18 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             if child.nodeName != 'field':
                 continue
             field_id = str(child.getAttribute('name'))
+            meta_type = child.getAttribute('meta_type')
+
+            old_state = None
+            if schema.has_key(field_id) and meta_type is not None:
+                field = schema[field_id]
+                if field.meta_type != str(meta_type):
+                    # Need to transtype the field
+                    old_state = field.__dict__.copy()
+                    schema.delSubObject(field_id)
+
             if not schema.has_key(field_id):
-                meta_type = str(child.getAttribute('meta_type'))
+                meta_type = str(meta_type)
                 for mt in Products.meta_types:
                     if mt['name'] == meta_type:
                         break
@@ -183,6 +193,10 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
                 field = schema.addSubObject(field)
             else:
                 field = schema[field_id]
+
+            if old_state:
+                # Transtyping: copy previous state
+                field.__dict__.update(old_state)
 
             importer = zapi.queryMultiAdapter((field, self.environ), INode)
             if not importer:

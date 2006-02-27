@@ -174,9 +174,19 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             if child.nodeName != 'widget':
                 continue
             widget_id = str(child.getAttribute('name'))
+            meta_type = child.getAttribute('meta_type')
             __traceback_info__ = 'widget: %s' % widget_id
+
+            old_state = None
+            if layout.has_key(widget_id) and meta_type is not None:
+                widget = layout[widget_id]
+                if widget.meta_type != str(meta_type):
+                    # Need to transtype the widget
+                    old_state = widget.__dict__.copy()
+                    layout.delSubObject(widget_id)
+
             if not layout.has_key(widget_id):
-                meta_type = str(child.getAttribute('meta_type'))
+                meta_type = str(meta_type)
                 for mt in Products.meta_types:
                     if mt['name'] == meta_type:
                         break
@@ -189,6 +199,11 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
                 widget = layout.addSubObject(widget)
             else:
                 widget = layout[widget_id]
+
+            if old_state:
+                # Transtyping: copy previous state
+                widget.__dict__.update(old_state)
+
             importer = zapi.queryMultiAdapter((widget, self.environ), INode)
             if not importer:
                 raise ValueError("Widget %s cannot be adapted to INode" %
