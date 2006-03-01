@@ -8,6 +8,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Fix CPSZippedHtmlWidget edition and preview mode (refactoring of the
+- #1476: Resizing of PNG files didn't work.
 File based widgets went wrong)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~

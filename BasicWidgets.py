@@ -1869,13 +1869,15 @@ class CPSImageWidget(CPSFileWidget):
                 img = PIL.Image.open(file)
                 img.thumbnail(size,
                               resample=PIL.Image.ANTIALIAS)
-                file.seek(0)
-                img.save(file, format=img.format)
+                # We now need a buffer to write to. It can't be the same 
+                # as the inbuffer as the PNG writer will write over itself.
+                outfile = StringIO()
+                img.save(outfile, format=img.format)
             except (NameError, IOError, ValueError, SystemError):
                 LOG('CPSImageWidget', PROBLEM,
                     "Failed to resize file %s keep original" \
                     % filename)
-        image = Image(self.fields[0], filename, file)
+        image = Image(self.fields[0], filename, outfile)
         return image
 
     def prepare(self, datastructure, **kw):
