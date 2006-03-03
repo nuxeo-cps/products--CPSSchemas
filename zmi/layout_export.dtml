@@ -17,7 +17,7 @@ layout should look like.</p>
     'widgets': {
 <dtml-in objectValues>
         '<dtml-var getWidgetId>': {
-            'type': '<dtml-var widget_type>',
+            'type': '<dtml-var meta_type>',
             'data': {
 <dtml-in propertyItems>
 <dtml-if "_.same_type(_['sequence-item'], '')">
