@@ -240,13 +240,13 @@
       <div tal:attributes="id string:div_${id}"></div>
     </div>
     <input class="standalone" type="button" name="del_item" value="action_delete"
-      i18n:attributes="value" onClick="delete_items()" />
+      i18n:attributes="value" onclick="delete_items()" />
     <input class="standalone" type="button" name="move_up" value="button_move_up"
-      i18n:attributes="value" onClick="move_up_items()" />
+      i18n:attributes="value" onclick="move_up_items()" />
     <input class="standalone" type="button" name="move_down" value="button_move_down"
-      i18n:attributes="value" onClick="move_down_items()" />
+      i18n:attributes="value" onclick="move_down_items()" />
     <input class="standalone" type="button" name="search_item" value="button_search"
-      i18n:attributes="value" onClick="open_search_dialog()" />
+      i18n:attributes="value" onclick="open_search_dialog()" />
     <br/>
   </tal:block>
 </tal:block>
