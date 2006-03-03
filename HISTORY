@@ -1,4 +1,25 @@
 *******************************************
+** CPSSchemas V0.50.0 [R1 build 2006/03/03-17:30 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 33855
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- #1378: transtyping allows changing the type of fields and widgets
+  in extension profiles.
+Bug fixes:
+~~~~~~~~~~
+- Fix CPSZippedHtmlWidget edition and preview mode (refactoring of the
+- #1476: Resizing of PNG files didn't work.
+File based widgets went wrong)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Lines Widget now has a configurable separator in view mode
+- The various file and image widgets macros don't have a label_title
+slot anymore.
+
+*******************************************
 ** CPSSchemas V0.49.0 [R1 build 2006/02/17-20:24 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 32986
 Requires:

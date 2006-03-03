@@ -3,15 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- #1378: transtyping allows changing the type of fields and widgets
-  in extension profiles.
+-
 Bug fixes:
 ~~~~~~~~~~
-- Fix CPSZippedHtmlWidget edition and preview mode (refactoring of the
-- #1476: Resizing of PNG files didn't work.
-File based widgets went wrong)
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Lines Widget now has a configurable separator in view mode
-- The various file and image widgets macros don't have a label_title
-slot anymore.
+-
