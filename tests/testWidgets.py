@@ -671,7 +671,7 @@ function getLayoutMode() {
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].title, 'newfilename.txt') # keeps old ext
+        self.assertEquals(dm['bar'].title, 'newfilename.doc')
         self.assertEquals(str(dm['bar']), 'filecontent')
         # datastructure doesn't retain the fileupload, which we don't need
         # to save in session as it's unchanged from ZODB data
@@ -687,7 +687,7 @@ function getLayoutMode() {
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].title, 'okfilename.txt') # keeps old ext
+        self.assertEquals(dm['bar'].title, 'okfilename.doc')
         self.assertEquals(str(dm['bar']), 'filecontent')
         # datastructure has the fileupload, which is not the same
         # as ZODB data so has to be saved in session if needed
@@ -703,7 +703,7 @@ function getLayoutMode() {
         self.assert_(res)
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(type(dm['bar']), File)
-        self.assertEquals(dm['bar'].title, 'declaration.txt')
+        self.assertEquals(dm['bar'].title, 'okfilename.txt')
         self.assertEquals(str(dm['bar']), 'tous les hommes naissent...')
 
         # Delete

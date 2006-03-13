@@ -1654,13 +1654,16 @@ class CPSFileWidget(CPSWidget):
             # if upload with input field unchanged, use fileupload filename
             filename = cookId('', '', fileupload)[0].strip()
         filename = cleanFileName(filename or 'file.bin')
-        # Keep old extension
-        if '.' in old_filename:
-            old_ext = old_filename[old_filename.rfind('.'):]
-            if not filename.endswith(old_ext):
-                if '.' in filename:
-                    filename = filename[:filename.rfind('.')]
-                filename += old_ext
+        return filename
+
+# XXX what the hell ?
+##        # Keep old extension
+##        if '.' in old_filename:
+##            old_ext = old_filename[old_filename.rfind('.'):]
+##            if not filename.endswith(old_ext):
+##                if '.' in filename:
+##                    filename = filename[:filename.rfind('.')]
+##                filename += old_ext
         return filename
 
     def checkFileName(self, filename, mimetype):

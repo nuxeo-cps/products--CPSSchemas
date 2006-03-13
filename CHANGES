@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fix filename behavior while upgrading file widget content. 
+  Was keeping the old extension all the time.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
