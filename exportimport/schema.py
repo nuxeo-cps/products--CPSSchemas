@@ -172,7 +172,7 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             meta_type = child.getAttribute('meta_type')
 
             old_state = None
-            if schema.has_key(field_id) and meta_type is not None:
+            if schema.has_key(field_id) and meta_type:
                 field = schema[field_id]
                 if field.meta_type != str(meta_type):
                     # Need to transtype the field
