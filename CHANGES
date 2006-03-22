@@ -8,7 +8,7 @@ Bug fixes:
 ~~~~~~~~~~
 - Fix filename behavior while upgrading file widget content. 
   Was keeping the old extension all the time.
-- #1426: no meta_type attribute in <widget> or <field> tags caused an error in
+- #1526: no meta_type attribute in <widget> or <field> tags caused an error in
          profile imports.
 - #1527: remove attribute implemented for fields and widgets in profile import.
 New internal features:
