@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.50.1 [R1 build 2006/03/22-18:17 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 34656
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fix filename behavior while upgrading file widget content. 
+  Was keeping the old extension all the time.
+- #1526: no meta_type attribute in <widget> or <field> tags caused an error in
+         profile imports.
+- #1527: remove attribute implemented for fields and widgets in profile import.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.50.0 [R1 build 2006/03/03-17:30 by ben]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 33855
 Requires:
