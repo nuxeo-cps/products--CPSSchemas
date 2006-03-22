@@ -83,6 +83,26 @@ class TestSchemaXMLAdapter(TestXMLAdapter):
         # properties were merged
         self.assertEquals(field.acl_write_roles, 'SomeRole')
 
+    def test_initFields_remove(self):
+        self.setPurge(False)
+        self.object.addSubObject(CPSStringField('the_field'))
+        self.assertEquals(self.object.keys(), ['the_field'])
+
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_schema">'
+                          '  <field name="the_field" remove="ads"/>'
+                          ' </object>')
+        self.assertEquals(self.object.keys(), [])
+
+    def test_initFields_remove_non_existent(self):
+        # don't fail
+        self.setPurge(False)
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_schema">'
+                          '  <field name="the_field" remove="ads"/>'
+                          ' </object>')
+
+
 class TestLayoutXMLAdapter(TestXMLAdapter):
     layer = CPSZCMLLayer
 
@@ -133,6 +153,25 @@ class TestLayoutXMLAdapter(TestXMLAdapter):
         self.assertEquals(widget.label_edit, 'def')
         # properties were merged
         self.assertEquals(widget.label, 'abc')
+
+    def test_initWidgets_remove(self):
+        self.setPurge(False)
+        self.object.addSubObject(CPSStringWidget('the_widget'))
+        self.assertEquals(self.object.keys(), ['the_widget'])
+
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_layout">'
+                          '  <widget name="the_widget" remove="ads"/>'
+                          ' </object>')
+        self.assertEquals(self.object.keys(), [])
+
+    def test_initWidgets_remove_non_existent(self):
+        # don't fail
+        self.setPurge(False)
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_widget">'
+                          '  <widget name="the_widget" remove="ads"/>'
+                          ' </object>')
 
 class TestVocabulariesToolXMLAdapter(TestXMLAdapter):
     layer = CPSZCMLLayer

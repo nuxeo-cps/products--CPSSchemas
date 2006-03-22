@@ -171,6 +171,16 @@ class SchemaXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             field_id = str(child.getAttribute('name'))
             meta_type = child.getAttribute('meta_type')
 
+            if child.hasAttribute('remove'):
+                if schema.has_key(field_id):
+                    schema.delSubObject(field_id)
+                    msg = "Field %s removed"
+                    self._logger.log(VERBOSE, msg)
+                else:
+                    msg = "Attempt of removing non-existent field %s" % field_id
+                    self._logger.warning(msg)
+                continue
+
             old_state = None
             if schema.has_key(field_id) and meta_type:
                 field = schema[field_id]

@@ -177,6 +177,17 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             meta_type = child.getAttribute('meta_type')
             __traceback_info__ = 'widget: %s' % widget_id
 
+            if child.hasAttribute('remove'):
+                if layout.has_key(widget_id):
+                    layout.delSubObject(widget_id)
+                    msg = "Widget %s removed"
+                    self._logger.log(VERBOSE, msg)
+                else:
+                    msg = "Attempt of removing "
+                    "non-existent widget %s" % widget_id
+                    self._logger.warning(msg)
+                continue
+
             old_state = None
             if layout.has_key(widget_id) and meta_type:
                 widget = layout[widget_id]
