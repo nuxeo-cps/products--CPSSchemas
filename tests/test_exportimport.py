@@ -19,15 +19,7 @@
 
 import unittest
 
-from xml.dom.minidom import Document
-from xml.dom.minidom import Element
-from xml.dom.minidom import parseString
-
-from zope.app import zapi
-
-from Products.GenericSetup.testing import DummySetupEnviron
-from Products.GenericSetup.testing import DummyLogger
-from Products.GenericSetup.testing import _AdapterTestCaseBase
+from Products.CPSUtil.testing.genericsetup import TestXMLAdapter
 from Products.CPSDefault.tests.CPSTestCase import CPSZCMLLayer
 
 from Products.CPSSchemas.exportimport.schema import SchemaXMLAdapter
@@ -37,123 +29,104 @@ from Products.CPSSchemas.Layout import CPSLayout
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
 from Products.CPSSchemas.BasicWidgets import CPSLinesWidget
 
-from Products.GenericSetup.interfaces import IBody
 
-#monkey patching because CPSSchema's I/O likes BLATHER
-#should end up in GenericSetup.testing at some point
-
-def log(self, level, msg, *args, **kwargs):
-    self._messages.append((level, self._id, msg))
-DummyLogger.log = log
-
-
-class TestSchemaXMLAdapter(unittest.TestCase):
+class TestSchemaXMLAdapter(TestXMLAdapter):
     layer = CPSZCMLLayer
 
-    def setUp(self):
-        self.schema = CPSSchema('the_schema')
-        self.environ = DummySetupEnviron()
-
-        self.adapted = zapi.getMultiAdapter((self.schema, self.environ), IBody)
+    def buildObject(self):
+        return CPSSchema('the_schema')
 
     def test_initFields_transtyping(self):
-        self.environ._should_purge = False
+        self.setPurge(False)
         field = CPSStringField('the_field')
 
         field.manage_changeProperties(default_expr='string:abc')
-        self.schema.addSubObject(field)
-        field = self.schema['the_field']
+        self.object.addSubObject(field)
+        field = self.object['the_field']
         self.assertEquals(field.meta_type, 'CPS String Field')
 
-        root = parseString('<?xml version="1.0"?>'
-                           ' <object name="the_schema">'
-                           '  <field name="the_field"'
-                           '         meta_type="CPS Int Field"/>'
-                           ' </object>').documentElement
-        self.adapted.node = root
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_schema">'
+                          '  <field name="the_field"'
+                          '         meta_type="CPS Int Field"/>'
+                          ' </object>')
 
-        field = self.schema['the_field']
+        field = self.object['the_field']
         self.assertEquals(field.meta_type, 'CPS Int Field')
         # pre-transtyping attributes are kept
         self.assertEquals(field.default_expr, 'string:abc')
 
     def test_initFields_notranstyping(self):
         # See #1526: no meta_type doesn't mean we want to transtype to ''
-        self.environ._should_purge = False
+        self.setPurge(False)
 
         field = CPSStringField('the_field')
         field.manage_changeProperties(acl_write_roles='SomeRole')
-        self.schema.addSubObject(field)
-        field = self.schema['the_field']
+        self.object.addSubObject(field)
+        field = self.object['the_field']
         self.assertEquals(field.meta_type, 'CPS String Field')
 
-        root = parseString('<?xml version="1.0"?>'
-                           ' <object name="the_schema">'
-                           '  <field name="the_field">'
-                           '   <property name="default_expr">'
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_schema">'
+                          '  <field name="the_field">'
+                          '   <property name="default_expr">'
                                 'string:def'
-                              '</property>'
-                           '  </field>'
-                           ' </object>').documentElement
-        self.adapted.node = root
+                             '</property>'
+                          '  </field>'
+                          ' </object>')
 
-        field = self.schema['the_field']
+        field = self.object['the_field']
         self.assertEquals(field.meta_type, 'CPS String Field')
         self.assertEquals(field.default_expr, 'string:def')
         # properties were merged
         self.assertEquals(field.acl_write_roles, 'SomeRole')
 
-class TestLayoutXMLAdapter(unittest.TestCase):
+class TestLayoutXMLAdapter(TestXMLAdapter):
     layer = CPSZCMLLayer
 
-    def setUp(self):
-        self.layout = CPSLayout('the_layout')
-        self.environ = DummySetupEnviron()
-
-        self.adapted = zapi.getMultiAdapter((self.layout, self.environ), IBody)
+    def buildObject(self):
+        return CPSLayout('the_layout')
 
     def test_initWidgets_transtyping(self):
-        self.environ._should_purge = False
+        self.setPurge(False)
         widget = CPSStringWidget('the_widget')
 
         widget.manage_changeProperties(label='abc')
-        self.layout.addSubObject(widget)
-        widget = self.layout['the_widget']
+        self.object.addSubObject(widget)
+        widget = self.object['the_widget']
         self.assertEquals(widget.meta_type, 'String Widget')
 
-        root = parseString('<?xml version="1.0"?>'
-                           ' <object name="the_layout">'
-                           '  <widget name="the_widget"'
-                           '         meta_type="Lines Widget"/>'
-                           ' </object>').documentElement
-        self.adapted.node = root
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_layout">'
+                          '  <widget name="the_widget"'
+                          '         meta_type="Lines Widget"/>'
+                          ' </object>')
 
-        widget = self.layout['the_widget']
+        widget = self.object['the_widget']
         self.assertEquals(widget.meta_type, 'Lines Widget')
         # pre-transtyping attributes are kept
         self.assertEquals(widget.label, 'abc')
 
     def test_initWidgets_notranstyping(self):
         # See #1526: no meta_type doesn't mean we want to transtype to ''
-        self.environ._should_purge = False
+        self.setPurge(False)
 
         widget = CPSStringWidget('the_widget')
         widget.manage_changeProperties(label='abc')
-        self.layout.addSubObject(widget)
-        widget = self.layout['the_widget']
+        self.object.addSubObject(widget)
+        widget = self.object['the_widget']
         self.assertEquals(widget.meta_type, 'String Widget')
 
-        root = parseString('<?xml version="1.0"?>'
-                           ' <object name="the_layout">'
-                           '  <widget name="the_widget">'
-                           '   <property name="label_edit">'
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_layout">'
+                          '  <widget name="the_widget">'
+                          '   <property name="label_edit">'
                                 'def'
                               '</property>'
-                           '  </widget>'
-                           ' </object>').documentElement
-        self.adapted.node = root
+                          '  </widget>'
+                          ' </object>')
 
-        widget = self.layout['the_widget']
+        widget = self.object['the_widget']
         self.assertEquals(widget.meta_type, 'String Widget')
         self.assertEquals(widget.label_edit, 'def')
         # properties were merged
