@@ -28,6 +28,9 @@ from Products.GenericSetup.utils import ObjectManagerHelpers
 from Products.GenericSetup.utils import PropertyManagerHelpers
 from Products.CPSUtil.PropertiesPostProcessor import (
     PostProcessingPropertyManagerHelpers)
+#XXX GR move this to some common place or when remove attribute bug is
+# fixed in GenericSetup
+from Products.CPSDocument.exportimport import CPSObjectManagerHelpers
 
 from Products.CPSSchemas.interfaces import IVocabularyTool
 from Products.CPSSchemas.interfaces import IPropertyVocabulary
@@ -56,7 +59,7 @@ def importVocabularyTool(context):
     importObjects(tool, '', context)
 
 
-class VocabularyToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers,
+class VocabularyToolXMLAdapter(XMLAdapterBase, CPSObjectManagerHelpers,
                                PropertyManagerHelpers):
     """XML importer and exporter for Vocabulary tool.
     """

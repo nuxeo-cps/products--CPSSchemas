@@ -28,9 +28,11 @@ from Products.CPSSchemas.BasicFields import CPSStringField
 from Products.CPSSchemas.Layout import CPSLayout
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
 from Products.CPSSchemas.BasicWidgets import CPSLinesWidget
+from Products.CPSSchemas.VocabulariesTool import VocabulariesTool
 
 
 class TestSchemaXMLAdapter(TestXMLAdapter):
+    #XXX we shouldn't depend on CPSDefault here
     layer = CPSZCMLLayer
 
     def buildObject(self):
@@ -132,10 +134,24 @@ class TestLayoutXMLAdapter(TestXMLAdapter):
         # properties were merged
         self.assertEquals(widget.label, 'abc')
 
+class TestVocabulariesToolXMLAdapter(TestXMLAdapter):
+    layer = CPSZCMLLayer
+
+    def buildObject(self):
+        return VocabulariesTool('voc_tool')
+
+    def test_remove_non_existent(self):
+        # don't fail if trying to remove a non-existent sub-object
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="voc_tool">'
+                          '   <object name="non-ex" remove="True"/>'
+                          ' </object>')
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestSchemaXMLAdapter),
         unittest.makeSuite(TestLayoutXMLAdapter),
+        unittest.makeSuite(TestVocabulariesToolXMLAdapter),
         ))
 
 if __name__ == '__main__':
