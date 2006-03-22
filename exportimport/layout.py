@@ -178,7 +178,7 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             __traceback_info__ = 'widget: %s' % widget_id
 
             old_state = None
-            if layout.has_key(widget_id) and meta_type is not None:
+            if layout.has_key(widget_id) and meta_type:
                 widget = layout[widget_id]
                 if widget.meta_type != str(meta_type):
                     # Need to transtype the widget

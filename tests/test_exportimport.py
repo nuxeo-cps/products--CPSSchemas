@@ -33,7 +33,9 @@ from Products.CPSDefault.tests.CPSTestCase import CPSZCMLLayer
 from Products.CPSSchemas.exportimport.schema import SchemaXMLAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.BasicFields import CPSStringField
-from Products.CPSSchemas.BasicFields import CPSIntField
+from Products.CPSSchemas.Layout import CPSLayout
+from Products.CPSSchemas.BasicWidgets import CPSStringWidget
+from Products.CPSSchemas.BasicWidgets import CPSLinesWidget
 
 from Products.GenericSetup.interfaces import IBody
 
@@ -99,9 +101,64 @@ class TestSchemaXMLAdapter(unittest.TestCase):
         # properties were merged
         self.assertEquals(field.acl_write_roles, 'SomeRole')
 
+class TestLayoutXMLAdapter(unittest.TestCase):
+    layer = CPSZCMLLayer
+
+    def setUp(self):
+        self.layout = CPSLayout('the_layout')
+        self.environ = DummySetupEnviron()
+
+        self.adapted = zapi.getMultiAdapter((self.layout, self.environ), IBody)
+
+    def test_initWidgets_transtyping(self):
+        widget = CPSStringWidget('the_widget')
+
+        widget.manage_changeProperties(label='abc')
+        self.layout.addSubObject(widget)
+        widget = self.layout['the_widget']
+        self.assertEquals(widget.meta_type, 'String Widget')
+
+        root = parseString('<?xml version="1.0"?>'
+                           ' <object name="the_layout">'
+                           '  <widget name="the_widget"'
+                           '         meta_type="Lines Widget"/>'
+                           ' </object>').documentElement
+        self.adapted.node = root
+
+        widget = self.layout['the_widget']
+        self.assertEquals(widget.meta_type, 'Lines Widget')
+        self.failIfEqual(widget.label, 'abc')
+
+    def test_initWidgets_notranstyping(self):
+        # See #1526: no meta_type doesn't mean we want to transtype to ''
+        self.environ._should_purge = False
+
+        widget = CPSStringWidget('the_widget')
+        widget.manage_changeProperties(label='abc')
+        self.layout.addSubObject(widget)
+        widget = self.layout['the_widget']
+        self.assertEquals(widget.meta_type, 'String Widget')
+
+        root = parseString('<?xml version="1.0"?>'
+                           ' <object name="the_layout">'
+                           '  <widget name="the_widget">'
+                           '   <property name="label_edit">'
+                                'def'
+                              '</property>'
+                           '  </widget>'
+                           ' </object>').documentElement
+        self.adapted.node = root
+
+        widget = self.layout['the_widget']
+        self.assertEquals(widget.meta_type, 'String Widget')
+        self.assertEquals(widget.label_edit, 'def')
+        # properties were merged
+        self.assertEquals(widget.label, 'abc')
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestSchemaXMLAdapter),
+        unittest.makeSuite(TestLayoutXMLAdapter),
         ))
 
 if __name__ == '__main__':
