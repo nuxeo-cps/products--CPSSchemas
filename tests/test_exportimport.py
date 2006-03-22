@@ -57,6 +57,7 @@ class TestSchemaXMLAdapter(unittest.TestCase):
         self.adapted = zapi.getMultiAdapter((self.schema, self.environ), IBody)
 
     def test_initFields_transtyping(self):
+        self.environ._should_purge = False
         field = CPSStringField('the_field')
 
         field.manage_changeProperties(default_expr='string:abc')
@@ -73,7 +74,8 @@ class TestSchemaXMLAdapter(unittest.TestCase):
 
         field = self.schema['the_field']
         self.assertEquals(field.meta_type, 'CPS Int Field')
-        self.failIfEqual(field.default_expr, 'string:abc')
+        # pre-transtyping attributes are kept
+        self.assertEquals(field.default_expr, 'string:abc')
 
     def test_initFields_notranstyping(self):
         # See #1526: no meta_type doesn't mean we want to transtype to ''
@@ -111,6 +113,7 @@ class TestLayoutXMLAdapter(unittest.TestCase):
         self.adapted = zapi.getMultiAdapter((self.layout, self.environ), IBody)
 
     def test_initWidgets_transtyping(self):
+        self.environ._should_purge = False
         widget = CPSStringWidget('the_widget')
 
         widget.manage_changeProperties(label='abc')
@@ -127,7 +130,8 @@ class TestLayoutXMLAdapter(unittest.TestCase):
 
         widget = self.layout['the_widget']
         self.assertEquals(widget.meta_type, 'Lines Widget')
-        self.failIfEqual(widget.label, 'abc')
+        # pre-transtyping attributes are kept
+        self.assertEquals(widget.label, 'abc')
 
     def test_initWidgets_notranstyping(self):
         # See #1526: no meta_type doesn't mean we want to transtype to ''
