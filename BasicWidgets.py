@@ -1880,6 +1880,7 @@ class CPSImageWidget(CPSFileWidget):
                 LOG('CPSImageWidget', PROBLEM,
                     "Failed to resize file %s keep original" \
                     % filename)
+                outfile = file
         image = Image(self.fields[0], filename, outfile)
         return image
 

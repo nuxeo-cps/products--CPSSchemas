@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- #1550: "Problem adding image to flexible (and just Image in gallery)" missing
+  variable definition when PIL was not installed
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
