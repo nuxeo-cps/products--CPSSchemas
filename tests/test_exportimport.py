@@ -173,6 +173,52 @@ class TestLayoutXMLAdapter(TestXMLAdapter):
                           '  <widget name="the_widget" remove="ads"/>'
                           ' </object>')
 
+    def test_initTable_no_purge_explicit(self):
+        self.setPurge(False)
+        self.object.setLayoutDefinition({
+            'style_prefix': 'layout_metadata_',
+            'ncols': 2,
+            'rows': [
+            [{'ncols': 2, 'widget_id': 'Title'},],
+            [{'ncols': 2, 'widget_id': 'Description'},],]})
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_layout">'
+                          '  <table purge="False">'
+                          '   <row><cell name="NewCell"/></row>'
+                          '  </table>'
+                          ' </object>')
+        rows = self.object.getLayoutDefinition()['rows']
+        self.assertEquals(len(rows), 3)
+        row = rows[2]
+        self.assertEquals(len(row), 1)
+        cell = row[0]
+        self.assertEquals(cell, {'widget_id': 'NewCell', 'ncols': 2})
+
+    def test_initTable_no_purge_explicit(self):
+        # check that the purge=False implementation dosen't change anything
+        # if not present
+        self.setPurge(False)
+        self.object.setLayoutDefinition({
+            'style_prefix': 'layout_metadata_',
+            'ncols': 2,
+            'rows': [
+            [{'ncols': 2, 'widget_id': 'Title'},],
+            [{'ncols': 2, 'widget_id': 'Description'},],]})
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_layout">'
+                          '  <table>'
+                          '   <row><cell name="NewCell"/></row>'
+                          '  </table>'
+                          ' </object>')
+        rows = self.object.getLayoutDefinition()['rows']
+        self.assertEquals(len(rows), 1)
+        row = rows[0]
+        self.assertEquals(len(row), 1)
+        cell = row[0]
+        self.assertEquals(cell, {'widget_id': 'NewCell', 'ncols': 1})
+
+
+
 class TestVocabulariesToolXMLAdapter(TestXMLAdapter):
     layer = CPSZCMLLayer
 

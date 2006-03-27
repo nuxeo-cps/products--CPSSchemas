@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-# 02111-1307, USA.
+# 02111-1307, USA.2
 #
 # $Id$
 """Layout Tool XML Adapter.
@@ -242,10 +242,15 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
         self.context.setLayoutDefinition({'rows': []})
 
     def _initTable(self, node):
-        rows = []
         for table_node in node.childNodes:
             if table_node.nodeName != 'table':
                 continue
+            # nopurge is this restrictive for backwards compatibility
+            # with CPS 3.4.0
+            if table_node.getAttribute('purge') == 'False':
+                rows = self.context.getLayoutDefinition()['rows']
+            else:
+                rows = []
             for row_node in table_node.childNodes:
                 if row_node.nodeName != 'row':
                     continue
@@ -261,6 +266,8 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
                     row.append(cell)
                 rows.append(row)
             break
+        else: # no <table> node, hence no purge=False on it (compat with 3.4.0)
+            rows = []
         self.context.setLayoutDefinition({'rows': rows})
 
 
