@@ -194,7 +194,7 @@ class TestLayoutXMLAdapter(TestXMLAdapter):
         cell = row[0]
         self.assertEquals(cell, {'widget_id': 'NewCell', 'ncols': 2})
 
-    def test_initTable_no_purge_explicit(self):
+    def test_initTable_purge_by_default(self):
         # check that the purge=False implementation dosen't change anything
         # if not present
         self.setPurge(False)
