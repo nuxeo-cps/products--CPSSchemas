@@ -6,10 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- #1550: "Problem adding image to flexible (and just Image in gallery)" missing
-  variable definition when PIL was not installed
-- #1542: One can now add a row to a layout via profiles, by putting
-  purge="False" on the <table> element.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
