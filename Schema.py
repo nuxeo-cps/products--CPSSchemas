@@ -110,7 +110,7 @@ class CPSSchema(FolderWithPrefixedIds):
     manage_options = (
         {'label': 'Schema', 'action': 'manage_editSchema', },
         ) + FolderWithPrefixedIds.manage_options[1:] + (
-        {'label': 'Export', 'action': 'manage_export', },
+        {'label': 'Export', 'action': 'manage_genericSetupExport.html', },
         )
 
     security.declareProtected(ManagePortal, 'manage_editSchema')

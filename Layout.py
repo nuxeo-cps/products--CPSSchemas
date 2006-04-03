@@ -506,7 +506,7 @@ class CPSLayout(Layout):
          },
         ) + SimpleItemWithProperties.manage_options + (
         {'label': 'Export',
-         'action': 'manage_export',
+         'action': 'manage_genericSetupExport.html',
          },
         )
 
