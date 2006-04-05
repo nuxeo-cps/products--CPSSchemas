@@ -1602,7 +1602,10 @@ class CPSFileWidget(CPSWidget):
             # a directory).
             id_field = getattr(dm.getContext(), 'id_field', None)
             if id_field:
-                entry_id = datastructure[id_field]
+                try:
+                    entry_id = datastructure[id_field]
+                except KeyError:
+                    entry_id = None
             else:
                 # No object passed, and no id_field
                 entry_id = None
