@@ -266,8 +266,8 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
                     row.append(cell)
                 rows.append(row)
             break
-        else: # no <table> node, hence no purge=False on it (compat with 3.4.0)
-            rows = []
+        else: # no <table> node, do nothing
+            return
         self.context.setLayoutDefinition({'rows': rows})
 
 

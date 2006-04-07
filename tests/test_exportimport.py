@@ -194,6 +194,24 @@ class TestLayoutXMLAdapter(TestXMLAdapter):
         cell = row[0]
         self.assertEquals(cell, {'widget_id': 'NewCell', 'ncols': 2})
 
+    def test_initTable_no_purge_by_noelement(self):
+        self.setPurge(False)
+        self.object.setLayoutDefinition({
+            'style_prefix': 'layout_metadata_',
+            'ncols': 2,
+            'rows': [
+            [{'ncols': 2, 'widget_id': 'Title'},],
+            [{'ncols': 2, 'widget_id': 'Description'},],]})
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="the_layout">'
+                          ' </object>')
+        rows = self.object.getLayoutDefinition()['rows']
+        self.assertEquals(len(rows), 2)
+        row = rows[1]
+        self.assertEquals(len(row), 1)
+        cell = row[0]
+        self.assertEquals(cell, {'widget_id': 'Description', 'ncols': 2})
+
     def test_initTable_purge_by_default(self):
         # check that the purge=False implementation dosen't change anything
         # if not present
