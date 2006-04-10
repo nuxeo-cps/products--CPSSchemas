@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-22 16:17default\n"
-"PO-Revision-Date: 2005-12-19 15:14-0200\n"
+"PO-Revision-Date: 2006-04-03 15:40-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portugues do Brasil <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "<span replace=\\\"op/id\\\" /> ${dim}"
 #.   <h1 content="label_edit">Edit</h1>
 #: from ../skins/cps_schemas/popup_fckeditor_form.pt
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
@@ -145,9 +145,8 @@ msgstr "Nenhum"
 #.           </span>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
-#, fuzzy
 msgid "cpsschemas_label_filename"
-msgstr "None"
+msgstr "Nome do Arquivo"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
@@ -445,9 +444,8 @@ msgstr "Texto"
 msgid "cpsschemas_rformat_html"
 msgstr "HTML"
 
-#, fuzzy
 msgid "cpsschemas_rformat_rst"
-msgstr "Structured Text (reST)"
+msgstr "Texto Estruturado (reST)"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Original"
@@ -594,5 +592,5 @@ msgstr "Editar online"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animação Flash (swf)"
 
-msgid "label_alt_text"
-msgstr "Texto alternativo"
+#~ msgid "label_alt_text"
+#~ msgstr "Texto alternativo"
