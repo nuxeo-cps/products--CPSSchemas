@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.50.3 [R1 build 2006/04/10-15:55 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 35055
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- #1542: lack of <table> element in XML file describing a layout
+  doesn't erase the table anymore
+- Updated brazilian portugese translations (thanks to mo.menezes@gmail.com).
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.50.2 [R1 build 2006/03/27-17:33 by gracinet]
 ** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 34759
 Requires:

@@ -6,9 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- #1542: lack of <table> element in XML file describing a layout
-  doesn't erase the table anymore
-- Updated brazilian portugese translations (thanks to mo.menezes@gmail.com).
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
