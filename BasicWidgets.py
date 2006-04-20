@@ -25,11 +25,9 @@ Definition of standard widget types.
 """
 
 import warnings
-import string
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_parent, aq_inner
-from AccessControl import ClassSecurityInfo
 from cgi import escape
 from re import compile, search
 from urlparse import urlparse
@@ -52,10 +50,8 @@ from StringIO import StringIO
 
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
-from OFS.PropertyManager import PropertyManager
 from Products.PythonScripts.standard import structured_text, newline_to_br
 
-from Products.CMFCore.permissions import ManageProperties
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSSchemas.Widget import CPSWidget

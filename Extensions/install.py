@@ -17,7 +17,6 @@
 #
 # $Id$
 
-import os
 from zLOG import LOG, INFO, DEBUG
 
 # XXX I think that as long as you don't run any CPSSpecific methods,

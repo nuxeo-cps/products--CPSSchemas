@@ -32,8 +32,6 @@ from re import match
 from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
 from DateTime.DateTime import DateTime
-from ZPublisher.HTTPRequest import FileUpload
-from OFS.Image import cookId, File, Image
 import os.path
 from zLOG import LOG, DEBUG, TRACE
 
@@ -41,10 +39,8 @@ from Products.PythonScripts.standard import newline_to_br
 from Products.PythonScripts.standard import structured_text
 from reStructuredText import HTML
 from Products.CMFCore.utils import getToolByName
-from Products.CPSUtil.file import makeFileUploadFromOFSFile
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
-from Products.CPSSchemas.BasicWidgets import CPSNoneWidget
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
 from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget

@@ -36,7 +36,7 @@ from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ManagePortal
-from Products.CMFCore.Expression import Expression, getEngine
+from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 
 from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor

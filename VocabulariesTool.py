@@ -18,7 +18,7 @@
 # $Id$
 """Vocabularies Tool"""
 
-from Globals import InitializeClass, DTMLFile
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
 from OFS.ObjectManager import IFAwareObjectManager

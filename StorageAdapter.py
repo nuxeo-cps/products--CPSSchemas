@@ -38,8 +38,6 @@ ZMI.
 import warnings
 from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
-from OFS.ObjectManager import ObjectManager
-from OFS.SimpleItem import SimpleItem
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
