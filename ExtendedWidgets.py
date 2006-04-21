@@ -920,6 +920,8 @@ class CPSGenericSelectWidget(CPSWidget):
                 res = renderHtmlTag('select', name=html_widget_id)
             # vocabulary options
             for k, v in vocabulary.items():
+                # this enable to work with vocabulary that have integer keys
+                k = str(k)
                 if getattr(self, 'translated', None):
                     v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                 if render_format == 'select':
