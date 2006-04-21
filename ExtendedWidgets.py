@@ -893,6 +893,9 @@ class CPSGenericSelectWidget(CPSWidget):
         """Render in mode from datastructure."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        # allow int values to work
+        if value is not None:
+            value = str(value)
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
         cpsmcat = portal.translation_service
