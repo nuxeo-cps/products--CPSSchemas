@@ -30,6 +30,27 @@ from Products.CPSSchemas.BasicWidgets import CPSStringWidget
 from Products.CPSSchemas.BasicWidgets import CPSLinesWidget
 from Products.CPSSchemas.VocabulariesTool import VocabulariesTool
 
+class TestFieldXMLAdapter(TestXMLAdapter):
+    layer = CPSZCMLLayer
+
+    def buildObject(self):
+        return CPSStringField('the_field')
+
+    def test_exportBody(self):
+        # normally we provide no body
+        self.assertEquals(self.adapted.body, None)
+
+        # except if the environment implements IForceBodySetupEnviron
+        from Products.CPSUtil.interfaces import IForceBodySetupEnviron
+        from zope.interface import directlyProvides
+        directlyProvides(self.environ, IForceBodySetupEnviron)
+
+        adapted = self.adapt(self.object)
+        xml = adapted.body
+
+        self.failIf(xml is None)
+        self.assert_(xml.startswith('<?xml'))
+
 
 class TestSchemaXMLAdapter(TestXMLAdapter):
     #XXX we shouldn't depend on CPSDefault here
@@ -101,6 +122,27 @@ class TestSchemaXMLAdapter(TestXMLAdapter):
                           ' <object name="the_schema">'
                           '  <field name="the_field" remove="ads"/>'
                           ' </object>')
+
+class TestWidgetXMLAdapter(TestXMLAdapter):
+    layer = CPSZCMLLayer
+
+    def buildObject(self):
+        return CPSStringWidget('the_widget')
+
+    def test_exportBody(self):
+        # normally we provide no body
+        self.assertEquals(self.adapted.body, None)
+
+        # except if the environment implements IForceBodySetupEnviron
+        from Products.CPSUtil.interfaces import IForceBodySetupEnviron
+        from zope.interface import directlyProvides
+        directlyProvides(self.environ, IForceBodySetupEnviron)
+
+        adapted = self.adapt(self.object)
+        xml = adapted.body
+
+        self.failIf(xml is None)
+        self.assert_(xml.startswith('<?xml'))
 
 
 class TestLayoutXMLAdapter(TestXMLAdapter):
@@ -254,6 +296,8 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestSchemaXMLAdapter),
         unittest.makeSuite(TestLayoutXMLAdapter),
+        unittest.makeSuite(TestWidgetXMLAdapter),
+        unittest.makeSuite(TestFieldXMLAdapter),
         unittest.makeSuite(TestVocabulariesToolXMLAdapter),
         ))
 

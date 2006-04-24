@@ -29,6 +29,8 @@
       class=".SchemasTool.SchemasTool"/>
   <five:traversable
       class=".Schema.CPSSchema"/>
+  <five:traversable
+      class=".Field.CPSField"/>
 
   <configure package="Products.GenericSetup.browser">
 

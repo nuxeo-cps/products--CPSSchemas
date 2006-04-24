@@ -384,6 +384,17 @@ class CPSWidget(Widget):
         """
         self.fields = ['?']
 
+    #
+    # ZMI
+    #
+
+    manage_options = SimpleItemWithProperties.manage_options + (
+        {'label': 'Export',
+         'action': 'manage_genericSetupExport.html',
+         },
+        )
+
+
 InitializeClass(CPSWidget)
 
 

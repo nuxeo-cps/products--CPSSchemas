@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Widgets and fields have their own export tab in ZMI
 Bug fixes:
 ~~~~~~~~~~
 -

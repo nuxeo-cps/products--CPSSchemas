@@ -29,6 +29,8 @@
       class=".LayoutsTool.LayoutsTool"/>
   <five:traversable
       class=".Layout.CPSLayout"/>
+  <five:traversable
+      class=".Widget.CPSWidget"/>
 
   <configure package="Products.GenericSetup.browser">
 

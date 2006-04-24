@@ -398,6 +398,16 @@ class CPSField(Field):
     security = ClassSecurityInfo()
     security.declareObjectProtected(View) # XXX correct ?
 
+    #
+    # ZMI
+    #
+
+    manage_options = SimpleItemWithProperties.manage_options + (
+        {'label': 'Export',
+         'action': 'manage_genericSetupExport.html',
+         },
+        )
+
 InitializeClass(CPSField)
 
 

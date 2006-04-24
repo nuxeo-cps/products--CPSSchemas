@@ -38,6 +38,8 @@ from Products.GenericSetup.interfaces import INode
 from Products.GenericSetup.interfaces import IBody
 from Products.GenericSetup.interfaces import ISetupEnviron
 
+from Products.CPSUtil.interfaces import IForceBodySetupEnviron
+
 from Products.CPSSchemas.interfaces import ILayoutTool
 from Products.CPSSchemas.interfaces import ILayout
 from Products.CPSSchemas.interfaces import IWidget
@@ -305,8 +307,11 @@ class WidgetXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
     def _exportBody(self):
         """Export the object as a file body.
         """
-        # We don't want file body export, just nodes.
-        return None
+        # We don't want file body export, just nodes, except when the context
+        # requires it
+        if not IForceBodySetupEnviron.providedBy(self.environ):
+            return
+        return XMLAdapterBase._exportBody(self)
 
     def _importBody(self, node):
         """Import the object from the file body.
