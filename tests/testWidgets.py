@@ -518,6 +518,12 @@ function getLayoutMode() {
                           'FakeWidget w1 mode=view val=Foo|'
                           'FakeWidget w2 mode=view val=Bar')
 
+        # If a subwidget is hidden, we don't see it in the output
+        widget_infos['w2']['widget_mode'] = 'hidden'
+        rendered = widget.render('view', ds, widget_infos=widget_infos)
+        self.assertEquals(rendered,
+                          'mode view|FakeWidget w1 mode=view val=Foo')
+
     def test_CPSCompoundWidget_old_LinkWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
         widget = CPSCompoundWidget('foo')

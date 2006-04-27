@@ -6,7 +6,7 @@ New features:
 - Widgets and fields have their own export tab in ZMI
 Bug fixes:
 ~~~~~~~~~~
--
+- #1627: fixed hidden widgets inside compound widgets.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - "Generic Select widget" can be used with vocabulary that have integer keys

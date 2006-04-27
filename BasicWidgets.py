@@ -2030,6 +2030,8 @@ class CPSCompoundWidget(CPSWidget):
             cell.update(widget_infos[widget_id])
             widget = layout[widget_id]
             widget_mode = cell['widget_mode']
+            if widget_mode == 'hidden':
+                continue
             rendered = widget.render(widget_mode, datastructure, **kw)
             rendered = rendered.strip()
             cell['widget_rendered'] = rendered
