@@ -19,8 +19,9 @@
           tal:condition="python: preview_id and not session_file">
       <a href="http://url..."
          tal:define="field_id python:fields[0];
-                     field_html python:len(fields)>2 and fields[2] or ''"
-         tal:attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}"
+                     field_html python:len(fields)>2 and fields[2] or '';
+                     field_html_subfiles python:len(fields)>3 and fields[3] or '';"
+         tal:attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}"
          i18n:translate="cpsschema_link_preview">
         (preview)
       </a>
