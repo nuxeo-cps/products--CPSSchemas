@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.50.4 [R1 build 2006/05/02-16:50 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 45185
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Widgets and fields have their own export tab in ZMI
+Bug fixes:
+~~~~~~~~~~
+- #1627: fixed hidden widgets inside compound widgets.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- "Generic Select widget" can be used with vocabulary that have integer keys
+
+*******************************************
 ** CPSSchemas V0.50.3 [R1 build 2006/04/10-15:55 by gracinet]
 ** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 35055
 Requires:
