@@ -994,6 +994,11 @@ class CPSMultiSelectWidget(CPSWidget):
 
     def _getVocabulary(self, datastructure=None):
         """Get the vocabulary object for this widget."""
+        if not isinstance(self.vocabulary, str):
+            # this is in case vocabulary directly holds
+            # a vocabulary object (very unit test friendly)
+            # XXX GR: should be common among all Select widget species
+            return self.vocabulary
         vtool = getToolByName(self, 'portal_vocabularies')
         context = datastructure.getDataModel().getContext()
         vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
