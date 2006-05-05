@@ -47,8 +47,14 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
         % (mime_type, repr(file)))
     current_mime_type = getattr(file, 'content_type',
                                 'application/octet-stream')
+    if context is not None:
+        default_encoding = context.default_charset
+    else:
+        default_encoding = 'latin9'
+        
     data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
                                  # filename='fooXXX', encoding='',
+                                 encoding = default_encoding,
                                  **kwargs
                                  )
     if not data:
