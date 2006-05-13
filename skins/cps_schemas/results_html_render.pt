@@ -1,0 +1,16 @@
+<tal:comment condition="nothing"><!--
+  Render document items for InternalLinks widget through a XMLHttpRequest
+  object
+  --></tal:comment>
+<tal:block define="results python:request and request.get('results',[]) or options.get('results',[]);
+                   items python:here.getObjectsFromPath(path_list=results);
+                   cpsmcat nocall:here/translation_service;
+                   utool nocall:here/portal_url;
+                   site_wide python:1;
+                   no_form request/no_form|options/no_form|python:1;
+                   base_url utool/getBaseUrl;
+                   format string:simple;
+                   display_description python:1;
+                   items_per_page python:10666;">
+<metal:items use-macro="here/content_lib_display_contents/macros/display_contents"></metal:items>
+</tal:block>

@@ -1,0 +1,42 @@
+<metal:html tal:define="emptybody python:1;
+                        input_id request/input_id;
+                        value request/value|string:;
+                        label_edit request/label_edit|string:;
+                        rte_value request/rte_value|nothing;">
+<metal:body use-macro="here/main_template_popup/macros/master">
+<metal:headslot fill-slot="head_slot" tal:condition="rte_value">
+ <script type="text/javascript"
+  tal:define="js_rte_value python:here.encodeJsString(rte_value)"
+  tal:content='structure string:
+  <!--
+      var dest;
+      dest = opener.document.getElementById("${input_id}");
+      dest.value = "${js_rte_value}";
+      window.close();
+  -->' />
+</metal:headslot>
+<metal:main fill-slot="body">
+<div style="margin: 1em;">
+<div class="document">
+<form action="" method="post" tal:attributes="action string:${here_url}/popup_rte_form">
+<div class="row">
+ <h3 tal:content="label_edit" i18n:translate="" />
+ <div class="field">
+  <input type="hidden" name="input_id" tal:attributes="value input_id" />
+
+  <tal:block define="locale cpsmcat/getSelectedLanguage|string:en;"
+    replace="structure python:here.cpsInitEpoz(input_id=input_id,
+    name='rte_value', data=value, lang=locale,
+    style='width:600px; height:300px; border:1px solid #A0A0A0; border-style:solid;')" />
+ </div>
+</div>
+  <input type="button" value="button_cancel" class="context"
+    onclick="window.close()" i18n:attributes="value" />
+  <input type="submit" value="button_update" class="standalone"
+    i18n:attributes="value" />
+</form>
+</div>
+</div>
+</metal:main>
+</metal:body>
+</metal:html>

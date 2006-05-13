@@ -1,0 +1,252 @@
+<tal:block define="mode options/mode;
+                   datastructure options/datastructure;
+                   id here/getWidgetId;
+                   values datastructure/?id;
+                   cpsmcat nocall:here/translation_service;
+                   utool nocall:here/portal_url;
+                   absolute here/absolute|python:False;
+                   base_url python:test(absolute,
+                                        utool()+'/',
+                                        utool.getBaseUrl());
+                   items python:here.getObjectsFromPath(values);
+                   format string:simple;
+                   display_description python:1;
+                   item_per_page python:10666;
+                  ">
+  <tal:block condition="python:mode == 'view'" tal:define="no_form python:1">
+    <metal:items use-macro="here/content_lib_display_contents/macros/display_contents"></metal:items>
+  </tal:block>
+
+  <tal:block condition="python:mode == 'edit'">
+    <script type="text/javascript" tal:content="structure string:<!--
+      var base_url = '${base_url}';
+      var intlinks_w_id = '${id}';
+      var links_div_id = 'div_${id}';
+      var all_div_id = 'div_all_${id}';
+      var info_div_id = 'info_div_${id}';
+      var currentXMLHttp = false;
+
+      // Javascript update of the rendered view of the search results
+
+      function createXMLHttpObject() {
+        if (window.XMLHttpRequest) {         // Firefox, Safari, Opera & Others
+          xml = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject) {     // Internet Explorer
+          xml = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        else {                               // XMLHttpRequest not supported
+          xml = false;
+        }
+        return xml;
+      }
+
+      function update_results() {
+        var textareaElement = document.getElementById(intlinks_w_id);
+        var links_div = document.getElementById(all_div_id);
+        var params = '';
+        var links = textareaElement.value.split('\n');
+        // Create a new object each time to avoid a bug on Firefox and Opera:
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=305855
+        currentXMLHttp = createXMLHttpObject();
+        if (! currentXMLHttp) {
+          // xmlHttpRequest is not available on this browser: do nothing
+          return;
+        }
+        for (var i=0; i < links.length; i++) {
+          var link = links[i];
+          if(link.length) {
+            params += 'results:list=' + link + '&';
+          }
+        }
+
+        var url = 'results_html_render?no_form:int=0&' + params;
+        currentXMLHttp.open('GET', url, false);
+        currentXMLHttp.send(null);
+        links_div.innerHTML = currentXMLHttp.responseText;
+        currentXMLHttp.abort();
+        // abort is needed because of a Firefox/Opera bug when we close the
+        // popup: https://bugzilla.mozilla.org/show_bug.cgi?id=305855
+      }
+
+      function is_in(item, list) {
+        var exist = false;
+        for(var j=0;j<list.length;j++) {
+          if (item == list[j]) {
+            exist = true;
+          }
+        }
+        return exist;
+      }
+
+      function getSelectedItems() {
+         var form = document.getElementById(intlinks_w_id).form
+         var selected = form.elements;
+         var selected_items = new Array();
+         for (i = 0; i < selected.length; i++) {
+           var checkbox = selected[i];
+           if (checkbox.checked) {
+             selected_items.push(checkbox.value);
+           }
+         }
+         return selected_items;
+      }
+
+      function getExistingItems() {
+         var textareaElement = document.getElementById(intlinks_w_id);
+         var existing_items = textareaElement.value.split('\n');
+
+         for(var i=0; i<existing_items.length;i++) {
+           var value = existing_items[i];
+           lf_index = value.indexOf('\r',0);
+           if(lf_index != -1) {
+             existing_items[i] = value.substring(0, lf_index);
+           }
+         }
+         return existing_items;
+      }
+
+      function setExistingItems(items) {
+        // put items in textarea form cache if value not ''
+        var textareaElement = document.getElementById(intlinks_w_id);
+        var value = '';
+
+        for(var i=0; i<items.length; i++) {
+          var item = items[i];
+          if(item.length) {
+            value += item + '\n';
+          }
+        }
+        textareaElement.value = value;
+      }
+
+      function delete_items() {
+        var links = getExistingItems();
+        var deleted_links = getSelectedItems();
+
+        for(var i=0;i<links.length;i++) {
+          var value = links[i];
+          if(is_in(value, deleted_links)) {
+            links[i] = '';
+          }
+        }
+
+        setExistingItems(links);
+        update_results();
+      }
+
+      function getIndex(item, list) {
+        for(var i=0;i<list.length;i++) {
+          if(item == list[i]) {
+            return i;
+          }
+        }
+        return -1;
+      }
+
+      function canMove(index, shift, max) {
+        if(shift == -1) {
+          if(index > 0) {
+            return true;
+          }
+        } else {
+          if(index < max) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function move_items(direction) {
+        var shift = 1;
+
+        if (direction=='up') {
+          shift = -1;
+        }
+
+        var move_links  = getSelectedItems();
+        var links = getExistingItems();
+        var changed = false;
+        var value, index;
+
+        for(var i=0;i<move_links.length;i++) {
+          value = move_links[i];
+          index = getIndex(value, links);
+          if ( canMove(index, shift,links.length) ) {
+            var tmp = links[index+shift];
+            links[index+shift] = value;
+            links[index] = tmp;
+            changed = true;
+          }
+        }
+
+        if (changed) {
+          setExistingItems(links);
+          update_results();
+        }
+      }
+
+      function move_up_items() {
+        move_items('up');
+      }
+
+       function move_down_items() {
+        move_items('down');
+      }
+
+      function update_links(added_links) {
+        var links = getExistingItems()
+
+        for (i=0;i<added_links.length;i++) {
+          var value = added_links[i];
+          if (!is_in(value, links)) {
+            links.push(value);
+          }
+        }
+        setExistingItems(links);
+        update_results();
+      }
+
+      -->">
+    </script>
+    <script type="text/javascript">
+      <!--
+      function open_search_dialog() {
+        var selector_window = window.open(base_url + 'popup_internallinks_form'+
+        '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
+        'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,' +
+        'dependent=1,width=600,height=600');
+        if (! selector_window.opener) {
+          selector_window.opener = window;
+        }
+      }
+      -->
+    </script>
+    <!-- 
+    XXX: Find a way to hide the texterea cache with javascript (not CSS) so that
+    javascript-disabled browsers can see it
+    -->
+    <textarea cols="2" style="width: 90%; height:1px; visibility: hidden;"
+              tal:define="html_id here/getHtmlWidgetId;
+                          links python:'\n'.join(values)"
+              tal:attributes="
+                name string:${html_id}:lines;
+                id id;
+                rows python:test(here.size, here.size, None);"
+              tal:content="links"></textarea>
+    <div tal:attributes="id string:div_all_${id}">
+      <tal:block content="structure
+        python:here.results_html_render(results=values, no_form=0)" />
+      <div tal:attributes="id string:div_${id}"></div>
+    </div>
+    <input class="standalone" type="button" name="del_item" value="action_delete"
+      i18n:attributes="value" onclick="delete_items()" />
+    <input class="standalone" type="button" name="move_up" value="button_move_up"
+      i18n:attributes="value" onclick="move_up_items()" />
+    <input class="standalone" type="button" name="move_down" value="button_move_down"
+      i18n:attributes="value" onclick="move_down_items()" />
+    <input class="standalone" type="button" name="search_item" value="button_search"
+      i18n:attributes="value" onclick="open_search_dialog()" />
+    <br/>
+  </tal:block>
+</tal:block>

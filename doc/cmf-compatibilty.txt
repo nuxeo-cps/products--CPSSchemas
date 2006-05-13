@@ -1,0 +1,64 @@
+======================
+Compatibility with CMF
+======================
+
+:Revision: $Id$
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+
+CMF compatibility
+=================
+
+CPSSchemas works just fine within a 'stock' CMF instance.
+CPSSchemas is a framework. If you're looking for 'out of the box'
+content types install CPSDocument on your CMF. (same dependencies
+as below)
+
+Actually tested with CMF-1.4.7
+
+
+Dependencies
+============
+
+Here are the mandatory products for CPSSchemas within the
+CMF:
+
+- CPSInstaller (Used for the installation only)
+
+  You can launch the installer through the CMFQuickInstaller though.
+
+- Epoz 7.4
+
+- TranslationService >= 0.5.0
+
+- Localizer = 1.0.1
+
+- PortalTransforms -> CVS Nuxeo : http://svn.nuxeo.com (didn't
+  test the logilab version, so can't say anything)
+
+Localizer and TranslationService stands still here because of the
+skins.  It can be successfully installed without though but the
+widgets are going to be broken.
+
+
+TESTS on a 'stock' CMF
+======================
+
+You can launch tests against CPSSchemas within the tests
+sub-directory. You'll need for that Localizer and
+TranslationService
+
+Simply go to the test directories and type::
+
+    $ make test
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
+

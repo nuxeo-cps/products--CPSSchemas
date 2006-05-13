@@ -1,0 +1,37 @@
+<fieldset tal:define="mode options/mode;
+                      ds options/datastructure;
+                      widget_base_htmlid string:${here/getHtmlWidgetId}_;
+                      widget_base_id string:${here/getWidgetId}_;"
+          id="advancedSearchZCText">
+  <tal:block repeat="operator here/operators"><tal:block
+     define="widget_htmlid string:${widget_base_htmlid}${operator};
+             widget_id string:${widget_base_id}${operator};
+             field_htmlid string:${widget_htmlid}_field;
+             field_id string:${widget_id}_field;
+             fields here/fields;">
+    <label tal:attributes="for widget_htmlid"
+           tal:content="string:cpsschemas_label_zctext_operator_${operator}"
+           i18n:translate="" />
+    <input type="text" size="28"
+           tal:attributes="id widget_htmlid;
+                           name widget_htmlid;
+                           value ds/?widget_id" />
+    <tal:block condition="python:len(fields) == 1">
+      <input type="hidden"
+        tal:attributes="name field_htmlid;
+                        value python:fields[0]"/>
+    </tal:block>
+    <tal:block condition="python:len(fields) > 1">
+      <select tal:attributes="name field_htmlid">
+        <tal:block repeat="field fields">
+          <option tal:attributes="value field;
+                                  selected python:test(field == ds[field_id],
+                                  'selected', nothing)"
+                  tal:content="string:cpsschemas_label_zctext_field_${field}"
+                  i18n:translate="" />
+        </tal:block>
+      </select>
+    </tal:block>
+    <br />
+  </tal:block></tal:block>
+</fieldset>

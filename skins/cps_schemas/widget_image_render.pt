@@ -1,0 +1,69 @@
+<tal:block define="mode options/mode;
+  id here/getWidgetId;
+  fields here/fields;
+  current_filename options/current_filename;
+  empty_file options/empty_file;
+  session_file options/session_file;
+  mimetype options/mimetype;
+  size options/size;
+  content_url options/content_url;
+  last_modified options/last_modified;
+  image_width options/width;
+  image_height options/height;
+  image_tag options/image_tag;
+  ">
+  <img tal:condition="python: mode == 'view' and not empty_file"
+    tal:replace="structure image_tag" />
+
+  <tal:block condition="python: mode == 'edit'">
+
+    <metal:block use-macro="here/widget_file_render/macros/file_size_max_view" />
+
+    <metal:block define-macro="image_title_edit">
+      <metal:block use-macro="here/widget_file_render/macros/file_title_edit">
+      </metal:block>
+    </metal:block>
+
+    <img tal:condition="python: not empty_file and not session_file"
+      tal:replace="structure image_tag" />
+
+    <metal:block define-macro="image_edit">
+      <tal:block define="allow_resize here/allow_resize|nothing">
+      <metal:block use-macro="here/widget_file_render/macros/file_edit">
+        <metal:block fill-slot="edit_file_action">
+          <metal:block define-slot="edit_file_action" />
+        </metal:block>
+        <metal:block fill-slot="change_file">
+          <input type="radio" class="noborder"  name="." value="change"
+                 tal:attributes="name radio_name;
+                                 id string:${radio_name}_change" />
+          <label i18n:translate="cpsschemas_label_file_change"
+                 tal:attributes="for string:${radio_name}_change">Change</label>
+          <input type="file" name="." size="24"
+                 tal:attributes="name name;
+            onclick string:document.getElementById('${radio_name}_change').checked='checked'" />
+          <tal:block condition="allow_resize">
+            <label i18n:translate="cpsschemas_image_resize"
+                   tal:attributes="for string:${radio_name}_change">resize</label>
+            <select tal:attributes="name string:${name}_resize;
+              onchange string:document.getElementById('${radio_name}_change').checked='checked';"
+              tal:define="wid_size python:(here.display_width, here.display_height);
+              sizes python:[s for s in here.getImgSizes() if not wid_size[0] or s['size'] < wid_size]">
+              <option tal:repeat="op sizes"
+                tal:attributes="value op/id;
+                selected python: op['size'] and (op['size'][0]==image_width
+                                               or op['size'][1]==image_height)"
+                i18n:translate=""
+                ><span tal:replace="op/id" /> <span tal:condition="op/size"
+                  i18n:name="dim"
+                  tal:replace="python:'(%sx%s)' % op['size']">
+                  640x480</span></option>
+            </select>
+          </tal:block>
+        </metal:block>
+      </metal:block>
+      </tal:block>
+    </metal:block>
+
+  </tal:block>
+</tal:block>

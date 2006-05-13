@@ -1,0 +1,1993 @@
+*******************************************
+** CPSSchemas V0.50.4 [R1 build 2006/05/02-16:50 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 45185
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Widgets and fields have their own export tab in ZMI
+Bug fixes:
+~~~~~~~~~~
+- #1627: fixed hidden widgets inside compound widgets.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- "Generic Select widget" can be used with vocabulary that have integer keys
+
+*******************************************
+** CPSSchemas V0.50.3 [R1 build 2006/04/10-15:55 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 35055
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- #1542: lack of <table> element in XML file describing a layout
+  doesn't erase the table anymore
+- Updated brazilian portugese translations (thanks to mo.menezes@gmail.com).
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.50.2 [R1 build 2006/03/27-17:33 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 34759
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- #1550: "Problem adding image to flexible (and just Image in gallery)" missing
+  variable definition when PIL was not installed
+- #1542: One can now add a row to a layout via profiles, by putting
+  purge="False" on the <table> element.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.50.1 [R1 build 2006/03/22-18:17 by gracinet]
+** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 34656
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fix filename behavior while upgrading file widget content. 
+  Was keeping the old extension all the time.
+- #1526: no meta_type attribute in <widget> or <field> tags caused an error in
+         profile imports.
+- #1527: remove attribute implemented for fields and widgets in profile import.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.50.0 [R1 build 2006/03/03-17:30 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 33855
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- #1378: transtyping allows changing the type of fields and widgets
+  in extension profiles.
+Bug fixes:
+~~~~~~~~~~
+- Fix CPSZippedHtmlWidget edition and preview mode (refactoring of the
+- #1476: Resizing of PNG files didn't work.
+File based widgets went wrong)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Lines Widget now has a configurable separator in view mode
+- The various file and image widgets macros don't have a label_title
+slot anymore.
+
+*******************************************
+** CPSSchemas V0.49.0 [R1 build 2006/02/17-20:24 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 32986
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- For FCKeditor configuration, used the FontFormat menu item instead of the
+  Style menu item. Fixes #1285: Usability issue with titles.
+- Fix File Widget's validate function: bad definition for checkFileName 
+  function
+- Fixed #1309: Error when creating Flash Animation object
+- Fixed #1361: Error when trying to select an vocabulary without first 
+  selecting it's id
+- Fixed #1367: wrong security for manage_addCPSVocabulary
+- Fixed #1374: addink Link to a flexible document produced error
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Disabled the semantic plugin for FCKeditor by default.
+- Flash Animation Widget refactoring needed for using it in a flexible document
+- Added Byline Widget which will be used in folder_contents instead of the 
+  byline macro
+- Heading Widget now renders the document icon also
+- #1403: Byline widget will show only the creator/date in workspaces
+*******************************************
+** CPSSchemas V0.48.0 [R1 build 2006/01/23-17:30 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 31976
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Made CPS use the "semantic" plugin if FCKeditor is used. This Fixes #502.
+Bug fixes:
+~~~~~~~~~~
+- Search ZCText widget rendering was presenting a field selection even if
+  there was only one field available.
+- Moved the "EditorAreaCSS" property from the template popup_fckeditor_form.pt
+  to the FCKeditor config file ckconfig-cps.js. This will ease customization
+  that will only have to be done in the ckconfig-cps.js file.
+- #1143 removed dependency on CPSBoxes in the popup forms
+- #496: handling of empty values for Int and Float Widgets: None is now
+  stored if the widgets are not required and an empty string is entered
+- #1145: Made photo widget more robust.
+- #1188: Fixed boolean widget in checkbox mode.
+- Made the BooleanWidget return int values instead of string values.
+- Fixed #616: Moving Text Widget to restructured text.
+- Fixed #671: The text area used for editing wiki pages should use monospaced
+  font.
+- #1258: added a fallback value the Float field importer.
+- Made the Boolean Widget use a Boolean Field.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- The Widget Types Tool has been removed. Widget code and registration
+  gets simpler. The Compound Widget now also takes the role of the
+  previous Customizable Widget.
+- Previous standard Compound or Customizable widget types (Link Widget,
+  Text Image Widget, Image Link Widget, Search Widget, Search Location
+  Widget) are now defined in code using CPSProgrammerCompoundWidget.
+- The prepare/validate method of the Compound Widget has a new
+  'prevalidate' phase.
+- Removed unused 'sort_function' code of vocabularies.
+- added a singleton object FieldNamespace.fieldStorageNamespace to
+  register methods made available in read/write_process_expression of
+  Field objects. This is intended to be used by CPSDirectory to register
+  dirCross(G|S)etList methods in String List Fields (cross references
+  between directories).
+- RichTextEditorWidget is deprecated. TextWidget should be used instead.
+- Long Field and Long Widget are deprecated. Use the Int equivalents.
+- Float Widget's default decimal separator is now '.'
+- Added getReadableFieldIds method to storage adapters.
+- CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
+- Added a CSS file dedicated to CPSSchemas.
+
+*******************************************
+** CPSSchemas V0.47.0 [R1 build 2005/11/08-16:55 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 29274
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added support for FCKeditor as the HTML editor.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.46.0 [R1 build 2005/11/07-15:25 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 29058
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
+  <mario [at] curiango.ipen.br>)
+Bug fixes:
+~~~~~~~~~~
+- If you try to update your directory entry you would get an error that the
+  password is too short (#1028).
+- Re-enabled the labels and input areas association to increase CPS
+  accessibility. This time the implementation does not generate modifications in
+  the ZODB.
+- Widgets configured to be hidden when empty were not hidden in a compound
+  widget.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Moved the cleanFileName method from CPSSchemas to CPSUtil.
+
+*******************************************
+** CPSSchemas V0.45.0 [R1 build 2005/09/21-15:22 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 27306
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- image and photo widgets now display dims in pixels and show the current dim
+  as preselected option in the resize control
+Bug fixes:
+~~~~~~~~~~
+- Fixed the search popup for Internal Links box to search only in the current
+  path using the "here" option (it used to search on the entire site)
+- The title in the link widget was rendered as escaped (#898)
+- #901: Field storage expression context's "proxy" variable is always None in
+  read expressions
+- internallinks popup now works on mozilla/firefox and looks better
+- added an option to InternalLinks widget to display absolute urls in links
+  (useful for CPSNewsletter)
+- #920: removed "target=CPS_Link" for external links.
+- #702: ModificationDate and other *Date fields now return DateTime objects
+  instead of strings.
+- #954 the image caption in the photo widget was not aligned under the image.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.44.0 [R1 build 2005/08/05-13:58 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 25426
+Requires:
+~~~~~~~~~
+- CPSUtil > 0.5.3
+New features:
+~~~~~~~~~~~~~
+- Added the possibility for a widget to specify if it has a input area (ie for
+  user input). Using information about a potential input area is important for
+  accessibility: it is used to associate the widget label with a potential input
+  area. To test this, just "click" on the "title" label of any CPS document
+  layout and your pointer will jump to the user field.
+- CPSIdentifierWidget: the regular expression is now a string property, this allow
+  you to change it if you need a special pattern for user ids
+- PropertiesPostProcessor now lives in CPSUtil.
+Bug fixes:
+~~~~~~~~~~
+- Removed the debian directory of this product since this product will never be
+  packaged on its own as a Debian package.
+- i18n: added missing translations for fr & en
+- Taking advantage of the new centralized CPSI18n.tests.translations module.
+- Fixed translation files through the CPSI18n/bin/fix_pos script.
+- Added absolute url to the photo popup call so that it works from a box
+  (where the context is not the image itself)
+- related to #297 : do not loose file title on the attached file widget when a
+  new file is loaded
+- Modified some ZPT files so that they are valid XHTML 1.0 Strict. This is a
+  work in progress to fix #773 "Using XHTML 1.0 Strict by default for CPS
+  sites".
+- Password widget accepted a blank value when widget was not required even if
+  a minimum size was set.
+- Replaced incorrect code producing broken urls using virtual hosting.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- The secure module importer ('modules') is available in the expression
+  context of field, widget and layout expressions.
+- Added unit tests for CPSDateTime widget
+
+*******************************************
+** CPSSchemas V0.43.0 [R1 build 2005/06/02-09:34 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSSchemas/trunk Revision: 22058
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Flash Widget
+- Added a "CPS Boolean Field".
+- Added "proxy" in the namespace for "read_process_expr" and
+  "write_process_expr".
+Bug fixes:
+~~~~~~~~~~
+- DateTime widget: a default value (current date) was presented in view mode if
+  widget was required.
+- added check for non empty value in the validation of the CPSSelectWidget with
+  is_required == True
+- Replaced remaining "latin1" encodings into "latin9" encodings.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Removed dumb LOGs that fill the logs with binary data.
+
+*******************************************
+** CPSSchemas V0.42.0 [R1 build 2005/04/25-15:15 by astefanescu]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-the local vocabularies are now used -if they exist- in the widgets
+that use vocabularies 
+Bug fixes:
+~~~~~~~~~~
+- Fix l10n on Multi-Select widget on view mode.
+- Cast to str the value of a Select Widget to prevent from crashing if it's an integer.
+- Add height/width parameters for Internet Explorer on the photo widget popup 
+  and extend a little the popup dimensions
+- Fix PhotoWidget display when upgrading from older version.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.41.4 [R1 build 2005/04/13-17:51 by fguillaume]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- #584: On win32 DiskFile field was not compatible with ExternalEditor.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.41.3 [R1 build 2005/04/13-15:39 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Updated i18n with new version of update_pos.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Moved some obnoxious DEBUG logs to TRACE level.
+
+*******************************************
+** CPSSchemas V0.41.2 [R1 build 2005/04/13-08:33 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- fix: advanced search: traceback when using updated criteria
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.41.1 [R1 build 2005/04/11-12:54 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- field_types was not correctly defined in CPSSearchLanguageWidget
+- For the Text Widget made the file_upload being used only when it is not
+  empty. (Fixes #578)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.41.0 [R1 build 2005/04/08-16:28 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Generic select widget: now possible to set display width and max size
+  parameters for the 'other' option.
+- Local vocabularies support, take a look at doc/localvocabulary.txt for more
+  information.
+- New ZippedHtmlWidget: store a zip file that contains html which can be
+  viewed online. Using index.html or any html file from the zip as preview
+  page.
+- Added a "file_uploader" option to the Text Widget.
+- New SearchWidgets to build search form
+Bug fixes:
+~~~~~~~~~~
+- Made the Layout.renderLayoutStyle() method more generic so that it can deal
+  with any mode.
+- Fixed HTML errors in Boolean Widget render method (invalid id, invalid label
+  in edit mode)
+- Fixed error when saving changes on layout properties in the ZMI.
+- Better decoration for the CPSDocumentLanguageSelectWidget through CSS.
+- Fixed the BMP bug (#305)
+- Widgets controlling a forbidden field are now correctly hidden.
+- fix: SubjectWidget doesn't translate i18n vocabulary in view mode
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.40.0 [R1 build 2005/03/07-16:17 by madarche]
+
+Requires:
+~~~~~~~~~
+- Now using CPSUtil.integration.isProductPresent method.
+New features:
+~~~~~~~~~~~~~
+- Added the SubjectWidget and made the MultiSelectWidget, from which it
+  inherits, easier to derive from.
+- Added keysSortedBy method to Vocabulary. Criterium available and well tested
+  are 'id', 'label', 'i18n'. You can also sort keys with a sort_function which
+  take the following list as an element (key, label, msgid, translated_msgid).
+- Try to implement sorted vocabularies. Now Vocabulary() can take an extra
+  argument: sort_function. It permits to insert a new key at good place on set.
+  Three methods are added: getSortFunction, setSortFunction, sortKeys.
+  The last one is not called 'sort' because it must not implement the list.sort
+  API. It will only help when a portal manager change Vocabulary sort function.
+- Possible to add JavaScript code in a widget rendering information
+- Made the Text Image Widget be able to handle either 1 block or 2 blocks of
+  text.
+- Added three properties to layouts: "layout_create_method",
+  "layout_edit_method" and "layout_view_method". Those properties provide more
+  flexibility than the already existing "style_prefix" property which needs
+  three ZPT files to be defined. Those three new properties take precedence over
+  the "style_prefix" property.
+Bug fixes:
+~~~~~~~~~~
+- Generic select widget did not refuse validation of empty values when required
+  if vocabulary did not hold blank values
+- Generic select widget generated multiple "selected" attributes when the same
+  key was repeated (typically blank keys)
+- Made that in edit mode if a css class is specified, this is the class name
+  suffixed by "Edit" that is returned. This is because in edit mode one usually
+  doesn't want the widgets to have the same appearance that they have in view
+  mode. Actually in edit mode one prefers to have all the widgets with the same
+  neutral presentation.
+- Removed some needless <span> elements used for i18n.
+- Fixed the English translation telling the maximum size of an attached file.
+- Correct commit when a proxy is present in a datamodel for a new document.
+- Don't do properties post-processing in Layout every time it's called.
+- The URL Widget returned an empty tag (<a class="url"></a>) when there was
+  no value to display which made the 'hidden if empty' option ineffective.
+- The Email Widget returned an empty tag (<a ...></a>) when there was
+  no value to display which made the 'hidden if empty' option ineffective.
+- Generic (Multi) Select widgets used value taken from datamodel instead of
+  datastructure for rendering
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Widget properties: widget_group_id was removed (not used ans not XHTML
+  compliant), widget_css_class renamed into css_class_expr, and
+  getCssClassForDatamodel method was renamed into getCssClass: if expression is
+  specified, the basic property css_class is ignored.
+- Use CMFCore.permissions instead of CMFCore.CMFCorePermissions to avoid warnings
+
+*******************************************
+** CPSSchemas V0.39.0 [R1 build 2005/01/28-15:04 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added context support for MethodVocabulary via wrapper class
+  MethodVocabularyWithContext. Select and MultiSelect Widgets can
+  use method vocabularies with context.
+- Added the posibility of saving the original image for the Photo Widget
+  in case of image resizing. The saved original image will be displayed
+  in a popup.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.38.0 [R1 build 2005/01/20-11:41 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- (crash) Wasn't impossible to have a different field name than the widget name on couple of widgets (CPSIntWidget, CPSLongWidget, CPSBooleanWidget,  CPSFloafWidget)
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- macro lib splitted
+- fix for #453 makes accessible javascript library
+- Use a non-empty default for the layout style prefix,
+  to avoid hard to track bugs.
+
+*******************************************
+** CPSSchemas V0.37.0 [R1 build 2004/12/21-09:17 by ben]
+
+Requires:
+~~~~~~~~~
+- CPSCore > 3.19.0
+  api change Languages -> getProxyLanguages
+New features:
+~~~~~~~~~~~~~
+- Added expression attribute that can be used
+  to validate all form values together
+
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.36.2 [R1 build 2004/12/13-20:51 by edegoute]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.36.1 [R1 build 2004/12/13-20:41 by edegoute]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Widget attribute widget_display_expr wasn't working
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Layout structure cells have widget_css_class key
+
+*******************************************
+** CPSSchemas V0.36.0 [R1 build 2004/12/13-09:09 by edegoute]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- No Epoz Dependency (EpozPatch)
+- No PortalTransforms dependency (install.py)
+- simplifier javascipt API: see the widget howto 
+
+*******************************************
+** CPSSchemas V0.35.4 [R1 build 2004/12/07-16:57 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- A bug in the cut-copy-pasting of DiskFiles that appeared when working
+  with revisions was fixed.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.35.3 [R1 build 2004/12/07-14:53 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- DiskFile now overrides __str__ to use getData directly.
+- If the newly uploaded version of a file doesn't exist on disk,
+  DiskFile now falls back to the old one.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.35.2 [R1 build 2004/12/07-13:22 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- A DiskFiles getData() would return the data of the previously committed
+  file, not the newly uploaded file, if called before a commit.
+  This made the previews of Disk File Fields preview "lag behind" the file.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.35.1 [R1 build 2004/12/03-12:41 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- More ExternalEditor support bugfixes for Disk File Field.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Better labels for Generic Select widget.
+
+*******************************************
+** CPSSchemas V0.35.0 [R1 build 2004/12/02-15:38 by regebro]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Disk File Field stored new files in ZODB.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.34.0 [R1 build 2004/12/02-10:33 by regebro]
+
+Requires:
+~~~~~~~~~
+- Disk File Fields dependant _html field must now be a standard File Field,
+  not a Disk File Field.
+New features:
+~~~~~~~~~~~~~
+- new CPSDocumentLanguageSelectWidget, require CPSCore > 3.18
+- Possible to resize image within a Photo widget, and not anymore
+  within an Image widget
+- Add an HTML id on each widget: group_id
+- Add 'depends on' attributes for javascript display toggle
+- Malagasy language
+Bug fixes:
+~~~~~~~~~~
+- Date widget use nn/nn/nnnn instead of n/n/n for rendering
+- The Internal Links widget does not perform a permission check
+  before displaying links.
+- Corrected the <head>...</head> declarations in main_template_popup.pt
+- Disk File Field now works better with external editor.
+- Disk File would fail when trying to calculate the size before the file
+  was uploaded.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Malagasy javascript camendar (to translate)
+
+*******************************************
+** CPSSchemas V0.33.0 [R1 build 2004/11/08-09:49 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- It is now possible to use the more sensible ISO 8601 date format for
+  DateTimeWidget cf. http://www.w3.org/TR/NOTE-datetime
+- File and attached file widgets now display a link to edit file online
+  if external editor is installed.
+- It is now possible to resize images already loaded in an Image widget.
+Bug fixes:
+~~~~~~~~~~
+- Now img tags always have an "alt" attribute as required by the W3C specs, even
+  if it is empty.
+- Some XHTML cleaning.
+- A file rejected by widget validation was presented as an accepted
+  file to keep (file, attached file, image and photo widgets)
+- A file or an image accepted by validation was lost when layout was not
+  validated entirely
+- Image and File widget validation did not take care of the fact that the widget
+  could be required
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- File, Image, AttachedFile and Photo widgets have been refactored a little
+  bit: all generic features have been put in File widget, and specific features
+  are in each widget.
+
+*******************************************
+** CPSSchemas V0.32.2 [R1 build 2004/10/25-13:46 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- indent error on generic select widget validation
+- #411: write_process_expr for contributors was broken
+- fix: BooleanWidget don't work properly with ldap storage adapter
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.32.1 [R1 build 2004/10/21-15:35 by ben]
+
+Requires:
+~~~~~~~~~
+- CPSDocument > 0.27.2
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- fix #175 for attachedFileWidget: 
+  (#175: File/Image widgets lose attached files when modifying after errors)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.32.0 [R1 build 2004/10/21-09:56 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Generic Select and Generic MultiSelect widgets have a new property
+  'blank_value_ok_if_required' to specify whether a blank value in the
+  given vocabulary should be considered ok when validating if the field is
+  required.
+  It gives the opportunity add blank values to the vocabulary just to
+  change the way the list is presented (using items like 'choose a category' or
+  '------------' to separate items) and not affect the way the value will be
+  validated if the widget is required. Before this, if the widget was required,
+  default behavior was to accept blank values if they were in the vocabulary
+  (e.g blank_value_ok_if_required = 1)
+
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.31.7 [R1 build 2004/10/18-15:47 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed the problem that an attached file "to keep" was not saved anymore.
+- Better display and i18n of the maximum allowed size, before size was only
+  described in Mb.
+- Allowed maximum size and allowed file suffixes are now clearly displayed for
+  the AttachedFileWidget.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.31.6 [R1 build 2004/10/11-12:11 by fermigier]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added a new "allowed_suffixes" properties to the CPSAttachedFileWidget. This
+  makes it now possible to control a bit more what files a user can upload in
+  this widget, which is most useful for example for OpenOffice.org to DocBook
+  transformations.
+Bug fixes:
+~~~~~~~~~~
+- Implemented the "is_required" property handling in the CPSAttachedFileWidget.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.31.5 [R1 build 2004/10/06-11:49 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added the isProductPresent method which returns whether the product
+  corresponding to the given product name is present and ready (not broken) in
+  the current Zope instance.
+- Added the translation for the msg "action_edit_online".
+
+*******************************************
+** CPSSchemas V0.31.4 [R1 build 2004/09/28-16:25 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fix getFileInfo() within CPSFileWidget to cope with non proxy object
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added getExternalEditorPath.py
+
+*******************************************
+** CPSSchemas V0.31.3 [R1 build 2004/09/24-12:13 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Initializing img_info dict with 'height' and 'width' for Image and Photo
+  widgets. The lack of initialization was problematic in some cases.
+- Fixed problem of default values markers appearing in field expressions.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Refactoring of unit tests.
+- Adding the clear method to CPSVocabulary, as it was in the base Vocabulary.
+- Added datamodel to the namespace of default value expressions in fields. This
+  is safe because the argument defaults to None. Only documents provide their
+  DataModel, it is too complicated for directories and lack use cases.
+
+*******************************************
+** CPSSchemas V0.31.2 [R1 build 2004/09/15-16:12 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Problem of variable initialization in getImageInfo.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.31.1 [R1 build 2004/09/15-15:06 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Allowing unlimited size for image caption of PhotoWidget, with the caption
+  text nicely wrapped at the bottom of the corresponding image.
+Bug fixes:
+~~~~~~~~~~
+- Fixed the naming problems that were causing in the log file the alerts
+  "Init Ambiguous name for method != 'manage_main'".
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.31.0 [R1 build 2004/09/10-09:36 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Big switch from GIF images to PNG images.
+
+*******************************************
+** CPSSchemas V0.30.0 [R1 build 2004/09/09-01:01 by anguenot]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- CPS Couple Field
+- CPSAttachedFileWidget and CPSImageWidget in edition mode now display the
+  maximal size they that is allowed.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added in doc the 'context' in namespace for field read/write expressions.
+- Unit tests can be launched within 'stock' CMF
+- Documentation about CMF compatibility
+
+*******************************************
+** CPSSchemas V0.29.0 [R1 build 2004/09/03-13:39 by ben]
+
+Requires:
+~~~~~~~~~
+- TranslationService >= 0.5.0
+New features:
+~~~~~~~~~~~~~
+- Better error message for the CPSAttachedFileWidget, it tells what the max size
+  is if it has been exceeded.
+Bug fixes:
+~~~~~~~~~~
+- Allow for "file:///xxx" URLs
+- Compute paths to preview URLs fine.
+- StorageAdapters now goes through write expressions despite write ignore
+  storage flag
+- read_size variable was not set in CPSAttachedFile widget validation
+  when file was empty -> made the page crash
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added variable mapping to errors stored in datastructure.
+
+*******************************************
+** CPSSchemas V0.28.2 [R1 build 2004/08/23-05:55 by fermigier]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- CPSHtmlWidget was missing the field_list definition.
+- Use more semantical HTML markup
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.28.1 [R1 build 2004/08/16-14:17 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- The open() calls in DiskFile now specifies binary mode, for windows
+  compatibility.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Implemented Coverage, Source, Relation DublinCore setters and getters through
+  a patch to the CMF DublinCore classes.
+
+*******************************************
+** CPSSchemas V0.28.0 [R1 build 2004/08/12-14:21 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Adding a default render method for compound widgets, displaying the rendered
+  structure for each widget in the compound widget: providing a render method
+  when defining a compound widget is not mandatory anymore.
+- Added the new "context" variable to be used with the storage expressions.
+Bug fixes:
+~~~~~~~~~~
+- Generic Select Widget: when widget is required and other option is accepted,
+  an empty entry in the text input was accepted when validating the widget.
+- Don't fail widget expression computation if the proxy does not have
+  a review_state.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.27.1 [R1 build 2004/07/28-15:39 by guillaum]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- string value was not correctly changed into list in Generic Multi Select Widget
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.27.0 [R1 build 2004/07/23-13:28 by guillaum]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Add a range list field
+- A DiskFile field, that stores the file on disk.
+- Add an 'other' option where free input is accepted in Generic Select widget
+  (ignored if render format is 'select')
+Bug fixes:
+~~~~~~~~~~
+- Small bug in CPSSubObjectsField when deleting fields.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- DataModel has a new isDirty method to check if a field is dirty (has
+  been modified).
+- In DataModel split _commit and _commitData so that the postcommithook
+  can modify data and re-call _commitData to update dependent fields.
+
+*******************************************
+** CPSSchemas V0.26.2 [R1 build 2004/07/07-17:04 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.26.1 [R1 build 2004/07/07-13:08 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Unregistered too general list field.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.26.0 [R1 build 2004/07/07-09:13 by madarche]
+
+Requires:
+~~~~~~~~~
+- Code calling getDefaultData() on the adapter should now also call a new
+  method afterward
+  data = adapter.getDefaultData()
+  adapter.finalizeDefaults(data)
+ 
+New features:
+~~~~~~~~~~~~~
+- Optimization: added a dirty_fields_map attribute to the DataModel to keep
+  track of which field should be committed to the storage adapter. At the moment
+  this optimization has the effect of computing dependent fields only when
+  necessary and thus avoid unneeded plain text generation (for indexation) and
+  html preview.
+
+Bug fixes:
+~~~~~~~~~~
+- Optimized the validate() method of the CPSAttachedFileWidget
+- Removing a widget without redoing the layout now doesn't raise an 
+  error when you render a document. 
+- You no longer can have a widget twice in a layouts layout.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Add a field class to manage all list field
+
+*******************************************
+** CPSSchemas V0.25.0 [R1 build 2004/06/30-09:41 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Add the possibility to translate a vocabulary
+- Made the MetaDataStorageAdapter now accepts unknown attributes to him and
+  stores them as regular attributes. This makes it natural to customize the
+  metadata schema.
+
+Bug fixes:
+~~~~~~~~~~
+- Vocabulary export and import deal with msgid
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.24.1 [R1 build 2004/06/18-17:52 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Renamed the preview template -> preview_html so that it doesn't collide with
+  the preview attribute of the image widget.
+- There are now two kinds of preview, an embedded preview and a non-embedded
+  preview, called for users' sake "printable version".
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.24.0 [R1 build 2004/06/16-11:35 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- HTML previews now contain images
+  - Added a CPSSubObjectsField
+  - Modified CPSFileField to hold files generated by conversions
+  - Modified FileUtils to return string and sub-objects for transformations other
+    than transformations to text
+  - Modified the AttachedFile widget to use the new embedded in the site template
+    preview
+- Passing kwargs for every transformation methods of FileUtils
+Bug fixes:
+~~~~~~~~~~
+- Forgot to add the "fields" variable in the widget_attachedfile_render template.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.23.1 [R1 build 2004/06/14-15:32 by afernandez]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Correction of internal link javascript problem with IE, and crach under mozilla
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.23.0 [R1 build 2004/06/14-09:09 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- widget internal link use cpsdefault po ?
+
+*******************************************
+** CPSSchemas V0.22.3 [R1 build 2004/06/10-15:56 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- getFileInfo returned 'None' when file had no modification date; nows returns
+  the default empty string.
+- Handling of empty fields (regression)
+- fixed bug in widget internal links render that appeared in CPSSchemas-0_22_1
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.22.2 [R1 build 2004/06/04-14:17 by hcauwelier]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Correctly convert an image to string in convertToLDAP.
+- Change widgets to use the new renderHtmlTag logic.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.22.1 [R1 build 2004/05/26-15:13 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Using a wider translation_table to that the attachedfile name does not contain
+  special characters. Added rules for ligatures.
+- Correct utf-8 conversion.
+- Increase the size of the text input for the title of file and image widgets
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- renderHtmlTag now ignores None arguments, acting as tal:attributes.
+
+*******************************************
+** CPSSchemas V0.22.0 [R1 build 2004/05/24-10:19 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- now possible to set an 'alt' text in Image/Photo widgets
+  (was previously set to the filename's value)
+Bug fixes:
+~~~~~~~~~~
+- 
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.21.1 [R1 build 2004/05/10-06:19 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- In the widget_text_render.pt the RTE button now appears if and only if the
+  selected render format if HTML, and not depending on whether the format is
+  configurable or not.
+- Missing conversion method for Image Field.
+- Check on file max size for AttachedFile Widget works again
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.21.0 [R1 build 2004/05/05-00:21 by guillaum]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+Bug fixes:
+~~~~~~~~~~
+- fix: zoomed mimetype icon for attached file is ugly
+- RTE button JavaScript toggle corrected
+- Hardening + W3C compliance : Escaping content that has been entered in as text
+- CPSURLWidget now really uses the display_width value to truncate the display
+  of URLs that are too long and append '...' in the end.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Additional Field API to convert to and from LDAP attributes.
+- Additional StorageAdapter API: getFieldIds().
+
+*******************************************
+** CPSSchemas V0.20.0 [R1 build 2004/04/29-11:09 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- portal_layouts know how to render/validate a layout/schema
+- new MethodVocabulary this enable dynamic vocabulary
+- HTML RTE: Layout button now appears only when the selected render format is
+  HTML. This is now done through JavaScript.
+- new MappingStorageAdapter just using a dictionnary
+Bug fixes:
+~~~~~~~~~~
+- #312: refactor export tab to use smart writing. Now detects quotes used and
+  put stronger quotes.
+- Using the file title is there is one for file attachment. This makes other
+  CPSComponents happy.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Use tuples for vocabularies export
+- Clarify setContextObject use.
+- DateTime widget handle default time and minute
+
+*******************************************
+** CPSSchemas V0.19.2 [R1 build 2004/04/09-13:28 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- not able to use double quote inside title, bad escaping
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.19.1 [R1 build 2004/03/25-16:54 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- xhtmlize
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.19.0 [R1 build 2004/03/25-11:40 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- xhtmlize
+Bug fixes:
+~~~~~~~~~~
+- Fix datamodel.get when key is missing.
+- UrlWidget don't check bla-%20foo url
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- boolean widget handle string value '0' as false
+
+*******************************************
+** CPSSchemas V0.18.1 [R1 build 2004/03/09-10:37 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Rich Text Editor is not localized
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.18.0 [R1 build 2004/03/08-14:18 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- new Identifier Widget
+- new Heading Widget rendering with H tag
+Bug fixes:
+~~~~~~~~~~
+- #336: File uploading fails for some extensions
+- AttachedFile no mimetype icons if file extension have uppercase char
+- AttachedFile/Image/File return invalid file when choose keep under Mac and IE
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Datamodel add_roles setting split into convenience function.
+- improve attachedFile rendering
+
+*******************************************
+** CPSSchemas V0.17.2 [R1 build 2004/02/25-08:46 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Vocabulary management screens only work with plain CPS Vocabularies.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.17.1 [R1 build 2004/02/19-15:56 by ben]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- AttachedFile widget: incorrect content type for file attachement make 
+  portal transform unable to extract text
+- #197: FileWidget download link is badly cached
+- Image widget display windows full path of src as alt and title
+- Epoz editor don't use cps css
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Storage adapters always propagate **kw arguments to the base adapter.
+- Don't fail on ReadAccessError when doing datamodel.get('foo') but return
+  the default value.
+- _getContentUrl now receives the file_name as argument too.
+
+*******************************************
+** CPSSchemas V0.17.0 [R1 build 2004/02/18-09:34 by regebro]
+
+Requires:
+~~~~~~~~~
+- use Epoz 7.4 for trendy xhtml
+New features:
+~~~~~~~~~~~~~
+- Removed the deprecated AutoIndex field.
+- widget text editor does true wysiwyg, using cps css
+- DateWidget can now use javascript to auto-tabulate
+  between the fields.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- 
+
+*******************************************
+** CPSSchemas V0.16.0 [R1 build 2004/02/13-14:33 by regebro]
+
+Requires:
+~~~~~~~~~
+- A recent version of PortalTransforms, at least PortalTransforms-1.0 and
+  preferably PortalTransforms-1.0.3
+New features:
+~~~~~~~~~~~~~
+- Handling of OpenOffice.org mimetypes if this is not already provided by the
+  host system
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Changed the widget_type parameter in __init__ to widgettype to avoid
+  clashes with the widget_type keyword.
+
+*******************************************
+** CPSSchemas V0.15.0 [R1 build 2004/02/08-08:01 by fermigier]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- Convert metadata storage for Coverage, Source and Relation by running
+  once the external method CPSSchemas.convert_metadata.
+New features:
+~~~~~~~~~~~~~
+- Password widget: able to define a policy for password validation:
+  checking min, max size checking lower, upper, digit or extra chararcter
+- A new AutoIndex field for automatically generating numbers useful for
+  indexes.
+Bug fixes:
+~~~~~~~~~~
+- renderHtmlTag unable to generate <option value=""> tag
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- EmailWidget
+  - no validation in search mode 
+  - '+' is allowed in email addresses.
+- Vocabularies are now preferrably initialized using the
+  syntax (('foo': "Foo"), ('bar': "Bar")).
+- i18n using CPSDefault as black list pot
+- Storage as attributes of metadata is done using standard lowercase
+  identifiers. Uppercase is reserved for accessors.
+
+*******************************************
+** CPSSchemas V0.14.1 [R1 build 2004/01/21-10:46 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Italian translation.
+- A password widget can compare its value with another one so that you can have
+  a confirm password.
+Bug fixes:
+~~~~~~~~~~
+- EmailWidget was always mandatory.
+- CheckBoxWidget's default should not be a list but an empty string.
+- #195: SelectWidget in edit mode displays the current value selected
+  even if the value is not in the vocabulary
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- MultiSelect widget handle is_required property
+
+*******************************************
+** CPSSchemas V0.14.0 [R1 build 2004-01/06-15:06 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+
+New features:
+~~~~~~~~~~~~~
+- Ordered List and Unordered List widgets
+-
+
+Bug fixes:
+~~~~~~~~~~
+- Don't fail when logging an error when there are duplicate fields.
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Field property is_indexed has been renamed to is_searchabletext.
+  Update your schemas and schema creation scripts if needed.
+*******************************************
+** CPSSchemas V0.13.1 [R1 build 2003/12/23-15:09 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- ImageWidget uploading non image or invalid image result in a Zope error 
+  in getImageInfo
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.13.0 [R1 build 2003/12/23-10:05 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- new URLWidget
+- new EmailWidget
+- TextWidget has size_max property
+- new 'help' attribute for widgets to store information related to filling the
+  widgets. This information can be displayed in UI as tooltips.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- renaming properties '*_str' and used '*_c' for computed attribute
+  foo_expression_str -> foo_expr, foo_expression -> foo_expr_c
+  foo_str -> foo, foo -> foo_c
+
+*******************************************
+** CPSSchemas V0.12.0 [R1 build 2003/12/17-10:41 by regebro]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- new Boolean Widget
+- MetaDataStorage adapter handle non CMF Dublin Core Coverage, Source 
+  and Relation
+Bug fixes:
+~~~~~~~~~~
+- Bug fix for handling of non-ZODB images.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.11.0 [R1 build 2003/12/15-09:06 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Fields now have a read_process_dependent_fields property to specify which
+  fields the depend on.
+- New compound widget textimage
+Bug fixes:
+~~~~~~~~~~
+- old CPSDocument using deprecated CPSLinkWidget (not the compound) can be
+  viewed
+- CPSImageWidget, CPSPhotoWidget, CPSFileWidget and CPSAttachedFileWidget all
+  assumed that the data was stored as a ZODB attribute. Now they instead ask
+  the StorageAdapter for the URL to the content.
+- Fixed typos in RTE widget meta_types:
+  "CPS Rich Text EditorWidget" -> "CPS Rich Text Editor Widget"
+  "CPS Rich Text Editor Widget Type " -> "CPS Rich Text Editor Widget Type"
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added the possibility to restrict the fields managed by a storage adapter.
+- improve link, photo css integration
+- Renamed makeWidget to makeWidgetTypeInstance in WidgetTypeRegistry
+
+*******************************************
+** CPSSchemas V0.10.1 [R1 build 2003/12/10-18:24 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- The Image and Photo Widgets rendering assumed that the data was attributes.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.10.0 [R1 build 2003/12/10-17:19 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- Update the default value of any field that has a non-default default.
+  This means changing getDocumentSchemas.py or getCustomDocumentSchemas.py
+New features:
+~~~~~~~~~~~~~
+- rewrite Link widget into Compound widget
+- new MetaData storage adaptater a metadata use getter/setter method like
+  Title() and setTitle()
+- Fields can now be computed/processed on read and write.
+- Don't initialize fields with the widget name by default.
+- Widgets now have a hidden_if_expr property to hide the widget if
+  the given TAL expression returns true.
+- Compound widget have customisable prepare_validate method
+- Added fields.txt documentation in doc.
+- Field's default value is now a TALES expression.
+Bug fixes:
+~~~~~~~~~~
+- do not raise exception if 2 schemas have a field in common
+  this case is possible when you change your schema definition
+- Fix lines widget to deal with Zope bug where it returns [''] instead of [].
+- Fix image widget to use a correct absolute URL for the image.
+- #253: ImageWidget PIL don't know how to save JPEG image
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Pass the datamodel as argument to postCommitHook as it is sometimes
+  needed.
+- computeLayoutStructure has a simpler API without the need for a chooser.
+- Added 'portal' to the namespace for field processing expression.
+- Factor out PropertiesPostProcessor usage.
+
+*******************************************
+** CPSSchemas V0.9.0 [R1 build 2003/11/27-22:41 by fermigier]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- Image widget resize require PIL library
+  read CPSDefault/doc/HOWTO.install_CPS3 to know how to install PIL
+
+New features:
+~~~~~~~~~~~~~
+- if PIL is installed ImageWidget resize image bigger than
+  display_widhtxdisplay_height if allow_resize is set then user can choose a
+  smaller format, list of size format is defined in getImgSizes.py, the
+  imported image will be resized if bigger.
+- P2 #104: New Compound Widget Type, enabling the creation of compound widgets
+  by defining a render skin in the type, and the subwidget ids in the widget,
+  does not yet work in flexible mode.
+
+Bug fixes:
+~~~~~~~~~~
+- fixing TextArea render format text, pre, stx and html default is text
+- If you forgot to set a vocabulary for a select widget, you got a very
+  unhelpful error message.
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Possibility to define different render modes such as edit and 
+  edit_metadata for instance.
+- attached file are open in a new window if you click on the mimetype icon
+
+*******************************************
+** CPSSchemas V0.8.0 [R1 build 2003/11/19-17:50 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- New Photo Widget with position and sub title
+Bug fixes:
+~~~~~~~~~~
+- Fixing text block position 
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSSchemas V0.7.0 [R1 build 2003/11/17-15:27 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- Epoz 0.6.0 is recommanded for Text widget
+- Warning Date and File widgets are deprecated
+  you should use DateTime and attachedFile.
+New features:
+~~~~~~~~~~~~~
+- CPSTextWidget handle an Epoz editor in a popup, enable multi RTE per document
+Bug fixes:
+~~~~~~~~~~
+- Correctly keep the proxy in the datamodel after a commit.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Spliting widgets into 2 files: Basic and Extended
+- CPSTextAreawidget is back to sample version,
+  the advanced version with format and position is named CPSTextWidget
+- CPSDateWidget is back to basic rendering, the advanced is named
+  CPSDateTimeWidget
+- CPSFileWidget is back to basic file upload, the advanced version is named
+  CPSAttachedFileWidget
+
+*******************************************
+** CPSSchemas V0.6.0 [R1 build 2003/11/10-18:17 by guillaum]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added Lines widget, dealing with String List fields. This allows
+  filling string lists with free text entered in a textarea.
+  Each line of input text will be a string in the string list, ala
+  ZMI way of dealing with line fields.
+- image widget in edit mode display the current image
+- enhanced int, long, float widgets (better support for separators and range)
+- Vocabularies can now have write ACLs to allow user edits (no skins yet).
+- Fields can now check access rights (read and write).
+- new TextArea widget with format and postion
+Bug fixes:
+~~~~~~~~~~
+- 
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- getLayoutData now takes a widget mode chooser as argument, and renders
+  all the widgets.
+- adding style_prefix property to Layout
+- Refactored to provide a correct set of steps to do the validation and
+  rendering.
+- New PropertiesPostProcessor mixin to allow posprocessed ZMI properties.
+- Allow any layout_mode starting with 'view' to render widgets in view mode.
+- Added an isWriteAllowed method for the skins to check vocabulary editing.
+- StorageAdapter now has a getDefaultData method to get default data.
+
+*******************************************
+** CPSSchemas V0.5.1 [R1 build 2003-10/24-14:14 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Installing EPOZ for the RTE widget
+- Better support for range, decimal/thousands separator attributes for
+  widgets int, long and float
+- Delete option no longer appears in widgets File and Image if not Deletable
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Refactoring of vocabularies tool to allow registry of several types of
+  vocabularies.
+*******************************************
+** CPSSchemas V0.5.0 [R1 build 2003-10/18-10:35 by anguenot]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+
+New features:
+~~~~~~~~~~~~~
+- P1 #187: Create documents without creating empty object.
+- P2 #201: Extended Select widget using popup and search capabilities
+
+Bug fixes:
+~~~~~~~~~~
+- LinkWidget convert url in lowercase
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- P2 #220: DataModel constructor now takes a proxy argument to be able to
+  provide it to fields or widgets that need to do placeful stuff.
+- DataModel now also provides the context where the document is created or
+  edited.
+- Internal Links widget.
+- Float can be restricted to a range and have custom separators for thousands
+  and decimal part.
+*******************************************
+** CPSSchemas V0.4.0 [R1 build 2003-10/08-14:57 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- adding Link Widget
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+*******************************************
+** CPSSchemas V0.3.1 [R1 build 2003-10/06-08:43 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- #108: Searchable and previewable files like in NuxDocument
+Bug fixes:
+~~~~~~~~~~
+- temporary fix for 'unhashable type' in vocabulary.get
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+*******************************************
+** CPSSchema V0.3.0 [R1 build 2003-10/03-15:05 by ben]
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+- CPSSchemas requires Epoz-0.5.1
+- indexing File require PortalTransforms-1.0a3
+- Recreate portal_widget_types using installer.
+New features:
+~~~~~~~~~~~~~
+- Split off from CPSDocument into a separate package CPSSchemas.
+- Select Widget (displays a menu to choose one string)
+- CheckBox Widget (displays a checkbox to choose true/false)
+- MultiSelect Widget (display a select multiple to choose a list of strings)
+- First RTE (Epoz) integration. Only one per page right now. (unstable)
+- String/Date/Text widgets has is_required properties
+- adding hidden_empty properties 
+- String widget handle size_max property
+- P2 #110: Improve basic Date widget, fully i18n/l10n using jscalendar
+- P3 #145: Check file or image maximum size property
+- P3 #190: Mime type restriction for images
+Bug fixes:
+~~~~~~~~~~
+- P1 #144: Versioning is not incremental while editing the document
+- P1 #158: Edit page of working version after submit/publish doesn't work
+- P2 #125: File/Image Widget must be able to not display anything if no file
+- P2 #176: offer export of a document's layout and schema
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- sf code cleaning
+- Vocabularies are now used for all "choice" widgets.
+- renaming widget properties: 'title' to 'label_edit' and 'title_view' into 'label'
+- Use a first version of simple storage adapters.
+- Added a notion of dependant fields so that we can compute other fields
+  when one is modified. Will be used for file preview/indexing for instance
+- All fields can have allow_none now.
+- Renamed portal_widgets to portal_widget_types.
+- Don't pass both datastructure and datamodel around.
+- string widget display_maxwidth is replaced with size_max
+*******************************************
+** CPSDocument V0.0.0
+
+ZODB Requires:
+~~~~~~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- P1 #94: Password Widget
+- P1 #96: action edit layout should appear only when flexible document
+          Still open with CMF-1.3.1 (NOT WITH CMF-1.4)
+- CPSDefault layout (layout_default_)
+- cool News Document
+Bug fixes:
+~~~~~~~~~~
+- Button move up/move down/change are removed the schema interface.
+- Layout Dummy : Don't display title if there is none.
+- Bug fixed : Redirection to the portal_repository while editing the
+  layouts. Adding an arguments proxy= in the render method signature.
+- fixing bad portal type icon init
+- fixing non i18n action name
+- fixing search on is_indexed field (install bug)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Add widget for arbitrary HTML. Uses no field.
+- Added a storage_method parameter to the FlexTI.
+  Its syntax is mode1:meth1 mode2:meth2 and it specifies, for some
+  modes, what method to call to do the storage, instead of storing in
+  the object. layout_form_store.py is an example.
+  Later we'll use real storage adapters, but this works for now.
+  The layout_form* skins shows how to have a basic form skin.
+  cpsdocument_form_view is the view for a form.
+- Adding a dummy form document for demo created with CPSDocument.install
+- Moving schemas/widgets/layouts declations from the CPSDocument installer.
+  Now in : CPSDocumentSchemas.py CPSDocumentLayouts.py and
+  CPSDocumentWidgets.py
+- Comming back to Florent form example.
+- move CPSDocument[Schemas|Layers|Types|Widgets] to getDocument* 
+  document can be define in the application skin using getCustomDocument*
+- i18n of widgets error messages
+- Widget Image handle dipslay size
+- Widget have different title for view (title_view) and edit (title)
+- i18n of title title_view and description
+- css_class widget attribute is now used for view mode, edition use
+  default css row/fields ...
+- adding get_size method
+- adding CPSDefault hook getAdditionalContentInfo
+- adding hidden_view and hidden_edit attribute for layout
+- when creating a field/widget through the manage_add* methods, all
+  properties can be initialized directly as keyword arguments
+- renamed Pwd Widget and Field into Password
+- add the possibility for string and textarea widgets to be mandatory

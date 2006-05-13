@@ -1,0 +1,72 @@
+<tal:block define="cells options/cells;
+                   mode options/mode;
+                   ds options/datastructure;
+                   dm ds/getDataModel;
+">
+  <tal:block condition="python: mode == 'view'">
+      <tal:block repeat="cell cells">
+        <tal:block define="widget cell/widget">
+          <div tal:attributes="class cell/css_class|nothing;
+                               id python:widget.getHtmlWidgetId()+'_widget';
+                              ">
+            <div class="label" tal:condition="widget/label">
+              <tal:block i18n:translate="" tal:condition="widget/is_i18n"
+                    tal:content="widget/label">label</tal:block>
+              <tal:block tal:condition="not:widget/is_i18n"
+                    tal:content="widget/label">label</tal:block>
+            </div>
+            <tal:block replace="structure cell/widget_rendered" />
+          </div>
+        </tal:block>
+      </tal:block>
+  </tal:block>
+
+  <tal:block condition="python: mode == 'edit'">
+    <tal:block repeat="cell cells">
+      <tal:block define="widget cell/widget;
+                         wid widget/getWidgetId;
+                         dm options/datastructure/getDataModel;
+                         err python:ds.getError(wid);
+                         is_required widget/is_required|nothing;
+                         tooltip_id python:wid + '_help';
+                         css_class python:test(err, 'row error', 'row')">
+        <div tal:attributes="class css_class">
+        <div tal:attributes="class cell/css_class|nothing;
+                             id python:widget.getHtmlWidgetId()+'_widget';
+                            ">
+          <div class="label" tal:condition="widget/label_edit"
+                             tal:attributes="class python:test(is_required, 'label required',
+                                              'label')">
+            <tal:block i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/label_edit">label</tal:block>
+            <tal:block tal:condition="not:widget/is_i18n"
+              tal:content="widget/label_edit">label</tal:block>
+          </div>
+          <button type="button" class="tooltipControl"
+                  tal:condition="widget/help"
+                  tal:attributes="onclick python:'toggleElementVisibility(\'%s\')' % tooltip_id;"
+          > ? </button>
+          <div class="field">
+            <div tal:replace="structure cell/widget_rendered"/>
+          </div>
+          <div class="tooltipArea" style="visibility: hidden;"
+               tal:condition="widget/help"
+               tal:attributes="
+               id tooltip_id;
+               onclick python:'showElement(false, \'%s\')' % tooltip_id;
+            ">
+            <tal:block i18n:translate="" tal:condition="widget/is_i18n"
+              tal:content="widget/help">i18_key-help_for_this_field</tal:block>
+            <tal:block tal:condition="not:widget/is_i18n"
+              tal:content="widget/help">This is the help for this field</tal:block>
+          </div>
+          <tal:block condition="err">
+            <em style="color: red"
+                i18n:translate="" tal:content="err">err</em><br/>
+          </tal:block>
+        </div>
+        </div>
+      </tal:block>
+    </tal:block>
+  </tal:block>
+</tal:block>

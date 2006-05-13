@@ -1,0 +1,67 @@
+<tal:block define="mode options/mode;
+                   id here/getWidgetId;
+                   id_date string:${id}_date;
+                   id_hour string:${id}_hour;
+                   id_minute string:${id}_minute;
+                   value options/datastructure/?id;
+                   date options/datastructure/?id_date;
+                   hour options/datastructure/?id_hour;
+                   minute options/datastructure/?id_minute;
+                   fmt here/view_format;
+">
+<tal:block condition="python: mode == 'view'">
+<span tal:replace="python:here.getDateStr(value, fmt=fmt)" />
+</tal:block>
+<tal:block define="name here/getHtmlWidgetId;
+                   date_day_fmt python:fmt.startswith('iso8601')
+                       and 'iso8601_short' or 'short'"
+  condition="python: mode == 'edit'">
+  <input type="text" size="11" maxlength="22"
+    tal:attributes="name string:${name}_date;
+                    id string:${name}_date;
+                    value python:here.getDateStr(value, fmt=date_day_fmt)" />
+  <button id="trigger"
+    tal:attributes="id string:trigger_${name}_date">...</button>
+  <tal:block define="jscalendar_date_fmt python:fmt.startswith('iso8601')
+      and 'y-mm-dd' or here.translation_service('jscalendar_date_fmt');"
+    replace="structure string:<script type='text/javascript'>
+    Calendar.setup(
+      {
+        inputField  : '${name}_date',
+        ifFormat    : '${jscalendar_date_fmt}',
+        button      : 'trigger_${name}_date',
+        mondayFirst : true,
+        range       : [1970, 2037]
+      }
+    );
+  </script>" />
+  <tal:block condition="here/time_setting"
+    define="hours python:range(0,24);minutes python:(0,10,15,20,30,40,45,50);
+            elt_hour_id string:${name}_hour;
+            elt_minute_id string:${name}_minute">
+    <tal:block i18n:translate="cpsschema_at">at</tal:block>
+    <select tal:attributes="name elt_hour_id;
+                            id elt_hour_id">
+      <tal:block repeat="h hours">
+        <option tal:attributes="value h; selected python:int(hour)==h"
+          tal:content="python:'%2.2i'%h" />
+      </tal:block>
+    </select>
+    <label tal:attributes="for elt_hour_id"
+           i18n:translate="cpsschema_hour">h</label>
+    <select tal:attributes="name elt_minute_id;
+                            id elt_minute_id">
+      <tal:block repeat="m minutes">
+        <option tal:attributes="value m; selected python:int(minute)==m"
+          tal:content="python:'%2.2i'%m" />
+      </tal:block>
+      <tal:block condition="python:int(minute) not in minutes">
+        <option tal:attributes="value minute" tal:content="minute"
+          selected="selected" />
+      </tal:block>
+    </select>
+    <label tal:attributes="for elt_minute_id"
+           i18n:translate="cpsschema_minute">mn</label>
+  </tal:block>
+</tal:block>
+</tal:block>

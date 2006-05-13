@@ -1,0 +1,118 @@
+<dtml-var manage_page_header>
+<dtml-let management_view="'Vocabulary'">
+<dtml-var manage_tabs>
+</dtml-let>
+
+<form action="&dtml-URL1;" method="POST">
+
+<br />
+
+<dtml-let keys=keys>
+<dtml-if keys>
+<em><dtml-var "_.len(keys)"> entries in this vocabulary.</em>
+<table cellspacing="0" cellpadding="2" border="0" width="100%">
+  <tr class="list-header">
+    <td align="left" valign="top">
+      &nbsp;
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Key</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Label</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Msgid</div>
+    </td>
+  </tr>
+  <dtml-in keys>
+  <dtml-let key=sequence-item index=sequence-index>
+  <dtml-if sequence-odd>
+  <tr class="row-normal">
+  <dtml-else>
+  <tr class="row-hilite">
+  </dtml-if>
+    <td align="left" valign="top">
+      <input type="checkbox" name="keys:list" value="&dtml-key;">
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">
+        <input type="text" name="key_&dtml-index;" value="&dtml-key;" size="20" />
+      </div>
+    </td>
+    <td align="left">
+      <div class="form-item">
+        <input type="text" name="label_&dtml-index;" value="<dtml-var "get(key)" html_quote>" size="40" />
+      </div>
+    </td>
+    <td align="left">
+      <div class="form-item">
+        <input type="text" name="msgid_&dtml-index;" value="<dtml-var "getMsgid(key) or ''" html_quote>" size="20" />
+      </div>
+    </td>
+  </tr>
+  </dtml-let>
+  </dtml-in>
+  <tr>
+    <td align="left" colspan="3">
+      <input type="submit" name="manage_changeVocabulary:method" value=" Change " />
+      <dtml-comment>
+      <input type="submit" name="manage_moveVocabularyItemsUp:method" value=" Move up " />
+      <input type="submit" name="manage_moveVocabularyItemsDown:method" value=" Move down " />
+      </dtml-comment>
+      <input type="submit" name="manage_delVocabularyItems:method" value=" Delete " />
+    </td>
+  </tr>
+</table>
+<dtml-else>
+<p>
+  The vocabulary is empty.
+</p>
+</dtml-if>
+</dtml-let>
+
+<br />
+
+<table cellspacing="0" cellpadding="2" border="0" width="100%">
+<tr class="list-header">
+  <td align="left" valign="top" colspan="2">
+    <div class="form-label">Add a new vocabulary item</div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">Key</div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="new_key" size="40" /></div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">Label</div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="new_label" size="40" /></div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">Msgid</div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="new_msgid" size="40" /></div>
+  </td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td align="left">
+    <input type="submit" name="manage_addVocabularyItem:method" value=" Add ">
+  </td>
+</tr>
+</table>
+
+
+</form>
+
+
+<dtml-var manage_page_footer>

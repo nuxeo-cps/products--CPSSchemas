@@ -1,0 +1,59 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+  <adapter
+      factory=".exportimport.layout.LayoutToolXMLAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for=".interfaces.ILayoutTool
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+  <adapter
+      factory=".exportimport.layout.LayoutXMLAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for=".interfaces.ILayout
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+  <adapter
+      factory=".exportimport.layout.WidgetXMLAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for=".interfaces.IWidget
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+
+  <five:traversable
+      class=".LayoutsTool.LayoutsTool"/>
+  <five:traversable
+      class=".Layout.CPSLayout"/>
+  <five:traversable
+      class=".Widget.CPSWidget"/>
+
+  <configure package="Products.GenericSetup.browser">
+
+    <browser:page
+        for="zope.app.container.interfaces.IAdding"
+        name="addCPSLayout.html"
+        template="addWithPresettings.pt"
+        class="Products.CPSSchemas.browser.CPSLayoutAddView"
+        permission="cmf.ManagePortal"
+        />
+
+  </configure>
+
+  <!-- class registration -->
+
+  <five:registerClass
+      class=".Layout.CPSLayout"
+      meta_type="CPS Layout"
+      addview="addCPSLayout.html"
+      permission="cmf.ManagePortal"
+      global="False"
+      />
+
+  <!-- widget classes are registered by code -->
+
+</configure>

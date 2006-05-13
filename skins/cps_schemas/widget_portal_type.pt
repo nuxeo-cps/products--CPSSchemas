@@ -1,0 +1,12 @@
+<tal:block tal:define="
+             datamodel options/datastructure/getDataModel;
+             proxy datamodel/getProxy | nothing">
+  <tal:block tal:condition="python:proxy">
+    <div tal:define="cpsmcat nocall:here/translation_service;
+                     type_title python:proxy.getTypeInfo().Title()"
+         tal:content="python:cpsmcat(type_title)"></div>
+  </tal:block>
+  <tal:block tal:condition="python:not proxy">
+    <div tal:content="string:?"></div>
+  </tal:block>
+</tal:block>

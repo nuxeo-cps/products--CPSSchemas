@@ -1,0 +1,42 @@
+<tal:block define="mode options/mode;
+                   datastructure options/datastructure;
+                   vocabulary options/vocabulary;
+                   id here/getWidgetId;
+                   key datastructure/?id;
+                   value python:vocabulary.get(key, key);
+                  ">
+<tal:block condition="python: mode == 'edit'">
+  <tal:block define="utool nocall:here/portal_url;
+                     base_url python:utool.getBaseUrl();
+                     voc_id vocabulary/getId;
+                    ">
+    <script type="text/javascript" tal:content="structure string:<!--
+      var base_url = '${base_url}'
+      var voc_id = '${voc_id}'
+      var extsel_w_id = '${id}'
+      var key = '${key}'
+      -->">
+    </script>
+    <script type="text/javascript">
+      <!--
+      function open_select_dialog() {
+        selector_window = window.open(base_url + 'popup_extendedselect_form' + 
+        '?source=' + voc_id + '&input=' + extsel_w_id + '&previous=' + key,
+        'popup_select', 'toolbar=0,scrollbars=1,location=0,statusbar=0,' +
+        'menubar=0,resizable=1,dependent=1,width=400,height=300');
+        if (! selector_window.opener)
+          selector_window.opener = window
+      }
+      -->
+    </script>
+    <input type="hidden" tal:attributes="id id;
+                                         name here/getHtmlWidgetId;
+                                         value key;
+                                        " />
+    <span tal:attributes="id string:${id}_text"
+          tal:content="value">Value</span>
+    <a href="javascript:open_select_dialog()"><img tal:replace="structure
+            python:here.getImgTag('search_popup.png', width=32, height=32)"></a>
+  </tal:block>
+</tal:block>
+</tal:block>

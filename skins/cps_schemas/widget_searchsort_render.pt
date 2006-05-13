@@ -1,0 +1,15 @@
+<tal:block define="mode options/mode;
+                   value options/value;
+                   widget_id here/getHtmlWidgetId;
+                   modes here/sort_mode_names;">
+  <select tal:attributes="name widget_id;
+                          id widget_id;">
+    <tal:block repeat="mode modes">
+      <option tal:attributes="value mode;
+                              selected python:test(value==mode, 'selected', nothing)"
+              tal:content="string:cpsschemas_label_searchsort_${mode}"
+              i18n:translate="" />
+    </tal:block>
+  </select>
+</tal:block>
+

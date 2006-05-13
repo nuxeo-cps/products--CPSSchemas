@@ -1,0 +1,43 @@
+<tal:block define="cells options/cells;
+  mode options/mode;
+  ds options/datastructure">
+
+  <tal:block condition="python: mode == 'view'"
+    define="
+    href python: cells[0]['widget_rendered'];
+    href_id python: cells[0]['widget'].getWidgetId();
+    href_url ds/?href_id;
+    has_byline python:len(cells)>3 and cells[3];
+    content python: cells[1]['widget_rendered'];
+    title python: cells[2]['widget_rendered'];">
+    <a href="" tal:attributes="href href_url;title title|nothing;">
+      <strong tal:content="structure python: test(content, content, href_url)" />
+    </a>
+    <tal:block condition="has_byline">
+      <span tal:define="byline python: cells[3]['widget_rendered'];"
+            tal:content="structure byline" />
+    </tal:block>
+    <div style="padding-left: 1.5em;">
+      <span tal:condition="title" tal:content="structure title" />
+      <div tal:content="structure href" />
+    </div>
+  </tal:block>
+
+  <tal:block condition="python: mode in ('edit', 'create')">
+    <table width="100%" summary="link layout">
+      <tr tal:repeat="cell cells">
+        <td valign="top" tal:content="cell/widget/label_edit" i18n:translate="" />
+        <td valign="top"
+          tal:define="err python:ds.getError(cell['widget'].getWidgetId());
+          css_class python:test(err, 'row error', nothing);"
+          tal:attributes="class css_class">
+          <tal:block replace="structure cell/widget_rendered" />
+          <div tal:condition="err">
+            <em style="color: red" i18n:translate="" tal:content="err">err</em>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </tal:block>
+
+</tal:block>

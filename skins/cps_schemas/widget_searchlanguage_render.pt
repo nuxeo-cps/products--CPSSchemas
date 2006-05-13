@@ -1,0 +1,42 @@
+<fieldset tal:define="mode options/mode;
+                      value options/value;
+                      selected options/selected;
+                      widget_id here/getHtmlWidgetId;
+                      widget_selected_id string:${widget_id}_selected;
+                      vocabulary options/vocabulary;
+                      languages vocabulary/keys">
+<input type="radio" class="noborder"
+       tal:attributes="id string:${widget_selected_id}_no;
+                       name widget_selected_id;
+                       checked python:test(selected!='yes', 1, 0);
+                       value string:no;
+                       onclick string:searchLanguageClearSelected(this.form.${widget_id})" />
+<label tal:attributes="for string:${widget_selected_id}_no" i18n:translate="">cpsschemas_search_all_languages</label><br />
+<input type="radio" class="noborder"
+       tal:attributes="id string:${widget_selected_id}_yes;
+                       name widget_selected_id;
+                       checked python:test(selected=='yes', 1, 0);
+                       value string:yes;" />
+<label tal:attributes="for string:${widget_selected_id}_yes" i18n:translate="">cpsschemas_search_languages</label><br />
+<div>
+<span class="advancedSearchColumn">
+  <tal:block repeat="lang languages">
+    <tal:block
+        condition="python:repeat['lang'].index and not repeat['lang'].index % 4"
+        content="structure string:</span><span class='advancedSearchColumn'>" />
+    <input type="checkbox" class="noborder"
+           tal:attributes="name widget_id;
+                           id string:${widget_id}_${lang};
+                           checked python:test(lang in value, 'checked', nothing);
+                           value lang;
+                           onclick string:searchLanguageCheckSelected(this.form.${widget_id}, this.form.${widget_selected_id}[0], this.form.${widget_selected_id}[1])" />
+    <label tal:attributes="for string:${widget_id}_${lang}"
+           tal:content="python: vocabulary.getMsgid(lang)"
+           i18n:translate="" /><br />
+  </tal:block>
+</span>
+</div>
+<tal:comment condition="nothing"> Safari tweak: </tal:comment>
+<div style="clear:both"></div>
+</fieldset>
+

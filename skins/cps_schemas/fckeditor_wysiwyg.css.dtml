@@ -1,0 +1,37 @@
+<dtml-comment>
+$Id$
+</dtml-comment>
+
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+1" >
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+</dtml-let>
+
+<dtml-let base_url="portal_url.getBaseUrl()">
+
+.langSwitch {
+  background-color: #99ff99;
+}
+
+<dtml-in "['ae', 'am', 'qa', 'en', 'qc', 'iq', 'is', 'ye', 'un', 'mx', 'bh',
+           'yu', 'fi', 'br', 'jp', 'no', 'ca', 'sa', 'km', 'cu', 'gr', 'si',
+           'sk', 'so', 'kw', 'su', 'sy', 'lb', 'dj', 'th', 'hu', 'dz', 'lt',
+           'tn', 'ps', 'tr', 'pt_BR', 'ee', 'eg', 'ma', 'ar', 'mg', 'at',
+           'il', 'ua', 'mk', 'es', 'eu', 'az', 'it', 'uk', 'be', 'us', 'bg',
+           'uy', 'fr', 'jo', 'nl', 'by', 'ro', 'vn', 'ru', 'ch', 'ge', 'om',
+           'cz', 'sv', 'de', 'la', 'dk', 'hr', 'pl', 'pt', 'ly'
+]">
+<dtml-let>
+.lang-<dtml-var sequence-item> {
+  background-image: url(<dtml-var expr="base_url">cpsskins_images/flag-<dtml-var sequence-item>.png);
+  background-repeat: no-repeat;
+  background-position: center right;
+  padding-right: 18px;
+}
+
+</dtml-let>
+</dtml-in>
+
+</dtml-let>

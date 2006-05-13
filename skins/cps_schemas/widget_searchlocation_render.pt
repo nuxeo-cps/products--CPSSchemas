@@ -1,0 +1,30 @@
+<fieldset tal:define="mode options/mode;
+                   id here/getWidgetId;
+                   html_id here/getHtmlWidgetId;
+                   value options/datastructure/?id;
+                   id_select string:${id}_select;
+                   html_select_id string:${html_id}_select;
+                   value_select options/datastructure/?id_select;
+                  ">
+  <input type="radio" class="noborder" value="site"
+         tal:attributes="id string:${html_select_id}_site;
+                         name html_select_id;
+                         checked python:test(value_select == 'site',
+                           'checked', nothing);"
+         />
+  <label tal:attributes="for string:${html_select_id}_site"
+         i18n:translate="">label_search_all_site</label><br />
+  <input type="radio" class="noborder" value="here"
+         tal:attributes="id string:${html_select_id}_here;
+                         name html_select_id;
+                         checked python:test(value_select == 'here',
+                           'checked', nothing);"
+         />
+  <label tal:attributes="for string:${html_select_id}_here"
+         i18n:translate="">label_search_here</label> :
+  <input type="text" size="45"
+         tal:attributes="id html_id;
+                         name html_id;
+                         value value;
+                         onclick string:this.form.${html_select_id}_here.checked=true;;" />
+</fieldset>

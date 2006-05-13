@@ -1,0 +1,30 @@
+<tal:block define="mode options/mode;
+                   id here/getWidgetId;
+                   html_id here/getHtmlWidgetId;
+                   current_name options/current_name;
+                   value options/datastructure/?id;
+                  ">
+  <tal:block condition="python:modules['Products.CPSUtil.integration'].isProductPresent('Products.FCKeditor')">
+    <script type="text/javascript" src=""
+      tal:attributes="src string:${base_url}fckeditor.js">
+    </script>
+    <script type="text/javascript" tal:content="structure string:
+      var oFCKeditor = new FCKeditor(${html_id});
+      oFCKeditor.BasePath = '${base_url}';
+      oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
+      oFCKeditor.ToolbarSet='Semantic';
+      oFCKeditor.Width = 610;
+      oFCKeditor.Height = 410;
+      oFCKeditor.Create();
+      ">
+    </script>
+  </tal:block>
+  <tal:block condition="python:modules['Products.CPSUtil.integration'].isProductPresent('Products.Epoz')">
+    <div style="width:550px; height:300px"
+      tal:define="locale here/translation_service/getSelectedLanguage|string:en"
+      tal:content="structure python:here.Epoz(name=html_id, data=value, lang=locale,
+                                              style='width:550px; height:220px; border:1px solid #A0A0A0; border-style:solid;'
+                                              )
+      "/>
+  </tal:block>
+</tal:block>

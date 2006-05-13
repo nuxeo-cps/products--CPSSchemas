@@ -1,0 +1,55 @@
+<tal:block define="mode options/mode;
+  id here/getWidgetId;
+  fields here/fields;
+  current_filename options/current_filename;
+  empty_file options/empty_file;
+  session_file options/session_file;
+  mimetype options/mimetype;
+  size options/size;
+  content_url options/content_url;
+  last_modified options/last_modified;
+  ">
+  <tal:block condition="python: mode == 'view' and not empty_file">
+    <metal:block use-macro="here/widget_file_render/macros/file_view" />
+    <span tal:define="ds options/datastructure;
+                      dm ds/getDataModel;
+                      proxy dm/getProxy;
+                      proxy_url proxy/absolute_url;
+                      preview_id python:ds[id + '_preview']"
+          tal:condition="python: preview_id and not session_file">
+      <a href="http://url..."
+         tal:define="field_id python:fields[0];
+                     field_html python:len(fields)>2 and fields[2] or '';
+                     field_html_subfiles python:len(fields)>3 and fields[3] or '';"
+         tal:attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}"
+         i18n:translate="cpsschema_link_preview">
+        (preview)
+      </a>
+      <a href="http://url..." target="_blank"
+        tal:attributes="href string:${proxy_url}/${preview_id}"
+        i18n:translate="cpsschema_link_printable_version">
+        (printable version)
+      </a>
+    </span>
+  </tal:block>
+
+  <tal:block condition="python: mode == 'edit'">
+
+    <tal:block define="allowed_suffixes python:here.allowed_suffixes;"
+      condition="allowed_suffixes">
+      <p i18n:translate="">
+        cpsschemas_allowed_file_suffixes
+        <tal:block tal:replace="python:', '.join(allowed_suffixes)"
+          i18n:name="allowed_file_suffixes">
+          .html, .sxw
+        </tal:block>
+      </p>
+    </tal:block>
+
+    <metal:block use-macro="here/widget_file_render/macros/file_size_max_view" />
+    <metal:block use-macro="here/widget_file_render/macros/file_title_edit" />
+    <metal:block use-macro="here/widget_file_render/macros/file_edit" />
+
+  </tal:block>
+
+</tal:block>

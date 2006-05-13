@@ -1,0 +1,149 @@
+=====================
+How to write a widget
+=====================
+
+:Revision: $Id$
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+
+This document describes how to write a new widget in a python class.
+Simple examples of existing widgets can be found in BasicWidgets.py
+
+Overview
+========
+
+A widget is a component describing how to render one (or several)
+fields. Rendering can be done in several modes, usually in 'view'
+and 'edit'.
+
+There are two important concepts regarding the data associated with a
+widget: the data-model and the data-structure.
+
+- 'data-model':
+
+  The data-model is a representation of what is stored in the object.
+  It is basically a dictionary. The keys are defined by the fields of
+  the schema for the document, and the type of the values is
+  constrained by what the fields allow.
+
+  The data-model must only contain "valid" data.
+
+- 'data-structure':
+
+  The data-structure is a representation that is equivalent to what
+  the user would enter in 'edit' mode. This means that it is
+  widget-oriented (and not field-oriented like the data-model), and
+  that the values are usually strings.
+
+  The data-structure may contain "canonical" data computed from the
+  data-model, for instance when first rendering an object for
+  edition, but it may also contain "erroneous" data typed by the
+  user and that must be redisplayed with an error message.
+
+  If a widget has to deal with several HTML input zones, then
+  different keys in the data-structure must be used. They must all be
+  based on ``self.getWidgetId()`` plus some suffix.
+
+Methods
+=======
+
+- 'prepare':
+
+  Must build a data-structure from the data-model. It has to compute
+  all the strings that would appear in the data-structure.
+
+  ...
+
+- 'validate':
+
+  Validate data entered by the user from the data-structure, and if
+  everything is OK update the data-model to reflect the changes made
+  by the user. If there is an error, then the data-structure should be
+  updated to reflect it (using the ``setError`` method).
+
+  ...
+
+  Must return 1 if everything was OK, or 0 if there was an error.
+
+  After validation, whether there was an error or not, the document
+  will be redisplayed in some mode (usually 'view' or 'edit') using
+  the current data-structure.
+
+  *Note:* If the ``validate`` method modifies the data-model
+  in such a way that a subsequent rendering would be different
+  than the existing one (where the user entered his values),
+  then the data-structure also has to be modified to reflect
+  those changes. This is because the next rendering is done
+  from the existing data-structure, not from another request.
+
+  The easiest way to ensure this is to call ``prepare`` at the
+  end of the ``validate`` method, to re-prepare the
+  data-structure.
+
+- 'render'
+
+  Rendering is done from the data-structure. It has to be based on
+  the data-structure only (not the data-model), because in case of
+  error from the user input (detected during validation), this input
+  has to be redisplayed with an error message asking to correct it.
+
+  Rendering must be careful to always escape user-data to avoid the
+  possibility of breaking the display if the user enters HTML code
+  in a field designed to receive simple text for instance.
+
+  Rendering must always return a string.
+
+
+Gotchas
+=======
+
+- To get the unique ID of a widget, use ``self.getWidgetId()``. To
+  get a unique ID for the widget suitable for including in HTML
+  code (in the rendering), use ``self.getHtmlWidgetId()`` (or
+  ``here/getHtmlWidgetId`` from Page Templates).
+
+  The conversion between from HTML input field IDs into the
+  data-structure IDs is done by ``DataStructure.updateFromMapping()``.
+
+- A widget has a 'field_types' attribute. It is used by the flexible
+  layout code to decide what types of fields should be created if
+  there is a need to create a new widget of this type.
+
+- A widget is not always called in the context of an existing
+  document. During creation, a data-model and data-structure are
+  constructed, but don't (yet) have an object behind them.
+
+**Warning:** The two following points are not up to date. (AT)
+
+- A widget has a 'widget_group_id' attribute. It makes possible to
+  catch several widget in JavaScript with only one ID. If this
+  attribute is empty, it's the unique ID of the widget following by
+  '_widget' which used.
+
+- A widget has 'widget_display_expr' attribute. The main idea
+  below is if you want to use JavaScript to toggle display of
+  widgets, you want too that they will be hidden/displayed on all
+  rendering actions. It takes a TAL expression. If this expression
+  is not used, the value given is 'visible'.  Basic values that
+  the expression will be give are 'hidden' and 'visible', which
+  correspond to CSS2 class. If you need more, extend CSS class.
+  The context is widget template context, then you can use
+  'datamodel' to catch schema value, but you cannot access
+  directly to the proxy.  Example of ``widget_display_expr``::
+  
+    python:test(datamodel[depends_on_field_id] == depends_on_field_value,
+                widget.css_class or 'visible', 'hidden')
+		
+  In widget you can access this property under the name of
+  ``widget_css_class`` in each cell of layouts structure.
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
+

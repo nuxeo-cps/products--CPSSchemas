@@ -1,0 +1,309 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2003-09-09 13:01default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: default\n"
+
+msgid "cpsschemas_unit_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_mega_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_giga_bytes"
+msgstr ""
+
+msgid "cpsschemas_err_string"
+msgstr ""
+
+msgid "cpsschemas_err_string_too_long"
+msgstr ""
+
+msgid "cpsschemas_err_required"
+msgstr ""
+
+msgid "cpsschemas_err_textarea"
+msgstr ""
+
+msgid "cpsschemas_err_select"
+msgstr ""
+
+msgid "cpsschemas_err_multiselect"
+msgstr ""
+
+msgid "cpsschemas_err_boolean"
+msgstr ""
+
+msgid "cpsschemas_err_int"
+msgstr ""
+
+msgid "cpsschemas_err_date"
+msgstr ""
+
+msgid "cpsschemas_err_bad_date"
+msgstr ""
+
+msgid "cpsschemas_err_file"
+msgstr ""
+
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
+msgstr ""
+
+msgid "cpsschemas_err_file_empty"
+msgstr ""
+
+msgid "cpsschemas_err_file_too_big"
+msgstr ""
+
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr ""
+
+msgid "cpsschemas_err_image"
+msgstr ""
+
+msgid "cpsschemas_err_url"
+msgstr ""
+
+msgid "cpsschemas_err_long"
+msgstr ""
+
+msgid "cpsschemas_err_long_range"
+msgstr ""
+
+msgid "cpsschemas_err_float_positive"
+msgstr ""
+
+msgid "cpsschemas_err_float_range"
+msgstr ""
+
+msgid "cpsschemas_err_float"
+msgstr ""
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr ""
+
+msgid "cpsschemas_err_password_size_min"
+msgstr ""
+
+msgid "cpsschemas_err_password_lower"
+msgstr ""
+
+msgid "cpsschemas_err_password_upper"
+msgstr ""
+
+msgid "cpsschemas_err_password_digit"
+msgstr ""
+
+msgid "cpsschemas_err_password_extra"
+msgstr ""
+
+msgid "cpsschemas_err_identifier"
+msgstr ""
+
+msgid "cpsschemas_err_email"
+msgstr ""
+
+msgid "cpsschemas_err_readonly"
+msgstr ""
+
+msgid "cpsschemas_err_rangelist"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_html_not_found"
+msgstr ""
+
+msgid "jscalendar_date_fmt"
+msgstr ""
+
+msgid "cpsschemas_rposition_normal"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_center"
+msgstr ""
+
+msgid "cpsschemas_rformat_text"
+msgstr ""
+
+msgid "cpsschemas_rformat_html"
+msgstr ""
+
+msgid "cpsschemas_rformat_rst"
+msgstr ""
+
+msgid "cpsschemas_rformat_original"
+msgstr ""
+
+msgid "img_auto_size"
+msgstr ""
+
+msgid "img_icon ${dim}"
+msgstr ""
+
+msgid "img_xsmall ${dim}"
+msgstr ""
+
+msgid "img_small ${dim}"
+msgstr ""
+
+msgid "img_medium ${dim}"
+msgstr ""
+
+msgid "img_large ${dim}"
+msgstr ""
+
+msgid "img_xlarge ${dim}"
+msgstr ""
+
+msgid "cpsschemas_label_false"
+msgstr ""
+
+msgid "cpsschemas_label_true"
+msgstr ""
+
+msgid "cpsschema_label_on"
+msgstr ""
+
+msgid "cpsschema_label_off"
+msgstr ""
+
+msgid "cpsschemas_label_link_href"
+msgstr ""
+
+msgid "cpsschemas_label_link_content"
+msgstr ""
+
+msgid "cpsschemas_label_link_title"
+msgstr ""
+
+# zctext
+msgid "cpsschemas_label_zctext_operator_and"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_or"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_exact"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_not"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_SearchableText"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_Title"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_Description"
+msgstr ""
+
+# modified
+msgid "cpsschemas_label_modified_since_0"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_1"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_30"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_91"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_182"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_365"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_relevance"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_antechrono"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_chrono"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_expires"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_title"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_review_state"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_relative_path"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_portal_type"
+msgstr ""
+
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr ""
+
+msgid "label_none_selection"
+msgstr ""
+
+msgid "label_other_selection"
+msgstr ""
+
+### action =================================================
+msgid "action_edit_online"
+msgstr ""
+
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr ""

@@ -1,0 +1,583 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2006-02-22 16:17default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-encodings: latin9 utf-8\n"
+"Domain: default\n"
+
+#.   <option attributes="value op/id;
+#.                   selected python: op['size'] and (op['size'][0]==image_width
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal condition="op/size" replace="python:'(%sx%s)' % op['size']")}</option>
+#.   <option attributes="value op/id;
+#.                 selected python: op['size'] and (op['size'][0]==image_width
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "<span replace=\"op/id\" /> ${dim}"
+msgstr ""
+
+#.   <h1 content="label_edit">Edit</h1>
+#: from ../skins/cps_schemas/popup_fckeditor_form.pt
+msgid "Edit"
+msgstr ""
+
+#.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
+#: from ../skins/cps_schemas/widget_boolean_render.pt
+msgid "False"
+msgstr ""
+
+#.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
+#: from ../skins/cps_schemas/widget_boolean_render.pt
+msgid "True"
+msgstr ""
+
+#.   <button attributes="
+#.           id button_text_editor_popup_id;
+#.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
+#.           " type="button">Layout</button>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "button_text_editor_popup"
+msgstr ""
+
+#.   <block>at</block>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_at"
+msgstr ""
+
+#.   <label attributes="for elt_hour_id">h</label>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_hour"
+msgstr ""
+
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
+#.           (preview)
+#.         </a>
+#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
+#.           (preview)
+#.         </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
+msgid "cpsschema_link_preview"
+msgstr ""
+
+#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.           (printable version)
+#.         </a>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+msgid "cpsschema_link_printable_version"
+msgstr ""
+
+#.   <label attributes="for elt_minute_id">mn</label>
+#: from ../skins/cps_schemas/widget_datetime_render.pt
+msgid "cpsschema_minute"
+msgstr ""
+
+#.   <p>
+#.           cpsschemas_allowed_file_suffixes
+#.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
+#.         </p>
+#: from ../skins/cps_schemas/widget_attachedfile_render.pt
+#: ../skins/cps_schemas/widget_zippedhtml_render.pt
+msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
+msgstr ""
+
+#.   <label attributes="for string:${radio_name}_change">resize</label>
+#: from ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_image_resize"
+msgstr ""
+
+#.   <label attributes="for string:${radio_name}_change">Change</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+#: ../skins/cps_schemas/widget_image_render.pt
+msgid "cpsschemas_label_file_change"
+msgstr ""
+
+#.   <label attributes="for string:${radio_name}_delete">Delete</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+msgid "cpsschemas_label_file_delete"
+msgstr ""
+
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
+#.                     Edit file online
+#.                   </a>
+#: from ../skins/cps_schemas/widget_file_render.pt
+msgid "cpsschemas_label_file_edit_online"
+msgstr ""
+
+#.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+msgid "cpsschemas_label_file_keep"
+msgstr ""
+
+#.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+msgid "cpsschemas_label_file_none"
+msgstr ""
+
+#.   <span>
+#.             Filename
+#.           </span>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+msgid "cpsschemas_label_filename"
+msgstr ""
+
+#.   <label attributes="for string:${radio_name}_resize">resize</label>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_label_image_resize"
+msgstr ""
+
+#.   <span>
+#.           Photo subtitle
+#.         </span>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_photo_subtitle"
+msgstr ""
+
+#.   <label attributes="for format_selector_id">Format:</label>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_format"
+msgstr ""
+
+#.   <span>
+#.             Render position
+#.           </span>
+#.   <label attributes="for position_selector_id">Position:</label>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#: ../skins/cps_schemas/widget_text_render.pt
+msgid "cpsschemas_render_position"
+msgstr ""
+
+#.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+msgid "cpsschemas_search_all_languages"
+msgstr ""
+
+#.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
+#: from ../skins/cps_schemas/widget_searchlanguage_render.pt
+msgid "cpsschemas_search_languages"
+msgstr ""
+
+#.   <p>
+#.             cpsschemas_size_max
+#.             ${size_max (tal content="str_sizeMax")}
+#.           </p>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+msgid "cpsschemas_size_max ${size_max}"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_add</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_add"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_available</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_available"
+msgstr ""
+
+#.   <span class="description">cpsschemas_vocabulary_contains
+#.     ${voc_entries (tal replace="python:len(keys)")}
+#.     entry(ies)</span>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_delete</h2>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_delete"
+msgstr ""
+
+#.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_edit ${voc_id}"
+msgstr ""
+
+#.   <h2>cpsschemas_vocabulary_entry_add</h2>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_entry_add"
+msgstr ""
+
+#.   <th>Id:</th>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_id"
+msgstr ""
+
+#.   <th>Key:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_key"
+msgstr ""
+
+#.   <h1>cpsschemas_vocabulary_manage</h1>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "cpsschemas_vocabulary_manage"
+msgstr ""
+
+#.   <th>MsgId:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_msgid"
+msgstr ""
+
+#.   <th>Value:</th>
+#: from ../skins/cps_schemas/vocabulary_edit_form.pt
+msgid "cpsschemas_vocabulary_value"
+msgstr ""
+
+#.   <p>description_vocabulary_manage_form</p>
+#: from ../skins/cps_schemas/vocabularies_manage_form.pt
+msgid "description_vocabulary_manage_form"
+msgstr ""
+
+#.   <em content="err" style="color: red">err</em>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_link_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
+#: ../skins/cps_schemas/widget_textimage_render.pt
+msgid "err"
+msgstr ""
+
+#.   <th>
+#.           Click on the chosen value
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_click_chosen_value"
+msgstr ""
+
+#.   <th>
+#.           Enter a search term:
+#.         </th>
+#: from ../skins/cps_schemas/popup_extendedselect_form.pt
+msgid "heading_enter_searched_value"
+msgstr ""
+
+#.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
+#.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
+msgid "i18_key-help_for_this_field"
+msgstr ""
+
+#.   <block content="widget/label" condition="widget/is_i18n">label</block>
+#.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
+#.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
+#: from ../skins/cps_schemas/widget_compound_default_render.pt
+#: ../skins/cps_schemas/widget_search_render.pt
+msgid "label"
+msgstr ""
+
+#.   <label attributes="for file_upload_id">
+#.             File to use to fill the text area:</label>
+#: from ../skins/cps_schemas/widget_text_render.pt
+msgid "label_file_upload"
+msgstr ""
+
+msgid "cpsschemas_unit_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_mega_bytes"
+msgstr ""
+
+msgid "cpsschemas_unit_giga_bytes"
+msgstr ""
+
+msgid "cpsschemas_err_string"
+msgstr ""
+
+msgid "cpsschemas_err_string_too_long"
+msgstr ""
+
+msgid "cpsschemas_err_required"
+msgstr ""
+
+msgid "cpsschemas_err_textarea"
+msgstr ""
+
+msgid "cpsschemas_err_select"
+msgstr ""
+
+msgid "cpsschemas_err_multiselect"
+msgstr ""
+
+msgid "cpsschemas_err_boolean"
+msgstr ""
+
+msgid "cpsschemas_err_int"
+msgstr ""
+
+msgid "cpsschemas_err_date"
+msgstr ""
+
+msgid "cpsschemas_err_bad_date"
+msgstr ""
+
+msgid "cpsschemas_err_file"
+msgstr ""
+
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
+msgstr ""
+
+msgid "cpsschemas_err_file_empty"
+msgstr ""
+
+msgid "cpsschemas_err_file_too_big"
+msgstr ""
+
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr ""
+
+msgid "cpsschemas_err_image"
+msgstr ""
+
+msgid "cpsschemas_err_url"
+msgstr ""
+
+msgid "cpsschemas_err_long"
+msgstr ""
+
+msgid "cpsschemas_err_long_range"
+msgstr ""
+
+msgid "cpsschemas_err_float_positive"
+msgstr ""
+
+msgid "cpsschemas_err_float_range"
+msgstr ""
+
+msgid "cpsschemas_err_float"
+msgstr ""
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr ""
+
+msgid "cpsschemas_err_password_size_min"
+msgstr ""
+
+msgid "cpsschemas_err_password_lower"
+msgstr ""
+
+msgid "cpsschemas_err_password_upper"
+msgstr ""
+
+msgid "cpsschemas_err_password_digit"
+msgstr ""
+
+msgid "cpsschemas_err_password_extra"
+msgstr ""
+
+msgid "cpsschemas_err_identifier"
+msgstr ""
+
+msgid "cpsschemas_err_email"
+msgstr ""
+
+msgid "cpsschemas_err_readonly"
+msgstr ""
+
+msgid "cpsschemas_err_rangelist"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr ""
+
+msgid "cpsschemas_err_zippedhtml_html_not_found"
+msgstr ""
+
+msgid "jscalendar_date_fmt"
+msgstr ""
+
+msgid "cpsschemas_rposition_normal"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_col_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_left"
+msgstr ""
+
+msgid "cpsschemas_rposition_right"
+msgstr ""
+
+msgid "cpsschemas_rposition_center"
+msgstr ""
+
+msgid "cpsschemas_rformat_text"
+msgstr ""
+
+msgid "cpsschemas_rformat_html"
+msgstr ""
+
+msgid "cpsschemas_rformat_rst"
+msgstr ""
+
+msgid "cpsschemas_rformat_original"
+msgstr ""
+
+msgid "img_auto_size"
+msgstr ""
+
+msgid "img_icon ${dim}"
+msgstr ""
+
+msgid "img_xsmall ${dim}"
+msgstr ""
+
+msgid "img_small ${dim}"
+msgstr ""
+
+msgid "img_medium ${dim}"
+msgstr ""
+
+msgid "img_large ${dim}"
+msgstr ""
+
+msgid "img_xlarge ${dim}"
+msgstr ""
+
+msgid "cpsschemas_label_false"
+msgstr ""
+
+msgid "cpsschemas_label_true"
+msgstr ""
+
+msgid "cpsschema_label_on"
+msgstr ""
+
+msgid "cpsschema_label_off"
+msgstr ""
+
+msgid "cpsschemas_label_link_href"
+msgstr ""
+
+msgid "cpsschemas_label_link_content"
+msgstr ""
+
+msgid "cpsschemas_label_link_title"
+msgstr ""
+
+# zctext
+msgid "cpsschemas_label_zctext_operator_and"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_or"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_exact"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_operator_not"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_SearchableText"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_Title"
+msgstr ""
+
+msgid "cpsschemas_label_zctext_field_Description"
+msgstr ""
+
+# modified
+msgid "cpsschemas_label_modified_since_0"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_1"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_30"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_91"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_182"
+msgstr ""
+
+msgid "cpsschemas_label_modified_since_365"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_relevance"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_antechrono"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_chrono"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_expires"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_title"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_review_state"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_relative_path"
+msgstr ""
+
+msgid "cpsschemas_label_searchsort_portal_type"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr ""
+
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr ""
+
+msgid "label_none_selection"
+msgstr ""
+
+msgid "label_other_selection"
+msgstr ""
+
+# ## action =================================================
+msgid "action_edit_online"
+msgstr ""
+
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr ""

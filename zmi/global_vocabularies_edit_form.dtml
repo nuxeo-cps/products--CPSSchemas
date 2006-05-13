@@ -1,0 +1,21 @@
+<dtml-var manage_page_header>
+<dtml-let management_view="'Vocabulary'">
+<dtml-var manage_tabs>
+</dtml-let>
+
+<table>
+  <dtml-in expr="portal_vocabularies.objectItems()" sort=title>
+  <dtml-if sequence-odd>
+    <tr class="row-normal">
+  <dtml-else>
+    <tr class="row-hilite">
+  </dtml-if>
+  <form action="manage_addLocalVocabularyForm" method="post">
+    <td><a href="&dtml-absolute_url;/manage_workspace"><dtml-var title_or_id></a></td>
+    <td><input type="hidden" name="vocabulary_id" value="&dtml-id;"><input type="submit" value="Customize"></td>
+  </form>
+  </tr>
+  </dtml-in>
+</table>
+
+<dtml-var manage_page_footer>

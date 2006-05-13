@@ -1,0 +1,114 @@
+<tal:block define="mode options/mode;
+  id here/getWidgetId;
+  current_filename options/current_filename;
+  empty_file options/empty_file;
+  session_file options/session_file;
+  mimetype options/mimetype;
+  size options/size;
+  content_url options/content_url;
+  last_modified options/last_modified;
+  ">
+  <tal:block condition="python: mode == 'view' and not empty_file">
+    <object type="application/x-shockwave-flash"
+	    classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	    codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0"
+	    tal:define="flashobject_url content_url"
+	    tal:attributes="data content_url;
+			    width options/width;
+			    height options/height">
+      <param name="movie" value="" tal:attributes="value flashobject_url" />
+      <embed src=""
+	     menu="false"
+	     wmode="transparent"
+	     type="application/x-shockwave-flash"
+	     pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlas
+			  h"
+	     tal:attributes="src flashobject_url; 
+			     width options/width; 
+			     height options/height">
+      </embed>
+      <span><a href="http://www.macromedia.com/">Macromedia Flash Plugin</a> required</span>
+      </object>
+  </tal:block>
+  <tal:block condition="python: mode == 'edit'">
+    <metal:block define-macro="file_size_max_view">
+      <tal:block define="size_max python:here.size_max;
+			 str_sizeMax python:here.getHumanReadableSize(size_max)"
+        condition="python:size_max > 0">
+
+        <p i18n:translate="">
+          cpsschemas_size_max
+          <tal:block i18n:name="size_max" content="str_sizeMax"/>
+        </p>
+      </tal:block>
+    </metal:block>
+
+    <metal:block define-macro="file_title_edit">
+      <p tal:define="name here/getHtmlWidgetId;
+                     title_name string:${name}_filename;">
+        <span i18n:translate="cpsschemas_label_filename">
+          Filename
+        </span>
+        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
+               tal:attributes="name title_name;
+                               value current_filename" />
+      </p>
+    </metal:block>
+
+    <metal:block define-macro="file_edit">
+
+      <ul class="fileChoice"
+          tal:define="name here/getHtmlWidgetId;
+                      radio_name string:${name}_choice;">
+        <li>
+          <metal:block define-slot="keep_file">
+            <input type="radio" class="noborder" name="." value="keep"
+                   checked="checked"
+                   tal:attributes="name radio_name;
+                                   id string:${radio_name}_keep;"/>
+            <label i18n:translate="cpsschemas_label_file_none"
+                   tal:condition="empty_file"
+                   tal:attributes="for string:${radio_name}_keep">None</label>
+            <label i18n:translate="cpsschemas_label_file_keep"
+                   tal:condition="not:empty_file"
+                   tal:attributes="for string:${radio_name}_keep">Keep</label>
+            <a href="http://url..." target="_blank"
+               tal:condition="not:empty_file"
+               tal:omit-tag="session_file"
+               tal:attributes="href string:${content_url}?nocache=${last_modified}">
+              <tal:block condition="mimetype"
+                replace="structure python:here.getImgTag(mimetype.icon_path,
+                  title=mimetype.name())" />
+              <tal:block replace="current_filename" />
+            </a>
+
+          </metal:block>
+        </li>
+        <metal:block define-slot="edit_file_action" />
+        <li>
+          <metal:block define-slot="change_file">
+            <input type="radio" class="noborder"  name="." value="change"
+                   tal:attributes="name radio_name;
+                                   id string:${radio_name}_change" />
+            <label i18n:translate="cpsschemas_label_file_change"
+                   tal:attributes="for string:${radio_name}_change">Change</label>
+            <input type="file" name="." size="24"
+                   tal:attributes="name name;
+              onclick string:document.getElementById('${radio_name}_change').checked='checked'" />
+          </metal:block>
+        </li>
+        <li tal:condition="python: not here.is_required and not empty_file">
+          <metal:block define-slot="delete_file">
+            <input type="radio" class="noborder" name="." value="delete"
+                   tal:attributes="name radio_name;
+                                   id string:${radio_name}_delete" />
+            <label i18n:translate="cpsschemas_label_file_delete"
+                   tal:attributes="for string:${radio_name}_delete">Delete</label>
+          </metal:block>
+        </li>
+      </ul>
+    </metal:block>
+
+  </tal:block>
+
+</tal:block>

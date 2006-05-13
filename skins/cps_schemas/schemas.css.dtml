@@ -1,0 +1,46 @@
+<dtml-comment>
+CSS for CPSSchemas (for fields and widgets)
+$Id$
+</dtml-comment>
+
+/* DTML instructions to set caching headers.
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+1">
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Last-Modified', last_modified.toZone('GMT').rfc822())">
+<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=36000, must-revalidate')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Expires', expires.toZone('GMT').rfc822())" >
+</dtml-let>
+
+<dtml-with stylesheet_properties>
+*/
+
+textarea.monospaceFont {
+  font-family: monospace !important;
+}
+
+div.popup {
+  background-color: white;
+  border: 1px solid #336699;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+div.popup ul {
+  margin: 0px;
+  padding: 0px;
+  line-height: normal;
+  list-style-type: none;
+  display: inline;
+}
+
+div.popup ul li {
+  padding-left: 4px;
+}
+
+div.popup ul li.selected {
+  background: <dtml-var buttonBackgroundHover>;
+}
+
+/*
+</dtml-with>
+*/

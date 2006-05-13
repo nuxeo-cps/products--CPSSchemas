@@ -1,0 +1,56 @@
+<dtml-var manage_page_header>
+
+<dtml-let form_title="'Add Local Vocabulary'">
+<dtml-var manage_form_title>
+
+<form action="&dtml-URL1;/manage_addLocalVocabulary" method="post">
+<table cellspacing="0" cellpadding="2" border="0">
+  <tr>
+    <td align="left" valign="top">
+      <div class="form-label">Id</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-element">
+        <input type="text" name="id" size="40" value="&dtml-vocabulary_id;"/>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <div class="form-label">Inheritance type</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-element">
+        <select name="inheritance_type">
+          <option value="inherit">inherit</option>
+          <option value="global">global</option>
+        </select>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <div class="form-label">Merge behaviour</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-element">
+        <select name="merge_behaviour">
+          <option value="None">None</option>
+          <option value="union">union</option>
+        </select>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">&nbsp;</td>
+    <td align="left" valign="top">
+      <div class="form-element">
+        <input class="form-element" type="submit" value=" Add " />
+      </div>
+    </td>
+  </tr>
+</table>
+</form>
+
+<dtml-var manage_page_footer>
+</dtml-let>

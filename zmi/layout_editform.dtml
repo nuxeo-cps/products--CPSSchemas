@@ -1,0 +1,75 @@
+<dtml-var manage_page_header>
+<dtml-let management_view="'Layout'">
+<dtml-var manage_tabs>
+</dtml-let>
+
+<form action="&dtml-URL1;" method="POST">
+
+<br />
+
+<dtml-let widgetids=keys
+          layoutdef=getLayoutDefinition
+          totcols="layoutdef['ncols']"
+          rows="layoutdef['rows']"
+         >
+<table cellspacing="0" cellpadding="2" border="0" width="100%">
+  <tr class="list-header">
+    <td align="left" valign="top">
+      <div class="form-label">Layout</div>
+    </td>
+  </tr>
+  <tr class="row-normal">
+    <td align="left" valign="top">
+      <div class="form-label">
+        <table border="1">
+          <tr>
+            <dtml-in "_.range(totcols)">
+              <td>&dtml-sequence-number;</td>
+            </dtml-in>
+          </tr>
+          <dtml-in "rows">
+          <dtml-let row=sequence-item nrow=sequence-number>
+          <tr>
+            <dtml-in row mapping>
+            <dtml-let ncell=sequence-number>
+              <td colspan="&dtml-ncols;">
+                <input type="checkbox" name="check_&dtml-nrow;_&dtml-ncell;">
+                <select name="cell_&dtml-nrow;_&dtml-ncell;">
+                  <dtml-if "widget_id not in widgetids">
+                    <option value="" selected>?</option>
+                  </dtml-if>
+                  <dtml-in widgetids>
+                  <dtml-let wid=sequence-item>
+                    <option value="&dtml-wid;"
+                      <dtml-if "wid == widget_id">selected</dtml-if>
+                    >&dtml-wid;</option>
+                  </dtml-let>
+                  </dtml-in>
+                </select>
+              </td>
+            </dtml-let>
+            </dtml-in>
+          </tr>
+          </dtml-let>
+          </dtml-in>
+        </table>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      <input type="submit" name="manage_changeLayout:method" value=" Change " />
+      <input type="submit" name="manage_addLayoutRow:method" value=" Add row " />
+      <input type="submit" name="manage_splitCell:method" value=" Split cell " />
+      <input type="submit" name="manage_deleteCell:method" value=" Delete cell " />
+      <input type="submit" name="manage_widenCell:method" value=" Widen cell " />
+      <input type="submit" name="manage_shrinkCell:method" value=" Shrink cell " />
+    </td>
+  </tr>
+</table>
+</dtml-let>
+
+</form>
+
+
+<dtml-var manage_page_footer>
