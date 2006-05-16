@@ -1863,6 +1863,8 @@ class CPSImageWidget(CPSFileWidget):
         file = StringIO(str(file.data)) # XXX use OFSFileIO
         size = (self.display_width,
                 self.display_height)
+
+        # NB: skin method: CPSSchemas/skins/cps_schemas/getImgSizes.py
         for s in self.getImgSizes():
             if s['id'] == resize_op:
                 resize = s['size']
@@ -1885,6 +1887,9 @@ class CPSImageWidget(CPSFileWidget):
                     "Failed to resize file %s keep original (%s)" \
                     % (filename, err))
                 outfile = file
+        # XXX: is this the correct default behaviour ?
+        else:
+            outfile = file
         image = Image(self.fields[0], filename, outfile)
         return image
 
