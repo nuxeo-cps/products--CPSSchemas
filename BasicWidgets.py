@@ -1880,10 +1880,10 @@ class CPSImageWidget(CPSFileWidget):
                 # as the inbuffer as the PNG writer will write over itself.
                 outfile = StringIO()
                 img.save(outfile, format=img.format)
-            except (NameError, IOError, ValueError, SystemError):
+            except (NameError, IOError, ValueError, SystemError), err:
                 LOG('CPSImageWidget', PROBLEM,
-                    "Failed to resize file %s keep original" \
-                    % filename)
+                    "Failed to resize file %s keep original (%s)" \
+                    % (filename, err))
                 outfile = file
         image = Image(self.fields[0], filename, outfile)
         return image
