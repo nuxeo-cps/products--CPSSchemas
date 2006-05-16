@@ -34,4 +34,10 @@ $Id$
 </dtml-let>
 </dtml-in>
 
+<dtml-if custom.css>
+<dtml-var custom.css>
+</dtml-if>
+<dtml-var document.css>
+<dtml-var default.css>
+
 </dtml-let>

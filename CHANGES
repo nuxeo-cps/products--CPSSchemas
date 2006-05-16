@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Include document.css, default.css and custom.css in the css used for the
+  editor area in FCKEditor.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
