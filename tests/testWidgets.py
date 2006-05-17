@@ -1,5 +1,5 @@
 # -*- coding: ISO-8859-15 -*-
-# Copyright (c) 2004-2005 Nuxeo SARL <http://nuxeo.com>
+# Copyright (c) 2004-2006 Nuxeo SAS <http://nuxeo.com>
 # Authors: Florent Guillaume <fg@nuxeo.com>
 #          Anahide Tchertchian <at@nuxeo.com>
 #
@@ -32,6 +32,8 @@ from Products.CPSSchemas.DataModel import DataModel
 from Products.CPSSchemas.Widget import Widget
 
 
+DUMMY_DICT = {'a': 'ZZZ', 'b': 'YYY', 'c': 'XXX'}
+
 class FakePortal(Implicit):
     pass
 fakePortal = FakePortal()
@@ -39,6 +41,19 @@ fakePortal = FakePortal()
 class FakeUrlTool(Implicit):
     def getPortalObject(self):
         return fakePortal
+
+class FakeVocabulariesTool(Implicit):
+    def getPortalObject(self):
+        return fakePortal
+    def getVocabularyFor(self, vocabulary_id, context):
+        """Returns always the same vocabulary.
+        """
+        from Products.CPSSchemas.Vocabulary import Vocabulary
+        vocabulary = Vocabulary()
+        vocabulary.meta_type = 'dummy'
+        for k, v in DUMMY_DICT.items():
+            vocabulary.set(k, v)
+        return vocabulary
 
 class FakeTranslationService:
     def getSelectedLanguage(self):
@@ -318,7 +333,6 @@ class TestWidgets(unittest.TestCase):
         self.assert_(isinstance(ds['foo'], bool))
         self.assertEquals(ds['foo'], True)
 
-
     def testDateTimeWidget_getDateTimeInfo(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
         from DateTime.DateTime import DateTime
@@ -360,11 +374,42 @@ class TestWidgets(unittest.TestCase):
         self.assertNotEqual(widget.getDateTimeInfo(value, mode),
                             (value, '04/01/2005', '3', '14'))
 
+    def testMultiSelectWidget(self):
+        from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget
+        fakePortal.portal_vocabularies = FakeVocabulariesTool()
+        widget = CPSMultiSelectWidget('foo').__of__(fakePortal)
+        widget.fields = ['foo']
+        self.assertEquals(widget.getWidgetId(), 'foo')
+        self.assertEquals(widget.getFieldTypes(), ('CPS String List Field',))
+
+        dm = FakeDataModel()
+        dm['foo'] = None
+        ds = FakeDataStructure(dm)
+        ds['foo'] = ['a', 'b', 'c']
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+
+        res = widget.render('view', ds)
+        self.assertEquals(res, 'ZZZ, YYY, XXX')
+        res = widget.render('edit', ds)
+        expected = '<input type="hidden" name="widget__foo:tokens:default" value="" /><select multiple="multiple" name="widget__foo:list" id="widget__foo"><option selected="selected" value="a">ZZZ</option><option selected="selected" value="c">XXX</option><option selected="selected" value="b">YYY</option></select>'
+        self.assertEquals(res, expected)
+
+        kw = {'sorted': True}
+        widget.manage_changeProperties(**kw)
+        res = widget.render('view', ds)
+        self.assertEquals(res, 'XXX, YYY, ZZZ')
+        res = widget.render('edit', ds)
+        expected = '<input type="hidden" name="widget__foo:tokens:default" value="" /><select multiple="multiple" name="widget__foo:list" id="widget__foo"><option selected="selected" value="c">XXX</option><option selected="selected" value="b">YYY</option><option selected="selected" value="a">ZZZ</option></select>'
+        self.assertEquals(res, expected)
+
     def testFlashWidget(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
         widget = CPSFlashWidget('foo')
         self.assertEquals(widget.getWidgetId(), 'foo')
-        self.assertEquals(widget.getFieldTypes(), ('CPS File Field', 'CPS String Field', 'CPS File Field'))
+        self.assertEquals(widget.getFieldTypes(), ('CPS File Field',
+                                                   'CPS String Field',
+                                                   'CPS File Field'))
 
     def test_getCssClass(self):
         # create a bare widget, and set it in the portal to be able to create

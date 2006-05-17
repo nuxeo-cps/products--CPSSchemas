@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Schema handles what storage adapter to use
+- Schema handles what storage adapter to use.
+- Added the "sorted" option to the CPSMultiSelectWidget.
 Bug fixes:
 ~~~~~~~~~~
 - Include document.css, default.css and custom.css in the css used for the

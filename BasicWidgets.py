@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -976,15 +976,18 @@ class CPSMultiSelectWidget(CPSWidget):
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary'},
         {'id': 'translated', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is vocabulary translated on display'},
+         'label': 'Are vocabulary values rendered translated'},
+        {'id': 'sorted', 'type': 'boolean', 'mode': 'w',
+         'label': 'Are vocabulary values rendered sorted'},
         {'id': 'size', 'type': 'int', 'mode': 'w',
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
         )
-    # XXX make a menu for the vocabulary.
+    # XXX make a menu for the vocabulary
     vocabulary = ''
     translated = False
+    sorted = False
     size = 0
     format_empty = ''
 
@@ -1011,7 +1014,7 @@ class CPSMultiSelectWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
         if value == '':
-            # Buggy Zope :lines prop may give us '' instead of [] for default.
+            # Buggy Zope :lines prop may give us '' instead of [] for default
             value = []
         # XXX make a copy of the list ?
         datastructure[self.getWidgetId()] = value
@@ -1042,24 +1045,6 @@ class CPSMultiSelectWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-
-    def getEntriesHtml(self, entries, vocabulary, translated=False):
-        if translated:
-            cpsmcat = getToolByName(self, 'translation_service', None)
-            if cpsmcat is None:
-                translated = False
-        values = []
-        for entry in entries:
-            if translated:
-                value = vocabulary.getMsgid(entry, entry)
-                value = cpsmcat(value, default=value)
-                value = value.encode('ISO-8859-15', 'ignore')
-            else:
-                value = vocabulary.get(entry, entry)
-            values.append(value)
-        return escape(', '.join(values))
-
-
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
@@ -1074,6 +1059,9 @@ class CPSMultiSelectWidget(CPSWidget):
             else:
                 return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
+            vocabulary_items = vocabulary.items()
+            if self.sorted:
+                vocabulary_items.sort(cmp=self.cmpVocabularyItems)
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id + ':list',
                   'multiple': 'multiple',
@@ -1082,7 +1070,7 @@ class CPSMultiSelectWidget(CPSWidget):
             if self.size:
                 kw['size'] = self.size
             res = renderHtmlTag('select', **kw)
-            for k, v in vocabulary.items():
+            for k, v in vocabulary_items:
                 if self.translated:
                     label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
                     label = label.encode('ISO-8859-15', 'ignore')
@@ -1101,6 +1089,27 @@ class CPSMultiSelectWidget(CPSWidget):
                                         value='')
             return default_tag+res
         raise RuntimeError('unknown mode %s' % mode)
+
+    def cmpVocabularyItems(self, x, y):
+        return cmp(x[1], y[1])
+
+    def getEntriesHtml(self, entries, vocabulary, translated=False):
+        if translated:
+            cpsmcat = getToolByName(self, 'translation_service', None)
+            if cpsmcat is None:
+                translated = False
+        values = []
+        for entry in entries:
+            if translated:
+                value = vocabulary.getMsgid(entry, entry)
+                value = cpsmcat(value, default=value)
+                value = value.encode('ISO-8859-15', 'ignore')
+            else:
+                value = vocabulary.get(entry, entry)
+            values.append(value)
+            if self.sorted:
+                values.sort()
+        return escape(', '.join(values))
 
 InitializeClass(CPSMultiSelectWidget)
 
