@@ -21,6 +21,8 @@ import unittest
 
 from Products.CPSSchemas.SchemasTool import SchemasTool
 from Products.CPSSchemas.Schema import CPSSchema
+from Products.CPSSchemas.StorageAdapter import MetaDataStorageAdapter
+from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 
 
 class TestSchemas(unittest.TestCase):
@@ -43,6 +45,21 @@ class TestSchemas(unittest.TestCase):
         self.assertEquals(schema.keys(), ['f1', 'f2'])
         self.assertEquals(schema['f1'].getFieldId(), 'f1')
         self.assertEquals(schema['f2'].getFieldId(), 'f2')
+
+    def testSchemaAdapter(self):
+        schema = CPSSchema('s1', 'Schema1')
+        self.assertEquals(isinstance(schema.getStorageAdapter(object()),
+                                     AttributeStorageAdapter),
+                          True)
+        mschema = CPSSchema('metadata')
+        self.assertEquals(isinstance(mschema.getStorageAdapter(object()),
+                                     MetaDataStorageAdapter),
+                          True)
+        omschema = CPSSchema('metadata_shmurk')
+        self.assertEquals(isinstance(omschema.getStorageAdapter(object()),
+                                     MetaDataStorageAdapter),
+                          True)
+
 
 def test_suite():
     suites = [unittest.makeSuite(TestSchemas)]

@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Schema handles what storage adapter to use
 Bug fixes:
 ~~~~~~~~~~
 - Include document.css, default.css and custom.css in the css used for the

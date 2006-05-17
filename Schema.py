@@ -32,6 +32,8 @@ from Products.CMFCore.permissions import ManagePortal
 
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.Field import FieldRegistry
+from Products.CPSSchemas.StorageAdapter import MetaDataStorageAdapter
+from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 
 from zope.interface import implements
 from Products.CPSSchemas.interfaces import ISchema
@@ -101,6 +103,18 @@ class CPSSchema(FolderWithPrefixedIds):
         """Add a new field instance."""
         field = FieldRegistry.makeField(field_type, id, **kw)
         return self.addSubObject(field)
+
+    security.declarePrivate('getStorageAdapter')
+    def getStorageAdapter(self, ob, **kw):
+        """Get storage adapter for this schema
+        """
+        # BBB for Metadata storage
+        if self.id.startswith('metadata'):
+            adapter = MetaDataStorageAdapter(self, ob, **kw)
+        else:
+            adapter = AttributeStorageAdapter(self, ob, **kw)
+        return adapter
+
 
     #
     # ZMI
