@@ -25,38 +25,36 @@ Definition of standard widget types.
 """
 
 import warnings
-from DateTime.DateTime import DateTime
-from Globals import InitializeClass
-from Acquisition import aq_parent, aq_inner
-from cgi import escape
+import operator
 from re import compile, search
+from cgi import escape
 from urlparse import urlparse
+from StringIO import StringIO
 
 from zLOG import LOG, INFO, DEBUG, PROBLEM
-from TAL.TALDefs import attrEscape
-
-from Products.CPSUtil.id import generateFileName
-from Products.CPSUtil.file import PersistableFileUpload
-from Products.CPSUtil.file import makeFileUploadFromOFSFile
-from Products.CPSSchemas.utils import getHumanReadableSize
-
 try:
     import PIL.Image
 except ImportError:
     LOG('CPSSchemas', INFO, "No PIL library found so no image resizing will "
                             "be done")
 
-from StringIO import StringIO
-
+from DateTime.DateTime import DateTime
+from Globals import InitializeClass
+from Acquisition import aq_parent, aq_inner
+from TAL.TALDefs import attrEscape
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 from Products.PythonScripts.standard import structured_text, newline_to_br
 
 from Products.CMFCore.utils import getToolByName
 
+from Products.CPSUtil.id import generateFileName
+from Products.CPSUtil.file import PersistableFileUpload
+from Products.CPSUtil.file import makeFileUploadFromOFSFile
+
+from Products.CPSSchemas.utils import getHumanReadableSize
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
-
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
 
 def _isinstance(ob, cls):
@@ -1061,7 +1059,7 @@ class CPSMultiSelectWidget(CPSWidget):
         elif mode == 'edit':
             vocabulary_items = vocabulary.items()
             if self.sorted:
-                vocabulary_items.sort(cmp=self.cmpVocabularyItems)
+                vocabulary_items.sort(key=operator.itemgetter(1))
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id + ':list',
                   'multiple': 'multiple',
@@ -1089,9 +1087,6 @@ class CPSMultiSelectWidget(CPSWidget):
                                         value='')
             return default_tag+res
         raise RuntimeError('unknown mode %s' % mode)
-
-    def cmpVocabularyItems(self, x, y):
-        return cmp(x[1], y[1])
 
     def getEntriesHtml(self, entries, vocabulary, translated=False):
         if translated:
