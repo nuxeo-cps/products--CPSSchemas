@@ -85,14 +85,16 @@ class LayoutsTool(UniqueObject, LayoutContainer):
             layout_mode=layout_mode,
             datamodel=dm)
         layout = layout_structure['layout']
+        commit = bool(kw.get('commit', True))
         if mapping:
             if layout.validateLayoutStructure(layout_structure,
                                               ds, layout_mode=layout_mode):
                 msg = 'valid'
-                ob = dm._commit(check_perms=0)
+                if commit:
+                    ob = dm._commit(check_perms=0)
             else:
                 msg = 'invalid'
-        elif not len(ob):
+        elif not len(ob) and commit:
             # init empty mapping
             ob = dm._commit(check_perms=0)
 
