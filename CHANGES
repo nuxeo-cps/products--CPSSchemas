@@ -3,14 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Schema handles what storage adapter to use.
-- Added the "sorted" option to the CPSMultiSelectWidget.
-- Add possibility not to commit the datamodel when rendering a layout via
-  LayoutsTool.renderLayout.
+-
 Bug fixes:
 ~~~~~~~~~~
-- Include document.css, default.css and custom.css in the css used for the
-  editor area in FCKEditor.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

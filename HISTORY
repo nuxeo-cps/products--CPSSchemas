@@ -1,4 +1,24 @@
 *******************************************
+** CPSSchemas V0.51.0 [R1 build 2006/05/19-12:36 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 45740
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Schema handles what storage adapter to use.
+- Added the "sorted" option to the CPSMultiSelectWidget.
+- Add possibility not to commit the datamodel when rendering a layout via
+  LayoutsTool.renderLayout.
+Bug fixes:
+~~~~~~~~~~
+- Include document.css, default.css and custom.css in the css used for the
+  editor area in FCKEditor.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.50.4 [R1 build 2006/05/02-16:50 by gracinet]
 ** SVN URL: http://svn/pub/CPSSchemas/trunk Revision: 45185
 Requires:
