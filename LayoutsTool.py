@@ -55,17 +55,23 @@ class LayoutsTool(UniqueObject, LayoutContainer):
 
     security.declareProtected(View, 'renderLayout')
     def renderLayout(self, layout_id, schema_id, context, mapping=None,
-                     layout_mode='edit', ob=None, **kw):
+                     layout_mode='edit', ob=None, commit=True, **kw):
         """Render a layout/schema.
 
         Return rendered, msg, ds
-        rendered is the html rendering
 
-        if mapping is not none then the layout is validate
-        and msg is either 'valid' or 'invalid',
-        if valid the ob is commited ob use a mapping storage
+        rendered is the html rendering.
 
-        you can add kw like style_prefix."""
+        If mapping is not None, the layout is validated and msg is either
+        'valid' or 'invalid'.
+
+        ds is the resulting datastructure.
+
+        If valid, the datamodel is commited to ob or context (if ob is None),
+        using a mapping storage, unless the commit keyword is set to False.
+
+        Other keywords like style_prefix can be added.
+        """
         msg = ''
         stool = getToolByName(self, 'portal_schemas')
         ltool = getToolByName(self, 'portal_layouts')
@@ -85,7 +91,7 @@ class LayoutsTool(UniqueObject, LayoutContainer):
             layout_mode=layout_mode,
             datamodel=dm)
         layout = layout_structure['layout']
-        commit = bool(kw.get('commit', True))
+        commit = bool(commit)
         if mapping:
             if layout.validateLayoutStructure(layout_structure,
                                               ds, layout_mode=layout_mode):
