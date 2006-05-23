@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Clicking to open the popup for photo widgets will not refresh anymore the document page
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
