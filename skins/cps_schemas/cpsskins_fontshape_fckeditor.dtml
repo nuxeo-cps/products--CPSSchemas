@@ -1,0 +1,177 @@
+
+p {
+<dtml-if P_font>
+  font: <dtml-var P_font> !important;
+</dtml-if>
+<dtml-if P_padding>
+  padding: <dtml-var P_padding>;
+</dtml-if>
+}
+
+<dtml-if STRONG_font>
+strong {
+  font: <dtml-var STRONG_font> !important;
+} </dtml-if>
+
+<dtml-if SMALL_font>
+small {
+  font: <dtml-var SMALL_font> !important;
+} </dtml-if>
+
+h1, .h1 {
+<dtml-if H1_font>
+  font: <dtml-var H1_font> !important;
+</dtml-if>
+<dtml-if H1_padding>
+  padding: <dtml-var H1_padding>;
+</dtml-if>
+<dtml-if H1_margin>
+  margin: <dtml-var H1_margin>;
+</dtml-if>
+<dtml-if H1_border_style>
+  border-style: <dtml-var H1_border_style>;
+</dtml-if>
+<dtml-if H1_border_width>
+  border-width: <dtml-var H1_border_width>;
+</dtml-if>
+}
+
+h2, .h2 {
+<dtml-if H2_font>
+  font: <dtml-var H2_font> !important;
+</dtml-if>
+<dtml-if H2_padding>
+  padding: <dtml-var H2_padding>;
+</dtml-if>
+<dtml-if H2_margin>
+  margin: <dtml-var H2_margin>;
+</dtml-if>
+<dtml-if H2_border_style>
+  border-style: <dtml-var H2_border_style>;
+</dtml-if>
+<dtml-if H2_border_width>
+  border-width: <dtml-var H2_border_width>;
+</dtml-if>
+}
+
+h3, .h3 {
+<dtml-if H3_font>
+  font: <dtml-var H3_font> !important;
+</dtml-if>
+<dtml-if H3_padding>
+  padding: <dtml-var H3_padding>;
+</dtml-if>
+<dtml-if H3_margin>
+  margin: <dtml-var H3_margin>;
+</dtml-if>
+<dtml-if H3_border_style>
+  border-style: <dtml-var H3_border_style>;
+</dtml-if>
+<dtml-if H3_border_width>
+  border-width: <dtml-var H3_border_width>;
+</dtml-if>
+}
+
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+<dtml-if H456_font>
+  font: <dtml-var H456_font> !important;
+</dtml-if>
+<dtml-if H456_padding>
+  padding: <dtml-var H456_padding>;
+</dtml-if>
+<dtml-if H456_margin>
+  margin: <dtml-var H456_margin>;
+</dtml-if>
+<dtml-if H456_border_style>
+  border-style: <dtml-var H456_border_style>;
+</dtml-if>
+<dtml-if H456_border_width>
+  border-width: <dtml-var H456_border_width>;
+</dtml-if>
+}
+
+<dtml-if A_link_decoration>
+a,
+a div,
+a span {
+  text-decoration: <dtml-var A_link_decoration>;
+} </dtml-if>
+
+<dtml-if A_visited_decoration>
+a:visited,
+a:visited div,
+a:visited span {
+  text-decoration: <dtml-var A_visited_decoration>;
+} </dtml-if>
+
+<dtml-if A_active_decoration>
+a:active,
+a:active div,
+a:active span {
+  text-decoration: <dtml-var A_active_decoration>;
+} </dtml-if>
+
+<dtml-if A_hover_decoration>
+a:hover,
+a:hover div,
+a:hover span {
+  text-decoration: <dtml-var A_hover_decoration>;
+} </dtml-if>
+
+<dtml-if A_link_border_style>
+a,
+a div,
+a span {
+  border-style: <dtml-var A_link_border_style>;
+} </dtml-if>
+
+<dtml-if A_visited_border_style>
+a:visited,
+a:visited div,
+a:visited span {
+  border-style: <dtml-var A_visited_border_style>;
+} </dtml-if>
+
+<dtml-if A_active_border_style>
+a:active,
+a:active div,
+a:active span {
+  border-style: <dtml-var A_active_border_style>;
+} </dtml-if>
+
+<dtml-if A_hover_border_style>
+a:hover,
+a:hover div,
+a:hover span {
+  border-style: <dtml-var A_hover_border_style>;
+} </dtml-if>
+
+<dtml-if A_link_border_width>
+a,
+a div,
+a span {
+  border-width: <dtml-var A_link_border_width>;
+} </dtml-if>
+
+<dtml-if A_visited_border_width>
+a:visited,
+a:visited div,
+a:visited span {
+  border-width: <dtml-var A_visited_border_width>;
+} </dtml-if>
+
+<dtml-if A_active_border_width>
+a:active,
+a:active div,
+a:active span {
+  border-width: <dtml-var A_active_border_width>;
+} </dtml-if>
+
+<dtml-if A_hover_border_width>
+a:hover,
+a:hover div,
+a:hover span {
+  border-width: <dtml-var A_hover_border_width>;
+} </dtml-if>

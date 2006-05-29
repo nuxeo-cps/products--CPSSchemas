@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- The FCKEditor field now uses the same font shapes and color as the main
+  content slot.
 Bug fixes:
 ~~~~~~~~~~
 - Clicking to open the popup for photo widgets will not refresh anymore the document page

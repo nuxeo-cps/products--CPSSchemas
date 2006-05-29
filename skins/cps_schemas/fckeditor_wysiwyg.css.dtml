@@ -39,5 +39,5 @@ $Id$
 </dtml-if>
 <dtml-var document.css>
 <dtml-var default.css>
-
+<dtml-var cpsskins_mainslot_css>
 </dtml-let>
