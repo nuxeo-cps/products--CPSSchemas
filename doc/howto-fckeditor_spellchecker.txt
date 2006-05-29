@@ -74,13 +74,8 @@ Configuring which spellchecking service to use
 Finally you need to configure which spellchecking service should be used by the
 client.
 
-There are 2 possibilities to configure which server-side spellchecker you
-can/want to use:
-
-1. Perform configuration on the server through Apache configuration.
-
-2. Perform configuration through the customization of a FCKeditor product skin file.
-
+The actual code of FCKeditor makes it only possible  to configure which
+server-side spellchecker you can/want to use through Apache configuration.
 
 Apache
 ......
@@ -100,17 +95,20 @@ Apache2 virtualhost configuration::
 Customizing through skins
 .........................
 
-You can perform the needed configuration through customizing the
-``spellChecker.js`` FCKeditor file.
+It would be useful if we could perform the needed configuration through
+customizing the ``spellChecker.js`` FCKeditor file.
+Unfortunately it doesn't work.
 
 In
 ``FCKeditor/skins/fckeditor/editor/dialog/fck_spellerpages/spellerpages/spellChecker.js``
-you just have to modifiy the following line::
+we would like to just have to modify the following line::
 
   // Original line:
   //this.spellCheckScript = 'server-scripts/spellchecker.php';
   // New configuration example:
-  this.spellCheckScript = 'server-scripts/spellchecker.php';
+  this.spellCheckScript = 'http://spellmachine/speller/server-scripts/spellchecker.php';
+
+Unfortunately it doesn't work.
 
 
 
