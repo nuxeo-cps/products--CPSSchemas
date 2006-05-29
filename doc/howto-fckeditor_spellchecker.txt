@@ -1,0 +1,120 @@
+======================================================
+HOWTO to use a server-side spellchecker with FCKeditor
+======================================================
+
+:Author: Marc-Aurèle Darche
+
+:Revision: $Id$
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+
+
+Introduction
+============
+
+.. _CPS: http://www.fckeditor.net/
+.. _FCKeditor: http://www.fckeditor.net/
+
+The aim of this short documentation is to explain how to use a server-side
+spellchecker such as `aspell` in the FCKeditor_ WYSIWYG HTML editor in a
+CPS_ context.
+
+The FCKeditor WYSIWYG HTML editor is used for the CPS text widgets when they are
+in HTML mode.
+
+
+
+Setup
+=====
+
+
+Installing the server-side spellchecker utility
+-----------------------------------------------
+
+First of all you have to install a file from the FCKeditor Zope product on the
+web server that will be used to perform the spell checking,
+that is, on the target machine, copying
+``FCKeditor/skins/fckeditor/editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php``
+as
+``/var/www/speller/server-scripts/spellchecker.php``
+.
+
+
+Enable server-side spellchecking on the client
+----------------------------------------------
+
+Then you need to enable the spell checking on the user interface and tell it to
+use the server-side implementation.
+
+To do so you need to customize the FCKeditor configuration file which is::
+
+  CPSSchemas/skins/cps_schemas/fckconfig-cps.js
+
+The configuration should be::
+
+  // Specifying the "SpellerPages" spellchecker server-side implementation
+  FCKConfig.SpellChecker = 'SpellerPages';
+
+  // Adding the "SpellCheck" button on the toolbar that you are currently using.
+  // "Semantic" is the default toolbar used by CPSSchemas.
+  FCKConfig.ToolbarSets['Semantic'] = [
+      ['Italic','Bold','FontFormat'],
+      ['-','OrderedList','UnorderedList','-','Link','Unlink','-','SpellCheck'],
+      ['Image','Table','Rule'],
+      '/',
+      ['RemoveFormat','Undo','Redo','Source']
+  ];
+
+
+Configuring which spellchecking service to use
+----------------------------------------------
+
+Finally you need to configure which spellchecking service should be used by the
+client.
+
+There are 2 possibilities to configure which server-side spellchecker you
+can/want to use:
+
+1. Perform configuration on the server through Apache configuration.
+
+2. Perform configuration through the customization of a FCKeditor product skin file.
+
+
+Apache
+......
+
+You can perform the needed configuration through Apache configuration
+directives.
+
+Apache2 virtualhost configuration::
+
+  RewriteCond %{REQUEST_URI} ^(.*)/editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php
+  RewriteRule ^/(.*) /var/www/speller/server-scripts/spellchecker.php [L]
+
+  RewriteCond %{HTTP:Authorization}  ^(.*)
+  RewriteRule ^/(.*) http://localhost:8080/VirtualHostBase/http/%{HTTP_HOST}:80/cps/VirtualHostRoot/$1 [P,L]
+
+
+Customizing through skins
+.........................
+
+You can perform the needed configuration through customizing the
+``spellChecker.js`` FCKeditor file.
+
+In
+``FCKeditor/skins/fckeditor/editor/dialog/fck_spellerpages/spellerpages/spellChecker.js``
+you just have to modifiy the following line::
+
+  // Original line:
+  //this.spellCheckScript = 'server-scripts/spellchecker.php';
+  // New configuration example:
+  this.spellCheckScript = 'server-scripts/spellchecker.php';
+
+
+
+.. Local Variables:
+.. mode: rst
+.. End:
+.. vim: set filetype=rst:
