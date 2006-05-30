@@ -33,13 +33,36 @@ Setup
 Installing the server-side spellchecker utility
 -----------------------------------------------
 
-First of all you have to install a file from the FCKeditor Zope product on the
+First of all you need to have the `aspell` program and needed dictionary
+installed on the host system::
+
+  $ apt-get install aspell aspell-en
+
+Of course you could install other dictionaries than the English
+dictionary. Possible choices are ``aspell-fr``, ``aspell-es``, etc.
+
+Then you have to install a file from the FCKeditor Zope product on the
 web server that will be used to perform the spell checking,
-that is, on the target machine, copying
+that is, on the host system, copying
 ``FCKeditor/skins/fckeditor/editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php``
 as
 ``/var/www/speller/server-scripts/spellchecker.php``
 .
+
+And then you need to modify the `spellchecker.php` script so that it corresponds
+to your environment. Since CPS web pages are served as ``ISO-8859-15`` be sure
+to specify an ``ISO-8859-15`` locale as the `lang` parameter, otherwise you
+would receive weird characters (due to encoding problems).
+
+Here is an example for using an English dictionary::
+
+  $aspell_prog = 'aspell';
+  $lang = 'en_US@euro';
+
+Here is an example for using a French dictionary::
+
+  $aspell_prog = 'aspell';
+  $lang = 'fr_FR@euro';
 
 
 Enable server-side spellchecking on the client
