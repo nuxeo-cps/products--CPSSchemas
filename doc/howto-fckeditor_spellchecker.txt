@@ -41,6 +41,10 @@ installed on the host system::
 Of course you could install other dictionaries than the English
 dictionary. Possible choices are ``aspell-fr``, ``aspell-es``, etc.
 
+Then you have to install a PHP module for your web server, for example::
+
+  $ apt-get install libapache2-mod-php4
+
 Then you have to install a file from the FCKeditor Zope product on the
 web server that will be used to perform the spell checking,
 that is, on the host system, copying
