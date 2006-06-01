@@ -8,6 +8,8 @@ Configuring Epoz to Produce Valid XHTML
 .. contents::   :depth: 4
 
 
+This document is only interesting to you if you run a CPS previous to CPS 3.4.x.
+
 This document describe how to configure Epoz editor used by Text
 and RichText widgets to produce valid XHTML instead of dirty
 browser HTML code.

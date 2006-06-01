@@ -9,7 +9,7 @@ Most of the documentation for CPSSchemas currently lives in:
 
 In this directory you will find:
 
-- `HOWTO_write_a_widget.txt(html) <HOWTO_write_a_widget.html>`_
+- `howto-write_a_widget.txt(html) <howto-write_a_widget.html>`_
 
 - `naming_conventions.txt(html) <naming_conventions.html>`_
   Vocabulary, schema and layout naming conventions
@@ -23,7 +23,7 @@ In this directory you will find:
 - `Note on using CPSSchemas on top of a stock CMF or Plone:
   cmf-compatibilty.txt(html) <cmf-compatibilty.html>`_
 
-- `HOWTO_make_epoz_output_xhtml.txt(html) <HOWTO_make_epoz_output_xhtml.html>`_
+- `howto-make_epoz_output_xhtml.txt(html) <howto-make_epoz_output_xhtml.html>`_
   CPS now uses FCKeditor by default so this documentation may not be of interest
   to you.
 
