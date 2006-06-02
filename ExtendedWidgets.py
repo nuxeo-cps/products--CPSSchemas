@@ -795,18 +795,11 @@ widgetRegistry.register(CPSPhotoWidget)
 
 ##################################################
 
-class CPSGenericSelectWidget(CPSWidget):
+class CPSGenericSelectWidget(CPSSelectWidget):
     """Generic Select widget."""
     meta_type = 'Generic Select Widget'
 
-    field_types = ('CPS String Field',)
-    field_inits = ({'is_searchabletext': 1,},)
-
-    _properties = CPSWidget._properties + (
-        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-         'label': 'Vocabulary', 'is_required' : 1},
-        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is vocabulary translated on display'},
+    _properties = CPSSelectWidget._properties + (
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format'},
@@ -830,21 +823,11 @@ class CPSGenericSelectWidget(CPSWidget):
         )
     render_formats = ['select', 'radio']
 
-    # XXX make a menu for the vocabulary.
-    vocabulary = ''
-    translated = 0
     render_format = render_formats[0]
     other_option = 0
     other_option_display_width = 20
     other_option_size_max = 0
     blank_value_ok_if_required = 1
-
-    def _getVocabulary(self, datastructure=None):
-        """Get the vocabulary object for this widget."""
-        vtool = getToolByName(self, 'portal_vocabularies')
-        context = datastructure.getDataModel().getContext()
-        vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
-        return vocabulary
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -1059,22 +1042,11 @@ widgetRegistry.register(CPSGenericSelectWidget)
 
 ##################################################
 
-class CPSGenericMultiSelectWidget(CPSWidget):
+class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
     """Generic MultiSelect widget."""
     meta_type = 'Generic MultiSelect Widget'
 
-    field_types = ('CPS String List Field',)
-    field_inits = ({'is_searchabletext': 1,},)
-
-    _properties = CPSWidget._properties + (
-        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-         'label': 'Vocabulary', 'is_required' : 1},
-        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is vocabulary translated on display'},
-        {'id': 'size', 'type': 'int', 'mode': 'w',
-         'label': 'Size'},
-        {'id': 'format_empty', 'type': 'string', 'mode': 'w',
-         'label': 'Format for empty list'},
+    _properties = CPSMultiSelectWidget._properties + (
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format'},
@@ -1089,21 +1061,9 @@ class CPSGenericMultiSelectWidget(CPSWidget):
          'label': "Accept blank values when validating"},
         )
     render_formats = ['select', 'radio', 'checkbox']
-    # XXX make a menu for the vocabulary.
 
-    vocabulary = ''
-    translated = 0
-    size = 0
-    format_empty = ''
     render_format = render_formats[0]
     blank_value_ok_if_required = 1
-
-    def _getVocabulary(self, datastructure=None):
-        """Get the vocabulary object for this widget."""
-        vtool = getToolByName(self, 'portal_vocabularies')
-        context = datastructure.getDataModel().getContext()
-        vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
-        return vocabulary
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
