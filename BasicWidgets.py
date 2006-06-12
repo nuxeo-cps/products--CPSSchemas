@@ -1039,9 +1039,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             else:
                 return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
-            vocabulary_items = vocabulary.items()
-            if self.sorted:
-                vocabulary_items.sort(key=operator.itemgetter(1))
             html_widget_id = self.getHtmlWidgetId()
             kw = {'name': html_widget_id + ':list',
                   'multiple': 'multiple',
@@ -1050,6 +1047,9 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             if self.size:
                 kw['size'] = self.size
             res = renderHtmlTag('select', **kw)
+            vocabulary_items = vocabulary.items()
+            if self.sorted:
+                vocabulary_items.sort(key=operator.itemgetter(1))
             for k, v in vocabulary_items:
                 if self.translated:
                     label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
