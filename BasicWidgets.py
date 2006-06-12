@@ -976,7 +976,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
     field_types = ('CPS String List Field',)
     field_inits = ({'is_searchabletext': 1,},)
 
-    _properties = CPSWidget._properties + (
+    _properties = CPSSelectWidget._properties + (
         {'id': 'size', 'type': 'int', 'mode': 'w',
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
