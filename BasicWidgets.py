@@ -874,10 +874,13 @@ class CPSSelectWidget(CPSWidget):
          'label': 'Vocabulary', 'is_required' : 1},
         {'id': 'translated', 'type': 'boolean', 'mode': 'w',
          'label': 'Is vocabulary translated on display'},
+        {'id': 'sorted', 'type': 'boolean', 'mode': 'w',
+         'label': 'Are vocabulary values rendered sorted'},
         )
     # XXX make a menu for the vocabulary.
     vocabulary = ''
     translated = False
+    sorted = False
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -938,7 +941,10 @@ class CPSSelectWidget(CPSWidget):
             html_widget_id = self.getHtmlWidgetId()
             res = renderHtmlTag('select', name=html_widget_id, id=html_widget_id)
             in_selection = 0
-            for k, v in vocabulary.items():
+            vocabulary_items = vocabulary.items()
+            if self.sorted:
+                vocabulary_items.sort(key=operator.itemgetter(1))
+            for k, v in vocabulary_items:
                 if self.translated:
                     kw = {'value': k,
                           'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
@@ -963,7 +969,7 @@ widgetRegistry.register(CPSSelectWidget)
 
 ##################################################
 
-class CPSMultiSelectWidget(CPSWidget):
+class CPSMultiSelectWidget(CPSSelectWidget):
     """MultiSelect widget."""
     meta_type = 'MultiSelect Widget'
 
@@ -971,41 +977,17 @@ class CPSMultiSelectWidget(CPSWidget):
     field_inits = ({'is_searchabletext': 1,},)
 
     _properties = CPSWidget._properties + (
-        {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
-         'label': 'Vocabulary'},
-        {'id': 'translated', 'type': 'boolean', 'mode': 'w',
-         'label': 'Are vocabulary values rendered translated'},
-        {'id': 'sorted', 'type': 'boolean', 'mode': 'w',
-         'label': 'Are vocabulary values rendered sorted'},
         {'id': 'size', 'type': 'int', 'mode': 'w',
          'label': 'Size'},
         {'id': 'format_empty', 'type': 'string', 'mode': 'w',
          'label': 'Format for empty list'},
         )
-    # XXX make a menu for the vocabulary
-    vocabulary = ''
-    translated = False
-    sorted = False
     size = 0
     format_empty = ''
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
     has_input_area = True
-
-    def _getVocabulary(self, datastructure=None):
-        """Get the vocabulary object for this widget."""
-        if not isinstance(self.vocabulary, str):
-            # this is in case vocabulary directly holds
-            # a vocabulary object (very unit test friendly)
-            # XXX GR: should be common among all Select widget species
-            return self.vocabulary
-        vtool = getToolByName(self, 'portal_vocabularies')
-        context = datastructure.getDataModel().getContext()
-        vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
-        if vocabulary.meta_type == 'CPS Method Vocabulary':
-            vocabulary = MethodVocabularyWithContext(vocabulary, context)
-        return vocabulary
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""

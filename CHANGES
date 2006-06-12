@@ -7,6 +7,7 @@ New features:
   content slot.
 - GenericSelect and MultiGenericSelect widgets can use a
   MethodVocabularyWithContext vocabulary.
+- Select Widget vocabulary can be sorted.
 Bug fixes:
 ~~~~~~~~~~
 - Clicking to open the popup for photo widgets will not refresh anymore the document page
