@@ -905,7 +905,10 @@ class CPSGenericSelectWidget(CPSSelectWidget):
             if render_format == 'select':
                 res = renderHtmlTag('select', name=html_widget_id)
             # vocabulary options
-            for k, v in vocabulary.items():
+            vocabulary_items = vocabulary.items()
+            if self.sorted:
+                vocabulary_items.sort(key=operator.itemgetter(1))
+            for k, v in vocabulary_items:
                 # this enable to work with vocabulary that have integer keys
                 k = str(k)
                 if getattr(self, 'translated', None):
@@ -1126,10 +1129,8 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            elif getattr(self, 'translated', None):
-                return ', '.join([escape(cpsmcat(vocabulary.getMsgid(i, i))) for i in value])
             else:
-                return ', '.join([escape(vocabulary.get(i, i)) for i in value])
+                return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
             in_selection = 0
             res = ''
@@ -1145,7 +1146,10 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                     kw['size'] = self.size
                 res = renderHtmlTag('select', **kw)
             # vocabulary options
-            for k, v in vocabulary.items():
+            vocabulary_items = vocabulary.items()
+            if self.sorted:
+                vocabulary_items.sort(key=operator.itemgetter(1))
+            for k, v in vocabulary_items:
                 if getattr(self, 'translated', None):
                     v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
                 if render_format == 'select':
