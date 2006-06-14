@@ -28,6 +28,7 @@ import warnings
 import operator
 from re import compile, search
 from cgi import escape
+from xml.sax.saxutils import quoteattr
 from urlparse import urlparse
 from StringIO import StringIO
 
@@ -41,7 +42,6 @@ except ImportError:
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
 from Acquisition import aq_parent, aq_inner
-from TAL.TALDefs import attrEscape
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 from Products.PythonScripts.standard import structured_text, newline_to_br
@@ -80,7 +80,7 @@ def renderHtmlTag(tagname, **kw):
         if value is None:
             continue
         if key in ('value', 'alt') or value != '':
-            attrs.append('%s="%s"' % (key, attrEscape(str(value))))
+            attrs.append('%s=%s' % (key, quoteattr(str(value))))
     res = '<%s %s' % (tagname, ' '.join(attrs))
     if contents is not None:
         res += '>%s</%s>' % (contents, tagname)

@@ -122,6 +122,15 @@ class FakeFieldStorage:
 
 class TestWidgets(unittest.TestCase):
 
+    def test_renderHtmlTag(self):
+        from Products.CPSSchemas.BasicWidgets import renderHtmlTag
+
+        res = renderHtmlTag('img', title='à doublé " quote')
+        self.assertEquals(res, "<img title='\xe0 doubl\xe9 \" quote' />")
+
+        res = renderHtmlTag('img', title="a single ' quote")
+        self.assertEquals(res, '<img title="a single \' quote" />')
+
     def testStringWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSStringWidget
         widget = CPSStringWidget('foo')
