@@ -15,3 +15,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added doc about HOWTO to use a server-side spellchecker with FCKeditor.
+- renderHtmlTag uses std python library to escape attributes
