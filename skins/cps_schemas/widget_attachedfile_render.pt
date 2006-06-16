@@ -12,12 +12,16 @@
   <tal:block condition="python: mode == 'view' and not empty_file">
     <metal:block use-macro="here/widget_file_render/macros/file_view" />
     <span tal:define="ds options/datastructure;
+                      display_html_preview here/display_html_preview|python:True;
+                      display_printable_version
+                        here/display_printable_version|python:True;
                       dm ds/getDataModel;
                       proxy dm/getProxy;
                       proxy_url proxy/absolute_url;
                       preview_id python:ds[id + '_preview']"
           tal:condition="python: preview_id and not session_file">
       <a href="http://url..."
+         tal:condition="display_html_preview"
          tal:define="field_id python:fields[0];
                      field_html python:len(fields)>2 and fields[2] or '';
                      field_html_subfiles python:len(fields)>3 and fields[3] or '';"
@@ -26,6 +30,7 @@
         (preview)
       </a>
       <a href="http://url..." target="_blank"
+        tal:condition="display_printable_version"
         tal:attributes="href string:${proxy_url}/${preview_id}"
         i18n:translate="cpsschema_link_printable_version">
         (printable version)

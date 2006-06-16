@@ -1530,8 +1530,11 @@ class CPSFileWidget(CPSWidget):
     _properties = CPSWidget._properties + (
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Maximum file size'},
+        {'id': 'display_external_editor', 'type': 'boolean', 'mode': 'w',
+         'label': 'Display link to external editor in edit mode'},
         )
     size_max = 4*1024*1024
+    display_external_editor = True
 
     def getHumanReadableSize(self, size):
         """ get human readable size

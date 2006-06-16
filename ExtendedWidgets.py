@@ -389,9 +389,15 @@ class CPSAttachedFileWidget(CPSFileWidget):
                    )
 
     _properties = CPSFileWidget._properties + (
+        {'id': 'display_html_preview', 'type': 'boolean', 'mode': 'w',
+         'label': 'Display link to HTML preview in view mode'},
+        {'id': 'display_printable_version', 'type': 'boolean', 'mode': 'w',
+         'label': 'Display link to printable version in view mode'},
         {'id': 'allowed_suffixes', 'type': 'tokens', 'mode': 'w',
          'label': 'Allowed file suffixes (ex: .html .sxw)'},
         )
+    display_html_preview = True
+    display_printable_version = True
     allowed_suffixes = []
 
     def prepare(self, datastructure, **kw):
