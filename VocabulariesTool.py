@@ -66,7 +66,7 @@ class VocabulariesTool(UniqueObject, IFAwareObjectManager, Folder):
 
         if not hasLocalVocContainer(context):
             parent = getParentNode(context)
-            while parent:
+            while parent is not None:
                 if hasLocalVocContainer(parent):
                     return getLocalVocContainer(parent).getVocabulary(voc_id)
                 parent = getParentNode(parent)
