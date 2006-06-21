@@ -3,18 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- The FCKEditor field now uses the same font shapes and color as the main
-  content slot.
-- GenericSelect and MultiGenericSelect widgets can use a
-  MethodVocabularyWithContext vocabulary.
-- Select Widget and other Generic Select widgets vocabularies can be sorted.
-- made File and AttachedFile widgets more configurable: link to external editor,
-  html preview and html printable preview are hideable thanks to properties
+-
 Bug fixes:
 ~~~~~~~~~~
-- Clicking to open the popup for photo widgets will not refresh anymore the
-  document page
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Added doc about HOWTO to use a server-side spellchecker with FCKeditor.
-- renderHtmlTag uses std python library to escape attributes
+-
