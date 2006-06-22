@@ -10,4 +10,4 @@ Bug fixes:
 widgets (no preview, no indexing).
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- All fields get a new method _getAllDependantFieldIds

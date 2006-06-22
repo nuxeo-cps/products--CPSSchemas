@@ -186,6 +186,11 @@ class BasicFieldTests(unittest.TestCase):
         self.assertEquals(
             flexfield._getDependantFieldId(fakeschemas, '_no_such'), None)
 
+        flexfield.suffix_html = '_f1'
+        flexfield.suffix_text = '_f3'
+        self.assertEquals(flexfield._getAllDependantFieldIds(),
+                          ('the_id_f1', 'the_id_f3'))
+
         # a few others
         flexfield = self.makeOne(BasicFields.CPSFileField,
                                  fid='the_id_f14')
@@ -223,6 +228,7 @@ class BasicFieldTests(unittest.TestCase):
         self.assertEquals(
             flexfield._getDependantFieldId(fakeschemas, '_dependent'),
             'a_f0_noflex_dependent')
+
 
         # TODO: add test for "dependant fields" themselves there.
 

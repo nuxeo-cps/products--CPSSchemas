@@ -529,17 +529,27 @@ class CPSFileField(CPSField):
     suffix_html = ''
     suffix_html_subfiles = ''
 
+
+    def _getDependantFieldsBaseId(self):
+        return re.sub(r'_f\d+$', '', self.getFieldId())
+
     def _getDependantFieldId(self, schemas, suffix):
         """Get a dependant field id described by the suffix.
 
         Takes flexible situation into account"""
         if not suffix:
             return None
-        fid = re.sub(r'_f\d+$', '', self.getFieldId()) + suffix
+        fid = self._getDependantFieldsBaseId() + suffix
         for schema in schemas:
             if schema.has_key(fid):
                 return fid
         return None
+
+    def _getAllDependantFieldIds(self):
+        base_id = self._getDependantFieldsBaseId()
+        suffixes = (self.suffix_html, self.suffix_text,
+                    self.suffix_html_subfiles)
+        return tuple(base_id + suffix for suffix in suffixes if suffix)
 
     def computeDependantFields(self, schemas, data, context=None):
         """Compute dependant fields.

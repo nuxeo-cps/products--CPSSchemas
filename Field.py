@@ -183,6 +183,18 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
         """
         pass
 
+    security.declarePrivate('getDependantFieldsIds')
+    def _getAllDependantFieldIds(self):
+        """Provides the list of all *possible* dependent fields.
+
+        If in this list, a field will be considered as dependent. This doesn't
+        mean that all the fields from the list do exist.
+
+        This is useful for exporters to avoid exporting dependent fields.
+        """
+
+        return ()
+
     security.declarePublic('getFieldId')
     def getFieldId(self):
         """Get this field's id."""
