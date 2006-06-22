@@ -259,7 +259,7 @@ class CPSStringField(CPSField):
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
         """
-        context.setNodeValue(node, value.decode(default_encoding))
+        context.setNodeValue(node, str(value).decode(default_encoding))
 
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.
