@@ -24,6 +24,7 @@ Definition of standard field types.
 from zLOG import LOG, DEBUG, WARNING
 import sys
 import warnings
+import re
 from Globals import InitializeClass
 from DateTime.DateTime import DateTime
 
@@ -529,13 +530,15 @@ class CPSFileField(CPSField):
     suffix_html_subfiles = ''
 
     def _getDependantFieldId(self, schemas, suffix):
-        """Get a dependant field id described by the suffix."""
+        """Get a dependant field id described by the suffix.
+
+        Takes flexible situation into account"""
         if not suffix:
             return None
-        id = self.getFieldId() + suffix
+        fid = re.sub(r'_f\d+$', '', self.getFieldId()) + suffix
         for schema in schemas:
-            if schema.has_key(id):
-                return id
+            if schema.has_key(fid):
+                return fid
         return None
 
     def computeDependantFields(self, schemas, data, context=None):

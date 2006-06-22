@@ -380,12 +380,16 @@ class CPSAttachedFileWidget(CPSFileWidget):
     meta_type = 'AttachedFile Widget'
 
     field_types = ('CPS File Field',   # File
-                   'CPS String Field', # Caption (optional)
-                   'CPS File Field')   # Preview (optional)
+                   'CPS String Field', # Plain text for indexing (optional)
+                   'CPS File Field',   # Preview (HTML, optional)
+                   'CPS SubObjects Field',)
+
     field_inits = ({'is_searchabletext': 0,
                     'suffix_text': '_f1', # _f# are autocomputed field ext
-                    'suffix_html': '_f2'},
-                   {'is_searchabletext': 1}, {},
+                    'suffix_html': '_f2',
+                    'suffix_html_subfiles': '_f3',
+                    },
+                   {'is_searchabletext': 1}, {}, {},
                    )
 
     _properties = CPSFileWidget._properties + (
@@ -1454,7 +1458,7 @@ class CPSFlashWidget(CPSAttachedFileWidget):
                    'CPS File Field')   # Preview (optional)
     field_inits = ({'is_searchabletext': 0,
                     'suffix_text': '_f1', # _f# are autocomputed field ext
-                    'suffix_html': '_f2'},
+                    'suffix_html': '_f2',},
                    {'is_searchabletext': 1}, {},
                    )
 

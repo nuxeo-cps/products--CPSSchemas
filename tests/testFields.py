@@ -41,12 +41,12 @@ fakePortal.portal_url = fakeUrlTool
 
 class BasicFieldTests(unittest.TestCase):
 
-    def makeOne(self, cls):
-        field = cls('the_id')
+    def makeOne(self, cls, fid='the_id'):
+        field = cls(fid)
         # Acquisition is needed for expression context computation
         # during fetch
         field = field.__of__(fakePortal)
-        self.assertEquals(field.getFieldId(), 'the_id')
+        self.assertEquals(field.getFieldId(), fid)
         return field
 
     def testCreation(self):
@@ -167,7 +167,64 @@ class BasicFieldTests(unittest.TestCase):
         self.assertEquals(field.validate(file), file)
         self.assertRaises(ValueError, field.validate, [1])
         self.assertRaises(ValueError, field.validate, 'zzz')
-        # TODO: add test for "dependant fields" there.
+
+        # test _getDependantFieldId
+        fakeschemas = ({'the_id_dependent': None}, )
+
+        self.assertEquals(
+            field._getDependantFieldId(fakeschemas, '_dependent'),
+            'the_id_dependent')
+        self.assertEquals(
+            field._getDependantFieldId(fakeschemas, '_no_such'), None)
+
+        # now with a flexible field
+        flexfield = self.makeOne(BasicFields.CPSFileField,
+                                 fid='the_id_f0')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_dependent'),
+            'the_id_dependent')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_no_such'), None)
+
+        # a few others
+        flexfield = self.makeOne(BasicFields.CPSFileField,
+                                 fid='the_id_f14')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_dependent'),
+            'the_id_dependent')
+
+        flexfield = self.makeOne(BasicFields.CPSFileField,
+                                 fid='the_id_f5')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_dependent'),
+            'the_id_dependent')
+
+        # fields that could be mistaken to be flexible because of _f
+        fakeschemas = ({'the_field_dependent': None,
+                        'the_id_f_dependent' : None,
+                        'a_f0_noflex_dependent': None,
+                        },
+                       )
+
+        flexfield = self.makeOne(BasicFields.CPSFileField,
+                                 fid='the_field')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_dependent'),
+            'the_field_dependent')
+
+        flexfield = self.makeOne(BasicFields.CPSFileField,
+                                 fid='the_id_f')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_dependent'),
+            'the_id_f_dependent')
+
+        flexfield = self.makeOne(BasicFields.CPSFileField,
+                                 fid='a_f0_noflex')
+        self.assertEquals(
+            flexfield._getDependantFieldId(fakeschemas, '_dependent'),
+            'a_f0_noflex_dependent')
+
+        # TODO: add test for "dependant fields" themselves there.
 
     def testImageField(self):
         field = self.makeOne(BasicFields.CPSImageField)

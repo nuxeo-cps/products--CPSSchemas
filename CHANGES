@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- #1677: dependent fields didn't work for File Fields created by flexible
+widgets (no preview, no indexing).
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
