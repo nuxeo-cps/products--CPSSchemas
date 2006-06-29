@@ -78,7 +78,7 @@ class LayoutsTool(UniqueObject, LayoutContainer):
         schema = stool._getOb(schema_id)
         layout = ltool._getOb(layout_id)
         adapters = [MappingStorageAdapter(schema, ob)]
-        dm = DataModel(ob, adapters, proxy=context, context=context)
+        dm = DataModel(ob, adapters, proxy=None, context=context)
         dm._fetch()
         dm._check_acls = 0 # this is needed to shortcut directory acl
         ds = DataStructure(datamodel=dm)
