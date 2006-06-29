@@ -12,7 +12,7 @@
       dname python:here.portal_directories.members.getEntry(doc.Creator(), default=None);
       cname dname/fullname|python:here.portal_membership.getFullnameFromId(doc.Creator());
       info python:(here_url != utool.getPortalObject().absolute_url())
-      and doc.getContentInfo(doc=doc, level=2) or None;
+      and doc.getContentInfo(proxy=doc, level=2) or None;
       email dname/email|nothing;">
   <span i18n:translate="">
     Created by
