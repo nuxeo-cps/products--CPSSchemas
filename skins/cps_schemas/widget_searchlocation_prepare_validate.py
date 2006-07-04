@@ -16,9 +16,9 @@ field_id = context.fields[0]
 portal_path = utool.getPortalPath()
 
 if mode == 'prepare':
-    proxy = datamodel.getProxy()
-    ppath = '/'.join(proxy.getPhysicalPath())
-    rpath = ppath[len(portal_path)+1:]
+    context = datamodel.getContext()
+    cpath = '/'.join(context.getPhysicalPath())
+    rpath = cpath[len(portal_path)+1:]
     datastructure.set(widget_id, rpath)
     datastructure.set(widget_id+'_select', 'site')
     return
