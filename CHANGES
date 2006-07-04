@@ -6,12 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- #1677: dependent fields didn't work for File Fields created by flexible
-widgets (no preview, no indexing).
-- Using LayoutTools renderLayout call with a context that has a 
-  postCommitHook caused the hook to be called if the layout changed, which 
-  on CPSDocuments would set the size to something wrong, and cause a commit
-  transaction.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- All fields get a new method _getAllDependantFieldIds
+-
