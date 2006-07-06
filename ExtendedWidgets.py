@@ -25,6 +25,7 @@ Definition of extended widget types.
 
 import warnings
 import zipfile
+import operator
 
 from cgi import escape
 from re import match
@@ -1112,12 +1113,15 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                     return 0
             else:
-                if not vocabulary.has_key(i):
-                    datastructure.setError(widget_id, "cpsschemas_err_multiselect")
-                    return 0
-                else:
-                    if self.is_required and not self.blank_value_ok_if_required:
-                        datastructure.setError(widget_id, "cpsschemas_err_multiselect")
+                if self.is_required:
+                    # set error unless vocabulary holds blank values and
+                    # blank_value_ok_if_required is set to 1
+                    if vocabulary.has_key(i):
+                        if not self.blank_value_ok_if_required:
+                            datastructure.setError(widget_id, "cpsschemas_err_required")
+                            return 0
+                    else:
+                        datastructure.setError(widget_id, "cpsschemas_err_required")
                         return 0
             v.append(i)
         if self.is_required and not len(v):

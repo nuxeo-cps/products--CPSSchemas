@@ -6,7 +6,9 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Generic MultiSelect Widget will validate if the selection is empty and the 
+  widget is not required, or is required and accepting blank values;
+- Allowed Select widgets to sort the entries (missing import)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
