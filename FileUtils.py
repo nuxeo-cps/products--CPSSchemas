@@ -21,9 +21,10 @@
 Utilities to deal with files: conversion to HTML, or text.
 """
 
-from zLOG import LOG, DEBUG
 from Products.CMFCore.utils import getToolByName
+from logging import getLogger
 
+logger = getLogger('CPSSchemas.FileUtils._convertFileToMimeType')
 
 def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     """Convert a file to a new mime type.
@@ -38,20 +39,19 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
         return None
     transformer = getToolByName(context, 'portal_transforms', None)
     if transformer is None:
-        LOG('_convertFileToMimeType', DEBUG, 'No portal_transforms')
+        logger.debug('No portal_transforms')
         return None
     raw = str(file)
     if not raw:
         return None
-    LOG('_convertFileToMimeType', DEBUG, 'to %s for file %s'
-        % (mime_type, repr(file)))
+    logger.debug('to %s for file %s', mime_type, repr(file))
     current_mime_type = getattr(file, 'content_type',
                                 'application/octet-stream')
     if context is not None:
         default_encoding = context.default_charset
     else:
         default_encoding = 'latin9'
-        
+
     data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
                                  # filename='fooXXX', encoding='',
                                  encoding = default_encoding,
