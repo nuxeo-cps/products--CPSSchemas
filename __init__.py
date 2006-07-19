@@ -18,7 +18,7 @@
 #
 # $Id$
 
-from zLOG import LOG, INFO
+from logging import getLogger
 
 import Products.CMFCore
 from Products.CMFCore.DirectoryView import registerDirectory
@@ -43,12 +43,12 @@ import DublinCorePatch
 
 import LocalVocabulary
 
+logger = getLogger('CPSSchemas.__init__')
+
 try:
     from Products import Epoz
 except ImportError:
-    LOG("Epoz is not installed",
-        INFO,
-        "EpozPatch can't be applied")
+    logger.info("Epoz is not installed: EpozPatch can't be applied")
 else:
     import EpozPatch
 

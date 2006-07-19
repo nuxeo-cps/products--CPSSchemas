@@ -26,11 +26,6 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
-from zLOG import LOG, TRACE
-
-LOG('DublinCorePatch', TRACE, "Patching DublinCore...")
-
-
 def Coverage(self):
     """
     """

@@ -11,4 +11,4 @@ Bug fixes:
 - Allowed Select widgets to sort the entries (missing import)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- removed some zLOG deprecation warnings
