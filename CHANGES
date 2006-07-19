@@ -4,6 +4,7 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - CPSRevisionWidget to only display the revision of a proxy
+- added auto_strip feature to the CPSLinesWidget
 Bug fixes:
 ~~~~~~~~~~
 - Generic MultiSelect Widget will validate if the selection is empty and the 

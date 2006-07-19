@@ -6,24 +6,22 @@ import os
 import unittest
 
 from Acquisition import Implicit
-from OFS.Image import File
 from OFS.Folder import Folder
 
 from ZPublisher.HTTPRequest import FileUpload
 
 from Products.CPSSchemas.DataStructure import DataStructure
-from Products.CPSSchemas.BasicWidgets import CPSStringWidget, \
-     CPSBooleanWidget, CPSURLWidget, CPSEmailWidget, CPSPasswordWidget, \
-     CPSIdentifierWidget, CPSFloatWidget
-from Products.CPSSchemas.ExtendedWidgets import CPSRangeListWidget, \
-     CPSTextWidget
+from Products.CPSSchemas.BasicWidgets import (
+    CPSStringWidget, CPSBooleanWidget, CPSURLWidget, CPSEmailWidget,
+    CPSPasswordWidget, CPSIdentifierWidget, CPSFloatWidget, CPSLinesWidget)
+from Products.CPSSchemas.ExtendedWidgets import (
+    CPSRangeListWidget, CPSTextWidget)
 
 from Products.CPSSchemas.ExtendedWidgets import CPSFlashWidget
-from Products.CPSSchemas import tests as cpsschemas_tests
-TEST_SWF = os.path.join(cpsschemas_tests.__path__[0], 'test.swf')
-
 from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
+from Products.CPSSchemas import tests as cpsschemas_tests
 
+TEST_SWF = os.path.join(cpsschemas_tests.__path__[0], 'test.swf')
 
 class FakePortal(Implicit):
     pass
@@ -657,6 +655,29 @@ class DateTimeWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, '26/2705k')
         self.assertEquals(ret, 0)
         self.assertEquals(err, 'cpsschemas_err_date')
+
+class LinesWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSLinesWidget
+    default_value = ['']
+
+    def test_lines_ok_1(self):
+        ret, err, ds = self._validate({}, [''])
+        self.assertEquals(ret, 1)
+        self.assertEquals(ds.getDataModel().values()[0], [])
+
+    def test_lines_ok_2(self):
+        ret, err, ds = self._validate({}, [' ', '', ' some words '])
+        self.assertEquals(ret, 1)
+        self.assertEquals(ds.getDataModel().values()[0],
+                          [' ', '', ' some words '])
+
+    def test_lines_ok_2(self):
+        ret, err, ds = self._validate({'auto_strip': True},
+                                      [' ', '', ' some words '])
+        self.assertEquals(ret, 1)
+        self.assertEquals(ds.getDataModel().values()[0], ['some words'])
+
+
 
 
 # XXX: test more widget types here

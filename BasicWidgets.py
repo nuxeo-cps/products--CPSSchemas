@@ -753,6 +753,7 @@ class CPSLinesWidget(CPSWidget):
     height = 5
     view_mode_separator = ', '
     format_empty = ''
+    auto_strip = False
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
@@ -763,6 +764,8 @@ class CPSLinesWidget(CPSWidget):
          'label': 'Format for empty list'},
         {'id': 'view_mode_separator', 'type': 'string', 'mode': 'w',
          'label': 'Separator in view mode'},
+        {'id': 'auto_strip', 'type': 'boolean', 'mode': 'w',
+         'label': 'Auto strip lines on validation'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -786,7 +789,9 @@ class CPSLinesWidget(CPSWidget):
         if value == ['']:
             # Buggy Zope :lines prop may give us [''] instead of []
             value = []
-        v = value # Zope handle :lines automagically
+        v = value # Zope handle lines automagically
+        if self.auto_strip:
+            v = [line.strip() for line in v if line.strip()]
         if self.is_required and not v:
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, "cpsschemas_err_required")
