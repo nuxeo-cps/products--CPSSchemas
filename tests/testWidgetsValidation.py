@@ -604,16 +604,16 @@ class FlashWidgetValidationTest(WidgetValidationTest):
         id = 'ff'
         choice = 'change'
         title = 'title'
-        
+
         data = {id: value, id+'_choice': choice, id+'_title': title}
         dm = FakeDataModel(data)
         dm._adapters = [FakeAdapter({id: 'foo'})]
         ds = DataStructure(data, datamodel=dm)
         properties.update({'fields': (id,),})
-        
+
         folder = Folder()
         folder.mimetypes_registry = FakeMimeTypeRegistry()
-        
+
         widget = self.widget_type(id, **properties).__of__(folder)
 
         # Just test the internal validation related to swf
