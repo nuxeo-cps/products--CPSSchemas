@@ -42,7 +42,7 @@ except ImportError:
 
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
-from Acquisition import aq_parent, aq_inner
+from Acquisition import aq_parent, aq_inner, aq_base
 from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import cookId, File, Image
 from Products.PythonScripts.standard import structured_text, newline_to_br
@@ -2111,3 +2111,31 @@ class CPSBylineWidget(CPSWidget):
 InitializeClass(CPSBylineWidget)
 
 widgetRegistry.register(CPSBylineWidget)
+
+class CPSRevisionWidget(CPSWidget):
+    """Display the revision of the document"""
+    meta_type = 'Revision Widget'
+
+    def prepare(self, datastructure, **kw):
+        """Prepare datastructure from datamodel."""
+        pass
+
+    def validate(self, datastructure, **kw):
+        """Validate datastructure and update datamodel."""
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure."""
+        datamodel = datastructure.getDataModel()
+        # get the proxy containing this widget
+        proxy = datamodel.getProxy()
+        if proxy and getattr(aq_base(proxy), 'getRevision', None) is not None:
+            return str(proxy.getRevision())
+        else:
+            return ''
+
+
+InitializeClass(CPSRevisionWidget)
+
+widgetRegistry.register(CPSRevisionWidget)
+

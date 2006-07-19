@@ -650,6 +650,30 @@ function getLayoutMode() {
             hook.uninstall()
         self.assertEquals(len(hook.warnings), 1)
 
+    def test_CPSRevisionWidget(self):
+        from Products.CPSSchemas.BasicWidgets import CPSRevisionWidget
+        folder = Folder()
+        widget = CPSRevisionWidget('foo').__of__(folder)
+
+        dm = FakeDataModel()
+        class FakeProxy(Folder):
+            def getRevision(self):
+                return 1
+        dm.proxy = FakeProxy().__of__(folder)
+        ds = FakeDataStructure(dm)
+
+        self.assertEquals(widget.prepare(ds), None)
+        self.assert_(widget.validate(ds))
+        for mode in ('view', 'edit'):
+            self.assertEquals(widget.render(mode, ds), '1')
+
+        # Now without proxy
+        dm.proxy = None
+
+        self.assertEquals(widget.prepare(ds), None)
+        self.assert_(widget.validate(ds))
+        for mode in ('view', 'edit'):
+            self.assertEquals(widget.render(mode, ds), '')
 
     def test_CPSFileWidget_getFileInfo(self):
         from Products.CPSSchemas.BasicWidgets import CPSFileWidget
