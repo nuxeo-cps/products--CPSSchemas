@@ -32,12 +32,13 @@ from xml.sax.saxutils import quoteattr
 from urlparse import urlparse
 from StringIO import StringIO
 
-from zLOG import LOG, INFO, DEBUG, PROBLEM
+from logging import getLogger
+logger = getLogger('CPSSchemas.BasicWidgets')
+
 try:
     import PIL.Image
 except ImportError:
-    LOG('CPSSchemas', INFO, "No PIL library found so no image resizing will "
-                            "be done")
+    logger.info("No PIL library found so no image resizing will be done")
 
 from DateTime.DateTime import DateTime
 from Globals import InitializeClass
@@ -1536,6 +1537,8 @@ class CPSFileWidget(CPSWidget):
     size_max = 4*1024*1024
     display_external_editor = True
 
+    logger = getLogger('CPSSchemas.BasicWidgets.CPSFileWidget')
+
     def getHumanReadableSize(self, size):
         """ get human readable size
         """
@@ -1755,7 +1758,7 @@ class CPSFileWidget(CPSWidget):
         return True
 
     def validateError(self, err, err_mapping, datastructure):
-        LOG(self.__class__.__name__, DEBUG, "Validation error %s" % err)
+        self.logger.debug("Validation error %s", err)
         # Do not keep rejected file, revert to older
         self.unprepare(datastructure)
         datastructure.setError(self.getWidgetId(), err, err_mapping)
@@ -1796,6 +1799,8 @@ class CPSImageWidget(CPSFileWidget):
     display_height = 0
     display_width = 0
     allow_resize = 0
+
+    logger = getLogger('CPSSchemas.BasicWidgets.CPSImageWidget')
 
     def getImageInfo(self, datastructure):
         """Get the image info from the datastructure."""
@@ -1872,9 +1877,8 @@ class CPSImageWidget(CPSFileWidget):
                 outfile = StringIO()
                 img.save(outfile, format=img.format)
             except (NameError, IOError, ValueError, SystemError), err:
-                LOG('CPSImageWidget', PROBLEM,
-                    "Failed to resize file %s keep original (%s)" \
-                    % (filename, err))
+                self.logger.warning(
+                    "Failed to resize file %s keep original (%s)", filename, err)
                 outfile = file
         # XXX: is this the correct default behaviour ?
         else:
