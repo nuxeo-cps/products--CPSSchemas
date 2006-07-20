@@ -386,18 +386,34 @@ widgetRegistry.register(CPSURLWidget)
 class CPSEmailWidget(CPSStringWidget):
     """Email widget."""
     meta_type = 'Email Widget'
+
+    _properties = CPSStringWidget._properties + (
+        {'id': 'allow_extended_email', 'type': 'boolean', 'mode': 'w',
+         'label': 'Allow email of the form "Foo Bar <foo@bar.net>"'},
+    )
+
     display_width = 72
     size_max = 256
-    email_pat = compile(r"^([-\w_.'+])+@(([-\w])+\.)+([\w]{2,4})$")
+    allow_extended_email = False
+
+    base_email_pat = r"([-\w_.'+])+@(([-\w])+\.)+([\w]{2,4})"
+
+    email_pat = compile(r"^%s$" % base_email_pat)
+    extended_email_pat = compile(r"^([^<>]+) <%s>$" % base_email_pat)
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         err, v = self._extractValue(datastructure[widget_id])
         # no validation in search mode
-        if not err and kw.get('layout_mode') != 'search' and \
-               v and not self.email_pat.match(v):
-            err = 'cpsschemas_err_email'
+        if not err and kw.get('layout_mode') != 'search' and v:
+            if self.allow_extended_email:
+                if not (self.email_pat.match(v) or
+                        self.extended_email_pat.match(v)):
+                    err = 'cpsschemas_err_email'
+            else:
+                if not self.email_pat.match(v):
+                    err = 'cpsschemas_err_email'
 
         if err:
             datastructure.setError(widget_id, err)

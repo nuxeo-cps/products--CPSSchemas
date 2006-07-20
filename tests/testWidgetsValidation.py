@@ -396,6 +396,16 @@ class EmailWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, 'f+bar@be.bo.ba')
         self.assert_(ret, err)
 
+    def test_email_ok_5(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      'Firstname Lastname <first.last@be.br>')
+        self.assert_(ret, err)
+
+    def test_email_ok_6(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      'Yé Yo Yu5632 <ye.yo@truc.br>')
+        self.assert_(ret, err)
+
     def test_email_nok_1(self):
         ret, err, ds = self._validate({}, 'root')
         self.assertEquals(err, 'cpsschemas_err_email')
@@ -424,10 +434,28 @@ class EmailWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, 'a@foo..fr')
         self.assertEquals(err, 'cpsschemas_err_email')
 
-#  XXX should fail
-#    def test_email_nok_8(self):
-#        ret, err, ds = self._validate('Email', {}, 'a@foo.france')
-#        self.assert_(err == 'cpsschemas_err_email', err)
+    def test_email_nok_8(self):
+        ret, err, ds = self._validate({}, 'a@foo.france')
+        self.assert_(err == 'cpsschemas_err_email', err)
+
+    def test_email_nok_9(self):
+        ret, err, ds = self._validate({}, 'Alice Bob <ab@foo.fr>')
+        self.assert_(err == 'cpsschemas_err_email', err)
+
+    def test_email_nok_10(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      'Fistname Lastname<email@fake.com>')
+        self.assert_(err == 'cpsschemas_err_email', err)
+
+    def test_email_nok_11(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      '<email@fake.com> <email@fake.com>')
+        self.assert_(err == 'cpsschemas_err_email', err)
+
+    def test_email_nok_12(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      'Truc Bidule <email>')
+        self.assert_(err == 'cpsschemas_err_email', err)
 
 class IdentifierWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSIdentifierWidget

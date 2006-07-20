@@ -14,3 +14,5 @@ New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - All fields get a new method _getAllDependantFieldIds
 - removed some zLOG deprecation warnings
+- made the CPSEmailWidget able to support addresses of the form
+  "Firstname Lastname <fl@fakeemail.com>"
