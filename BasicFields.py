@@ -21,7 +21,8 @@
 Definition of standard field types.
 """
 
-from zLOG import LOG, DEBUG, WARNING
+from logging import getLogger
+
 import sys
 import warnings
 import re
@@ -42,7 +43,6 @@ from Products.CPSSchemas.DiskFile import DiskFile
 from zope.interface import implements
 from Products.CPSSchemas.interfaces import IFileField
 from Products.CPSSchemas.interfaces import IFieldNodeIO
-
 
 def _isinstance(ob, cls):
     warnings.warn("_isinstance() is deprecated and will be removed in "
@@ -228,6 +228,8 @@ class CPSStringField(CPSField):
     default_expr = 'string:'
     default_expr_c = Expression(default_expr)
 
+    logger = getLogger("CPSSchemas.BasicFields.CPSStringField")
+
     # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, str):
@@ -245,15 +247,14 @@ class CPSStringField(CPSField):
         if not values:
             return ''
         if len(values) != 1:
-            LOG('CPSStringField.convertFromLDAP', WARNING,
-                'Multi-valued field, cutting: %s' % `values`)
+            self.logger.warning('convertFromLDAP: Multi-valued field, '
+                                'cutting: %r', values)
             values = values[:1]
         value = values[0]
         try:
             value = fromUTF8(value)
         except UnicodeError:
-            LOG('CPSStringField.convertFromLDAP', WARNING,
-                'Problem recoding %s' % `value`)
+            self.logger.warning('convertFromLDAP: Problem recoding %r', value)
             pass
         return value
 
@@ -323,6 +324,8 @@ class CPSStringListField(CPSListField):
 
     validation_error_msg = 'Not a string list: '
 
+    logger = getLogger("CPSSchemas.BasicFields.CPSStringListField")
+
     def verifyType(self, value):
         """Verify the type of the value"""
         return isinstance(value, str)
@@ -339,8 +342,7 @@ class CPSStringListField(CPSListField):
             try:
                 v = fromUTF8(v)
             except UnicodeError:
-                LOG('CPSStringListField.convertFromLDAP', WARNING,
-                    'problem recoding %s' % `v`)
+                self.logger.warning('convertFromLDAP: problem recoding %r', v)
                 pass
             res.append(v)
         return res
@@ -586,10 +588,8 @@ class CPSFileField(CPSField):
                 # being a file but described as a string.
                 subobjects_dict = html_conversion.getSubObjects()
                 files_dict = {}
-                #LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
                 for k, v in subobjects_dict.items():
                     files_dict[k] = File(k, k, v)
-                #LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
             else:
                 html_file = None
                 files_dict = {}
@@ -690,10 +690,8 @@ class CPSDiskFileField(CPSFileField):
                 # being a file but described as a string.
                 subobjects_dict = html_conversion.getSubObjects()
                 files_dict = {}
-                #LOG('BasicFields', DEBUG, "subobjects = %s" % `subobjects_dict`)
                 for k, v in subobjects_dict.items():
                     files_dict[k] = File(k, k, v)
-                #LOG('BasicFields', DEBUG, "files_dict = %s" % `files_dict`)
             else:
                 html_file = None
                 files_dict = {}
