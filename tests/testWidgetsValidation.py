@@ -678,8 +678,6 @@ class LinesWidgetValidationTest(WidgetValidationTest):
         self.assertEquals(ds.getDataModel().values()[0], ['some words'])
 
 
-
-
 # XXX: test more widget types here
 
 def test_suite():
