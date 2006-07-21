@@ -11,6 +11,7 @@ Bug fixes:
   widget is not required, or is required and accepting blank values;
 - Allowed Select widgets to sort the entries (missing import)
 - new widget: Email List Widget that combines Email and Lines widgets
+- do not escape tag attributes as they are already xmlquoted by renderHtmlTag
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - All fields get a new method _getAllDependantFieldIds

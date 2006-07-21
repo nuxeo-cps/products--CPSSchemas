@@ -281,7 +281,7 @@ class CPSStringWidget(CPSWidget):
             kw = {'type': 'text',
                   'id'  : html_widget_id,
                   'name': html_widget_id,
-                  'value': escape(value),
+                  'value': value,
                   'size': self.display_width,
                   }
             if self.size_max:
@@ -428,10 +428,10 @@ class CPSEmailWidget(CPSStringWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = escape(datastructure[self.getWidgetId()])
+        value = datastructure[self.getWidgetId()]
         if mode == 'view' and value:
             kw = {'href': 'mailto:' + value,
-                  'contents': value}
+                  'contents': escape(value)}
             return renderHtmlTag('a', **kw)
         return CPSStringWidget.render(self, mode, datastructure, **kw)
 
@@ -891,8 +891,9 @@ class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
             if not value:
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
-            links = [renderHtmlTag('a', **{'href': 'mailto:%s' % escape(l),
-                                           'contents': l}) for l in value]
+            links = [renderHtmlTag('a',**{'href': 'mailto:%s' % l,
+                                          'contents': escape(l)})
+                     for l in value]
             return self.view_mode_separator.join(links)
         else:
             return CPSLinesWidget.render(self, mode, datastructure, **kw)
