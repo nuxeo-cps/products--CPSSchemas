@@ -738,8 +738,6 @@ class EmailListWidgetValidationTest(WidgetValidationTest):
                                       ['<email@fake.com> <email@fake.com>'])
         self.assert_(err == 'cpsschemas_err_email', err)
 
-
-
 # XXX: test more widget types here
 
 def test_suite():
