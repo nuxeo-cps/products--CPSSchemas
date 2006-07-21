@@ -816,7 +816,7 @@ class CPSLinesWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def _validateValue(self, value, datastructure):
+    def _validateValue(self, value, datastructure, **kw):
         """Helper method to make it easier to chain validation steps"""
         if value == ['']:
             # Buggy Zope :lines prop may give us [''] instead of []
@@ -878,7 +878,6 @@ class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
                     err = line_err
                     break
         if err:
-            datastructure[widget_id] = ''
             datastructure.setError(widget_id, err)
             return 0
         datamodel = datastructure.getDataModel()
@@ -893,7 +892,7 @@ class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             links = [renderHtmlTag('a', **{'href': 'mailto:%s' % escape(l),
-                                           'contents': value}) for l in value]
+                                           'contents': l}) for l in value]
             return self.view_mode_separator.join(links)
         else:
             return CPSLinesWidget.render(self, mode, datastructure, **kw)
