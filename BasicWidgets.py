@@ -384,7 +384,7 @@ widgetRegistry.register(CPSURLWidget)
 ##################################################
 
 class CPSEmailWidget(CPSStringWidget):
-    """Email widget."""
+    """Email widget"""
     meta_type = 'Email Widget'
 
     _properties = CPSStringWidget._properties + (
@@ -407,21 +407,24 @@ class CPSEmailWidget(CPSStringWidget):
         err, v = self._extractValue(datastructure[widget_id])
         # no validation in search mode
         if not err and kw.get('layout_mode') != 'search' and v:
-            if self.allow_extended_email:
-                if not (self.email_pat.match(v) or
-                        self.extended_email_pat.match(v)):
-                    err = 'cpsschemas_err_email'
-            else:
-                if not self.email_pat.match(v):
-                    err = 'cpsschemas_err_email'
-
+            v, err = self._validateValue(v, datastructure, **kw)
         if err:
             datastructure.setError(widget_id, err)
         else:
             datamodel = datastructure.getDataModel()
             datamodel[self.fields[0]] = v
-
         return not err
+
+    def _validateValue(self, value, datamodel, **kw):
+        """Helper method to make it easier to chain validation steps"""
+        if self.allow_extended_email:
+            if not (self.email_pat.match(value) or
+                    self.extended_email_pat.match(value)):
+                return None, 'cpsschemas_err_email'
+        else:
+            if not self.email_pat.match(value):
+                return None, 'cpsschemas_err_email'
+        return value, None
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -435,6 +438,8 @@ class CPSEmailWidget(CPSStringWidget):
 InitializeClass(CPSEmailWidget)
 
 widgetRegistry.register(CPSEmailWidget)
+
+
 
 ##################################################
 
@@ -802,6 +807,17 @@ class CPSLinesWidget(CPSWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        v, err = self._validateValue(value, datastructure, **kw)
+        if err:
+            datastructure[widget_id] = ''
+            datastructure.setError(widget_id, err)
+            return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def _validateValue(self, value, datastructure):
+        """Helper method to make it easier to chain validation steps"""
         if value == ['']:
             # Buggy Zope :lines prop may give us [''] instead of []
             value = []
@@ -809,12 +825,8 @@ class CPSLinesWidget(CPSWidget):
         if self.auto_strip:
             v = [line.strip() for line in v if line.strip()]
         if self.is_required and not v:
-            datastructure[widget_id] = ''
-            datastructure.setError(widget_id, "cpsschemas_err_required")
-            return 0
-        datamodel = datastructure.getDataModel()
-        datamodel[self.fields[0]] = v
-        return 1
+            return None, "cpsschemas_err_required"
+        return v, None
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -838,6 +850,59 @@ class CPSLinesWidget(CPSWidget):
 InitializeClass(CPSLinesWidget)
 
 widgetRegistry.register(CPSLinesWidget)
+
+
+class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
+    """List of Emails with a textarea for input and rendered mailto: links"""
+
+    meta_type = 'Email List Widget'
+
+    _properties = CPSLinesWidget._properties  + CPSEmailWidget._properties
+
+    auto_strip = True
+
+    def validate(self, datastructure, **kw):
+        """Validate a list of email address by combining list and email tests"""
+        widget_id = self.getWidgetId()
+        value = datastructure[widget_id]
+
+        # first apply the Lines validation
+        v, err = CPSLinesWidget._validateValue(self, value, datastructure, **kw)
+
+        # then for each line apply email validation
+        if not err:
+            for line in v:
+                _, line_err = CPSEmailWidget._validateValue(self, line,
+                                                            datastructure, **kw)
+                if line_err:
+                    err = line_err
+                    break
+        if err:
+            datastructure[widget_id] = ''
+            datastructure.setError(widget_id, err)
+            return 0
+        datamodel = datastructure.getDataModel()
+        datamodel[self.fields[0]] = v
+        return 1
+
+    def render(self, mode, datastructure, **kw):
+        """Render in mode from datastructure"""
+        if mode == "view":
+            value = datastructure[self.getWidgetId()]
+            if not value:
+                # XXX L10N empty format may be subject to i18n.
+                return self.format_empty
+            links = [renderHtmlTag('a', **{'href': 'mailto:%s' % escape(l),
+                                           'contents': value}) for l in value]
+            return self.view_mode_separator.join(links)
+        else:
+            return CPSLinesWidget.render(self, mode, datastructure, **kw)
+
+
+InitializeClass(CPSEmailListWidget)
+
+widgetRegistry.register(CPSEmailListWidget)
+
 
 ##################################################
 
@@ -1893,7 +1958,7 @@ class CPSImageWidget(CPSFileWidget):
                 img = PIL.Image.open(file)
                 img.thumbnail(size,
                               resample=PIL.Image.ANTIALIAS)
-                # We now need a buffer to write to. It can't be the same 
+                # We now need a buffer to write to. It can't be the same
                 # as the inbuffer as the PNG writer will write over itself.
                 outfile = StringIO()
                 img.save(outfile, format=img.format)

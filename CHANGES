@@ -10,6 +10,7 @@ Bug fixes:
 - Generic MultiSelect Widget will validate if the selection is empty and the 
   widget is not required, or is required and accepting blank values;
 - Allowed Select widgets to sort the entries (missing import)
+- new widget: Email List Widget that combines Email and Lines widgets
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - All fields get a new method _getAllDependantFieldIds

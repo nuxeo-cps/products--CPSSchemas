@@ -13,7 +13,9 @@ from ZPublisher.HTTPRequest import FileUpload
 from Products.CPSSchemas.DataStructure import DataStructure
 from Products.CPSSchemas.BasicWidgets import (
     CPSStringWidget, CPSBooleanWidget, CPSURLWidget, CPSEmailWidget,
-    CPSPasswordWidget, CPSIdentifierWidget, CPSFloatWidget, CPSLinesWidget)
+    CPSPasswordWidget, CPSIdentifierWidget, CPSFloatWidget, CPSLinesWidget,
+    CPSEmailListWidget,
+)
 from Products.CPSSchemas.ExtendedWidgets import (
     CPSRangeListWidget, CPSTextWidget)
 
@@ -704,6 +706,38 @@ class LinesWidgetValidationTest(WidgetValidationTest):
                                       [' ', '', ' some words '])
         self.assertEquals(ret, 1)
         self.assertEquals(ds.getDataModel().values()[0], ['some words'])
+
+
+class EmailListWidgetValidationTest(WidgetValidationTest):
+    widget_type = CPSEmailListWidget
+    default_value = ['']
+
+    def test_email_list_ok_1(self):
+        ret, err, ds = self._validate({}, [''])
+        self.assertEquals(ret, 1)
+        self.assertEquals(ds.getDataModel().values()[0], [])
+
+    def test_email_list_ok_2(self):
+        ret, err, ds = self._validate({}, [' ', '', ' root@nuxeo.com '])
+        self.assertEquals(ret, 1)
+        self.assertEquals(ds.getDataModel().values()[0],
+                          ['root@nuxeo.com'])
+
+    def test_email_list_ok_2(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      [' Firstname Lastname <first.last@be.br>'])
+        self.assertEquals(ds.getDataModel().values()[0],
+                          ['Firstname Lastname <first.last@be.br>'])
+
+    def test_email_list_nok_1(self):
+        ret, err, ds = self._validate({}, ['First Last <first.last@fake.org>'])
+        self.assert_(err == 'cpsschemas_err_email', err)
+
+    def test_email_list_nok_2(self):
+        ret, err, ds = self._validate({'allow_extended_email': True},
+                                      ['<email@fake.com> <email@fake.com>'])
+        self.assert_(err == 'cpsschemas_err_email', err)
+
 
 
 # XXX: test more widget types here
