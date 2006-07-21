@@ -34,7 +34,6 @@ from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
 from DateTime.DateTime import DateTime
 import os.path
-from zLOG import LOG, DEBUG, TRACE
 
 from Products.PythonScripts.standard import newline_to_br
 from Products.PythonScripts.standard import structured_text
@@ -845,8 +844,6 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
         if isinstance(value, (list, tuple)):
-            LOG('CPSGenericSelectWidget.prepare', TRACE,
-                'expected String got Typle %s use first element' % value)
             if len(value):
                 value = value[0]
             else:
@@ -1084,8 +1081,6 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
         datamodel = datastructure.getDataModel()
         value = datamodel[self.fields[0]]
         if isinstance(value, str):
-            LOG('CPSGenericMultiSelectWidget.prepare', TRACE,
-                'expected List got String %s converting into list' % value)
             if value:
                 value = [value,]
             else:
@@ -1474,7 +1469,6 @@ class CPSFlashWidget(CPSAttachedFileWidget):
         if choice == 'change':
             fileinfo = self.getFileInfo(datastructure)
             if fileinfo is not None:
-                LOG('CPSFlashWidget', DEBUG, 'file %s' % fileinfo)
                 cond = fileinfo['mimetype'] == 'application/x-shockwave-flash'
                 if not cond:
                     datastructure.setError(self.getWidgetId(),
