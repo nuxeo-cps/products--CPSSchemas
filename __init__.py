@@ -45,13 +45,6 @@ import LocalVocabulary
 
 logger = getLogger('CPSSchemas.__init__')
 
-try:
-    from Products import Epoz
-except ImportError:
-    logger.info("Epoz is not installed: EpozPatch can't be applied")
-else:
-    import EpozPatch
-
 import DiskFile
 
 import utils

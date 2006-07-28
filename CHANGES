@@ -13,6 +13,8 @@ Bug fixes:
 - Allowed Select widgets to sort the entries (missing import)
 - new widget: Email List Widget that combines Email and Lines widgets
 - do not escape tag attributes as they are already xmlquoted by renderHtmlTag
+- #1700: Epoz problems in Internet Explorer. This results in the total removal
+  of Epoz support in CPS.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - All fields get a new method _getAllDependantFieldIds
