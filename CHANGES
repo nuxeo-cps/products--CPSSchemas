@@ -5,6 +5,7 @@ New features:
 ~~~~~~~~~~~~~
 - CPSRevisionWidget to only display the revision of a proxy
 - added auto_strip feature to the CPSLinesWidget
+- #1702: Added new Catalan translation thanks to Santi Camps.
 Bug fixes:
 ~~~~~~~~~~
 - Generic MultiSelect Widget will validate if the selection is empty and the 
