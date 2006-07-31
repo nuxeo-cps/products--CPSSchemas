@@ -1,4 +1,31 @@
 *******************************************
+** CPSSchemas V0.54.0 [R1 build 2006/07/31-13:50 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 47588
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- CPSRevisionWidget to only display the revision of a proxy
+- added auto_strip feature to the CPSLinesWidget
+- #1702: Added new Catalan translation thanks to Santi Camps.
+Bug fixes:
+~~~~~~~~~~
+- Generic MultiSelect Widget will validate if the selection is empty and the 
+  widget is not required, or is required and accepting blank values;
+- Allowed Select widgets to sort the entries (missing import)
+- new widget: Email List Widget that combines Email and Lines widgets
+- do not escape tag attributes as they are already xmlquoted by renderHtmlTag
+- #1700: Epoz problems in Internet Explorer. This results in the total removal
+  of Epoz support in CPS.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- All fields get a new method _getAllDependantFieldIds
+- removed some zLOG deprecation warnings
+- made the CPSEmailWidget able to support addresses of the form
+  "Firstname Lastname <fl@fakeemail.com>"
+
+*******************************************
 ** CPSSchemas V0.53.0 [R1 build 2006/07/04-16:06 by gracinet]
 ** SVN URL: http://svn/pub/CPS3/products/CPSSchemas/trunk Revision: 46897
 Requires:
