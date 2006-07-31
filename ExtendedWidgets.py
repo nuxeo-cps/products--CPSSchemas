@@ -839,6 +839,9 @@ class CPSGenericSelectWidget(CPSSelectWidget):
     other_option_size_max = 0
     blank_value_ok_if_required = 1
 
+    # BBB for [46171]. Remove this once an upgrade step has been written
+    sorted = False
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -1075,6 +1078,9 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
 
     render_format = render_formats[0]
     blank_value_ok_if_required = 1
+
+    # BBB for [46171]. Remove this once an upgrade step has been written
+    sorted = False
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""

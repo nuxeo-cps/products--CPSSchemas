@@ -1076,6 +1076,9 @@ class CPSMultiSelectWidget(CPSSelectWidget):
     # accessibility.
     has_input_area = True
 
+    # BBB for [46410]. Remove this once an upgrade step has been written
+    sorted = False
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
