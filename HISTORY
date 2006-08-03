@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.54.1 [R1 build 2006/08/03-09:20 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 47837
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- BBB hack for upgradability.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.54.0 [R1 build 2006/07/31-13:50 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 47588
 Requires:
