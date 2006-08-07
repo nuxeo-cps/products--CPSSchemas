@@ -1,4 +1,20 @@
 *******************************************
+** CPSSchemas V0.54.2 [R1 build 2006/08/07-16:38 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 48074
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- optional bypass of getEditableContent in datamodel commit (#1608 & #1714)
+
+*******************************************
 ** CPSSchemas V0.54.1 [R1 build 2006/08/03-09:20 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 47837
 Requires:

@@ -9,4 +9,4 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- optional bypass of getEditableContent in datamodel commit (#1608 & #1714)
+-
