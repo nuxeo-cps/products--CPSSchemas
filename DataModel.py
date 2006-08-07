@@ -312,15 +312,18 @@ class DataModel(UserDict):
         for adapter in self._adapters:
             adapter.setContextObject(ob, proxy)
 
-    def _commit(self, check_perms=1):
+    def _commit(self, check_perms=1, _set_editable=True):
         """Commit modified data into object.
 
         Returns the resulting object.
 
         Try to re-get an editable version of the object before modifying
-        it. This is needed by CPS for frozen objects.
+        it. This is needed by CPS for frozen objects and can be bypassed
+        with the _set_editable kwarg. This bypass should be used at creation
+        time only: the proxy doesn't know the new object yet in this case.
         """
-        self._setEditable()
+        if _set_editable:
+            self._setEditable()
         ob = self._ob
 
         # Check permission on the object.
