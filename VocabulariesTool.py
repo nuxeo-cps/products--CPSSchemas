@@ -53,10 +53,7 @@ class VocabulariesTool(UniqueObject, IFAwareObjectManager, Folder):
         """Returns vocabulary for given context."""
 
         def hasLocalVocContainer(context):
-            try:
-                return LOCAL_VOCABULARY_CONTAINER_ID in context.objectIds()
-            except:
-                return 0
+            return context.hasObject(LOCAL_VOCABULARY_CONTAINER_ID)
 
         def getLocalVocContainer(context):
             return context._getOb(LOCAL_VOCABULARY_CONTAINER_ID, None)
