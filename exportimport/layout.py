@@ -186,7 +186,7 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
                     self._logger.log(VERBOSE, msg)
                 else:
                     self._logger.warning(
-                        "Attempt of removing non-existent widget %s", widget_id)
+                        "Removal attempt of non-existent widget %s" % widget_id)
                 continue
 
             old_state = None
