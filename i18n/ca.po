@@ -536,7 +536,7 @@ msgid "img_xsmall ${dim}"
 msgstr "Molt petit ${dim}"
 
 msgid "jscalendar_date_fmt"
-msgstr "d/m/a"
+msgstr "d/m/y"
 
 #.   <block content="widget/label" condition="widget/is_i18n">label</block>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
