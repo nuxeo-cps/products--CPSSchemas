@@ -28,9 +28,10 @@ import warnings
 import operator
 from re import compile, search
 from cgi import escape
-from xml.sax.saxutils import quoteattr
 from urlparse import urlparse
 from StringIO import StringIO
+
+from Products.CPSUtil.html import renderHtmlTag
 
 from logging import getLogger
 logger = getLogger('CPSSchemas.BasicWidgets')
@@ -64,32 +65,6 @@ def _isinstance(ob, cls):
                   DeprecationWarning, stacklevel=2)
     return isinstance(ob, cls)
 
-def renderHtmlTag(tagname, **kw):
-    """Render an HTML tag."""
-    # The "class" key cannot be used since it is a reserved word in python, so
-    # to set the "class" attribute one has to specify the "css_class" key.
-    if kw.get('css_class'):
-        kw['class'] = kw['css_class']
-        del kw['css_class']
-    if kw.has_key('contents'):
-        contents = kw['contents']
-        del kw['contents']
-    else:
-        contents = None
-    attrs = []
-    for key, value in kw.items():
-        if value is None:
-            continue
-        if key in ('value', 'alt') or value != '':
-            attrs.append('%s=%s' % (key, quoteattr(str(value))))
-    res = '<%s %s' % (tagname, ' '.join(attrs))
-    if contents is not None:
-        res += '>%s</%s>' % (contents, tagname)
-    elif tagname in ('input', 'img', 'br', 'hr'):
-        res += ' />'
-    else:
-        res += '>'
-    return res
 
 # BBB (remove this in CPS-3.6)
 def cleanFileName(name):
