@@ -92,8 +92,8 @@ class Vocabulary(Persistent, Implicit):
         d = {}
         m = {}
         # We suppose that initial vocabulary is sorted
-        if tuples is not None:
-            if tuples and isinstance(tuples[0], str):
+        if tuples:
+            if isinstance(tuples[0], str):
                 # Vocabulary(('foo', 'bar'))
                 l = builtins_list(tuples)
                 for k in l:
