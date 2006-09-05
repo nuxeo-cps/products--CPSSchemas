@@ -10,6 +10,8 @@ Bug fixes:
 - #1730: Calendar widget not working fine when language is Catalan
 - Made it possible to create empty vocabularies through the use of
   the CPSInstaller verifyVocabularies method.
+- Missing XML ZMI export tab on vocabularies
+
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved jscalendar lang/ subdir to calendar-lang/ to avoid name collisions.

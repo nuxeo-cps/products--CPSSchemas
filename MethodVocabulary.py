@@ -73,6 +73,13 @@ class MethodVocabulary(SimpleItemWithProperties):
          'label':'Empty key i18n value'},
         )
 
+    manage_options = SimpleItemWithProperties.manage_options + (
+        {'label': 'Export',
+         'action': 'manage_genericSetupExport.html',
+         },
+        )
+
+
     title = ''
     title_msgid = ''
     description = ''
