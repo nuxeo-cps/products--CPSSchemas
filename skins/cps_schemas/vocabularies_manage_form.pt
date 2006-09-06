@@ -5,7 +5,7 @@
   tal:define="global context_urlc python:here.getContextUrl(utool=utool,
                                                             concat=1)">
 
-  <tal:security condition="python:not checkPerm('Manage Boxes', here)">
+  <tal:security condition="python:not checkPerm('Manage portal', here)">
     <tal:redirect define="response request/RESPONSE;
                           dummy python:response.redirect(context_url)" />
   </tal:security>
