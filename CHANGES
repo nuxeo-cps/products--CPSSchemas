@@ -12,6 +12,8 @@ Bug fixes:
   the CPSInstaller verifyVocabularies method.
 - Missing XML ZMI export tab on vocabularies
 - Fixed wrong permission check on vocabularies_manage_form.pt.
+- Fixed vocabularies_manage_form so that the buttons appear skinned + used
+  better HTML markup.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved jscalendar lang/ subdir to calendar-lang/ to avoid name collisions.

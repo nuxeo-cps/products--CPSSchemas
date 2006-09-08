@@ -28,7 +28,7 @@
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_add" i18n:attributes="value" />
+        <button type="submit" i18n:translate="button_add">Add</button>
       </td>
     </tr>
   </table>
@@ -55,7 +55,7 @@
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_select" i18n:attributes="value" />
+        <button type="submit" i18n:translate="button_select">Select</button>
       </td>
     </tr>
   </table>
@@ -83,7 +83,7 @@
     </tr>
     <tr>
       <td>
-        <input type="submit" value="button_delete" i18n:attributes="value" />
+        <button type="submit" i18n:translate="button_delete">Delete</button>
       </td>
     </tr>
   </table>
