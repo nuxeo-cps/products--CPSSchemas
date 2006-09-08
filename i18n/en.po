@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 16:17default\n"
+"POT-Creation-Date: 2006-09-08 14:22default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -57,6 +57,7 @@ msgstr "True"
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
+#.           class string:standalone;
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
 #.           " type="button">Layout</button>
@@ -74,8 +75,9 @@ msgstr "at"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or '';
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
 #.           (preview)
 #.         </a>
 #.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
@@ -86,7 +88,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(preview)"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" condition="display_printable_version" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -339,6 +341,9 @@ msgstr "Invalid boolean"
 
 msgid "cpsschemas_err_int"
 msgstr "Invalid integer"
+
+msgid "cpsschemas_err_int_range"
+msgstr "Integer out of range"
 
 msgid "cpsschemas_err_date"
 msgstr "Invalid date"

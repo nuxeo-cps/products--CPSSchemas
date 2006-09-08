@@ -52,6 +52,9 @@ msgstr ""
 msgid "cpsschemas_err_int"
 msgstr ""
 
+msgid "cpsschemas_err_int_range"
+msgstr ""
+
 msgid "cpsschemas_err_date"
 msgstr ""
 

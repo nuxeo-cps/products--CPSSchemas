@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 16:17default\n"
+"POT-Creation-Date: 2006-09-08 14:16default\n"
 "PO-Revision-Date: 2006-07-19 19:05+0100\n"
 "Last-Translator: Santi Camps <scamps@earcon.com>\n"
 "Language-Team: català <darcalis@gmail.com>\n"
@@ -19,8 +19,11 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 
 #.   <option attributes="value op/id;
+#.                   selected python: op['size'] and (op['size'][0]==image_width
 #.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal condition="op/size" replace="python:'(%sx%s)' % op['size']")}</option>
+#.   <option attributes="value op/id;
 #.                 selected python: op['size'] and (op['size'][0]==image_width
+#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "<span replace=\"op/id\" /> ${dim}"
@@ -41,19 +44,17 @@ msgstr "Fals"
 msgid "True"
 msgstr "Vertader"
 
-msgid "action_edit_online"
-msgstr "Editar en línia"
-
 #.   <button attributes="
+#.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
+#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           class string:standalone;
 #.           onclick
+#.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
 #.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr "Engegar l'editor"
-
-msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr "Animació flash (swf)"
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -65,22 +66,21 @@ msgstr "a"
 msgid "cpsschema_hour"
 msgstr "h"
 
-msgid "cpsschema_label_off"
-msgstr "Desactivat"
-
-msgid "cpsschema_label_on"
-msgstr "Activat"
-
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or '';
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
 #.           (preview)
+#.         </a>
 #.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
+#.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
 msgstr "(previsualització)"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" condition="display_printable_version" href="http://url..." target="_blank">
+#.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_printable_version"
@@ -92,121 +92,20 @@ msgid "cpsschema_minute"
 msgstr "mn"
 
 #.   <p>
+#.           cpsschemas_allowed_file_suffixes
 #.           ${allowed_file_suffixes (tal replace="python:', '.join(allowed_suffixes)")}
+#.         </p>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr "Els arxius han de tenir algun dels següents sufixos: ${allowed_file_suffixes}."
-
-msgid "cpsschemas_err_bad_date"
-msgstr "Data+ incorrecta"
-
-msgid "cpsschemas_err_boolean"
-msgstr "Valor lògic no válid"
-
-msgid "cpsschemas_err_date"
-msgstr "Format de data no vàlid"
-
-msgid "cpsschemas_err_email"
-msgstr "E-mail no vàlid"
-
-msgid "cpsschemas_err_file"
-msgstr "Fitxer no vàlid"
-
-msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr "Aquest arxiu no té un sufix vàlid. Els sufixos vàlids son: ${allowed_file_suffixes}."
-
-msgid "cpsschemas_err_file_empty"
-msgstr "fitxer buit"
-
-msgid "cpsschemas_err_file_too_big"
-msgstr "Fitxer massa gran"
-
-msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Fitxer massa gran; la mida màxima ha de ser ${max_size}Mb."
-
-msgid "cpsschemas_err_float"
-msgstr "Número real no vàlid"
-
-msgid "cpsschemas_err_float_positive"
-msgstr "Aquest número real ha de ser positiu"
-
-msgid "cpsschemas_err_float_range"
-msgstr "Número real fora de límits"
-
-msgid "cpsschemas_err_identifier"
-msgstr "Identificador no vàlid"
-
-msgid "cpsschemas_err_image"
-msgstr "Imatge no vàlida"
-
-msgid "cpsschemas_err_int"
-msgstr "Enter no vàlid"
-
-msgid "cpsschemas_err_long"
-msgstr "Enter llarg no vàlid"
-
-msgid "cpsschemas_err_long_range"
-msgstr "Enter llarg fora de límits"
-
-msgid "cpsschemas_err_multiselect"
-msgstr "Selecció múltiple no vàlida"
-
-msgid "cpsschemas_err_password_digit"
-msgstr "La contrasenya ha de tenir al menys una xifra"
-
-msgid "cpsschemas_err_password_extra"
-msgstr "La contrasenya ha de tenir al menys un caràcter que no sigui lletra o xifra"
-
-msgid "cpsschemas_err_password_lower"
-msgstr "La contrasenya ha de tenir al menys una minúscula"
-
-msgid "cpsschemas_err_password_mismatch"
-msgstr "La contrasenya no coincideix amb la confirmació"
-
-msgid "cpsschemas_err_password_size_min"
-msgstr "Contrasenya massa curta"
-
-msgid "cpsschemas_err_password_upper"
-msgstr "La contrasenya ha de tenir al menys una majúscula"
-
-msgid "cpsschemas_err_rangelist"
-msgstr "Llista invàlida de rangs"
-
-msgid "cpsschemas_err_readonly"
-msgstr "Camp de només lectura"
-
-msgid "cpsschemas_err_required"
-msgstr "Camp obligatori"
-
-msgid "cpsschemas_err_select"
-msgstr "Selecció no vàlida"
-
-msgid "cpsschemas_err_string"
-msgstr "Cadena de caràcters no vàlida"
-
-msgid "cpsschemas_err_string_too_long"
-msgstr "Cadena de caràcters massa llarga"
-
-msgid "cpsschemas_err_textarea"
-msgstr "Text no vàlid"
-
-msgid "cpsschemas_err_url"
-msgstr "URL no vàlida"
-
-msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "No s'ha trobat cap document html a l'arxiu Zip"
-
-msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Arxiu Zip invàlid"
+msgstr ""
+"Els arxius han de tenir algun dels següents sufixos: "
+"${allowed_file_suffixes}."
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "i redimensionar: "
-
-msgid "cpsschemas_label_false"
-msgstr "No"
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -222,6 +121,7 @@ msgid "cpsschemas_label_file_delete"
 msgstr "Esborrar"
 
 #.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
+#.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
 msgid "cpsschemas_label_file_edit_online"
@@ -240,6 +140,7 @@ msgid "cpsschemas_label_file_none"
 msgstr "Cap"
 
 #.   <span>
+#.             Filename
 #.           </span>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
@@ -251,110 +152,12 @@ msgstr "Arxiu"
 msgid "cpsschemas_label_image_resize"
 msgstr "Redimensionar com a"
 
-msgid "cpsschemas_label_link_content"
-msgstr "Nom de l'enllaç"
-
-msgid "cpsschemas_label_link_href"
-msgstr "URL"
-
-msgid "cpsschemas_label_link_title"
-msgstr "Descripció"
-
-msgid "cpsschemas_label_modified_since_0"
-msgstr "sense límit de temps"
-
-msgid "cpsschemas_label_modified_since_1"
-msgstr "des d'ahir"
-
-msgid "cpsschemas_label_modified_since_182"
-msgstr "des dels darrers 6 mesos"
-
-msgid "cpsschemas_label_modified_since_30"
-msgstr "des del mes passat"
-
-msgid "cpsschemas_label_modified_since_365"
-msgstr "fa un any"
-
-msgid "cpsschemas_label_modified_since_91"
-msgstr "des dels darrers 3 mesos"
-
-msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "anticronológic"
-
-msgid "cpsschemas_label_searchsort_chrono"
-msgstr "cronològic"
-
-msgid "cpsschemas_label_searchsort_expires"
-msgstr "data d'expiració"
-
-msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "tipus de document"
-
-msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "localització"
-
-msgid "cpsschemas_label_searchsort_relevance"
-msgstr "rellevància"
-
-msgid "cpsschemas_label_searchsort_review_state"
-msgstr "estat"
-
-msgid "cpsschemas_label_searchsort_title"
-msgstr "Títol"
-
-msgid "cpsschemas_label_true"
-msgstr "Sí"
-
-msgid "cpsschemas_label_zctext_field_Description"
-msgstr "a la descripció"
-
-msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "al document"
-
-msgid "cpsschemas_label_zctext_field_Title"
-msgstr "al títol"
-
-msgid "cpsschemas_label_zctext_operator_and"
-msgstr "totes aquestes paraules"
-
-msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "l'expressió exacta"
-
-msgid "cpsschemas_label_zctext_operator_not"
-msgstr "cap d'aquestes paraules"
-
-msgid "cpsschemas_label_zctext_operator_or"
-msgstr "qualsevol d'aquestes paraules"
-
 #.   <span>
+#.           Photo subtitle
 #.         </span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Peu d'imatge:"
-
-msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Vocabulari creat"
-
-msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Vocabulari esborrat"
-
-msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Entrades esborrades"
-
-msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr "Entrada afegida"
-
-msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Aquesta id ja existeix. Selecciona'n una altra"
-
-msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "Seleccioni una id"
-
-msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr "No ha seleccionat cap entrada. Seleccioni'n una."
-
-msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Vocabulari actualitzat"
 
 #.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
@@ -362,41 +165,13 @@ msgid "cpsschemas_render_format"
 msgstr "Format: "
 
 #.   <span>
+#.             Render position
 #.           </span>
+#.   <label attributes="for position_selector_id">Position:</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
 msgstr "Posició: "
-
-msgid "cpsschemas_rformat_html"
-msgstr "HTML"
-
-msgid "cpsschemas_rformat_original"
-msgstr "Original"
-
-msgid "cpsschemas_rformat_rst"
-msgstr "Text estructurat Zope"
-
-msgid "cpsschemas_rformat_text"
-msgstr "Text"
-
-msgid "cpsschemas_rposition_center"
-msgstr "Al centre"
-
-msgid "cpsschemas_rposition_col_left"
-msgstr "Columna de l'esquerra"
-
-msgid "cpsschemas_rposition_col_right"
-msgstr "Columna de la dreta"
-
-msgid "cpsschemas_rposition_left"
-msgstr "A l'esquerra"
-
-msgid "cpsschemas_rposition_normal"
-msgstr "Amplada de la pàgina"
-
-msgid "cpsschemas_rposition_right"
-msgstr "A la dreta"
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
@@ -409,23 +184,13 @@ msgid "cpsschemas_search_languages"
 msgstr "uno o més dels següents idiomes"
 
 #.   <p>
+#.             cpsschemas_size_max
 #.             ${size_max (tal content="str_sizeMax")}
+#.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_size_max ${size_max}"
 msgstr "Mida màxima: ${size_max}."
-
-msgid "cpsschemas_unit_bytes"
-msgstr "bytes"
-
-msgid "cpsschemas_unit_giga_bytes"
-msgstr "Gb"
-
-msgid "cpsschemas_unit_kilo_bytes"
-msgstr "Kb"
-
-msgid "cpsschemas_unit_mega_bytes"
-msgstr "Mb"
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -438,6 +203,7 @@ msgid "cpsschemas_vocabulary_available"
 msgstr "Vocabularis disponibles"
 
 #.   <span class="description">cpsschemas_vocabulary_contains
+#.     ${voc_entries (tal replace="python:len(keys)")}
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
@@ -497,48 +263,28 @@ msgid "err"
 msgstr "Error"
 
 #.   <th>
+#.           Click on the chosen value
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_click_chosen_value"
 msgstr "Premi el valor desitjat"
 
 #.   <th>
+#.           Enter a search term:
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
 msgstr "Introdueixi una expressió de recerca"
 
 #.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
+#.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
 msgstr ""
 
-msgid "img_auto_size"
-msgstr "Automàtic"
-
-msgid "img_icon ${dim}"
-msgstr "Icona ${dim}"
-
-msgid "img_large ${dim}"
-msgstr "Gran ${dim}"
-
-msgid "img_medium ${dim}"
-msgstr "Mitjà ${dim}"
-
-msgid "img_small ${dim}"
-msgstr "Petit ${dim}"
-
-msgid "img_xlarge ${dim}"
-msgstr "Extra gran ${dim}"
-
-msgid "img_xsmall ${dim}"
-msgstr "Molt petit ${dim}"
-
-msgid "jscalendar_date_fmt"
-msgstr "d/m/y"
-
 #.   <block content="widget/label" condition="widget/is_i18n">label</block>
+#.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
 #.   <span content="widget/label_edit" condition="widget/is_i18n">label</span>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -546,9 +292,293 @@ msgid "label"
 msgstr "etiqueta"
 
 #.   <label attributes="for file_upload_id">
+#.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
 msgstr "Fitxer a emprar per emplenar una àrea de text:"
+
+msgid "cpsschemas_unit_bytes"
+msgstr "bytes"
+
+msgid "cpsschemas_unit_kilo_bytes"
+msgstr "Kb"
+
+msgid "cpsschemas_unit_mega_bytes"
+msgstr "Mb"
+
+msgid "cpsschemas_unit_giga_bytes"
+msgstr "Gb"
+
+msgid "cpsschemas_err_string"
+msgstr "Cadena de caràcters no vàlida"
+
+msgid "cpsschemas_err_string_too_long"
+msgstr "Cadena de caràcters massa llarga"
+
+msgid "cpsschemas_err_required"
+msgstr "Camp obligatori"
+
+msgid "cpsschemas_err_textarea"
+msgstr "Text no vàlid"
+
+msgid "cpsschemas_err_select"
+msgstr "Selecció no vàlida"
+
+msgid "cpsschemas_err_multiselect"
+msgstr "Selecció múltiple no vàlida"
+
+msgid "cpsschemas_err_boolean"
+msgstr "Valor lògic no válid"
+
+msgid "cpsschemas_err_int"
+msgstr "Enter no vàlid"
+
+#, fuzzy
+msgid "cpsschemas_err_int_range"
+msgstr "Integer out of range"
+
+msgid "cpsschemas_err_date"
+msgstr "Format de data no vàlid"
+
+msgid "cpsschemas_err_bad_date"
+msgstr "Data+ incorrecta"
+
+msgid "cpsschemas_err_file"
+msgstr "Fitxer no vàlid"
+
+msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
+msgstr ""
+"Aquest arxiu no té un sufix vàlid. Els sufixos vàlids son: "
+"${allowed_file_suffixes}."
+
+msgid "cpsschemas_err_file_empty"
+msgstr "fitxer buit"
+
+msgid "cpsschemas_err_file_too_big"
+msgstr "Fitxer massa gran"
+
+msgid "cpsschemas_err_file_too_big ${max_size}"
+msgstr "Fitxer massa gran; la mida màxima ha de ser ${max_size}Mb."
+
+msgid "cpsschemas_err_image"
+msgstr "Imatge no vàlida"
+
+msgid "cpsschemas_err_url"
+msgstr "URL no vàlida"
+
+msgid "cpsschemas_err_long"
+msgstr "Enter llarg no vàlid"
+
+msgid "cpsschemas_err_long_range"
+msgstr "Enter llarg fora de límits"
+
+msgid "cpsschemas_err_float_positive"
+msgstr "Aquest número real ha de ser positiu"
+
+msgid "cpsschemas_err_float_range"
+msgstr "Número real fora de límits"
+
+msgid "cpsschemas_err_float"
+msgstr "Número real no vàlid"
+
+msgid "cpsschemas_err_password_mismatch"
+msgstr "La contrasenya no coincideix amb la confirmació"
+
+msgid "cpsschemas_err_password_size_min"
+msgstr "Contrasenya massa curta"
+
+msgid "cpsschemas_err_password_lower"
+msgstr "La contrasenya ha de tenir al menys una minúscula"
+
+msgid "cpsschemas_err_password_upper"
+msgstr "La contrasenya ha de tenir al menys una majúscula"
+
+msgid "cpsschemas_err_password_digit"
+msgstr "La contrasenya ha de tenir al menys una xifra"
+
+msgid "cpsschemas_err_password_extra"
+msgstr ""
+"La contrasenya ha de tenir al menys un caràcter que no sigui lletra o xifra"
+
+msgid "cpsschemas_err_identifier"
+msgstr "Identificador no vàlid"
+
+msgid "cpsschemas_err_email"
+msgstr "E-mail no vàlid"
+
+msgid "cpsschemas_err_readonly"
+msgstr "Camp de només lectura"
+
+msgid "cpsschemas_err_rangelist"
+msgstr "Llista invàlida de rangs"
+
+msgid "cpsschemas_err_zippedhtml_invalid_zip"
+msgstr "Arxiu Zip invàlid"
+
+msgid "cpsschemas_err_zippedhtml_html_not_found"
+msgstr "No s'ha trobat cap document html a l'arxiu Zip"
+
+msgid "jscalendar_date_fmt"
+msgstr "d/m/y"
+
+msgid "cpsschemas_rposition_normal"
+msgstr "Amplada de la pàgina"
+
+msgid "cpsschemas_rposition_col_right"
+msgstr "Columna de la dreta"
+
+msgid "cpsschemas_rposition_col_left"
+msgstr "Columna de l'esquerra"
+
+msgid "cpsschemas_rposition_left"
+msgstr "A l'esquerra"
+
+msgid "cpsschemas_rposition_right"
+msgstr "A la dreta"
+
+msgid "cpsschemas_rposition_center"
+msgstr "Al centre"
+
+msgid "cpsschemas_rformat_text"
+msgstr "Text"
+
+msgid "cpsschemas_rformat_html"
+msgstr "HTML"
+
+msgid "cpsschemas_rformat_rst"
+msgstr "Text estructurat Zope"
+
+msgid "cpsschemas_rformat_original"
+msgstr "Original"
+
+msgid "img_auto_size"
+msgstr "Automàtic"
+
+msgid "img_icon ${dim}"
+msgstr "Icona ${dim}"
+
+msgid "img_xsmall ${dim}"
+msgstr "Molt petit ${dim}"
+
+msgid "img_small ${dim}"
+msgstr "Petit ${dim}"
+
+msgid "img_medium ${dim}"
+msgstr "Mitjà ${dim}"
+
+msgid "img_large ${dim}"
+msgstr "Gran ${dim}"
+
+msgid "img_xlarge ${dim}"
+msgstr "Extra gran ${dim}"
+
+msgid "cpsschemas_label_false"
+msgstr "No"
+
+msgid "cpsschemas_label_true"
+msgstr "Sí"
+
+msgid "cpsschema_label_on"
+msgstr "Activat"
+
+msgid "cpsschema_label_off"
+msgstr "Desactivat"
+
+msgid "cpsschemas_label_link_href"
+msgstr "URL"
+
+msgid "cpsschemas_label_link_content"
+msgstr "Nom de l'enllaç"
+
+msgid "cpsschemas_label_link_title"
+msgstr "Descripció"
+
+msgid "cpsschemas_label_zctext_operator_and"
+msgstr "totes aquestes paraules"
+
+msgid "cpsschemas_label_zctext_operator_or"
+msgstr "qualsevol d'aquestes paraules"
+
+msgid "cpsschemas_label_zctext_operator_exact"
+msgstr "l'expressió exacta"
+
+msgid "cpsschemas_label_zctext_operator_not"
+msgstr "cap d'aquestes paraules"
+
+msgid "cpsschemas_label_zctext_field_SearchableText"
+msgstr "al document"
+
+msgid "cpsschemas_label_zctext_field_Title"
+msgstr "al títol"
+
+msgid "cpsschemas_label_zctext_field_Description"
+msgstr "a la descripció"
+
+msgid "cpsschemas_label_modified_since_0"
+msgstr "sense límit de temps"
+
+msgid "cpsschemas_label_modified_since_1"
+msgstr "des d'ahir"
+
+msgid "cpsschemas_label_modified_since_30"
+msgstr "des del mes passat"
+
+msgid "cpsschemas_label_modified_since_91"
+msgstr "des dels darrers 3 mesos"
+
+msgid "cpsschemas_label_modified_since_182"
+msgstr "des dels darrers 6 mesos"
+
+msgid "cpsschemas_label_modified_since_365"
+msgstr "fa un any"
+
+msgid "cpsschemas_label_searchsort_relevance"
+msgstr "rellevància"
+
+msgid "cpsschemas_label_searchsort_antechrono"
+msgstr "anticronológic"
+
+msgid "cpsschemas_label_searchsort_chrono"
+msgstr "cronològic"
+
+msgid "cpsschemas_label_searchsort_expires"
+msgstr "data d'expiració"
+
+msgid "cpsschemas_label_searchsort_title"
+msgstr "Títol"
+
+msgid "cpsschemas_label_searchsort_review_state"
+msgstr "estat"
+
+msgid "cpsschemas_label_searchsort_relative_path"
+msgstr "localització"
+
+msgid "cpsschemas_label_searchsort_portal_type"
+msgstr "tipus de document"
+
+msgid "cpsschemas_psm_vocabulary_id_exists"
+msgstr "Aquesta id ja existeix. Selecciona'n una altra"
+
+msgid "cpsschemas_psm_vocabulary_created"
+msgstr "Vocabulari creat"
+
+msgid "cpsschemas_psm_vocabulary_id_missing"
+msgstr "Seleccioni una id"
+
+msgid "cpsschemas_psm_vocabulary_deleted"
+msgstr "Vocabulari esborrat"
+
+msgid "cpsschemas_psm_vocabulary_entry_added"
+msgstr "Entrada afegida"
+
+msgid "cpsschemas_psm_vocabulary_entries_deleted"
+msgstr "Entrades esborrades"
+
+msgid "cpsschemas_psm_vocabulary_no_entries_selected"
+msgstr "No ha seleccionat cap entrada. Seleccioni'n una."
+
+msgid "cpsschemas_psm_vocabulary_updated"
+msgstr "Vocabulari actualitzat"
 
 msgid "label_none_selection"
 msgstr "--Buit--"
@@ -556,3 +586,11 @@ msgstr "--Buit--"
 msgid "label_other_selection"
 msgstr "Un altre, per favor, especifiqui:"
 
+msgid "action_edit_online"
+msgstr "Editar en línia"
+
+msgid "cpsdoc_Flash_Animation_label_edit"
+msgstr "Animació flash (swf)"
+
+msgid "label_alt_text"
+msgstr "Alternative text"

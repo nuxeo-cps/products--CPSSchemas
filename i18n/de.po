@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 16:15default\n"
+"POT-Creation-Date: 2006-09-08 14:16default\n"
 "PO-Revision-Date: 2005-10-12 23:16+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -45,6 +45,7 @@ msgstr "Wahr"
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
+#.           class string:standalone;
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
 #.           " type="button">Layout</button>
@@ -62,8 +63,9 @@ msgstr "um"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or ''" href="http://url...">
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or '';
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
 #.           (preview)
 #.         </a>
 #.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
@@ -74,7 +76,7 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(Vorabansicht)"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" href="http://url..." target="_blank">
+#.   <a attributes="href string:${proxy_url}/${preview_id}" condition="display_printable_version" href="http://url..." target="_blank">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -131,6 +133,15 @@ msgstr "Behalten"
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_none"
 msgstr "Keine"
+
+#.   <span>
+#.             Filename
+#.           </span>
+#: from ../skins/cps_schemas/widget_file_render.pt
+#: ../skins/cps_schemas/widget_flash_render.pt
+#, fuzzy
+msgid "cpsschemas_label_filename"
+msgstr "Filename"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
@@ -276,13 +287,6 @@ msgstr "Hilfe für dieses Feld"
 msgid "label"
 msgstr "Label"
 
-#.   <span>
-#.               The alternative text
-#.             </span>
-#: from ../skins/cps_schemas/widget_image_render.pt
-msgid "label_alt_text"
-msgstr "Titel"
-
 #.   <label attributes="for file_upload_id">
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
@@ -323,7 +327,10 @@ msgid "cpsschemas_err_boolean"
 msgstr "Ungültiger Boolescher Wert"
 
 msgid "cpsschemas_err_int"
-msgstr "Ungültiger Ganz Zahl"
+msgstr "Ungültige Ganzzahl"
+
+msgid "cpsschemas_err_int_range"
+msgstr "Ganzzahl außerhalb des Wertebereichs"
 
 msgid "cpsschemas_err_date"
 msgstr "Ungültiges Datum"
@@ -353,10 +360,10 @@ msgid "cpsschemas_err_url"
 msgstr "Ungültige URL"
 
 msgid "cpsschemas_err_long"
-msgstr "Ungültige Long Integer Zahl"
+msgstr "Ungültige große Ganzzahl"
 
 msgid "cpsschemas_err_long_range"
-msgstr "Long Integer Zahl außerhalb des Wertebereichs"
+msgstr "Große Ganzzahl außerhalb des Wertebereichs"
 
 msgid "cpsschemas_err_float_positive"
 msgstr "Diese Gleitkommazahl muss positiv sein"
@@ -544,10 +551,6 @@ msgstr "Ort"
 msgid "cpsschemas_label_searchsort_portal_type"
 msgstr "Dokument Typ"
 
-#, fuzzy
-msgid "cpsschemas_label_filename"
-msgstr "None"
-
 msgid "cpsschemas_psm_vocabulary_id_exists"
 msgstr "Id existiert schon, wählen Sie eine andere."
 
@@ -584,6 +587,9 @@ msgstr "Bearbeiten Online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Flash Animation bearbeiten"
+
+msgid "label_alt_text"
+msgstr "Titel"
 
 #~ msgid "cpsschemas_rformat_pre"
 #~ msgstr "HTML vorformatiert"
