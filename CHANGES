@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Widgets have a new "readonly_if_expr" property.
 Bug fixes:
 ~~~~~~~~~~
 - [OPTIM]: fixed abusive use of objectIds() in local voc lookup

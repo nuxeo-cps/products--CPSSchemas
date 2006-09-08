@@ -100,6 +100,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         # layout mode
         {'id': 'readonly_layout_modes', 'type': 'tokens', 'mode': 'w',
          'label': 'Read-only in layout modes'},
+        {'id': 'readonly_if_expr', 'type': 'text', 'mode': 'w',
+         'label': "Read-only if (TALES)"},
         {'id': 'hidden_layout_modes', 'type': 'tokens', 'mode': 'w',
          'label': 'Hidden in layout modes'},
         {'id': 'hidden_readonly_layout_modes', 'type': 'tokens', 'mode': 'w',
@@ -129,6 +131,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     is_i18n = 0
     css_class = ''
     readonly_layout_modes = []
+    readonly_if_expr = ''
     hidden_layout_modes = []
     hidden_readonly_layout_modes = []
     hidden_empty = 0
@@ -141,12 +144,14 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     field_inits = [] # default settings for fields created in flexible mode
                      # using the same order as in field_types
 
+    readonly_if_expr_c = None
     hidden_if_expr_c = None
     widget_mode_expr_c = None
     css_class_expr_c = None
     javascript_expr_c = None
 
     _properties_post_process_tales = (
+        ('readonly_if_expr', 'readonly_if_expr_c'),
         ('hidden_if_expr', 'hidden_if_expr_c'),
         ('widget_mode_expr', 'widget_mode_expr_c'),
         ('css_class_expr', 'css_class_expr_c'),
@@ -181,7 +186,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     def _createExpressionContext(self, datamodel, layout_mode):
         """Create an expression context for expression evaluation.
 
-        Used for hidden_if_expr, widget_mode_expr and css_class_expr.
+        Used for readonly_if_expr, hidden_if_expr, widget_mode_expr,
+        css_class_expr.
         """
         wftool = getToolByName(self, 'portal_workflow')
         portal = getToolByName(self, 'portal_url').getPortalObject()
@@ -224,6 +230,11 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         """Return true if the widget is read-only in the layout_mode."""
         if layout_mode in self.readonly_layout_modes:
             return 1
+        if self.readonly_if_expr_c:
+            expr_context = self._createExpressionContext(datamodel,
+                                                         layout_mode)
+            if self.readonly_if_expr_c(expr_context):
+                return 1
         return self._isReadOnly(datamodel)
 
     security.declarePrivate('getModeFromLayoutMode')

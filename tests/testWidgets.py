@@ -120,6 +120,20 @@ class FakeFieldStorage:
     def seek(self, n):
         return self.file.seek(n)
 
+class FakeUser(object):
+    __allow_access_to_unprotected_subobjects__ = True
+    def __init__(self, id, roles):
+        self.id = id
+        self.roles = set(roles)
+    def has_role(self, roles, context=None):
+        if isinstance(roles, basestring):
+            roles = [roles]
+        return bool(self.roles & set(roles))
+    def getId(self):
+        return self.id
+    def getUserName(self):
+        return self.id
+
 class TestWidgets(unittest.TestCase):
 
     def test_renderHtmlTag(self):
@@ -469,6 +483,29 @@ class TestWidgets(unittest.TestCase):
         self.assertEquals(widget.getCssClass('view', dm), '')
         self.assertEquals(widget.getCssClass('edit', dm), '')
         self.assertEquals(widget.getCssClass('search', dm), 'searchExprClass')
+
+    def test_readOnly(self):
+        widget = Widget('widget_id').__of__(fakePortal)
+        dm = DataModel(ob=None, proxy=None)
+
+        self.assertEquals(widget.isReadOnly(dm, 'view'), False)
+
+        kw = {'readonly_if_expr': "python:True"}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.isReadOnly(dm, 'view'), True)
+
+        kw = {'readonly_if_expr': "python:layout_mode == 'edit'"}
+        widget.manage_changeProperties(**kw)
+        self.assertEquals(widget.isReadOnly(dm, 'create'), False)
+        self.assertEquals(widget.isReadOnly(dm, 'edit'), True)
+
+        kw = {'readonly_if_expr':
+              "python:  not user.has_role(('Manager', 'Member'), proxy)"}
+        widget.manage_changeProperties(**kw)
+        dm._acl_cache_user = FakeUser('bob', ['Dummy'])
+        self.assertEquals(widget.isReadOnly(dm, 'edit'), True)
+        dm._acl_cache_user = FakeUser('bob', ['Member'])
+        self.assertEquals(widget.isReadOnly(dm, 'edit'), False)
 
     def test_getJavaScriptCode(self):
         # create a bare widget, and set it in the portal to be able to create
