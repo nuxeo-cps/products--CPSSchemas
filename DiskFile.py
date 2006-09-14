@@ -47,7 +47,7 @@ class DiskFile(File, VTM):
         self.__name__ = id
         self.title = title
         self._file_store = storage_path
-        self._filename = self.getNewFilename(id)
+        self._filename = self.getNewFilename(title)
         self.precondition = '' # For Image.File compatibility
         if file:
             data, size = self._read_data(file)

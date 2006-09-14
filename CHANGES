@@ -6,6 +6,7 @@ New features:
 - Widgets have a new "readonly_if_expr" property.
 Bug fixes:
 ~~~~~~~~~~
+- Disk file field brought up to [32951] (aftermath of #1335)
 - [OPTIM]: fixed abusive use of objectIds() in local voc lookup
 - #1730: Calendar widget not working fine when language is Catalan
 - Made it possible to create empty vocabularies through the use of

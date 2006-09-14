@@ -25,6 +25,10 @@ class TestDiskFile(unittest.TestCase):
         newname = df._new_filename
         self.failUnless(os.path.exists(df.getFullFilename(newname)))
 
+        # passed (id, title) have been (Zope id ie field id, filename)
+        # since [32951]
+        self.assertEquals(df._filename, 'title')
+
         # Transaction ends sucessfully:
         df._finish()
         # Make sure file is deleted
