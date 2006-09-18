@@ -59,13 +59,6 @@ from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
 
-def _isinstance(ob, cls):
-    warnings.warn("_isinstance() is deprecated and will be removed in "
-                  "CPS 3.4.1. Use isinstance() instead.",
-                  DeprecationWarning, stacklevel=2)
-    return isinstance(ob, cls)
-
-
 # BBB (remove this in CPS-3.6)
 def cleanFileName(name):
     return generateFileName(name)

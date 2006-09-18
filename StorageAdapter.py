@@ -1,4 +1,4 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -41,12 +41,6 @@ from Acquisition import aq_base
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
-
-def _isinstance(ob, cls):
-    warnings.warn("_isinstance() is deprecated and will be removed in "
-                  "CPS 3.4.1. Use isinstance() instead.",
-                  DeprecationWarning, stacklevel=2)
-    return isinstance(ob, cls)
 
 class BaseStorageAdapter:
     """Base Storage Adapter
