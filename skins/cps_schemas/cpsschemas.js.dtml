@@ -1,0 +1,56 @@
+/*
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime() + 1">
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type', 'text/javascript')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Last-Modified', last_modified.toZone('GMT').rfc822())">
+<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=36000, must-revalidate')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Expires', expires.toZone('GMT').rfc822())" >
+</dtml-let>
+*/
+/*
+# (C) Copyright 2006 Nuxeo SAS <http://nuxeo.com>
+# Author:
+# M.-A. Darche <madarche@nuxeo.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
+# $Id:$
+
+CPSSchemas JavaScript functions.
+
+*/
+
+/**
+ * Display an FCKeditor window.
+ *
+ * inputId is the original widget textarea id
+ * parentPath and baseUrl are used to find FCKeditor resources, maybe this can
+ * be simplified in the future.
+ */
+function displayFckEditor(inputId, parentPath, baseUrl) {
+    // This is where the editor will save the finished HTML text
+    var oFCKeditor = new FCKeditor(inputId);
+    var pathUser = parentPath;
+    oFCKeditor.BasePath = baseUrl;
+    oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
+    oFCKeditor.ToolbarSet = 'Semantic';
+    oFCKeditor.Config['LinkBrowserURL'] = pathUser + '/fck_browse_files.html';
+    oFCKeditor.Config['ImageBrowserURL'] = pathUser + '/fck_browse_images.html';
+    oFCKeditor.Config['FlashBrowserURL'] = pathUser + '/fck_browse_files.html';
+    oFCKeditor.Width = 610;
+    oFCKeditor.Height = 410;
+    // Here we replace the original widget textarea
+    oFCKeditor.ReplaceTextarea();
+    //oFCKeditor.Create();
+}

@@ -72,6 +72,8 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'Max Size'},
         {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
          'label': 'Add a file uploader to the widget UI'},
+        {'id': 'html_editor_embedded', 'type': 'boolean', 'mode': 'w',
+         'label': 'Embed HTML editor in page, otherwise popup'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_render_formats',
          'label': 'Render format'},
@@ -89,7 +91,8 @@ class CPSTextWidget(CPSStringWidget):
     width = 40
     height = 5
     size_max = 2*1024*1024
-    file_uploader = 0
+    file_uploader = False
+    html_editor_embedded = False
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
     configurable = 'nothing'

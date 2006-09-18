@@ -3,6 +3,7 @@
   value_name here/getHtmlWidgetId;
   value options/value;
   file_uploader here/file_uploader;
+  html_editor_embedded here/html_editor_embedded;
   rposition options/render_position;
   rformat options/render_format;
   configurable options/configurable;
@@ -10,6 +11,9 @@
   position_selector_id string:${value_name}_rposition;
   format_selector_id string:${value_name}_rformat;
   button_text_editor_popup_id python:'widget__%s_button' % id;
+  utool nocall:here/portal_url;
+  absolute here/absolute|python:False;
+  base_url python:test(absolute, utool()+'/', utool.getBaseUrl());
   ">
   <tal:block condition="python: mode == 'view'">
     <div tal:condition="value"
@@ -18,14 +22,28 @@
       'dcolright', 'ddefault'))"
       tal:content="structure value" />
   </tal:block>
-  <tal:block condition="python: mode == 'edit'">
-      <textarea class="monospaceFont"
-        tal:attributes="id value_name;
-        name value_name;
-        cols here/width;
-        rows here/height;"
-        tal:content="value"
-      />
+  <tal:block condition="python:mode == 'edit'">
+        <textarea class="monospaceFont"
+          tal:attributes="id value_name;
+          name value_name;
+          cols here/width;
+          rows here/height;"
+          tal:content="value"
+          />
+      <tal:block condition="python:rformat == 'html' and html_editor_embedded">
+        <script type="text/javascript" src=""
+                tal:attributes="src string:${base_url}fckeditor.js">
+        </script>
+        <script type="text/javascript" src=""
+                tal:attributes="src string:${base_url}fckeditor_form.js">
+        </script>
+        <script type="text/javascript"
+                tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
+                tal:content="structure string:
+displayFckEditor('${value_name}', '${parent_path}', '${base_url}');
+">
+        </script>
+      </tal:block>
     <p>
       <tal:block condition="file_uploader">
         <label tal:attributes="for file_upload_id"
@@ -58,17 +76,18 @@
             tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
         </select>
       </tal:block>
+      <tal:block condition="not:html_editor_embedded">
       <button type="button"
         i18n:translate="button_text_editor_popup"
         tal:attributes="
         id button_text_editor_popup_id;
         style python:test(rformat == 'html',
         'visibility: visible;;', 'visibility: hidden;;');
-        class string:standalone;
         onclick
         string:javascript:popup_rte('${value_name}', '${here/label_edit}')
         "
         >Layout</button>
+      </tal:block>
     </p>
 
   </tal:block>
