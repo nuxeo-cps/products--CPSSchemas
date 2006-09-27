@@ -180,7 +180,6 @@ class CPSTextWidget(CPSStringWidget):
                     self.xhtml_sanitizer.feed(v)
                     v = self.xhtml_sanitizer.getResult()
             datamodel[self.fields[0]] = v
-            #datastructure[self.fields[0]] = v
             if file_upload_valid or self.xhtml_sanitize:
                 # If the file_upload is valid we update the datastructure so
                 # that the immediate view after the modification has been done
