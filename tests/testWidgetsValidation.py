@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# (c) 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
 # $Id$
 
 import os
@@ -80,12 +80,17 @@ class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
     widget_type = None
     default_value = None
+    fields = (id,)
+    data = {id: None}
+
+    def getWidgetId(self):
+        return 'ff'
 
     def _validate(self, properties, value):
-        id = 'ff'
-        data = {id: value}
-        ds = DataStructure(data, datamodel=data)
-        properties.update({'fields': (id,)})
+        id = self.getWidgetId()
+        self.data[id] = value
+        ds = DataStructure(self.data, datamodel=self.data)
+        properties.update({'fields': self.fields})
         widget = self.widget_type(id, **properties).__of__(fakePortal)
 
         ret = widget.validate(ds)
@@ -270,6 +275,8 @@ class TextWidgetValidationTest(WidgetValidationTest):
 )	\\\\\\\&piséoçç_sd)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\r\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\nmqslk\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\']"]\\\\\\\\\\\\\\\',
 	\\\\\\\\\\\\\\\'["[\\\\\\\\\\\\\\\\\\\\\\\
     """
+        #'
+        # Lines to protect emacs syntax highlighting from messing.
         ret, err, ds = self._validate({}, text)
         self.assert_(ret, err)
 
@@ -296,6 +303,34 @@ class TextWidgetValidationTest(WidgetValidationTest):
     def test_text_size_max_nok_1(self):
         ret, err, ds = self._validate({'size_max': 10}, '12345678901')
         self.assertEquals(err, 'cpsschemas_err_string_too_long')
+
+    def test_text_xhtml_sanitize_off(self):
+        wid = self.getWidgetId()
+        self.fields = (wid, wid + '_rposition', wid + '_rformat')
+        self.data[wid + '_rposition'] = 'normal'
+        self.data[wid + '_rformat'] = 'html'
+        ret, err, ds = self._validate({'rformat': 'html',
+                                       'xhtml_sanitize': False,
+                                       },
+                                      '<a>xxx')
+        #print "\n ds = ", ds
+        #print "\n ds = ", ds[wid]
+        self.assert_(ret)
+        self.assertEquals(ds[wid], '<a>xxx')
+
+    def test_text_xhtml_sanitize_on(self):
+        wid = self.getWidgetId()
+        self.fields = (wid, wid + '_rposition', wid + '_rformat')
+        self.data[wid + '_rposition'] = 'normal'
+        self.data[wid + '_rformat'] = 'html'
+        ret, err, ds = self._validate({'rformat': 'html',
+                                       'xhtml_sanitize': True,
+                                       },
+                                      '<a>xxx')
+        #print "\n ds = ", ds
+        #print "\n ds = ", ds[wid]
+        self.assert_(ret)
+        self.assertEquals(ds[wid], '<a>xxx</a>')
 
 
 class URLWidgetValidationTest(WidgetValidationTest):

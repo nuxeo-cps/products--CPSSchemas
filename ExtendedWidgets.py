@@ -38,7 +38,10 @@ import os.path
 from Products.PythonScripts.standard import newline_to_br
 from Products.PythonScripts.standard import structured_text
 from reStructuredText import HTML
+
 from Products.CMFCore.utils import getToolByName
+
+from Products.CPSUtil.html import XhtmlSanitizer
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
@@ -48,7 +51,6 @@ from Products.CPSSchemas.BasicWidgets import CPSImageWidget
 from Products.CPSSchemas.BasicWidgets import CPSFileWidget
 from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
-
 from Products.CPSSchemas.swfHeaderData import analyseContent
 
 ##################################################
@@ -70,6 +72,8 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'Height'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Max Size'},
+        {'id': 'xhtml_sanitize', 'type': 'boolean', 'mode': 'w',
+         'label': 'Sanitize the content to be valid XHTML'},
         {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
          'label': 'Add a file uploader to the widget UI'},
         {'id': 'html_editor_position', 'type': 'selection', 'mode': 'w',
@@ -93,6 +97,7 @@ class CPSTextWidget(CPSStringWidget):
     width = 40
     height = 5
     size_max = 2*1024*1024
+    xhtml_sanitize = False
     file_uploader = False
 
     render_position = all_render_positions[0]
@@ -105,6 +110,8 @@ class CPSTextWidget(CPSStringWidget):
     # Associating the widget label with an input area to improve the widget
     # accessibility.
     has_input_area = True
+
+    xhtml_sanitizer = XhtmlSanitizer()
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -150,12 +157,13 @@ class CPSTextWidget(CPSStringWidget):
         if not file_upload_valid:
             value = datastructure[widget_id]
         err, v = self._extractValue(value)
+
         if err:
             datastructure.setError(widget_id, err)
             datastructure[widget_id] = v
         else:
             datamodel = datastructure.getDataModel()
-            datamodel[self.fields[0]] = v
+            # Validating rposition and rformat and correcting them if necessary
             if self.configurable != 'nothing':
                 if len(self.fields) > 1:
                     rposition = datastructure[widget_id + '_rposition']
@@ -165,7 +173,15 @@ class CPSTextWidget(CPSStringWidget):
                     rformat = datastructure[widget_id + '_rformat']
                     if rformat and rformat in self.all_render_formats:
                         datamodel[self.fields[2]] = rformat
-            if file_upload_valid:
+            if self.xhtml_sanitize:
+                rformat = datamodel[self.fields[2]]
+                if rformat == 'html':
+                    self.xhtml_sanitizer.reset()
+                    self.xhtml_sanitizer.feed(v)
+                    v = self.xhtml_sanitizer.getResult()
+            datamodel[self.fields[0]] = v
+            #datastructure[self.fields[0]] = v
+            if file_upload_valid or self.xhtml_sanitize:
                 # If the file_upload is valid we update the datastructure so
                 # that the immediate view after the modification has been done
                 # shows the content of the file upload instead of the old value.
