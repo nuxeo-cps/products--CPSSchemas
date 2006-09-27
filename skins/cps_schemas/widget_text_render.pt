@@ -3,7 +3,7 @@
   value_name here/getHtmlWidgetId;
   value options/value;
   file_uploader here/file_uploader;
-  html_editor_embedded here/html_editor_embedded;
+  html_editor_position options/html_editor_position;
   rposition options/render_position;
   rformat options/render_format;
   configurable options/configurable;
@@ -30,7 +30,7 @@
           rows here/height;"
           tal:content="value"
           />
-      <tal:block condition="python:rformat == 'html' and html_editor_embedded">
+      <tal:block condition="python:rformat == 'html' and html_editor_position == 'embedded'">
         <script type="text/javascript" src=""
                 tal:attributes="src string:${base_url}fckeditor.js">
         </script>
@@ -76,7 +76,7 @@ displayFckEditor('${value_name}', '${parent_path}', '${base_url}');
             tal:content="string:cpsschemas_rformat_${op}" i18n:translate="" />
         </select>
       </tal:block>
-      <tal:block condition="not:html_editor_embedded">
+      <tal:block condition="python:html_editor_position == 'popup'">
       <button type="button"
         i18n:translate="button_text_editor_popup"
         tal:attributes="

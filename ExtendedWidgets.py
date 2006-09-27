@@ -72,8 +72,9 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'Max Size'},
         {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
          'label': 'Add a file uploader to the widget UI'},
-        {'id': 'html_editor_embedded', 'type': 'boolean', 'mode': 'w',
-         'label': 'Embed HTML editor in page, otherwise popup'},
+        {'id': 'html_editor_position', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_rte_positions',
+         'label': 'HTML rich text editor position'},
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_render_formats',
          'label': 'Render format'},
@@ -87,14 +88,16 @@ class CPSTextWidget(CPSStringWidget):
     all_configurable = ['nothing', 'position', 'format', 'position and format']
     all_render_positions = ['normal', 'col_left', 'col_right']
     all_render_formats = ['text', 'html', 'rst']
+    all_rte_positions = ['popup', 'embedded']
 
     width = 40
     height = 5
     size_max = 2*1024*1024
     file_uploader = False
-    html_editor_embedded = False
+
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
+    html_editor_position = all_rte_positions[0]
     configurable = 'nothing'
     input_encoding = 'iso-8859-15'
     output_encoding = 'iso-8859-15'
@@ -204,6 +207,7 @@ class CPSTextWidget(CPSStringWidget):
         return meth(mode=mode, datastructure=datastructure, value=value,
                     file_uploader=self.file_uploader,
                     render_position=rposition, render_format=rformat,
+                    html_editor_position=self.html_editor_position,
                     configurable=str(self.configurable))
 
 InitializeClass(CPSTextWidget)
