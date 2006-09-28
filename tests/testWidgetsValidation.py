@@ -76,12 +76,23 @@ class FakeDataModel(dict):
     def getContext(self):
         return self.context
 
+
 class WidgetValidationTest(unittest.TestCase):
     """Tests validate method of widgets"""
     widget_type = None
     default_value = None
-    fields = (id,)
-    data = {id: None}
+    fields = None
+    data = {}
+
+    def tearDown(self):
+        self.reset()
+
+    def reset(self):
+        """Reset the values of the widget so that it can be used in
+        many tests without having to reinstantiate the widget.
+        """
+        self.fields = None
+        self.data = {}
 
     def getWidgetId(self):
         return 'ff'
@@ -89,6 +100,8 @@ class WidgetValidationTest(unittest.TestCase):
     def _validate(self, properties, value):
         id = self.getWidgetId()
         self.data[id] = value
+        if self.fields is None:
+            self.fields = (id,)
         ds = DataStructure(self.data, datamodel=self.data)
         properties.update({'fields': self.fields})
         widget = self.widget_type(id, **properties).__of__(fakePortal)
@@ -104,7 +117,6 @@ class WidgetValidationTest(unittest.TestCase):
     def test_widget_nok_required_1(self):
         ret, err, ds = self._validate({'is_required': 1}, self.default_value)
         self.assertEquals(err, 'cpsschemas_err_required')
-
 
 
 class FloatWidgetValidationTest(WidgetValidationTest):
@@ -123,7 +135,7 @@ class FloatWidgetValidationTest(WidgetValidationTest):
         self.assert_(ret, err)
 
     def test_float_nok_1(self):
-        # this would work with locale fr_FR et etc/zope.conf...
+        # This would work with locale fr_FR in etc/zope.conf...
         # ret, err, ds = self._validate({}, '12345,803')
         ret, err, ds = self._validate({}, '12345;803')
         self.assert_(err)
@@ -198,6 +210,7 @@ class StringWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({'is_required': 1}, None)
         self.assertEquals(err, 'cpsschemas_err_required')
 
+
 class BooleanWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSBooleanWidget
     default_value = 0
@@ -244,6 +257,7 @@ class BooleanWidgetValidationTest(WidgetValidationTest):
     def test_boolean_ok_10(self):
         ret, err, ds = self._validate({}, {'foo': 'sk'})
         self.assert_(ret, err)
+
 
 class TextWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSTextWidget
@@ -748,47 +762,50 @@ class EmailListWidgetValidationTest(WidgetValidationTest):
     default_value = ['']
 
     def test_email_list_ok_1(self):
+        self.reset()
         ret, err, ds = self._validate({}, [''])
         self.assertEquals(ret, 1)
         self.assertEquals(ds.getDataModel().values()[0], [])
 
     def test_email_list_ok_2(self):
+        self.reset()
         ret, err, ds = self._validate({}, [' ', '', ' root@nuxeo.com '])
         self.assertEquals(ret, 1)
         self.assertEquals(ds.getDataModel().values()[0],
                           ['root@nuxeo.com'])
 
     def test_email_list_ok_2(self):
+        self.reset()
         ret, err, ds = self._validate({'allow_extended_email': True},
                                       [' Firstname Lastname <first.last@be.br>'])
         self.assertEquals(ds.getDataModel().values()[0],
                           ['Firstname Lastname <first.last@be.br>'])
 
     def test_email_list_nok_1(self):
+        self.reset()
         ret, err, ds = self._validate({}, ['First Last <first.last@fake.org>'])
         self.assert_(err == 'cpsschemas_err_email', err)
 
     def test_email_list_nok_2(self):
+        self.reset()
         ret, err, ds = self._validate({'allow_extended_email': True},
                                       ['<email@fake.com> <email@fake.com>'])
         self.assert_(err == 'cpsschemas_err_email', err)
 
+
 # XXX: test more widget types here
+
 
 def test_suite():
     from inspect import isclass
-    from types import ClassType
     tests = []
     for obj in globals().values():
         if obj is WidgetValidationTest:
             continue
-        if type(obj) is ClassType and issubclass(obj, WidgetValidationTest):
-            # python 2.1
-            tests.append(unittest.makeSuite(obj))
-        elif isclass(obj) and issubclass(obj, WidgetValidationTest):
-            # python 2.3
+        if isclass(obj) and issubclass(obj, WidgetValidationTest):
             tests.append(unittest.makeSuite(obj))
     return unittest.TestSuite(tests)
 
 if __name__ == "__main__":
     unittest.main(defaultTest='test_suite')
+
