@@ -1,4 +1,4 @@
-# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2004-2006 Nuxeo SAS <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 # $Id$
 
 import unittest
-#from CPSSchemasTestCase import CPSSchemasTestCase
 
 from OFS.Folder import Folder
 from Products.CPSSchemas import Vocabulary
@@ -115,6 +114,14 @@ class BasicVocabularyTests(unittest.TestCase):
         self.assertEquals(v.keys(), ['one', 'two'])
         self.assertEquals(v.items(), [('one', '1'), ('two', '2')])
         self.assertEquals(v.values(), ['1', '2'])
+
+    def test_modify(self):
+        v = self.makeOne()
+        v.set('bar', 'hm')
+        for modified in (False, True):
+            v.setUserModified(modified)
+            res = v.isUserModified()
+            self.assertEquals(res, modified)
 
     # XXX Could test msgids but I'm not sure we really use them.
 

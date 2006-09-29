@@ -6,6 +6,8 @@ New features:
 - Widgets have a new "readonly_if_expr" property.
 - Added the possibility to have embedded HTML editor window in the Text Widget.
 - Added an "xhtml_sanitize" property and functionality to the Text Widget.
+- Added a "setUserModified" method on CPSVocabulary so that scripts triggered by
+  user actions can prevent vocabularies from being overwritten.
 Bug fixes:
 ~~~~~~~~~~
 - Disk file field brought up to [32951] (aftermath of #1335)

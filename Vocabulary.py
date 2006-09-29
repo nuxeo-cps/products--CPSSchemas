@@ -319,6 +319,14 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
         """
         return self.user_modified
 
+    security.declareProtected(ManagePortal, 'setUserModified')
+    def setUserModified(self, modified):
+        """Set the vocabulary as modified.
+
+        This is useful for scripts triggered by user actions.
+        """
+        self.user_modified = modified
+
     #
     # ZMI
     #
