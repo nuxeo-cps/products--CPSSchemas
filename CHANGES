@@ -1,26 +1,12 @@
-Requires:
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
 ~~~~~~~~~
 -
-New features:
-~~~~~~~~~~~~~
-- Widgets have a new "readonly_if_expr" property.
-- Added the possibility to have embedded HTML editor window in the Text Widget.
-- Added an "xhtml_sanitize" property and functionality to the Text Widget.
-- Added a "setUserModified" method on CPSVocabulary so that scripts triggered by
-  user actions can prevent vocabularies from being overwritten.
-Bug fixes:
-~~~~~~~~~~
-- Disk file field brought up to [32951] (aftermath of #1335)
-- [OPTIM]: fixed abusive use of objectIds() in local voc lookup
-- #1730: Calendar widget not working fine when language is Catalan
-- Made it possible to create empty vocabularies through the use of
-  the CPSInstaller verifyVocabularies method.
-- Missing XML ZMI export tab on vocabularies
-- Fixed wrong permission check on vocabularies_manage_form.pt.
-- Fixed vocabularies_manage_form so that the buttons appear skinned + used
-  better HTML markup.
-New internal features:
-~~~~~~~~~~~~~~~~~~~~~~
-- Moved jscalendar lang/ subdir to calendar-lang/ to avoid name collisions.
-- Moved BasicWidget.renderHtmlTag to CPSUtil.html
-- Removed deprecated _isinstance use.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
