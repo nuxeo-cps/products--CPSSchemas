@@ -1,4 +1,4 @@
-# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
