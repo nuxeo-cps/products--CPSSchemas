@@ -7,6 +7,7 @@
   size options/size;
   content_url options/content_url;
   last_modified options/last_modified;
+  content_url_nocache string:${content_url}?nocache=${last_modified};
   ">
   <tal:block condition="python: mode == 'view' and not empty_file">
     <object type="application/x-shockwave-flash"
@@ -21,10 +22,9 @@
 	     menu="false"
 	     wmode="transparent"
 	     type="application/x-shockwave-flash"
-	     pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlas
-			  h"
-	     tal:attributes="src flashobject_url; 
-			     width options/width; 
+	     pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"
+	     tal:attributes="src flashobject_url;
+			     width options/width;
 			     height options/height">
       </embed>
       <span><a href="http://www.macromedia.com/">Macromedia Flash Plugin</a> required</span>
@@ -72,10 +72,12 @@
             <label i18n:translate="cpsschemas_label_file_keep"
                    tal:condition="not:empty_file"
                    tal:attributes="for string:${radio_name}_keep">Keep</label>
-            <a href="http://url..." target="_blank"
-               tal:condition="not:empty_file"
+            <a tal:condition="not:empty_file"
                tal:omit-tag="session_file"
-               tal:attributes="href string:${content_url}?nocache=${last_modified}">
+               tal:attributes="
+               href content_url_nocache;
+               onClick string:return openLinkInPopup('${content_url_nocache}');
+               ">
               <tal:block condition="mimetype"
                 replace="structure python:here.getImgTag(mimetype.icon_path,
                   title=mimetype.name())" />

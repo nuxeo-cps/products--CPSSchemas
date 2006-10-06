@@ -12,8 +12,11 @@
 
   <tal:block condition="python: mode == 'view' and not empty_file">
     <metal:block define-macro="file_view">
-      <a target="_blank" tal:condition="mimetype"
-        tal:attributes="href string:${content_url}?nocache=${last_modified}">
+      <a tal:condition="mimetype"
+        tal:attributes="
+        href content_url_nocache;
+        onClick string:return openLinkInPopup('${content_url_nocache}');
+        ">
         <img tal:replace="structure python:here.getImgTag(mimetype.icon_path,
           title=mimetype.name())" /></a>
       <a class="strong"
@@ -57,11 +60,11 @@
             <label i18n:translate="cpsschemas_label_file_keep"
                    tal:condition="not:empty_file"
                    tal:attributes="for string:${radio_name}_keep">Keep</label>
-            <a href="http://url..." target="_blank"
-               tal:condition="not:empty_file"
+            <a tal:condition="not:empty_file"
                tal:omit-tag="session_file"
                tal:attributes="
                href content_url_nocache;
+               onClick string:return openLinkInPopup('${content_url_nocache}');
                ">
               <tal:block condition="mimetype"
                 replace="structure python:here.getImgTag(mimetype.icon_path,
