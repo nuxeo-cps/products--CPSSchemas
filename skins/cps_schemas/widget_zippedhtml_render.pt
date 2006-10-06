@@ -22,6 +22,7 @@
          tal:attributes="
          href href;
          onClick string:return openLinkInPopup('${href}');
+         "
          i18n:translate="cpsschema_link_preview">
         (preview)
       </a>
