@@ -8,10 +8,13 @@
   mimetype options/mimetype;
   size options/size;
   content_url options/content_url;
+  last_modified options/last_modified;
+  content_url_nocache string:${content_url}?nocache=${last_modified};
   image_tag options/image_tag;
   image_width options/width;
   image_height options/height;
   subtitle options/subtitle;
+  title options/title;
   rposition options/render_position;
   configurable options/configurable;
   last_modified options/last_modified;
@@ -19,12 +22,12 @@
   original_photo_field python:len(fields)>3 and fields[3] or 'photo_original'
   ">
   <div class="photoWidget"
-       tal:condition="python: mode == 'view' and not empty_file" 
+       tal:condition="python: mode == 'view' and not empty_file"
        tal:define="original_photo python:getattr(here,original_photo_field, None)">
     <p tal:attributes="class python:test(rposition == 'right', 'dright',
                                       test(rposition == 'center', 'dcenter', 'dleft'))">
       <tal:block condition="python: original_photo">
-        <a href="#" 
+        <a href="#"
           tal:define="original_width python:original_photo.width or 100;
                       original_height python:original_photo.height or 100"
           tal:attributes="onclick python:'window.open(\'%s/popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(photo_path,original_photo_field,str(int(original_width)+40)) +
@@ -47,8 +50,6 @@
   </div>
 
   <tal:block condition="python: mode == 'edit'">
-    <metal:block use-macro="here/widget_image_render/macros/image_title_edit" />
-
     <img tal:condition="python: not empty_file and not session_file"
       tal:replace="structure image_tag" />
 
@@ -88,9 +89,9 @@
 
     <tal:block condition="python:len(fields) > 2 and 'position' in configurable">
       <p tal:define="name here/getHtmlWidgetId">
-        <span i18n:translate="cpsschemas_render_position">
+        <tal:block i18n:translate="cpsschemas_render_position">
           Render position
-        </span>
+        </tal:block>
         <select tal:attributes="name string:${value_name}_rposition">
           <option tal:repeat="op here/all_render_positions"
             tal:attributes="selected python:op == rposition;
@@ -101,13 +102,26 @@
       </p>
     </tal:block>
 
-    <tal:block condition="python:len(fields)>1">
-      <span i18n:translate="cpsschemas_photo_subtitle">
+    <tal:block condition="python:len(fields) > 4">
+      <p>
+      <tal:block i18n:translate="cpsschemas_photo_title">
+        Photo title
+      </tal:block>
+      <input type="text" size="30"
+             tal:attributes="name string:${value_name}_title;
+                             value title" />
+      </p>
+    </tal:block>
+
+    <tal:block condition="python:len(fields) > 1">
+      <p>
+      <tal:block i18n:translate="cpsschemas_photo_subtitle">
         Photo subtitle
-      </span>
+      </tal:block>
       <input type="text" size="30"
              tal:attributes="name string:${value_name}_subtitle;
                              value subtitle" />
+      </p>
     </tal:block>
 
   </tal:block>

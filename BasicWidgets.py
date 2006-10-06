@@ -1583,7 +1583,9 @@ class CPSFileWidget(CPSWidget):
 
     meta_type = 'File Widget'
 
-    field_types = ('CPS File Field',)
+    field_types = ('CPS File Field',    # File content
+                   'CPS String Field',  # Title
+                   )
 
     _properties = CPSWidget._properties + (
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
@@ -1671,11 +1673,15 @@ class CPSFileWidget(CPSWidget):
         registry = getToolByName(self, 'mimetypes_registry')
         mimetype = (registry.lookupExtension(current_filename.lower()) or
                     registry.lookupExtension('file.bin'))
+        # Using a title if there is one present in the datastructure
+        # otherwise (poorly) defaulting to the file name.
+        title = datastructure.get(widget_id + '_title', current_filename)
 
         file_info = {
             'empty_file': empty_file,
             'session_file': session_file,
             'current_filename': current_filename,
+            'title': title,
             'size': size,
             'last_modified': last_modified,
             'content_url': content_url,
@@ -1692,10 +1698,15 @@ class CPSFileWidget(CPSWidget):
         datastructure[widget_id] = makeFileUploadFromOFSFile(file)
         datastructure[widget_id + '_choice'] = ''
         if file is not None:
-            title = file.title
+            filename = file.title
         else:
-            title = ''
-        datastructure[widget_id + '_filename'] = title
+            filename = ''
+        datastructure[widget_id + '_filename'] = filename
+
+        if len(self.fields) > 1:
+            datastructure[widget_id + '_title'] = datamodel[self.fields[1]]
+        else:
+            datastructure[widget_id + '_title'] = ''
 
     def unprepare(self, datastructure):
         # Remove costly things already stored from the datastructure
@@ -1707,16 +1718,6 @@ class CPSFileWidget(CPSWidget):
             # if upload with input field unchanged, use fileupload filename
             filename = cookId('', '', fileupload)[0].strip()
         filename = cleanFileName(filename or 'file.bin')
-        return filename
-
-# XXX what the hell ?
-##        # Keep old extension
-##        if '.' in old_filename:
-##            old_ext = old_filename[old_filename.rfind('.'):]
-##            if not filename.endswith(old_ext):
-##                if '.' in filename:
-##                    filename = filename[:filename.rfind('.')]
-##                filename += old_ext
         return filename
 
     def checkFileName(self, filename, mimetype):
@@ -1734,7 +1735,7 @@ class CPSFileWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         widget_id = self.getWidgetId()
-        choice = datastructure[widget_id+'_choice']
+        choice = datastructure[widget_id + '_choice']
         store = False
         fileupload = None
         mimetype = None
@@ -1842,7 +1843,9 @@ class CPSImageWidget(CPSFileWidget):
     """Image widget."""
     meta_type = 'Image Widget'
 
-    field_types = ('CPS Image Field',)
+    field_types = ('CPS Image Field',
+                   'CPS String Field',  # Title used also for alt
+                   )
 
     _properties = CPSFileWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
@@ -1868,7 +1871,8 @@ class CPSImageWidget(CPSFileWidget):
             height = 0
             width = 0
         else:
-            image = datastructure[self.getWidgetId()]
+            widget_id = self.getWidgetId()
+            image = datastructure[widget_id]
             from OFS.Image import getImageInfo
             image.seek(0)
             data = image.read(24)
@@ -1894,15 +1898,14 @@ class CPSImageWidget(CPSFileWidget):
                     width = int(zoom * width)
                     height = int(zoom * height)
 
-            title = image_info['current_filename']
-            alt = title or ''
+            title = image_info['title']
             if height is None or width is None:
                 tag = renderHtmlTag('img', src=image_info['content_url'],
-                                    alt=alt, title=title)
+                                    alt=title, title=title)
             else:
                 tag = renderHtmlTag('img', src=image_info['content_url'],
                                     width=str(width), height=str(height),
-                                    alt=alt, title=title)
+                                    alt=title, title=title)
 
         image_info['height'] = height
         image_info['width'] = width
@@ -1946,8 +1949,15 @@ class CPSImageWidget(CPSFileWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         CPSFileWidget.prepare(self, datastructure, **kw)
+        widget_id = self.getWidgetId()
         if self.allow_resize:
-            datastructure[self.getWidgetId() + '_resize'] = ''
+            datastructure[widget_id + '_resize'] = ''
+
+        if len(self.fields) > 1:
+            datamodel = datastructure.getDataModel()
+            datastructure[widget_id + '_title'] = datamodel[self.fields[1]]
+        else:
+            datastructure[widget_id + '_title'] = ''
 
     def maybeKeepOriginal(self, image, datastructure):
         return

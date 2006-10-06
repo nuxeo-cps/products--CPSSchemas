@@ -8,6 +8,7 @@
   size options/size;
   content_url options/content_url;
   last_modified options/last_modified;
+  content_url_nocache string:${content_url}?nocache=${last_modified};
   ">
   <tal:block condition="python: mode == 'view' and not empty_file">
     <metal:block use-macro="here/widget_file_render/macros/file_view" />
@@ -30,8 +31,11 @@
         (preview)
       </a>
       <a href="http://url..." target="_blank"
+        tal:define="preview_url string:${proxy_url}/${preview_id}"
         tal:condition="display_printable_version"
-        tal:attributes="href string:${proxy_url}/${preview_id}"
+        tal:attributes="
+        href preview_url;
+        "
         i18n:translate="cpsschema_link_printable_version">
         (printable version)
       </a>
@@ -52,8 +56,8 @@
     </tal:block>
 
     <metal:block use-macro="here/widget_file_render/macros/file_size_max_view" />
-    <metal:block use-macro="here/widget_file_render/macros/file_title_edit" />
     <metal:block use-macro="here/widget_file_render/macros/file_edit" />
+    <metal:block use-macro="here/widget_file_render/macros/file_title_edit" />
 
   </tal:block>
 

@@ -712,8 +712,10 @@ class CPSPhotoWidget(CPSImageWidget):
     field_types = ('CPS Image Field',   # Image
                    'CPS String Field',  # Caption
                    'CPS String Field',  # render_position if configurable
-           'CPS Image Field',)  # original photo
-    field_inits = ({}, {'is_searchabletext': 1,}, {}, {})
+                   'CPS Image Field',   # Original photo
+                   'CPS String Field',  # Title used also for alt
+                   )
+    field_inits = ({}, {'is_searchabletext': 1,}, {}, {}, {})
 
     _properties = CPSImageWidget._properties + (
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',
@@ -755,6 +757,16 @@ class CPSPhotoWidget(CPSImageWidget):
         if self.keep_original and len(self.fields) > 3:
             datastructure[widget_id + '_resize_kept'] = ''
 
+        title = ''
+        if len(self.fields) > 4:
+            title = datamodel[self.fields[4]]
+        if not title:
+            # Defaulting to the file name if there is an image file
+            f = datamodel[self.fields[0]]
+            if f is not None:
+                title = f.title
+        datastructure[widget_id + '_title'] = title
+
     def otherProcessing(self, choice, datastructure):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
@@ -763,6 +775,11 @@ class CPSPhotoWidget(CPSImageWidget):
         subtitle = datastructure[widget_id + '_subtitle']
         if len(self.fields) > 1:
             datamodel[self.fields[1]] = subtitle
+
+        # Title
+        title = datastructure[widget_id + '_title']
+        if len(self.fields) > 4:
+            datamodel[self.fields[4]] = title
 
         # Position
         rposition = datastructure[widget_id + '_rposition']
@@ -811,7 +828,6 @@ class CPSPhotoWidget(CPSImageWidget):
         widget_id = self.getWidgetId()
         rposition = datastructure[widget_id + '_rposition']
         subtitle = datastructure[widget_id + '_subtitle']
-
         img_info = self.getImageInfo(datastructure)
 
         return meth(mode=mode, datastructure=datastructure,

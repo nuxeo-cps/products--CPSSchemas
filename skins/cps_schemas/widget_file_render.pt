@@ -7,6 +7,7 @@
   size options/size;
   content_url options/content_url;
   last_modified options/last_modified;
+  content_url_nocache string:${content_url}?nocache=${last_modified};
   ">
 
   <tal:block condition="python: mode == 'view' and not empty_file">
@@ -16,7 +17,7 @@
         <img tal:replace="structure python:here.getImgTag(mimetype.icon_path,
           title=mimetype.name())" /></a>
       <a class="strong"
-        tal:attributes="href string:${content_url}?nocache=${last_modified}">
+        tal:attributes="href content_url_nocache">
         <tal:block replace="current_filename" /></a>
       <span tal:condition="size" class="note"
         tal:define="str_size python:here.getHumanReadableSize(size);">
@@ -39,18 +40,6 @@
       </tal:block>
     </metal:block>
 
-    <metal:block define-macro="file_title_edit">
-      <p tal:define="name here/getHtmlWidgetId;
-                     title_name string:${name}_filename;">
-        <span i18n:translate="cpsschemas_label_filename">
-          Filename
-        </span>
-        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
-               tal:attributes="name title_name;
-                               value current_filename" />
-      </p>
-    </metal:block>
-
     <metal:block define-macro="file_edit">
 
       <ul class="fileChoice"
@@ -71,7 +60,9 @@
             <a href="http://url..." target="_blank"
                tal:condition="not:empty_file"
                tal:omit-tag="session_file"
-               tal:attributes="href string:${content_url}?nocache=${last_modified}">
+               tal:attributes="
+               href content_url_nocache;
+               ">
               <tal:block condition="mimetype"
                 replace="structure python:here.getImgTag(mimetype.icon_path,
                   title=mimetype.name())" />
@@ -120,6 +111,18 @@
           </metal:block>
         </li>
       </ul>
+    </metal:block>
+
+    <metal:block define-macro="file_title_edit">
+      <p tal:define="name here/getHtmlWidgetId;
+                     title_name string:${name}_filename;">
+        <span i18n:translate="cpsschemas_label_filename">
+          Filename
+        </span>
+        <input style="margin-left: 5px" type="text" size="30" maxlength="80"
+               tal:attributes="name title_name;
+                               value current_filename" />
+      </p>
     </metal:block>
 
   </tal:block>
