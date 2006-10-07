@@ -35,7 +35,7 @@
         tal:condition="display_printable_version"
         tal:attributes="
         href preview_url;
-        onClick string:return openLinkInPopup('${preview_url}', '${current_filename}');
+        onClick string:return openLinkInPopup('${preview_url}');
         "
         i18n:translate="cpsschema_link_printable_version">
         (printable version)
