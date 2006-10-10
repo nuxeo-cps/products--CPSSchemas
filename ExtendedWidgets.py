@@ -952,7 +952,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
             if render_format not in self.render_formats:
                 raise RuntimeError('unknown render format %s' % render_format)
             if render_format == 'select':
-                res = renderHtmlTag('select', name=html_widget_id)
+                res = renderHtmlTag('select',
+                                    name=html_widget_id, id=html_widget_id)
             # vocabulary options
             vocabulary_items = vocabulary.items()
             if self.sorted:
@@ -1192,7 +1193,8 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
             if render_format not in self.render_formats:
                 raise RuntimeError('unknown render format %s' % render_format)
             if render_format == 'select':
-                kw = {'name': html_widget_id+':list',
+                kw = {'name': html_widget_id + ':list',
+                      'id': html_widget_id,
                       'multiple': 'multiple',
                       }
                 if self.size:

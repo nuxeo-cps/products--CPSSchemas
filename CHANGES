@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Improved the Generic Select Widget and the Generic MultiSelect Widget label
+  accessibility.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
