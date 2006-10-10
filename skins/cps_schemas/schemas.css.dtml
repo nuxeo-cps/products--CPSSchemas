@@ -49,10 +49,7 @@ fieldset.radioFieldset {
   border: none;
   margin: 0;
   padding: 0;
-}
-.radioFieldset input {
-  border: none;
-  border: 0 !important;
+  padding-bottom: 0.5em;
 }
 
 

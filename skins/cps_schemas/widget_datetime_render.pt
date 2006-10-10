@@ -16,6 +16,8 @@
                    date_day_fmt python:fmt.startswith('iso8601')
                        and 'iso8601_short' or 'short'"
   condition="python: mode == 'edit'">
+  <fieldset class="radioFieldset"
+            tal:attributes="id string:${here/getHtmlWidgetId}">
   <input type="text" size="11" maxlength="22"
     tal:attributes="name string:${name}_date;
                     id string:${name}_date;
@@ -63,5 +65,6 @@
     <label tal:attributes="for elt_minute_id"
            i18n:translate="cpsschema_minute">mn</label>
   </tal:block>
+  </fieldset>
 </tal:block>
 </tal:block>
