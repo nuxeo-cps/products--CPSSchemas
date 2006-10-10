@@ -6,12 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Fixed #1518 by adding a title field in the File Widget, Image Widget and Photo
-  Widget. This title field is used as the "title" and "alt" attributes on
-  HTML images declarations.
-- Fixed #1380 : "open links in popups ?" by providing the openLinkInPopup
-  JavaScript method to open links in popup in an accessible way and not
-  breaking conformance to the XHTML 1.0 Strict DTD.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

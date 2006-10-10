@@ -1,4 +1,29 @@
 ===========================================================
+Package: CPSSchemas 0.55.1
+===========================================================
+First release built by: ogrisel at: 2006-10-10T11:44:37
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/0.55.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@49442
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Fixed #1518 by adding a title field in the File Widget, Image Widget and Photo
+  Widget. This title field is used as the "title" and "alt" attributes on
+  HTML images declarations.
+- Fixed #1380 : "open links in popups ?" by providing the openLinkInPopup
+  JavaScript method to open links in popup in an accessible way and not
+  breaking conformance to the XHTML 1.0 Strict DTD.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 0.55.0
 ===========================================================
 First release built by: ben at: 2006-10-04T11:13:56
