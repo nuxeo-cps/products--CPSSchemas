@@ -4,7 +4,7 @@
                    render_format options/render_format">
 
 <tal:block condition="python:mode == 'view'">
-  <span i18n:translate="" tal:content="label_value"></span>
+  <tal:block i18n:translate="" tal:content="label_value"/>
 </tal:block>
 
 <tal:block condition="python:mode == 'edit'">
@@ -14,12 +14,16 @@
     <tal:checkbox condition="python:render_format == 'checkbox'">
       <input type="checkbox" value="True"
              tal:attributes="checked true_checked;
-                             name string:${here/getHtmlWidgetId}:boolean;" />
+                             name string:${here/getHtmlWidgetId}:boolean;
+                             id string:${here/getHtmlWidgetId};
+              "/>
       <input type="hidden" value=""
              tal:attributes="name string:${here/getHtmlWidgetId}:boolean:default;" />
     </tal:checkbox>
 
     <tal:radio condition="python:render_format == 'radio'">
+      <fieldset class="radioFieldset"
+                tal:attributes="id string:${here/getHtmlWidgetId}">
       <input type="radio" value="True"
              tal:attributes="checked true_checked;
                              id string:${here/getHtmlWidgetId}_true;
@@ -34,10 +38,14 @@
       <label tal:content="here/label_false"
              tal:attributes="for string:${here/getHtmlWidgetId}_false"
              i18n:translate="" > False </label><br/>
+      </fieldset>
     </tal:radio>
 
     <tal:select condition="python:render_format == 'select'">
-      <select tal:attributes="name string:${here/getHtmlWidgetId}:boolean;">
+      <select tal:attributes="
+              name string:${here/getHtmlWidgetId}:boolean;
+              id string:${here/getHtmlWidgetId};
+          ">
         <option value="True"
                 tal:attributes="selected true_checked"
                 tal:content="here/label_true"

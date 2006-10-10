@@ -26,8 +26,8 @@ div.popup {
 }
 
 div.popup ul {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   line-height: normal;
   list-style-type: none;
   display: inline;
@@ -40,6 +40,21 @@ div.popup ul li {
 div.popup ul li.selected {
   background: <dtml-var buttonBackgroundHover>;
 }
+
+
+<dtml-comment>
+For the boolean widget
+</dtml-comment>
+fieldset.radioFieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.radioFieldset input {
+  border: none;
+  border: 0 !important;
+}
+
 
 /*
 </dtml-with>

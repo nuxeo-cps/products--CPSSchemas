@@ -610,6 +610,10 @@ class CPSCheckBoxWidget(CPSWidget):
     display_true = "Yes"
     display_false = "No"
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -635,6 +639,7 @@ class CPSCheckBoxWidget(CPSWidget):
             html_widget_id = self.getHtmlWidgetId()
             kw = {'type': 'checkbox',
                   'name': html_widget_id,
+                  'id': html_widget_id,
                   }
             if value:
                 kw['checked'] = 'checked'
@@ -1171,6 +1176,10 @@ class CPSBooleanWidget(CPSWidget):
     label_true = 'cpsschemas_label_true'
     render_formats = ('checkbox', 'radio', 'select')
     render_format = render_formats[2]
+
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
