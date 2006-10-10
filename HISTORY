@@ -1,3 +1,19 @@
+*******************************************
+** CPSSchemas V0.55.2 [R1 build 2006/10/10-13:53 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 49482
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Improved the Select Widget and the Boolean Widget label accessibility.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
 ===========================================================
 Package: CPSSchemas 0.55.1
 ===========================================================
