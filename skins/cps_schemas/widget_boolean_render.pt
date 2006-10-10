@@ -22,7 +22,7 @@
     </tal:checkbox>
 
     <tal:radio condition="python:render_format == 'radio'">
-      <fieldset class="radioFieldset"
+      <fieldset class="widget"
                 tal:attributes="id string:${here/getHtmlWidgetId}">
       <input type="radio" value="True"
              tal:attributes="checked true_checked;

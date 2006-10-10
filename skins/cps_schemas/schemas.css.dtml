@@ -45,7 +45,7 @@ div.popup ul li.selected {
 <dtml-comment>
 For the boolean widget
 </dtml-comment>
-fieldset.radioFieldset {
+fieldset.widget {
   border: none;
   margin: 0;
   padding: 0;

@@ -6,8 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Improved the Generic Select Widget, the Generic MultiSelect Widget and the
-  DateTime Widget label accessibility.
+- Improved the Generic Select Widget, the Generic MultiSelect Widget, the
+  Date Widget and the DateTime Widget label accessibility.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

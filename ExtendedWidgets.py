@@ -260,6 +260,10 @@ class CPSDateTimeWidget(CPSWidget):
     time_hour_default = '12'
     time_minutes_default = '00'
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def getDateTimeInfo(self, value, mode=None):
         """Return a tuple that is used to set the datastructure
 

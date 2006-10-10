@@ -1458,6 +1458,10 @@ class CPSDateWidget(CPSWidget):
     view_format_none = "-"
     use_javascript = 0
 
+    # Associating the widget label with an input area to improve the widget
+    # accessibility.
+    has_input_area = True
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -1534,6 +1538,7 @@ class CPSDateWidget(CPSWidget):
                 return escape(d+'/'+m+'/'+y)
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
+            res = '<fieldset class="widget" id="%s">' % html_widget_id
             dtag = renderHtmlTag('input',
                                  type='text',
                                  name=html_widget_id+'_d',
@@ -1569,7 +1574,9 @@ class CPSDateWidget(CPSWidget):
                                  onKeyPress=js_onKeyPress,
                                  )
             # XXX customize format
-            return dtag + '/' + mtag + '/' + ytag
+            res += dtag + '/' + mtag + '/' + ytag
+            res += '</fieldset>'
+            return res
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSDateWidget)
