@@ -1,4 +1,23 @@
 *******************************************
+** CPSSchemas V0.55.4 [R1 build 2006/10/13-13:11 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 49562
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed the way the render_format is retrieved in the Text Widget. It makes it
+  easier to XHTML sanitize.
+- Fixed and made coherent the initialization of the Image Widget and Photo
+  Widget title.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.55.3 [R1 build 2006/10/10-16:52 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 49511
 Requires:
