@@ -766,13 +766,14 @@ class CPSPhotoWidget(CPSImageWidget):
             datastructure[widget_id + '_resize_kept'] = ''
 
         title = ''
-        if len(self.fields) > 4:
-            title = datamodel[self.fields[4]]
-        if not title:
-            # Defaulting to the file name if there is an image file
-            f = datamodel[self.fields[0]]
-            if f is not None:
-                title = f.title
+        if len(self.fields) > 1:
+            datamodel = datastructure.getDataModel()
+            title = datamodel[self.fields[1]]
+            # Defaulting to the file name if there is an image file and if no
+            # title has been given yet. This is the case when the document is
+            # created.
+            if not title:
+                title = datastructure[widget_id + '_filename']
         datastructure[widget_id + '_title'] = title
 
     def otherProcessing(self, choice, datastructure):
@@ -831,7 +832,6 @@ class CPSPhotoWidget(CPSImageWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-
 
         widget_id = self.getWidgetId()
         rposition = datastructure[widget_id + '_rposition']

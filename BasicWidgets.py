@@ -1969,11 +1969,25 @@ class CPSImageWidget(CPSFileWidget):
         if self.allow_resize:
             datastructure[widget_id + '_resize'] = ''
 
+        title = ''
         if len(self.fields) > 1:
             datamodel = datastructure.getDataModel()
-            datastructure[widget_id + '_title'] = datamodel[self.fields[1]]
-        else:
-            datastructure[widget_id + '_title'] = ''
+            title = datamodel[self.fields[1]]
+            # Defaulting to the file name if there is an image file and if no
+            # title has been given yet. This is the case when the document is
+            # created.
+            if not title:
+                title = datastructure[widget_id + '_filename']
+        datastructure[widget_id + '_title'] = title
+
+    def otherProcessing(self, choice, datastructure):
+        datamodel = datastructure.getDataModel()
+        widget_id = self.getWidgetId()
+
+        # Title
+        title = datastructure[widget_id + '_title']
+        if len(self.fields) > 1:
+            datamodel[self.fields[1]] = title
 
     def maybeKeepOriginal(self, image, datastructure):
         return
