@@ -104,8 +104,8 @@
 
     <tal:block condition="python:len(fields) > 4">
       <p>
-      <tal:block i18n:translate="cpsschemas_photo_title">
-        Photo title
+      <tal:block i18n:translate="cpsschemas_image_title">
+        Image title :
       </tal:block>
       <input type="text" size="30"
              tal:attributes="name string:${value_name}_title;
@@ -116,7 +116,7 @@
     <tal:block condition="python:len(fields) > 1">
       <p>
       <tal:block i18n:translate="cpsschemas_photo_subtitle">
-        Photo subtitle
+        Photo subtitle :
       </tal:block>
       <input type="text" size="30"
              tal:attributes="name string:${value_name}_subtitle;

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-08 14:22default\n"
+"POT-Creation-Date: 2006-10-13 15:00default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -50,14 +50,13 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#.   <button attributes="
+#.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;;');
-#.           class string:standalone;
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           " type="button">Layout</button>
+#.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -72,12 +71,15 @@ msgstr "aan"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
 #.                        field_html python:len(fields)>2 and fields[2] or '';
-#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';">
 #.           (preview)
 #.         </a>
-#.   <a attributes="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}" href="http://url..." target="_blank">
+#.   <a attributes="
+#.            href href;
+#.            onClick string:return openLinkInPopup('${href}');
+#.            " define="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -85,7 +87,10 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(Versie HTML)"
 
-#.   <a attributes="href string:${proxy_url}/${preview_id}" condition="display_printable_version" href="http://url..." target="_blank">
+#.   <a href="http://url..." attributes="
+#.           href preview_url;
+#.           onClick string:return openLinkInPopup('${preview_url}');
+#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -112,6 +117,14 @@ msgstr ""
 msgid "cpsschemas_image_resize"
 msgstr "Formaat&nbsp;: "
 
+#.   <block>
+#.           Image title :
+#.         </block>
+#: from ../skins/cps_schemas/widget_photo_render.pt
+#, fuzzy
+msgid "cpsschemas_image_title"
+msgstr "Title: "
+
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
@@ -125,7 +138,7 @@ msgstr "Laden"
 msgid "cpsschemas_label_file_delete"
 msgstr "Afschaffen"
 
-#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
+#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -160,9 +173,9 @@ msgstr "Filename"
 msgid "cpsschemas_label_image_resize"
 msgstr "Resize as "
 
-#.   <span>
-#.           Photo subtitle
-#.         </span>
+#.   <block>
+#.           Photo subtitle :
+#.         </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Onderschrift&nbsp;: "
@@ -172,9 +185,9 @@ msgstr "Onderschrift&nbsp;: "
 msgid "cpsschemas_render_format"
 msgstr "Formaat&nbsp;: "
 
-#.   <span>
+#.   <block>
 #.             Render position
-#.           </span>
+#.           </block>
 #.   <label attributes="for position_selector_id">Position:</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
@@ -266,7 +279,7 @@ msgstr "Waarde&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr "This page allow you to manage vocabularies and their entries."
 
-#.   <em content="err" style="color: red">err</em>
+#.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
