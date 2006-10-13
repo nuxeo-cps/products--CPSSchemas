@@ -332,17 +332,36 @@ class TextWidgetValidationTest(WidgetValidationTest):
         self.assert_(ret)
         self.assertEquals(ds[wid], '<a>xxx')
 
-    def test_text_xhtml_sanitize_on(self):
+    def test_text_xhtml_sanitize_on_non_configurable(self):
+        wid = self.getWidgetId()
+        self.fields = (wid)
+        ret, err, ds = self._validate({'render_format': 'html',
+                                       'xhtml_sanitize': True,
+                                       },
+                                      '<a>xxx')
+        self.assert_(ret)
+        self.assertEquals(ds[wid], '<a>xxx</a>')
+
+    def test_text_xhtml_sanitize_on_non_configurable_on_text(self):
+        wid = self.getWidgetId()
+        self.fields = (wid)
+        ret, err, ds = self._validate({'render_format': 'text',
+                                       'xhtml_sanitize': True,
+                                       },
+                                      '<a>xxx')
+        self.assert_(ret)
+        self.assertEquals(ds[wid], '<a>xxx')
+
+    def test_text_xhtml_sanitize_on_configurable(self):
         wid = self.getWidgetId()
         self.fields = (wid, wid + '_rposition', wid + '_rformat')
         self.data[wid + '_rposition'] = 'normal'
         self.data[wid + '_rformat'] = 'html'
         ret, err, ds = self._validate({'rformat': 'html',
+                                       'configurable': True,
                                        'xhtml_sanitize': True,
                                        },
                                       '<a>xxx')
-        #print "\n ds = ", ds
-        #print "\n ds = ", ds[wid]
         self.assert_(ret)
         self.assertEquals(ds[wid], '<a>xxx</a>')
 
