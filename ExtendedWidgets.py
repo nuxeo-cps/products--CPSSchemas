@@ -163,7 +163,8 @@ class CPSTextWidget(CPSStringWidget):
             datastructure[widget_id] = v
         else:
             datamodel = datastructure.getDataModel()
-            # Validating rposition and rformat and correcting them if necessary
+            # Validating rposition and rformat entered by the user and
+            # correcting them if necessary.
             if self.configurable != 'nothing':
                 if len(self.fields) > 1:
                     rposition = datastructure[widget_id + '_rposition']
@@ -173,8 +174,11 @@ class CPSTextWidget(CPSStringWidget):
                     rformat = datastructure[widget_id + '_rformat']
                     if rformat and rformat in self.all_render_formats:
                         datamodel[self.fields[2]] = rformat
+            else:
+                # Defaulting to the widget property since no fields are used to
+                # store the format or the position.
+                rformat = self.render_format
             if self.xhtml_sanitize:
-                rformat = datamodel[self.fields[2]]
                 if rformat == 'html':
                     self.xhtml_sanitizer.reset()
                     self.xhtml_sanitizer.feed(v)

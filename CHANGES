@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fixed the way the render_format is retrieved in the Text Widget. It makes it
+  easier to XHTML sanitize.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
