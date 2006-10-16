@@ -7,8 +7,12 @@
 <metal:body use-macro="here/main_template_popup/macros/master">
 
 <metal:headslot fill-slot="style_slot">
-  <link rel="stylesheet" type="text/css" media="all"
-        tal:attributes="href string:${base_url}popup_fckeditor_form.css" />
+  <link rel="Stylesheet" type="text/css"
+        tal:attributes="href string:${base_url}cpsskins_common.css" />
+  <link rel="Stylesheet" type="text/css"
+        tal:attributes="href string:${base_url}portal_themes/default/renderCSS" />
+  <link rel="Stylesheet" type="text/css"
+        tal:attributes="href string:${base_url}cpsskins_common-css2.css" />
 </metal:headslot>
 
 <metal:headslot fill-slot="head_slot" tal:condition="rte_value">
@@ -23,7 +27,8 @@
 </metal:headslot>
 
 <metal:main fill-slot="body">
-<h1 tal:content="label_edit" i18n:translate="">Edit</h1>
+<div style="padding: 0.3em">
+<h1 class="fontShapeaverage fontColordefaultfontcolors" tal:content="label_edit" i18n:translate="">Edit</h1>
 <div class="document">
 <form action="" method="post"
       tal:attributes="action string:${here_url}/popup_fckeditor_form">
@@ -52,18 +57,18 @@ oFCKeditor.Create();
    </script>
  </div>
 </div>
-<div class="BackColor">
-  <button type="submit" i18n:translate="button_update"
-          class="Button">
+<p>
+  <button type="submit" i18n:translate="button_update">
     Update
   </button>
-  <button type="button" onclick="window.close()" i18n:translate="button_cancel"
-          class="Button">
+  <button type="button" onclick="window.close()" i18n:translate="button_cancel">
     Cancel
   </button>
-</div>
+</p>
 </form>
 </div>
 </metal:main>
+
+
 </metal:body>
 </metal:html>
