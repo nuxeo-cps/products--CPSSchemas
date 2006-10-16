@@ -1726,7 +1726,11 @@ class CPSFileWidget(CPSWidget):
 
     def unprepare(self, datastructure):
         # Remove costly things already stored from the datastructure
-        del datastructure[self.getWidgetId()]
+        try:
+            del datastructure[self.getWidgetId()]
+        except KeyError:
+            # unprepare may be called several times
+            pass
 
     def getFileName(self, fileupload, datastructure, choice, old_filename=''):
         filename = datastructure[self.getWidgetId()+'_filename'].strip()
