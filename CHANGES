@@ -6,9 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Made it possible to call the unprepare method several times in the course of
-  the validate method of a widget since it sometimes happens when validateError
-  is called in the end in case of error.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

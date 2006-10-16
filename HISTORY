@@ -1,4 +1,22 @@
 *******************************************
+** CPSSchemas V0.55.5 [R1 build 2006/10/16-11:56 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 49601
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Made it possible to call the unprepare method several times in the course of
+  the validate method of a widget since it sometimes happens when validateError
+  is called in the end in case of error.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSSchemas V0.55.4 [R1 build 2006/10/13-13:11 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 49562
 Requires:
