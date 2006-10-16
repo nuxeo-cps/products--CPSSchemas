@@ -1,11 +1,12 @@
 <tal:block define="mode options/mode;
-  id here/getWidgetId;
+  id here/getHtmlWidgetId;
   fields here/fields;
   current_filename options/current_filename;
   empty_file options/empty_file;
   session_file options/session_file;
   mimetype options/mimetype;
   size options/size;
+  title options/title;
   content_url options/content_url;
   last_modified options/last_modified;
   content_url_nocache string:${content_url}?nocache=${last_modified};
@@ -61,6 +62,17 @@
       </metal:block>
       </tal:block>
     </metal:block>
+
+    <tal:block condition="python:len(fields) > 1">
+      <p>
+      <tal:block i18n:translate="cpsschemas_image_title">
+        Image title :
+      </tal:block>
+      <input type="text" size="30" maxlength="60"
+             tal:attributes="name string:${id}_title;
+                             value title" />
+      </p>
+    </tal:block>
 
   </tal:block>
 </tal:block>

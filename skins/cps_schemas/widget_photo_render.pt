@@ -1,6 +1,5 @@
 <tal:block define="mode options/mode;
-  id here/getWidgetId;
-  value_name here/getHtmlWidgetId;
+  id here/getHtmlWidgetId;
   fields here/fields;
   current_filename options/current_filename;
   empty_file options/empty_file;
@@ -88,11 +87,11 @@
     </tal:block>
 
     <tal:block condition="python:len(fields) > 2 and 'position' in configurable">
-      <p tal:define="name here/getHtmlWidgetId">
+      <p>
         <tal:block i18n:translate="cpsschemas_render_position">
           Render position
         </tal:block>
-        <select tal:attributes="name string:${value_name}_rposition">
+        <select tal:attributes="name string:${id}_rposition">
           <option tal:repeat="op here/all_render_positions"
             tal:attributes="selected python:op == rposition;
                             value op"
@@ -107,8 +106,8 @@
       <tal:block i18n:translate="cpsschemas_image_title">
         Image title :
       </tal:block>
-      <input type="text" size="30"
-             tal:attributes="name string:${value_name}_title;
+      <input type="text" size="30" maxlength="60"
+             tal:attributes="name string:${id}_title;
                              value title" />
       </p>
     </tal:block>
@@ -119,7 +118,7 @@
         Photo subtitle :
       </tal:block>
       <input type="text" size="30"
-             tal:attributes="name string:${value_name}_subtitle;
+             tal:attributes="name string:${id}_subtitle;
                              value subtitle" />
       </p>
     </tal:block>

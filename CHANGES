@@ -6,7 +6,10 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Added a maxlength attribute to conform to the rule
+  "Fiche 1.4 : Pour chacune des images de la page, les textes dans l'attribut
+  ALT font-ils moins de 60 caractères ?"
+  cf. http://www.accessiweb.org/fr/guide_accessiweb/guide-accessiweb-fiche-1-4.html
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
