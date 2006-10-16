@@ -27,8 +27,8 @@
 </metal:headslot>
 
 <metal:main fill-slot="body">
-<div style="padding: 0.3em">
-<h1 class="fontShapeaverage fontColordefaultfontcolors" tal:content="label_edit" i18n:translate="">Edit</h1>
+<div style="padding: 0.3em" class="fontColordefaultfontcolors fontShapeaverage">
+<h1 tal:content="label_edit" i18n:translate="">Edit</h1>
 <div class="document">
 <form action="" method="post"
       tal:attributes="action string:${here_url}/popup_fckeditor_form">
