@@ -137,7 +137,13 @@ class Layout(PropertiesPostProcessor,
          'label': 'Allowed widgets in flexible'},
         {'id': 'validate_values_expr', 'type': 'text', 'mode': 'w',
          'label': 'Layout validation expression'},
-        )
+        {'id': 'label', 'type': 'string', 'mode': 'w',
+         'label': 'Label in view layout mode'},
+        {'id': 'label_edit', 'type': 'string', 'mode': 'w',
+         'label': 'Label in edit layout mode'},
+        {'id': 'is_i18n', 'type': 'boolean', 'mode': 'w',
+         'label': 'Label is i18n'},
+    )
 
     style_prefix = 'layout_default_'
     layout_create_method = ''
@@ -146,6 +152,9 @@ class Layout(PropertiesPostProcessor,
     flexible_widgets = ()
     validate_values_expr = ''
     validate_values_expr_c = None
+    label = ''
+    label_edit = ''
+    is_i18n = False
 
     prefix = 'w__'
     id = None
@@ -451,6 +460,9 @@ class Layout(PropertiesPostProcessor,
         rendered = layout_style(layout=layout_structure,
                                 datastructure=datastructure,
                                 flexible_widgets=flexible_widgets,
+                                label=self.label,
+                                label_edit=self.label_edit,
+                                is_i18n=self.is_i18n,
                                 **kw)
         return rendered
 

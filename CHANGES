@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Layout has 3 new properties (label, label_edit and is_i18n) that are passed as
+  kw arguments to the layout_style to be able to label groups of widgets
 Bug fixes:
 ~~~~~~~~~~
 - Added a maxlength attribute to conform to the rule
