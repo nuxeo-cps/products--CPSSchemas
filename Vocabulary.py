@@ -199,6 +199,7 @@ class Vocabulary(Persistent, Implicit):
             l.sort()
             return [x[1] for x in l]
         elif crit == 'i18n':
+            # XXX why not getToolByName(self, 'translation_service') ?
             portal = getToolByName(self, 'portal_url').getPortalObject()
             cpsmcat = portal.translation_service
             l = [(cpsmcat(self.getMsgid(key)), key) for key in self.keys()]
@@ -405,3 +406,83 @@ InitializeClass(CPSVocabulary)
 
 VocabularyTypeRegistry.register(CPSVocabulary)
 # Exporter is registered in setup/vocabulary.py
+
+class EmptyKeyVocabularyWrapper:
+    """ A simple class that wraps any vocabulary to add an empty key.
+    """
+
+    implements(ICPSVocabulary)
+
+    def __init__(self, vocabulary, value, msgid=None, position='first'):
+        """Constructor.
+
+        value: the value to associate to ''
+        msgid: the msgid to associate to ''
+        position: all other than 'first' mean 'last'
+        """
+        self._voc = vocabulary
+        self._val = value
+        self._msgid = msgid
+        self._pos = position
+
+    def _wrap_list(self, l, value):
+        """Return list l in which value has been inserted. """
+        if self._pos == 'first':
+            l.insert(0, value)
+        else:
+            l.append(value)
+        return l
+
+    def clear(self):
+        """Clear the vocabulary."""
+        self._voc.clear()
+
+    def __delitem__(self, key):
+        if key != '':
+            self._voc.__delitem__(self, key)
+
+    def set(self, key, label, msgid=None):
+        """Set a label for a key."""
+        if key != '':
+            self._voc.set(key, label, msgid=msgid)
+
+    def __getitem__(self, key):
+        """Get a label for a key."""
+        if key == '':
+            return self._val
+        return self._voc.__getitem__(key)
+
+    def get(self, key, default=None):
+        """Get a label for a key, default to None."""
+        if key == '':
+            return self._val
+        return self._voc.get(key, default)
+
+    def getMsgid(self, key, default=None):
+        """Get a msgid for a key, default to None."""
+        if key == '':
+            return self._msgid
+        return self._voc.getMsgid(key, default)
+
+    def has_key(self, key):
+        """Test if a key is present."""
+        return key == '' or self._voc.has_key(key)
+
+    def keys(self):
+        """Get the ordered list of keys."""
+        return self._wrap_list(self._voc.keys(), '')
+
+    def items(self):
+        """Get the ordered list of (key, value)."""
+        return self._wrap_list(self._voc.items(), ('', self._val))
+
+    def values(self):
+        """Get the ordered list of values."""
+        return self._wrap_list(self._voc.values(), self._val)
+
+    def keysSortedBy(self, crit='id'):
+        """Return a keys list sorted on a criterium
+
+        Empty key position is not affected by sorting
+        """
+        return self._wrap_list(self._voc.keysSortedBy(crit=crit), '')

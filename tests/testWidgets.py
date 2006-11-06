@@ -55,9 +55,23 @@ class FakeVocabulariesTool(Implicit):
             vocabulary.set(k, v)
         return vocabulary
 
+_marker = object()
+
 class FakeTranslationService:
     def getSelectedLanguage(self):
         return 'fr'
+
+    def __init__(self):
+        self._map = {}
+
+    def addMsgid(self, msgid, xlated):
+        self._map[msgid] = xlated
+
+    def __call__(self, msgid, default=_marker):
+        res = self._map.get(msgid)
+        if res is None:
+            return default is _marker and msgid or default
+        return res
 
 class FakeWidget(SimpleItem):
     hidden_empty = False
@@ -396,6 +410,39 @@ class TestWidgets(unittest.TestCase):
         # not None value, edit mode
         self.assertNotEqual(widget.getDateTimeInfo(value, mode),
                             (value, '04/01/2005', '3', '14'))
+
+    def testSelectWidget(self):
+        from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
+        fakePortal.portal_vocabularies = FakeVocabulariesTool()
+        widget = CPSSelectWidget('foo').__of__(fakePortal)
+        widget.fields = ['foo']
+        self.assertEquals(widget.getWidgetId(), 'foo')
+        self.assertEquals(widget.getFieldTypes(), ('CPS String Field',))
+
+        dm = FakeDataModel()
+        dm['foo'] = None
+        ds = FakeDataStructure(dm)
+        ds['foo'] = 'a'
+        res = widget.validate(ds)
+        self.assert_(widget.validate(ds))
+
+        widget.add_empty_key = True
+        widget.empty_key_value = 'Choose one'
+        widget.empty_key_value_i18n = 'label_choose_one'
+        fakePortal.translation_service.addMsgid('label_choose_one',
+                                                u'S\xe9lectionnez')
+
+        ds['foo'] = ''
+        widget.is_required = False
+        self.assert_(widget.validate(ds))
+
+        self.assertEquals(widget.render('view', ds), 'Choose one')
+        res = widget.render('edit', ds)
+        # regression test
+        self.assertEquals(res, '<select name="widget__foo" id="widget__foo"><option selected="selected" value="">Choose one</option><option value="a">ZZZ</option><option value="c">XXX</option><option value="b">YYY</option></select>')
+
+        widget.translated = True
+        self.assertEquals(widget.render('view', ds), 'S\xe9lectionnez')
 
     def testMultiSelectWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget

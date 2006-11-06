@@ -58,6 +58,7 @@ from Products.CPSSchemas.utils import getHumanReadableSize
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
+from Products.CPSSchemas.Vocabulary import EmptyKeyVocabularyWrapper
 
 # BBB (remove this in CPS-3.6)
 def cleanFileName(name):
@@ -936,11 +937,26 @@ class CPSSelectWidget(CPSWidget):
          'label': 'Is vocabulary translated on display'},
         {'id': 'sorted', 'type': 'boolean', 'mode': 'w',
          'label': 'Are vocabulary values rendered sorted'},
+        {'id': 'add_empty_key', 'type': 'boolean', 'mode': 'w',
+         'label':'Add an empty key'},
+        {'id': 'empty_key_pos', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'empty_key_pos_select',
+         'label':'Empty key position'},
+        {'id': 'empty_key_value', 'type': 'string', 'mode': 'w',
+         'label':'Empty key value'},
+        {'id': 'empty_key_value_i18n', 'type': 'string', 'mode': 'w',
+         'label':'Empty key i18n value'},
         )
+
     # XXX make a menu for the vocabulary.
     vocabulary = ''
     translated = False
     sorted = False
+    add_empty_key = False
+    empty_key_pos_select = ('first', 'last')
+    empty_key_pos = empty_key_pos_select[0]
+    empty_key_value = ''
+    empty_key_value_i18n = ''
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -958,6 +974,11 @@ class CPSSelectWidget(CPSWidget):
             vocabulary = vtool.getVocabularyFor(context, self.vocabulary)
         if vocabulary.meta_type == 'CPS Method Vocabulary':
             vocabulary = MethodVocabularyWithContext(vocabulary, context)
+        if self.add_empty_key:
+            vocabulary = EmptyKeyVocabularyWrapper(
+                vocabulary, self.empty_key_value,
+                msgid=self.empty_key_value_i18n,
+                position=self.empty_key_pos,)
         return vocabulary
 
     def prepare(self, datastructure, **kw):

@@ -22,12 +22,37 @@ import unittest
 from OFS.Folder import Folder
 from Products.CPSSchemas import Vocabulary
 
+i18n_dict = {'label_foo': 'Foo',
+             'label_bar': 'Bar',
+             'label_cow': 'Cow',
+             'label_empty': 'No choice',
+             }
+
+class FakeTranslationService:
+    def __call__(self, msgid, default=None):
+        if default is None:
+            default = msgid
+        return i18n_dict.get(msgid, default)
+
+class FakePortal:
+    translation_service = FakeTranslationService()
+
+class FakePortalUrl:
+    def getPortalObject(self):
+        return FakePortal()
 
 class BasicVocabularyTests(unittest.TestCase):
 
     def makeOne(self):
         return Vocabulary.CPSVocabulary(
             'the_id', (('foo', 'F'), ('bar', 'B'), ('meuh', 'M')))
+
+    def makeWithMsgids(self):
+        voc = Vocabulary.CPSVocabulary(
+            'the_id', (('foo', 'F', 'label_foo'), ('bar', 'B', 'label_bar'),
+                       ('meuh', 'M', 'label_cow')))
+        voc.portal_url = FakePortalUrl()
+        return voc
 
     def testInterface(self):
         from zope.interface.verify import verifyClass
@@ -64,17 +89,39 @@ class BasicVocabularyTests(unittest.TestCase):
         self.assertEquals(v.keys(), [])
         self.assertEquals(v.values(), [])
 
-    def testSimple(self):
+    def testSimpleGets(self):
         v = self.makeOne()
+
         self.assertEquals(v['bar'], 'B')
         self.assertRaises(KeyError, v.__getitem__, 'blah')
+
         self.assertEquals(v.get('foo'), 'F')
         self.assertEquals(v.get('blah'), None)
+
+        self.assertEquals(v.has_key('foo'), True)
+        self.assertEquals(v.has_key('blah'), False)
+
+    def test_getMsgid(self):
+        v = self.makeWithMsgids()
+
+        self.assertEquals(v.getMsgid('foo'), 'label_foo')
+        self.assertEquals(v.getMsgid('meuh'), 'label_cow')
+        self.assertEquals(v.getMsgid('blah'), None)
+
+    def testSimpleLists(self):
+        v = self.makeOne()
         self.assertEquals(v.keys(), ['foo', 'bar', 'meuh'])
         self.assertEquals(v.items(), [('foo', 'F'),
                                       ('bar', 'B'),
                                       ('meuh', 'M')])
         self.assertEquals(v.values(), ['F', 'B', 'M'])
+
+    def test_keysSortedBy(self):
+        v = self.makeWithMsgids()
+        # B, F, M
+        self.assertEquals(v.keysSortedBy('label'), ['bar', 'foo', 'meuh'])
+        # Bar, Cow, Meuh
+        self.assertEquals(v.keysSortedBy('i18n'), ['bar', 'meuh', 'foo'])
 
     def test_value_is_key(self):
         v = Vocabulary.CPSVocabulary(
@@ -125,9 +172,51 @@ class BasicVocabularyTests(unittest.TestCase):
 
     # XXX Could test msgids but I'm not sure we really use them.
 
+class EmptyKeyVocabularyWrapperTests(BasicVocabularyTests):
+
+    def makeOne(self):
+        return Vocabulary.EmptyKeyVocabularyWrapper(
+            BasicVocabularyTests.makeOne(self), 'Empty Value')
+
+    def makeWithMsgids(self):
+        return Vocabulary.EmptyKeyVocabularyWrapper(
+            BasicVocabularyTests.makeWithMsgids(self),
+            'Empty Value', 'label_empty')
+
+    def testInterface(self):
+        from zope.interface.verify import verifyClass
+        from Products.CPSSchemas.interfaces import IVocabulary
+        verifyClass(IVocabulary, Vocabulary.EmptyKeyVocabularyWrapper)
+
+    def testSimpleLists(self):
+        v = self.makeOne()
+        self.assertEquals(v.keys(), ['', 'foo', 'bar', 'meuh'])
+        self.assertEquals(v.items(), [('', 'Empty Value'),
+                                      ('foo', 'F'),
+                                      ('bar', 'B'),
+                                      ('meuh', 'M')])
+        self.assertEquals(v.values(), ['Empty Value', 'F', 'B', 'M'])
+
+    def test_keysSortedBy(self):
+        v = self.makeWithMsgids()
+        # for reference
+        cpsmcat = FakeTranslationService()
+        self.assertEquals(cpsmcat('label_empty'), 'No choice')
+        # B, F, M
+        self.assertEquals(v.keysSortedBy('label'), ['', 'bar', 'foo', 'meuh'])
+        # No choice, Bar, Cow, Foo: empty key always first
+        self.assertEquals(v.keysSortedBy('i18n'), ['', 'bar', 'meuh', 'foo'])
+
+    # disable tests for not forwarded part of API
+    def test_modify(self):
+        pass
+
+    def test_reset(self):
+        pass
 
 def test_suite():
-    suites = [unittest.makeSuite(BasicVocabularyTests)]
+    suites = [unittest.makeSuite(BasicVocabularyTests),
+              unittest.makeSuite(EmptyKeyVocabularyWrapperTests)]
     return unittest.TestSuite(suites)
 
 if __name__ == '__main__':
