@@ -1,3 +1,31 @@
+===========================================================
+Package: CPSSchemas 0.56.0
+===========================================================
+First release built by: gracinet at: 2006-11-16T18:17:23
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/0.56.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50008
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Layout has 3 new properties (label, label_edit and is_i18n) that are passed as
+  kw arguments to the layout_style to be able to label groups of widgets
+- #1769: Select Widgets can add an empty key to vocabularies
+- Added Zope External Editor sample configuration files for both Unix and
+  Windows systems (featuring OpenOffice.org file formats).
+Bug fixes:
+~~~~~~~~~~
+- Added a maxlength attribute to conform to the rule
+  "Fiche 1.4 : Pour chacune des images de la page, les textes dans l'attribut
+  ALT font-ils moins de 60 caractères ?"
+  cf. http://www.accessiweb.org/fr/guide_accessiweb/guide-accessiweb-fiche-1-4.html
+- Applied the CPS style to the HTML editor window.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
 *******************************************
 ** CPSSchemas V0.55.5 [R1 build 2006/10/16-11:56 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk Revision: 49601

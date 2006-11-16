@@ -1,20 +1,12 @@
-Requires:
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
 ~~~~~~~~~
 -
-New features:
-~~~~~~~~~~~~~
-- Layout has 3 new properties (label, label_edit and is_i18n) that are passed as
-  kw arguments to the layout_style to be able to label groups of widgets
-- #1769: Select Widgets can add an empty key to vocabularies
-- Added Zope External Editor sample configuration files for both Unix and
-  Windows systems (featuring OpenOffice.org file formats).
-Bug fixes:
-~~~~~~~~~~
-- Added a maxlength attribute to conform to the rule
-  "Fiche 1.4 : Pour chacune des images de la page, les textes dans l'attribut
-  ALT font-ils moins de 60 caractères ?"
-  cf. http://www.accessiweb.org/fr/guide_accessiweb/guide-accessiweb-fiche-1-4.html
-- Applied the CPS style to the HTML editor window.
-New internal features:
-~~~~~~~~~~~~~~~~~~~~~~
--
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
