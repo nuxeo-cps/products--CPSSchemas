@@ -1,36 +1,25 @@
-# translation of CPSSchemas_en.po to Euskara
-# translation of en.po to
-# translation of en.po to Francais
-# translation of en.po to francais
-# translation of en.po to ben
-# Gettext Message File for default.
-# Your Name <your@email>, Year
-# ben <ben@nuxeo.com>, 2003,2004.
-# emmanuel <epietriga@nuxeo.com>, 2004.
-# DARCHE <madarche@nuxeo.com>, 2004.
-# Encolpe DEGOUTE <ed@nuxeo.com>, 2004.
-# Asier  Sarasua <asarasua@codesyntax.com>, 2004.
-# Aitzol Naberan Burgaña <anaberan@codesyntax.com>, 2004.
-#
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: CPSSchemas_en\n"
+"Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-13 15:00default\n"
-"PO-Revision-Date: 2004-10-04 16:59+0100\n"
-"Last-Translator:  <>\n"
-"Language-Team: Euskara <eu@li.org>\n"
+"POT-Creation-Date: 2005-06-24 15:44default\n"
+"PO-Revision-Date: 2006-11-16 15:50+0100\n"
+"Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
+"Language-Team: euskara <perikoalkain@lasalle.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-Code: eu\n"
-"Language-Name: Basque\n"
+"Preferred-encodings: utf-8 latin1\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+"X-Generator: KBabel 1.3.1\n"
 "Domain: default\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: basque\n"
+"X-Poedit-Country: SPAIN\n"
 
-#.   <option attributes="value op/id;
-#.                   selected python: op['size'] and (op['size'][0]==image_width
-#.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal condition="op/size" replace="python:'(%sx%s)' % op['size']")}</option>
+#.   <option attributes="value op/id" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
 #.   <option attributes="value op/id;
 #.                 selected python: op['size'] and (op['size'][0]==image_width
 #.                                                  or op['size'][1]==image_height)" repeat="op sizes"><span replace="op/id" /> ${dim (tal content="python:'(%sx%s)' % op['size']" condition="op/size")}</option>
@@ -39,20 +28,15 @@ msgstr ""
 msgid "<span replace=\"op/id\" /> ${dim}"
 msgstr ""
 
-#.   <h1 content="label_edit">Edit</h1>
-#: from ../skins/cps_schemas/popup_fckeditor_form.pt
-msgid "Edit"
-msgstr ""
-
 #.   <label content="here/label_false" attributes="for string:${here/getHtmlWidgetId}_false"> False </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "False"
-msgstr ""
+msgstr "Faltsua"
 
 #.   <label content="here/label_true" attributes="for string:${here/getHtmlWidgetId}_true"> True </label>
 #: from ../skins/cps_schemas/widget_boolean_render.pt
 msgid "True"
-msgstr ""
+msgstr "Egiazkoa"
 
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
@@ -63,29 +47,23 @@ msgstr ""
 #.           ">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
-msgstr ""
+msgstr "Editorea erabili"
 
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
-#, fuzzy
 msgid "cpsschema_at"
-msgstr "a"
+msgstr ""
 
 #.   <label attributes="for elt_hour_id">h</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
-#, fuzzy
 msgid "cpsschema_hour"
-msgstr "h"
+msgstr "ord"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
-#.                        field_html python:len(fields)>2 and fields[2] or '';
-#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';">
+#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}" define="field_id python:fields[0];
+#.                        field_html python:len(fields)>2 and fields[2] or ''">
 #.           (preview)
 #.         </a>
-#.   <a attributes="
-#.            href href;
-#.            onClick string:return openLinkInPopup('${href}');
-#.            " define="href string:${proxy_url}/viewZip/${field_id}/${current_filename}/${index_path}">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/viewZip/${field_id}/${current_name}/${index_path}">
 #.           (preview)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -93,21 +71,17 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(aurrebista)"
 
-#.   <a href="http://url..." attributes="
-#.           href preview_url;
-#.           onClick string:return openLinkInPopup('${preview_url}');
-#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}">
+#.   <a href="http://url..." target="_blank" attributes="href string:${proxy_url}/${preview_id}">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_printable_version"
-msgstr "(inprimatzeko)"
+msgstr "(inprimatzeko bertsioa)"
 
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
-#, fuzzy
 msgid "cpsschema_minute"
-msgstr "mn"
+msgstr "min"
 
 #.   <p>
 #.           cpsschemas_allowed_file_suffixes
@@ -116,20 +90,12 @@ msgstr "mn"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr ""
+msgstr "Fitxategiek honako luzapenetako bat izan behar dute: ${allowed_file_suffixes}."
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
-msgstr "neurri berria:"
-
-#.   <block>
-#.           Image title :
-#.         </block>
-#: from ../skins/cps_schemas/widget_photo_render.pt
-#, fuzzy
-msgid "cpsschemas_image_title"
-msgstr "Title: "
+msgstr "eta tamaina aldatu: "
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -148,15 +114,14 @@ msgstr "Ezabatu"
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
-#, fuzzy
 msgid "cpsschemas_label_file_edit_online"
-msgstr "Editar en línea"
+msgstr "On-line editatu"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="not:empty_file">Keep</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_keep"
-msgstr "Mantendu"
+msgstr "Gorde"
 
 #.   <label attributes="for string:${radio_name}_keep" condition="empty_file">None</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -169,48 +134,44 @@ msgstr "Bat ere ez"
 #.           </span>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
-#, fuzzy
 msgid "cpsschemas_label_filename"
-msgstr "Archivo"
+msgstr "Fitxategia"
 
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
-#, fuzzy
 msgid "cpsschemas_label_image_resize"
-msgstr "Redimensionar como"
+msgstr "Tamaina aldatu gisa honetara"
 
-#.   <block>
-#.           Photo subtitle :
-#.         </block>
+#.   <span>
+#.           Photo subtitle
+#.         </span>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr "Izenburupea: "
+msgstr "Irudi-oina:"
 
 #.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
 msgstr "Formatua: "
 
-#.   <block>
+#.   <span>
 #.             Render position
-#.           </block>
+#.           </span>
 #.   <label attributes="for position_selector_id">Position:</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
-msgstr "Posizioa: "
+msgstr "Kokalekua: "
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_all_languages"
-msgstr "cualquier idioma"
+msgstr "edozein hizkuntza"
 
 #.   <label attributes="for string:${widget_selected_id}_yes">cpsschemas_search_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
-#, fuzzy
 msgid "cpsschemas_search_languages"
-msgstr "uno o más de los siguientes idiomas"
+msgstr "ondoko hizkuntetako bat edo gehiago"
 
 #.   <p>
 #.             cpsschemas_size_max
@@ -218,14 +179,13 @@ msgstr "uno o más de los siguientes idiomas"
 #.           </p>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
-#, fuzzy
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Tamaño máximo: ${size_max}."
+msgstr "Tamaina maximoa: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
-msgstr "Hiztegia gehitu"
+msgstr "Hiztegi bat gehitu"
 
 #.   <h2>cpsschemas_vocabulary_available</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -237,22 +197,22 @@ msgstr "Hiztegi erabilgarriak"
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
-msgstr "Hiztegi honetan:  ${voc_entries} sarrera"
+msgstr "Hiztegi honek ${voc_entries} sarrera ditu"
 
 #.   <h2>cpsschemas_vocabulary_delete</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_delete"
-msgstr "Hiztegia ezabat"
+msgstr "Ezabatu"
 
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
-msgstr "Hiztegia editatu  \"${voc_id}\""
+msgstr "\"${voc_id}\" hiztegia editatu "
 
 #.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
-msgstr "Sarrera gehitu"
+msgstr "Sarrera bat gehitu"
 
 #.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -261,9 +221,8 @@ msgstr "Id:"
 
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
-#, fuzzy
 msgid "cpsschemas_vocabulary_key"
-msgstr "Clave: "
+msgstr "Gakoa: "
 
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -273,19 +232,17 @@ msgstr "Hiztegien kudeaketa"
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_msgid"
-msgstr "MsgId:"
+msgstr "MsgId"
 
 #.   <th>Value:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
-#, fuzzy
 msgid "cpsschemas_vocabulary_value"
-msgstr "Valor: "
+msgstr "Balioa: "
 
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
-#, fuzzy
 msgid "description_vocabulary_manage_form"
-msgstr "Esta página le permite administrar vocabularios y sus entradas."
+msgstr "Orrialde honek hiztegiak eta haien sarrerak administratzea ahalbidetzen dizu."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -293,21 +250,21 @@ msgstr "Esta página le permite administrar vocabularios y sus entradas."
 #: ../skins/cps_schemas/widget_search_render.pt
 #: ../skins/cps_schemas/widget_textimage_render.pt
 msgid "err"
-msgstr ""
+msgstr "Errorea"
 
 #.   <th>
 #.           Click on the chosen value
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_click_chosen_value"
-msgstr "Nahi duzuna aukeratu:"
+msgstr "Klikatu aukeratzen duzun balioan"
 
 #.   <th>
 #.           Enter a search term:
 #.         </th>
 #: from ../skins/cps_schemas/popup_extendedselect_form.pt
 msgid "heading_enter_searched_value"
-msgstr "Zer bilatu?"
+msgstr "Sar ezazu bilaketa-adierazpenen bat"
 
 #.   <block content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</block>
 #.   <span content="widget/help" condition="widget/is_i18n">i18_key-help_for_this_field</span>
@@ -322,149 +279,133 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
-msgstr ""
+msgstr "etiketa"
 
 #.   <label attributes="for file_upload_id">
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr ""
+msgstr "Testu-area betetzeko erabiltzen den fitxategia:"
 
-#, fuzzy
 msgid "cpsschemas_unit_bytes"
-msgstr "bytes"
+msgstr "byte"
 
-#, fuzzy
 msgid "cpsschemas_unit_kilo_bytes"
 msgstr "Kb"
 
-#, fuzzy
 msgid "cpsschemas_unit_mega_bytes"
 msgstr "Mb"
 
-#, fuzzy
 msgid "cpsschemas_unit_giga_bytes"
 msgstr "Gb"
 
 msgid "cpsschemas_err_string"
-msgstr "Katea okerra"
+msgstr "Baliogabeko hizki-katea"
 
 msgid "cpsschemas_err_string_too_long"
-msgstr "Luzeegia"
+msgstr "Hizki-kate luzeegia"
 
-#, fuzzy
 msgid "cpsschemas_err_required"
-msgstr "Campo obligatorio"
+msgstr "Derrigorrezko eremua"
 
 msgid "cpsschemas_err_textarea"
-msgstr "Testu okerra"
+msgstr "Baliogabeko testua"
 
 msgid "cpsschemas_err_select"
-msgstr "Aukeraketa okerra"
+msgstr "Baliogabeko hautapena"
 
 msgid "cpsschemas_err_multiselect"
-msgstr "Aukeraketa okerra"
+msgstr "Baliogabeko hautapen anizkoitza"
 
 msgid "cpsschemas_err_boolean"
-msgstr "Boolear okerra"
+msgstr "Baliogabeko balio logikoa"
 
 msgid "cpsschemas_err_int"
-msgstr "Zenbaki okerra"
-
-#, fuzzy
-msgid "cpsschemas_err_int_range"
-msgstr "Entero fuera de límites"
+msgstr "Baliogabeko zenbaki osoa"
 
 msgid "cpsschemas_err_date"
+msgstr "Baliogabeko data- formatua"
+
+msgid "cpsschemas_err_bad_date"
 msgstr "Data okerra"
 
-#, fuzzy
-msgid "cpsschemas_err_bad_date"
-msgstr "Fecha incorrecta"
-
 msgid "cpsschemas_err_file"
-msgstr "Fitxategi okerra"
+msgstr "Baliogabeko fitxategia"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr ""
+msgstr "Fitxategi honen luzapenak ez du balio. Baliozko luzapenak hauxe dituzu: ${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
-msgstr "Fitxategi okerra"
+msgstr "fitxategia hutsik"
 
 msgid "cpsschemas_err_file_too_big"
-msgstr "Fitxategia astunegia da"
+msgstr "Fitxategi hau handiegia da"
 
-#, fuzzy
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr ""
-"Este archivo es demasiado grande; el tamaño máximo admitido es ${max_size}Mb."
+msgstr "Fitxategi hau handiegia da; onartutako tamaina maximoa ${max_size}Mb-koa da."
 
 msgid "cpsschemas_err_image"
-msgstr "Irudi okerra"
+msgstr "Baliogabeko irudia"
 
 msgid "cpsschemas_err_url"
-msgstr "URL okerra"
+msgstr "Baliogabeko URLa"
 
 msgid "cpsschemas_err_long"
-msgstr "Zenbaki okerra"
+msgstr "Baliogabeko zenbaki oso luzeegia"
 
 msgid "cpsschemas_err_long_range"
-msgstr "Zenbakia mugaz kanpo"
+msgstr "Zenbaki oso luzea mugaz kanpo"
 
 msgid "cpsschemas_err_float_positive"
-msgstr "'Float' honek positiboa behar du"
+msgstr "Zenbaki erreal honek positiboa izan behar du"
 
-#, fuzzy
 msgid "cpsschemas_err_float_range"
-msgstr "Número real fuera de límites"
+msgstr "Zenbaki erreala mugaz kanpo"
 
 msgid "cpsschemas_err_float"
-msgstr "'Float' okerra"
+msgstr "Baliogabeko zenbaki erreala"
 
 msgid "cpsschemas_err_password_mismatch"
-msgstr "Pasahitza eta konfirmazioa ez datoz bat"
+msgstr "Pasahitza eta bere berrespena ez datoz bat"
 
 msgid "cpsschemas_err_password_size_min"
-msgstr "Pasahitza laburregia da"
+msgstr "Zure pasahitza laburregia da"
 
 msgid "cpsschemas_err_password_lower"
-msgstr "Gutxienez karaktere bat txikiz idatzi, mesedez"
+msgstr "Zure berrespenak, gutxienez, minusukula bat izan behar du"
 
 msgid "cpsschemas_err_password_upper"
-msgstr "Gutxienez karaktere bat handiz idatzi, mesedez"
+msgstr "Zure pasahitzak, gutxienez, maiuskula bat izan behar du"
 
 msgid "cpsschemas_err_password_digit"
-msgstr "Gutxienez zenbaki bat idatzi, mesedez"
+msgstr "Zure pasahitzak, gutxienez, zifra bat izan behar du"
 
 msgid "cpsschemas_err_password_extra"
-msgstr "Karaktere bereziren bat sartu, mesedez"
+msgstr "Zure pasahitzak, gutxienez, ez letra eta ez zifra den hizki berezi bat izan behar du"
 
 msgid "cpsschemas_err_identifier"
-msgstr "Identifikatzaile okerra"
+msgstr "Baliogabeko identifikatzailea"
 
 msgid "cpsschemas_err_email"
-msgstr "E-posta okerra"
+msgstr "Baliogabeko posta-e"
 
 msgid "cpsschemas_err_readonly"
-msgstr "Irakurtzeko bakarrik"
+msgstr "Irakurtzeko eremua baino ez"
 
-#, fuzzy
 msgid "cpsschemas_err_rangelist"
-msgstr "Lista inválida de rangos"
+msgstr "Baliogabeko barruti-zerrenda"
 
-#, fuzzy
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Archivo Zip inválido"
+msgstr "Baliogabeko ZIP fitxategia "
 
-#, fuzzy
 msgid "cpsschemas_err_zippedhtml_html_not_found"
-msgstr "No se ha encontrado ningún documento html en el archivo Zip"
+msgstr "Ez da aurkitu inolako html dokumenturik ZIP fitxategian "
 
 msgid "jscalendar_date_fmt"
-msgstr ""
+msgstr "e/h/u"
 
 msgid "cpsschemas_rposition_normal"
-msgstr "Orriaren zabalera"
+msgstr "Orrialdearen zabalera"
 
 msgid "cpsschemas_rposition_col_right"
 msgstr "Eskuineko zutabea"
@@ -473,10 +414,10 @@ msgid "cpsschemas_rposition_col_left"
 msgstr "Ezkerreko zutabea"
 
 msgid "cpsschemas_rposition_left"
-msgstr "Ezkerrean"
+msgstr "Ezkerrera"
 
 msgid "cpsschemas_rposition_right"
-msgstr "Eskuinean"
+msgstr "Eskuinera"
 
 msgid "cpsschemas_rposition_center"
 msgstr "Erdian"
@@ -485,11 +426,13 @@ msgid "cpsschemas_rformat_text"
 msgstr "Testua"
 
 msgid "cpsschemas_rformat_html"
-msgstr "HTML"
+msgstr "HTMLa"
 
-#, fuzzy
-msgid "cpsschemas_rformat_rst"
-msgstr "Structured Text (reST)"
+msgid "cpsschemas_rformat_stx"
+msgstr "Zope-z egituratutako testua"
+
+msgid "cpsschemas_rformat_pre"
+msgstr "HTML-z aurrezformateatuta"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Jatorrizkoa"
@@ -497,29 +440,23 @@ msgstr "Jatorrizkoa"
 msgid "img_auto_size"
 msgstr "Automatikoa"
 
-#, fuzzy
 msgid "img_icon ${dim}"
-msgstr "Icono ${dim}"
+msgstr "Ikonoa ${dim}"
 
-#, fuzzy
 msgid "img_xsmall ${dim}"
-msgstr "Muy pequeño ${dim}"
+msgstr "Oso txikia ${dim}"
 
-#, fuzzy
 msgid "img_small ${dim}"
-msgstr "Pequeño ${dim}"
+msgstr "Txikia ${dim} "
 
-#, fuzzy
 msgid "img_medium ${dim}"
-msgstr "Medio ${dim}"
+msgstr "Ertaina ${dim} "
 
-#, fuzzy
 msgid "img_large ${dim}"
-msgstr "Grande ${dim}"
+msgstr "Handia ${dim} "
 
-#, fuzzy
 msgid "img_xlarge ${dim}"
-msgstr "Extra grande ${dim}"
+msgstr "Superhandia ${dim} "
 
 msgid "cpsschemas_label_false"
 msgstr "Ez"
@@ -528,112 +465,91 @@ msgid "cpsschemas_label_true"
 msgstr "Bai"
 
 msgid "cpsschema_label_on"
-msgstr "On"
+msgstr "Aktibatuta"
 
 msgid "cpsschema_label_off"
-msgstr "Off"
+msgstr "Desaktibatuta"
 
 msgid "cpsschemas_label_link_href"
-msgstr "URL"
+msgstr "URLa"
 
 msgid "cpsschemas_label_link_content"
-msgstr "Loturaren izena"
+msgstr "Estekaren izena"
 
 msgid "cpsschemas_label_link_title"
-msgstr "Azalpena"
+msgstr "Deskribapena"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_and"
-msgstr "todas estas palabras"
+msgstr "hitz hauek guztiak"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_or"
-msgstr "cualquiera de estas palabras"
+msgstr "hitz hauetako edozein"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_exact"
-msgstr "la expresión exacta"
+msgstr "adierazpen zehatza"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_operator_not"
-msgstr "ninguna de estas palabras"
+msgstr "hitz hauetako bat ere ez"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_SearchableText"
-msgstr "en el documento"
+msgstr "dokumentuan"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "en el título"
+msgstr "izenburuan"
 
-#, fuzzy
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "en la descripción"
+msgstr "deskribapenean"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_0"
-msgstr "sin límite de tiempo"
+msgstr "eperik gabe"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_1"
-msgstr "desde ayer"
+msgstr "atzoz geroztik"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_30"
-msgstr "desde el mes pasado"
+msgstr "joan den hiletik"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_91"
-msgstr "desde los 3 últimos meses"
+msgstr "azken hiru hilabete hauetatik"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_182"
-msgstr "desde los 6 últimos meses"
+msgstr "azken sei hilabete hauetatik"
 
-#, fuzzy
 msgid "cpsschemas_label_modified_since_365"
-msgstr "hace un año"
+msgstr "iaz"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "relevancia"
+msgstr "garrantzia"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "anticronológico"
+msgstr "antikronologikoa"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "cronológico"
+msgstr "kronologikoa"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "fecha de expiración"
+msgstr "iraungitze-data"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_title"
-msgstr "título"
+msgstr "izenburua"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_review_state"
-msgstr "estado"
+msgstr "egoera"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "localización"
+msgstr "kokapena"
 
-#, fuzzy
 msgid "cpsschemas_label_searchsort_portal_type"
-msgstr "tipo de documento"
+msgstr "dokumentu-mota"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Id hau badago; beste bat aukeratu"
+msgstr "Dagoeneko Id hori bada. Hautatu beste bat."
 
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Hiztegia sortuta"
+msgstr "Hiztegia sortuta."
 
 msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "Id bat aukeratu"
+msgstr "Id bat hautatu."
 
 msgid "cpsschemas_psm_vocabulary_deleted"
 msgstr "Hiztegia ezabatuta"
@@ -645,29 +561,20 @@ msgid "cpsschemas_psm_vocabulary_entries_deleted"
 msgstr "Hiztegia ezabatuta."
 
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr "Sarrera bat aukeratu, mesedez."
+msgstr "Ez duzu sarrerarik hautatu. Bat hautatu."
 
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Hiztegia eguneratuta."
+msgstr "Hiztegia gaurkotuta"
 
 msgid "label_none_selection"
-msgstr " -- Hutsik -- "
+msgstr "--Hutsik--"
 
 msgid "label_other_selection"
-msgstr "Beste bat; zehaztu, mesedez: "
+msgstr "Beste bat, zehaztu, mesedez:"
 
-# ## action =================================================
 msgid "action_edit_online"
-msgstr ""
+msgstr "On-line editatu"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr ""
+msgstr "Flash animazioa (swf)"
 
-msgid "label_alt_text"
-msgstr "Ordezko testua"
-
-msgid "cpsschemas_rformat_pre"
-msgstr "HTML preformateado"
-
-#~ msgid "cpsschemas_search_language_or"
-#~ msgstr "o"
