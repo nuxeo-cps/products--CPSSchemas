@@ -75,9 +75,9 @@ function set_parent_value(parent_id){
                 direction python:request.get('direction', '');
                 folder_prefix python:request.get('folder_prefix', '');
                 items python:here.search(query=request.form,
-                sort_by=sort_by,
-                direction=direction,
-                folder_prefix=folder_prefix);
+                                         sort_by=sort_by,
+                                         direction=direction,
+                                         folder_prefix=folder_prefix);
                 nav_action string:search_form;
                 no_form nothing;
                 site_wide python:1;

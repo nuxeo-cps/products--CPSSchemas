@@ -18,8 +18,14 @@
   </tal:block>
 
   <tal:block condition="python:mode == 'edit'">
-    <script type="text/javascript" tal:content="structure string:<!--
-      var base_url = '${base_url}';
+    <script type="text/javascript"
+            tal:define="datamodel datastructure/getDataModel;
+                   portlet datamodel/getObject;
+                   proxy datamodel/getProxy;
+                   local_folder portlet/getLocalFolder|proxy/thisProxyFolder|utool/getPortalObject;
+                   local_folder_url local_folder/absolute_url;"
+            tal:content="structure string:<!--
+      var local_folder_url = '${local_folder_url}';
       var intlinks_w_id = '${id}';
       var links_div_id = 'div_${id}';
       var all_div_id = 'div_all_${id}';
@@ -212,7 +218,7 @@
     <script type="text/javascript">
       <!--
       function open_search_dialog() {
-        var selector_window = window.open(base_url + 'popup_internallinks_form'+
+        var selector_window = window.open(local_folder_url + '/popup_internallinks_form'+
         '?textarea=' + intlinks_w_id, 'popup_link', 'toolbar=0,' +
         'scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,' +
         'dependent=1,width=600,height=600');
