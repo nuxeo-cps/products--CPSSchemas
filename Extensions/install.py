@@ -54,7 +54,8 @@ class CPSSchemasInstaller(CPSInstaller):
                 ('sti', 'application/vnd.sun.xml.impress.template'),
                 ('sxd', 'application/vnd.sun.xml.draw'),
                 ('std', 'application/vnd.sun.xml.draw.template'),
-                ('sxm', 'application/vnd.sun.xml.math')):
+                ('sxm', 'application/vnd.sun.xml.math'),
+                ('odt', 'application/vnd.oasis.opendocument.text'),):
                 if not mimetypesRegistry.extensions.has_key(extension):
                     mimetypesRegistry.manage_addMimeType(mimetype, [mimetype],
                                                          [extension], '', 1)
