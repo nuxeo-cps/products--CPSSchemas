@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.0.0
+===========================================================
+First release built by: madarche at: 2006-11-27T18:21:55
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.0.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50321
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- Added ODT file format in the mimetypesRegistry. 
+
+===========================================================
 Package: CPSSchemas 0.56.2
 ===========================================================
 First release built by: gracinet at: 2006-11-23T21:01:58
