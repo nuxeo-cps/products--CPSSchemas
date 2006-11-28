@@ -82,7 +82,7 @@ displayFckEditor('${value_name}', '${parent_path}', '${base_url}');
         tal:attributes="
         id button_text_editor_popup_id;
         style python:test(rformat == 'html',
-        'visibility: visible;;', 'visibility: hidden;;');
+        'visibility: visible;;', 'visibility: hidden;; display: none;;');
         onclick
         string:javascript:popup_rte('${value_name}', '${here/label_edit}')
         "
