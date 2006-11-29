@@ -1,4 +1,25 @@
 ===========================================================
+Package: CPSSchemas 1.0.1
+===========================================================
+First release built by: gracinet at: 2006-11-29T01:52:56
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.0.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50353
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- In the Text Widget, made the format changing button not use space if the user
+  is not allowed to use the button.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.0.0
 ===========================================================
 First release built by: madarche at: 2006-11-27T18:21:55

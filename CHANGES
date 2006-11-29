@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- In the Text Widget, made the format changing button not use space if the user
-  is not allowed to use the button.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
