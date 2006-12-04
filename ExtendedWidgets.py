@@ -876,6 +876,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         # blank_value_ok_if_required = 1)
         {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
          'label': "Accept blank values when validating"},
+        {'id': 'onchange', 'type': 'string', 'mode':'w',
+         'label': "onChange attribute (edit mode only)"}
         )
     render_formats = ['select', 'radio']
 
@@ -884,6 +886,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
     other_option_display_width = 20
     other_option_size_max = 0
     blank_value_ok_if_required = 1
+    onchange = ''
 
     # BBB for [46171]. Remove this once an upgrade step has been written
     sorted = False
@@ -961,7 +964,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                 raise RuntimeError('unknown render format %s' % render_format)
             if render_format == 'select':
                 res = renderHtmlTag('select',
-                                    name=html_widget_id, id=html_widget_id)
+                                    name=html_widget_id, id=html_widget_id,
+                                    onChange=self.onchange or None)
             # vocabulary options
             vocabulary_items = vocabulary.items()
             if self.sorted:
