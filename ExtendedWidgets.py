@@ -451,8 +451,8 @@ class CPSAttachedFileWidget(CPSFileWidget):
         if self.allowed_suffixes:
             base, suffix = os.path.splitext(fileid)
             if suffix not in self.allowed_suffixes:
-                err = 'cpsschemas_err_file_bad_suffix ${allowed_suffixes}'
-                err_mapping = {'allowed_suffixes':
+                err = 'cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}'
+                err_mapping = {'allowed_file_suffixes':
                                ' '.join(self.allowed_suffixes)}
                 return err, err_mapping
         return '', {}
