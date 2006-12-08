@@ -9,6 +9,7 @@ Bug fixes
 - Fixes #1795 : "cpsschemas_err_file_bad_suffix is not translated" by
   synchronizing the err and err_mapping translations with those of the .po
   files.
+- Fixed i18n sorting in vocabularies.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

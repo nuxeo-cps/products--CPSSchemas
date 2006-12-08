@@ -1,4 +1,4 @@
-# (C) Copyright 2003 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -199,10 +199,10 @@ class Vocabulary(Persistent, Implicit):
             l.sort()
             return [x[1] for x in l]
         elif crit == 'i18n':
-            # XXX why not getToolByName(self, 'translation_service') ?
             portal = getToolByName(self, 'portal_url').getPortalObject()
             cpsmcat = portal.translation_service
-            l = [(cpsmcat(self.getMsgid(key)), key) for key in self.keys()]
+            l = [(cpsmcat(self.getMsgid(key)).encode('ISO-8859-15', 'ignore'),
+                  key) for key in self.keys()]
             l.sort()
             return [x[1] for x in l]
         else:
