@@ -10,6 +10,8 @@ Bug fixes
   synchronizing the err and err_mapping translations with those of the .po
   files.
 - Fixed i18n sorting in vocabularies.
+- Fixed sorting in Select Widget and MultiSelect Widget when the translated
+  option is on.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

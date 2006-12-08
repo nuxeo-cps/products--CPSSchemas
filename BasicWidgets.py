@@ -1015,29 +1015,34 @@ class CPSSelectWidget(CPSWidget):
         cpsmcat = portal.translation_service
         if mode == 'view':
             if self.translated:
-                return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
+                return escape(cpsmcat(
+                    vocabulary.getMsgid(value, value)).encode('ISO-8859-15',
+                                                              'ignore'))
             else:
                 return escape(vocabulary.get(value, value))
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
-            res = renderHtmlTag('select', name=html_widget_id, id=html_widget_id)
-            in_selection = 0
+            res = renderHtmlTag('select',
+                                name=html_widget_id, id=html_widget_id)
+            in_selection = False
             vocabulary_items = vocabulary.items()
+            if self.translated:
+                vocabulary_items_translated = []
+                for k, v in vocabulary_items:
+                    label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
+                    label = label.encode('ISO-8859-15', 'ignore')
+                    vocabulary_items_translated.append((k, label))
+                vocabulary_items = vocabulary_items_translated
             if self.sorted:
                 vocabulary_items.sort(key=operator.itemgetter(1))
             for k, v in vocabulary_items:
-                if self.translated:
-                    kw = {'value': k,
-                          'contents': cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
-                          }
-                else:
-                    kw = {'value': k, 'contents': v}
+                kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = 'selected'
-                    in_selection = 1
+                    in_selection = True
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
-                kw = {'value': value, 'contents': 'invalid: '+ str(value),
+                kw = {'value': value, 'contents': 'invalid: ' + str(value),
                       'selected': 'selected'}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
@@ -1117,7 +1122,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
         cpsmcat = portal.translation_service
         if mode == 'view':
             if not value:
-                # XXX L10N empty format may be subject to i18n.
+                # XXX L10N empty format may be subject to i18n
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
             else:
@@ -1131,18 +1136,19 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             if self.size:
                 kw['size'] = self.size
             res = renderHtmlTag('select', **kw)
+
             vocabulary_items = vocabulary.items()
+            if self.translated:
+                vocabulary_items_translated = []
+                for k, v in vocabulary_items:
+                    label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
+                    label = label.encode('ISO-8859-15', 'ignore')
+                    vocabulary_items_translated.append((k, label))
+                vocabulary_items = vocabulary_items_translated
             if self.sorted:
                 vocabulary_items.sort(key=operator.itemgetter(1))
             for k, v in vocabulary_items:
-                if self.translated:
-                    label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
-                    label = label.encode('ISO-8859-15', 'ignore')
-                    kw = {'value': k,
-                          'contents': label,
-                          }
-                else:
-                    kw = {'value': k, 'contents': v}
+                kw = {'value': k, 'contents': v}
                 if k in value:
                     kw['selected'] = 'selected'
                 res += renderHtmlTag('option', **kw)
