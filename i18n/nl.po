@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-13 15:00default\n"
+"POT-Creation-Date: 2006-12-11 18:01default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 #.   <button type="button" attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
-#.           'visibility: visible;;', 'visibility: hidden;;');
+#.           'visibility: visible;;', 'visibility: hidden;; display: none;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
 #.           ">Layout</button>
@@ -120,7 +120,8 @@ msgstr "Formaat&nbsp;: "
 #.   <block>
 #.           Image title :
 #.         </block>
-#: from ../skins/cps_schemas/widget_photo_render.pt
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_image_title"
 msgstr "Title: "
@@ -340,6 +341,10 @@ msgstr "Gb"
 
 msgid "cpsschemas_err_string"
 msgstr "Keten van invalide karakter"
+
+#, fuzzy
+msgid "cpsschemas_err_string_too_short"
+msgstr "String too short"
 
 msgid "cpsschemas_err_string_too_long"
 msgstr "Te lange keten van karakter"

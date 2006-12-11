@@ -189,10 +189,13 @@ class CPSStringWidget(CPSWidget):
     field_inits = ({'is_searchabletext': 1,},)
 
     display_width = 20
+    size_min = 0
     size_max = 0
     _properties = CPSWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
+        {'id': 'size_min', 'type': 'int', 'mode': 'w',
+         'label': 'Minimum input width'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Maximum input width'},
         )
@@ -221,6 +224,8 @@ class CPSStringWidget(CPSWidget):
         else:
             if self.is_required and not v:
                 err = 'cpsschemas_err_required'
+            elif self.size_min and len(v) < self.size_min:
+                err = 'cpsschemas_err_string_too_short'
             elif self.size_max and len(v) > self.size_max:
                 err = 'cpsschemas_err_string_too_long'
         return err, v

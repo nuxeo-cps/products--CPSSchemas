@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- Added a "size_min" option to the String Widget.
 Bug fixes
 ~~~~~~~~~
 - Fixes #1795 : "cpsschemas_err_file_bad_suffix is not translated" by

@@ -31,6 +31,9 @@ msgstr ""
 msgid "cpsschemas_err_string"
 msgstr ""
 
+msgid "cpsschemas_err_string_too_short"
+msgstr ""
+
 msgid "cpsschemas_err_string_too_long"
 msgstr ""
 
