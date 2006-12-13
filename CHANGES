@@ -3,15 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- Added a "size_min" option to the String Widget.
+-
 Bug fixes
 ~~~~~~~~~
-- Fixes #1795 : "cpsschemas_err_file_bad_suffix is not translated" by
-  synchronizing the err and err_mapping translations with those of the .po
-  files.
-- Fixed i18n sorting in vocabularies.
-- Fixed sorting in Select Widget and MultiSelect Widget when the translated
-  option is on.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

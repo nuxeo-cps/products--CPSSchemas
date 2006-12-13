@@ -1,4 +1,29 @@
 ===========================================================
+Package: CPSSchemas 1.2.0
+===========================================================
+First release built by: gracinet at: 2006-12-13T20:10:35
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.2.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50571
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Added a "size_min" option to the String Widget.
+Bug fixes
+~~~~~~~~~
+- Fixes #1795 : "cpsschemas_err_file_bad_suffix is not translated" by
+  synchronizing the err and err_mapping translations with those of the .po
+  files.
+- Fixed i18n sorting in vocabularies.
+- Fixed sorting in Select Widget and MultiSelect Widget when the translated
+  option is on.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.1.0
 ===========================================================
 First release built by: gracinet at: 2006-12-05T19:06:15
