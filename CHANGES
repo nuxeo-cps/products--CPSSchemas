@@ -6,9 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Made FCKEditor config do no try to convert characters into HTML entities. If
-  the users were able to enter those characters (for example quotes), let them
-  as they are.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

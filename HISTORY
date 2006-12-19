@@ -1,4 +1,26 @@
 ===========================================================
+Package: CPSSchemas 1.2.1
+===========================================================
+First release built by: div at: 2006-12-19T20:17:50
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.2.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50655
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Made FCKEditor config do no try to convert characters into HTML entities. If
+  the users were able to enter those characters (for example quotes), let them
+  as they are.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.2.0
 ===========================================================
 First release built by: gracinet at: 2006-12-13T20:10:35
