@@ -1,7 +1,6 @@
 <tal:block define="mode options/mode;
-                   doc nocall:options/value;
-                   here_url here/absolute_url;
-                   utool nocall:here/portal_url;
+                   doc nocall:options/doc;
+                   proxy nocall:options/proxy;
                    mtool here/portal_membership;
                    isAnon mtool/isAnonymousUser;
                   ">
@@ -9,11 +8,16 @@
   <small>
   <tal:block condition="not:isAnon"
     define="
-      dname python:here.portal_directories.members.getEntry(doc.Creator(), default=None);
-      cname dname/fullname|python:here.portal_membership.getFullnameFromId(doc.Creator());
-      info python:(here_url != utool.getPortalObject().absolute_url())
-      and doc.getContentInfo(proxy=doc, level=2) or None;
-      email dname/email|nothing;">
+      wtool nocall:here/portal_workflow;
+      dtool nocall:here/portal_directories;
+      creator doc/Creator;
+      dname python:dtool.members.getEntry(creator, default=None);
+      cname dname/fullname|python:mtool.getFullnameFromId(creator);
+      email dname/email|nothing;
+      review_state python:wtool.getInfoFor(proxy, 'review_state', '');
+      rev proxy/getRevision;
+      lang proxy/getLanguage;
+">
   <span i18n:translate="">
     Created by
     <a href="." title="Here" tal:omit-tag="not:email"
@@ -23,17 +27,17 @@
     <tal:block content="python:here.getDateStr(doc.modification_date, 'short')"
       i18n:name="item_modification"/>.
   </span>
-  <tal:block condition="python: info and not doc.isInWorkspacesTree()">
+  <tal:block condition="not:proxy/isInWorkspacesTree">
     <span i18n:translate="label_status">Label Status</span>
-    <span tal:content="info/review_state" tal:attributes="class
-      info/review_state" i18n:translate="">Work</span>
+    <span tal:content="review_state" tal:attributes="class
+      review_state" i18n:translate="">Work</span>
     <tal:block i18n:translate="">label_revision
-      <span tal:content="info/rev" i18n:name="status_revision">1</span>
+      <span tal:content="rev" i18n:name="status_revision">1</span>
     </tal:block>
     <tal:block i18n:translate="">label_language
       <span i18n:name="status_language">
       <tal:block i18n:translate=""
-        content="string:label_language_${info/lang}">en</tal:block>
+        content="string:label_language_${lang}">en</tal:block>
        </span>
     </tal:block>
   </tal:block>

@@ -2223,27 +2223,27 @@ class CPSBylineWidget(CPSWidget):
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        return 1
+        return True
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         datamodel = datastructure.getDataModel()
-        # get the object containing this widget
-        if datamodel.getObject():
-            value = datamodel.getObject().aq_inner.aq_parent
-        else:
-            value = None
+        doc = datamodel.getObject()
+        proxy = datamodel.getProxy()
+        if proxy is None:
+            proxy = doc
         render_method = 'widget_byline_render'
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        return meth(mode=mode, value=value)
-
+        return meth(mode=mode, proxy=proxy, doc=doc)
 
 InitializeClass(CPSBylineWidget)
 
 widgetRegistry.register(CPSBylineWidget)
+
+##################################################
 
 class CPSRevisionWidget(CPSWidget):
     """Display the revision of the document"""
@@ -2266,7 +2266,6 @@ class CPSRevisionWidget(CPSWidget):
             return str(proxy.getRevision())
         else:
             return ''
-
 
 InitializeClass(CPSRevisionWidget)
 
