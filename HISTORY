@@ -1,4 +1,25 @@
 ===========================================================
+Package: CPSSchemas 1.2.2
+===========================================================
+First release built by: ben at: 2006-12-26T11:22:39
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.2.2
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50681
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Fixed the Byline Widget which had dubious code mixing up doc and proxy. This
+  is a replay of changeset [46411] from CPS4.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.2.1
 ===========================================================
 First release built by: div at: 2006-12-19T20:17:50
