@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Fixed the Byline Widget which had dubious code mixing up doc and proxy. This
-  is a replay of changeset [46411] from CPS4.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
