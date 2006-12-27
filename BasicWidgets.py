@@ -207,21 +207,25 @@ class CPSStringWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
 
     def _extractValue(self, value):
         """Return err and new value."""
         err = None
         if not value:
-            v = ''
+            v = u''
         else:
             v = value
-        try:
-            v = v.strip()
-        except AttributeError:
-            err = 'cpsschemas_err_string'
-        else:
+            try:
+                if not isinstance(value, basestring):
+                    raise ValueError
+                if isinstance(value, str):
+                    v = unicode(value, 'ascii')
+                v = v.strip()
+            except (ValueError, UnicodeError):
+                err = 'cpsschemas_err_string'
+        if err is None:
             if self.is_required and not v:
                 err = 'cpsschemas_err_required'
             elif self.size_min and len(v) < self.size_min:
@@ -229,6 +233,7 @@ class CPSStringWidget(CPSWidget):
             elif self.size_max and len(v) > self.size_max:
                 err = 'cpsschemas_err_string_too_long'
         return err, v
+
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -548,18 +553,16 @@ class CPSPasswordWidget(CPSStringWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         err = 0
-        try:
-            v = str(value).strip()
-        except ValueError:
-            err = 'cpsschemas_err_string'
-        else:
+
+        err, v = self._extractValue(value)
+        if err is None:
             if self.password_widget:
                 # here we only check that that our confirm match the pwd
                 pwidget_id = self.password_widget
                 pvalue = datastructure[pwidget_id]
                 datastructure[widget_id] = ''
                 datastructure[pwidget_id] = ''
-                pv = str(pvalue).strip()
+                pv = pvalue.strip()
                 if pv and v != pv:
                     err = 'cpsschemas_err_password_mismatch'
             else:
@@ -690,17 +693,26 @@ class CPSTextAreaWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        try:
-            v = str(value).strip()
-        except ValueError:
-            datastructure.setError(widget_id, "cpsschemas_err_textarea")
-            return 0
+
+        if not value:
+            v = u''
+        else:
+            v = value
+            try:
+                if not isinstance(value, basestring):
+                    raise ValueError
+                if isinstance(value, str):
+                    v = unicode(value, 'ascii')
+                v = v.strip()
+            except (ValueError, UnicodeError):
+                datastructure.setError(widget_id, 'cpsschemas_err_textarea')
+                return 0
         if self.is_required and not v:
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, "cpsschemas_err_required")
@@ -820,7 +832,7 @@ class CPSLinesWidget(CPSWidget):
             html_widget_id = self.getHtmlWidgetId()
             return renderHtmlTag('textarea',
                                  id=html_widget_id,
-                                 name=html_widget_id + ':lines',
+                                 name=html_widget_id + ':utf8:ulines',
                                  cols=self.width,
                                  rows=self.height,
                                  contents='\n'.join(value))
@@ -985,6 +997,21 @@ class CPSSelectWidget(CPSWidget):
                 msgid=self.empty_key_value_i18n,
                 position=self.empty_key_pos,)
         return vocabulary
+
+    def _getTranslatedVocabularyKey(self, translation_service, vocabulary,
+                                    key):
+        """Get vocabulary key translated."""
+        msgid = vocabulary.getMsgid(key, key)
+        if not isinstance(msgid, basestring):
+            msgid = str(msgid)
+        value = translation_service(msgid, default=msgid)
+        return value
+
+    def _getTranslatedMsgid(self, translation_service, msgid):
+        """Get translated Msgid for selections presentation
+        """
+        value = translation_service(msgid, default=msgid)
+        return value
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""

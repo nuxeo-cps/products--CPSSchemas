@@ -104,8 +104,8 @@ class CPSTextWidget(CPSStringWidget):
     render_format = all_render_formats[0]
     html_editor_position = all_html_editor_positions[0]
     configurable = 'nothing'
-    input_encoding = 'iso-8859-15'
-    output_encoding = 'iso-8859-15'
+    input_encoding = 'unicode'
+    output_encoding = 'unicode'
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -117,7 +117,7 @@ class CPSTextWidget(CPSStringWidget):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
-        datastructure[widget_id] = str(datamodel[self.fields[0]])
+        datastructure[widget_id] = datamodel[self.fields[0]]
         rposition = self.render_position
         rformat = self.render_format
         if self.configurable != 'nothing':
@@ -906,13 +906,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        try:
-            v = str(value)
-        except ValueError:
-            datastructure.setError(widget_id, "cpsschemas_err_select")
-            return 0
-        vocabulary = self._getVocabulary(datastructure)
-        if len(value)>0:
+        if value != '':
             if not vocabulary.has_key(value):
                 if self.render_format == 'select' or not self.other_option:
                     datastructure.setError(widget_id, "cpsschemas_err_select")
@@ -929,8 +923,9 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_required")
                     return 0
         datamodel = datastructure.getDataModel()
-        datamodel[self.fields[0]] = v
+        datamodel[self.fields[0]] = value
         return 1
+
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -940,8 +935,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         if value is not None:
             value = str(value)
         vocabulary = self._getVocabulary(datastructure)
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.translation_service
+        cpsmcat = getToolByName(self, 'translation_service')
         if mode == 'view':
             if not vocabulary.has_key(value):
                 # for free input
@@ -951,7 +945,9 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     return ''
             else:
                 if getattr(self, 'translated', None):
-                    return escape(cpsmcat(vocabulary.getMsgid(value, value)).encode('ISO-8859-15', 'ignore'))
+                    return escape(self._getTranslatedVocabularyKey(cpsmcat,
+                                                                   vocabulary,
+                                                                   value))
                 else:
                     return escape(vocabulary.get(value, value))
         elif mode == 'edit':
@@ -974,7 +970,9 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                 # this enable to work with vocabulary that have integer keys
                 k = str(k)
                 if getattr(self, 'translated', None):
-                    v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
+                    v = self._getTranslatedVocabularyKey(cpsmcat,
+                                                         vocabulary,
+                                                         k)
                 if render_format == 'select':
                     kw = {'value': k, 'contents': v}
                     # do not add a selected option if it is already set
@@ -1001,10 +999,12 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     res += '<br/>\n'
             # invalid or free selections
             if value and not in_selection:
+                invalid_contents = '%s %s' % (self._getTranslatedMsgid(
+                    cpsmcat, 'label_invalid_selection'), value)
                 if render_format == 'select':
                     in_selection = 1
                     kw = {'value': value,
-                          'contents': 'invalid: '+value,
+                          'contents': invalid_contents,
                           'selected': 'selected',
                           }
                     res += renderHtmlTag('option', **kw)
@@ -1021,7 +1021,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                               }
                         res += renderHtmlTag('input', **kw)
                         kw = {'for': html_widget_id+'_other_selection',
-                              'contents': cpsmcat('label_other_selection').encode('ISO-8859-15', 'ignore'),
+                              'contents': self._getTranslatedMsgid(
+                            cpsmcat, 'label_other_selection'),
                               }
                         res += renderHtmlTag('label', **kw)
                         kw = {'type': 'text',
@@ -1044,7 +1045,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                               }
                         res += renderHtmlTag('input', **kw)
                         kw = {'for': html_widget_id+'_'+value,
-                              'contents': 'invalid: '+value,
+                              'contents': invalid_contents,
                               }
                         res += renderHtmlTag('label', **kw)
                         res += '<br/>\n'
@@ -1058,7 +1059,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                           }
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_other_selection',
-                          'contents': cpsmcat('label_other_selection').encode('ISO-8859-15', 'ignore'),
+                          'contents': self._getTranslatedMsgid(
+                        cpsmcat, 'label_other_selection'),
                           }
                     res += renderHtmlTag('label', **kw)
                     kw = {'type': 'text',
@@ -1076,7 +1078,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
             if not self.is_required and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
-                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
+                          'contents': self._getTranslatedMsgid(
+                        cpsmcat, 'label_none_selection'),
                           }
                     if not in_selection:
                         kw['selected'] = 'selected'
@@ -1092,7 +1095,8 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                         kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
-                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
+                          'contents': self._getTranslatedMsgid(
+                        cpsmcat, 'label_none_selection'),
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
@@ -1188,8 +1192,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         vocabulary = self._getVocabulary(datastructure)
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        cpsmcat = portal.translation_service
+        cpsmcat = getToolByName(self, 'translation_service')
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
@@ -1244,10 +1247,11 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
             # invalid selections
             for value_item in value:
                 if value_item and value_item not in vocabulary.keys():
+                    invalid_contents = '%s %s' % (self._getTranslatedMsgid(
+                        cpsmcat, 'label_invalid_selection'), value_item)
                     if render_format == 'select':
                         kw = {'value': value_item,
-                              # XXX missing i18n for invalid
-                              'contents': 'invalid: ' + value_item,
+                              'contents': invalid_contents,
                               'selected': 'selected',
                               }
                         res += renderHtmlTag('option', **kw)
@@ -1261,7 +1265,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                               }
                         res += renderHtmlTag('input', **kw)
                         kw = {'for': html_widget_id+'_'+value_item,
-                              'contents': 'invalid: '+value_item,
+                              'contents': invalid_contents,
                               }
                         res += renderHtmlTag('label', **kw)
                         res += '<br/>\n'
@@ -1269,7 +1273,8 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
             if not self.is_required and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
-                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
+                          'contents': self._getTranslatedMsgid(
+                        cpsmcat, 'label_none_selection'),
                           }
                     if not in_selection:
                         kw['selected'] = 'selected'
@@ -1286,7 +1291,8 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                         kw['checked'] = 'checked'
                     res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_empty',
-                          'contents': cpsmcat('label_none_selection').encode('ISO-8859-15', 'ignore'),
+                          'contents': self._getTranslatedMsgid(
+                        cpsmcat, 'label_none_selection'),
                           }
                     res += renderHtmlTag('label', **kw)
                     res += '<br/>\n'
@@ -1433,8 +1439,8 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
                 return msgid
 
         for language in languages:
-            language_title = mcat('label_language_%s'% language).encode(
-                'ISO-8859-15', 'ignore')
+            language_title = mcat('label_language_%s'% language,
+                                  default=language)
             contents = language
             if current_language != language:
                 contents = renderHtmlTag('a', href='%s/switchLanguage/%s' %

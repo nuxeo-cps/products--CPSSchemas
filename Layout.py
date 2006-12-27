@@ -464,6 +464,8 @@ class Layout(PropertiesPostProcessor,
                                 label_edit=self.label_edit,
                                 is_i18n=self.is_i18n,
                                 **kw)
+        if not isinstance(rendered, unicode):
+            rendered = unicode(rendered, 'utf-8', 'replace')
         return rendered
 
 InitializeClass(Layout)
