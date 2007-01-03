@@ -1047,9 +1047,7 @@ class CPSSelectWidget(CPSWidget):
         cpsmcat = portal.translation_service
         if mode == 'view':
             if self.translated:
-                return escape(cpsmcat(
-                    vocabulary.getMsgid(value, value)).encode('ISO-8859-15',
-                                                              'ignore'))
+                return escape(cpsmcat(vocabulary.getMsgid(value, value)))
             else:
                 return escape(vocabulary.get(value, value))
         elif mode == 'edit':
@@ -1062,7 +1060,6 @@ class CPSSelectWidget(CPSWidget):
                 vocabulary_items_translated = []
                 for k, v in vocabulary_items:
                     label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
-                    label = label.encode('ISO-8859-15', 'ignore')
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
@@ -1174,7 +1171,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                 vocabulary_items_translated = []
                 for k, v in vocabulary_items:
                     label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
-                    label = label.encode('ISO-8859-15', 'ignore')
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
@@ -1202,7 +1198,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             if translated:
                 value = vocabulary.getMsgid(entry, entry)
                 value = cpsmcat(value, default=value)
-                value = value.encode('ISO-8859-15', 'ignore')
             else:
                 value = vocabulary.get(entry, entry)
             values.append(value)
@@ -1678,8 +1673,7 @@ class CPSFileWidget(CPSWidget):
         """
         hr = getHumanReadableSize(size)
         cpsmcat = getToolByName(self, 'translation_service')
-        return str(hr[0]) + ' ' + cpsmcat(hr[1]).encode('ISO-8859-15',
-                                                        'ignore')
+        return str(hr[0]) + ' ' + cpsmcat(hr[1])
 
     def getFileInfo(self, datastructure):
         """Get the file info from the datastructure."""
