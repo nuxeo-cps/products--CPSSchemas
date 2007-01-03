@@ -446,6 +446,10 @@ class CPSIdentifierWidget(CPSStringWidget):
 
         if not err and v and not self._checkIdentifier(v):
             err = 'cpsschemas_err_identifier'
+        try:
+            v = str(v)
+        except UnicodeEncodeError:
+            err = 'cpsschemas_err_identifier'
 
         if err:
             datastructure.setError(widget_id, err)
