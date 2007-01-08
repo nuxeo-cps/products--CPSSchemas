@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- #1801: Diskfile respects file 'extensions', has better transactional
-  behaviour and allows access to temporary file (for analysis).
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
