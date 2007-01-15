@@ -906,6 +906,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        vocabulary = self._getVocabulary(datastructure)
         if value != '':
             if not vocabulary.has_key(value):
                 if self.render_format == 'select' or not self.other_option:
