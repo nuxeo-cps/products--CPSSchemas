@@ -357,10 +357,11 @@ class DataModel(UserDict):
                     LOG("DataModel", TRACE, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
-
+        # write only the dirty data
+        towrite = dict( (k,v) for k,v in data.items() if self.isDirty(k))
         # Call the adapters to store the data.
         for adapter in self._adapters:
-            adapter.setData(data)
+            adapter.setData(towrite)
 
     #
     # Import/export

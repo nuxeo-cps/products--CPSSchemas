@@ -172,7 +172,6 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.isDirty('f2'), False)
         self.assertEquals(dm.isDirty('f3'), False)
         self.assertEquals(dm.isDirty('f4'), False)
-        self.assertEquals(dm.isDirty('f5'), False)
 
     def test_commit_with_proxy(self):
         # Test that editable content is correctly retrieved.
