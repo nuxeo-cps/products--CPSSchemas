@@ -147,6 +147,7 @@ class TestDataModel(unittest.TestCase):
         dm._fetch()
         dm['f2'] = 'f2changed'
         dm['f4'] = 'f4changed'
+        doc.f5 = "unchanged stored value"
 
         # Unchanged field with class value is not dirty
         self.assertEquals(dm.isDirty('f1'), False)
@@ -165,13 +166,14 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(doc.f2, 'f2changed')
         self.assertEquals(doc.f3, 'f3def')
         self.assertEquals(doc.f4, 'f4changed')
-        self.assertEquals(doc.f5, 'f2inst_yo') # f2 changed after fetch
+        self.assertEquals(doc.f5, "unchanged stored value")
 
         # Nothing is dirty anymore
         self.assertEquals(dm.isDirty('f1'), False)
         self.assertEquals(dm.isDirty('f2'), False)
         self.assertEquals(dm.isDirty('f3'), False)
         self.assertEquals(dm.isDirty('f4'), False)
+        self.assertEquals(dm.isDirty('f5'), False)
 
     def test_commit_with_proxy(self):
         # Test that editable content is correctly retrieved.
