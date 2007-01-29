@@ -147,7 +147,6 @@ class TestDataModel(unittest.TestCase):
         dm._fetch()
         dm['f2'] = 'f2changed'
         dm['f4'] = 'f4changed'
-        doc.f5 = "unchanged stored value"
 
         # Unchanged field with class value is not dirty
         self.assertEquals(dm.isDirty('f1'), False)
@@ -166,7 +165,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(doc.f2, 'f2changed')
         self.assertEquals(doc.f3, 'f3def')
         self.assertEquals(doc.f4, 'f4changed')
-        self.assertEquals(doc.f5, "unchanged stored value")
+        self.assertEquals(doc.f5, "f2inst_yo")
 
         # Nothing is dirty anymore
         self.assertEquals(dm.isDirty('f1'), False)
