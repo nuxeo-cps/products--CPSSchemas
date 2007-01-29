@@ -109,6 +109,18 @@ class BaseStorageAdapter:
         """Get the writable field ids and the fields."""
         return self._writable_field_items
 
+    def getMandatoryFieldIds(self):
+        """Get the ids of fields whose values are needed for write operations.
+
+        Called by DataModel's _commitData to know what non dirty fields are
+        nonetheless to be passed along to setData.
+        Use-case from CPSDirectory: the ids in backings have to be passed along
+        when a StackingDirectory is behind a MetaDirectory.
+        """
+        # BBB
+        return self.getFieldIds()
+
+
     def getDefaultData(self):
         """Get the default data from the fields' default values.
 
@@ -208,6 +220,9 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
+    def getMandatoryFieldIds(self):
+        return ()
+
     def getContextObject(self):
         """Get the underlying context for this adapter."""
         return self._ob
@@ -291,6 +306,9 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
+    def getMandatoryFieldIds(self):
+        return ()
+
     def getContextObject(self):
         """Get the underlying context for this adapter."""
         return self._ob
@@ -357,6 +375,9 @@ class MappingStorageAdapter(BaseStorageAdapter):
         """
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
+
+    def getMandatoryFieldIds(self):
+        return ()
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""

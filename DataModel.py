@@ -357,9 +357,19 @@ class DataModel(UserDict):
                     LOG("DataModel", TRACE, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
+                    for dep_id in field._getAllDependantFieldIds():
+                        self.dirty[dep_id] = 1
+
+        # Compute the mapping that has to be passed to adapters
+        mandatory = set()
+        for adapter in self._adapters:
+            mandatory.update(adapter.getMandatoryFieldIds())
+        to_set = dict((k,v) for k,v in data.items()
+                      if k in mandatory or self.isDirty(k))
+
         # Call the adapters to store the data.
         for adapter in self._adapters:
-            adapter.setData(data)
+            adapter.setData(to_set)
 
     #
     # Import/export
