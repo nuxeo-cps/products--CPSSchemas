@@ -120,6 +120,17 @@ class BaseStorageAdapter:
         # BBB
         return self.getFieldIds()
 
+    def getWriteProcessFieldIds(self):
+        """Return the ids of fields that are needed for write expressions.
+
+        Can be used as a replacement for getMandatoryFieldIds
+        """
+
+        res = getattr(self, '_write_process_field_ids', None)
+        if res is not None:
+            return res
+        res = self._write_process_field_ids = self._getWriteProcessFieldIds()
+        return res
 
     def getDefaultData(self):
         """Get the default data from the fields' default values.
@@ -151,7 +162,21 @@ class BaseStorageAdapter:
 
     #
     # Internal API for subclasses
-    #
+   #
+
+    def _getWriteProcessFieldIds(self):
+        res = set()
+
+        for field_id, field in self.getFieldItems():
+            if not field.write_process_expr:
+                continue
+            res.add(field_id)
+            wpdf = field.write_process_dependent_fields
+            if '*' in wpdf:
+                return self.getFieldIds()
+            res.update(wpdf)
+        return res
+
     def _getData(self, **kw):
         """Get data from the object, returns a mapping."""
         data = {}
@@ -190,7 +215,7 @@ class BaseStorageAdapter:
         Returns a copy, without the fields that are not stored."""
         new_data = {}
         for field_id, field in self.getFieldItems():
-            if not data.has_key(field_id):
+            if not field_id in data:
                 continue
             value = data[field_id]
             result = field.processValueBeforeWrite(value, data,
@@ -220,8 +245,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
-    def getMandatoryFieldIds(self):
-        return ()
+    getMandatoryFieldIds = BaseStorageAdapter.getWriteProcessFieldIds
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""
@@ -306,8 +330,7 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
-    def getMandatoryFieldIds(self):
-        return ()
+    getMandatoryFieldIds = BaseStorageAdapter.getWriteProcessFieldIds
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""
@@ -376,8 +399,7 @@ class MappingStorageAdapter(BaseStorageAdapter):
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
 
-    def getMandatoryFieldIds(self):
-        return ()
+    getMandatoryFieldIds = BaseStorageAdapter.getWriteProcessFieldIds
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""

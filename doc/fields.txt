@@ -173,8 +173,17 @@ Fields are configured using the following properties.
   TALES expression before being really written to the storage. The
   same namespace than for 'read_process_expr is available, except
   that 'value' and 'data' refer to the value as seen by the rest
-  of CPSSchemas before writing.
+  of CPSSchemas before writing. See also below.
 
+- write_process_dependent_fields -- Write: expression dependent fields
+  If the above expression uses some other fields, they must be
+  specified here so that the write process engine gets them even if
+  they have seen no changes (some backends can request a strict subset of all
+  fields to write and process, thus avoid useless or harmful writes).
+
+  These fields must be all belong in the same
+  schema. One can use '*' as a wildcard for 'all', and this is the
+  default value, for backwards compatibility.
 
 Additional properties
 =====================

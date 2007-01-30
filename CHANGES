@@ -10,4 +10,6 @@ Bug fixes
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - DataModel tells the StorageAdapters to write only those fields that
-  have been modified or that the adapter didn't require.
+  have been modified or that the adapter didn't require;
+  A new 'write_process_dependent_fields' property is used by some
+  adapters to require those fields. This is backwards compatible.

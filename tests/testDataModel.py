@@ -62,7 +62,7 @@ class TestDataModel(unittest.TestCase):
         doc = self.doc = FakeDocument()
         doc.f2 = 'f2inst'
         # Acquisition is needed for expression context computation during fetch
-        schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
+        self.schema = schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
         schema.addField('f1', 'CPS String Field')
         schema.addField('f2', 'CPS String Field')
         schema.addField('f3', 'CPS String Field', default_expr='string:f3def')
@@ -83,6 +83,10 @@ class TestDataModel(unittest.TestCase):
                         read_ignore_storage=True,
                         read_process_expr='python:util.dummy("some text")',
                         )
+        self.schema.addField('f8', 'CPS String Field',
+                             write_process_expr='python: f2+"_ja"',
+                             write_process_dependent_fields=('f2',),
+                             )
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
@@ -99,7 +103,8 @@ class TestDataModel(unittest.TestCase):
               'f4': 'f4changed',
               'f5': 'f2inst_yo',
               'f6': None,
-              'f7': 'some text'
+              'f7': 'some text',
+              'f8': '',
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -109,6 +114,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm['f5'], ok['f5'])
         self.assertEquals(dm['f6'], ok['f6'])
         self.assertEquals(dm['f7'], ok['f7'])
+        self.assertEquals(dm['f8'], ok['f8'])
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 
@@ -128,7 +134,8 @@ class TestDataModel(unittest.TestCase):
               'f4': '',
               'f5': '_yo',
               'f6': None,
-              'f7': 'some text'
+              'f7': 'some text',
+              'f8': '',
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -174,6 +181,17 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.isDirty('f3'), False)
         self.assertEquals(dm.isDirty('f4'), False)
         self.assertEquals(dm.isDirty('f5'), False)
+
+    def testWriteDependencies(self):
+        # We will change f2, and expect f8 to be updated because it has
+        # a write dependency on f2
+        dm = self.makeOne()
+        doc = self.doc
+        self.doc.f8 = 'previous_f8'
+        dm._fetch()
+        dm['f2'] = 'f2changed'
+        dm._commit(check_perms=0)
+        self.assertEquals(doc.f8, 'f2changed_ja')
 
     def test_commit_with_proxy(self):
         # Test that editable content is correctly retrieved.
