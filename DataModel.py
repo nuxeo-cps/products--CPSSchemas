@@ -209,7 +209,7 @@ class DataModel(UserDict):
     # Expose setter as method for restricted code.
     def set(self, key, item):
         self.checkWriteAccess(key)
-        self.data[key] = item
+        self[key] = item
 
     def update(self, dict):
         for key in dict.keys():
