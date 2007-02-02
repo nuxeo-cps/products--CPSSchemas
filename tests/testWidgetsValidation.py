@@ -291,6 +291,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
     """
         #'
         # Lines to protect emacs syntax highlighting from messing.
+        text = unicode(text, 'iso-8859-15')
         ret, err, ds = self._validate({}, text)
         self.assert_(ret, err)
 
@@ -473,7 +474,7 @@ class EmailWidgetValidationTest(WidgetValidationTest):
 
     def test_email_ok_6(self):
         ret, err, ds = self._validate({'allow_extended_email': True},
-                                      'Yé Yo Yu5632 <ye.yo@truc.br>')
+                                      u'Yé Yo Yu5632 <ye.yo@truc.br>')
         self.assert_(ret, err)
 
     def test_email_nok_1(self):
@@ -497,7 +498,7 @@ class EmailWidgetValidationTest(WidgetValidationTest):
         self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_6(self):
-        ret, err, ds = self._validate({}, 'é@à.fr')
+        ret, err, ds = self._validate({}, u'é@à.fr')
         self.assertEquals(err, 'cpsschemas_err_email')
 
     def test_email_nok_7(self):
@@ -560,11 +561,11 @@ class IdentifierWidgetValidationTest(WidgetValidationTest):
         self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_2(self):
-        ret, err, ds = self._validate({}, 'élskjd')
+        ret, err, ds = self._validate({}, u'élskjd')
         self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_3(self):
-        ret, err, ds = self._validate({}, 'boaz mlskjr ')
+        ret, err, ds = self._validate({}, u'boaz mlskjr ')
         self.assertEquals(err, 'cpsschemas_err_identifier')
 
     def test_identifier_nok_4(self):

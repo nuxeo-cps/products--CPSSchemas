@@ -228,10 +228,11 @@ class CPSStringWidget(CPSWidget):
         if err is None:
             if self.is_required and not v:
                 err = 'cpsschemas_err_required'
-            elif self.size_min and len(v) < self.size_min:
-                err = 'cpsschemas_err_string_too_short'
-            elif self.size_max and len(v) > self.size_max:
-                err = 'cpsschemas_err_string_too_long'
+            elif not self.is_required and v:
+                if self.size_min and len(v) < self.size_min:
+                    err = 'cpsschemas_err_string_too_short'
+                elif self.size_max and len(v) > self.size_max:
+                    err = 'cpsschemas_err_string_too_long'
         return err, v
 
 
@@ -593,6 +594,8 @@ class CPSPasswordWidget(CPSStringWidget):
                         err = 'cpsschemas_err_password_extra'
 
         if err:
+            if err == 'cpsschemas_err_string_too_short':
+                err = 'cpsschemas_err_password_size_min'
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, err)
         elif v:
