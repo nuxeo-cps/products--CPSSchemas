@@ -1209,7 +1209,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
             if render_format not in self.render_formats:
                 raise RuntimeError('unknown render format %s' % render_format)
             if render_format == 'select':
-                kw = {'name': html_widget_id + ':list',
+                kw = {'name': html_widget_id + ':utf8:ulist',
                       'id': html_widget_id,
                       'multiple': 'multiple',
                       }
@@ -1222,7 +1222,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                 vocabulary_items.sort(key=operator.itemgetter(1))
             for k, v in vocabulary_items:
                 if getattr(self, 'translated', None):
-                    v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
+                    v = cpsmcat(vocabulary.getMsgid(k, k))
                 if render_format == 'select':
                     kw = {'value': k, 'contents': v}
                     if k in value:
