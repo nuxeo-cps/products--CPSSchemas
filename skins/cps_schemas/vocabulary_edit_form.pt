@@ -32,21 +32,21 @@
   <tal:keys repeat="key keys">
     <tr tal:define="num repeat/key/index">
       <td>
-        <input type="checkbox" name="keys:list" tal:attributes="value key" />
+        <input type="checkbox" name="keys:utf8:ulist" tal:attributes="value key" />
       </td>
       <td>
         <input type="text" size="20"
-               tal:attributes="name string:key_${num};
+               tal:attributes="name string:key_${num}:utf8:ustring;
                                value key" />
       </td>
       <td>
         <input type="text" size="40"
-               tal:attributes="name string:label_${num};
+               tal:attributes="name string:label_${num}:utf8:ustring;
                                value python:vocab.get(key)" />
       </td>
       <td>
         <input type="text"  size="15"
-               tal:attributes="name string:msgid_${num};
+               tal:attributes="name string:msgid_${num}:utf8:ustring;
                                value python:vocab.getMsgid(key)" />
       </td>
     </tr>
