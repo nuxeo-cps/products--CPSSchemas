@@ -1162,7 +1162,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                 return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
-            kw = {'name': html_widget_id + ':list',
+            kw = {'name': html_widget_id + ':utf8:ulist',
                   'multiple': 'multiple',
                   'id': html_widget_id,
                   }
@@ -1187,7 +1187,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             res += '</select>'
             default_tag = renderHtmlTag('input',
                                         type='hidden',
-                                        name=html_widget_id+':tokens:default',
+                                        name=html_widget_id+':utf8:utokens:default',
                                         value='')
             return default_tag+res
         raise RuntimeError('unknown mode %s' % mode)
