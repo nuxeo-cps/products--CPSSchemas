@@ -107,7 +107,7 @@
         Image title :
       </tal:block>
       <input type="text" size="30" maxlength="60"
-             tal:attributes="name string:${id}_title;
+             tal:attributes="name string:${id}_title:utf8:ustring;
                              value title" />
       </p>
     </tal:block>
@@ -118,7 +118,7 @@
         Photo subtitle :
       </tal:block>
       <input type="text" size="30"
-             tal:attributes="name string:${id}_subtitle;
+             tal:attributes="name string:${id}_subtitle:utf8:ustring;
                              value subtitle" />
       </p>
     </tal:block>
