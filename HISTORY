@@ -1,4 +1,26 @@
 ===========================================================
+Package: CPSSchemas 1.3.0
+===========================================================
+First release built by: gracinet at: 2007-02-06T14:46:06
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50983
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- DataModel tells the StorageAdapters to write only those fields that
+  have been modified or that the adapter didn't require;
+  A new 'write_process_dependent_fields' property is used by some
+  adapters to require those fields. This is backwards compatible.
+===========================================================
 Package: CPSSchemas 1.2.3
 ===========================================================
 First release built by: ben at: 2007-01-08T10:50:36
