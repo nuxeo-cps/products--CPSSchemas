@@ -1,4 +1,4 @@
-# (C) Copyright 2003-2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # M.-A. Darche <madarche@nuxeo.com>
 # Tarek Ziade <tziade@nuxeo.com>
@@ -74,9 +74,9 @@ def getHumanReadableSize(octet_size):
         if octet_size == kilo:
             return (1, 'cpsschemas_unit_kilo_bytes')
         else:
-            msize = float(octet_size/float(kilo))
-            msize = float('%.02f' % msize)
-            return (msize, 'cpsschemas_unit_kilo_bytes')
+            ksize = float(octet_size/float(kilo))
+            ksize = float('%.02f' % ksize)
+            return (ksize, 'cpsschemas_unit_kilo_bytes')
     else:
         if octet_size == 1:
             return (1, 'cpsschemas_unit_bytes')
