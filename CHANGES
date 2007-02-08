@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Vocabularies: avoid duplicates in empty key wrapper 
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

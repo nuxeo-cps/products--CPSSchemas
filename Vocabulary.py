@@ -426,10 +426,13 @@ class EmptyKeyVocabularyWrapper:
         self._pos = position
 
     def _wrap_list(self, l, value):
-        """Return list l in which value has been inserted. """
-        if self._pos == 'first':
+        """Return list l in which value has been inserted.
+
+        Ensure there can't be any duplicate.
+        """
+        if self._pos == 'first' and l[0] != value:
             l.insert(0, value)
-        else:
+        elif l[-1] != value:
             l.append(value)
         return l
 
