@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Vocabularies: avoid duplicates in empty key wrapper.
-- Cleanup : more legible code in CPSSchemas.utils.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
