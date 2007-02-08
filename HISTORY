@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.3.1
+===========================================================
+First release built by: gracinet at: 2007-02-08T14:46:26
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51030
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1811: CompoundWidget: css_class of subwidgets is ignored
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.3.0
 ===========================================================
 First release built by: gracinet at: 2007-02-06T14:46:06
