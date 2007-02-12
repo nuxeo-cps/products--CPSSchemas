@@ -365,7 +365,7 @@ msgid "cpsschemas_err_date"
 msgstr "Invalid date"
 
 msgid "cpsschemas_err_bad_date"
-msgstr "Date incorrecte"
+msgstr "Incorrect date"
 
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
