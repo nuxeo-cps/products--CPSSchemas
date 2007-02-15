@@ -508,8 +508,6 @@ class CPSPasswordWidget(CPSStringWidget):
          'label': 'Checking at least one digit [0-9]'},
         {'id': 'check_extra', 'type': 'boolean', 'mode': 'w',
          'label': 'Checking at least one extra char other than [a-zA-Z0-9]'},
-        {'id': 'size_min', 'type': 'int', 'mode': 'w',
-         'label': 'Checking minimum size',}
         )
 
     field_types = ('CPS Password Field',)
