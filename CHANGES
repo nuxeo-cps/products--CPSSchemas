@@ -3,8 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- i18n unicode utf-8 support in progress
-- adding Arabic and Portuguese empty locales
+-
 Bug fixes
 ~~~~~~~~~
 -
