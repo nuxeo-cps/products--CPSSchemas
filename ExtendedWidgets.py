@@ -1,4 +1,4 @@
-# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -766,9 +766,9 @@ class CPSPhotoWidget(CPSImageWidget):
             datastructure[widget_id + '_resize_kept'] = ''
 
         title = ''
-        if len(self.fields) > 1:
+        if len(self.fields) > 4:
             datamodel = datastructure.getDataModel()
-            title = datamodel[self.fields[1]]
+            title = datamodel[self.fields[4]]
             # Defaulting to the file name if there is an image file and if no
             # title has been given yet. This is the case when the document is
             # created.
