@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.3.4
+===========================================================
+First release built by: madarche at: 2007-03-05T16:50:56
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.4
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51291
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Fixed #1816 : "Buggy behavior for the title field of the Photo Widget".
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.3.3
 ===========================================================
 First release built by: div at: 2007-02-19T18:35:24
