@@ -877,7 +877,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
          'label': "Accept blank values when validating"},
         {'id': 'onchange', 'type': 'string', 'mode':'w',
-         'label': "onChange attribute (edit mode only)"}
+         'label': "onchange attribute (edit mode only)"}
         )
     render_formats = ['select', 'radio']
 
@@ -965,7 +965,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
             if render_format == 'select':
                 res = renderHtmlTag('select',
                                     name=html_widget_id, id=html_widget_id,
-                                    onChange=self.onchange or None)
+                                    onchange=self.onchange or None)
             # vocabulary options
             vocabulary_items = vocabulary.items()
             if self.sorted:
