@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Added workaround for dealing with vocabularies that return iso-8859-15 
-  encoded strings
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
