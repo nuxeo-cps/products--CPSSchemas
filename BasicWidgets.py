@@ -1051,12 +1051,18 @@ class CPSSelectWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
+        charset = portal.default_charset
         cpsmcat = portal.translation_service
         if mode == 'view':
             if self.translated:
                 return escape(cpsmcat(vocabulary.getMsgid(value, value)))
             else:
-                return escape(vocabulary.get(value, value))
+                ret = vocabulary.get(value, value)
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(ret, unicode):
+                        ret = ret.decode('iso-8859-15')
+                return escape(ret)
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             res = renderHtmlTag('select',
@@ -1072,13 +1078,25 @@ class CPSSelectWidget(CPSWidget):
             if self.sorted:
                 vocabulary_items.sort(key=operator.itemgetter(1))
             for k, v in vocabulary_items:
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(k, unicode):
+                        k = k.decode('iso-8859-15')
+                    if not isinstance(v, unicode):
+                        v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = 'selected'
                     in_selection = True
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
-                kw = {'value': value, 'contents': 'invalid: ' + str(value),
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(value, unicode):
+                        value = value.decode('iso-8859-15')
+                else:
+                    value = str(value)
+                kw = {'value': value, 'contents': 'invalid: ' + value,
                       'selected': 'selected'}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
