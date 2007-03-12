@@ -173,7 +173,10 @@ class DiskFile(File, VTM):
         return data
 
     def __str__(self):
-        return str(self.getData())
+        if self.content_type.startswith('text/'):
+            return str(self.getData()[:500])
+        else:
+            return "%s content" % self.content_type
 
     security.declareProtected(View, 'data')
     data = ComputedAttribute(getData, 1)

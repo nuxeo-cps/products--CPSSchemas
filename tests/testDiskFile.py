@@ -69,6 +69,8 @@ class TestDiskFile(unittest.TestCase):
 
         # test getData
         self.assertEquals(df.getData(), test_data)
+        # This should be text/plain, so str dumps the beginning of data
+        self.assertEquals(str(df), test_data)
 
         # Remove the file:
         df.manage_beforeDelete(None,None)
@@ -82,6 +84,11 @@ class TestDiskFile(unittest.TestCase):
         # still true after commit
         df._finish()
         self.failUnless(df.getFullFilename().endswith('.mp3'))
+
+        # test of str.
+        # could be smarter in the future. Then test should be updated
+        self.assertEquals(df.content_type, 'audio/mpeg')
+        self.assertEquals(str(df), "audio/mpeg content")
 
     def test_finish(self):
         # See #1801, second point

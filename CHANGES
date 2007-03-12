@@ -7,6 +7,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 - #1801: incorrect filename stored on DiskFile object
+- #1801: stop flooding logs with DiskFile object data
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
