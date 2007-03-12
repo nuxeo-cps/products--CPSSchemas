@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #1801: incorrect filename stored on DiskFile object
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

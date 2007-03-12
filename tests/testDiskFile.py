@@ -86,12 +86,14 @@ class TestDiskFile(unittest.TestCase):
     def test_finish(self):
         # See #1801, second point
         df = DiskFile('id','free name', storage_path=self.testdir)
-        df.update_data(test_data)
         # In the meanwhile, some other thread creates a file with exact same id
         wrong_target = os.path.join(self.testdir, 'free name')
         f = open(wrong_target, 'w')
         f.write('Some other data')
         f.close()
+        # filename is computed at the end of update_data.
+        # that's the best we can do, since _finish is after ZODB write
+        df.update_data(test_data)
 
         # now our transaction comes to an end
         df._finish()

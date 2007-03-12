@@ -100,9 +100,7 @@ class DiskFile(File, VTM):
         # This is called after ZODB write
         if not self._v_tmp:
             return
-        tmp_path = self.getFullFilename()
-        if self._v_new_file:
-            self._filename = self.getNewFilename(self.title)
+        tmp_path = self.getFullFilename(self._v_tmp_filename)
         target = self.getFullFilename(self._filename)
 
         if sys.platform == 'win32' and not self._v_new_file:
@@ -161,6 +159,10 @@ class DiskFile(File, VTM):
         self.ZCacheable_invalidate()
         self.ZCacheable_set(None)
         self.http__refreshEtag()
+
+        # must be done before ZODB write
+        if self._v_new_file:
+            self._filename = self.getNewFilename(self.title)
 
     security.declareProtected(View, 'getData')
     def getData(self):
