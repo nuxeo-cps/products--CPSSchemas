@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-11 18:01default\n"
+"POT-Creation-Date: 2007-03-13 17:46default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -116,14 +116,25 @@ msgstr ""
 "Allowed files must have one of the following suffixes: "
 "${allowed_file_suffixes}."
 
+#.   <block>
+#.               Image alternate text (accessibility) :
+#.             </block>
+#.   <block>
+#.               Image alternative text :
+#.             </block>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_image_alt"
+msgstr "Alternate text (accessibility): "
+
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "and resize as "
 
 #.   <block>
-#.           Image title :
-#.         </block>
+#.             Image title :
+#.           </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_title"
@@ -175,8 +186,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Resize as "
 
 #.   <block>
-#.           Photo subtitle :
-#.         </block>
+#.             Photo subtitle :
+#.           </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Caption: "

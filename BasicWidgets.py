@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -1720,7 +1720,7 @@ class CPSFileWidget(CPSWidget):
         mimetype = (registry.lookupExtension(current_filename.lower()) or
                     registry.lookupExtension('file.bin'))
         # Using a title if there is one present in the datastructure
-        # otherwise (poorly) defaulting to the file name.
+        # otherwise defaulting to the file name.
         title = datastructure.get(widget_id + '_title', current_filename)
 
         file_info = {
@@ -1894,7 +1894,8 @@ class CPSImageWidget(CPSFileWidget):
     meta_type = 'Image Widget'
 
     field_types = ('CPS Image Field',
-                   'CPS String Field',  # Title used also for alt
+                   'CPS String Field',  # Title
+                   'CPS String Field',  # Alternate text for accessibility
                    )
 
     _properties = CPSFileWidget._properties + (
@@ -1917,9 +1918,10 @@ class CPSImageWidget(CPSFileWidget):
         image_info = self.getFileInfo(datastructure)
 
         if image_info['empty_file']:
-            tag = ''
             height = 0
             width = 0
+            tag = ''
+            alt = ''
         else:
             widget_id = self.getWidgetId()
             image = datastructure[widget_id]
@@ -1949,17 +1951,21 @@ class CPSImageWidget(CPSFileWidget):
                     height = int(zoom * height)
 
             title = image_info['title']
+            # Using an alt text if there is one present in the datastructure
+            # otherwise defaulting to the title.
+            alt = datastructure.get(widget_id + '_alt', title)
             if height is None or width is None:
                 tag = renderHtmlTag('img', src=image_info['content_url'],
-                                    alt=title, title=title)
+                                    title=title, alt=alt)
             else:
                 tag = renderHtmlTag('img', src=image_info['content_url'],
                                     width=str(width), height=str(height),
-                                    alt=title, title=title)
+                                    title=title, alt=alt)
 
         image_info['height'] = height
         image_info['width'] = width
         image_info['image_tag'] = tag
+        image_info['alt'] = alt
         return image_info
 
     def getResizedImage(self, file, filename, resize_op):
@@ -1999,29 +2005,39 @@ class CPSImageWidget(CPSFileWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         CPSFileWidget.prepare(self, datastructure, **kw)
+        datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
         if self.allow_resize:
             datastructure[widget_id + '_resize'] = ''
 
         title = ''
         if len(self.fields) > 1:
-            datamodel = datastructure.getDataModel()
             title = datamodel[self.fields[1]]
-            # Defaulting to the file name if there is an image file and if no
-            # title has been given yet. This is the case when the document is
-            # created.
-            if not title:
-                title = datastructure[widget_id + '_filename']
         datastructure[widget_id + '_title'] = title
+
+        alt = ''
+        if len(self.fields) > 2:
+            alt = datamodel[self.fields[2]]
+            # Defaulting to the file name if there is an image file and if no
+            # alt has been given yet. This is the case when the document is
+            # created.
+            if not alt:
+                alt = datastructure[widget_id + '_filename']
+        datastructure[widget_id + '_alt'] = alt
 
     def otherProcessing(self, choice, datastructure):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
 
         # Title
-        title = datastructure[widget_id + '_title']
         if len(self.fields) > 1:
+            title = datastructure[widget_id + '_title']
             datamodel[self.fields[1]] = title
+
+        # Alt
+        if len(self.fields) > 2:
+            alt = datastructure[widget_id + '_alt']
+            datamodel[self.fields[2]] = alt
 
     def maybeKeepOriginal(self, image, datastructure):
         return

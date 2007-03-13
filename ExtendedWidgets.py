@@ -721,9 +721,10 @@ class CPSPhotoWidget(CPSImageWidget):
                    'CPS String Field',  # Caption
                    'CPS String Field',  # render_position if configurable
                    'CPS Image Field',   # Original photo
-                   'CPS String Field',  # Title used also for alt
+                   'CPS String Field',  # Title
+                   'CPS String Field',  # Alternate text for accessibility
                    )
-    field_inits = ({}, {'is_searchabletext': 1,}, {}, {}, {})
+    field_inits = ({}, {'is_searchabletext': 1,}, {}, {}, {}, {})
 
     _properties = CPSImageWidget._properties + (
         {'id': 'render_position', 'type': 'selection', 'mode': 'w',
@@ -767,32 +768,41 @@ class CPSPhotoWidget(CPSImageWidget):
 
         title = ''
         if len(self.fields) > 4:
-            datamodel = datastructure.getDataModel()
             title = datamodel[self.fields[4]]
-            # Defaulting to the file name if there is an image file and if no
-            # title has been given yet. This is the case when the document is
-            # created.
-            if not title:
-                title = datastructure[widget_id + '_filename']
         datastructure[widget_id + '_title'] = title
+
+        alt = ''
+        if len(self.fields) > 5:
+            alt = datamodel[self.fields[5]]
+            # Defaulting to the file name if there is an image file and if no
+            # alt has been given yet. This is the case when the document is
+            # created.
+            if not alt:
+                alt = datastructure[widget_id + '_filename']
+        datastructure[widget_id + '_alt'] = alt
 
     def otherProcessing(self, choice, datastructure):
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
 
         # Caption
-        subtitle = datastructure[widget_id + '_subtitle']
         if len(self.fields) > 1:
+            subtitle = datastructure[widget_id + '_subtitle']
             datamodel[self.fields[1]] = subtitle
 
         # Title
-        title = datastructure[widget_id + '_title']
         if len(self.fields) > 4:
+            title = datastructure[widget_id + '_title']
             datamodel[self.fields[4]] = title
 
+        # Alt
+        if len(self.fields) > 5:
+            alt = datastructure[widget_id + '_alt']
+            datamodel[self.fields[5]] = alt
+
         # Position
-        rposition = datastructure[widget_id + '_rposition']
         if self.configurable != 'nothing' and len(self.fields) > 2:
+            rposition = datastructure[widget_id + '_rposition']
             if rposition and rposition in self.all_render_positions:
                 datamodel[self.fields[2]] = rposition
 

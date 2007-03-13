@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-11 18:00default\n"
+"POT-Creation-Date: 2007-03-13 17:46default\n"
 "PO-Revision-Date: 2005-10-12 23:16+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
@@ -102,14 +102,26 @@ msgstr "m"
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr "Erlaubte Dateiendungen"
 
+#.   <block>
+#.               Image alternate text (accessibility) :
+#.             </block>
+#.   <block>
+#.               Image alternative text :
+#.             </block>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+#, fuzzy
+msgid "cpsschemas_image_alt"
+msgstr "Title: "
+
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "und Größe ändern zu "
 
 #.   <block>
-#.           Image title :
-#.         </block>
+#.             Image title :
+#.           </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -163,8 +175,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Bildgröße ändern "
 
 #.   <block>
-#.           Photo subtitle :
-#.         </block>
+#.             Photo subtitle :
+#.           </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Überschrift: "
@@ -606,8 +618,8 @@ msgstr "Bearbeiten Online"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Flash Animation bearbeiten"
 
-msgid "label_alt_text"
-msgstr "Titel"
+#~ msgid "label_alt_text"
+#~ msgstr "Titel"
 
 #~ msgid "cpsschemas_rformat_pre"
 #~ msgstr "HTML vorformatiert"

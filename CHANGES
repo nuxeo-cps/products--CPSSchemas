@@ -3,7 +3,8 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- Accessibility improvement: Added alt attribute for ImageWidget and
+  PhotoWidget.
 Bug fixes
 ~~~~~~~~~
 - #1801: incorrect filename stored on DiskFile object
