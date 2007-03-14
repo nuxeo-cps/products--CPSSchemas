@@ -1,4 +1,26 @@
 ===========================================================
+Package: CPSSchemas 1.4.0
+===========================================================
+First release built by: div at: 2007-03-14T12:25:36
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.4.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51329
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Accessibility improvement: Added alt attribute for ImageWidget and
+  PhotoWidget.
+Bug fixes
+~~~~~~~~~
+- #1801: incorrect filename stored on DiskFile object
+- #1801: stop flooding logs with DiskFile object data
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.3.4
 ===========================================================
 First release built by: madarche at: 2007-03-05T16:50:56
