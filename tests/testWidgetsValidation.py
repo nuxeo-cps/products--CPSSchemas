@@ -1,5 +1,23 @@
 # -*- coding: iso-8859-15 -*-
-# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
+# Authors:
+# Florent Guillaume <fg@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
 # $Id$
 
 import os
@@ -336,7 +354,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
         wid = self.getWidgetId()
         self.fields = (wid)
         ret, err, ds = self._validate({'render_format': 'html',
-                                       'xhtml_sanitize': True,
+                                       'xhtml_sanitize': 'builtin',
                                        },
                                       '<a>xxx')
         self.assert_(ret)
@@ -346,7 +364,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
         wid = self.getWidgetId()
         self.fields = (wid)
         ret, err, ds = self._validate({'render_format': 'text',
-                                       'xhtml_sanitize': True,
+                                       'xhtml_sanitize': 'builtin',
                                        },
                                       '<a>xxx')
         self.assert_(ret)
@@ -359,7 +377,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
         self.data[wid + '_rformat'] = 'html'
         ret, err, ds = self._validate({'rformat': 'html',
                                        'configurable': True,
-                                       'xhtml_sanitize': True,
+                                       'xhtml_sanitize': 'builtin',
                                        },
                                       '<a>xxx')
         self.assert_(ret)
