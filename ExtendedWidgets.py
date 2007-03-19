@@ -190,7 +190,6 @@ class CPSTextWidget(CPSStringWidget):
                     self.xhtml_sanitizer.feed(v)
                     v = self.xhtml_sanitizer.getResult()
                 elif self.xhtml_sanitize == 'system':
-                    logger = getLogger('TextWidget')
                     file_to_clean_fd, file_to_clean_path = mkstemp(
                         suffix=".xhtml",
                         prefix="cps-schemas",
