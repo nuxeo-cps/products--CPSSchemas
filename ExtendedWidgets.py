@@ -23,17 +23,18 @@
 Definition of extended widget types.
 """
 
+from logging import getLogger
 import warnings
 import zipfile
 import operator
-
+import os
+from tempfile import mkstemp
 from cgi import escape
 from re import match
 
 from Globals import InitializeClass
 from Acquisition import aq_base, aq_parent, aq_inner
 from DateTime.DateTime import DateTime
-import os.path
 
 from Products.PythonScripts.standard import newline_to_br
 from Products.PythonScripts.standard import structured_text
@@ -72,8 +73,11 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'Height'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Max Size'},
-        {'id': 'xhtml_sanitize', 'type': 'boolean', 'mode': 'w',
-         'label': 'Sanitize the content to be valid XHTML'},
+        {'id': 'xhtml_sanitize', 'type': 'selection', 'mode': 'w',
+         'select_variable': 'all_xhtml_sanitize_options',
+         'label': 'XHTML sanitize the content'},
+        {'id': 'xhtml_sanitize_system', 'type': 'string', 'mode': 'w',
+         'label': 'XHTML sanitize through system command line'},
         {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
          'label': 'Add a file uploader to the widget UI'},
         {'id': 'html_editor_position', 'type': 'selection', 'mode': 'w',
@@ -89,6 +93,7 @@ class CPSTextWidget(CPSStringWidget):
          'select_variable': 'all_configurable',
          'label': 'What is user configurable (require extra fields)'},
         )
+    all_xhtml_sanitize_options = ['no', 'builtin', 'system']
     all_configurable = ['nothing', 'position', 'format', 'position and format']
     all_render_positions = ['normal', 'col_left', 'col_right']
     all_render_formats = ['text', 'html', 'rst']
@@ -98,6 +103,7 @@ class CPSTextWidget(CPSStringWidget):
     height = 5
     size_max = 2*1024*1024
     xhtml_sanitize = False
+    xhtml_sanitize_system = 'tidy --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments yes %s 2>/dev/null'
     file_uploader = False
 
     render_position = all_render_positions[0]
@@ -178,11 +184,26 @@ class CPSTextWidget(CPSStringWidget):
                 # Defaulting to the widget property since no fields are used to
                 # store the format or the position.
                 rformat = self.render_format
-            if self.xhtml_sanitize:
-                if rformat == 'html':
+            if rformat == 'html':
+                if self.xhtml_sanitize == 'builtin':
                     self.xhtml_sanitizer.reset()
                     self.xhtml_sanitizer.feed(v)
                     v = self.xhtml_sanitizer.getResult()
+                elif self.xhtml_sanitize == 'system':
+                    logger = getLogger('TextWidget')
+                    file_to_clean_fd, file_to_clean_path = mkstemp(
+                        suffix=".xhtml",
+                        prefix="cps-schemas",
+                        )
+                    file_to_clean = os.fdopen(file_to_clean_fd, 'w')
+                    file_to_clean.write(v)
+                    file_to_clean.close()
+                    os.system(self.xhtml_sanitize_system % file_to_clean_path)
+                    file_to_clean = open(file_to_clean_path)
+                    v = file_to_clean.read()
+                    file_to_clean.close()
+                    os.remove(file_to_clean_path)
+
             datamodel[self.fields[0]] = v
             if file_upload_valid or self.xhtml_sanitize:
                 # If the file_upload is valid we update the datastructure so

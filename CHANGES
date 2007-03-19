@@ -1,9 +1,9 @@
 Requires
 ~~~~~~~~
--
+- tidy >= 11 February 2007
 New features
 ~~~~~~~~~~~~
--
+- Implemented new XHTML sanitizing using a system command line.
 Bug fixes
 ~~~~~~~~~
 -
