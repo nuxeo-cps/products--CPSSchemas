@@ -103,7 +103,7 @@ class CPSTextWidget(CPSStringWidget):
     height = 5
     size_max = 2*1024*1024
     xhtml_sanitize = False
-    xhtml_sanitize_system = 'tidy --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments yes %s 2>/dev/null'
+    xhtml_sanitize_system = 'tidy --input-encoding latin1 --output-encoding latin1 --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments yes %s 2>/dev/null'
     file_uploader = False
 
     render_position = all_render_positions[0]
