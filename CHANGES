@@ -1,14 +1,12 @@
 Requires
 ~~~~~~~~
-- tidy >= 11 February 2007
+-
 New features
 ~~~~~~~~~~~~
-- Implemented new XHTML sanitizing using a system command line.
+-
 Bug fixes
 ~~~~~~~~~
-- Fixed #1819 : "Links in the Link Widget are HTML escaped".
-- Fixed HTML validity of the URL Widget.
-- Updated Spanish translation thanks to Jesús Martín.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
