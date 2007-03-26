@@ -6,7 +6,7 @@ New features
 - Implemented new XHTML sanitizing using a system command line.
 Bug fixes
 ~~~~~~~~~
--
+- Fixed #1819 : "Links in the Link Widget are HTML escaped".
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

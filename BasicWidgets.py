@@ -335,14 +335,13 @@ class CPSURLWidget(CPSStringWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        value = escape(datastructure[self.getWidgetId()])
+        value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            if len(value) > self.display_width:
-                value_for_display = value[:self.display_width] + '...'
-            else :
-                value_for_display = value
-            if not value_for_display:
+            if not value:
                 return ''
+            value_for_display = escape(value)
+            if len(value_for_display) > self.display_width:
+                value_for_display = value_for_display[:self.display_width] + '...'
             kw = {'href': value, 'contents': value_for_display,
                   'css_class': self.css_class,
                   'target': self.target.strip()}
