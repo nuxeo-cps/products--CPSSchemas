@@ -7,6 +7,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 - Fixed #1819 : "Links in the Link Widget are HTML escaped".
+- Fixed HTML validity of the URL Widget.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
