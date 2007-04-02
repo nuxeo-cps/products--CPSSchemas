@@ -125,7 +125,7 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_alt"
-msgstr "Alternate text (accessibility): "
+msgstr "Alternate text : "
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt

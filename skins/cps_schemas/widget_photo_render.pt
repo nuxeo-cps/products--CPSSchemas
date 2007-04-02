@@ -102,35 +102,55 @@
       </p>
     </tal:block>
 
-    <tal:block condition="python:len(fields) > 4">
-      <p>
-        <tal:block i18n:translate="cpsschemas_image_title">
-          Image title :
+    <tal:block condition="python:len(fields) > 1">
+      <table>
+
+        <tal:block condition="python:len(fields) > 4">
+          <tr>
+            <td>
+              <tal:block i18n:translate="cpsschemas_image_title">
+                Title :
+              </tal:block>
+            </td>
+            <td>
+              <input type="text" size="30" maxlength="60"
+                tal:attributes="name string:${id}_title;
+                value title" />
+            </td>
+          </tr>
         </tal:block>
-        <input type="text" size="30" maxlength="60"
-               tal:attributes="name string:${id}_title;
-               value title" />
+
         <tal:block condition="python:len(fields) > 5">
-          <tal:block i18n:translate="cpsschemas_image_alt">
-            Image alternative text :
-          </tal:block>
-          <input type="text" size="30" maxlength="60"
-                 tal:attributes="name string:${id}_alt;
-                 value alt" />
+          <tr>
+            <td>
+              <tal:block i18n:translate="cpsschemas_image_alt">
+                Alternate text :
+              </tal:block>
+            </td>
+            <td>
+              <input type="text" size="30" maxlength="60"
+                tal:attributes="name string:${id}_alt;
+                value alt" />
+            </td>
+          </tr>
         </tal:block>
-      </p>
+
+        <tr>
+          <td>
+            <tal:block i18n:translate="cpsschemas_photo_subtitle">
+              Subtitle :
+            </tal:block>
+          </td>
+          <td>
+            <input type="text" size="30"
+              tal:attributes="name string:${id}_subtitle;
+              value subtitle" />
+          </td>
+        </tr>
+
+      </table>
     </tal:block>
 
-    <tal:block condition="python:len(fields) > 1">
-      <p>
-        <tal:block i18n:translate="cpsschemas_photo_subtitle">
-          Photo subtitle :
-        </tal:block>
-        <input type="text" size="30"
-               tal:attributes="name string:${id}_subtitle;
-               value subtitle" />
-      </p>
-    </tal:block>
 
   </tal:block>
 

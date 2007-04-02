@@ -65,22 +65,34 @@
     </metal:block>
 
     <tal:block condition="python:len(fields) > 1">
-      <p>
-        <tal:block i18n:translate="cpsschemas_image_title">
-          Image title :
-        </tal:block>
-        <input type="text" size="30" maxlength="60"
-               tal:attributes="name string:${id}_title;
-               value title" />
+      <table>
+        <tr>
+          <td>
+            <tal:block i18n:translate="cpsschemas_image_title">
+              Image title :
+            </tal:block>
+          </td>
+          <td>
+            <input type="text" size="30" maxlength="60"
+              tal:attributes="name string:${id}_title;
+              value title" />
+          </td>
+        </tr>
         <tal:block condition="python:len(fields) > 2">
-          <tal:block i18n:translate="cpsschemas_image_alt">
-            Image alternate text (accessibility) :
-          </tal:block>
-          <input type="text" size="30" maxlength="60"
-                 tal:attributes="name string:${id}_alt;
-                 value alt" />
+          <tr>
+            <td>
+              <tal:block i18n:translate="cpsschemas_image_alt">
+                Image alternate text :
+              </tal:block>
+            </td>
+            <td>
+              <input type="text" size="30" maxlength="60"
+                tal:attributes="name string:${id}_alt;
+                value alt" />
+            </td>
+          </tr>
         </tal:block>
-      </p>
+      </table>
     </tal:block>
 
   </tal:block>
