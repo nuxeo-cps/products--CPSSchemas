@@ -58,13 +58,35 @@ class BaseStorageAdapter:
             field_ids = schema.keys()
         field_items = []
         writable_field_items = []
+        write_dependencies = {} # field id -> fields depending on it for write
+        all_dependent = [] # fields that depend for write on all others
         for field_id, field in schema.items():
             if field_id in field_ids:
                 field_items.append((field_id, field))
                 if not field.write_ignore_storage:
                     writable_field_items.append((field_id, field))
+                if not field.write_process_expr:
+                    continue
+                wpdf = field.write_process_dependent_fields
+                if '*' in wpdf:
+                    # postponed: we don't have the list of all fields yet
+                    all_dependent.append(field_id)
+                    continue
+                for ancestor in wpdf:
+                    write_dependencies.setdefault(ancestor, set()).add(
+                        field_id)
+
+        # update write dependencies for fields that depend on everything
+        for field_id in all_dependent:
+            for ancestor in field_ids:
+                if ancestor == field_id:
+                    # avoid dependency loop
+                    continue
+                write_dependencies.setdefault(ancestor, set()).add(field_id)
+
         self._field_items = field_items
         self._writable_field_items = writable_field_items
+        self._write_dependencies = write_dependencies
 
     def getContextObject(self):
         """Get the underlying context for this adapter.
@@ -109,29 +131,6 @@ class BaseStorageAdapter:
         """Get the writable field ids and the fields."""
         return self._writable_field_items
 
-    def getMandatoryFieldIds(self):
-        """Get the ids of fields whose values are needed for write operations.
-
-        Called by DataModel's _commitData to know what non dirty fields are
-        nonetheless to be passed along to setData.
-        Use-case from CPSDirectory: the ids in backings have to be passed along
-        when a StackingDirectory is behind a MetaDirectory.
-        """
-        # BBB
-        return self.getFieldIds()
-
-    def getWriteProcessFieldIds(self):
-        """Return the ids of fields that are needed for write expressions.
-
-        Can be used as a replacement for getMandatoryFieldIds
-        """
-
-        res = getattr(self, '_write_process_field_ids', None)
-        if res is not None:
-            return res
-        res = self._write_process_field_ids = self._getWriteProcessFieldIds()
-        return res
-
     def getDefaultData(self):
         """Get the default data from the fields' default values.
 
@@ -156,13 +155,30 @@ class BaseStorageAdapter:
         """Get data from the object, returns a mapping."""
         return self._getData()
 
-    def setData(self, data):
-        """Set data to the object, from a mapping."""
-        self._setData(data)
+    def setData(self, data, toset=None):
+        """Set data to the object, from a mapping.
+
+        The optional toset argument allows to restrict the data to be written.
+        It is a subset of data.keys(). Note that write expressions might need
+        the full set of data, possibly even associated to another schema than
+        the current adapter takes care of.
+
+        This method has the side effect of updating 'toset' to take write
+        dependencies into account.
+        """
+        try:
+            self._setData(data, toset=toset)
+        except TypeError:
+            # BBB for old subclasses for which _setData has no kwarg
+            import sys
+            if sys.exc_info()[2].tb_next is not None:
+                # error is deeper
+                raise
+            self._setData(data)
 
     #
     # Internal API for subclasses
-   #
+    #
 
     def _getWriteProcessFieldIds(self):
         res = set()
@@ -201,21 +217,33 @@ class BaseStorageAdapter:
         """Get data from one field."""
         raise NotImplementedError
 
-    def _setData(self, data):
-        """Set data to the object, from a mapping."""
-        data = self._setDataDoProcess(data)
+    def _setData(self, data, toset=None):
+        """Set data to the object, from a mapping.
+
+        Only data  belonging to 'toset' and dependencies will be written."""
+        data = self._setDataDoProcess(data, toset=toset)
         for field_id, field in self.getWritableFieldItems():
             if not data.has_key(field_id):
                 continue
             self._setFieldData(field_id, data[field_id])
 
-    def _setDataDoProcess(self, data):
+    def _setDataDoProcess(self, data, toset=None):
         """Process data before write.
 
         Returns a copy, without the fields that are not stored."""
+        if toset is None:
+            toset = set(data)
+
+        # resolve dependencies
+        # XXX only first order dependencies are ensured. Others depend on
+        # impredictable ordering of iteration
+        for ancestor, dependents in self._write_dependencies.items():
+            if ancestor in toset:
+                toset.update(dependents)
+
         new_data = {}
         for field_id, field in self.getFieldItems():
-            if not field_id in data:
+            if not field_id in toset:
                 continue
             value = data[field_id]
             result = field.processValueBeforeWrite(value, data,
@@ -244,8 +272,6 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         self._ob = ob
         self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
-
-    getMandatoryFieldIds = BaseStorageAdapter.getWriteProcessFieldIds
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""
@@ -330,8 +356,6 @@ class MetaDataStorageAdapter(BaseStorageAdapter):
         self._proxy = proxy
         BaseStorageAdapter.__init__(self, schema, **kw)
 
-    getMandatoryFieldIds = BaseStorageAdapter.getWriteProcessFieldIds
-
     def getContextObject(self):
         """Get the underlying context for this adapter."""
         return self._ob
@@ -398,8 +422,6 @@ class MappingStorageAdapter(BaseStorageAdapter):
         """
         self._ob = ob
         BaseStorageAdapter.__init__(self, schema, **kw)
-
-    getMandatoryFieldIds = BaseStorageAdapter.getWriteProcessFieldIds
 
     def getContextObject(self):
         """Get the underlying context for this adapter."""

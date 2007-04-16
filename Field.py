@@ -119,7 +119,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     read_process_dependent_fields = ()
     write_ignore_storage = 0
     write_process_expr = ''
-    write_process_dependent_fields = ('*',) # BBB, remove in CPS 3.5
+    # BBB, remove in CPS 3.5 (this is used only if there is a write expr)
+    write_process_dependent_fields = ('*',)
 
     default_expr_c = Expression(default_expr)
     acl_read_permissions_c = []

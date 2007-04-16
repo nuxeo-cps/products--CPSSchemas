@@ -87,6 +87,10 @@ class TestDataModel(unittest.TestCase):
                              write_process_expr='python: f2+"_ja"',
                              write_process_dependent_fields=('f2',),
                              )
+
+        self.schema.addField('f9', 'CPS String Field',
+                             write_process_expr='python: value+f2',
+                             )
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
@@ -105,6 +109,7 @@ class TestDataModel(unittest.TestCase):
               'f6': None,
               'f7': 'some text',
               'f8': '',
+              'f9': '',
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -136,6 +141,7 @@ class TestDataModel(unittest.TestCase):
               'f6': None,
               'f7': 'some text',
               'f8': '',
+              'f9': '',
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -192,6 +198,22 @@ class TestDataModel(unittest.TestCase):
         dm['f2'] = 'f2changed'
         dm._commit(check_perms=0)
         self.assertEquals(doc.f8, 'f2changed_ja')
+
+    def testWriteDependencies2(self):
+        # We will change f9, that depends on itself and f2.
+        # Although unchanged, the latter is available for write_exprs
+        # no matter what the conf says.
+        # Used to break in some directory use-cases where f2 is an id, and
+        # therefore discarded in writes. This is reproduced by not indicating
+        # the dependency of f9 upon f2.
+        dm = self.makeOne()
+        doc = self.doc
+        self.doc.f2 = 'f2'
+        dm._fetch()
+        dm['f9'] = 'f9changed'
+        self.failIf(dm.isDirty('f2'))
+        dm._commit(check_perms=0)
+        self.assertEquals(doc.f9, 'f9changedf2')
 
     def test_commit_with_proxy(self):
         # Test that editable content is correctly retrieved.

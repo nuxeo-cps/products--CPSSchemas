@@ -135,6 +135,8 @@ Fields are configured using the following properties.
 
   - value: the value that was really read from the storage
 
+  - all field values that have already been fetched
+
   - data: a mapping of the values read from the storage for this entry
 
   - field: the current field
@@ -175,15 +177,23 @@ Fields are configured using the following properties.
   that 'value' and 'data' refer to the value as seen by the rest
   of CPSSchemas before writing. See also below.
 
-- write_process_dependent_fields -- Write: expression dependent fields
-  If the above expression uses some other fields, they must be
-  specified here so that the write process engine gets them even if
-  they have seen no changes (some backends can request a strict subset of all
-  fields to write and process, thus avoid useless or harmful writes).
+- write_process_dependent_fields -- Write: expression dependent
+  fields.
 
-  These fields must be all belong in the same
-  schema. One can use '*' as a wildcard for 'all', and this is the
-  default value, for backwards compatibility.
+  If the above expression uses some other fields, they must be
+  specified here to ensure that the current field is updated upon
+  changes in other fields. Dependent fields can be in any relevant schema.
+
+  One can use '*' as a wildcard for 'all', and this is the
+  default value, for backwards compatibility, but is not recommended
+  in new configurations, since this has the side-effect of always
+  writing the current field, even if there is no need to. See issue
+  #1830 for more info on this.
+
+  Higher order dependencies (i.e., depending on a field that itself
+  depends on some other) might seem to work but this would actually be
+  mere luck and is *not* supported as of this writing.
+
 
 Additional properties
 =====================

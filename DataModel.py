@@ -113,10 +113,9 @@ class DataModel(UserDict):
         self._adapters = adapters
         self._proxy = proxy
 
-        # This structure is a dictionary of field ids associated with
-        # a boolean that tells wether the given field is dirty
-        # (has been modified) or not.
-        self.dirty = {}
+        # This set keeps track of field ids whose data is "dirty"
+        # (has been modified).
+        self.dirty = set()
 
         if context is None:
             if proxy is not None:
@@ -200,11 +199,11 @@ class DataModel(UserDict):
     def __setitem__(self, key, item):
         self.checkWriteAccess(key)
         self.data[key] = item
-        self.dirty[key] = 1
+        self.dirty.add(key)
 
     def isDirty(self, key):
         """Is the item marked dirty ?"""
-        return self.dirty.get(key, False)
+        return key in self.dirty
 
     # Expose setter as method for restricted code.
     def set(self, key, item):
@@ -268,7 +267,7 @@ class DataModel(UserDict):
                 # (and written, and used for dependent computations)
                 field = fields[field_id]
                 data[field_id] = field.getDefault(self)
-                self.dirty[field_id] = 1
+                self.dirty.add(field_id)
 
     def _setEditable(self):
         """Set the editable object for this DataModel.
@@ -340,10 +339,6 @@ class DataModel(UserDict):
         if hasattr(aq_base(ob), 'postCommitHook'):
             ob.postCommitHook(datamodel=self)
 
-        # Mark all fields as non-dirty.
-        for field_id in self._fields.keys():
-            self.dirty[field_id] = 0
-
         return ob
 
     def _commitData(self):
@@ -358,18 +353,14 @@ class DataModel(UserDict):
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
                     for dep_id in field._getAllDependantFieldIds():
-                        self.dirty[dep_id] = 1
-
-        # Compute the mapping that has to be passed to adapters
-        mandatory = set()
-        for adapter in self._adapters:
-            mandatory.update(adapter.getMandatoryFieldIds())
-        to_set = dict((k,v) for k,v in data.items()
-                      if k in mandatory or self.isDirty(k))
+                        self.dirty.add(dep_id)
 
         # Call the adapters to store the data.
         for adapter in self._adapters:
-            adapter.setData(to_set)
+            adapter.setData(data, toset=self.dirty)
+
+        # nothing's dirty any more
+        self.dirty = set()
 
     #
     # Import/export
