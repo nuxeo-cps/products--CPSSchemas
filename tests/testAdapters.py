@@ -85,11 +85,9 @@ class TestBaseStorageAdapter(ZopeTestCase):
 
     def testInit(self):
         # some important internals
-        expected = {}
-        for key in ['f1', 'f3', 'f4', 'f5', 'f6']:
-            expected[key] = set(['f7'])
-        expected['f2'] = set(['f6', 'f7'])
-        self.assertEquals(self.adapter._write_dependencies, expected)
+        self.assertEquals(self.adapter._write_dependencies,
+                          {'f2': set(['f6'])})
+        self.assertEquals(self.adapter._all_dependents, ['f7'])
 
 
 class TestStorageAdapter(ZopeTestCase):

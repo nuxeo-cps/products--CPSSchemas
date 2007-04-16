@@ -59,7 +59,7 @@ class BaseStorageAdapter:
         field_items = []
         writable_field_items = []
         write_dependencies = {} # field id -> fields depending on it for write
-        all_dependent = [] # fields that depend for write on all others
+        all_dependents = [] # fields that depend for write on all others
         for field_id, field in schema.items():
             if field_id in field_ids:
                 field_items.append((field_id, field))
@@ -69,24 +69,16 @@ class BaseStorageAdapter:
                     continue
                 wpdf = field.write_process_dependent_fields
                 if '*' in wpdf:
-                    # postponed: we don't have the list of all fields yet
-                    all_dependent.append(field_id)
+                    all_dependents.append(field_id)
                     continue
                 for ancestor in wpdf:
                     write_dependencies.setdefault(ancestor, set()).add(
                         field_id)
 
-        # update write dependencies for fields that depend on everything
-        for field_id in all_dependent:
-            for ancestor in field_ids:
-                if ancestor == field_id:
-                    # avoid dependency loop
-                    continue
-                write_dependencies.setdefault(ancestor, set()).add(field_id)
-
         self._field_items = field_items
         self._writable_field_items = writable_field_items
         self._write_dependencies = write_dependencies
+        self._all_dependents = all_dependents
 
     def getContextObject(self):
         """Get the underlying context for this adapter.
@@ -240,6 +232,9 @@ class BaseStorageAdapter:
         for ancestor, dependents in self._write_dependencies.items():
             if ancestor in toset:
                 toset.update(dependents)
+        # being dependent on 'all' means in particular upon fields of other
+        # schemas. We have no choice but to always update.
+        toset.update(self._all_dependents)
 
         new_data = {}
         for field_id, field in self.getFieldItems():
