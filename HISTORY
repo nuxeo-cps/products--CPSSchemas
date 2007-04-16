@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.5.2
+===========================================================
+First release built by: div at: 2007-04-16T20:16:17
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.5.2
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51539
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1830: proper implementation of sparse writes.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.5.1
 ===========================================================
 First release built by: div at: 2007-04-03T20:52:34
