@@ -112,7 +112,7 @@ msgstr "Erlaubte Dateiendungen"
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_image_alt"
-msgstr "Title: "
+msgstr "Alternate text : "
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -618,8 +618,8 @@ msgstr "Bearbeiten Online"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Flash Animation bearbeiten"
 
-#~ msgid "label_alt_text"
-#~ msgstr "Titel"
+msgid "label_alt_text"
+msgstr "Titel"
 
 #~ msgid "cpsschemas_rformat_pre"
 #~ msgstr "HTML vorformatiert"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-13 17:46default\n"
+"POT-Creation-Date: 2007-04-25 12:21default\n"
 "PO-Revision-Date: 2004-05-21 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -113,16 +113,16 @@ msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
 
 #.   <block>
-#.               Image alternate text (accessibility) :
-#.             </block>
+#.                   Image alternate text :
+#.                 </block>
 #.   <block>
-#.               Image alternative text :
-#.             </block>
+#.                   Alternate text :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_image_alt"
-msgstr "Title: "
+msgstr "Alternate text : "
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -130,8 +130,11 @@ msgid "cpsschemas_image_resize"
 msgstr "Formaat&nbsp;: "
 
 #.   <block>
-#.             Image title :
-#.           </block>
+#.                 Image title :
+#.               </block>
+#.   <block>
+#.                   Title :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -187,8 +190,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Resize as "
 
 #.   <block>
-#.             Photo subtitle :
-#.           </block>
+#.                 Subtitle :
+#.               </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Onderschrift&nbsp;: "
@@ -388,7 +391,7 @@ msgstr "Formaat van invalide datum"
 
 #, fuzzy
 msgid "cpsschemas_err_bad_date"
-msgstr "Date incorrecte"
+msgstr "Incorrect date"
 
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
@@ -689,5 +692,5 @@ msgstr ""
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
 
-#~ msgid "label_alt_text"
-#~ msgstr "Alternatieve tekst"
+msgid "label_alt_text"
+msgstr "Alternatieve tekst"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-13 17:46default\n"
+"POT-Creation-Date: 2007-04-25 12:21default\n"
 "PO-Revision-Date: 2006-11-16 15:50+0100\n"
 "Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
 "Language-Team: euskara <perikoalkain@lasalle.es>\n"
@@ -110,16 +110,16 @@ msgstr ""
 "${allowed_file_suffixes}."
 
 #.   <block>
-#.               Image alternate text (accessibility) :
-#.             </block>
+#.                   Image alternate text :
+#.                 </block>
 #.   <block>
-#.               Image alternative text :
-#.             </block>
+#.                   Alternate text :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_image_alt"
-msgstr "Título:"
+msgstr "Alternate text : "
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -127,8 +127,11 @@ msgid "cpsschemas_image_resize"
 msgstr "eta tamaina aldatu: "
 
 #.   <block>
-#.             Image title :
-#.           </block>
+#.                 Image title :
+#.               </block>
+#.   <block>
+#.                   Title :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -181,8 +184,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Tamaina aldatu gisa honetara"
 
 #.   <block>
-#.             Photo subtitle :
-#.           </block>
+#.                 Subtitle :
+#.               </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Irudi-oina:"
@@ -343,7 +346,7 @@ msgstr "Baliogabeko hizki-katea"
 
 #, fuzzy
 msgid "cpsschemas_err_string_too_short"
-msgstr "String too short"
+msgstr "Cadena demasiado corta"
 
 msgid "cpsschemas_err_string_too_long"
 msgstr "Hizki-kate luzeegia"
@@ -628,8 +631,8 @@ msgstr "On-line editatu"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Flash animazioa (swf)"
 
-#~ msgid "label_alt_text"
-#~ msgstr "Texto alternativo"
+msgid "label_alt_text"
+msgstr "Texto alternativo"
 
 #~ msgid "cpsschemas_rformat_pre"
 #~ msgstr "HTML-z aurrezformateatuta"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-13 17:46default\n"
+"POT-Creation-Date: 2007-04-25 12:21default\n"
 "PO-Revision-Date: 2006-04-03 15:40-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portugues do Brasil <pt@li.org>\n"
@@ -111,11 +111,11 @@ msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr "sufixos permitidos: ${allowed_file_suffixes}"
 
 #.   <block>
-#.               Image alternate text (accessibility) :
-#.             </block>
+#.                   Image alternate text :
+#.                 </block>
 #.   <block>
-#.               Image alternative text :
-#.             </block>
+#.                   Alternate text :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -128,8 +128,11 @@ msgid "cpsschemas_image_resize"
 msgstr "Redimensiona"
 
 #.   <block>
-#.             Image title :
-#.           </block>
+#.                 Image title :
+#.               </block>
+#.   <block>
+#.                   Title :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -182,8 +185,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Redimensionar como"
 
 #.   <block>
-#.             Photo subtitle :
-#.           </block>
+#.                 Subtitle :
+#.               </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Subtítulo"

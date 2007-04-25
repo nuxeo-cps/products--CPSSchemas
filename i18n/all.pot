@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2006-12-11 18:01default\n"
+"POT-Creation-Date: 2007-04-25 12:21default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -103,14 +103,28 @@ msgstr ""
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr ""
 
+#.   <block>
+#.                   Image alternate text :
+#.                 </block>
+#.   <block>
+#.                   Alternate text :
+#.                 </block>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+msgid "cpsschemas_image_alt"
+msgstr ""
+
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr ""
 
 #.   <block>
-#.           Image title :
-#.         </block>
+#.                 Image title :
+#.               </block>
+#.   <block>
+#.                   Title :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_title"
@@ -162,8 +176,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr ""
 
 #.   <block>
-#.           Photo subtitle :
-#.         </block>
+#.                 Subtitle :
+#.               </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr ""
