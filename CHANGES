@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Made the MultiSelect Widget do case-insensitive sorting.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
