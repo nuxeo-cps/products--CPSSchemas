@@ -1148,7 +1148,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
-                vocabulary_items.sort(key=operator.itemgetter(1))
                 deco = [(v.lower(), k, v) for k, v in vocabulary_items]
                 deco.sort()
                 vocabulary_items = [(k, v) for index, k, v in deco]
