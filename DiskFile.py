@@ -25,8 +25,8 @@ __version__ = '$Revision$'[11:-2]
 
 import os
 import sys
+import logging
 
-from zLOG import LOG, DEBUG, ERROR, WARNING
 from Globals import InitializeClass, DTMLFile
 from ComputedAttribute import ComputedAttribute
 from AccessControl import ClassSecurityInfo
@@ -35,73 +35,95 @@ from TM import VTM
 
 from Products.CMFCore.permissions import View
 
+logger = logging.getLogger('CPSSchemas.DiskFile')
+
 class DiskFile(File, VTM):
     """Stores the data of a file object into a file on the disk
     """
     meta_type = 'Disk File'
     security = ClassSecurityInfo()
-    is_new_file = 0
+    _v_new_file = False
+    _v_tmp = False
     content_type = ''
 
     def __init__(self, id, title, file=None, content_type=None, storage_path='var/files'):
         self.__name__ = id
-        self.title = title
+        self.title = self._filename = title # _filename prone to change
         self._file_store = storage_path
-        self._filename = self.getNewFilename(title)
         self.precondition = '' # For Image.File compatibility
+        self._v_new_file = True # NB: __init__ is bypassed by ZODB loads
         if file:
             data, size = self._read_data(file)
             content_type = self._get_content_type(file, data, id, content_type)
             self.update_data(data, content_type, size)
 
     def getFullFilename(self, filename=None):
-        """Returns the full path name to a file"""
+        """Return the full path name to a file.
+
+        If filename not specified, the current one is used.
+        This is the temporary one if applicable or the permanent one
+        """
         if filename is None:
-            filename = self._filename
+            filename = self._v_tmp and self._v_tmp_filename or self._filename
         return os.path.join(INSTANCE_HOME, self._file_store, filename)
 
-    def getNewFilename(self, suggested_id):
+    def getNewFilename(self, suggested_id, tmp=False):
+        """Return a free file name in the file store, based on suggested id.
+
+        If new, an additional marker is also inserted."""
+
+        dot = suggested_id.find('.')
+        if dot != -1:
+            ext = suggested_id[dot:]
+            suggested_id = suggested_id[:dot]
+        else:
+            ext = ''
+
         path = os.path.join(INSTANCE_HOME, self._file_store)
         existing_files = os.listdir(path)
-        newid = suggested_id
+        newid = tmp and (suggested_id + '_tmp' + ext) or (suggested_id + ext)
         theint = 0
         # Q: Won't this be horribly slow when there are hundreds of documents ?
         # A: Probably.
+        # GR: why not let the FS cope and use os.path.exists() ?
         while newid in existing_files:
             theint += 1
-            newid = suggested_id + str(theint)
+            baseid = suggested_id + str(theint)
+            newid = tmp and (baseid + '_tmp' + ext) or (baseid + ext)
         return newid
+
 
     #
     # Transaction support
     #
     def _finish(self):
-        if not self.is_new_file:
+        # This is called after ZODB write
+        if not self._v_tmp:
             return
-        self.is_new_file = 0
-        filename = self.getFullFilename()
-        new_filename = self.getFullFilename(self._new_filename)
-        if sys.platform == 'win32':
+        tmp_path = self.getFullFilename(self._v_tmp_filename)
+        target = self.getFullFilename(self._filename)
+
+        if sys.platform == 'win32' and not self._v_new_file:
             # Crappy win32 cannot do an atomic rename
             try:
-                os.remove(filename)
+                os.remove(target)
             except OSError:
-                LOG('DiskFile', WARNING, 'Error during transaction commit',
-                    'Removing file %s failed. \nStray files may linger.\n' %
-                    filename)
-        os.rename(new_filename, filename)
+                logger.warn('Error during transaction commit',
+                    'Removing file %s failed. \nStray files may linger.\n',
+                    target)
+        os.rename(tmp_path, target)
+        self._v_tmp = self._v_new_file = False
 
     def _abort(self):
-        if not self.is_new_file:
+        if not self._v_tmp:
             return
-        self.is_new_file = 0
-        new_filename = self.getFullFilename(self._new_filename)
+        self._v_tmp = self._v_new_file = False
+        path = self.getFullFilename(self._v_tmp_filename)
         try:
-            os.remove(new_filename)
+            os.remove(path)
         except OSError:
-            LOG('DiskFile', WARNING, 'Error during transaction abort',
-                'Removing file %s failed. \nStray files may linger.\n' %
-                new_filename)
+            logger.warn('Error during transaction abort',
+                'Removing file %s failed. \nStray files may linger.\n', path)
 
     #
     # API
@@ -118,28 +140,43 @@ class DiskFile(File, VTM):
         if size is None:
             size = len(data)
         self.size = size
-        self._new_filename = self.getNewFilename(self._filename + '.new')
-        filename = self.getFullFilename(self._new_filename)
-        file = open(filename, 'wb')
-        file.write(str(data))
-        self.is_new_file = 1
+        new_tmp = self.getNewFilename(self._filename, tmp=True)
+        fpath = self.getFullFilename(new_tmp)
+        file_d = open(fpath, 'wb')
+        file_d.write(str(data))
+        file_d.close()
+        if self._v_tmp:
+            # There is a previous temporary file. It is now outdated.
+            oldpath = self.getFullFilename(self._v_tmp_filename)
+            try:
+                os.unlink(oldpath)
+            except OSError:
+                logger.error("Error attempting to remove the previous "
+                             "temporary file %s", oldpath)
+        self._v_tmp = True
+        self._v_tmp_filename = new_tmp
+
         self.ZCacheable_invalidate()
         self.ZCacheable_set(None)
         self.http__refreshEtag()
 
+        # must be done before ZODB write
+        if self._v_new_file:
+            self._filename = self.getNewFilename(self.title)
+
     security.declareProtected(View, 'getData')
     def getData(self):
-        if self.is_new_file:
-            filename = self.getFullFilename(self._new_filename)
+        filename = self.getFullFilename()
 
-        if not self.is_new_file or not os.path.exists(filename):
-            filename = self.getFullFilename()
         file = open(filename, 'rb')
         data = file.read()
         return data
 
     def __str__(self):
-        return str(self.getData())
+        if self.content_type.startswith('text/'):
+            return str(self.getData()[:500])
+        else:
+            return "%s content" % self.content_type
 
     security.declareProtected(View, 'data')
     data = ComputedAttribute(getData, 1)
@@ -151,6 +188,9 @@ class DiskFile(File, VTM):
         """Loads the data from the external object to internal attributes
 
         This is used for cut/copy/paste.
+        XXX GR within a folder cut/paste, this can load gigabytes in RAM
+               If this is for cut/copy/paste *only*, a simple set of
+               flags would be much better.
         """
         self._copy_data = self.getData()
 
@@ -167,8 +207,8 @@ class DiskFile(File, VTM):
         try:
             os.remove(self.getFullFilename())
         except OSError:
-            LOG('DiskFile', WARNING, 'manage_beforeDelete',
-                'Removing file %s failed. \nStray files may linger.\n' %
+            logger.warn('manage_beforeDelete: '
+                'Removing file %s failed. \nStray files may linger.\n',
                     self.getFullFilename())
 
     def manage_afterClone(self, item):

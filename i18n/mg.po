@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-11 18:01default\n"
+"POT-Creation-Date: 2007-03-13 17:46default\n"
 "PO-Revision-Date: 2004-11-24 14:56+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -115,14 +115,26 @@ msgstr ""
 "Tsy maintsy manana iray amin'ireto tovana manara ireto ny fichier mahazo "
 "alalana : ${allowed_file_suffixes}."
 
+#.   <block>
+#.               Image alternate text (accessibility) :
+#.             </block>
+#.   <block>
+#.               Image alternative text :
+#.             </block>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+#, fuzzy
+msgid "cpsschemas_image_alt"
+msgstr "Titre : "
+
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "sy avidika amin'ny 'format'"
 
 #.   <block>
-#.           Image title :
-#.         </block>
+#.             Image title :
+#.           </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -176,8 +188,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Ovaina amin'ny format "
 
 #.   <block>
-#.           Photo subtitle :
-#.         </block>
+#.             Photo subtitle :
+#.           </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Fanazavana kely &nbsp;: "
@@ -657,5 +669,5 @@ msgstr "Ovaina eo anivon'ny tranonkala"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr ""
 
-msgid "label_alt_text"
-msgstr "Teny fanoloana"
+#~ msgid "label_alt_text"
+#~ msgstr "Teny fanoloana"

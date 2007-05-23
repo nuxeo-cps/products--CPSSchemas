@@ -41,6 +41,214 @@ New internal features
 - 
 
 ===========================================================
+Package: CPSSchemas 1.5.2
+===========================================================
+First release built by: div at: 2007-04-16T20:16:17
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.5.2
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51539
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1830: proper implementation of sparse writes.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.5.1
+===========================================================
+First release built by: div at: 2007-04-03T20:52:34
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.5.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51445
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- More usable layout for the image widgets.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.5.0
+===========================================================
+First release built by: div at: 2007-03-26T20:47:52
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.5.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51414
+
+Requires
+~~~~~~~~
+- tidy >= 11 February 2007
+New features
+~~~~~~~~~~~~
+- Implemented new XHTML sanitizing using a system command line.
+Bug fixes
+~~~~~~~~~
+- Fixed #1819 : "Links in the Link Widget are HTML escaped".
+- Fixed HTML validity of the URL Widget.
+- Updated Spanish translation thanks to Jesús Martín.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.4.0
+===========================================================
+First release built by: div at: 2007-03-14T12:25:36
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.4.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51329
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Accessibility improvement: Added alt attribute for ImageWidget and
+  PhotoWidget.
+Bug fixes
+~~~~~~~~~
+- #1801: incorrect filename stored on DiskFile object
+- #1801: stop flooding logs with DiskFile object data
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.3.4
+===========================================================
+First release built by: madarche at: 2007-03-05T16:50:56
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.4
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51291
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Fixed #1816 : "Buggy behavior for the title field of the Photo Widget".
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.3.3
+===========================================================
+First release built by: div at: 2007-02-19T18:35:24
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.3
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51117
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Fixed English translation message.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.3.2
+===========================================================
+First release built by: gracinet at: 2007-02-08T23:39:47
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.2
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51061
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Vocabularies: avoid duplicates in empty key wrapper.
+- Cleanup : more legible code in CPSSchemas.utils.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.3.1
+===========================================================
+First release built by: gracinet at: 2007-02-08T14:46:26
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@51030
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1811: CompoundWidget: css_class of subwidgets is ignored
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.3.0
+===========================================================
+First release built by: gracinet at: 2007-02-06T14:46:06
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.3.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50983
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- DataModel tells the StorageAdapters to write only those fields that
+  have been modified or that the adapter didn't require;
+  A new 'write_process_dependent_fields' property is used by some
+  adapters to require those fields. This is backwards compatible.
+===========================================================
+Package: CPSSchemas 1.2.3
+===========================================================
+First release built by: ben at: 2007-01-08T10:50:36
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.2.3
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@50770
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1801: Diskfile respects file 'extensions', has better transactional
+  behaviour and allows access to temporary file (for analysis).
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.2.2
 ===========================================================
 First release built by: ben at: 2006-12-26T11:22:39

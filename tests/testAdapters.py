@@ -22,6 +22,7 @@ from Testing.ZopeTestCase import ZopeTestCase
 
 from Acquisition import Implicit
 from DateTime.DateTime import DateTime
+from Products.CPSSchemas.StorageAdapter import BaseStorageAdapter
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 from Products.CPSSchemas.StorageAdapter import MetaDataStorageAdapter
 from Products.CPSSchemas.StorageAdapter import MappingStorageAdapter
@@ -55,6 +56,38 @@ class FakeDocument:
 class FakeProxy:
     def __init__(self, document):
         self.document = document
+
+class TestBaseStorageAdapter(ZopeTestCase):
+
+    def afterSetUp(self):
+        # Acquisition is needed for expression context computation during fetch
+        schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
+        schema.addField('f1', 'CPS String Field')
+        schema.addField('f2', 'CPS String Field')
+        schema.addField('f3', 'CPS String Field', default_expr='string:f3def')
+        schema.addField('f4', 'CPS String Field')
+        schema.addField('f5', 'CPS String Field',
+                        read_ignore_storage=True,
+                        read_process_expr='python: f2+"_yo"',
+                        read_process_dependent_fields='f2',
+                        )
+        schema.addField('f6', 'CPS String Field',
+                        read_ignore_storage=True,
+                        write_process_expr='python: f2+"_ja"',
+                        write_process_dependent_fields=('f2',),
+                        )
+        schema.addField('f7', 'CPS String Field',
+                        read_ignore_storage=True,
+                        write_process_expr='python: f2+"_uh"',
+                        # default write_process will be used
+                        )
+        self.adapter = BaseStorageAdapter(schema)
+
+    def testInit(self):
+        # some important internals
+        self.assertEquals(self.adapter._write_dependencies,
+                          {'f2': set(['f6'])})
+        self.assertEquals(self.adapter._all_dependents, ['f7'])
 
 
 class TestStorageAdapter(ZopeTestCase):
@@ -241,6 +274,7 @@ def test_suite():
     suites = [unittest.makeSuite(TestAttributeStorageAdapter),
               unittest.makeSuite(TestMetaDataStorageAdapter),
               unittest.makeSuite(TestMappingStorageAdapter),
+              unittest.makeSuite(TestBaseStorageAdapter),
               ]
     return unittest.TestSuite(suites)
 

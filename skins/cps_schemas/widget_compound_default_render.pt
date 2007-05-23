@@ -31,7 +31,7 @@
                          tooltip_id python:wid + '_help';
                          css_class python:test(err, 'row error', 'row')">
         <div tal:attributes="class css_class">
-        <div tal:attributes="class cell/css_class|nothing;
+        <div tal:attributes="class cell/widget_css_class|nothing;
                              id python:widget.getHtmlWidgetId()+'_widget';
                             ">
           <div class="label" tal:condition="widget/label_edit"

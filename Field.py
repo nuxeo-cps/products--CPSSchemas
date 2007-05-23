@@ -99,6 +99,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': "Write: ignore storage"},
         {'id': 'write_process_expr', 'type': 'string', 'mode': 'w',
          'label': "Write: expression"},
+        {'id': 'write_process_dependent_fields', 'type': 'tokens', 'mode': 'w',
+         'label': "Write: expression dependent fields"},
         )
 
     default_expr = 'string:'
@@ -117,6 +119,8 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     read_process_dependent_fields = ()
     write_ignore_storage = 0
     write_process_expr = ''
+    # BBB, remove in CPS 3.5 (this is used only if there is a write expr)
+    write_process_dependent_fields = ('*',)
 
     default_expr_c = Expression(default_expr)
     acl_read_permissions_c = []

@@ -62,7 +62,7 @@ class TestDataModel(unittest.TestCase):
         doc = self.doc = FakeDocument()
         doc.f2 = 'f2inst'
         # Acquisition is needed for expression context computation during fetch
-        schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
+        self.schema = schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
         schema.addField('f1', 'CPS String Field')
         schema.addField('f2', 'CPS String Field')
         schema.addField('f3', 'CPS String Field', default_expr='string:f3def')
@@ -83,6 +83,14 @@ class TestDataModel(unittest.TestCase):
                         read_ignore_storage=True,
                         read_process_expr='python:util.dummy("some text")',
                         )
+        self.schema.addField('f8', 'CPS String Field',
+                             write_process_expr='python: f2+"_ja"',
+                             write_process_dependent_fields=('f2',),
+                             )
+
+        self.schema.addField('f9', 'CPS String Field',
+                             write_process_expr='python: value+f2',
+                             )
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
@@ -99,7 +107,9 @@ class TestDataModel(unittest.TestCase):
               'f4': 'f4changed',
               'f5': 'f2inst_yo',
               'f6': None,
-              'f7': 'some text'
+              'f7': 'some text',
+              'f8': '',
+              'f9': '',
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -109,6 +119,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm['f5'], ok['f5'])
         self.assertEquals(dm['f6'], ok['f6'])
         self.assertEquals(dm['f7'], ok['f7'])
+        self.assertEquals(dm['f8'], ok['f8'])
         self.assertEquals(dm.getContext(), self.doc)
         self.assertEquals(dm.getProxy(), None)
 
@@ -128,7 +139,9 @@ class TestDataModel(unittest.TestCase):
               'f4': '',
               'f5': '_yo',
               'f6': None,
-              'f7': 'some text'
+              'f7': 'some text',
+              'f8': '',
+              'f9': '',
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -147,6 +160,7 @@ class TestDataModel(unittest.TestCase):
         dm._fetch()
         dm['f2'] = 'f2changed'
         dm['f4'] = 'f4changed'
+        doc.f5 = "unchanged stored value"
 
         # Unchanged field with class value is not dirty
         self.assertEquals(dm.isDirty('f1'), False)
@@ -165,7 +179,7 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(doc.f2, 'f2changed')
         self.assertEquals(doc.f3, 'f3def')
         self.assertEquals(doc.f4, 'f4changed')
-        self.assertEquals(doc.f5, 'f2inst_yo') # f2 changed after fetch
+        self.assertEquals(doc.f5, "unchanged stored value")
 
         # Nothing is dirty anymore
         self.assertEquals(dm.isDirty('f1'), False)
@@ -173,6 +187,33 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.isDirty('f3'), False)
         self.assertEquals(dm.isDirty('f4'), False)
         self.assertEquals(dm.isDirty('f5'), False)
+
+    def testWriteDependencies(self):
+        # We will change f2, and expect f8 to be updated because it has
+        # a write dependency on f2
+        dm = self.makeOne()
+        doc = self.doc
+        self.doc.f8 = 'previous_f8'
+        dm._fetch()
+        dm['f2'] = 'f2changed'
+        dm._commit(check_perms=0)
+        self.assertEquals(doc.f8, 'f2changed_ja')
+
+    def testWriteDependencies2(self):
+        # We will change f9, that depends on itself and f2.
+        # Although unchanged, the latter is available for write_exprs
+        # no matter what the conf says.
+        # Used to break in some directory use-cases where f2 is an id, and
+        # therefore discarded in writes. This is reproduced by not indicating
+        # the dependency of f9 upon f2.
+        dm = self.makeOne()
+        doc = self.doc
+        self.doc.f2 = 'f2'
+        dm._fetch()
+        dm['f9'] = 'f9changed'
+        self.failIf(dm.isDirty('f2'))
+        dm._commit(check_perms=0)
+        self.assertEquals(doc.f9, 'f9changedf2')
 
     def test_commit_with_proxy(self):
         # Test that editable content is correctly retrieved.

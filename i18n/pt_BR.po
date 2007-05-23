@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt-BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-11 18:01default\n"
+"POT-Creation-Date: 2007-03-13 17:46default\n"
 "PO-Revision-Date: 2006-04-03 15:40-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portugues do Brasil <pt@li.org>\n"
@@ -110,14 +110,26 @@ msgstr "min"
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr "sufixos permitidos: ${allowed_file_suffixes}"
 
+#.   <block>
+#.               Image alternate text (accessibility) :
+#.             </block>
+#.   <block>
+#.               Image alternative text :
+#.             </block>
+#: from ../skins/cps_schemas/widget_image_render.pt
+#: ../skins/cps_schemas/widget_photo_render.pt
+#, fuzzy
+msgid "cpsschemas_image_alt"
+msgstr "Title: "
+
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
 msgstr "Redimensiona"
 
 #.   <block>
-#.           Image title :
-#.         </block>
+#.             Image title :
+#.           </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
@@ -170,8 +182,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Redimensionar como"
 
 #.   <block>
-#.           Photo subtitle :
-#.         </block>
+#.             Photo subtitle :
+#.           </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Subtítulo"
@@ -615,5 +627,5 @@ msgstr "Editar online"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animação Flash (swf)"
 
-msgid "label_alt_text"
-msgstr "Texto alternativo"
+#~ msgid "label_alt_text"
+#~ msgstr "Texto alternativo"

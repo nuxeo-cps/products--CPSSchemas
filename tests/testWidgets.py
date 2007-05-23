@@ -546,6 +546,8 @@ class TestWidgets(unittest.TestCase):
         self.assertEquals(widget.isReadOnly(dm, 'create'), False)
         self.assertEquals(widget.isReadOnly(dm, 'edit'), True)
 
+        # XXX GR: this doesn't work with security implementation
+        # (TypeError: 'bool' object is not callable)
         kw = {'readonly_if_expr':
               "python:  not user.has_role(('Manager', 'Member'), proxy)"}
         widget.manage_changeProperties(**kw)

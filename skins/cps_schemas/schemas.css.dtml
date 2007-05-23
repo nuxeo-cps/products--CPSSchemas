@@ -43,7 +43,7 @@ div.popup ul li.selected {
 
 
 <dtml-comment>
-For the boolean widget
+For the Boolean Widget
 </dtml-comment>
 fieldset.widget {
   border: none;
@@ -52,6 +52,18 @@ fieldset.widget {
   padding-bottom: 0.5em;
 }
 
+<dtml-comment>
+For the URL Widget
+</dtml-comment>
+
+.urlImage {
+  float: left;
+  padding-right: 0;
+}
+
+.urlDescription {
+  padding-left: 2em;
+}
 
 /*
 </dtml-with>

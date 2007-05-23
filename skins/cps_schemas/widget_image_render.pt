@@ -7,6 +7,7 @@
   mimetype options/mimetype;
   size options/size;
   title options/title;
+  alt options/alt;
   content_url options/content_url;
   last_modified options/last_modified;
   content_url_nocache string:${content_url}?nocache=${last_modified};
@@ -64,14 +65,34 @@
     </metal:block>
 
     <tal:block condition="python:len(fields) > 1">
-      <p>
-      <tal:block i18n:translate="cpsschemas_image_title">
-        Image title :
-      </tal:block>
-      <input type="text" size="30" maxlength="60"
-             tal:attributes="name string:${id}_title;
-                             value title" />
-      </p>
+      <table>
+        <tr>
+          <td>
+            <tal:block i18n:translate="cpsschemas_image_title">
+              Image title :
+            </tal:block>
+          </td>
+          <td>
+            <input type="text" size="30" maxlength="60"
+              tal:attributes="name string:${id}_title;
+              value title" />
+          </td>
+        </tr>
+        <tal:block condition="python:len(fields) > 2">
+          <tr>
+            <td>
+              <tal:block i18n:translate="cpsschemas_image_alt">
+                Image alternate text :
+              </tal:block>
+            </td>
+            <td>
+              <input type="text" size="30" maxlength="60"
+                tal:attributes="name string:${id}_alt;
+                value alt" />
+            </td>
+          </tr>
+        </tal:block>
+      </table>
     </tal:block>
 
   </tal:block>
