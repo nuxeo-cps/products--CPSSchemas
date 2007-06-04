@@ -1,5 +1,8 @@
-# (C) Copyright 2005 Nuxeo SAS <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# (C) Copyright 2005-2007 Nuxeo SAS <http://nuxeo.com>
+# Authors:
+# Florent Guillaume <fg@nuxeo.com>
+# Georges Racinet <gracinet@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -138,6 +141,7 @@ class CPSVocabularyXMLAdapter(XMLAdapterBase,
         fragment = self._doc.createDocumentFragment()
         for key, value in vocab.items():
             value = value.decode('iso-8859-15').encode('utf-8')
+            key = key.decode('iso-8859-15').encode('utf-8')
             child = self._doc.createElement('item')
             child.setAttribute('key', key)
             child.appendChild(self._doc.createTextNode(value))
@@ -165,7 +169,8 @@ class CPSVocabularyXMLAdapter(XMLAdapterBase,
         for child in node.childNodes:
             if child.nodeName != 'item':
                 continue
-            key = str(child.getAttribute('key'))
+            key = child.getAttribute('key')
+            key = str(key.encode('iso-8859-15'))
             value = self._getNodeText(child)
             value = value.encode('iso-8859-15')
             if child.hasAttribute('msgid'):
