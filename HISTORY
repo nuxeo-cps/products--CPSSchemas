@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.4.0-rel1271525924
+===========================================================
+First release built by: div at: 2007-06-14T14:32:00
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.4.0-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@51831
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- Merged with the trunk
+
+===========================================================
 Package: CPSSchemas 1.3.1-rel1271525924
 ===========================================================
 First release built by: div at: 2007-03-07T12:16:00
