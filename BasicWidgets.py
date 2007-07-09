@@ -1059,7 +1059,10 @@ class CPSSelectWidget(CPSWidget):
                 if charset == "unicode":
                     if not isinstance(ret, unicode) and ret is not None:
                         ret = ret.decode('iso-8859-15')
-                return escape(ret)
+                if ret is not None:
+                    return escape(ret)
+                else:
+                    return ret
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             res = renderHtmlTag('select',
