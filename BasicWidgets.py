@@ -1057,7 +1057,7 @@ class CPSSelectWidget(CPSWidget):
                 ret = vocabulary.get(value, value)
                 # XXX workaround to deal with iso-8859-15 encoded strings
                 if charset == "unicode":
-                    if not isinstance(ret, unicode):
+                    if not isinstance(ret, unicode) and ret is not None:
                         ret = ret.decode('iso-8859-15')
                 return escape(ret)
         elif mode == 'edit':
@@ -1077,9 +1077,9 @@ class CPSSelectWidget(CPSWidget):
             for k, v in vocabulary_items:
                 # XXX workaround to deal with iso-8859-15 encoded strings
                 if charset == "unicode":
-                    if not isinstance(k, unicode):
+                    if not isinstance(k, unicode) and k is not None:
                         k = k.decode('iso-8859-15')
-                    if not isinstance(v, unicode):
+                    if not isinstance(v, unicode) and v is not None:
                         v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if value == k:
@@ -1089,7 +1089,7 @@ class CPSSelectWidget(CPSWidget):
             if value and not in_selection:
                 # XXX workaround to deal with iso-8859-15 encoded strings
                 if charset == "unicode":
-                    if not isinstance(value, unicode):
+                    if not isinstance(value, unicode) and value is not None:
                         value = value.decode('iso-8859-15')
                 else:
                     value = str(value)

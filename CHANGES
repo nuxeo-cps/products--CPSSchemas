@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Avoid crashes when converting to unicode but the field value is None
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
