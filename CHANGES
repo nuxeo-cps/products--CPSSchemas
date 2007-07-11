@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Fixed crash on unicode values for the MultiSelect Widget
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

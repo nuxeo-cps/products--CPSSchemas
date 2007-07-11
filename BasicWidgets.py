@@ -1062,7 +1062,7 @@ class CPSSelectWidget(CPSWidget):
                 if ret is not None:
                     return escape(ret)
                 else:
-                    return ret
+                    return ""
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             res = renderHtmlTag('select',
@@ -1173,6 +1173,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
+        charset = portal.default_charset
         cpsmcat = portal.translation_service
         if mode == 'view':
             if not value:
@@ -1201,6 +1202,12 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             if self.sorted:
                 vocabulary_items.sort(key=operator.itemgetter(1))
             for k, v in vocabulary_items:
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(k, unicode) and k is not None:
+                        k = k.decode('iso-8859-15')
+                    if not isinstance(v, unicode) and v is not None:
+                        v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if k in value:
                     kw['selected'] = 'selected'
