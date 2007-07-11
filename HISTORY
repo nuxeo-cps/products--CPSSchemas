@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.4.2-rel1271525924
+===========================================================
+First release built by: div at: 2007-07-11T16:31:47
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.4.2-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@51898
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Fixed crash on unicode values for the MultiSelect Widget
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.4.1-rel1271525924
 ===========================================================
 First release built by: div at: 2007-07-09T16:12:40
