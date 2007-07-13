@@ -8,6 +8,8 @@ Bug fixes
 ~~~~~~~~~
 - Fixed #1844 : "It is impossible to import a vocabulary with items having
   accented characters in keys".
+- Fixed #1850 : Empty keys get duplicated when displaying a vocabulary with
+  Select Widgets.
 - Made the MultiSelect Widget do case-insensitive sorting.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~

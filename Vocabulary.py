@@ -1,5 +1,8 @@
-# (C) Copyright 2003-2006 Nuxeo SAS <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
+# Authors:
+# Florent Guillaume <fg@nuxeo.com>
+# Georges Racinet <gracinet@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -427,9 +430,9 @@ class EmptyKeyVocabularyWrapper:
 
     def _wrap_list(self, l, value):
         """Return list l in which value has been inserted.
-
-        Ensure there can't be any duplicate.
         """
+        # Ensuring that there aren't any empty key duplicate
+        l = [x for x in l if x != value]
         if self._pos == 'first' and l[0] != value:
             l.insert(0, value)
         elif l[-1] != value:

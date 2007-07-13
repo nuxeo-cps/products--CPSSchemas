@@ -1,5 +1,8 @@
-# (C) Copyright 2004-2006 Nuxeo SAS <http://nuxeo.com>
-# Author: Florent Guillaume <fg@nuxeo.com>
+# (C) Copyright 2004-2007 Nuxeo SAS <http://nuxeo.com>
+# Authors:
+# Florent Guillaume <fg@nuxeo.com>
+# Georges Racinet <gracinet@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -178,6 +181,16 @@ class EmptyKeyVocabularyWrapperTests(BasicVocabularyTests):
         return Vocabulary.EmptyKeyVocabularyWrapper(
             BasicVocabularyTests.makeOne(self), 'Empty Value')
 
+    def makeOneAlreadyWithEmptyKeyAtBeginning(self, position='first'):
+        v = Vocabulary.CPSVocabulary(
+            'the_id', (('', ''), ('foo', 'F'), ('bar', 'B'), ('meuh', 'M')))
+        return Vocabulary.EmptyKeyVocabularyWrapper(v, '', position=position)
+
+    def makeOneAlreadyWithEmptyKeyAtEnd(self, position='first'):
+        v = Vocabulary.CPSVocabulary(
+            'the_id', (('foo', 'F'), ('bar', 'B'), ('meuh', 'M'), ('', '')))
+        return Vocabulary.EmptyKeyVocabularyWrapper(v, '', position=position)
+
     def makeWithMsgids(self):
         return Vocabulary.EmptyKeyVocabularyWrapper(
             BasicVocabularyTests.makeWithMsgids(self),
@@ -196,6 +209,46 @@ class EmptyKeyVocabularyWrapperTests(BasicVocabularyTests):
                                       ('bar', 'B'),
                                       ('meuh', 'M')])
         self.assertEquals(v.values(), ['Empty Value', 'F', 'B', 'M'])
+
+    def testListsWithEmptyKeyAtBeginning(self):
+        # The aim is to test that there won't be more than one empty key
+        v = self.makeOneAlreadyWithEmptyKeyAtBeginning()
+        self.assertEquals(v.keys(), ['', 'foo', 'bar', 'meuh'])
+        self.assertEquals(v.items(), [('', ''),
+                                      ('foo', 'F'),
+                                      ('bar', 'B'),
+                                      ('meuh', 'M'),
+                                      ])
+        self.assertEquals(v.values(), ['', 'F', 'B', 'M'])
+
+        v = self.makeOneAlreadyWithEmptyKeyAtBeginning(position='end')
+        self.assertEquals(v.keys(), ['foo', 'bar', 'meuh', ''])
+        self.assertEquals(v.items(), [('foo', 'F'),
+                                      ('bar', 'B'),
+                                      ('meuh', 'M'),
+                                      ('', ''),
+                                      ])
+        self.assertEquals(v.values(), ['F', 'B', 'M', ''])
+
+    def testListsWithEmptyKeyAtEnd(self):
+        # The aim is to test that there won't be more than one empty key
+        v = self.makeOneAlreadyWithEmptyKeyAtEnd()
+        self.assertEquals(v.keys(), ['', 'foo', 'bar', 'meuh'])
+        self.assertEquals(v.items(), [('', ''),
+                                      ('foo', 'F'),
+                                      ('bar', 'B'),
+                                      ('meuh', 'M'),
+                                      ])
+        self.assertEquals(v.values(), ['', 'F', 'B', 'M'])
+
+        v = self.makeOneAlreadyWithEmptyKeyAtBeginning(position='end')
+        self.assertEquals(v.keys(), ['foo', 'bar', 'meuh', ''])
+        self.assertEquals(v.items(), [('foo', 'F'),
+                                      ('bar', 'B'),
+                                      ('meuh', 'M'),
+                                      ('', ''),
+                                      ])
+        self.assertEquals(v.values(), ['F', 'B', 'M', ''])
 
     def test_keysSortedBy(self):
         v = self.makeWithMsgids()
