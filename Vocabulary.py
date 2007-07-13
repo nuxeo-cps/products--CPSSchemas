@@ -426,9 +426,9 @@ class EmptyKeyVocabularyWrapper:
 
     def _wrap_list(self, l, value):
         """Return list l in which value has been inserted.
-
-        Ensure there can't be any duplicate.
         """
+        # Ensuring that there aren't any empty key duplicate
+        l = [x for x in l if x != value]
         if self._pos == 'first' and l[0] != value:
             l.insert(0, value)
         elif l[-1] != value:
