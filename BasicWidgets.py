@@ -633,7 +633,7 @@ class CPSCheckBoxWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            # XXX L10N Should expand view mode to be able to do i18n.
+            # XXX L10N Should expand view mode to be able to do i18n
             if value:
                 return self.display_true
             else:
@@ -809,7 +809,7 @@ class CPSLinesWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
             if not value:
-                # XXX L10N empty format may be subject to i18n.
+                # XXX L10N empty format may be subject to i18n
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
             return self.view_mode_separator.join([escape(i) for i in value])
@@ -865,7 +865,7 @@ class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
         if mode == "view":
             value = datastructure[self.getWidgetId()]
             if not value:
-                # XXX L10N empty format may be subject to i18n.
+                # XXX L10N empty format may be subject to i18n
                 return self.format_empty
             links = [renderHtmlTag('a',**{'href': 'mailto:%s' % l,
                                           'contents': escape(l)})
@@ -936,7 +936,7 @@ class CPSSelectWidget(CPSWidget):
         {'id': 'vocabulary', 'type': 'string', 'mode': 'w',
          'label': 'Vocabulary', 'is_required' : 1},
         {'id': 'translated', 'type': 'boolean', 'mode': 'w',
-         'label': 'Is vocabulary translated on display'},
+         'label': 'Vocabulary is i18n'},
         {'id': 'sorted', 'type': 'boolean', 'mode': 'w',
          'label': 'Are vocabulary values rendered sorted'},
         {'id': 'add_empty_key', 'type': 'boolean', 'mode': 'w',
