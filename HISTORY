@@ -1,4 +1,25 @@
 ===========================================================
+Package: CPSSchemas 1.4.3-rel1271525924
+===========================================================
+First release built by: div at: 2007-07-18T16:40:40
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.4.3-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@51910
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Ported back from the trunk: Fixed #1850 - Empty keys get duplicated when 
+  displaying a vocabulary with Select Widgets.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.4.2-rel1271525924
 ===========================================================
 First release built by: div at: 2007-07-11T16:31:47
