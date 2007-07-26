@@ -253,6 +253,8 @@ class CPSStringWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if value is None:
+                return ''
             return escape(value)
         elif mode == 'edit':
             # XXX TODO should use an other name than kw !
@@ -343,7 +345,7 @@ class CPSURLWidget(CPSStringWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-            if not value:
+            if value is None:
                 return ''
             value_for_display = escape(value)
             if len(value_for_display) > self.display_width:
@@ -736,6 +738,8 @@ class CPSTextAreaWidget(CPSWidget):
                                 contents=value)
         elif mode == 'view':
             rformat = self.render_format
+            if value is None:
+                value = ''
             if rformat == 'pre':
                 ret = '<pre>' + escape(value) + '</pre>'
             elif rformat == 'stx':
@@ -1385,6 +1389,8 @@ class CPSIntWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if value is None:
+                return ''
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -1509,6 +1515,8 @@ class CPSFloatWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if value is None:
+                return ''
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',

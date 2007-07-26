@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Fixed potential problems on None values for some of the widgets
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
