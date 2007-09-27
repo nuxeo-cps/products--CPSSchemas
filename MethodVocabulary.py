@@ -1,4 +1,4 @@
-# (C) Copyright 2004 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2004-2007 Nuxeo SAS <http://nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -41,11 +41,15 @@ class MethodVocabulary(SimpleItemWithProperties):
     the method have to return a list of tuples like this
     (('foo', "Foo"), ('bar', "Bar"))
 
-    the method should handle a 'key' argument
-    if the key is not None then the method must return the value.
-    The method should also handle the 'is_i18n' boolean argument
-    if it's not False and return msgid corresponsding to the passed
-    'key' argument
+    By contract the method should handle a "key" argument.
+    If the key is not None then the method must return a corresponsding value.
+    If nothing is found by the method corresponding to the given "key", then a
+    KeyError should be raised (this exception is then used to return a default
+    value).
+
+    If the MethodVocabulary is to be i18n, the method should also handle a
+    "is_i18n" boolean argument. If it's not False and return msgid
+    corresponsding to the passed a "key" argument.
     """
 
     implements(IPropertyVocabulary)
