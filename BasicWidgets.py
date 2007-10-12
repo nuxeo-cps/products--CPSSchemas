@@ -774,6 +774,8 @@ class CPSLinesWidget(CPSWidget):
     view_mode_separator = ', '
     format_empty = ''
     auto_strip = False
+    limit_character = 0 
+
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
@@ -786,6 +788,8 @@ class CPSLinesWidget(CPSWidget):
          'label': 'Separator in view mode'},
         {'id': 'auto_strip', 'type': 'boolean', 'mode': 'w',
          'label': 'Auto strip lines on validation'},
+        {'id': 'limit_character', 'type': 'int', 'mode': 'w',
+         'label': 'Limit the number of character'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -835,7 +839,12 @@ class CPSLinesWidget(CPSWidget):
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            return self.view_mode_separator.join([escape(i) for i in value])
+            car = self.view_mode_separator.join([escape(i) for i in value])
+            car = car.replace(', ',',')
+            if(self.limit_character>0):
+                car1 = car[:self.limit_character] + '...'
+                return car1
+            return car 
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             return renderHtmlTag('textarea',
