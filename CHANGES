@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- Lines widget can now have a max width in view mode
 Bug fixes
 ~~~~~~~~~
 -
