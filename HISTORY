@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.5.0-rel1271525924
+===========================================================
+First release built by: laurent at: 2007-10-16T18:57:38
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.5.0-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@52010
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Lines widget can now have a max width in view mode
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.4.4-rel1271525924
 ===========================================================
 First release built by: div at: 2007-07-27T16:17:34
