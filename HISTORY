@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.6.1
+===========================================================
+First release built by: madarche at: 2007-10-24T19:27:25
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.6.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@52133
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1858: "Adding empty key in an empty CPSSchemas vocabulary causes an error".
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.6.0
 ===========================================================
 First release built by: madarche at: 2007-10-19T12:21:16
