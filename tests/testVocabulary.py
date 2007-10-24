@@ -181,6 +181,10 @@ class EmptyKeyVocabularyWrapperTests(BasicVocabularyTests):
         return Vocabulary.EmptyKeyVocabularyWrapper(
             BasicVocabularyTests.makeOne(self), 'Empty Value')
 
+    def makeOneEmpty(self, position='first'):
+        v = Vocabulary.CPSVocabulary('the_id', ())
+        return Vocabulary.EmptyKeyVocabularyWrapper(v, 'Empty Value', position=position)
+
     def makeOneAlreadyWithEmptyKeyAtBeginning(self, position='first'):
         v = Vocabulary.CPSVocabulary(
             'the_id', (('', ''), ('foo', 'F'), ('bar', 'B'), ('meuh', 'M')))
@@ -202,6 +206,12 @@ class EmptyKeyVocabularyWrapperTests(BasicVocabularyTests):
         verifyClass(IVocabulary, Vocabulary.EmptyKeyVocabularyWrapper)
 
     def testSimpleLists(self):
+        v = self.makeOneEmpty()
+        self.assertEquals(v.keys(), [''])
+        self.assertEquals(v.items(), [('', 'Empty Value'),
+                                      ])
+        self.assertEquals(v.values(), ['Empty Value'])
+
         v = self.makeOne()
         self.assertEquals(v.keys(), ['', 'foo', 'bar', 'meuh'])
         self.assertEquals(v.items(), [('', 'Empty Value'),

@@ -431,12 +431,15 @@ class EmptyKeyVocabularyWrapper:
     def _wrap_list(self, l, value):
         """Return list l in which value has been inserted.
         """
-        # Ensuring that there aren't any empty key duplicate
-        l = [x for x in l if x != value]
-        if self._pos == 'first' and l[0] != value:
-            l.insert(0, value)
-        elif l[-1] != value:
+        if len(l) == 0:
             l.append(value)
+        else:
+            # Ensuring that there aren't any empty key duplicate
+            l = [x for x in l if x != value]
+            if self._pos == 'first' and l[0] != value:
+                l.insert(0, value)
+            elif l[-1] != value:
+                l.append(value)
         return l
 
     def clear(self):
