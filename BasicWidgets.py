@@ -191,6 +191,8 @@ class CPSStringWidget(CPSWidget):
     display_width = 20
     size_min = 0
     size_max = 0
+#    del_first_occurence = False
+
     _properties = CPSWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
@@ -198,6 +200,8 @@ class CPSStringWidget(CPSWidget):
          'label': 'Minimum input width'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Maximum input width'},
+#        {'id': 'del_first_occurence', 'type': 'boolean', 'mode': 'w',
+#         'label': 'Delete the first occurence'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -253,6 +257,11 @@ class CPSStringWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+#            if(self.del_first_occurence):
+#                tab = [escape(i) for i in strip(value,',')]
+#                if len(tab)>1:
+#                    value= self.view_mode_separator.join([escape(i) for i in tab[1:]])
+
             if value is None:
                 return ''
             return escape(value)
@@ -775,7 +784,7 @@ class CPSLinesWidget(CPSWidget):
     format_empty = ''
     auto_strip = False
     limit_character = 0 
-
+    del_first_occurence = False
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
@@ -790,6 +799,8 @@ class CPSLinesWidget(CPSWidget):
          'label': 'Auto strip lines on validation'},
         {'id': 'limit_character', 'type': 'int', 'mode': 'w',
          'label': 'Limit the number of character'},
+        {'id': 'del_first_occurence', 'type': 'boolean', 'mode': 'w',
+         'label': 'Delete the first occurence'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -834,17 +845,26 @@ class CPSLinesWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
+        point = ''
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n.
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
             car = self.view_mode_separator.join([escape(i) for i in value])
-            car = car.replace(', ',',')
+            if(self.del_first_occurence):
+                tab = [escape(i) for i in value]
+                if len(tab)>1:
+                    car = self.view_mode_separator.join([escape(i) for i in tab[1:]])
+
             if(self.limit_character>0):
-                car1 = car[:self.limit_character] + '...'
+                if(len(car)>self.limit_caracter):
+                    point = '...'    
+                car1 = car[:self.limit_character] + point
                 return car1
             return car 
+
+
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             return renderHtmlTag('textarea',
