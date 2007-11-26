@@ -191,7 +191,7 @@ class CPSStringWidget(CPSWidget):
     display_width = 20
     size_min = 0
     size_max = 0
-#    del_first_occurence = False
+    del_first_occurence = False
 
     _properties = CPSWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
@@ -200,8 +200,8 @@ class CPSStringWidget(CPSWidget):
          'label': 'Minimum input width'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Maximum input width'},
-#        {'id': 'del_first_occurence', 'type': 'boolean', 'mode': 'w',
-#         'label': 'Delete the first occurence'},
+        {'id': 'del_first_occurence', 'type': 'boolean', 'mode': 'w',
+         'label': 'Delete the first occurence'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -257,10 +257,10 @@ class CPSStringWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
-#            if(self.del_first_occurence):
-#                tab = [escape(i) for i in strip(value,',')]
-#                if len(tab)>1:
-#                    value= self.view_mode_separator.join([escape(i) for i in tab[1:]])
+            if(self.del_first_occurence):
+                tab = [escape(i) for i in strip(value,',')]
+                if len(tab)>1:
+                    value= self.view_mode_separator.join([escape(i) for i in tab[1:]])
 
             if value is None:
                 return ''
@@ -858,7 +858,7 @@ class CPSLinesWidget(CPSWidget):
                     car = self.view_mode_separator.join([escape(i) for i in tab[1:]])
 
             if(self.limit_character>0):
-                if(len(car)>self.limit_caracter):
+                if(len(car)>self.limit_character):
                     point = '...'    
                 car1 = car[:self.limit_character] + point
                 return car1
