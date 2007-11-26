@@ -1513,7 +1513,7 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
             if translated:
                 subject_label = cpsmcat(
                     vocabulary.getMsgid(subject_name, subject_name),
-                    subject_name)
+                    subject_name).encode('ISO-8859-15', 'ignore')
                 entries_html_list.append(self.getSubjectSearchLink(
                     subject_name, subject_label))
             else:

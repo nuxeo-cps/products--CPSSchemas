@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #1864: CPSSubjectWidget breaks when a subject contains non-ascii characters.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
