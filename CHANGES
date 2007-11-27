@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- For string line widget we can delete the first occurence
 Bug fixes
 ~~~~~~~~~
 -
