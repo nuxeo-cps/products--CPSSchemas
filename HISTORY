@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.6.0-rel1271525924
+===========================================================
+First release built by: laurent at: 2007-11-27T16:12:33
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.6.0-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@52210
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- For string line widget we can delete the first occurence
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.5.0-rel1271525924
 ===========================================================
 First release built by: laurent at: 2007-10-16T18:57:38
