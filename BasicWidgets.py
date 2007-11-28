@@ -855,7 +855,7 @@ class CPSLinesWidget(CPSWidget):
             if(self.del_first_occurence):
                 tab = [escape(i) for i in value]
                 if len(tab)>1:
-                    car = self.view_mode_separator.join([escape(i) for i in tab[1:]])
+                    car = self.view_mode_separator.join([i for i in tab[1:]])
 
             if(self.limit_character>0):
                 if(len(car)>self.limit_character):
