@@ -2,9 +2,10 @@
 #
 # $Id$
 
-from Products.CMFCore.utils import getToolByName
-from ZTUtils import make_query
 from zLOG import LOG, DEBUG
+from ZTUtils import make_query
+
+from Products.CMFCore.utils import getToolByName
 
 def getContents(dm):
     wfolder = dm.get('folder', '')
@@ -79,7 +80,7 @@ def getFolderObject(wfolder):
         # setting folder to '.' allow a contextual search
         elif wfolder == '.':
             return context
-        elif not hasattr(aq_base(container), folder):
+        elif not hasattr(container.aq_inner.aq_explicit, folder):
             return obj
         try:
             obj = container.restrictedTraverse(folder)
@@ -111,7 +112,7 @@ def buildQuery(dm):
         if wquery_modified == 'time_last_login':
             mtool = getToolByName(context, 'portal_membership')
             member = mtool.getAuthenticatedMember()
-            if hasattr(aq_base(member), 'last_login_time'):
+            if hasattr(member.aq_inner.aq_explicit, 'last_login_time'):
                 modified = member.last_login_time
         else:
             today = DateTime()

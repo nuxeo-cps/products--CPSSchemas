@@ -7,6 +7,8 @@ New features
 Bug fixes
 ~~~~~~~~~
 - #1864: CPSSubjectWidget breaks when a subject contains non-ascii characters.
+- In restricted code, replaced aq_base(obj) by obj.aq_inner.aq_explicit, since
+  aq_base is not available in restricted code.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
