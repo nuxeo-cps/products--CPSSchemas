@@ -1,4 +1,6 @@
 ##parameters=dm
+#
+# $Id$
 
 from Products.CMFCore.utils import getToolByName
 from ZTUtils import make_query
@@ -39,7 +41,7 @@ def getContents(dm):
                                                  direction=wdirection,
                                                  hide_folder=1,
                                                  displayed=displayed)
-        
+
         if wnb_items and len(items) > wnb_items:
             items = items[:wnb_items]
             if len(query):
