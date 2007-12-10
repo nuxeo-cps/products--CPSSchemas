@@ -429,9 +429,9 @@ class EmptyKeyVocabularyWrapper:
         """
         # Ensuring that there aren't any empty key duplicate
         l = [x for x in l if x != value]
-        if self._pos == 'first' and l[0] != value:
+        if self._pos == 'first' and (not l or l[0] != value):
             l.insert(0, value)
-        elif l[-1] != value:
+        elif not l or l[-1] != value:
             l.append(value)
         return l
 

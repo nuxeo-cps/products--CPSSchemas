@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #1867: blank entry wrapper crashes on empty vocabularies
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
