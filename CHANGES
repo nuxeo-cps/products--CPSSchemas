@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- #1868: trailing spaces in widgets and fields ids
-- #1867: blank entry wrapper crashes on empty vocabularies
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

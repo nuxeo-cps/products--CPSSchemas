@@ -1,4 +1,25 @@
 ===========================================================
+Package: CPSSchemas 1.6.1-rel1271525924
+===========================================================
+First release built by: gracinet at: 2007-12-10T15:42:26
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.6.1-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@52259
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #1868: trailing spaces in widgets and fields ids
+- #1867: blank entry wrapper crashes on empty vocabularies
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.6.0-rel1271525924
 ===========================================================
 First release built by: laurent at: 2007-11-27T16:12:33
