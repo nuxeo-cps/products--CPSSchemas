@@ -43,7 +43,7 @@ class FolderWithPrefixedIds(Folder):
 
         Returns the subobject in its acquisition chain.
         """
-        id = ob.getId()
+        id = ob.getId().strip()
         if not id.startswith(self.prefix):
             id = self.prefix + id
             ob._setId(id)
