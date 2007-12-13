@@ -149,7 +149,7 @@ class DiskFile(File, VTM):
             # There is a previous temporary file. It is now outdated.
             oldpath = self.getFullFilename(self._v_tmp_filename)
             try:
-                os.unlink(oldpath)
+                os.remove(oldpath)
             except OSError:
                 logger.error("Error attempting to remove the previous "
                              "temporary file %s", oldpath)
