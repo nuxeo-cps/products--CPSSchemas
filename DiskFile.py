@@ -122,6 +122,7 @@ class DiskFile(File, VTM):
             return
         self._v_tmp = self._v_new_file = False
         path = self.getFullFilename(self._v_tmp_filename)
+        logger.debug("Aborting creation or modification for path %s" % path)
         try:
             os.remove(path)
         except OSError:
