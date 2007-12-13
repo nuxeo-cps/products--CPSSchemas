@@ -38,7 +38,7 @@ from Products.CMFCore.permissions import View
 logger = logging.getLogger('CPSSchemas.DiskFile')
 
 class DiskFile(File, VTM):
-    """Stores the data of a file object into a file on the disk
+    """Stores the data of a file object into a file on the disk.
     """
     meta_type = 'Disk File'
     security = ClassSecurityInfo()
@@ -61,7 +61,7 @@ class DiskFile(File, VTM):
         """Return the full path name to a file.
 
         If filename not specified, the current one is used.
-        This is the temporary one if applicable or the permanent one
+        This is the temporary one if applicable or the permanent one.
         """
         if filename is None:
             filename = self._v_tmp and self._v_tmp_filename or self._filename
@@ -70,7 +70,8 @@ class DiskFile(File, VTM):
     def getNewFilename(self, suggested_id, tmp=False):
         """Return a free file name in the file store, based on suggested id.
 
-        If new, an additional marker is also inserted."""
+        If new, an additional marker is also inserted.
+        """
 
         dot = suggested_id.find('.')
         if dot != -1:
@@ -93,11 +94,10 @@ class DiskFile(File, VTM):
         return newid
 
 
-    #
-    # Transaction support
-    #
     def _finish(self):
-        # This is called after ZODB write
+        """Called after ZODB write.
+        This is the VTM transaction support.
+        """
         if not self._v_tmp:
             return
         tmp_path = self.getFullFilename(self._v_tmp_filename)
@@ -115,6 +115,9 @@ class DiskFile(File, VTM):
         self._v_tmp = self._v_new_file = False
 
     def _abort(self):
+        """Called when the Zope transaction is rolled-back.
+        This is the VTM transaction support.
+        """
         if not self._v_tmp:
             return
         self._v_tmp = self._v_new_file = False
@@ -241,7 +244,8 @@ addDiskFileForm = DTMLFile('zmi/addDiskFileForm', globals())
 
 def addDiskFile(self, id, title, file=None, content_type=None,
                 storage_path='var/files', REQUEST=None):
-    """Add a ZODBStorageItem."""
+    """Add a ZODBStorageItem.
+    """
     ob = DiskFile(id, title, '', content_type, storage_path)
     self._setObject(id, ob)
     # Upload in two steps, as OFS.Image.File does, since this is more efficient
@@ -251,3 +255,4 @@ def addDiskFile(self, id, title, file=None, content_type=None,
         self._getOb(id).content_type = content_type
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(self.absolute_url() + '/manage_main')
+
