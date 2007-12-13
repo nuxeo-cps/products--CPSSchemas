@@ -196,7 +196,6 @@ class DiskFile(File, VTM):
 
     def storeData(self):
         """Stores internal data into the external storage"""
-        # Clear the _storage_id to force the use of a new object
         filename = self.getFullFilename()
         file = open(filename, 'wb')
         file.write(self._copy_data)
