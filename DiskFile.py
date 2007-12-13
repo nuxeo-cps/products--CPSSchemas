@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2004 Nuxeo SARL <http://nuxeo.com>
+# Copyright (c) 2003-2007 Nuxeo SAS <http://nuxeo.com>
 # Copyright (c) 2003 CEA <http://www.cea.fr>
 #
 # This program is free software; you can redistribute it and/or modify
