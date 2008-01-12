@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #1881: Provide an easy mean to resize the widget textareas.
 Bug fixes
 ~~~~~~~~~
 - #1864: CPSSubjectWidget breaks when a subject contains non-ascii characters.

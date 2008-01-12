@@ -23,7 +23,7 @@
       tal:content="structure value" />
   </tal:block>
   <tal:block condition="python:mode == 'edit'">
-        <textarea class="monospaceFont"
+        <textarea class="monospaceFont resizable"
           tal:attributes="id value_name;
           name value_name;
           cols here/width;
