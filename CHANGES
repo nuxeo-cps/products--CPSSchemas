@@ -3,13 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #1881: Provide an easy mean to resize the widget textareas.
+-
 Bug fixes
 ~~~~~~~~~
-- #1864: CPSSubjectWidget breaks when a subject contains non-ascii characters.
-- #1868: ZMI copy/paste of widgets is hazardous.
-- In restricted code, replaced aq_base(obj) by obj.aq_inner.aq_explicit, since
-  aq_base is not available in restricted code.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

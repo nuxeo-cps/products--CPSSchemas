@@ -1,4 +1,27 @@
 ===========================================================
+Package: CPSSchemas 1.7.0
+===========================================================
+First release built by: madarche at: 2008-01-15T12:19:24
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.7.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@52414
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #1881: Provide an easy mean to resize the widget textareas.
+Bug fixes
+~~~~~~~~~
+- #1864: CPSSubjectWidget breaks when a subject contains non-ascii characters.
+- #1868: ZMI copy/paste of widgets is hazardous.
+- In restricted code, replaced aq_base(obj) by obj.aq_inner.aq_explicit, since
+  aq_base is not available in restricted code.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.6.1
 ===========================================================
 First release built by: madarche at: 2007-10-24T19:27:25
