@@ -1,4 +1,4 @@
-# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2008 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -454,7 +454,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
         {'id': 'display_printable_version', 'type': 'boolean', 'mode': 'w',
          'label': 'Display link to printable version in view mode'},
         {'id': 'allowed_suffixes', 'type': 'tokens', 'mode': 'w',
-         'label': 'Allowed file suffixes (ex: .html .sxw)'},
+         'label': 'Allowed file suffixes (ex: .html .odt)'},
         )
     display_html_preview = True
     display_printable_version = True
