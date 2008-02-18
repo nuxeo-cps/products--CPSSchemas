@@ -649,6 +649,8 @@ class CPSDiskFileField(CPSFileField):
     def computeDependantFields(self, schemas, data, context=None):
         """Compute dependant fields.
 
+        In particular this method handles the conversion from File to DiskFile
+        
         schemas is the list of schemas
 
         data is the dictionnary of the datamodel
