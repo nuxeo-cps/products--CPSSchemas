@@ -1744,6 +1744,17 @@ class CPSFileWidget(CPSWidget):
         cpsmcat = getToolByName(self, 'translation_service')
         return str(hr[0]) + ' ' + cpsmcat(hr[1])
 
+    def getFileSize(self, fileupload):
+        """Find size of given fileupload.
+
+        fileupload is assumed not to be None."""
+
+        current = fileupload.tell()
+        fileupload.seek(0, 2) # end of file
+        size = fileupload.tell()
+        fileupload.seek(current)
+        return size
+
     def getFileInfo(self, datastructure):
         """Get the file info from the datastructure."""
         widget_id = self.getWidgetId()
@@ -1754,9 +1765,7 @@ class CPSFileWidget(CPSWidget):
             empty_file = False
             session_file = isinstance(fileupload, PersistableFileUpload)
             current_filename = cleanFileName(fileupload.filename)
-            fileupload.seek(0, 2) # end of file
-            size = fileupload.tell()
-            fileupload.seek(0)
+            size = self.getFileSize(fileupload)
             file = dm[field_id] # last stored file
             if file is not None:
                 last_modified = str(file._p_mtime or '')
@@ -1911,8 +1920,7 @@ class CPSFileWidget(CPSWidget):
             if not isinstance(fileupload, FileUpload):
                 return self.validateError('cpsschemas_err_file', {},
                                           datastructure)
-            fileupload.seek(0, 2) # end of file
-            size = fileupload.tell()
+            size = self.getFileSize(fileupload)
             if not size:
                 return self.validateError('cpsschemas_err_file_empty', {},
                                           datastructure)
