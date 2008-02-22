@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.7.1
+===========================================================
+First release built by: madarche at: 2008-02-22T15:54:56
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.7.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@52586
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Better description for the CPSAttachedFileWidget options.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.7.0
 ===========================================================
 First release built by: madarche at: 2008-01-15T12:19:24
