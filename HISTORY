@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.7.0-rel1271525924
+===========================================================
+First release built by: rspivak at: 2008-02-27T18:24:05
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.7.0-rel1271525924
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/branches/rel1271525924@52628
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- Merge of [52576]: factorization of uploaded file size finding
+
+===========================================================
 Package: CPSSchemas 1.6.1-rel1271525924
 ===========================================================
 First release built by: gracinet at: 2007-12-10T15:42:26
