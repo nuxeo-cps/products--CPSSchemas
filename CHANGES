@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Made textarea.resizable use a width of 100% for maximum usability.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
