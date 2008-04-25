@@ -6,7 +6,8 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Set a more efficient configuration for tidy:
+  -indent, -wrap 80, --hide-comments no
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

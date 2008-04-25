@@ -109,7 +109,7 @@ class CPSTextWidget(CPSStringWidget):
     # * force-output makes tidy produce an output even if errors were found.
     # * show-body-only outputs only the content of the body tag.
     # * write-back modifies the file in place.
-    xhtml_sanitize_system = 'tidy --input-encoding latin1 --output-encoding latin1 --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments yes %s 2>/dev/null'
+    xhtml_sanitize_system = 'tidy -indent -wrap 80 --input-encoding latin1 --output-encoding latin1 --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments no %s 2>/dev/null'
     file_uploader = False
 
     render_position = all_render_positions[0]
