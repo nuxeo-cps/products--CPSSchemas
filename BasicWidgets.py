@@ -1812,6 +1812,10 @@ class CPSFileWidget(CPSWidget):
             datamodel[field_id] = None
         elif choice == 'keep':
             fileupload = datastructure[widget_id]
+            if fileupload is None and self.is_required:
+                return self.validateError('cpsschemas_err_required', {},
+                                          datastructure)
+
             if isinstance(fileupload, PersistableFileUpload):
                 # Keeping something from the session means we
                 # actually want to store it.
@@ -2293,4 +2297,3 @@ class CPSRevisionWidget(CPSWidget):
 InitializeClass(CPSRevisionWidget)
 
 widgetRegistry.register(CPSRevisionWidget)
-
