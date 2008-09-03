@@ -1,4 +1,30 @@
 ===========================================================
+Package: CPSSchemas 1.7.3
+===========================================================
+First release built by: madarche at: 2008-09-03T15:28:11
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/tags/1.7.3
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSSchemas/trunk@52925
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Set a more efficient configuration for tidy:
+  -indent, -wrap 80, --hide-comments no
+- #1890: Image without image breaks Image Gallery.
+  Part of the fix includes setting 'is_required' to True by default for
+  'preview' field in image layout (done in CPSDefault package).
+  Another part of fix is to correctly handle 'is_required' field when no
+  image was supplied to 'Image Widget'.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+-
+
+===========================================================
 Package: CPSSchemas 1.7.2
 ===========================================================
 First release built by: madarche at: 2008-04-18T12:57:49

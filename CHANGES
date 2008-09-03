@@ -6,13 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Set a more efficient configuration for tidy:
-  -indent, -wrap 80, --hide-comments no
-- #1890: Image without image breaks Image Gallery.
-  Part of the fix includes setting 'is_required' to True by default for
-  'preview' field in image layout (done in CPSDefault package).
-  Another part of fix is to correctly handle 'is_required' field when no
-  image was supplied to 'Image Widget'.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
--
+- 
