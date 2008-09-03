@@ -1,6 +1,6 @@
-# translation of pt-BR.po to PortuguÍs do Brasil
-# translation of pt-br.po to Portugu√™s do Brasil
-# translation of cpsschemas.po to Portugu√™s do Brasil
+# translation of pt-BR.po to Portugu√™s do Brasil
+# translation of pt-br.po to Portugu√É¬™s do Brasil
+# translation of cpsschemas.po to Portugu√É¬™s do Brasil
 # ##########################################################
 # ################# DON'T EDIT THIS FILE! ##################
 # ##########################################################
@@ -14,14 +14,15 @@ msgstr ""
 "POT-Creation-Date: 2007-03-13 17:46default\n"
 "PO-Revision-Date: 2007-05-01 16:30+0100\n"
 "Last-Translator: \n"
-"Language-Team: PortuguÍs <luis727@gmail.com>\n"
+"Language-Team: Portugu√™s <luis727@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Code: pt\n"
+"Language-Code: pt\n"
+"Language-Name: pt\n"
 "Domain: default\n"
-"Language-Code: pt\n"
-"Language-Code: pt\n"
-"Language-Name: Portuguese Brazilian\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
 #.                   selected python: op['size'] and (op['size'][0]==image_width
@@ -63,7 +64,7 @@ msgstr "Iniciar editor online"
 #.   <block>at</block>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
 msgid "cpsschema_at"
-msgstr "‡s"
+msgstr "√†s"
 
 #.   <label attributes="for elt_hour_id">h</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -84,7 +85,7 @@ msgstr "hora"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschema_link_preview"
-msgstr "Previs„o"
+msgstr "Previs√£o"
 
 #.   <a href="http://url..." attributes="
 #.           href preview_url;
@@ -94,7 +95,7 @@ msgstr "Previs„o"
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 msgid "cpsschema_link_printable_version"
-msgstr "Previs„o"
+msgstr "Previs√£o"
 
 #.   <label attributes="for elt_minute_id">mn</label>
 #: from ../skins/cps_schemas/widget_datetime_render.pt
@@ -119,7 +120,7 @@ msgstr "sufixos permitidos: ${allowed_file_suffixes}"
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_alt"
-msgstr "TÌtulo: "
+msgstr "T√≠tulo: "
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -132,7 +133,7 @@ msgstr "Redimensiona"
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_title"
-msgstr "TÌtulo: "
+msgstr "T√≠tulo: "
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -184,12 +185,12 @@ msgstr "Redimensionar como"
 #.           </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr "SubtÌtulo"
+msgstr "Subt√≠tulo"
 
 #.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_format"
-msgstr "Formato de renderizaÁ„o"
+msgstr "Formato de renderiza√ß√£o"
 
 #.   <block>
 #.             Render position
@@ -198,7 +199,7 @@ msgstr "Formato de renderizaÁ„o"
 #: from ../skins/cps_schemas/widget_photo_render.pt
 #: ../skins/cps_schemas/widget_text_render.pt
 msgid "cpsschemas_render_position"
-msgstr "PosiÁ„o de renderizaÁ„o"
+msgstr "Posi√ß√£o de renderiza√ß√£o"
 
 #.   <label attributes="for string:${widget_selected_id}_no">cpsschemas_search_all_languages</label>
 #: from ../skins/cps_schemas/widget_searchlanguage_render.pt
@@ -217,29 +218,29 @@ msgstr "um ou mais dos seguintes idiomas"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Tamanho m·ximo: ${size_max}."
+msgstr "Tamanho m√°ximo: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
-msgstr "Adicionar vocabul·rio"
+msgstr "Adicionar vocabul√°rio"
 
 #.   <h2>cpsschemas_vocabulary_available</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_available"
-msgstr "Vocabul·rio disponÌvel"
+msgstr "Vocabul√°rio dispon√≠vel"
 
 #.   <span class="description">cpsschemas_vocabulary_contains
 #.     ${voc_entries (tal replace="python:len(keys)")}
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
-msgstr "Vocabul·rio contÈm ${voc_entries} entrada(s)."
+msgstr "Vocabul√°rio cont√©m ${voc_entries} entrada(s)."
 
 #.   <h2>cpsschemas_vocabulary_delete</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_delete"
-msgstr "Remover vocabul·rio"
+msgstr "Remover vocabul√°rio"
 
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
@@ -249,7 +250,7 @@ msgstr "Editar ${voc_id}"
 #.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
-msgstr "Adicionar entrada de vocabul·rio"
+msgstr "Adicionar entrada de vocabul√°rio"
 
 #.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -264,7 +265,7 @@ msgstr "Chave:"
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_manage"
-msgstr "Administrar vocabul·rio"
+msgstr "Administrar vocabul√°rio"
 
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
@@ -279,7 +280,7 @@ msgstr "Valor:"
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "description_vocabulary_manage_form"
-msgstr "Esta p·gina permite administrar vocabul·rios e suas entradas."
+msgstr "Esta p√°gina permite administrar vocabul√°rios e suas entradas."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -316,13 +317,13 @@ msgstr "Tecla de ajuda"
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "label"
-msgstr "rÛtulo"
+msgstr "r√≥tulo"
 
 #.   <label attributes="for file_upload_id">
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr "Arquivo a ser utilizado para preencher a ·rea de texto:"
+msgstr "Arquivo a ser utilizado para preencher a √°rea de texto:"
 
 msgid "cpsschemas_unit_bytes"
 msgstr "bytes"
@@ -337,7 +338,7 @@ msgid "cpsschemas_unit_giga_bytes"
 msgstr "Gb"
 
 msgid "cpsschemas_err_string"
-msgstr "Cadeia de caracteres inv·lida."
+msgstr "Cadeia de caracteres inv√°lida."
 
 msgid "cpsschemas_err_string_too_short"
 msgstr "String demasiado curto"
@@ -349,52 +350,52 @@ msgid "cpsschemas_err_required"
 msgstr "Campo requerido."
 
 msgid "cpsschemas_err_textarea"
-msgstr "Texto inv·lido."
+msgstr "Texto inv√°lido."
 
 msgid "cpsschemas_err_select"
-msgstr "SelecÁ„o inv·lida."
+msgstr "Selec√ß√£o inv√°lida."
 
 msgid "cpsschemas_err_multiselect"
-msgstr "SelecÁ„o m˙ltipla inv·lida."
+msgstr "Selec√ß√£o m√∫ltipla inv√°lida."
 
 msgid "cpsschemas_err_boolean"
-msgstr "Booleano inv·lido."
+msgstr "Booleano inv√°lido."
 
 msgid "cpsschemas_err_int"
-msgstr "Inteiro inv·lido."
+msgstr "Inteiro inv√°lido."
 
 msgid "cpsschemas_err_int_range"
 msgstr "Inteiro fora da faixa."
 
 msgid "cpsschemas_err_date"
-msgstr "Data inv·lida."
+msgstr "Data inv√°lida."
 
 msgid "cpsschemas_err_bad_date"
 msgstr "Data incorreta"
 
 msgid "cpsschemas_err_file"
-msgstr "Arquivo inv·lido."
+msgstr "Arquivo inv√°lido."
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr "Este arquivo n„o tem um sufixo permitido; os sufixos permitidos s„o: ${allowed_file_suffixes}."
+msgstr "Este arquivo n√£o tem um sufixo permitido; os sufixos permitidos s√£o: ${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
-msgstr "Arquivo inv·lido (vazio)."
+msgstr "Arquivo inv√°lido (vazio)."
 
 msgid "cpsschemas_err_file_too_big"
-msgstr "Este arquivo È muito grande"
+msgstr "Este arquivo √© muito grande"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Este arquivo È muito grande, o tamanho m·ximo permitido È ${max_size}Mb."
+msgstr "Este arquivo √© muito grande, o tamanho m√°ximo permitido √© ${max_size}Mb."
 
 msgid "cpsschemas_err_image"
-msgstr "Imagem inv·lida."
+msgstr "Imagem inv√°lida."
 
 msgid "cpsschemas_err_url"
-msgstr "URL inv·lida."
+msgstr "URL inv√°lida."
 
 msgid "cpsschemas_err_long"
-msgstr "Inteiro longo inv·lido."
+msgstr "Inteiro longo inv√°lido."
 
 msgid "cpsschemas_err_long_range"
 msgstr "Inteiro longo fora da faixa."
@@ -406,40 +407,40 @@ msgid "cpsschemas_err_float_range"
 msgstr "Ponto flutuante fora da faixa."
 
 msgid "cpsschemas_err_float"
-msgstr "Ponto flutuante inv·lido."
+msgstr "Ponto flutuante inv√°lido."
 
 msgid "cpsschemas_err_password_mismatch"
-msgstr "Sua senha e a confirmaÁ„o n„o coincidem."
+msgstr "Sua senha e a confirma√ß√£o n√£o coincidem."
 
 msgid "cpsschemas_err_password_size_min"
-msgstr "Desculpe, a sua senha È muito curta."
+msgstr "Desculpe, a sua senha √© muito curta."
 
 msgid "cpsschemas_err_password_lower"
-msgstr "Desculpe, a sua senha deve conter alguma letra min˙scula."
+msgstr "Desculpe, a sua senha deve conter alguma letra min√∫scula."
 
 msgid "cpsschemas_err_password_upper"
-msgstr "Desculpe, a sua senha deve conter alguma letra mai˙scula."
+msgstr "Desculpe, a sua senha deve conter alguma letra mai√∫scula."
 
 msgid "cpsschemas_err_password_digit"
-msgstr "Desculpe, a sua senha deve conter um dÌgito."
+msgstr "Desculpe, a sua senha deve conter um d√≠gito."
 
 msgid "cpsschemas_err_password_extra"
-msgstr "Desculpe, a sua senha deve conter um caracter especial diferente de letra e dÌgito."
+msgstr "Desculpe, a sua senha deve conter um caracter especial diferente de letra e d√≠gito."
 
 msgid "cpsschemas_err_identifier"
-msgstr "Identificador inv·lido."
+msgstr "Identificador inv√°lido."
 
 msgid "cpsschemas_err_email"
-msgstr "Email inv·lido."
+msgstr "Email inv√°lido."
 
 msgid "cpsschemas_err_readonly"
 msgstr "Campo somente para leitura."
 
 msgid "cpsschemas_err_rangelist"
-msgstr "Faixa de lista inv·lida"
+msgstr "Faixa de lista inv√°lida"
 
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Arquivo Zip inv·lido"
+msgstr "Arquivo Zip inv√°lido"
 
 msgid "cpsschemas_err_zippedhtml_html_not_found"
 msgstr "Nenhum documento html econtrado no arquivo Zip"
@@ -448,7 +449,7 @@ msgid "jscalendar_date_fmt"
 msgstr "d/m/y"
 
 msgid "cpsschemas_rposition_normal"
-msgstr "Largura da p·gina"
+msgstr "Largura da p√°gina"
 
 msgid "cpsschemas_rposition_col_right"
 msgstr "Coluna da direita"
@@ -478,10 +479,10 @@ msgid "cpsschemas_rformat_original"
 msgstr "Original"
 
 msgid "img_auto_size"
-msgstr "Autom·tico"
+msgstr "Autom√°tico"
 
 msgid "img_icon ${dim}"
-msgstr "Õcone ${dim}"
+msgstr "√çcone ${dim}"
 
 msgid "img_xsmall ${dim}"
 msgstr "Extra pequeno ${dim}"
@@ -490,7 +491,7 @@ msgid "img_small ${dim}"
 msgstr "Pequeno ${dim}"
 
 msgid "img_medium ${dim}"
-msgstr "MÈdio ${dim}"
+msgstr "M√©dio ${dim}"
 
 msgid "img_large ${dim}"
 msgstr "Grande ${dim}"
@@ -499,7 +500,7 @@ msgid "img_xlarge ${dim}"
 msgstr "Extra grande ${dim}"
 
 msgid "cpsschemas_label_false"
-msgstr "N„o"
+msgstr "N√£o"
 
 msgid "cpsschemas_label_true"
 msgstr "Sim"
@@ -517,7 +518,7 @@ msgid "cpsschemas_label_link_content"
 msgstr "Nome do Link"
 
 msgid "cpsschemas_label_link_title"
-msgstr "DescriÁ„o"
+msgstr "Descri√ß√£o"
 
 msgid "cpsschemas_label_zctext_operator_and"
 msgstr "todas estas palavras"
@@ -535,10 +536,10 @@ msgid "cpsschemas_label_zctext_field_SearchableText"
 msgstr "no documento"
 
 msgid "cpsschemas_label_zctext_field_Title"
-msgstr "no tÌtulo"
+msgstr "no t√≠tulo"
 
 msgid "cpsschemas_label_zctext_field_Description"
-msgstr "na descriÁ„o"
+msgstr "na descri√ß√£o"
 
 msgid "cpsschemas_label_modified_since_0"
 msgstr "qualquer data"
@@ -547,77 +548,77 @@ msgid "cpsschemas_label_modified_since_1"
 msgstr "desde ontem"
 
 msgid "cpsschemas_label_modified_since_30"
-msgstr "dentro do ˙ltimo mÍs"
+msgstr "dentro do √∫ltimo m√™s"
 
 msgid "cpsschemas_label_modified_since_91"
-msgstr "dentro dos ˙ltimos 3 meses"
+msgstr "dentro dos √∫ltimos 3 meses"
 
 msgid "cpsschemas_label_modified_since_182"
-msgstr "dentro dos ˙ltimos 6 meses"
+msgstr "dentro dos √∫ltimos 6 meses"
 
 msgid "cpsschemas_label_modified_since_365"
 msgstr "dentro de um ano"
 
 msgid "cpsschemas_label_searchsort_relevance"
-msgstr "relev‚ncia"
+msgstr "relev√¢ncia"
 
 msgid "cpsschemas_label_searchsort_antechrono"
-msgstr "cronolÛgica inversa"
+msgstr "cronol√≥gica inversa"
 
 msgid "cpsschemas_label_searchsort_chrono"
-msgstr "cronolÛgica"
+msgstr "cronol√≥gica"
 
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "data de expiraÁ„o"
+msgstr "data de expira√ß√£o"
 
 msgid "cpsschemas_label_searchsort_title"
-msgstr "tÌtulo"
+msgstr "t√≠tulo"
 
 msgid "cpsschemas_label_searchsort_review_state"
 msgstr "estado"
 
 msgid "cpsschemas_label_searchsort_relative_path"
-msgstr "localizaÁ„o"
+msgstr "localiza√ß√£o"
 
 msgid "cpsschemas_label_searchsort_portal_type"
 msgstr "tipo do documento"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Id j· existe, escolha outro."
+msgstr "Id j√° existe, escolha outro."
 
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Vocabul·rio criado."
+msgstr "Vocabul√°rio criado."
 
 msgid "cpsschemas_psm_vocabulary_id_missing"
 msgstr "Escolha um id."
 
 msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Vocabul·rio removido."
+msgstr "Vocabul√°rio removido."
 
 msgid "cpsschemas_psm_vocabulary_entry_added"
 msgstr "Entrada adicionada."
 
 msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Entradas de vocabul·rio removidas."
+msgstr "Entradas de vocabul√°rio removidas."
 
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
 msgstr "Nenhuma entrada selecionada. Escolha uma."
 
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Vocabul·rio actualizado."
+msgstr "Vocabul√°rio actualizado."
 
 msgid "label_none_selection"
 msgstr " -- Vazio --"
 
 msgid "label_other_selection"
-msgstr "Outra, por favor especÌfica: "
+msgstr "Outra, por favor espec√≠fica: "
 
 # ## action =================================================
 msgid "action_edit_online"
 msgstr "Editar online"
 
 msgid "cpsdoc_Flash_Animation_label_edit"
-msgstr "AnimaÁ„o Flash (swf)"
+msgstr "Anima√ß√£o Flash (swf)"
 
 #~ msgid "label_alt_text"
 #~ msgstr "Texto alternativo"

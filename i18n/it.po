@@ -12,14 +12,14 @@ msgstr ""
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Preferred-encodings: utf-8 latin1\n"
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 "Language-Code: it\n"
 "Language-Name: Italian\n"
 "Domain: default\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
 #.                   selected python: op['size'] and (op['size'][0]==image_width
@@ -341,14 +341,14 @@ msgid "cpsschemas_unit_giga_bytes"
 msgstr "GB"
 
 msgid "cpsschemas_err_string"
-msgstr "Il valore immesso non è valido."
+msgstr "Il valore immesso non Ã¨ valido."
 
 #, fuzzy
 msgid "cpsschemas_err_string_too_short"
-msgstr "Chaîne de caractère trop courte"
+msgstr "ChaÃ®ne de caractÃ¨re trop courte"
 
 msgid "cpsschemas_err_string_too_long"
-msgstr "Il valore immesso è troppo lungo."
+msgstr "Il valore immesso Ã¨ troppo lungo."
 
 msgid "cpsschemas_err_required"
 msgstr "Campo obbligatorio."
@@ -372,7 +372,7 @@ msgid "cpsschemas_err_int_range"
 msgstr "Numero intero fuori dall'intervallo consentito."
 
 msgid "cpsschemas_err_date"
-msgstr "Il formato della data non è valido."
+msgstr "Il formato della data non Ã¨ valido."
 
 msgid "cpsschemas_err_bad_date"
 msgstr "Date errata"
@@ -382,18 +382,18 @@ msgstr "File non valido."
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
 msgstr ""
-"Questa non è un'estensione autorizzata. Puoi utilizzare file con le seguenti "
+"Questa non Ã¨ un'estensione autorizzata. Puoi utilizzare file con le seguenti "
 "estensioni: ${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
-msgstr "Il file è vuoto."
+msgstr "Il file Ã¨ vuoto."
 
 msgid "cpsschemas_err_file_too_big"
 msgstr "File troppo grande"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
 msgstr ""
-"Le dimensioni del file sono eccessive. La grandezza massima consentita è di: "
+"Le dimensioni del file sono eccessive. La grandezza massima consentita Ã¨ di: "
 "${max_size}Mb."
 
 msgid "cpsschemas_err_image"
@@ -421,7 +421,7 @@ msgid "cpsschemas_err_password_mismatch"
 msgstr "La password e la conferma non coincidono."
 
 msgid "cpsschemas_err_password_size_min"
-msgstr "Il nome di autenticazione è troppo breve."
+msgstr "Il nome di autenticazione Ã¨ troppo breve."
 
 msgid "cpsschemas_err_password_lower"
 msgstr ""
@@ -486,7 +486,7 @@ msgstr "HTML"
 
 #, fuzzy
 msgid "cpsschemas_rformat_rst"
-msgstr "Texte structuré (reST)"
+msgstr "Texte structurÃ© (reST)"
 
 msgid "cpsschemas_rformat_original"
 msgstr "Originale"
@@ -516,7 +516,7 @@ msgid "cpsschemas_label_false"
 msgstr "No"
 
 msgid "cpsschemas_label_true"
-msgstr "Sì"
+msgstr "SÃ¬"
 
 msgid "cpsschema_label_on"
 msgstr "Attivo"
@@ -597,28 +597,28 @@ msgid "cpsschemas_label_searchsort_portal_type"
 msgstr "tipo di documento"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Questo identificatore è già presente, scegli un altro termine."
+msgstr "Questo identificatore Ã¨ giÃ  presente, scegli un altro termine."
 
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Il dizionario è stato creato."
+msgstr "Il dizionario Ã¨ stato creato."
 
 msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "L'identificativo è obbligatorio. Scegli un id."
+msgstr "L'identificativo Ã¨ obbligatorio. Scegli un id."
 
 msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Il dizionario è stato eliminato."
+msgstr "Il dizionario Ã¨ stato eliminato."
 
 msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr "Il termine è stato aggiunto al dizionario."
+msgstr "Il termine Ã¨ stato aggiunto al dizionario."
 
 msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Il termine è stato rimosso dal dizionario."
+msgstr "Il termine Ã¨ stato rimosso dal dizionario."
 
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
 msgstr "Devi selezionare almeno un elemento."
 
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Il dizionario è stato aggiornato."
+msgstr "Il dizionario Ã¨ stato aggiornato."
 
 msgid "label_none_selection"
 msgstr "-- Vuoto --"

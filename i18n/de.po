@@ -8,12 +8,13 @@ msgstr ""
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: de <rheinland@dzug.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Name: German\n"
 "Language-Code: de\n"
+"Language-Name: German\n"
 "Domain: default\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
 #.                   selected python: op['size'] and (op['size'][0]==image_width
@@ -24,7 +25,7 @@ msgstr ""
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "<span replace=\"op/id\" /> ${dim}"
-msgstr "<span·replace=\"op/id\"·/>·${dim}"
+msgstr "<spanÂ·replace=\"op/id\"Â·/>Â·${dim}"
 
 #.   <h1 content="label_edit">Edit</h1>
 #: from ../skins/cps_schemas/popup_fckeditor_form.pt
@@ -117,7 +118,7 @@ msgstr "Alternate text : "
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_image_resize"
-msgstr "und Größe ändern zu "
+msgstr "und GrÃ¶ÃŸe Ã¤ndern zu "
 
 #.   <block>
 #.             Image title :
@@ -133,13 +134,13 @@ msgstr "Title: "
 #: ../skins/cps_schemas/widget_flash_render.pt
 #: ../skins/cps_schemas/widget_image_render.pt
 msgid "cpsschemas_label_file_change"
-msgstr "Ändern"
+msgstr "Ã„ndern"
 
 #.   <label attributes="for string:${radio_name}_delete">Delete</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_label_file_delete"
-msgstr "Löschen"
+msgstr "LÃ¶schen"
 
 #.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
 #.                     Edit file online
@@ -172,14 +173,14 @@ msgstr "Filename"
 #.   <label attributes="for string:${radio_name}_resize">resize</label>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_label_image_resize"
-msgstr "Bildgröße ändern "
+msgstr "BildgrÃ¶ÃŸe Ã¤ndern "
 
 #.   <block>
 #.             Photo subtitle :
 #.           </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
-msgstr "Überschrift: "
+msgstr "Ãœberschrift: "
 
 #.   <label attributes="for format_selector_id">Format:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
@@ -212,39 +213,39 @@ msgstr "eine oder mehrere der folgenden Sprachen"
 #: from ../skins/cps_schemas/widget_file_render.pt
 #: ../skins/cps_schemas/widget_flash_render.pt
 msgid "cpsschemas_size_max ${size_max}"
-msgstr "Maximale Grösse: ${size_max}."
+msgstr "Maximale GrÃ¶sse: ${size_max}."
 
 #.   <h2>cpsschemas_vocabulary_add</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_add"
-msgstr "Hinzufügen eines Wörterbuchs"
+msgstr "HinzufÃ¼gen eines WÃ¶rterbuchs"
 
 #.   <h2>cpsschemas_vocabulary_available</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_available"
-msgstr "hier vorhandene Wörterbücher"
+msgstr "hier vorhandene WÃ¶rterbÃ¼cher"
 
 #.   <span class="description">cpsschemas_vocabulary_contains
 #.     ${voc_entries (tal replace="python:len(keys)")}
 #.     entry(ies)</span>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_contains ${voc_entries} entry(ies)"
-msgstr "Dieses Wörterbuch enthält ${voc_entries} Eintrag(e)"
+msgstr "Dieses WÃ¶rterbuch enthÃ¤lt ${voc_entries} Eintrag(e)"
 
 #.   <h2>cpsschemas_vocabulary_delete</h2>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_delete"
-msgstr "Löschen eines Wörterbuchs"
+msgstr "LÃ¶schen eines WÃ¶rterbuchs"
 
 #.   <h1>cpsschemas_vocabulary_edit ${voc_id (tal replace="vocab/title_or_id")}</h1>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_edit ${voc_id}"
-msgstr "Bearbeiten Wörterbuch \"${voc_id}\""
+msgstr "Bearbeiten WÃ¶rterbuch \"${voc_id}\""
 
 #.   <h2>cpsschemas_vocabulary_entry_add</h2>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_entry_add"
-msgstr "Hinzufügen eines Eintrags"
+msgstr "HinzufÃ¼gen eines Eintrags"
 
 #.   <th>Id:</th>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
@@ -254,12 +255,12 @@ msgstr "Id:"
 #.   <th>Key:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
 msgid "cpsschemas_vocabulary_key"
-msgstr "Schlüssel:"
+msgstr "SchlÃ¼ssel:"
 
 #.   <h1>cpsschemas_vocabulary_manage</h1>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "cpsschemas_vocabulary_manage"
-msgstr "Wörterbuch Management"
+msgstr "WÃ¶rterbuch Management"
 
 #.   <th>MsgId:</th>
 #: from ../skins/cps_schemas/vocabulary_edit_form.pt
@@ -274,7 +275,7 @@ msgstr "Wert:"
 #.   <p>description_vocabulary_manage_form</p>
 #: from ../skins/cps_schemas/vocabularies_manage_form.pt
 msgid "description_vocabulary_manage_form"
-msgstr "Auf dieser Seite können Sie Wörterbücher und ihre Einträge bearbeiten."
+msgstr "Auf dieser Seite kÃ¶nnen Sie WÃ¶rterbÃ¼cher und ihre EintrÃ¤ge bearbeiten."
 
 #.   <em style="color: red" content="err">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
@@ -303,7 +304,7 @@ msgstr "Eingabe Suchgegriff:"
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
 msgid "i18_key-help_for_this_field"
-msgstr "Hilfe für dieses Feld"
+msgstr "Hilfe fÃ¼r dieses Feld"
 
 #.   <block content="widget/label" condition="widget/is_i18n">label</block>
 #.   <block content="widget/label_edit" condition="widget/is_i18n">label</block>
@@ -317,7 +318,7 @@ msgstr "Label"
 #.             File to use to fill the text area:</label>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "label_file_upload"
-msgstr "Datei ändern"
+msgstr "Datei Ã¤ndern"
 
 msgid "cpsschemas_unit_bytes"
 msgstr "m"
@@ -332,7 +333,7 @@ msgid "cpsschemas_unit_giga_bytes"
 msgstr "G"
 
 msgid "cpsschemas_err_string"
-msgstr "Ungültiger String"
+msgstr "UngÃ¼ltiger String"
 
 #, fuzzy
 msgid "cpsschemas_err_string_too_short"
@@ -345,67 +346,67 @@ msgid "cpsschemas_err_required"
 msgstr "Feld erforderlich"
 
 msgid "cpsschemas_err_textarea"
-msgstr "Ungültiger Text"
+msgstr "UngÃ¼ltiger Text"
 
 msgid "cpsschemas_err_select"
-msgstr "Ungültige Auswahl"
+msgstr "UngÃ¼ltige Auswahl"
 
 msgid "cpsschemas_err_multiselect"
-msgstr "Ungültige Mehrfach-Auswahl"
+msgstr "UngÃ¼ltige Mehrfach-Auswahl"
 
 msgid "cpsschemas_err_boolean"
-msgstr "Ungültiger Boolescher Wert"
+msgstr "UngÃ¼ltiger Boolescher Wert"
 
 msgid "cpsschemas_err_int"
-msgstr "Ungültige Ganzzahl"
+msgstr "UngÃ¼ltige Ganzzahl"
 
 msgid "cpsschemas_err_int_range"
-msgstr "Ganzzahl außerhalb des Wertebereichs"
+msgstr "Ganzzahl auÃŸerhalb des Wertebereichs"
 
 msgid "cpsschemas_err_date"
-msgstr "Ungültiges Datum"
+msgstr "UngÃ¼ltiges Datum"
 
 msgid "cpsschemas_err_bad_date"
 msgstr "Datum inkorrekt"
 
 msgid "cpsschemas_err_file"
-msgstr "Ungültige Datei"
+msgstr "UngÃ¼ltige Datei"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr "Ungültiger Suffix ${allowed_file_suffixes}"
+msgstr "UngÃ¼ltiger Suffix ${allowed_file_suffixes}"
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Leere Datei"
 
 msgid "cpsschemas_err_file_too_big"
-msgstr "Diese Datei ist zu groß"
+msgstr "Diese Datei ist zu groÃŸ"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Sorry diese Datei ist zu groß "
+msgstr "Sorry diese Datei ist zu groÃŸ "
 
 msgid "cpsschemas_err_image"
-msgstr "Ungültiges Bild"
+msgstr "UngÃ¼ltiges Bild"
 
 msgid "cpsschemas_err_url"
-msgstr "Ungültige URL"
+msgstr "UngÃ¼ltige URL"
 
 msgid "cpsschemas_err_long"
-msgstr "Ungültige große Ganzzahl"
+msgstr "UngÃ¼ltige groÃŸe Ganzzahl"
 
 msgid "cpsschemas_err_long_range"
-msgstr "Große Ganzzahl außerhalb des Wertebereichs"
+msgstr "GroÃŸe Ganzzahl auÃŸerhalb des Wertebereichs"
 
 msgid "cpsschemas_err_float_positive"
 msgstr "Diese Gleitkommazahl muss positiv sein"
 
 msgid "cpsschemas_err_float_range"
-msgstr "Gleitkommazahl außerhalb des Wertebereichs"
+msgstr "Gleitkommazahl auÃŸerhalb des Wertebereichs"
 
 msgid "cpsschemas_err_float"
-msgstr "Ungültige Gleitkommazahl"
+msgstr "UngÃ¼ltige Gleitkommazahl"
 
 msgid "cpsschemas_err_password_mismatch"
-msgstr "Ihr Passwort und die Bestätigung passen nicht überein"
+msgstr "Ihr Passwort und die BestÃ¤tigung passen nicht Ã¼berein"
 
 msgid "cpsschemas_err_password_size_min"
 msgstr "Sorry, das Passwort ist zu kurz"
@@ -414,7 +415,7 @@ msgid "cpsschemas_err_password_lower"
 msgstr "Sorry, das Passwort muss einem Kleinbuchstaben enthalten"
 
 msgid "cpsschemas_err_password_upper"
-msgstr "Sorry, das Passwort muss einen Großbuchstaben enthalten"
+msgstr "Sorry, das Passwort muss einen GroÃŸbuchstaben enthalten"
 
 msgid "cpsschemas_err_password_digit"
 msgstr "Sorry, das Passwort muss eine Zahl enthalten "
@@ -425,10 +426,10 @@ msgstr ""
 "Zahl"
 
 msgid "cpsschemas_err_identifier"
-msgstr "Ungültiger Bezeichner"
+msgstr "UngÃ¼ltiger Bezeichner"
 
 msgid "cpsschemas_err_email"
-msgstr "Ungültige Email"
+msgstr "UngÃ¼ltige Email"
 
 msgid "cpsschemas_err_readonly"
 msgstr "Nur lesbares Feld"
@@ -437,7 +438,7 @@ msgid "cpsschemas_err_rangelist"
 msgstr "Fehler Wertebereich"
 
 msgid "cpsschemas_err_zippedhtml_invalid_zip"
-msgstr "Ungültige Zip Datei"
+msgstr "UngÃ¼ltige Zip Datei"
 
 msgid "cpsschemas_err_zippedhtml_html_not_found"
 msgstr "Kein HTML Dokument in der Zip Datei gefunden"
@@ -567,7 +568,7 @@ msgid "cpsschemas_label_searchsort_chrono"
 msgstr "chronologisch"
 
 msgid "cpsschemas_label_searchsort_expires"
-msgstr "Gültigkeits Datum"
+msgstr "GÃ¼ltigkeits Datum"
 
 msgid "cpsschemas_label_searchsort_title"
 msgstr "Titel"
@@ -582,28 +583,28 @@ msgid "cpsschemas_label_searchsort_portal_type"
 msgstr "Dokument Typ"
 
 msgid "cpsschemas_psm_vocabulary_id_exists"
-msgstr "Id existiert schon, wählen Sie eine andere."
+msgstr "Id existiert schon, wÃ¤hlen Sie eine andere."
 
 msgid "cpsschemas_psm_vocabulary_created"
-msgstr "Wörterbuch erstellt."
+msgstr "WÃ¶rterbuch erstellt."
 
 msgid "cpsschemas_psm_vocabulary_id_missing"
-msgstr "Wähle eine Id."
+msgstr "WÃ¤hle eine Id."
 
 msgid "cpsschemas_psm_vocabulary_deleted"
-msgstr "Wörterbuch gelöscht."
+msgstr "WÃ¶rterbuch gelÃ¶scht."
 
 msgid "cpsschemas_psm_vocabulary_entry_added"
-msgstr "Eintrag hinzugefügt."
+msgstr "Eintrag hinzugefÃ¼gt."
 
 msgid "cpsschemas_psm_vocabulary_entries_deleted"
-msgstr "Wörterbuch gelöscht."
+msgstr "WÃ¶rterbuch gelÃ¶scht."
 
 msgid "cpsschemas_psm_vocabulary_no_entries_selected"
-msgstr "Kein Eintrag ausgewählt. Wähle einen."
+msgstr "Kein Eintrag ausgewÃ¤hlt. WÃ¤hle einen."
 
 msgid "cpsschemas_psm_vocabulary_updated"
-msgstr "Wörterbuch auf neusten Stand gebracht."
+msgstr "WÃ¶rterbuch auf neusten Stand gebracht."
 
 msgid "label_none_selection"
 msgstr "Null Selektion"
@@ -643,4 +644,4 @@ msgstr "Titel"
 #~ msgstr "Extra Gross"
 
 #~ msgid "button_back"
-#~ msgstr "Zurück"
+#~ msgstr "ZurÃ¼ck"
