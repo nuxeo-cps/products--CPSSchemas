@@ -556,6 +556,11 @@ class CPSFileField(CPSField):
         """
         field_id = self.getFieldId()
         file = data[field_id] # May be None.
+        
+        # Work on regular OFS.Image.File only (#1939)
+        # if needed, could be relaxed to exclusion of Tramline File
+        if file is None or file.meta_type != 'File':
+            return
 
         text_field_id = self._getDependantFieldId(schemas, self.suffix_text)
         if text_field_id is not None:

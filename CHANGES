@@ -7,6 +7,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 -
+- #1939: Dependent fields computation crash on Tramline files
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
