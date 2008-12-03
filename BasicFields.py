@@ -742,6 +742,9 @@ class CPSSubObjectsField(CPSField):
         return value
 
     def setAsAttribute(self, ob, field_id, value):
+        if value is None:
+            # for leftover wrong values of default_expr (#1943)
+            value = {}
         for k in getattr(ob, field_id, ()):
             if k.startswith('_'):
                 continue

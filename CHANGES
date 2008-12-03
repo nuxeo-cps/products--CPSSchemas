@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #1943: robustness for Subobjects Field
 - #1939: Dependent fields computation crash on Tramline files
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~

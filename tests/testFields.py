@@ -248,6 +248,15 @@ class BasicFieldTests(unittest.TestCase):
         fobj.meta_type = File.meta_type
         self.assertRaises(TypeError, field.computeDependantFields, None, data)
 
+    def testSubOjectsField(self):
+        # non-regression test for #1943
+        field = self.makeOne(BasicFields.CPSSubObjectsField)
+        class FakeDoc:
+            pass
+        ob = FakeDoc()
+        field.setAsAttribute(ob, 'attr', None)
+        self.assertEquals(ob.__dict__, {'attr': ()})
+
     def testImageField(self):
         field = self.makeOne(BasicFields.CPSImageField)
         self.assertEquals(field.getDefault(), None)
