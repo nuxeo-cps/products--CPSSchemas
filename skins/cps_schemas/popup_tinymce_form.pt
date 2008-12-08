@@ -1,0 +1,69 @@
+<metal:html tal:define="emptybody python:1;
+                        input_id request/input_id;
+                        value request/value|string:;
+                        label_edit request/label_edit|string:;
+                        rte_value request/rte_value|nothing;">
+
+<metal:body use-macro="here/main_template_popup/macros/master">
+
+<metal:headslot fill-slot="style_slot">
+  <link rel="Stylesheet" type="text/css"
+        tal:attributes="href string:${base_url}cpsskins_common.css" />
+  <link rel="Stylesheet" type="text/css"
+        tal:attributes="href string:${base_url}portal_themes/default/renderCSS" />
+  <link rel="Stylesheet" type="text/css"
+        tal:attributes="href string:${base_url}cpsskins_common-css2.css" />
+</metal:headslot>
+
+<metal:headslot fill-slot="head_slot" tal:condition="rte_value">
+ <script type="text/javascript"
+  tal:define="js_rte_value python:here.encodeJsString(rte_value)"
+  tal:content='structure string:
+      var dest;
+      dest = opener.document.getElementById("${input_id}");
+      dest.value = "${js_rte_value}";
+      window.close();
+        '/>
+</metal:headslot>
+
+<metal:main fill-slot="body">
+<div style="padding: 0.3em" class="fontColordefaultfontcolors fontShapeaverage">
+<h1 tal:content="label_edit" i18n:translate="">Edit</h1>
+<div class="document">
+<form action="" method="post"
+      tal:attributes="action string:${here_url}/popup_tinymce_form">
+<div class="row">
+ <div class="field">
+  <input type="hidden" name="input_id" tal:attributes="value input_id" />
+  <script type="text/javascript" src=""
+                tal:attributes="src string:${base_url}tiny_mce.js">
+  </script>
+  <textarea id="rte_value" name="rte_value" rows="15" cols="80" style="width: 90%">
+</textarea>
+  <script type="text/javascript"
+                tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
+                tal:content="structure string:
+tinyMCE.init({
+    mode : 'textareas',
+    theme : 'simple'
+});
+document.getElementById('rte_value').value = opener.document.getElementById('${input_id}').value;
+">
+   </script>
+ </div>
+</div>
+<p>
+  <button type="submit" i18n:translate="button_update">
+    Update
+  </button>
+  <button type="button" onclick="window.close()" i18n:translate="button_cancel">
+    Cancel
+  </button>
+</p>
+</form>
+</div>
+</metal:main>
+
+
+</metal:body>
+</metal:html>
