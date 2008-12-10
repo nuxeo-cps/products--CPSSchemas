@@ -73,6 +73,7 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'Height'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Max Size'},
+
         {'id': 'xhtml_sanitize', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_xhtml_sanitize_options',
          'label': 'XHTML sanitize the content'},
@@ -80,6 +81,10 @@ class CPSTextWidget(CPSStringWidget):
          'label': 'XHTML sanitize through system command line'},
         {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
          'label': 'Add a file uploader to the widget UI'},
+
+        {'id': 'html_editor_type', 'type': 'string', 'mode': 'w',
+         'label': 'The name of the HTML editor to use'},
+
         {'id': 'html_editor_position', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_html_editor_positions',
          'label': 'HTML rich text editor position'},
@@ -111,6 +116,9 @@ class CPSTextWidget(CPSStringWidget):
     # * write-back modifies the file in place.
     xhtml_sanitize_system = 'tidy -indent -wrap 80 --input-encoding latin1 --output-encoding latin1 --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments no %s 2>/dev/null'
     file_uploader = False
+
+    # Possible values are "tinymce" and "fckeditor"
+    html_editor_type = 'tinymce'
 
     render_position = all_render_positions[0]
     render_format = all_render_formats[0]
@@ -251,6 +259,7 @@ class CPSTextWidget(CPSStringWidget):
                              (rformat, self.getId()))
         return meth(mode=mode, datastructure=datastructure, value=value,
                     file_uploader=self.file_uploader,
+                    html_editor_type=self.html_editor_type,
                     render_position=rposition, render_format=rformat,
                     html_editor_position=self.html_editor_position,
                     configurable=str(self.configurable))

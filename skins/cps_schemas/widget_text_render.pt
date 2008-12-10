@@ -2,6 +2,7 @@
   id here/getWidgetId;
   value_name here/getHtmlWidgetId;
   value options/value;
+  html_editor_type options/html_editor_type|string:Undefined;
   file_uploader here/file_uploader;
   html_editor_position options/html_editor_position;
   rposition options/render_position;
@@ -30,6 +31,16 @@
           rows here/height;"
           tal:content="value"
           />
+      <tal:block condition="python:rformat == 'html'">
+        <script type="text/javascript"
+                tal:define="popup_editor_form_file_name
+                python:test(html_editor_type == 'tinymce', 'popup_tinymce_form',
+                            html_editor_type == 'fckeditor', 'popup_fckeditor_form')"
+                tal:content="structure string:
+var popup_editor_form = '${popup_editor_form_file_name}';
+">
+        </script>
+      </tal:block>
       <tal:block condition="python:rformat == 'html' and html_editor_position == 'embedded'">
         <script type="text/javascript" src=""
                 tal:attributes="src string:${base_url}fckeditor.js">
