@@ -28,7 +28,12 @@
           tal:attributes="id value_name;
           name value_name;
           cols here/width;
-          rows here/height;"
+          rows here/height;
+          class python:test(rformat == 'html'
+                            and html_editor_type == 'tinymce'
+                            and html_editor_position == 'embedded',
+                            'mceEditor', default);
+          "
           tal:content="value"
           />
       <tal:block condition="python:rformat == 'html'">
@@ -42,6 +47,26 @@ var popup_editor_form = '${popup_editor_form_file_name}';
         </script>
       </tal:block>
       <tal:block condition="python:rformat == 'html' and html_editor_position == 'embedded'">
+        <tal:block condition="python:html_editor_type == 'tinymce'">
+          <script type="text/javascript" src=""
+                  tal:attributes="src string:${base_url}tiny_mce.js">
+          </script>
+  <script type="text/javascript"
+                tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
+                tal:content="structure string:
+tinyMCE.init({
+    mode : 'specific_textareas',
+    editor_selector : 'mceEditor',
+    theme : 'advanced',
+    plugins : 'table',
+    theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,bullist,numlist,formatselect,removeformat,separator,link,unlink,anchor,image,emotions,separator,undo,redo,code',
+    theme_advanced_buttons2 : 'tablecontrols',
+    theme_advanced_buttons3 : ''
+});
+">
+   </script>
+        </tal:block>
+        <tal:block condition="python:html_editor_type == 'fckeditor'">
         <script type="text/javascript" src=""
                 tal:attributes="src string:${base_url}fckeditor.js">
         </script>
@@ -54,6 +79,7 @@ var popup_editor_form = '${popup_editor_form_file_name}';
 displayFckEditor('${value_name}', '${parent_path}', '${base_url}');
 ">
         </script>
+      </tal:block>
       </tal:block>
     <p>
       <tal:block condition="file_uploader">

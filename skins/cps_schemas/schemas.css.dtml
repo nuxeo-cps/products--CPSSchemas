@@ -18,7 +18,7 @@ textarea.monospaceFont {
   font-family: monospace !important;
 }
 
-textarea.resizable {
+textarea.resizable, textarea.mceEditor {
   width: 100%;
 }
 
