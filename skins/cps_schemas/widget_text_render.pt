@@ -48,9 +48,6 @@ var popup_editor_form = '${popup_editor_form_file_name}';
       </tal:block>
       <tal:block condition="python:rformat == 'html' and html_editor_position == 'embedded'">
         <tal:block condition="python:html_editor_type == 'tinymce'">
-          <script type="text/javascript" src=""
-                  tal:attributes="src string:${base_url}tiny_mce.js">
-          </script>
   <script type="text/javascript"
                 tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
                 tal:content="structure string:
