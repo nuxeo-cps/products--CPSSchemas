@@ -2,7 +2,11 @@
                         input_id request/input_id;
                         value request/value|string:;
                         label_edit request/label_edit|string:;
-                        rte_value request/rte_value|nothing;">
+                        rte_value request/rte_value|nothing;
+                        utool nocall:here/portal_url;
+                        portal utool/getPortalObject;
+                        selected_language portal/getSelectedLanguage;
+                       ">
 
 <metal:body use-macro="here/main_template_popup/macros/master">
 
@@ -15,15 +19,22 @@
         tal:attributes="href string:${base_url}cpsskins_common-css2.css" />
 </metal:headslot>
 
-<metal:headslot fill-slot="head_slot" tal:condition="rte_value">
- <script type="text/javascript"
-  tal:define="js_rte_value python:here.encodeJsString(rte_value)"
-  tal:content='structure string:
+<metal:headslot fill-slot="head_slot">
+  <script type="text/javascript" src="tiny_mce.js"
+    tal:attributes="src string:${base_url}tiny_mce.js"></script>
+  <script type="text/javascript" src="cpsdocument.js"
+    tal:attributes="src string:${base_url}cpsdocument.js"></script>
+  <script type="text/javascript" src="cpsschemas.js"
+    tal:attributes="src string:${base_url}cpsschemas.js"></script>
+  <tal:block condition="rte_value">
+    <script type="text/javascript"
+      tal:define="js_rte_value python:here.encodeJsString(rte_value)"
+      tal:content='structure string:
       var dest;
       dest = opener.document.getElementById("${input_id}");
       dest.value = "${js_rte_value}";
-      window.close();
-        '/>
+      window.close();'></script>
+  </tal:block>
 </metal:headslot>
 
 <metal:main fill-slot="body">
@@ -35,9 +46,6 @@
 <div class="row">
  <div class="field">
   <input type="hidden" name="input_id" tal:attributes="value input_id" />
-  <script type="text/javascript" src=""
-                tal:attributes="src string:${base_url}tiny_mce.js">
-  </script>
   <textarea id="rte_value" name="rte_value" rows="15" cols="80" style="width: 100%">
 </textarea>
   <script type="text/javascript"
@@ -46,6 +54,7 @@
 tinyMCE.init({
     mode : 'textareas',
     theme : 'advanced',
+    language : '${selected_language}',
     plugins : 'table',
     theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,bullist,numlist,formatselect,justifyleft,justifycenter,justifyright,justifyfull,removeformat,separator,link,unlink,anchor,image,separator,undo,redo,code',
     theme_advanced_buttons2 : 'tablecontrols',

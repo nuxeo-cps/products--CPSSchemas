@@ -34,11 +34,12 @@ CPSSchemas JavaScript functions.
 /**
  * Display a TinyMCE embedded frame.
  */
-function displayTinyMceEditor(htmlWidgetId) {
+function displayTinyMceEditor(htmlWidgetId, selected_language) {
   tinyMCE.init({
     mode : 'specific_textareas',
     editor_selector : htmlWidgetId,
     theme : 'advanced',
+    language : selected_language,
     plugins : 'table',
     theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,bullist,numlist,formatselect,justifyleft,justifycenter,justifyright,justifyfull,removeformat,separator,link,unlink,anchor,image,separator,undo,redo,code',
     theme_advanced_buttons2 : 'tablecontrols',

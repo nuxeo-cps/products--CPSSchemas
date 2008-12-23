@@ -13,6 +13,7 @@
   format_selector_id string:${value_name}_rformat;
   button_text_editor_popup_id python:'widget__%s_button' % id;
   utool nocall:here/portal_url;
+  portal utool/getPortalObject;
   absolute here/absolute|python:False;
   base_url python:test(absolute, utool()+'/', utool.getBaseUrl());
   ">
@@ -49,9 +50,9 @@ var popup_editor_form = '${popup_editor_form_file_name}';
       <tal:block condition="python:rformat == 'html' and html_editor_position == 'embedded'">
         <tal:block condition="python:html_editor_type == 'tinymce'">
   <script type="text/javascript"
-                tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
+                tal:define="selected_language portal/getSelectedLanguage"
                 tal:content="structure string:
-displayTinyMceEditor('${value_name}');
+displayTinyMceEditor('${value_name}', '${selected_language}');
 ">
    </script>
         </tal:block>
