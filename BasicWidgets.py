@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2009 Nuxeo SA <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -1036,7 +1036,7 @@ class CPSSelectWidget(CPSWidget):
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
-                vocabulary_items.sort(key=operator.itemgetter(1))
+                vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
                 kw = {'value': k, 'contents': v}
                 if value == k:
@@ -1148,9 +1148,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
-                deco = [(v.lower(), k, v) for k, v in vocabulary_items]
-                deco.sort()
-                vocabulary_items = [(k, v) for index, k, v in deco]
+                vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
                 kw = {'value': k, 'contents': v}
                 if k in value:

@@ -1,4 +1,4 @@
-# (C) Copyright 2003-2008 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2009 Nuxeo SA <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -1014,7 +1014,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
             # vocabulary options
             vocabulary_items = vocabulary.items()
             if self.sorted:
-                vocabulary_items.sort(key=operator.itemgetter(1))
+                vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
                 # this enable to work with vocabulary that have integer keys
                 k = str(k)
@@ -1260,7 +1260,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
             # vocabulary options
             vocabulary_items = vocabulary.items()
             if self.sorted:
-                vocabulary_items.sort(key=operator.itemgetter(1))
+                vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
                 if getattr(self, 'translated', None):
                     v = cpsmcat(vocabulary.getMsgid(k, k)).encode('ISO-8859-15', 'ignore')
