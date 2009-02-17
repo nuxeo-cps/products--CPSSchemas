@@ -15,9 +15,10 @@
   <p i18n:translate="">description_vocabulary_manage_form</p>
 </metal:header>
 
-<metal:main fill-slot="main"
-            tal:define="vocabularies python:here.portal_vocabularies.objectValues('CPS Vocabulary')">
-
+<metal:main fill-slot="main" tal:define="
+            vocabularies python:here.portal_vocabularies.objectValues('CPS Vocabulary');
+            dummy python:vocabularies.sort(key=lambda obj: obj.id.lower());
+      ">
 <h2 i18n:translate="">cpsschemas_vocabulary_add</h2>
 <form action="vocabularies_addvoc" method="get"
       tal:attributes="action string:${base_url}vocabularies_addvoc">

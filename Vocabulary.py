@@ -1,4 +1,4 @@
-# (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2003-2009 Nuxeo SA <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # Georges Racinet <gracinet@nuxeo.com>
@@ -196,8 +196,11 @@ class Vocabulary(Persistent, Implicit):
 
         Crit is one of 'id', 'label' or 'i18n'.
         """
-
-        if crit == 'label':
+        if crit == 'id':
+            l = list(self.keys())
+            l.sort(key=str.lower)
+            return l
+        elif crit == 'label':
             l = [(x[1], x[0]) for x in self.items()]
             l.sort()
             return [x[1] for x in l]

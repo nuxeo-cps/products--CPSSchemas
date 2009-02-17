@@ -1,7 +1,7 @@
 <metal:body use-macro="here/main_template/macros/master">
 <metal:main fill-slot="main"
             tal:define="voc_id request/voc_id;">
-                        
+
 <tal:block condition="not: voc_id">
   <tal:redirect define="response request/RESPONSE;
                         psm string:cpsschemas_psm_vocabulary_id_missing;
@@ -11,7 +11,7 @@
 
 <tal:block condition="voc_id">
 <tal:block define="vocab python:here.portal_vocabularies[voc_id];
-                   keys python:vocab.keys()">
+                   keys python:vocab.keysSortedBy(crit='id')">
 
 <h1 i18n:translate="">cpsschemas_vocabulary_edit <span
     tal:replace="vocab/title_or_id" i18n:name="voc_id" /></h1>
