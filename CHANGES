@@ -6,6 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
+- #1980: CPSBooleanField does not work on LDAP with standard RFC 2252 syntax
 - #1160: Add support for TinyMCE, a Javascript HTML WYSIWYG editor
 - #1943: robustness for Subobjects Field
 - #1939: Dependent fields computation crash on Tramline files
