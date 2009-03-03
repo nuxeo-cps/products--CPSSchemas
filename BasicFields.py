@@ -105,6 +105,8 @@ class CPSIntField(CPSField):
 
 InitializeClass(CPSIntField)
 
+LDAP_FALSE = 'FALSE'
+LDAP_TRUE = 'TRUE'
 
 class CPSBooleanField(CPSField):
     """Boolean field."""
@@ -123,15 +125,23 @@ class CPSBooleanField(CPSField):
 
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
-        return [str(value)]
+        if value is None:
+            # GR: evaluating to False means missing attribute
+            # see LDAPBackingDirectory#convertDataToLDAP
+            return
+        return value and [LDAP_TRUE] or [LDAP_FALSE]
 
     def convertFromLDAP(self, values):
         """Convert a value from LDAP attribute values."""
-        try:
-            if len(values) != 1:
-                raise ValueError
-            return bool(values[0])
-        except (ValueError, TypeError):
+        if len(values) != 1:
+            raise ValueError
+        v = values[0]
+
+        if v == LDAP_FALSE:
+            return False
+        elif v == LDAP_TRUE:
+            return True
+        else:
             raise ValidationError("Incorrect Boolean value from LDAP: %s"
                                   % `values`)
 
