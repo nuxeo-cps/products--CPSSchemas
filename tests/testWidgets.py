@@ -1,7 +1,8 @@
-# -*- coding: ISO-8859-15 -*-
+# -*- coding: iso-8859-15 -*-
 # Copyright (c) 2004-2006 Nuxeo SAS <http://nuxeo.com>
 # Authors: Florent Guillaume <fg@nuxeo.com>
 #          Anahide Tchertchian <at@nuxeo.com>
+#          Georges Racinet <georges@racinet.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -33,6 +34,21 @@ from Products.CPSSchemas.Widget import Widget
 
 
 DUMMY_DICT = {'a': 'ZZZ', 'b': 'YYY', 'c': 'XXX'}
+
+TEST_IMAGE = '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
+'\x04\x03\x00\x00\x00\x81Tg\xc7\x00\x00\x00\x18PLTE\x8e\x0b\x08\x00\x00\x00'
+'\x99\x99\x99\xcc\xcc\xccfff333\x99\x99f\xff\xff\xff\x15E\xae\xa3\x00\x00\x00'
+'\x01tRNS\x00@\xe6\xd8f\x00\x00\x00\x01bKGD\x00\x88\x05\x1dH\x00\x00\x00\tpHYs'
+'\x00\x00\x0b\x13\x00\x00\x0b\x13\x01\x00\x9a\x9c\x18\x00\x00\x00\xdbIDATx\xda'
+'\x8d\x92\xb1\x92\x820\x10\x86\xb1\xb8>\xeb\xe1X\x1b`RK`\xd2\x1a4\xfdq#/\xe0'
+'\x1b\x98Mf__@\x17\x04\x8b\xbb\xbf\xcb7_6\xc9n\x92\xe43\x1b\x18\xb3;1\xf8\xa61'
+'\xa6f\xb0\x7f\x82\x0c\x7f\x18x\xd9G):,\x8d\x03\xc0\xd2\xd0\x8d}3\xca\xaek\xb4'
+'\x9d\x8d\xe2"e\xf1;\xd7\xc0\xab1:\xb3\xb3Qd\xfd.\xac\xa6\xa2\xe8\xb4\xa4\x90c'
+';\x81\xce\xa3Q!\x1c\x19T\x85\'\xd5\x83(^ \xe6\x9e\x06C3\xb8_PR\x99\xe3\x95'
+'\xc1q8\x84\x02\xe1\xb4\xa5\xe9\xd7\xfeL\x8eA\xd5\x98\xf1yS\xd12\xd5\xcag1\xde'
+'\xb9c\xd8\xe5\x86b4|\xf5\xed\xcd:S\xb9\x18\xe0\xad\xc9\xfa\\\xc7\x16\xe6\xc6C'
+'\xea\xac\x15\x00\x8bQ\x88\xe4\x0b\xc4j@\x0eV#\xdb\xb6\x7f*\xe9\x7f\x94\xf5O'
+'\x10\x0f\x1a\xadA\xb9\xc2\xaa\xf96\x00\x00\x00\x00IEND\xaeB`\x82'
 
 class FakePortal(Implicit):
     pass
@@ -93,10 +109,14 @@ class FakeDataStructure(dict):
     def __init__(self, datamodel):
         self.errs = {}
         self.datamodel = datamodel
+        self.errs_mapping = {}
+
     def getDataModel(self):
         return self.datamodel
-    def setError(self, id, err):
-        self.errs[id] = err
+
+    def setError(self, key, message, mapping=None):
+        self.errs[key] = message
+        self.errs_mapping[key] = mapping
 
 class FakeAdapter(object):
     def __init__(self, schema):
@@ -122,7 +142,10 @@ class FakeDataModel(dict):
 
 class FakeMimeTypeRegistry(Implicit):
     def lookupExtension(self, name):
-        return 'testlookup/'+name[name.rfind('.')+1:].upper()
+        ext = name[name.rfind('.')+1:]
+        if ext == 'png':
+            return 'image/png'
+        return 'testlookup/' + ext.upper()
 
 class FakeFieldStorage:
     def __init__(self, file, filename, headers=None):
@@ -886,6 +909,56 @@ function getLayoutMode() {
         self.assertEquals(dm.keys(), ['bar'])
         self.assertEquals(dm['bar'], None)
 
+    def test_CPSImageWidget_validate_email_render(self):
+        from Products.CPSSchemas.BasicWidgets import CPSImageWidget
+        folder = Folder()
+        widget = CPSImageWidget('foo').__of__(folder)
+        folder.mimetypes_registry = FakeMimeTypeRegistry()
+        widget.fields = ['bar']
+        dm = FakeDataModel()
+        dm._adapters = [FakeAdapter({'bar': 'thatsme'})]
+        dm.proxy = 'someproxy'
+        dm['bar'] = None
+        ds = FakeDataStructure(dm)
+        f = StringIO(TEST_IMAGE)
+        fu = FileUpload(FakeFieldStorage(f, 'search_popup.png'))
+        ds['foo'] = fu
+        ds['foo_title'] = 'im.png'
+        ds['foo_choice'] = 'change'
+        ds['foo_filename'] = 'search_popup.png'
+        # now validate in order to put something appropriate in datamodel
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm['bar'].data, TEST_IMAGE)
+
+        # start with a fresh datastructure and prepare
+        ds = FakeDataStructure(dm)
+        widget.prepare(ds)
+
+        from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
+        # using a fake render method and having it return a dict, not an str !
+        def widget_image_render(mode='', ds=None, **img_info):
+            return img_info
+        widget.widget_image_render = widget_image_render
+        rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
+        expected_cid = 'widget__foo'
+        self.assertEquals(rendered['image_tag'],
+                          '<img src="cid:%s" alt="" height="32" '
+                          'width="32" />' % expected_cid)
+
+        from Products.CPSSchemas.Widget import CIDPARTS_KEY
+        parts = ds.get(CIDPARTS_KEY)
+        self.assertFalse(parts is None)
+        part = parts.get(expected_cid)
+        self.assertFalse(part is None)
+        self.assertEquals(part['content'], TEST_IMAGE)
+        self.assertEquals(part['content-type'], 'image/png')
+
+        # delete and check that we can still render
+        ds['foo'] = None
+        del ds[CIDPARTS_KEY]
+        rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
+        parts = ds.get(CIDPARTS_KEY)
+        self.assertTrue(parts is None or expected_cid not in parts)
 
 def test_suite():
     return unittest.TestSuite((

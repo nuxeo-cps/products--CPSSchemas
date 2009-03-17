@@ -46,6 +46,15 @@ from zope.interface import implements
 from zope.interface import implementedBy
 from Products.CPSSchemas.interfaces import IWidget
 
+#
+# CONSTANTS
+#
+
+# key passed in through kwargs to render() to map parts referred to by cid
+CIDPARTS_KEY = '_cidparts'
+
+# special layout mode for email
+EMAIL_LAYOUT_MODE = 'view_email'
 
 def widgetname(id):
     """Return the name of the widget as used in HTML forms."""

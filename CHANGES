@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #1961: rendering for email messages
 Bug fixes
 ~~~~~~~~~
 - #1980: CPSBooleanField does not work on LDAP with standard RFC 2252 syntax

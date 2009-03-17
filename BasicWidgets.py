@@ -57,6 +57,8 @@ from Products.CPSUtil.file import makeFileUploadFromOFSFile
 from Products.CPSSchemas.utils import getHumanReadableSize
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
+from Products.CPSSchemas.Widget import CIDPARTS_KEY
+from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
 from Products.CPSSchemas.Vocabulary import EmptyKeyVocabularyWrapper
 
@@ -1924,9 +1926,13 @@ class CPSImageWidget(CPSFileWidget):
 
     logger = getLogger('CPSSchemas.BasicWidgets.CPSImageWidget')
 
-    def getImageInfo(self, datastructure):
+    def getImageInfo(self, datastructure, **kw):
         """Get the image info from the datastructure."""
         image_info = self.getFileInfo(datastructure)
+        if kw.get('layout_mode') == EMAIL_LAYOUT_MODE:
+            # TODO GR: make this cid really unique !
+            image_info['mime_content_id'] = cid = self.getHtmlWidgetId()
+            image_info['content_url'] = 'cid:' + cid
 
         if image_info['empty_file']:
             height = 0
@@ -2067,12 +2073,23 @@ class CPSImageWidget(CPSFileWidget):
         return 'cpsschemas_err_image', {}
 
     def render(self, mode, datastructure, **kw):
+        img_info = self.getImageInfo(datastructure, **kw)
+        cid = img_info.get('mime_content_id')
+        fupload = datastructure[self.getWidgetId()]
+        if cid and fupload is not None:
+            fupload.seek(0)
+            parts = datastructure.setdefault(CIDPARTS_KEY, {})
+            parts[cid] = {'content': fupload.read(),
+                          'content-type': img_info['mimetype'],
+                          }
+            # GR might be a better idea to transmit something implementing
+            # the file interface and let stuff downstream actually dump it
+
         render_method = 'widget_image_render'
         meth = getattr(self, render_method, None)
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        img_info = self.getImageInfo(datastructure)
         return meth(mode=mode, datastructure=datastructure, **img_info)
 
 InitializeClass(CPSImageWidget)
