@@ -32,6 +32,7 @@ from urlparse import urlparse
 from StringIO import StringIO
 
 from Products.CPSUtil.html import renderHtmlTag
+from Products.CPSUtil.mail import make_cid
 
 from logging import getLogger
 logger = getLogger('CPSSchemas.BasicWidgets')
@@ -1930,8 +1931,8 @@ class CPSImageWidget(CPSFileWidget):
         """Use the cid: URL scheme (RFC 2392) and dump parts in datastructure.
         """
 
-        # TODO GR: make this cid really unique !
-        info['mime_content_id'] = cid = self.getHtmlWidgetId()
+        # RFC says that syntax of content-id is the same as RFC 822 message-id
+        info['mime_content_id'] = cid = make_cid(self.getHtmlWidgetId())
         info['content_url'] = 'cid:' + cid
         if not dump:
             return
