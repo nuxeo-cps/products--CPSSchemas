@@ -881,8 +881,8 @@ class CPSPhotoWidget(CPSImageWidget):
         widget_id = self.getWidgetId()
         rposition = datastructure[widget_id + '_rposition']
         subtitle = datastructure[widget_id + '_subtitle']
-        img_info = self.getImageInfo(datastructure)
 
+        img_info = self.getImageInfo(datastructure, dump_cid_parts=True, **kw)
         return meth(mode=mode, datastructure=datastructure,
                     subtitle=subtitle,
                     render_position=rposition,

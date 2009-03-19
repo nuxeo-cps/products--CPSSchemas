@@ -1926,13 +1926,38 @@ class CPSImageWidget(CPSFileWidget):
 
     logger = getLogger('CPSSchemas.BasicWidgets.CPSImageWidget')
 
-    def getImageInfo(self, datastructure, **kw):
-        """Get the image info from the datastructure."""
+    def updateImageInfoForEmail(self, info, datastructure, dump=False):
+        """Use the cid: URL scheme (RFC 2392) and dump parts in datastructure.
+        """
+
+        # TODO GR: make this cid really unique !
+        info['mime_content_id'] = cid = self.getHtmlWidgetId()
+        info['content_url'] = 'cid:' + cid
+        if not dump:
+            return
+
+        fupload = datastructure[self.getWidgetId()]
+        if fupload is not None:
+            fupload.seek(0)
+            parts = datastructure.setdefault(CIDPARTS_KEY, {})
+            parts[cid] = {'content': fupload.read(),
+                          'filename': info['current_filename'],
+                          'content-type': info['mimetype'],
+                          }
+            fupload.seek(0)
+
+    def getImageInfo(self, datastructure, dump_cid_parts=False, **kw):
+        """Get the image info from the datastructure.
+
+        if 'dump_cid_parts' is True, the image is dumped in the datastructure.
+        This is a side-effect, but it's been made such to avoid code duplication
+        in subclasses' render methods. To update these latter, just
+        set this kwarg to True in the call of getImageInfo and pass **kw.
+        """
         image_info = self.getFileInfo(datastructure)
         if kw.get('layout_mode') == EMAIL_LAYOUT_MODE:
-            # TODO GR: make this cid really unique !
-            image_info['mime_content_id'] = cid = self.getHtmlWidgetId()
-            image_info['content_url'] = 'cid:' + cid
+            self.updateImageInfoForEmail(image_info, datastructure,
+                                         dump=dump_cid_parts)
 
         if image_info['empty_file']:
             height = 0
@@ -2073,18 +2098,7 @@ class CPSImageWidget(CPSFileWidget):
         return 'cpsschemas_err_image', {}
 
     def render(self, mode, datastructure, **kw):
-        img_info = self.getImageInfo(datastructure, **kw)
-        cid = img_info.get('mime_content_id')
-        fupload = datastructure[self.getWidgetId()]
-        if cid and fupload is not None:
-            fupload.seek(0)
-            parts = datastructure.setdefault(CIDPARTS_KEY, {})
-            parts[cid] = {'content': fupload.read(),
-                          'content-type': img_info['mimetype'],
-                          }
-            # GR might be a better idea to transmit something implementing
-            # the file interface and let stuff downstream actually dump it
-
+        img_info = self.getImageInfo(datastructure, dump_cid_parts=True, **kw)
         render_method = 'widget_image_render'
         meth = getattr(self, render_method, None)
         if meth is None:
