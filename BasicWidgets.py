@@ -1931,7 +1931,6 @@ class CPSImageWidget(CPSFileWidget):
         """Use the cid: URL scheme (RFC 2392) and dump parts in datastructure.
         """
 
-        # RFC says that syntax of content-id is the same as RFC 822 message-id
         info['mime_content_id'] = cid = make_cid(self.getHtmlWidgetId())
         info['content_url'] = 'cid:' + cid
         if not dump:
