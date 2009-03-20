@@ -960,7 +960,7 @@ function getLayoutMode() {
         del ds[CIDPARTS_KEY]
         rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
         parts = ds.get(CIDPARTS_KEY)
-        self.assertTrue(parts is None or expected_cid not in parts)
+        self.assertTrue(parts is None or cid not in parts)
 
 def test_suite():
     return unittest.TestSuite((
