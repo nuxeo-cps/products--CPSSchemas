@@ -930,30 +930,32 @@ function getLayoutMode() {
         self.assertTrue(widget.validate(ds))
         self.assertEquals(dm['bar'].data, TEST_IMAGE)
 
-        # start with a fresh datastructure and prepare
+        # start with a fresh datastructure and render for email
         ds = FakeDataStructure(dm)
         widget.prepare(ds)
-
         from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
         # using a fake render method and having it return a dict, not an str !
         def widget_image_render(mode='', ds=None, **img_info):
             return img_info
         widget.widget_image_render = widget_image_render
         rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
-        expected_cid = 'widget__foo'
-        self.assertEquals(rendered['image_tag'],
-                          '<img src="cid:%s" alt="" height="32" '
-                          'width="32" />' % expected_cid)
 
+        # Extraction and assertions
+        # image properly dumped in dict for cid parts
         from Products.CPSSchemas.Widget import CIDPARTS_KEY
         parts = ds.get(CIDPARTS_KEY)
         self.assertFalse(parts is None)
-        part = parts.get(expected_cid)
-        self.assertFalse(part is None)
+        self.assertEquals(len(parts), 1)
+        cid, part = parts.items()[0]
         self.assertEquals(part['content'], TEST_IMAGE)
         self.assertEquals(part['content-type'], 'image/png')
 
-        # delete and check that we can still render
+        # URL for final rendering is consistent
+        self.assertEquals(rendered['image_tag'],
+                          '<img src="cid:%s" alt="" height="32" '
+                          'width="32" />' % cid)
+
+        # delete image from datastructure and check that we can still render
         ds['foo'] = None
         del ds[CIDPARTS_KEY]
         rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
