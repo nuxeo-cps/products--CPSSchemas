@@ -358,6 +358,10 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         # return empty inits
         return None
 
+    security.declarePrivate('finalizeFlexibleCreation')
+    def finalizeFlexibleCreation(self, schema=None, layout=None):
+        pass
+
     #
     # To be implemented by widget concrete classes.
     #
