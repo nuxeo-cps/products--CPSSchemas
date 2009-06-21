@@ -143,9 +143,9 @@ class BaseStorageAdapter:
     #
     # API called by DataModel
     #
-    def getData(self):
+    def getData(self, field_ids=None):
         """Get data from the object, returns a mapping."""
-        return self._getData()
+        return self._getData(field_ids=field_ids)
 
     def setData(self, data, toset=None):
         """Set data to the object, from a mapping.
@@ -185,21 +185,25 @@ class BaseStorageAdapter:
             res.update(wpdf)
         return res
 
-    def _getData(self, **kw):
+    def _getData(self, field_ids=None, **kw):
         """Get data from the object, returns a mapping."""
         data = {}
         for field_id, field in self.getFieldItems():
+            if field_ids is not None and not field_id in field_ids:
+                continue
             if field.read_ignore_storage:
                 value = DEFAULT_VALUE_MARKER
             else:
                 value = self._getFieldData(field_id, field, **kw)
             data[field_id] = value
-        self._getDataDoProcess(data, **kw)
+        self._getDataDoProcess(data, field_ids=field_ids, **kw)
         return data
 
-    def _getDataDoProcess(self, data, **kw):
+    def _getDataDoProcess(self, data, field_ids=None, **kw):
         """Process data after read."""
         for field_id, field in self.getFieldItems():
+            if field_ids is not None and field_id not in field_ids:
+                continue
             value = data[field_id]
             data[field_id] = field.processValueAfterRead(value, data,
                                                          self.getContextObject(),

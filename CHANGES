@@ -6,6 +6,7 @@ New features
 - #1961: rendering for email messages
 Bug fixes
 ~~~~~~~~~
+= #1998: indirect acess to *File titles
 - #1994: a hook for flexible widget creation
 - #1980: CPSBooleanField does not work on LDAP with standard RFC 2252 syntax
 - #1160: Add support for TinyMCE, a Javascript HTML WYSIWYG editor

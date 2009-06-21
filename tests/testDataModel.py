@@ -3,10 +3,14 @@
 # $Id$
 
 import unittest
-#from Testing.ZopeTestCase import ZopeLite
+
+from copy import deepcopy
 
 from Acquisition import Implicit
+from OFS.Image import File
+
 from Products.CPSSchemas.DataModel import DataModel, ValidationError
+from Products.CPSSchemas.DataModel import ProtectedFile
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.BasicFields import CPSStringField
@@ -42,6 +46,8 @@ class FakeDocument:
     f1 = 'f1class'
     def Language(self):
         return ''
+    def _setObject(self, oid, obj):
+        setattr(self, oid, obj)
 
 class FakeProxy:
     def __init__(self, default='en', **kw):
@@ -91,6 +97,7 @@ class TestDataModel(unittest.TestCase):
         self.schema.addField('f9', 'CPS String Field',
                              write_process_expr='python: value+f2',
                              )
+        self.schema.addField('file', 'CPS File Field')
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())
@@ -110,6 +117,7 @@ class TestDataModel(unittest.TestCase):
               'f7': 'some text',
               'f8': '',
               'f9': '',
+              'file': None,
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -142,6 +150,7 @@ class TestDataModel(unittest.TestCase):
               'f7': 'some text',
               'f8': '',
               'f9': '',
+              'file': None,
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
         self.assertEquals(dm['f1'], ok['f1'])
@@ -245,6 +254,42 @@ class TestDataModel(unittest.TestCase):
 
     def TODO_testFieldProcessing(self):
         pass
+
+    def test_fileProtection(self):
+        dm = self.makeOne()
+        dm._setObject(self.doc, proxy=FakeProxy(en=self.doc))
+        dm._fetch()
+
+        fobj = File('file', 'original', 'spam')
+        dm['file'] = fobj
+        dm._commit(check_perms=0)
+
+        self.assertEquals(self.doc.file, fobj)
+        self.assertTrue(isinstance(dm['file'], ProtectedFile))
+
+        dm['file'].title = 'changed'
+        self.assertEquals(dm.getObject().file.title, 'original')
+        self.assertEquals(dm['file'].title, 'changed')
+
+        # enhance FakeProxy to simulate getEditableContent for frozen proxy
+        def getEditableContent(lang=None):
+            self = dm.getProxy()
+            if lang is None:
+                lang = self.default
+            doc = self.docs[lang]
+            doc = self.docs[lang] = deepcopy(doc)
+            return doc
+        dm.getProxy().getEditableContent = getEditableContent
+
+        dm._commit(check_perms=0)
+
+        # unfreeze worked
+        self.assertFalse(dm.getObject() is self.doc)
+        self.assertFalse(dm.getObject().file is fobj)
+        # original file is unchanged
+        self.assertEquals(fobj.title, 'original')
+        # file in new doc has been changed
+        self.assertEquals(dm.getObject().file.title, 'changed')
 
 
 def test_suite():

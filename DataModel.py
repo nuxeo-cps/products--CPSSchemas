@@ -46,6 +46,7 @@ from cgi import escape
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo, Unauthorized
 from AccessControl import getSecurityManager
+from OFS.Image import File
 
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.permissions import ModifyPortalContent
@@ -87,6 +88,35 @@ class ValidationError(ValueError):
     """Raised by a widget or a field when user input is incorrect."""
     pass
 
+
+def is_file_object(obj):
+    """Tell if given obj is a file object.
+    Making this a function gives room for enhancement (PERF)
+    and unit tests monkey patching."""
+    return isinstance(obj, File)
+
+_marker = object()
+
+class ProtectedFile(object):
+    def __init__(self, file_obj, datamodel, dm_key):
+        # avoid loop
+        object.__setattr__(self, '_datamodel', datamodel)
+        self._file_obj = file_obj
+        self._dm_key = dm_key
+
+    def setFile(self, fobj):
+        """change the referenced file object."""
+        object.__setattr__(self, '_file_obj', fobj)
+
+    def __getattr__(self, attr, default=_marker):
+        if default is _marker:
+            return getattr(self._file_obj, attr)
+        return getattr(self._file_obj, attr, default)
+
+    def __setattr__(self, attr, v):
+        if not attr.startswith('_'):
+            self._datamodel.dirty.add(self._dm_key)
+        object.__setattr__(self, attr, v)
 
 class DataModel(UserDict):
     """An abstraction for the data stored in an object."""
@@ -268,6 +298,28 @@ class DataModel(UserDict):
                 field = fields[field_id]
                 data[field_id] = field.getDefault(self)
                 self.dirty.add(field_id)
+            if is_file_object(value):
+                self._protectFile(field_id, value)
+
+    def _getProtectedFileIds(self):
+        """Return the current set of protected file's ids.
+
+        Caching that is bad idea: None is a suitable value."""
+
+        return set(field_id for field_id, value in self.data.items()
+                   if isinstance(value, ProtectedFile))
+
+    def _updateProtectedFiles(self):
+        """Reload File fields and update references within protected files."""
+
+        refetched = {}
+        # GR: duplicated bit necessary. Enhancing _fetch for partial data
+        # leads to side effects
+        for adapter in self._adapters:
+            refetched.update(adapter.getData(
+                field_ids=self._getProtectedFileIds()))
+        for f_id, value in refetched.items():
+            self.data[f_id].setFile(value)
 
     def _setEditable(self):
         """Set the editable object for this DataModel.
@@ -299,6 +351,7 @@ class DataModel(UserDict):
         ob = proxy.getEditableContent(lang=lang)
         if ob is not None and ob is not old_ob:
             self._setObject(ob, proxy=proxy)
+            self._updateProtectedFiles()
 
     def _setObject(self, ob, proxy=None):
         """Set the object (and proxy) this datamodel is about.
@@ -310,6 +363,23 @@ class DataModel(UserDict):
         self._proxy = proxy
         for adapter in self._adapters:
             adapter.setContextObject(ob, proxy)
+
+    def _unProtectFiles(self):
+        for f_id in self._getProtectedFileIds():
+            protected = self.data[f_id]
+            self.data[f_id] = fobj = protected._file_obj
+            for attr, v in protected.__dict__.items():
+                if attr.startswith('_'):
+                    continue
+                setattr(fobj, attr, v)
+
+    def _protectFiles(self):
+        for fi, fv in self.data.items():
+            if isinstance(fv, File):
+                self._protectFile(fi, fv)
+
+    def _protectFile(self, field_id, value):
+        self.data[field_id] = ProtectedFile(value, self, field_id)
 
     def _commit(self, check_perms=1, _set_editable=True):
         """Commit modified data into object.
@@ -344,6 +414,9 @@ class DataModel(UserDict):
     def _commitData(self):
         """Compute dependent fields and write data into object."""
 
+        # apply changes to file objects and decapsulate
+        self._unProtectFiles()
+
         # Compute dependent fields.
         data = self.data
         for schema in self._schemas:
@@ -361,6 +434,9 @@ class DataModel(UserDict):
 
         # nothing's dirty any more
         self.dirty = set()
+
+        # reprotect file objects for further changes
+        self._protectFiles()
 
     #
     # Import/export
