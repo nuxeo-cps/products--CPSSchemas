@@ -38,7 +38,8 @@ It is *not* a storage, it isn't persistent at all. Its purpose is:
 The storage itself is done through a storage adapter.
 """
 
-from zLOG import LOG, DEBUG, WARNING, TRACE
+import logging
+
 from Acquisition import aq_base
 from UserDict import UserDict
 from cgi import escape
@@ -51,6 +52,7 @@ from OFS.Image import File
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.permissions import ModifyPortalContent
 
+logger = logging.getLogger('Products.CPSSchemas.DataModel')
 
 try:
     True
@@ -161,10 +163,10 @@ class DataModel(UserDict):
                 if fields.has_key(fieldid):
                     sids = [a._schema.getId() for a in adapters
                             if fieldid in a._schema.keys()]
-                    LOG('DataModel.__init__', WARNING,
-                        "Field '%s' is in schema %s but also in schema%s %s."
-                        % (fieldid, sids[0], len(sids) > 2 and 's' or '',
-                           ', '.join(sids[1:])))
+                    logger.warn(
+                        "Field '%s' is in schema %s but also in schema%s %s.",
+                        fieldid, sids[0], len(sids) > 2 and 's' or '',
+                        ', '.join(sids[1:]))
                     continue
                 fields[fieldid] = field
             schemas.append(schema)
@@ -400,7 +402,7 @@ class DataModel(UserDict):
         # XXX This should somehow be checked by the adapters.
         if (ob is not None and check_perms and
             not _checkPermission(ModifyPortalContent, ob)):
-            LOG("_commit", DEBUG, "Unauthorized to modify object %s" % (ob,))
+            logger.warn("Unauthorized to modify object %s", ob)
             raise Unauthorized("Cannot modify object")
 
         self._commitData()
@@ -422,7 +424,6 @@ class DataModel(UserDict):
         for schema in self._schemas:
             for field_id, field in schema.items():
                 if self.isDirty(field_id):
-                    LOG("DataModel", TRACE, "Computing field '%s'" % (field_id,))
                     field.computeDependantFields(self._schemas, data,
                                                  context=self._context)
                     for dep_id in field._getAllDependantFieldIds():
