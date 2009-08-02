@@ -355,6 +355,9 @@ msgstr "String too short"
 msgid "cpsschemas_err_string_too_long"
 msgstr "String too long"
 
+msgid "cpsschemas_err_string_unauthorized_value"
+msgstr "Unauthorized value"
+
 msgid "cpsschemas_err_required"
 msgstr "Field required"
 

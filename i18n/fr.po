@@ -355,6 +355,9 @@ msgstr "Chaîne de caractère trop courte"
 msgid "cpsschemas_err_string_too_long"
 msgstr "Chaîne de caractère trop longue"
 
+msgid "cpsschemas_err_string_unauthorized_value"
+msgstr "Valeur non admise"
+
 msgid "cpsschemas_err_required"
 msgstr "Champ obligatoire"
 

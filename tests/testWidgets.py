@@ -184,9 +184,36 @@ class TestWidgets(unittest.TestCase):
 
     def testStringWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSStringWidget
-        widget = CPSStringWidget('foo')
+        widget = CPSStringWidget('foo', fields=('foo',))
         self.assertEquals(widget.getWidgetId(), 'foo')
         self.assertEquals(widget.getFieldTypes(), ('CPS String Field',))
+
+        dm = {}
+        ds = FakeDataStructure(dm)
+
+        ds['foo'] = 'abc '
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], 'abc') # stripped
+
+        # Testing #2013
+        widget.must_regexp = r'\d\d-\d+'
+
+        ds['foo'] = '12-345' # passes
+        res = widget.validate(ds)
+        self.assertEquals(res, True)
+        self.assertEquals(dm['foo'], '12-345')
+
+        dm['foo'] = 'before'
+        ds['foo'] = '12-345a' # partial match
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        self.assertEquals(dm['foo'], 'before')
+
+        ds['foo'] = 'abc' # no match at all
+        res = widget.validate(ds)
+        self.assertEquals(res, False)
+        self.assertEquals(dm['foo'], 'before')
 
     def testIntWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSIntWidget

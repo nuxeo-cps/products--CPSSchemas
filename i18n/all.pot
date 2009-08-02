@@ -341,6 +341,9 @@ msgstr ""
 msgid "cpsschemas_err_string_too_long"
 msgstr ""
 
+msgid "cpsschemas_err_string_unauthorized_value"
+msgstr ""
+
 msgid "cpsschemas_err_required"
 msgstr ""
 

@@ -26,7 +26,7 @@ Definition of standard widget types.
 
 import warnings
 import operator
-from re import compile, search
+from re import compile, search, match
 from cgi import escape
 from urlparse import urlparse
 from StringIO import StringIO
@@ -194,6 +194,7 @@ class CPSStringWidget(CPSWidget):
     display_width = 20
     size_min = 0
     size_max = 0
+    must_regexp = '' # TODO compile it in postprocess stuff
     _properties = CPSWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
@@ -201,6 +202,8 @@ class CPSStringWidget(CPSWidget):
          'label': 'Minimum input width'},
         {'id': 'size_max', 'type': 'int', 'mode': 'w',
          'label': 'Maximum input width'},
+        {'id': 'must_regexp', 'type': 'string', 'mode': 'w',
+         'label': 'Regular expression constraining the value',},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -225,12 +228,17 @@ class CPSStringWidget(CPSWidget):
         except AttributeError:
             err = 'cpsschemas_err_string'
         else:
+            regexp = self.must_regexp
             if self.is_required and not v:
                 err = 'cpsschemas_err_required'
             elif self.size_min and len(v) < self.size_min:
                 err = 'cpsschemas_err_string_too_short'
             elif self.size_max and len(v) > self.size_max:
                 err = 'cpsschemas_err_string_too_long'
+            elif regexp:
+                m = match(regexp, v)
+                if m is None or m.end() != len(v):
+                    err = 'cpsschemas_err_string_unauthorized_value'
         return err, v
 
     def validate(self, datastructure, **kw):
