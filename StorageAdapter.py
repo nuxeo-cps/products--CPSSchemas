@@ -135,10 +135,14 @@ class BaseStorageAdapter:
 
     def finalizeDefaults(self, data):
         """This has to be called after getData to finalize default values.
+        Return the set of fields ids that had to be updated
         """
+        changed = set()
         for field_id, v in data.items():
             if v is DEFAULT_VALUE_MARKER:
                 data[field_id] = self._schema[field_id].getDefault()
+                changed.add(field_id)
+        return changed
 
     #
     # API called by DataModel

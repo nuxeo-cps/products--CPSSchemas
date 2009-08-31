@@ -291,15 +291,13 @@ class DataModel(UserDict):
         data = self.data
         fields = self._fields
         for adapter in self._adapters:
-            data.update(adapter.getData())
+            adapt_data = adapter.getData()
+            # Default values are dirty because they have
+            # to be considered changed by the user
+            # (and written, and used for dependent computations)
+            self.dirty.update(adapter.finalizeDefaults(adapt_data))
+            data.update(adapt_data)
         for field_id, value in data.items():
-            if value is DEFAULT_VALUE_MARKER:
-                # Default values are dirty because they have
-                # to be considered changed by the user
-                # (and written, and used for dependent computations)
-                field = fields[field_id]
-                data[field_id] = field.getDefault(self)
-                self.dirty.add(field_id)
             if is_file_object(value):
                 self._protectFile(field_id, value)
 
