@@ -295,7 +295,8 @@ class DataModel(UserDict):
             # Default values are dirty because they have
             # to be considered changed by the user
             # (and written, and used for dependent computations)
-            self.dirty.update(adapter.finalizeDefaults(adapt_data))
+            self.dirty.update(adapter.finalizeDefaults(adapt_data, 
+	                      datamodel=self))
             data.update(adapt_data)
         for field_id, value in data.items():
             if is_file_object(value):

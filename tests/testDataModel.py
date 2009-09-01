@@ -58,7 +58,6 @@ class FakeProxy:
             lang = self.default
         return self.docs.get(lang)
 
-
 class TestDataModel(unittest.TestCase):
 
     def setUp(self):
@@ -72,7 +71,10 @@ class TestDataModel(unittest.TestCase):
         schema.addField('f1', 'CPS String Field')
         schema.addField('f2', 'CPS String Field')
         schema.addField('f3', 'CPS String Field', default_expr='string:f3def')
-        schema.addField('f4', 'CPS String Field')
+        schema.addField('f4', 'CPS String Field',
+                        default_expr="python:datamodel.getProxy() is not None "
+                        "and datamodel.getProxy() is not None and "
+                        "'proxy found' or ''")
         schema.addField('f5', 'CPS String Field',
                         read_ignore_storage=True,
                         read_process_expr='python: f2+"_yo"',
