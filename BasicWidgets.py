@@ -2019,7 +2019,10 @@ class CPSImageWidget(CPSFileWidget):
         return image_info
 
     def getResizedImage(self, file, filename, resize_op):
-        """Get the resized image from information in datastructure"""
+        """Returns the resized image from information in datastructure.
+
+        Returns None if there is no need for a resize.
+        """
         file = StringIO(str(file.data)) # XXX use OFSFileIO
         size = (self.display_width,
                 self.display_height)
@@ -2031,8 +2034,15 @@ class CPSImageWidget(CPSFileWidget):
                 break
         else:
             resize = None
-        if resize and resize < size:
+
+        if resize is None:
+            return None
+
+        if resize < size:
             size = resize
+        else:
+            return None
+
         if size[0] and size[1]:
             try:
                 img = PIL.Image.open(file)
@@ -2046,9 +2056,8 @@ class CPSImageWidget(CPSFileWidget):
                 self.logger.warning(
                     "Failed to resize file %s keep original (%s)", filename, err)
                 outfile = file
-        # XXX: is this the correct default behaviour ?
         else:
-            outfile = file
+            return None
         image = Image(self.fields[0], filename, outfile)
         return image
 
@@ -2097,7 +2106,9 @@ class CPSImageWidget(CPSFileWidget):
         if self.allow_resize:
             self.maybeKeepOriginal(image, datastructure)
             resize_op = datastructure[self.getWidgetId() + '_resize']
-            image = self.getResizedImage(image, filename, resize_op)
+            result = self.getResizedImage(image, filename, resize_op)
+            if result is not None:
+                image = result
         return image
 
     def checkFileName(self, filename, mimetype):
