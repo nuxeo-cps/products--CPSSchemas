@@ -12,13 +12,13 @@ msgstr ""
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 "Language-Code: it\n"
 "Language-Name: Italian\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
@@ -350,6 +350,10 @@ msgstr "Chaîne de caractère trop courte"
 msgid "cpsschemas_err_string_too_long"
 msgstr "Il valore immesso è troppo lungo."
 
+#, fuzzy
+msgid "cpsschemas_err_string_unauthorized_value"
+msgstr "Valeur non admise"
+
 msgid "cpsschemas_err_required"
 msgstr "Campo obbligatorio."
 
@@ -633,5 +637,5 @@ msgstr "modifica online"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Modifica animazione Flash"
 
-msgid "label_alt_text"
-msgstr "Testo alternativo:"
+#~ msgid "label_alt_text"
+#~ msgstr "Testo alternativo:"

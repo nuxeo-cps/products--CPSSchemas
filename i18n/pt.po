@@ -11,17 +11,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-13 17:46default\n"
+"POT-Creation-Date: 2009-10-13 17:05default\n"
 "PO-Revision-Date: 2007-05-01 16:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: Português <luis727@gmail.com>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Code: pt\n"
 "Language-Code: pt\n"
 "Language-Name: pt\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
@@ -37,6 +37,7 @@ msgstr "<span replace=\\\"op/id\\\" /> ${dim}"
 
 #.   <h1 content="label_edit">Edit</h1>
 #: from ../skins/cps_schemas/popup_fckeditor_form.pt
+#: ../skins/cps_schemas/popup_tinymce_form.pt
 msgid "Edit"
 msgstr "Editar"
 
@@ -50,13 +51,13 @@ msgstr "Falso"
 msgid "True"
 msgstr "Verdadeiro"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;; display: none;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr "Iniciar editor online"
@@ -71,9 +72,9 @@ msgstr "às"
 msgid "cpsschema_hour"
 msgstr "hora"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
 #.                        field_html python:len(fields)>2 and fields[2] or '';
-#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';">
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
 #.           (preview)
 #.         </a>
 #.   <a attributes="
@@ -87,10 +88,10 @@ msgstr "hora"
 msgid "cpsschema_link_preview"
 msgstr "Previsão"
 
-#.   <a href="http://url..." attributes="
+#.   <a attributes="
 #.           href preview_url;
 #.           onClick string:return openLinkInPopup('${preview_url}');
-#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}">
+#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}" href="http://url...">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -112,11 +113,11 @@ msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
 msgstr "sufixos permitidos: ${allowed_file_suffixes}"
 
 #.   <block>
-#.               Image alternate text (accessibility) :
-#.             </block>
+#.                   Image alternate text :
+#.                 </block>
 #.   <block>
-#.               Image alternative text :
-#.             </block>
+#.                   Alternate text :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_alt"
@@ -128,8 +129,11 @@ msgid "cpsschemas_image_resize"
 msgstr "Redimensiona"
 
 #.   <block>
-#.             Image title :
-#.           </block>
+#.                 Image title :
+#.               </block>
+#.   <block>
+#.                   Title :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_image_title"
@@ -148,7 +152,7 @@ msgstr "Mudar"
 msgid "cpsschemas_label_file_delete"
 msgstr "Remover"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -181,8 +185,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Redimensionar como"
 
 #.   <block>
-#.             Photo subtitle :
-#.           </block>
+#.                 Subtitle :
+#.               </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Subtítulo"
@@ -282,7 +286,7 @@ msgstr "Valor:"
 msgid "description_vocabulary_manage_form"
 msgstr "Esta página permite administrar vocabulários e suas entradas."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -346,6 +350,10 @@ msgstr "String demasiado curto"
 msgid "cpsschemas_err_string_too_long"
 msgstr "Cadeia de caracteres muito longa."
 
+#, fuzzy
+msgid "cpsschemas_err_string_unauthorized_value"
+msgstr "Unauthorized value"
+
 msgid "cpsschemas_err_required"
 msgstr "Campo requerido."
 
@@ -377,7 +385,9 @@ msgid "cpsschemas_err_file"
 msgstr "Arquivo inválido."
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr "Este arquivo não tem um sufixo permitido; os sufixos permitidos são: ${allowed_file_suffixes}."
+msgstr ""
+"Este arquivo não tem um sufixo permitido; os sufixos permitidos são: "
+"${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "Arquivo inválido (vazio)."
@@ -386,7 +396,8 @@ msgid "cpsschemas_err_file_too_big"
 msgstr "Este arquivo é muito grande"
 
 msgid "cpsschemas_err_file_too_big ${max_size}"
-msgstr "Este arquivo é muito grande, o tamanho máximo permitido é ${max_size}Mb."
+msgstr ""
+"Este arquivo é muito grande, o tamanho máximo permitido é ${max_size}Mb."
 
 msgid "cpsschemas_err_image"
 msgstr "Imagem inválida."
@@ -425,7 +436,9 @@ msgid "cpsschemas_err_password_digit"
 msgstr "Desculpe, a sua senha deve conter um dígito."
 
 msgid "cpsschemas_err_password_extra"
-msgstr "Desculpe, a sua senha deve conter um caracter especial diferente de letra e dígito."
+msgstr ""
+"Desculpe, a sua senha deve conter um caracter especial diferente de letra e "
+"dígito."
 
 msgid "cpsschemas_err_identifier"
 msgstr "Identificador inválido."
@@ -622,4 +635,3 @@ msgstr "Animação Flash (swf)"
 
 #~ msgid "label_alt_text"
 #~ msgstr "Texto alternativo"
-

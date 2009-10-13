@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSSchemas\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-13 17:46default\n"
+"POT-Creation-Date: 2007-04-25 12:21default\n"
 "PO-Revision-Date: 2007-05-31 12:39+0100\n"
 "Language-Team: valencià/català. <juangus@lasalle.es>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Language: Catalan\n"
@@ -13,7 +14,6 @@ msgstr ""
 "Language-Code: ca\n"
 "Language-Name: ca\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
@@ -101,19 +101,21 @@ msgstr "mn"
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
 #: ../skins/cps_schemas/widget_zippedhtml_render.pt
 msgid "cpsschemas_allowed_file_suffixes ${allowed_file_suffixes}"
-msgstr "Els arxius han de tenir algun dels següents sufixos: ${allowed_file_suffixes}."
+msgstr ""
+"Els arxius han de tenir algun dels següents sufixos: "
+"${allowed_file_suffixes}."
 
 #.   <block>
-#.               Image alternate text (accessibility) :
-#.             </block>
+#.                   Image alternate text :
+#.                 </block>
 #.   <block>
-#.               Image alternative text :
-#.             </block>
+#.                   Alternate text :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_image_alt"
-msgstr "Title: "
+msgstr "Alternate text : "
 
 #.   <label attributes="for string:${radio_name}_change">resize</label>
 #: from ../skins/cps_schemas/widget_image_render.pt
@@ -121,13 +123,16 @@ msgid "cpsschemas_image_resize"
 msgstr "i redimensionar: "
 
 #.   <block>
-#.             Image title :
-#.           </block>
+#.                 Image title :
+#.               </block>
+#.   <block>
+#.                   Title :
+#.                 </block>
 #: from ../skins/cps_schemas/widget_image_render.pt
 #: ../skins/cps_schemas/widget_photo_render.pt
 #, fuzzy
 msgid "cpsschemas_image_title"
-msgstr "Title: "
+msgstr "Título:"
 
 #.   <label attributes="for string:${radio_name}_change">Change</label>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -175,8 +180,8 @@ msgid "cpsschemas_label_image_resize"
 msgstr "Redimensionar com a"
 
 #.   <block>
-#.             Photo subtitle :
-#.           </block>
+#.                 Subtitle :
+#.               </block>
 #: from ../skins/cps_schemas/widget_photo_render.pt
 msgid "cpsschemas_photo_subtitle"
 msgstr "Peu d'imatge:"
@@ -336,7 +341,7 @@ msgstr "Cadena de caràcters no vàlida"
 
 #, fuzzy
 msgid "cpsschemas_err_string_too_short"
-msgstr "String too short"
+msgstr "Cadena demasiado corta"
 
 msgid "cpsschemas_err_string_too_long"
 msgstr "Cadena de caràcters massa llarga"
@@ -361,7 +366,7 @@ msgstr "Enter no vàlid"
 
 #, fuzzy
 msgid "cpsschemas_err_int_range"
-msgstr "Integer out of range"
+msgstr "Entero fuera de límites"
 
 msgid "cpsschemas_err_date"
 msgstr "Format de data no vàlid"
@@ -373,7 +378,9 @@ msgid "cpsschemas_err_file"
 msgstr "Fitxer no vàlid"
 
 msgid "cpsschemas_err_file_bad_suffix ${allowed_file_suffixes}"
-msgstr "Este arxiu no té un sufix vàlid. Els sufixos vàlids son: ${allowed_file_suffixes}."
+msgstr ""
+"Este arxiu no té un sufix vàlid. Els sufixos vàlids son: "
+"${allowed_file_suffixes}."
 
 msgid "cpsschemas_err_file_empty"
 msgstr "fitxer buit"
@@ -421,7 +428,8 @@ msgid "cpsschemas_err_password_digit"
 msgstr "La contrasenya ha de tenir al menys una xifra"
 
 msgid "cpsschemas_err_password_extra"
-msgstr "La contrasenya ha de tenir al menys un caràcter que no siga lletra o xifra"
+msgstr ""
+"La contrasenya ha de tenir al menys un caràcter que no siga lletra o xifra"
 
 msgid "cpsschemas_err_identifier"
 msgstr "Identificador no vàlid"
@@ -615,6 +623,5 @@ msgstr "Editar en línia"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animació flash (swf)"
 
-#~ msgid "label_alt_text"
-#~ msgstr "Alternative text"
-
+msgid "label_alt_text"
+msgstr "Alternative text"

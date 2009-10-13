@@ -14,18 +14,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-25 12:21default\n"
+"POT-Creation-Date: 2009-10-13 17:05default\n"
 "PO-Revision-Date: 2005-05-16 02:45+0200\n"
 "Last-Translator: Julien Anguenot <anguenot@in.nuxeo.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.9.1\n"
 "Language-Code: fr\n"
 "Language-Name: French\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <option attributes="value op/id;
@@ -41,6 +41,7 @@ msgstr ""
 
 #.   <h1 content="label_edit">Edit</h1>
 #: from ../skins/cps_schemas/popup_fckeditor_form.pt
+#: ../skins/cps_schemas/popup_tinymce_form.pt
 msgid "Edit"
 msgstr ""
 
@@ -54,13 +55,13 @@ msgstr "Non"
 msgid "True"
 msgstr "Oui"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;; display: none;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr "Utiliser l'éditeur"
@@ -75,9 +76,9 @@ msgstr "à"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
 #.                        field_html python:len(fields)>2 and fields[2] or '';
-#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';">
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
 #.           (preview)
 #.         </a>
 #.   <a attributes="
@@ -91,10 +92,10 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(prévisualisation)"
 
-#.   <a href="http://url..." attributes="
+#.   <a attributes="
 #.           href preview_url;
 #.           onClick string:return openLinkInPopup('${preview_url}');
-#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}">
+#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}" href="http://url...">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -157,7 +158,7 @@ msgstr "Charger"
 msgid "cpsschemas_label_file_delete"
 msgstr "Supprimer"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -291,7 +292,7 @@ msgstr "Valeur&nbsp;:"
 msgid "description_vocabulary_manage_form"
 msgstr "Cette page vous permet de gérer les vocabulaires et leurs entrées."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt
@@ -496,7 +497,7 @@ msgid "cpsschemas_rformat_original"
 msgstr "Original"
 
 msgid "img_auto_size"
-msgstr "Automatique"
+msgstr "Garder la taille originale"
 
 msgid "img_icon ${dim}"
 msgstr "Vignette ${dim}"
