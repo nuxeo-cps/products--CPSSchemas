@@ -448,7 +448,6 @@ class EmptyKeyVocabularyWrapper:
     def clear(self):
         """Clear the vocabulary."""
         self._voc.clear()
-
     def __delitem__(self, key):
         if key != '':
             self._voc.__delitem__(self, key)
@@ -498,3 +497,74 @@ class EmptyKeyVocabularyWrapper:
         Empty key position is not affected by sorting
         """
         return self._wrap_list(self._voc.keysSortedBy(crit=crit), '')
+
+class ExclusionVocabularyWrapper:
+    """ A simple class that wraps any vocabulary to exclude some values
+    """
+
+    implements(ICPSVocabulary)
+
+    def __init__(self, vocabulary, excluded):
+        """Constructor.
+        excluded is a set/list of keys
+        """
+        self._voc = vocabulary
+        self._excl = excluded
+
+    def clear(self):
+        """Clear the vocabulary."""
+        self._voc.clear()
+
+    def __delitem__(self, key):
+        if key in self._excl:
+            raise KeyError(key)
+        self._voc.__delitem__(self, key)
+
+    def set(self, key, label, msgid=None):
+        """Set a label for a key."""
+        if key in self._excl:
+            raise KeyError(key)
+        self._voc.set(key, label, msgid=msgid)
+
+    def __getitem__(self, key):
+        """Get a label for a key."""
+        if key in self._excl:
+            raise KeyError(key)
+        return self._voc.__getitem__(key)
+
+    def get(self, key, default=None):
+        """Get a label for a key, default to None."""
+        if key in self._excl:
+            return default
+        return self._voc.get(key, default)
+
+    def getMsgid(self, key, default=None):
+        """Get a msgid for a key, default to None."""
+        if key in self._excl:
+            return default
+        return self._voc.getMsgid(key, default)
+
+    def has_key(self, key):
+        """Test if a key is present."""
+        return key not in self._excl and self._voc.has_key(key)
+
+    def keys(self):
+        """Get the ordered list of keys."""
+        return [k for k in self._voc.keys() if k not in self._excl]
+
+    def items(self):
+        """Get the ordered list of (key, value)."""
+        return [(k,v) for (k,v) in self._voc.items() if k not in self._excl]
+
+    def values(self):
+        """Get the ordered list of values."""
+        return [v for (k,v) in self._voc.items() if k not in self._excl]
+
+    def keysSortedBy(self, crit='id'):
+        """Return a keys list sorted on a criterium
+
+        Empty key position is not affected by sorting
+        """
+        return [k for k in self._voc.keysSortedBy(crit=crit)
+                if k not in self._excl]
+

@@ -5,6 +5,7 @@ New features
 ~~~~~~~~~~~~
 - #2013: regexp constraint on String Widget
 - #1961: rendering for email messages
+- #1402: exclusion vocabulary wrapper
 Bug fixes
 ~~~~~~~~~
 - #1998: indirect acess to *File titles
