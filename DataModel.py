@@ -412,13 +412,7 @@ class DataModel(UserDict):
 
         return ob
 
-    def _commitData(self):
-        """Compute dependent fields and write data into object."""
-
-        # apply changes to file objects and decapsulate
-        self._unProtectFiles()
-
-        # Compute dependent fields.
+    def _computeDependentFields(self):
         data = self.data
         for schema in self._schemas:
             for field_id, field in schema.items():
@@ -428,7 +422,16 @@ class DataModel(UserDict):
                     for dep_id in field._getAllDependantFieldIds():
                         self.dirty.add(dep_id)
 
+    def _commitData(self):
+        """Compute dependent fields and write data into object."""
+
+        # apply changes to file objects and decapsulate
+        self._unProtectFiles()
+
+        self._computeDependentFields()
+
         # Call the adapters to store the data.
+        data = self.data
         for adapter in self._adapters:
             adapter.setData(data, toset=self.dirty)
 
