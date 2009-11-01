@@ -162,14 +162,18 @@ class Field(PropertiesPostProcessor, SimpleItemWithProperties):
 
     def _createDefaultExpressionContext(self, datamodel):
         """Create an expression context for default value evaluation."""
+
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        util = fieldStorageNamespace.__of__(portal)
         mapping = {
             'field': self,
             'datamodel': datamodel,
             'user': getSecurityManager().getUser(),
-            'portal': getToolByName(self, 'portal_url').getPortalObject(),
+            'portal': portal,
             'modules': SecureModuleImporter,
             'DateTime': DateTime,
             'nothing': None,
+            'util': util,
             }
         return getEngine().getContext(mapping)
 

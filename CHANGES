@@ -8,6 +8,7 @@ New features
 - #1402: exclusion vocabulary wrapper
 Bug fixes
 ~~~~~~~~~
+- #2047: utility object not available from default expressions
 - #2046: Internal DataModel API call for dependent fields computation
 - #1998: indirect acess to *File titles
 - #1994: a hook for flexible widget creation
