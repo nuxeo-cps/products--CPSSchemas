@@ -123,6 +123,7 @@ class CPSBooleanField(CPSField):
             return value
         raise ValidationError('Not a boolean: %s' % repr(value))
 
+    @classmethod
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
         if value is None:
@@ -131,6 +132,7 @@ class CPSBooleanField(CPSField):
             return
         return value and [LDAP_TRUE] or [LDAP_FALSE]
 
+    @classmethod
     def convertFromLDAP(self, values):
         """Convert a value from LDAP attribute values."""
         if len(values) != 1:
