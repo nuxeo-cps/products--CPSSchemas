@@ -12,6 +12,7 @@ Bug fixes
 - #2046: Internal DataModel API call for dependent fields computation
 - #1998: indirect acess to *File titles
 - #1994: a hook for flexible widget creation
+- #2061: Bad exception raising for inconsistent Text Widgets
 - #1980: CPSBooleanField does not work on LDAP with standard RFC 2252 syntax
 - #1160: Add support for TinyMCE, a Javascript HTML WYSIWYG editor
 - #1943: robustness for Subobjects Field

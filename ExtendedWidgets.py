@@ -186,6 +186,9 @@ class CPSTextWidget(CPSStringWidget):
             # Validating rposition and rformat entered by the user and
             # correcting them if necessary.
             if self.configurable != 'nothing':
+                if len(self.fields) < 2:
+                    raise ValueError("Widget %s: user configurable format "
+                                     "& position need extra fields" % widget_id)
                 if len(self.fields) > 1:
                     rposition = datastructure[widget_id + '_rposition']
                     if rposition and rposition in self.all_render_positions:
