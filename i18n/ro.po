@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-25 12:21default\n"
+"POT-Creation-Date: 2009-10-13 17:05default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -32,6 +32,7 @@ msgstr ""
 
 #.   <h1 content="label_edit">Edit</h1>
 #: from ../skins/cps_schemas/popup_fckeditor_form.pt
+#: ../skins/cps_schemas/popup_tinymce_form.pt
 msgid "Edit"
 msgstr ""
 
@@ -45,13 +46,13 @@ msgstr "Fals"
 msgid "True"
 msgstr "Adevarat"
 
-#.   <button type="button" attributes="
+#.   <button attributes="
 #.           id button_text_editor_popup_id;
 #.           style python:test(rformat == 'html',
 #.           'visibility: visible;;', 'visibility: hidden;; display: none;;');
 #.           onclick
 #.           string:javascript:popup_rte('${value_name}', '${here/label_edit}')
-#.           ">Layout</button>
+#.           " type="button">Layout</button>
 #: from ../skins/cps_schemas/widget_text_render.pt
 msgid "button_text_editor_popup"
 msgstr ""
@@ -66,9 +67,9 @@ msgstr "la"
 msgid "cpsschema_hour"
 msgstr "h"
 
-#.   <a href="http://url..." attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
+#.   <a attributes="href string:${proxy_url}/preview_html?file=${field_id}&file_html=${field_html}&file_html_subfiles=${field_html_subfiles}" condition="display_html_preview" define="field_id python:fields[0];
 #.                        field_html python:len(fields)>2 and fields[2] or '';
-#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';">
+#.                        field_html_subfiles python:len(fields)>3 and fields[3] or '';" href="http://url...">
 #.           (preview)
 #.         </a>
 #.   <a attributes="
@@ -82,10 +83,10 @@ msgstr "h"
 msgid "cpsschema_link_preview"
 msgstr "(previzualizare)"
 
-#.   <a href="http://url..." attributes="
+#.   <a attributes="
 #.           href preview_url;
 #.           onClick string:return openLinkInPopup('${preview_url}');
-#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}">
+#.           " condition="display_printable_version" define="preview_url string:${proxy_url}/${preview_id}" href="http://url...">
 #.           (printable version)
 #.         </a>
 #: from ../skins/cps_schemas/widget_attachedfile_render.pt
@@ -150,7 +151,7 @@ msgstr "Schimba"
 msgid "cpsschemas_label_file_delete"
 msgstr "Sterge"
 
-#.   <a href="http://url..." attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)">
+#.   <a attributes="href python:portal.getExternalEditorPath(proxy, id, field_id)" href="http://url...">
 #.                     Edit file online
 #.                   </a>
 #: from ../skins/cps_schemas/widget_file_render.pt
@@ -288,7 +289,7 @@ msgid "description_vocabulary_manage_form"
 msgstr ""
 "Aceasta pagina iti permite sa administrezi vocabularele si intrarile lor."
 
-#.   <em style="color: red" content="err">err</em>
+#.   <em content="err" style="color: red">err</em>
 #: from ../skins/cps_schemas/widget_compound_default_render.pt
 #: ../skins/cps_schemas/widget_link_render.pt
 #: ../skins/cps_schemas/widget_search_render.pt

@@ -346,6 +346,10 @@ msgstr "Cadena demasiado corta"
 msgid "cpsschemas_err_string_too_long"
 msgstr "Cadena de caràcters massa llarga"
 
+#, fuzzy
+msgid "cpsschemas_err_string_unauthorized_value"
+msgstr "Unauthorized value"
+
 msgid "cpsschemas_err_required"
 msgstr "Camp obligatori"
 
@@ -623,5 +627,5 @@ msgstr "Editar en línia"
 msgid "cpsdoc_Flash_Animation_label_edit"
 msgstr "Animació flash (swf)"
 
-msgid "label_alt_text"
-msgstr "Alternative text"
+#~ msgid "label_alt_text"
+#~ msgstr "Alternative text"
