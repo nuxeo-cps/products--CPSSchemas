@@ -435,7 +435,7 @@ class EmptyKeyVocabularyWrapper:
         """Return list l in which value has been inserted.
         """
         if len(l) == 0:
-            l.append(value)
+            return [value]
         else:
             # Ensuring that there aren't any empty key duplicate
             l = [x for x in l if x != value]

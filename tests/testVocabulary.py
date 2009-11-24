@@ -119,6 +119,24 @@ class BasicVocabularyTests(unittest.TestCase):
                                       ('meuh', 'M')])
         self.assertEquals(v.values(), ['F', 'B', 'M'])
 
+    def testEmptyKeyForEmptyVoc(self):
+        class UnMutableEmptyVoc(Vocabulary.CPSVocabulary):
+            def __init__(self, vid, **kw):
+                self._setId(vid)
+
+            def keys(self):
+                return ()
+            def items(self):
+                return ()
+            def values(self):
+                return ()
+
+        v = Vocabulary.EmptyKeyVocabularyWrapper(UnMutableEmptyVoc('uev'),
+                                                 'Empty Key')
+        self.assertEquals(v.keys(), [''])
+        self.assertEquals(v.values(), ['Empty Key'])
+        self.assertEquals(v.items(), [('', 'Empty Key')])
+
     def test_keysSortedBy(self):
         v = self.makeWithMsgids()
         # B, F, M

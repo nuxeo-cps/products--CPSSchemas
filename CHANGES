@@ -15,6 +15,7 @@ Bug fixes
 - #2061: Bad exception raising for inconsistent Text Widgets
 - #1980: CPSBooleanField does not work on LDAP with standard RFC 2252 syntax
 - #1160: Add support for TinyMCE, a Javascript HTML WYSIWYG editor
+- #2069: error in vocabulary with empty key if vocabulary is empty
 - #1943: robustness for Subobjects Field
 - #1939: Dependent fields computation crash on Tramline files
 - #1974: Make vocabularies and vocabulary entries be better sorted
