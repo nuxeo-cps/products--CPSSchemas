@@ -3,23 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #2013: regexp constraint on String Widget
-- #1961: rendering for email messages
-- #1402: exclusion vocabulary wrapper
+-
 Bug fixes
 ~~~~~~~~~
-- #2047: utility object not available from default expressions
-- #2046: Internal DataModel API call for dependent fields computation
-- #1998: indirect acess to *File titles
-- #1994: a hook for flexible widget creation
-- #2061: Bad exception raising for inconsistent Text Widgets
-- #1980: CPSBooleanField does not work on LDAP with standard RFC 2252 syntax
-- #1160: Add support for TinyMCE, a Javascript HTML WYSIWYG editor
-- #2069: error in vocabulary with empty key if vocabulary is empty
-- #1943: robustness for Subobjects Field
-- #1939: Dependent fields computation crash on Tramline files
-- #1974: Make vocabularies and vocabulary entries be better sorted
-- Fixed Image Widget resizing wording
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
