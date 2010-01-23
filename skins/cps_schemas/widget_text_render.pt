@@ -17,13 +17,6 @@
   absolute here/absolute|python:False;
   base_url python:test(absolute, utool()+'/', utool.getBaseUrl());
   ">
-  <tal:block condition="python: mode == 'view'">
-    <div tal:condition="value"
-      tal:attributes="class python:test(rposition == 'col_left', 'dcolleft',
-      test(rposition == 'col_right',
-      'dcolright', 'ddefault'))"
-      tal:content="structure value" />
-  </tal:block>
   <tal:block condition="python:mode == 'edit'">
         <textarea class="monospaceFont resizable"
           tal:attributes="id value_name;
