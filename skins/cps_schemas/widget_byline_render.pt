@@ -6,8 +6,8 @@
                   ">
 <tal:block condition="python: mode == 'view'">
   <small>
-  <tal:block condition="not:isAnon"
-    define="
+  <tal:block condition="not:isAnon">
+    <tal:block define="
       wtool nocall:here/portal_workflow;
       dtool nocall:here/portal_directories;
       creator doc/Creator;
@@ -40,6 +40,7 @@
         content="string:label_language_${lang}">en</tal:block>
        </span>
     </tal:block>
+  </tal:block>
   </tal:block>
   </tal:block>
   <tal:block condition="isAnon">
