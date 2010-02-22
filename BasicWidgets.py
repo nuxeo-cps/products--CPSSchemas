@@ -2038,7 +2038,7 @@ class CPSImageWidget(CPSFileWidget):
         if resize is None:
             return None
 
-        if resize < size:
+        if resize <= size:
             size = resize
         else:
             return None
