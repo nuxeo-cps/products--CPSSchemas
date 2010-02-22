@@ -71,7 +71,7 @@
                                          here.display_height);
                         sizes python:[s for s in here.getImgSizes()
                                         if not wid_size[0]
-                                           or s['size'] < wid_size]">
+                                           or s['size'] <= wid_size]">
             <option tal:repeat="op sizes"
               tal:attributes="value op/id;
               selected python: op['size'] and (op['size'][0]==image_width
