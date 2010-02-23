@@ -100,6 +100,8 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Label in view layout mode'},
         {'id': 'label_edit', 'type': 'string', 'mode': 'w',
          'label': 'Label in edit layout mode'},
+        {'id': 'fieldset', 'type': 'boolean', 'mode': 'w',
+         'label': 'Render in edit mode as a fieldset (for widgets with lots of inputs)'},
         {'id': 'description', 'type': 'text', 'mode': 'w',
          'label': 'Description'},
         {'id': 'help', 'type': 'text', 'mode': 'w',
@@ -148,6 +150,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
     widget_mode_expr = ''
     css_class_expr = ''
     javascript_expr = ''
+    fieldset = False
 
     field_types = []
     field_inits = [] # default settings for fields created in flexible mode

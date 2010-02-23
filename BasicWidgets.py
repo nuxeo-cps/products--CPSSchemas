@@ -2152,6 +2152,7 @@ class CPSCompoundWidget(CPSWidget):
     widget_type = None # Compat with old instances
     render_method = 'widget_compound_default_render'
     prepare_validate_method = ''
+    fieldset = True # making <fieldset> <legend> likely to be useful
 
     _old_render_methods = {
         'Link Widget': 'widget_link_render',
