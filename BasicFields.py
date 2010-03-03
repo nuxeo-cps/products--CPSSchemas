@@ -238,7 +238,13 @@ class CPSStringField(CPSField):
 
     # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, str):
+        if isinstance(value, unicode):
+            return value
+        elif isinstance(value, basestring):
+            try:
+                unicode(value, 'iso-8859-15')
+            except UnicodeError:
+                ValidationError('Invalid encoding: %s' % repr(value))
             return value
         raise ValidationError('Not a string: %s' % repr(value))
 
@@ -267,13 +273,12 @@ class CPSStringField(CPSField):
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
         """
-        context.setNodeValue(node, str(value).decode(default_encoding))
+        context.setNodeValue(node, value)
 
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.
         """
-        text = context.getNodeValue(node)
-        return text.encode(default_encoding)
+        return context.getNodeValue(node)
 
 InitializeClass(CPSStringField)
 
@@ -334,7 +339,15 @@ class CPSStringListField(CPSListField):
 
     def verifyType(self, value):
         """Verify the type of the value"""
-        return isinstance(value, str)
+        if isinstance(value, unicode):
+            return True
+        elif isinstance(value, basestring):
+            try:
+                unicode(value, 'iso-8859-15')
+            except UnicodeError:
+                return False
+            return True
+        return False
 
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
@@ -358,7 +371,6 @@ class CPSStringListField(CPSListField):
         """
         for v in value:
             child = context.createStrictTextElement('e')
-            v = v.decode(default_encoding)
             context.setNodeValue(child, v)
             node.appendChild(child)
 
@@ -370,7 +382,6 @@ class CPSStringListField(CPSListField):
             if child.nodeName != 'e':
                 continue
             v = context.getNodeValue(child)
-            v = v.encode(default_encoding)
             res.append(v)
         return res
 

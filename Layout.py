@@ -396,8 +396,14 @@ class Layout(PropertiesPostProcessor,
             for cell in row:
                 widget = cell['widget']
                 mode = cell['widget_mode']
-                rendered = widget.render(mode, datastructure,
-                                         widget_infos=widget_infos, **kw)
+                try:
+                    rendered = widget.render(mode, datastructure,
+                                             widget_infos=widget_infos, **kw)
+                except UnicodeDecodeError:
+                    LOG('renderLayoutStructure', WARNING,
+                        'widget %s mix unicode and non ascii string: ds=%s' %
+                        (widget.absolute_url(), str(datastructure)))
+                    raise
                 rendered = rendered.strip()
                 cell['widget_rendered'] = rendered
                 if widget.hidden_empty and not rendered:

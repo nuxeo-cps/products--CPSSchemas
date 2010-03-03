@@ -100,6 +100,7 @@ class TestDataModel(unittest.TestCase):
                              write_process_expr='python: value+f2',
                              )
         self.schema.addField('file', 'CPS File Field')
+
         if with_language:
             schema.addField('Language', 'CPS String Field')
         adapter = AttributeStorageAdapter(schema, doc, field_ids=schema.keys())

@@ -207,8 +207,7 @@ class Vocabulary(Persistent, Implicit):
         elif crit == 'i18n':
             portal = getToolByName(self, 'portal_url').getPortalObject()
             cpsmcat = portal.translation_service
-            l = [(cpsmcat(self.getMsgid(key)).encode('ISO-8859-15', 'ignore'),
-                  key) for key in self.keys()]
+            l = [(cpsmcat(self.getMsgid(key)), key) for key in self.keys()]
             l.sort()
             return [x[1] for x in l]
         else:

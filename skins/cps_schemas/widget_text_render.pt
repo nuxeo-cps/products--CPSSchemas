@@ -20,7 +20,7 @@
   <tal:block condition="python:mode == 'edit'">
         <textarea class="monospaceFont resizable"
           tal:attributes="id value_name;
-          name value_name;
+          name string:${value_name}:utf8:ustring;
           cols here/width;
           rows here/height;
           class python:test(rformat == 'html'

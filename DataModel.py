@@ -321,6 +321,13 @@ class DataModel(UserDict):
                 field_ids=self._getProtectedFileIds()))
         for f_id, value in refetched.items():
             self.data[f_id].setFile(value)
+            if value is DEFAULT_VALUE_MARKER:
+                # Default values are dirty because they have
+                # to be considered changed by the user
+                # (and written, and used for dependent computations)
+                field = fields[field_id]
+                data[field_id] = field.getDefault(self)
+                self.dirty.add(field_id)
 
     def _setEditable(self):
         """Set the editable object for this DataModel.
@@ -421,7 +428,6 @@ class DataModel(UserDict):
                                                  context=self._context)
                     for dep_id in field._getAllDependantFieldIds():
                         self.dirty.add(dep_id)
-
     def _commitData(self):
         """Compute dependent fields and write data into object."""
 

@@ -195,6 +195,8 @@ class CPSStringWidget(CPSWidget):
     size_min = 0
     size_max = 0
     must_regexp = '' # TODO compile it in postprocess stuff
+    del_first_occurence = False
+
     _properties = CPSWidget._properties + (
         {'id': 'display_width', 'type': 'int', 'mode': 'w',
          'label': 'Display width'},
@@ -204,6 +206,8 @@ class CPSStringWidget(CPSWidget):
          'label': 'Maximum input width'},
         {'id': 'must_regexp', 'type': 'string', 'mode': 'w',
          'label': 'Regular expression constraining the value',},
+        {'id': 'del_first_occurence', 'type': 'boolean', 'mode': 'w',
+         'label': 'Delete the first occurence'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -213,22 +217,33 @@ class CPSStringWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
 
     def _extractValue(self, value):
         """Return err and new value."""
         err = None
         if not value:
-            v = ''
+            v = u''
         else:
             v = value
+
         try:
             v = v.strip()
         except AttributeError:
             err = 'cpsschemas_err_string'
         else:
             regexp = self.must_regexp
+
+            try:
+                if not isinstance(value, basestring):
+                    raise ValueError
+                if isinstance(value, str):
+                    v = unicode(value, 'ascii')
+                v = v.strip()
+            except (ValueError, UnicodeError):
+                err = 'cpsschemas_err_string'
+        if err is None:
             if self.is_required and not v:
                 err = 'cpsschemas_err_required'
             elif self.size_min and len(v) < self.size_min:
@@ -240,6 +255,7 @@ class CPSStringWidget(CPSWidget):
                 if m is None or m.end() != len(v):
                     err = 'cpsschemas_err_string_unauthorized_value'
         return err, v
+
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -258,6 +274,13 @@ class CPSStringWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if(self.del_first_occurence):
+                tab = [escape(i) for i in strip(value,',')]
+                if len(tab)>1:
+                    value= self.view_mode_separator.join([escape(i) for i in tab[1:]])
+
+            if value is None:
+                return ''
             return escape(value)
         elif mode == 'edit':
             # XXX TODO should use an other name than kw !
@@ -451,6 +474,10 @@ class CPSIdentifierWidget(CPSStringWidget):
 
         if not err and v and not self._checkIdentifier(v):
             err = 'cpsschemas_err_identifier'
+        try:
+            v = str(v)
+        except UnicodeEncodeError:
+            err = 'cpsschemas_err_identifier'
 
         if err:
             datastructure.setError(widget_id, err)
@@ -556,18 +583,16 @@ class CPSPasswordWidget(CPSStringWidget):
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         err = 0
-        try:
-            v = str(value).strip()
-        except ValueError:
-            err = 'cpsschemas_err_string'
-        else:
+
+        err, v = self._extractValue(value)
+        if err is None:
             if self.password_widget:
                 # here we only check that that our confirm match the pwd
                 pwidget_id = self.password_widget
                 pvalue = datastructure[pwidget_id]
                 datastructure[widget_id] = ''
                 datastructure[pwidget_id] = ''
-                pv = str(pvalue).strip()
+                pv = pvalue.strip()
                 if pv and v != pv:
                     err = 'cpsschemas_err_password_mismatch'
             else:
@@ -594,6 +619,8 @@ class CPSPasswordWidget(CPSStringWidget):
                         err = 'cpsschemas_err_password_extra'
 
         if err:
+            if err == 'cpsschemas_err_string_too_short':
+                err = 'cpsschemas_err_password_size_min'
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, err)
         elif v:
@@ -698,17 +725,26 @@ class CPSTextAreaWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = str(datamodel[self.fields[0]])
+        datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
-        try:
-            v = str(value).strip()
-        except ValueError:
-            datastructure.setError(widget_id, "cpsschemas_err_textarea")
-            return 0
+
+        if not value:
+            v = u''
+        else:
+            v = value
+            try:
+                if not isinstance(value, basestring):
+                    raise ValueError
+                if isinstance(value, str):
+                    v = unicode(value, 'ascii')
+                v = v.strip()
+            except (ValueError, UnicodeError):
+                datastructure.setError(widget_id, 'cpsschemas_err_textarea')
+                return 0
         if self.is_required and not v:
             datastructure[widget_id] = ''
             datastructure.setError(widget_id, "cpsschemas_err_required")
@@ -728,6 +764,8 @@ class CPSTextAreaWidget(CPSWidget):
                                 contents=value)
         elif mode == 'view':
             rformat = self.render_format
+            if value is None:
+                value = ''
             if rformat == 'pre':
                 ret = '<pre>' + escape(value) + '</pre>'
             elif rformat == 'stx':
@@ -762,6 +800,8 @@ class CPSLinesWidget(CPSWidget):
     view_mode_separator = ', '
     format_empty = ''
     auto_strip = False
+    limit_character = 0 
+    del_first_occurence = False
 
     _properties = CPSWidget._properties + (
         {'id': 'width', 'type': 'int', 'mode': 'w',
@@ -774,6 +814,10 @@ class CPSLinesWidget(CPSWidget):
          'label': 'Separator in view mode'},
         {'id': 'auto_strip', 'type': 'boolean', 'mode': 'w',
          'label': 'Auto strip lines on validation'},
+        {'id': 'limit_character', 'type': 'int', 'mode': 'w',
+         'label': 'Limit the number of character'},
+        {'id': 'del_first_occurence', 'type': 'boolean', 'mode': 'w',
+         'label': 'Delete the first occurence'},
         )
 
     # Associating the widget label with an input area to improve the widget
@@ -818,17 +862,31 @@ class CPSLinesWidget(CPSWidget):
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
+        point = ''
         if mode == 'view':
             if not value:
                 # XXX L10N empty format may be subject to i18n
                 return self.format_empty
             # XXX customize view mode, lots of displays are possible
-            return self.view_mode_separator.join([escape(i) for i in value])
+            car = self.view_mode_separator.join([escape(i) for i in value])
+            if(self.del_first_occurence):
+                tab = [escape(i) for i in value]
+                if len(tab)>1:
+                    car = self.view_mode_separator.join([i for i in tab[1:]])
+
+            if(self.limit_character>0):
+                if(len(car)>self.limit_character):
+                    point = '...'    
+                car1 = car[:self.limit_character] + point
+                return car1
+            return car 
+
+
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             return renderHtmlTag('textarea',
                                  id=html_widget_id,
-                                 name=html_widget_id + ':lines',
+                                 name=html_widget_id + ':utf8:ulines',
                                  cols=self.width,
                                  rows=self.height,
                                  contents='\n'.join(value))
@@ -994,6 +1052,21 @@ class CPSSelectWidget(CPSWidget):
                 position=self.empty_key_pos,)
         return vocabulary
 
+    def _getTranslatedVocabularyKey(self, translation_service, vocabulary,
+                                    key):
+        """Get vocabulary key translated."""
+        msgid = vocabulary.getMsgid(key, key)
+        if not isinstance(msgid, basestring):
+            msgid = str(msgid)
+        value = translation_service(msgid, default=msgid)
+        return value
+
+    def _getTranslatedMsgid(self, translation_service, msgid):
+        """Get translated Msgid for selections presentation
+        """
+        value = translation_service(msgid, default=msgid)
+        return value
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -1025,14 +1098,21 @@ class CPSSelectWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
+        charset = portal.default_charset
         cpsmcat = portal.translation_service
         if mode == 'view':
             if self.translated:
-                return escape(cpsmcat(
-                    vocabulary.getMsgid(value, value)).encode('ISO-8859-15',
-                                                              'ignore'))
+                return escape(cpsmcat(vocabulary.getMsgid(value, value)))
             else:
-                return escape(vocabulary.get(value, value))
+                ret = vocabulary.get(value, value)
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(ret, unicode) and ret is not None:
+                        ret = ret.decode('iso-8859-15')
+                if ret is not None:
+                    return escape(ret)
+                else:
+                    return ""
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
             res = renderHtmlTag('select',
@@ -1043,19 +1123,30 @@ class CPSSelectWidget(CPSWidget):
                 vocabulary_items_translated = []
                 for k, v in vocabulary_items:
                     label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
-                    label = label.encode('ISO-8859-15', 'ignore')
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
                 vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(k, unicode) and k is not None:
+                        k = k.decode('iso-8859-15')
+                    if not isinstance(v, unicode) and v is not None:
+                        v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = 'selected'
                     in_selection = True
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
-                kw = {'value': value, 'contents': 'invalid: ' + str(value),
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(value, unicode) and value is not None:
+                        value = value.decode('iso-8859-15')
+                else:
+                    value = str(value)
+                kw = {'value': value, 'contents': 'invalid: ' + value,
                       'selected': 'selected'}
                 res += renderHtmlTag('option', **kw)
             res += '</select>'
@@ -1132,6 +1223,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
+        charset = portal.default_charset
         cpsmcat = portal.translation_service
         if mode == 'view':
             if not value:
@@ -1142,7 +1234,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                 return self.getEntriesHtml(value, vocabulary, self.translated)
         elif mode == 'edit':
             html_widget_id = self.getHtmlWidgetId()
-            kw = {'name': html_widget_id + ':list',
+            kw = {'name': html_widget_id + ':utf8:ulist',
                   'multiple': 'multiple',
                   'id': html_widget_id,
                   }
@@ -1155,12 +1247,17 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                 vocabulary_items_translated = []
                 for k, v in vocabulary_items:
                     label = cpsmcat(vocabulary.getMsgid(k, k), default=k)
-                    label = label.encode('ISO-8859-15', 'ignore')
                     vocabulary_items_translated.append((k, label))
                 vocabulary_items = vocabulary_items_translated
             if self.sorted:
                 vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
+                # XXX workaround to deal with iso-8859-15 encoded strings
+                if charset == "unicode":
+                    if not isinstance(k, unicode) and k is not None:
+                        k = k.decode('iso-8859-15')
+                    if not isinstance(v, unicode) and v is not None:
+                        v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if k in value:
                     kw['selected'] = 'selected'
@@ -1168,7 +1265,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             res += '</select>'
             default_tag = renderHtmlTag('input',
                                         type='hidden',
-                                        name=html_widget_id+':tokens:default',
+                                        name=html_widget_id+':utf8:utokens:default',
                                         value='')
             return default_tag+res
         raise RuntimeError('unknown mode %s' % mode)
@@ -1183,7 +1280,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             if translated:
                 value = vocabulary.getMsgid(entry, entry)
                 value = cpsmcat(value, default=value)
-                value = value.encode('ISO-8859-15', 'ignore')
             else:
                 value = vocabulary.get(entry, entry)
             values.append(value)
@@ -1339,6 +1435,8 @@ class CPSIntWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if value is None:
+                return ''
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -1463,6 +1561,8 @@ class CPSFloatWidget(CPSWidget):
         """Render in mode from datastructure."""
         value = datastructure[self.getWidgetId()]
         if mode == 'view':
+            if value is None:
+                return ''
             return escape(value)
         elif mode == 'edit':
             return renderHtmlTag('input',
@@ -1659,8 +1759,18 @@ class CPSFileWidget(CPSWidget):
         """
         hr = getHumanReadableSize(size)
         cpsmcat = getToolByName(self, 'translation_service')
-        return str(hr[0]) + ' ' + cpsmcat(hr[1]).encode('ISO-8859-15',
-                                                        'ignore')
+        return str(hr[0]) + ' ' + cpsmcat(hr[1])
+
+    def getFileSize(self, fileupload):
+        """Find size of given fileupload.
+
+        fileupload is assumed not to be None."""
+
+        current = fileupload.tell()
+        fileupload.seek(0, 2) # end of file
+        size = fileupload.tell()
+        fileupload.seek(current)
+        return size
 
     def getFileSize(self, fileupload):
         """Find size of given fileupload.
