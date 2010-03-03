@@ -51,7 +51,8 @@ TEST_IMAGE = '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
 '\x10\x0f\x1a\xadA\xb9\xc2\xaa\xf96\x00\x00\x00\x00IEND\xaeB`\x82'
 
 class FakePortal(Implicit):
-    pass
+    default_charset = 'unicode'
+
 fakePortal = FakePortal()
 
 class FakeUrlTool(Implicit):

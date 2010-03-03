@@ -129,11 +129,7 @@
             </td>
             <td>
               <input type="text" size="30" maxlength="60"
-<<<<<<< local
-                tal:attributes="name string:${id}_alt;
-=======
                 tal:attributes="name string:${id}_alt:utf8:ustring;
->>>>>>> other
                 value alt" />
             </td>
           </tr>
@@ -147,11 +143,7 @@
           </td>
           <td>
             <input type="text" size="30"
-<<<<<<< local
-              tal:attributes="name string:${id}_subtitle;
-=======
               tal:attributes="name string:${id}_subtitle:utf8:ustring;
->>>>>>> other
               value subtitle" />
           </td>
         </tr>

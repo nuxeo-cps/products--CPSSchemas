@@ -236,8 +236,6 @@ class CPSStringWidget(CPSWidget):
             regexp = self.must_regexp
 
             try:
-                if not isinstance(value, basestring):
-                    raise ValueError
                 if isinstance(value, str):
                     v = unicode(value, 'ascii')
                 v = v.strip()
