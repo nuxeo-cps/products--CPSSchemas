@@ -600,7 +600,7 @@ class CPSPasswordWidget(CPSStringWidget):
                         if not datamodel[self.fields[0]]:
                             err = 'cpsschemas_err_required'
                 else:
-                    # checking pw consistancy
+                    # checking pw consistency
                     len_v = len(v)
                     if not err and self.size_max and len_v > self.size_max:
                         err = 'cpsschemas_err_string_too_long'
@@ -618,9 +618,12 @@ class CPSPasswordWidget(CPSStringWidget):
 
         if err:
             if err == 'cpsschemas_err_string_too_short':
-                err = 'cpsschemas_err_password_size_min'
-            datastructure[widget_id] = ''
-            datastructure.setError(widget_id, err)
+                if not v: # if required, would have produced another error
+                    err = None
+                else:
+                    err = 'cpsschemas_err_password_size_min'
+                    datastructure[widget_id] = ''
+                    datastructure.setError(widget_id, err)
         elif v:
             datamodel = datastructure.getDataModel()
             datamodel[self.fields[0]] = v
