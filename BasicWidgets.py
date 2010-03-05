@@ -616,14 +616,15 @@ class CPSPasswordWidget(CPSStringWidget):
                                                                    v):
                         err = 'cpsschemas_err_password_extra'
 
+        if err == 'cpsschemas_err_string_too_short':
+            if not v: # if required, would have produced another error
+                err = None
+            else:
+                err = 'cpsschemas_err_password_size_min'
+
         if err:
-            if err == 'cpsschemas_err_string_too_short':
-                if not v: # if required, would have produced another error
-                    err = None
-                else:
-                    err = 'cpsschemas_err_password_size_min'
-                    datastructure[widget_id] = ''
-                    datastructure.setError(widget_id, err)
+            datastructure[widget_id] = ''
+            datastructure.setError(widget_id, err)
         elif v:
             datamodel = datastructure.getDataModel()
             datamodel[self.fields[0]] = v
