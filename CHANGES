@@ -3,12 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #2120: optional use of fieldsets with widgets
+-
 Bug fixes
 ~~~~~~~~~
-- #2118: available sizes now filtered on lax inequalities
-- #2104: Byline widget perf bottleneck in anonymous mode
-- #2106: quicker Text Widget render in view mode
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
