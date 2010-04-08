@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2134: TinyMCE abusive URL rewrites
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
