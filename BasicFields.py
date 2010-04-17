@@ -48,9 +48,11 @@ from Products.CPSSchemas.interfaces import IFieldNodeIO
 # UTF-8
 #
 
+# XXX GR: the system's default encoding should have nothing to do here
+# at least use zpublisher's
 default_encoding = sys.getdefaultencoding()
 if default_encoding == 'ascii':
-    default_encoding = 'iso-8859-15'
+    default_encoding = 'utf-8'
 
 def toUTF8(s):
     if not isinstance(s, unicode):
@@ -58,7 +60,7 @@ def toUTF8(s):
     return s.encode('utf-8')
 
 def fromUTF8(s):
-    return unicode(s, 'utf-8').encode(default_encoding)
+    return unicode(s, 'utf-8')
 
 
 class CPSIntField(CPSField):
