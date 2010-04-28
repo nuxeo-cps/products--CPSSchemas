@@ -44,6 +44,8 @@ from zope.interface import implements
 from Products.CPSSchemas.interfaces import IFileField
 from Products.CPSSchemas.interfaces import IFieldNodeIO
 
+from Products.CPSUtil.text import OLD_CPS_ENCODING
+
 #
 # UTF-8
 #
@@ -233,13 +235,12 @@ class CPSStringField(CPSField):
 
     logger = getLogger("CPSSchemas.BasicFields.CPSStringField")
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, unicode):
             return value
         elif isinstance(value, basestring):
             try:
-                unicode(value, 'iso-8859-15')
+                unicode(value, OLD_CPS_ENCODING) # To be removed in CPS 3.5.2
             except UnicodeError:
                 ValidationError('Invalid encoding: %s' % repr(value))
             return value
@@ -295,7 +296,6 @@ class CPSListField(CPSField):
     default_expr_c = Expression(default_expr)
     validation_error_msg = 'Not a list: '
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, list):
             for v in value:
@@ -335,12 +335,13 @@ class CPSStringListField(CPSListField):
     logger = getLogger("CPSSchemas.BasicFields.CPSStringListField")
 
     def verifyType(self, value):
-        """Verify the type of the value"""
-        if isinstance(value, unicode):
+        """Verify the type of the value
+        """
+        if isinstance(value, unicode): # GR: What ???
             return True
         elif isinstance(value, basestring):
             try:
-                unicode(value, 'iso-8859-15')
+                unicode(value, OLD_CPS_ENCODING)
             except UnicodeError:
                 return False
             return True
@@ -394,7 +395,6 @@ class CPSListListField(CPSListField):
 
     validation_error_msg = 'Not a list of list: '
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, list):
             for l in value:
@@ -442,7 +442,6 @@ class CPSDateTimeField(CPSField):
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
 
-    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None

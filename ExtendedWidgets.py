@@ -43,6 +43,7 @@ from reStructuredText import HTML
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSUtil.html import XhtmlSanitizer
+from Products.CPSUtil.text import get_final_encoding
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
@@ -1532,13 +1533,14 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
         entries_html_list = []
         if translated:
             cpsmcat = getToolByName(self, 'translation_service', None)
+            encoding = get_final_encoding(cpsmcat)
             if cpsmcat is None:
                 translated = False
         for subject_name in entries:
             if translated:
                 subject_label = cpsmcat(
                     vocabulary.getMsgid(subject_name, subject_name),
-                    subject_name).encode('ISO-8859-15', 'ignore')
+                            subject_name).encode(encoding, 'ignore')
                 entries_html_list.append(self.getSubjectSearchLink(
                     subject_name, subject_label))
             else:

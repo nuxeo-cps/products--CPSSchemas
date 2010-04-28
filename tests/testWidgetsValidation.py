@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-15 -*-
+# -*- coding: iso-8859-1 -*-
 # (C) Copyright 2003-2007 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
@@ -309,7 +309,7 @@ class TextWidgetValidationTest(WidgetValidationTest):
     """
         #'
         # Lines to protect emacs syntax highlighting from messing.
-        text = unicode(text, 'iso-8859-15')
+        text = unicode(text, 'latin-1')
         ret, err, ds = self._validate({}, text)
         self.assert_(ret, err)
 
