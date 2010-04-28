@@ -100,7 +100,7 @@ def fix_voc_unicode(voc):
     voc.description = decode_needed(voc.description)
 
     for k, v in voc.items():
-        voc.set(k, decode_needed(v))
+        voc.set(k, decode_needed(v), msgid=voc.getMsgid(k))
 
 def upgrade_voctool_unicode(portal):
     vtool = portal.portal_vocabularies
