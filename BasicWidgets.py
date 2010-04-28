@@ -1100,17 +1100,12 @@ class CPSSelectWidget(CPSWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        charset = portal.default_charset
         cpsmcat = portal.translation_service
         if mode == 'view':
             if self.translated:
                 return escape(cpsmcat(vocabulary.getMsgid(value, value)))
             else:
                 ret = vocabulary.get(value, value)
-                # XXX workaround to deal with iso-8859-15 encoded strings
-                if charset == "unicode":
-                    if not isinstance(ret, unicode) and ret is not None:
-                        ret = ret.decode('iso-8859-15')
                 if ret is not None:
                     return escape(ret)
                 else:
@@ -1130,24 +1125,12 @@ class CPSSelectWidget(CPSWidget):
             if self.sorted:
                 vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
-                # XXX workaround to deal with iso-8859-15 encoded strings
-                if charset == "unicode":
-                    if not isinstance(k, unicode) and k is not None:
-                        k = k.decode('iso-8859-15')
-                    if not isinstance(v, unicode) and v is not None:
-                        v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if value == k:
                     kw['selected'] = 'selected'
                     in_selection = True
                 res += renderHtmlTag('option', **kw)
             if value and not in_selection:
-                # XXX workaround to deal with iso-8859-15 encoded strings
-                if charset == "unicode":
-                    if not isinstance(value, unicode) and value is not None:
-                        value = value.decode('iso-8859-15')
-                else:
-                    value = str(value)
                 kw = {'value': value, 'contents': 'invalid: ' + value,
                       'selected': 'selected'}
                 res += renderHtmlTag('option', **kw)
@@ -1225,7 +1208,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
         value = datastructure[self.getWidgetId()]
         vocabulary = self._getVocabulary(datastructure)
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        charset = portal.default_charset
         cpsmcat = portal.translation_service
         if mode == 'view':
             if not value:
@@ -1254,12 +1236,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
             if self.sorted:
                 vocabulary_items.sort(key=lambda obj: obj[1].lower())
             for k, v in vocabulary_items:
-                # XXX workaround to deal with iso-8859-15 encoded strings
-                if charset == "unicode":
-                    if not isinstance(k, unicode) and k is not None:
-                        k = k.decode('iso-8859-15')
-                    if not isinstance(v, unicode) and v is not None:
-                        v = v.decode('iso-8859-15')
                 kw = {'value': k, 'contents': v}
                 if k in value:
                     kw['selected'] = 'selected'

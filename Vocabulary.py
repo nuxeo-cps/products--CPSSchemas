@@ -26,7 +26,6 @@ label. They can be ordered, and may get their data from an external or
 computed source.
 """
 
-from zLOG import LOG, DEBUG
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
@@ -229,19 +228,19 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
 
     _propertiesBaseClass = SimpleItemWithProperties
     _properties = (
-        {'id': 'title', 'type': 'string', 'mode': 'w',
+        {'id': 'title', 'type': 'ustring', 'mode': 'w',
          'label': 'Title'},
         {'id': 'title_msgid', 'type': 'string', 'mode': 'w',
          'label': 'Title msgid'},
-        {'id': 'description', 'type': 'text', 'mode': 'w',
+        {'id': 'description', 'type': 'utext', 'mode': 'w',
          'label':'Description'},
         {'id': 'acl_write_roles', 'type': 'string', 'mode': 'w',
          'label':'ACL: write roles'},
         )
 
-    title = ''
+    title = u''
     title_msgid = ''
-    description = ''
+    description = u''
     acl_write_roles = 'Manager'
 
     acl_write_roles_c = ['Manager']

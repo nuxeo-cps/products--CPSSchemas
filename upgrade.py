@@ -1,5 +1,6 @@
 # (C) Copyright 2006 Nuxeo SAS <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
+# Author: Georges Racinet <georges@racinet.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -22,6 +23,9 @@ import logging
 from Acquisition import aq_base
 from OFS.Image import File
 from OFS.SimpleItem import Item
+
+from Products.CPSUtil.text import OLD_CPS_ENCODING
+from Vocabulary import Vocabulary, CPSVocabulary
 
 def fix_338_340_attached_files(portal):
     """Fix attached files' and images' names
@@ -81,3 +85,31 @@ def _fix_attached_one(id, ob):
         #ob._alt_title = old_title
         pass
     return 1
+
+def fix_voc_unicode(voc):
+    if not isinstance(voc, CPSVocabulary):
+        raise ValueError(
+            "Upgrade routine works on CPSSchemas.Vocabulary.CPSVocabulary instances")
+
+    def decode_needed(s):
+        if isinstance(s, unicode):
+            return s
+        return s.decode(OLD_CPS_ENCODING)
+
+    voc.title = decode_needed(voc.title)
+    voc.description = decode_needed(voc.description)
+
+    for k, v in voc.items():
+        voc.set(k, decode_needed(v))
+
+def upgrade_voctool_unicode(portal):
+    vtool = portal.portal_vocabularies
+    logger = logging.getLogger(
+        'Products.CPSSchemas.upgrade::upgrade_vocs_unicode')
+    for voc in vtool.objectValues():
+        if not isinstance(voc, CPSVocabulary):
+            logger.warn("Not upgradeable : %s, check manually")
+            continue
+        logger.info("Converting vocabulary %s to unicode", voc.getId())
+        fix_voc_unicode(voc)
+    logger.info("Finished to convert vocabularies found in tool.")
