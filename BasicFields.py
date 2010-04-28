@@ -48,15 +48,10 @@ from Products.CPSSchemas.interfaces import IFieldNodeIO
 # UTF-8
 #
 
-# XXX GR: the system's default encoding should have nothing to do here
-# at least use zpublisher's
-default_encoding = sys.getdefaultencoding()
-if default_encoding == 'ascii':
-    default_encoding = 'utf-8'
-
 def toUTF8(s):
     if not isinstance(s, unicode):
-        s = unicode(s, default_encoding)
+        # GR all internal non ASCII strings must be unicode now
+        s = unicode(s)
     return s.encode('utf-8')
 
 def fromUTF8(s):
