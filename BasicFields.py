@@ -336,7 +336,7 @@ class CPSAsciiStringField(CPSField):
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.
         """
-        return context.getNodeValue(node)
+        return str(context.getNodeValue(node))
 
 InitializeClass(CPSAsciiStringField)
 
@@ -497,7 +497,7 @@ class CPSAsciiStringListField(CPSListField):
         for child in node.childNodes:
             if child.nodeName != 'e':
                 continue
-            v = context.getNodeValue(child)
+            v = str(context.getNodeValue(child))
             res.append(v)
         return res
 
