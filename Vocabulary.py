@@ -43,6 +43,8 @@ from Products.CPSSchemas.interfaces import ICPSVocabulary
 
 builtins_list = list
 
+def uni_lower(s):
+    return unicode(s).lower()
 
 class Vocabulary(Persistent, Implicit):
     """Vocabulary
@@ -197,7 +199,8 @@ class Vocabulary(Persistent, Implicit):
         """
         if crit == 'id':
             l = list(self.keys())
-            l.sort(key=str.lower)
+            # can't guarantee that legacy values are str
+            l.sort(key=uni_lower)
             return l
         elif crit == 'label':
             l = [(x[1], x[0]) for x in self.items()]
