@@ -245,9 +245,13 @@ class CPSTextWidget(CPSStringWidget):
             elif rformat == 'html':
                 pass
             elif rformat == 'rst':
+                encs = [self.input_encoding, self.output_encoding]
+                encs = [enc == 'unicode' and get_final_encoding(self)
+                        for enc in encs]
+                in_enc, out_enc = encs
                 value = HTML(value,
-                             output_encoding=self.output_encoding,
-                             input_encoding=self.input_encoding,
+                             output_encoding=out_enc,
+                             input_encoding=in_enc,
                              initial_header_level=2, report_level=0)
             # The pre render format is not a proposed choice in the UI anymore.
             # BBB compatibility code, will be removed in CPS 3.5.0.
