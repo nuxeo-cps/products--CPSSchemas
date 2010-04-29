@@ -25,6 +25,7 @@ from OFS.Image import Image, File
 from DateTime.DateTime import DateTime
 from Products.CPSSchemas import BasicFields
 from Products.CPSSchemas.Field import FieldRegistry
+from Products.CPSSchemas.Field import ValidationError
 
 
 class FakePortal(Implicit):
@@ -106,6 +107,17 @@ class BasicFieldTests(unittest.TestCase):
         self.assertRaises(ValueError, field.validate, 0)
         self.assertRaises(ValueError, field.validate, None)
 
+    def testAsciiStringField(self):
+        field = self.makeOne(BasicFields.CPSAsciiStringField)
+        self.assertEquals(field.getDefault(), '')
+        self.assertEquals(field.validate(u'bimbo'), 'bimbo')
+        self.assertRaises(ValidationError, field.validate, u'\xe9')
+        self.assertRaises(ValidationError, field.validate, '\xe9')
+        # ValidationError subclasses ValueError
+        self.assertRaises(ValueError, field.validate, u'\xe9')
+        self.assertRaises(ValidationError, field.validate, 0)
+        self.assertRaises(ValidationError, field.validate, None)
+
     def testPasswordField(self):
         # XXX So what's specific about password vs string ?
         field = self.makeOne(BasicFields.CPSPasswordField)
@@ -126,6 +138,20 @@ class BasicFieldTests(unittest.TestCase):
         field = self.makeOne(BasicFields.CPSStringListField)
         self.assertEquals(field.getDefault(), [])
         self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
+        self.assertRaises(ValueError, field.validate, None)
+        self.assertRaises(ValueError, field.validate, [1])
+        self.assertRaises(ValueError, field.validate, ('a',))
+
+    def testAsciiStringListField(self):
+        field = self.makeOne(BasicFields.CPSAsciiStringListField)
+        self.assertEquals(field.getDefault(), [])
+        self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
+        self.assertEquals(field.validate(['a', '']), ['a', ''])
+        self.assertTrue(isinstance(field.validate(['a', u''])[1], str))
+        self.assertEquals(field.validate(['a', u'b']), ['a', 'b'])
+        self.assertEquals(field.validate(['a', u'b']), ['a', 'b'])
+        self.assertRaises(ValidationError, field.validate, ['a', u'\xe9'])
+        self.assertRaises(ValidationError, field.validate, ['a', '\xe9'])
         self.assertRaises(ValueError, field.validate, None)
         self.assertRaises(ValueError, field.validate, [1])
         self.assertRaises(ValueError, field.validate, ('a',))
