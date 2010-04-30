@@ -58,6 +58,8 @@ fakePortal = FakePortal()
 class FakeUrlTool(Implicit):
     def getPortalObject(self):
         return fakePortal
+    def __call__(self):
+        return '/fake_portal'
 
 class FakeVocabulariesTool(Implicit):
     def getPortalObject(self):
@@ -989,6 +991,13 @@ function getLayoutMode() {
         rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
         parts = ds.get(CIDPARTS_KEY)
         self.assertTrue(parts is None or cid not in parts)
+
+    def testSubjectWidget(self):
+        from Products.CPSSchemas.ExtendedWidgets import CPSSubjectWidget
+        folder = Folder()
+        fakePortal.default_charset = 'unicode'
+        wid = CPSSubjectWidget('foo').__of__(fakePortal)
+        link = wid.getSubjectSearchLink(u'events', '\xc3\x89v\xc3\xa9nements')
 
 def test_suite():
     return unittest.TestSuite((

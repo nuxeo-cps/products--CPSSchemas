@@ -55,6 +55,8 @@ from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 from Products.CPSSchemas.swfHeaderData import analyseContent
 
+logger = getLogger('Products.CPSSChemas.ExtendedWidgets')
+
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
 class CPSTextWidget(CPSStringWidget):
@@ -1555,6 +1557,7 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
 
     def getSubjectSearchLink(self, subject_name, subject_label):
         """Return an HTML link for the subject name with the given label."""
+        subject_name = str(subject_name) # no shame: voc entries must be str
         return ('<a href="%s">%s</a>'
                 % (self.getSubjectSearchUrl(escape(subject_name)),
                    escape(subject_label)))
