@@ -381,6 +381,12 @@ msgstr "Format de date invalide"
 msgid "cpsschemas_err_bad_date"
 msgstr "Date incorrecte"
 
+msgid "cpsschemas_err_date_must_future"
+msgstr "Devrait &ecirc;tre dans le futur"
+
+msgid "cpsschemas_err_date_must_past"
+msgstr "Devrait &ecirc;tre dans le pass&eacute;"
+
 msgid "cpsschemas_err_file"
 msgstr "Fichier invalide"
 
