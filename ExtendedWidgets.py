@@ -415,7 +415,7 @@ class CPSDateTimeWidget(CPSWidget):
 
             elif now < v:
                 datastructure.setError(widget_id,
-                                       'cpsschemas_err_date_must_future')
+                                       'cpsschemas_err_date_must_past')
                 return False
 
         datastructure[widget_id] = v
