@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2161: future and past conditions for DateTime Widget
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
