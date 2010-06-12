@@ -2162,6 +2162,8 @@ class CPSCompoundWidget(CPSWidget):
         'Search Location Widget': 'widget_searchlocation_render',
         }
 
+    logger = getLogger('CPSSchemas.BasicWidgets.CPSCompoundWidget')
+
     def _getRenderMethod(self):
         """Get the render method."""
         name = self._old_render_methods.get(self.widget_type,
@@ -2180,6 +2182,14 @@ class CPSCompoundWidget(CPSWidget):
         'Search Location Widget': 'widget_searchlocation_prepare_validate',
         }
 
+    def _getSubWidgets(self, with_ids=False):
+        layout = aq_parent(aq_inner(self))
+        wids = self.widget_ids
+        widgets = tuple(layout[wid] for wid in wids)
+
+        if with_ids:
+            return zip(wids, widgets)
+        return widgets
 
     def _getPrepareValidateMethod(self):
         """Get the prepare/validate method."""
@@ -2205,10 +2215,9 @@ class CPSCompoundWidget(CPSWidget):
 
     def prepare(self, datastructure, **kw):
         """Prepare the underlying widgets."""
+
         # Prepare each widget
-        layout = aq_parent(aq_inner(self))
-        for widget_id in self.widget_ids:
-            widget = layout[widget_id]
+        for widget in self._getSubWidgets():
             widget.prepare(datastructure, **kw)
         # Now prepare compound
         prepare = self._getPrepareValidateMethod()
@@ -2225,22 +2234,19 @@ class CPSCompoundWidget(CPSWidget):
         # Now validate each widget
         layout = aq_parent(aq_inner(self))
         ret = True
-        for widget_id in self.widget_ids:
-            widget = layout[widget_id]
+        for widget in self._getSubWidgets():
             ret = widget.validate(datastructure, **kw) and ret
         # Post-validate
         return ret and validate('validate', datastructure)
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        layout = aq_parent(aq_inner(self))
         widget_infos = kw['widget_infos']
         cells = []
-        for widget_id in self.widget_ids:
+        for widget_id, widget in self._getSubWidgets(with_ids=True):
             cell = {}
             # widget, widget_mode, css_class
             cell.update(widget_infos[widget_id])
-            widget = layout[widget_id]
             widget_mode = cell['widget_mode']
             if widget_mode == 'hidden':
                 continue
@@ -2250,6 +2256,7 @@ class CPSCompoundWidget(CPSWidget):
             if not widget.hidden_empty or rendered:
                 # do not add widgets to be hidden when empty
                 cells.append(cell)
+
         render = self._getRenderMethod()
         return render(mode=mode, datastructure=datastructure,
                       cells=cells, **kw)

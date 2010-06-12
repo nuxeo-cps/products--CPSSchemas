@@ -90,13 +90,22 @@ class FakeTranslationService:
         return res
 
 class FakeWidget(SimpleItem):
+
     hidden_empty = False
     def __init__(self, id, field_ids):
         self.id = id
         self.field_ids = field_ids
+
     def render(self, widget_mode, ds, **kw):
         return 'FakeWidget %s mode=%s val=%s' % (self.id, widget_mode,
                                                  ds[self.field_ids[0]])
+    def prepare(self, ds, **kw):
+        ds[self.id] = ds.getDataModel()[self.field_ids[0]]
+
+    def validate(self, ds, **kw):
+        ds.getDataModel()[self.field_ids[0]] = ds[self.id]
+        return True # TODO provide return of False
+
 
 class FakeLayout(Folder):
     pass
@@ -713,6 +722,20 @@ function getLayoutMode() {
         rendered = widget.render('view', ds, widget_infos=widget_infos)
         self.assertEquals(rendered,
                           'mode view|FakeWidget w1 mode=view val=Foo')
+
+        # Now test prepare
+        dm = FakeDataModel()
+        ds = FakeDataStructure(dm)
+        dm['f1'] = 'Spam'
+        dm['f2'] = 'Eggs'
+        widget.prepare(ds)
+        self.assertEquals(ds, dict(w1='Spam', w2='Eggs'))
+
+        # Now test validate
+        ds['w1'] = 'Foo'
+        ds['w2'] = 'Bar'
+        widget.validate(ds)
+        self.assertEquals(dm, dict(f1='Foo', f2='Bar'))
 
     def test_CPSCompoundWidget_old_LinkWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
