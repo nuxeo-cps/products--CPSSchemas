@@ -301,6 +301,10 @@ class CPSDateTimeWidget(CPSWidget):
          'label': 'default hour for time'},
         {'id': 'time_minutes_default', 'type': 'string', 'mode': 'w',
          'label': 'default minutes for time'},
+        {'id': 'must_future', 'type': 'boolean', 'mode': 'w',
+         'label': 'Must value be in the (lax) future if provided ?'},
+        {'id': 'must_past', 'type': 'boolean', 'mode': 'w',
+         'label': 'Must value be in the (lax) past if provided ?'},
         )
     # When will CPS default to the more sensible ISO 8601 date format?
     #view_format = 'iso8601_medium_easy'
@@ -308,6 +312,8 @@ class CPSDateTimeWidget(CPSWidget):
     time_setting = 1
     time_hour_default = '12'
     time_minutes_default = '00'
+    must_past = False
+    must_future = False
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -417,10 +423,23 @@ class CPSDateTimeWidget(CPSWidget):
                 DateTime.SyntaxError, DateTime.DateError):
             datastructure.setError(widget_id, 'cpsschemas_err_date')
             return 0
-        else:
-            datastructure[widget_id] = v
-            datamodel[field_id] = v
-            return 1
+
+        if self.must_future or self.must_past: # avoid one more costly DateTime
+            now = DateTime()
+            if self.must_future:
+                if now > v:
+                    datastructure.setError(widget_id,
+                                           'cpsschemas_err_date_must_future')
+                    return False
+
+            elif now < v:
+                datastructure.setError(widget_id,
+                                       'cpsschemas_err_date_must_past')
+                return False
+
+        datastructure[widget_id] = v
+        datamodel[field_id] = v
+        return True
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""

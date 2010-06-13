@@ -70,6 +70,12 @@ msgstr ""
 msgid "cpsschemas_err_bad_date"
 msgstr ""
 
+msgid "cpsschemas_err_date_must_future"
+msgstr ""
+
+msgid "cpsschemas_err_date_must_past"
+msgstr ""
+
 msgid "cpsschemas_err_file"
 msgstr ""
 

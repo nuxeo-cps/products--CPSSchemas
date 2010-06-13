@@ -7,6 +7,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 - #2134: TinyMCE abusive URL rewrites
+- #2161: future and past conditions for DateTime Widget
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
