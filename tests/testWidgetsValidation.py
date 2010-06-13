@@ -101,7 +101,9 @@ class WidgetValidationTest(unittest.TestCase):
     widget_type = None
     default_value = None
     fields = None
-    data = {}
+
+    def setUp(self):
+        self.data = {}
 
     def tearDown(self):
         self.reset()
