@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #2162: DateTime Range Widget
 Bug fixes
 ~~~~~~~~~
 - #2134: TinyMCE abusive URL rewrites

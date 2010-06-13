@@ -386,6 +386,9 @@ msgstr "Invalid date"
 msgid "cpsschemas_err_bad_date"
 msgstr "Incorrect date"
 
+msgid "cpsschemas_err_datetime_range_sgs"
+msgstr "The end must be after the beginning"
+
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"
 

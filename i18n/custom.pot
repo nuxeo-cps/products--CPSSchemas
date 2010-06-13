@@ -64,6 +64,9 @@ msgstr ""
 msgid "cpsschemas_err_date"
 msgstr ""
 
+msgid "cpsschemas_err_datetime_range_sgs"
+msgstr ""
+
 msgid "cpsschemas_err_bad_date"
 msgstr ""
 
