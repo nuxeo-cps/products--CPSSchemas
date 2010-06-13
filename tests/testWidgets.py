@@ -781,6 +781,11 @@ function getLayoutMode() {
             subwidget.prepare(ds)
             dm[fid] = prev
 
+        # validation of sub-widget fails
+        ds_put_for(bwidget, DateTime('2010/01/01'))
+        ds['w_begin_date'] = 'garbage'
+        self.assertFalse(widget.validate(ds))
+
         # All empty, range widget not required
         ds_put_for(bwidget, None)
         ds_put_for(ewidget, None)

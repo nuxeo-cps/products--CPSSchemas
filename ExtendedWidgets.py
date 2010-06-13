@@ -1511,7 +1511,8 @@ class CPSDateTimeRangeWidget(CPSProgrammerCompoundWidget):
 
         subs = self._getSubWidgets()
         for widget in subs:
-            widget.validate(ds, **kw)
+            if not widget.validate(ds, **kw):
+                return False
 
         wid = self.getWidgetId()
         begin, end = [dm[widget.fields[0]] for widget in subs]
