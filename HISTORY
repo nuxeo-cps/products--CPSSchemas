@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSSchemas 1.10.0
+===========================================================
+First release built by: gracinet at: 2010-06-30T02:35:20
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2162: DateTime Range Widget
+Bug fixes
+~~~~~~~~~
+- #2134: TinyMCE abusive URL rewrites
+- #2161: future and past conditions for DateTime Widget
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.9.0
 ===========================================================
 First release built by: gracinet at: 2010-03-14T16:30:56
