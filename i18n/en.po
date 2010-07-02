@@ -383,8 +383,17 @@ msgstr "Integer out of range"
 msgid "cpsschemas_err_date"
 msgstr "Invalid date"
 
+msgid "cpsschemas_err_date_must_future"
+msgstr "Should be in future"
+
+msgid "cpsschemas_err_date_must_past"
+msgstr "Should be in past;"
+
 msgid "cpsschemas_err_bad_date"
 msgstr "Incorrect date"
+
+msgid "cpsschemas_err_datetime_range_sgs"
+msgstr "The end must be after the beginning"
 
 msgid "cpsschemas_err_file"
 msgstr "Invalid file"

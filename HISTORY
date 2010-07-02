@@ -1,4 +1,41 @@
 ===========================================================
+Package: CPSSchemas 1.10.0
+===========================================================
+First release built by: gracinet at: 2010-06-30T02:35:20
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2162: DateTime Range Widget
+Bug fixes
+~~~~~~~~~
+- #2134: TinyMCE abusive URL rewrites
+- #2161: future and past conditions for DateTime Widget
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSSchemas 1.9.0
+===========================================================
+First release built by: gracinet at: 2010-03-14T16:30:56
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2120: optional use of fieldsets with widgets
+Bug fixes
+~~~~~~~~~
+- #2118: available sizes now filtered on lax inequalities
+- #2104: Byline widget perf bottleneck in anonymous mode
+- #2106: quicker Text Widget render in view mode
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.8.0
 ===========================================================
 First release built by: gracinet at: 2009-12-15T12:28:08

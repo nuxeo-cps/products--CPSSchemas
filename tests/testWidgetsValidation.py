@@ -23,6 +23,7 @@
 import os
 import unittest
 
+from DateTime import DateTime
 from Acquisition import Implicit
 from OFS.Folder import Folder
 
@@ -100,7 +101,9 @@ class WidgetValidationTest(unittest.TestCase):
     widget_type = None
     default_value = None
     fields = None
-    data = {}
+
+    def setUp(self):
+        self.data = {}
 
     def tearDown(self):
         self.reset()
@@ -743,20 +746,29 @@ class DateTimeWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSDateTimeWidget
     default_value = ''
 
+
+    def _makeWidget(self, properties=None):
+        wfid = 'ff'
+        if properties is None:
+            properties = {}
+        properties.update({'fields': (wfid,)})
+        return self.widget_type(wfid, **properties).__of__(fakePortal)
+
     # base class validation method is not compatible with this widget
     def _validate(self, properties, value):
-        id = 'ff'
+        widget = self._makeWidget(properties=properties.copy())
+
+        wid = widget.getWidgetId()
         data = {
-            id + '_date': value,
+            wid + '_date': value,
             # dummy values for hour and minute, they're not tested here
-            id + '_hour': '3',
-            id + '_minute': '38',
+            # GR 5 years after: yeah of course not ever since !
+            wid + '_hour': '3',
+            wid + '_minute': '38',
             }
         ds = DataStructure(data, datamodel=data)
-        properties.update({'fields': (id,)})
-        widget = self.widget_type(id, **properties).__of__(fakePortal)
         ret = widget.validate(ds)
-        err = ds.getError(id)
+        err = ds.getError(wid)
         return ret, err, ds
 
     def test_datetime_ok_1(self):
@@ -772,6 +784,48 @@ class DateTimeWidgetValidationTest(WidgetValidationTest):
         ret, err, ds = self._validate({}, '26/2705k')
         self.assertEquals(ret, 0)
         self.assertEquals(err, 'cpsschemas_err_date')
+
+    def test_future(self):
+        now = DateTime()
+        widget = self._makeWidget(properties=dict(must_future=True))
+        fid = widget.fields[0]
+
+        dm = FakeDataModel()
+        ds = DataStructure(datamodel=dm)
+
+        dm[fid] = now + 1
+        widget.prepare(ds)
+        dm[fid] = None
+        self.assertTrue(widget.validate(ds))
+        # this one would be dubious because of roundings
+        #self.assertEquals(dm[fid], now+1) 
+
+        dm[fid] = now - 1
+        widget.prepare(ds)
+        dm[fid] = None
+        self.assertFalse(widget.validate(ds))
+
+
+    def test_past(self):
+        now = DateTime()
+        widget = self._makeWidget(properties=dict(must_past=True))
+        fid = widget.fields[0]
+
+        dm = FakeDataModel()
+        ds = DataStructure(datamodel=dm)
+
+        dm[fid] = now - 1
+        widget.prepare(ds)
+        dm[fid] = None
+        self.assertTrue(widget.validate(ds))
+        # this one would be dubious because of roundings
+        #self.assertEquals(dm[fid], now-1) 
+
+        dm[fid] = now + 1
+        widget.prepare(ds)
+        dm[fid] = None
+        self.assertFalse(widget.validate(ds))
+
 
 class LinesWidgetValidationTest(WidgetValidationTest):
     widget_type = CPSLinesWidget

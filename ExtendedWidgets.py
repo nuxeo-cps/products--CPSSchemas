@@ -307,6 +307,10 @@ class CPSDateTimeWidget(CPSWidget):
          'label': 'default hour for time'},
         {'id': 'time_minutes_default', 'type': 'string', 'mode': 'w',
          'label': 'default minutes for time'},
+        {'id': 'must_future', 'type': 'boolean', 'mode': 'w',
+         'label': 'Must value be in the (lax) future if provided ?'},
+        {'id': 'must_past', 'type': 'boolean', 'mode': 'w',
+         'label': 'Must value be in the (lax) past if provided ?'},
         )
     # When will CPS default to the more sensible ISO 8601 date format?
     #view_format = 'iso8601_medium_easy'
@@ -314,6 +318,8 @@ class CPSDateTimeWidget(CPSWidget):
     time_setting = 1
     time_hour_default = '12'
     time_minutes_default = '00'
+    must_past = False
+    must_future = False
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -423,10 +429,23 @@ class CPSDateTimeWidget(CPSWidget):
                 DateTime.SyntaxError, DateTime.DateError):
             datastructure.setError(widget_id, 'cpsschemas_err_date')
             return 0
-        else:
-            datastructure[widget_id] = v
-            datamodel[field_id] = v
-            return 1
+
+        if self.must_future or self.must_past: # avoid one more costly DateTime
+            now = DateTime()
+            if self.must_future:
+                if now > v:
+                    datastructure.setError(widget_id,
+                                           'cpsschemas_err_date_must_future')
+                    return False
+
+            elif now < v:
+                datastructure.setError(widget_id,
+                                       'cpsschemas_err_date_must_past')
+                return False
+
+        datastructure[widget_id] = v
+        datamodel[field_id] = v
+        return True
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
@@ -1460,6 +1479,75 @@ class CPSRangeListWidget(CPSWidget):
 InitializeClass(CPSRangeListWidget)
 
 widgetRegistry.register(CPSRangeListWidget)
+
+##################################################
+
+class CPSDateTimeRangeWidget(CPSProgrammerCompoundWidget):
+    """Date Time Range widget.
+
+    A special compound widget that provides validation of the range and
+    control over validation of sub-widgets.
+
+    """
+    meta_type = 'DateTime Range Widget'
+
+    _properties = CPSProgrammerCompoundWidget._properties + (
+        dict(id='render_method', type='string', mode='w',
+             label='Render Method'),
+        # GR TODO: move skip_validate_if_expr to CPSWidget
+        # (no time to check on widget classes that rely on ordering of
+        # CPSWidget props to define theirs right now)
+        dict(id='skip_validate_if_expr', type='string', mode='w',
+             label="Skip validation if expression"))
+
+    _properties_post_process_tales = (
+        CPSProgrammerCompoundWidget._properties_post_process_tales + (
+        ('skip_validate_if_expr', 'skip_validate_if_expr_c'),)
+        )
+
+    render_method = 'widget_compound_default_render'
+    skip_validate_if_expr = ''
+    skip_validate_if_expr_c = None
+
+    def prepare(self, ds, **kw):
+        """Prepare datastructure from datamodel."""
+        # Nothing to do : preparation of all widgets in the layout is automatic.
+        pass
+
+    def validate(self, ds, **kw):
+        dm = ds.getDataModel()
+        skip_expr = self.skip_validate_if_expr_c
+        if skip_expr is not None:
+            econtext = self._createExpressionContext(dm, kw.get('layout_mode'))
+            if skip_expr(econtext):
+                return True
+
+        subs = self._getSubWidgets()
+        for widget in subs:
+            if not widget.validate(ds, **kw):
+                return False
+
+        wid = self.getWidgetId()
+        begin, end = [dm[widget.fields[0]] for widget in subs]
+        if self.is_required:
+            if begin is None and end is None:
+                ds.setError(wid, 'cpsschemas_err_required')
+                return False
+
+        # None is earlier than all actual datetimes
+        # but None for end should mean unbound future
+        if begin > end and end is not None:
+            ds.setError(wid, 'cpsschemas_err_datetime_range_sgs')
+            return False
+
+        return True
+
+    # render method of CPSCompoundWidget is fine
+    # and controlled by a property on this widget
+
+InitializeClass(CPSDateTimeRangeWidget)
+
+widgetRegistry.register(CPSDateTimeRangeWidget)
 
 ##################################################
 

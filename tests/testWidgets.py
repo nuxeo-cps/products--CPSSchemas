@@ -21,6 +21,7 @@
 # $Id$
 
 import unittest
+from DateTime.DateTime import DateTime
 from ZODB.tests.warnhook import WarningsHook
 from Acquisition import Implicit
 from cStringIO import StringIO
@@ -93,13 +94,22 @@ class FakeTranslationService:
         return res
 
 class FakeWidget(SimpleItem):
+
     hidden_empty = False
     def __init__(self, id, field_ids):
         self.id = id
         self.field_ids = field_ids
+
     def render(self, widget_mode, ds, **kw):
         return 'FakeWidget %s mode=%s val=%s' % (self.id, widget_mode,
                                                  ds[self.field_ids[0]])
+    def prepare(self, ds, **kw):
+        ds[self.id] = ds.getDataModel()[self.field_ids[0]]
+
+    def validate(self, ds, **kw):
+        ds.getDataModel()[self.field_ids[0]] = ds[self.id]
+        return True # TODO provide return of False
+
 
 class FakeLayout(Folder):
     pass
@@ -133,6 +143,7 @@ class FakeDataModel(dict):
     _adapters = None
     proxy = None
     context = None
+    _acl_cache_user = None
     def __init__(self, dm=None):
         if dm is not None:
             self.update(dm)
@@ -716,6 +727,136 @@ function getLayoutMode() {
         rendered = widget.render('view', ds, widget_infos=widget_infos)
         self.assertEquals(rendered,
                           'mode view|FakeWidget w1 mode=view val=Foo')
+
+        # Now test prepare
+        dm = FakeDataModel()
+        ds = FakeDataStructure(dm)
+        dm['f1'] = 'Spam'
+        dm['f2'] = 'Eggs'
+        widget.prepare(ds)
+        self.assertEquals(ds, dict(w1='Spam', w2='Eggs'))
+
+        # Now test validate
+        ds['w1'] = 'Foo'
+        ds['w2'] = 'Bar'
+        widget.validate(ds)
+        self.assertEquals(dm, dict(f1='Foo', f2='Bar'))
+
+    def test_CPSDateTimeRangeWidget_validation(self):
+        from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
+        from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeRangeWidget
+
+        widget = CPSDateTimeRangeWidget('foo')
+        widget.widget_ids = ['w_begin', 'w_end']
+        widget.field_ids = [] # some widgets are badly configured
+
+        layout = FakeLayout('layout')
+        layout = layout.__of__(fakePortal)
+        widget = widget.__of__(layout)
+
+        def make_sub(wid, fid):
+            w = CPSDateTimeWidget(wid)
+            w.fields = (fid,)
+            layout._setObject(wid, w)
+            return layout._getOb(wid)
+
+        bwidget = make_sub('w_begin', 'f_begin')
+        ewidget = make_sub('w_end', 'f_end')
+
+        dm = FakeDataModel()
+        ds = FakeDataStructure(dm)
+
+        def prepare_subs():
+            "This is also the simplest way to put something in data structure"
+            bwidget.prepare(ds)
+            ewidget.prepare(ds)
+
+        def ds_put_for(subwidget, dt):
+            """Put dt in datastructure for widget by using preparation.
+
+            dm value is restored
+            """
+            if dt is None:
+                ds[subwidget.getWidgetId()] = ''
+            fid = subwidget.fields[0]
+            prev = dm.get(fid)
+            dm[fid] = dt
+            subwidget.prepare(ds)
+            dm[fid] = prev
+
+        # validation of sub-widget fails
+        ds_put_for(bwidget, DateTime('2010/01/01'))
+        ds['w_begin_date'] = 'garbage'
+        self.assertFalse(widget.validate(ds))
+
+        # All empty, range widget not required
+        ds_put_for(bwidget, None)
+        ds_put_for(ewidget, None)
+        self.assertTrue(widget.validate(ds))
+
+        # now range widget is required
+        widget.is_required = True
+        self.assertFalse(widget.validate(ds))
+
+        # still required, providing just the end
+        ds_put_for(bwidget, None)
+        dt = DateTime('2010/01/01')
+        ds_put_for(ewidget, dt)
+        self.assertTrue(dm['f_end'] is None) # to be sure of test itself
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm['f_end'], dt)
+
+        # still required, providing just the beginning
+        ds_put_for(ewidget, None)
+        dt = DateTime('2010/01/01')
+        ds_put_for(bwidget, dt)
+        self.assertTrue(dm['f_begin'] is None) # to be sure of test itself
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm['f_begin'], dt)
+
+        # checking the range with two values
+        begin = DateTime('2010/01/01')
+        end = DateTime('2010/01/02')
+        ds_put_for(bwidget, begin)
+        ds_put_for(ewidget, end)
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm['f_begin'], begin)
+        self.assertEquals(dm['f_end'], end)
+
+        # the other way round fails, but no need to test that
+        # values are unchanged in dm : datamodel are meant to be transient,
+        # and ds validation failure should be enough so that downstream
+        # doesn't commit the datamodel
+        ds_put_for(bwidget, end)
+        ds_put_for(ewidget, begin)
+        self.assertFalse(widget.validate(ds))
+
+        # Testing the skip expression. First evaluates to false
+        widget.manage_changeProperties(
+            is_required=True,
+            skip_validate_if_expr="python: False")
+        ds_put_for(bwidget, None)
+        ds_put_for(ewidget, None)
+        self.assertFalse(widget.validate(ds))
+
+        # fresh objects to be sure dm isn't touched
+        dm = FakeDataModel()
+        ds = FakeDataStructure(dm)
+
+        # now evaluates to True and validation should have written to dm
+        widget.manage_changeProperties(skip_validate_if_expr="python: True")
+        ds_put_for(bwidget, begin)
+        ds_put_for(ewidget, end)
+        del dm['f_begin']         # avoid side-effects
+        del dm['f_end']
+        self.assertEquals(dm, {})
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm, {})
+
+        # getting back to normal
+        widget.manage_changeProperties(skip_validate_if_expr="")
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm, dict(f_begin=begin, f_end=end))
 
     def test_CPSCompoundWidget_old_LinkWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget

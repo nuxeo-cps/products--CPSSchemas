@@ -203,7 +203,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
         """
         wftool = getToolByName(self, 'portal_workflow')
         portal = getToolByName(self, 'portal_url').getPortalObject()
-        proxy = datamodel._proxy
+        proxy = datamodel.getProxy()
         if proxy is not None:
             review_state = wftool.getInfoFor(proxy, 'review_state', None)
         else:
@@ -213,7 +213,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             'datamodel': datamodel,
             'user': datamodel._acl_cache_user,
             'nothing': None,
-            'context': datamodel._context,
+            'context': datamodel.getContext(),
             'portal': portal,
             'modules': SecureModuleImporter,
             'proxy': proxy,
