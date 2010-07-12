@@ -108,7 +108,7 @@ def upgrade_voctool_unicode(portal):
         'Products.CPSSchemas.upgrade::upgrade_vocs_unicode')
     for voc in vtool.objectValues():
         if not isinstance(voc, CPSVocabulary):
-            logger.warn("Not upgradeable : %s, check manually")
+            logger.warn("Not upgradeable : %s, check manually", voc)
             continue
         logger.info("Converting vocabulary %s to unicode", voc.getId())
         fix_voc_unicode(voc)
