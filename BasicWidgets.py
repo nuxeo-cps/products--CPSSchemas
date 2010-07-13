@@ -52,6 +52,7 @@ from Products.PythonScripts.standard import structured_text, newline_to_br
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSUtil.id import generateFileName
+from Products.CPSUtil.text import uni_lower
 from Products.CPSUtil.file import PersistableFileUpload
 from Products.CPSUtil.file import makeFileUploadFromOFSFile
 
@@ -1262,7 +1263,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                 value = vocabulary.get(entry, entry)
             values.append(value)
             if self.sorted:
-                values.sort(key=str.lower)
+                values.sort(key=uni_lower)
         return escape(', '.join(values))
 
 InitializeClass(CPSMultiSelectWidget)
