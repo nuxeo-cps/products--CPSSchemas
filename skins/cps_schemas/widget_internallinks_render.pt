@@ -62,7 +62,7 @@
         for (var i=0; i < links.length; i++) {
           var link = links[i];
           if(link.length) {
-            params += 'results:list=' + link + '&';
+            params += 'results:utf8:ulist=' + link + '&';
           }
         }
 

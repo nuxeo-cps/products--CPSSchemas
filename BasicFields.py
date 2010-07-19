@@ -44,21 +44,20 @@ from zope.interface import implements
 from Products.CPSSchemas.interfaces import IFileField
 from Products.CPSSchemas.interfaces import IFieldNodeIO
 
+from Products.CPSUtil.text import OLD_CPS_ENCODING
+
 #
 # UTF-8
 #
 
-default_encoding = sys.getdefaultencoding()
-if default_encoding == 'ascii':
-    default_encoding = 'iso-8859-15'
-
 def toUTF8(s):
     if not isinstance(s, unicode):
-        s = unicode(s, default_encoding)
+        # GR all internal non ASCII strings must be unicode now
+        s = unicode(s)
     return s.encode('utf-8')
 
 def fromUTF8(s):
-    return unicode(s, 'utf-8').encode(default_encoding)
+    return unicode(s, 'utf-8')
 
 
 class CPSIntField(CPSField):
@@ -236,9 +235,14 @@ class CPSStringField(CPSField):
 
     logger = getLogger("CPSSchemas.BasicFields.CPSStringField")
 
-    # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, str):
+        if isinstance(value, unicode):
+            return value
+        elif isinstance(value, basestring):
+            try:
+                unicode(value, OLD_CPS_ENCODING) # To be removed in CPS 3.5.2
+            except UnicodeError:
+                ValidationError('Invalid encoding: %s' % repr(value))
             return value
         raise ValidationError('Not a string: %s' % repr(value))
 
@@ -267,15 +271,74 @@ class CPSStringField(CPSField):
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
         """
-        context.setNodeValue(node, str(value).decode(default_encoding))
+        context.setNodeValue(node, value)
 
     def getNodeValue(self, node, context):
         """See IFieldNodeIO.
         """
-        text = context.getNodeValue(node)
-        return text.encode(default_encoding)
+        return context.getNodeValue(node)
 
 InitializeClass(CPSStringField)
+
+
+class CPSAsciiStringField(CPSField):
+    """Ascii String field.
+
+
+    The value is str, encoded with the 'ascii' codec, meaning that
+    going from and to unicode without specifying any encoding is error-free.
+    """
+    meta_type = "CPS Ascii String Field"
+
+    implements(IFieldNodeIO)
+
+    default_expr = 'string:'
+    default_expr_c = Expression(default_expr)
+
+    logger = getLogger("CPSSchemas.BasicFields.CPSAsciiStringField")
+
+    @classmethod
+    def validate(self, value):
+        if isinstance(value, str):
+            try:
+                u = unicode(value, 'ascii')
+                return value
+            except UnicodeError:
+                raise ValidationError('Not an ASCII string: %r' % value)
+        elif isinstance(value, unicode):
+            try:
+                return str(value)
+            except UnicodeError:
+                raise ValidationError('Not an ASCII string: %r' % value)
+        else:
+            raise ValidationError('Not a string at all: %r' % value)
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        if not value:
+            return []
+        return [value]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        if not values:
+            return ''
+        if len(values) != 1:
+            self.logger.warning('convertFromLDAP: Multi-valued field, '
+                                'cutting: %r', values)
+        return values[0]
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        context.setNodeValue(node, value)
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        return str(context.getNodeValue(node))
+
+InitializeClass(CPSAsciiStringField)
 
 
 class CPSPasswordField(CPSStringField):
@@ -293,7 +356,6 @@ class CPSListField(CPSField):
     default_expr_c = Expression(default_expr)
     validation_error_msg = 'Not a list: '
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, list):
             for v in value:
@@ -333,8 +395,17 @@ class CPSStringListField(CPSListField):
     logger = getLogger("CPSSchemas.BasicFields.CPSStringListField")
 
     def verifyType(self, value):
-        """Verify the type of the value"""
-        return isinstance(value, str)
+        """Verify the type of *one value( of the list
+        """
+        if isinstance(value, unicode):
+            return True
+        elif isinstance(value, basestring):
+            try:
+                unicode(value, OLD_CPS_ENCODING)
+            except UnicodeError:
+                return False
+            return True
+        return False
 
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
@@ -358,7 +429,6 @@ class CPSStringListField(CPSListField):
         """
         for v in value:
             child = context.createStrictTextElement('e')
-            v = v.decode(default_encoding)
             context.setNodeValue(child, v)
             node.appendChild(child)
 
@@ -370,11 +440,68 @@ class CPSStringListField(CPSListField):
             if child.nodeName != 'e':
                 continue
             v = context.getNodeValue(child)
-            v = v.encode(default_encoding)
             res.append(v)
         return res
 
 InitializeClass(CPSStringListField)
+
+class CPSAsciiStringListField(CPSListField):
+    """Ascii String List field."""
+    meta_type = "CPS Ascii String List Field"
+
+    implements(IFieldNodeIO)
+
+    validation_error_msg = 'Not an ASCII string list: '
+
+    logger = getLogger("CPSSchemas.BasicFields.CPSAsciiStringListField")
+
+    def verifyType(self, value):
+        """Verify the type of one list value
+        """
+        CPSAsciiStringField.validate(value)
+        return True
+
+    def validate(self, values):
+        CPSListField.validate(self, values)
+        return [str(v) for v in values] # TODO refactor a bit verifyType etc.
+
+    def convertToLDAP(self, value):
+        """Convert a value to LDAP attribute values."""
+        # Empty values are not allowed in LDAP
+        return [v for v in value if v]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        res = []
+        for v in values:
+            try:
+                u = unicode(v, 'ascii')
+            except UnicodeError:
+                self.logger.warning('convertFromLDAP: %r is not ASCII', v)
+                pass
+            res.append(v) # keep str
+        return res
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        for v in value:
+            child = context.createStrictTextElement('e')
+            context.setNodeValue(child, v)
+            node.appendChild(child)
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        res = []
+        for child in node.childNodes:
+            if child.nodeName != 'e':
+                continue
+            v = str(context.getNodeValue(child))
+            res.append(v)
+        return res
+
+InitializeClass(CPSAsciiStringListField)
 
 class CPSListListField(CPSListField):
     """List of List field.
@@ -386,7 +513,6 @@ class CPSListListField(CPSListField):
 
     validation_error_msg = 'Not a list of list: '
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, list):
             for l in value:
@@ -434,7 +560,6 @@ class CPSDateTimeField(CPSField):
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
 
-    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
@@ -916,10 +1041,12 @@ InitializeClass(CPSCoupleField)
 
 FieldRegistry.register(CPSBooleanField)
 FieldRegistry.register(CPSStringField)
+FieldRegistry.register(CPSAsciiStringField)
 FieldRegistry.register(CPSPasswordField)
 #FieldRegistry.register(CPSListListField) # Not registered on purpose
 FieldRegistry.register(CPSIntListListField)
 FieldRegistry.register(CPSStringListField)
+FieldRegistry.register(CPSAsciiStringListField)
 FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSLongField) # deprecated
 FieldRegistry.register(CPSFloatField)

@@ -14,4 +14,12 @@
       handler=".upgrade.fix_338_340_attached_files"
       />
 
+  <!-- CPS 3.5.1 upgrades -->
+  <cps:upgradeStep
+      title="Upgrade global vocabularies to unicode"
+      source="3.5.0" destination="3.5.1"
+      handler=".upgrade.upgrade_voctool_unicode"
+      />
+
+
 </configure>

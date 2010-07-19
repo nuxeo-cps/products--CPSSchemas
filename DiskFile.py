@@ -94,10 +94,16 @@ class DiskFile(File, VTM):
         return newid
 
 
+    #
+    # Transaction support
+    #
     def _finish(self):
         """Called after ZODB write.
         This is the VTM transaction support.
         """
+
+        # This is called after ZODB write
+
         if not self._v_tmp:
             return
         tmp_path = self.getFullFilename(self._v_tmp_filename)
@@ -123,6 +129,7 @@ class DiskFile(File, VTM):
         self._v_tmp = self._v_new_file = False
         path = self.getFullFilename(self._v_tmp_filename)
         logger.debug("Aborting creation or modification for path %s" % path)
+
         try:
             os.remove(path)
         except OSError:
@@ -154,6 +161,7 @@ class DiskFile(File, VTM):
             oldpath = self.getFullFilename(self._v_tmp_filename)
             try:
                 os.remove(oldpath)
+
             except OSError:
                 logger.error("Error attempting to remove the previous "
                              "temporary file %s", oldpath)

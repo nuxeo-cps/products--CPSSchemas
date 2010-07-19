@@ -52,12 +52,15 @@ TEST_IMAGE = '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
 '\x10\x0f\x1a\xadA\xb9\xc2\xaa\xf96\x00\x00\x00\x00IEND\xaeB`\x82'
 
 class FakePortal(Implicit):
-    pass
+    default_charset = 'unicode'
+
 fakePortal = FakePortal()
 
 class FakeUrlTool(Implicit):
     def getPortalObject(self):
         return fakePortal
+    def __call__(self):
+        return '/fake_portal'
 
 class FakeVocabulariesTool(Implicit):
     def getPortalObject(self):
@@ -188,7 +191,7 @@ class TestWidgets(unittest.TestCase):
         from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 
         res = renderHtmlTag('img', title='à doublé " quote')
-        self.assertEquals(res, "<img title='\xe0 doubl\xe9 \" quote' />")
+        self.assertEquals(res, '<img title="\xe0 doubl\xe9 &quot; quote" />')
 
         res = renderHtmlTag('img', title="a single ' quote")
         self.assertEquals(res, '<img title="a single \' quote" />')
@@ -500,10 +503,10 @@ class TestWidgets(unittest.TestCase):
         self.assertEquals(widget.render('view', ds), 'Choose one')
         res = widget.render('edit', ds)
         # regression test
-        self.assertEquals(res, '<select name="widget__foo" id="widget__foo"><option selected="selected" value="">Choose one</option><option value="a">ZZZ</option><option value="c">XXX</option><option value="b">YYY</option></select>')
-
+        self.assertEquals(res, '<select name="widget__foo:utf8:ustring" id="widget__foo"><option selected="selected" value="">Choose one</option><option value="a">ZZZ</option><option value="c">XXX</option><option value="b">YYY</option></select>')
         widget.translated = True
-        self.assertEquals(widget.render('view', ds), 'S\xe9lectionnez')
+        self.assertEquals(widget.render('view', ds), unicode('S\xe9lectionnez',
+                                                             'latin-1'))
 
     def testMultiSelectWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget
@@ -523,7 +526,7 @@ class TestWidgets(unittest.TestCase):
         res = widget.render('view', ds)
         self.assertEquals(res, 'ZZZ, YYY, XXX')
         res = widget.render('edit', ds)
-        expected = '<input type="hidden" name="widget__foo:tokens:default" value="" /><select multiple="multiple" name="widget__foo:list" id="widget__foo"><option selected="selected" value="a">ZZZ</option><option selected="selected" value="c">XXX</option><option selected="selected" value="b">YYY</option></select>'
+        expected = '<input type="hidden" name="widget__foo:utf8:utokens:default" value="" /><select multiple="multiple" name="widget__foo:utf8:ulist" id="widget__foo"><option selected="selected" value="a">ZZZ</option><option selected="selected" value="c">XXX</option><option selected="selected" value="b">YYY</option></select>'
         self.assertEquals(res, expected)
 
         kw = {'sorted': True}
@@ -531,7 +534,7 @@ class TestWidgets(unittest.TestCase):
         res = widget.render('view', ds)
         self.assertEquals(res, 'XXX, YYY, ZZZ')
         res = widget.render('edit', ds)
-        expected = '<input type="hidden" name="widget__foo:tokens:default" value="" /><select multiple="multiple" name="widget__foo:list" id="widget__foo"><option selected="selected" value="c">XXX</option><option selected="selected" value="b">YYY</option><option selected="selected" value="a">ZZZ</option></select>'
+        expected = '<input type="hidden" name="widget__foo:utf8:utokens:default" value="" /><select multiple="multiple" name="widget__foo:utf8:ulist" id="widget__foo"><option selected="selected" value="c">XXX</option><option selected="selected" value="b">YYY</option><option selected="selected" value="a">ZZZ</option></select>'
         self.assertEquals(res, expected)
 
     def testFlashWidget(self):
@@ -1129,6 +1132,13 @@ function getLayoutMode() {
         rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
         parts = ds.get(CIDPARTS_KEY)
         self.assertTrue(parts is None or cid not in parts)
+
+    def testSubjectWidget(self):
+        from Products.CPSSchemas.ExtendedWidgets import CPSSubjectWidget
+        folder = Folder()
+        fakePortal.default_charset = 'unicode'
+        wid = CPSSubjectWidget('foo').__of__(fakePortal)
+        link = wid.getSubjectSearchLink(u'events', '\xc3\x89v\xc3\xa9nements')
 
 def test_suite():
     return unittest.TestSuite((

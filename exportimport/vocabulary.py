@@ -140,8 +140,7 @@ class CPSVocabularyXMLAdapter(XMLAdapterBase,
         vocab = self.context
         fragment = self._doc.createDocumentFragment()
         for key, value in vocab.items():
-            value = value.decode('iso-8859-15').encode('utf-8')
-            key = key.decode('iso-8859-15').encode('utf-8')
+            key = str(key) # key should be ascii only
             child = self._doc.createElement('item')
             child.setAttribute('key', key)
             child.appendChild(self._doc.createTextNode(value))
@@ -170,9 +169,8 @@ class CPSVocabularyXMLAdapter(XMLAdapterBase,
             if child.nodeName != 'item':
                 continue
             key = child.getAttribute('key')
-            key = str(key.encode('iso-8859-15'))
+            key = str(key) # key should be ascii only
             value = self._getNodeText(child)
-            value = value.encode('iso-8859-15')
             if child.hasAttribute('msgid'):
                 msgid = str(child.getAttribute('msgid'))
             else:

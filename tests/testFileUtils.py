@@ -9,7 +9,7 @@ from Products.CPSSchemas import FileUtils
 
 
 class FakePortal(Implicit):
-    default_charset = 'iso-8859-15'
+    default_charset = 'unicode'
     pass
 fakePortal = FakePortal()
 

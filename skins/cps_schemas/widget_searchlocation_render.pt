@@ -24,7 +24,7 @@
          i18n:translate="">label_search_here</label> :
   <input type="text" size="45"
          tal:attributes="id html_id;
-                         name html_id;
+                         name string:${html_id}:utf8:ustring;
                          value value;
                          onclick string:this.form.${html_select_id}_here.checked=true;;" />
 </fieldset>

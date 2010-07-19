@@ -26,7 +26,6 @@ label. They can be ordered, and may get their data from an external or
 computed source.
 """
 
-from zLOG import LOG, DEBUG
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl import getSecurityManager
@@ -44,6 +43,8 @@ from Products.CPSSchemas.interfaces import ICPSVocabulary
 
 builtins_list = list
 
+def uni_lower(s):
+    return unicode(s).lower()
 
 class Vocabulary(Persistent, Implicit):
     """Vocabulary
@@ -198,7 +199,8 @@ class Vocabulary(Persistent, Implicit):
         """
         if crit == 'id':
             l = list(self.keys())
-            l.sort(key=str.lower)
+            # can't guarantee that legacy values are str
+            l.sort(key=uni_lower)
             return l
         elif crit == 'label':
             l = [(x[1], x[0]) for x in self.items()]
@@ -207,8 +209,7 @@ class Vocabulary(Persistent, Implicit):
         elif crit == 'i18n':
             portal = getToolByName(self, 'portal_url').getPortalObject()
             cpsmcat = portal.translation_service
-            l = [(cpsmcat(self.getMsgid(key)).encode('ISO-8859-15', 'ignore'),
-                  key) for key in self.keys()]
+            l = [(cpsmcat(self.getMsgid(key)), key) for key in self.keys()]
             l.sort()
             return [x[1] for x in l]
         else:
@@ -230,19 +231,19 @@ class CPSVocabulary(PropertiesPostProcessor, SimpleItemWithProperties):
 
     _propertiesBaseClass = SimpleItemWithProperties
     _properties = (
-        {'id': 'title', 'type': 'string', 'mode': 'w',
+        {'id': 'title', 'type': 'ustring', 'mode': 'w',
          'label': 'Title'},
         {'id': 'title_msgid', 'type': 'string', 'mode': 'w',
          'label': 'Title msgid'},
-        {'id': 'description', 'type': 'text', 'mode': 'w',
+        {'id': 'description', 'type': 'utext', 'mode': 'w',
          'label':'Description'},
         {'id': 'acl_write_roles', 'type': 'string', 'mode': 'w',
          'label':'ACL: write roles'},
         )
 
-    title = ''
+    title = u''
     title_msgid = ''
-    description = ''
+    description = u''
     acl_write_roles = 'Manager'
 
     acl_write_roles_c = ['Manager']

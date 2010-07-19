@@ -30,7 +30,7 @@
 <div style="padding: 0.3em" class="fontColordefaultfontcolors fontShapeaverage">
 <h1 tal:content="label_edit" i18n:translate="">Edit</h1>
 <div class="document">
-<form action="" method="post"
+<form action="" method="post" accept-charset="utf-8"
       tal:attributes="action string:${here_url}/popup_fckeditor_form">
 <div class="row">
  <div class="field">

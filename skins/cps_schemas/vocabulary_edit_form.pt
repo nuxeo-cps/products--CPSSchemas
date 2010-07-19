@@ -19,7 +19,7 @@
   <span tal:replace="python:len(keys)" i18n:name="voc_entries" />
   entry(ies)</span>
 
-<form action="" method="post"
+<form action="" method="post" accept-charset="utf-8"
       tal:attributes="action base_url"
       tal:condition="keys">
   <table summary="vocabulary edit form layout">
@@ -36,17 +36,17 @@
       </td>
       <td>
         <input type="text" size="20"
-               tal:attributes="name string:key_${num};
+               tal:attributes="name string:key_${num}:utf8:ustring;
                                value key" />
       </td>
       <td>
         <input type="text" size="40"
-               tal:attributes="name string:label_${num};
+               tal:attributes="name string:label_${num}:utf8:ustring;
                                value python:vocab.get(key)" />
       </td>
       <td>
         <input type="text"  size="15"
-               tal:attributes="name string:msgid_${num};
+               tal:attributes="name string:msgid_${num}:utf8:ustring;
                                value python:vocab.getMsgid(key)" />
       </td>
     </tr>
@@ -62,7 +62,8 @@
 <hr/>
 
 <h2 i18n:translate="">cpsschemas_vocabulary_entry_add</h2>
-<form tal:attributes="action here/portal_url" method="post">
+<form tal:attributes="action here/portal_url" method="post"
+      accept-charset="utf-8">
   <table summary="vocabulary listing">
   <tr>
     <th i18n:translate="cpsschemas_vocabulary_key">Key:</th>
@@ -71,13 +72,13 @@
   </tr>
   <tr>
     <td>
-      <input type="text" name="new_key" size="20" />
+      <input type="text" name="new_key:utf8:ustring" size="20" />
     </td>
     <td>
-      <input type="text" name="new_label" size="40" />
+      <input type="text" name="new_label:utf8:ustring" size="40" />
     </td>
     <td>
-        <input type="text" name="new_msgid" size="15" />
+        <input type="text" name="new_msgid:utf8:ustring" size="15" />
     </td>
   </tr>
   </table>
