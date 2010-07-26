@@ -3,10 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #2178: call field validation at datamodel level.
 Bug fixes
 ~~~~~~~~~
--
+- #2178: Ascii Field not really enforcing ascii plain str
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

@@ -132,7 +132,7 @@ class BasicFieldTests(unittest.TestCase):
         self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
         self.assertRaises(ValueError, field.validate, None)
         self.assertRaises(ValueError, field.validate, 1)
-        self.assertRaises(ValueError, field.validate, (2,))
+        self.assertEquals(field.validate((2,)), [2])
 
     def testStringListField(self):
         field = self.makeOne(BasicFields.CPSStringListField)
@@ -140,7 +140,7 @@ class BasicFieldTests(unittest.TestCase):
         self.assertEquals(field.validate(['a', 'b']), ['a', 'b'])
         self.assertRaises(ValueError, field.validate, None)
         self.assertRaises(ValueError, field.validate, [1])
-        self.assertRaises(ValueError, field.validate, ('a',))
+        self.assertEquals(field.validate(('a',)), ['a'])
 
     def testAsciiStringListField(self):
         field = self.makeOne(BasicFields.CPSAsciiStringListField)
@@ -154,7 +154,7 @@ class BasicFieldTests(unittest.TestCase):
         self.assertRaises(ValidationError, field.validate, ['a', '\xe9'])
         self.assertRaises(ValueError, field.validate, None)
         self.assertRaises(ValueError, field.validate, [1])
-        self.assertRaises(ValueError, field.validate, ('a',))
+        self.assertEquals(field.validate(('a', u'b')), ['a', 'b'])
 
     def testListListField(self):
         field = self.makeOne(BasicFields.CPSListListField)

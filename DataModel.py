@@ -51,7 +51,6 @@ from OFS.Image import File
 
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.permissions import ModifyPortalContent
-
 logger = logging.getLogger('Products.CPSSchemas.DataModel')
 
 try:
@@ -230,7 +229,8 @@ class DataModel(UserDict):
 
     def __setitem__(self, key, item):
         self.checkWriteAccess(key)
-        self.data[key] = item
+        field = self._fields[key] # not catching KeyError on purpose
+        self.data[key] = field.validate(item) # same for ValidationError
         self.dirty.add(key)
 
     def isDirty(self, key):
@@ -243,13 +243,14 @@ class DataModel(UserDict):
         self[key] = item
 
     def update(self, dict):
-        for key in dict.keys():
-            self.checkWriteAccess(key)
-        UserDict.update(self, dict)
+        for k,v in dict.items():
+            self[k] = v # will check access rights and validate
 
     def setdefault(self, key, failobj=None):
         self.checkReadAccess(key)
         self.checkWriteAccess(key)
+        # current UserDict implementation calls self[key] = failobj
+        # if needed
         return UserDict.setdefault(self, key, failobj=failobj)
 
     # Unrestricted accessors

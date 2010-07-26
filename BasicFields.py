@@ -69,7 +69,6 @@ class CPSIntField(CPSField):
     default_expr = 'python:0'
     default_expr_c = Expression(default_expr)
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, int):
             return value
@@ -116,7 +115,6 @@ class CPSBooleanField(CPSField):
     default_expr = 'python:False'
     default_expr_c = Expression(default_expr)
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, bool):
             return value
@@ -184,11 +182,11 @@ class CPSFloatField(CPSField):
     default_expr = 'python:0.0'
     default_expr_c = Expression(default_expr)
 
-    # XXX this is never called yet.
     def validate(self, value):
-        if isinstance(value, float):
+        # None is accepted to represent a missing value
+        if value is None or isinstance(value, float):
             return value
-        raise ValidationError('Not an real number: %s' % repr(value))
+        raise ValidationError('Not a real number: %s' % repr(value))
 
     def convertToLDAP(self, value):
         """Convert a value to LDAP attribute values."""
@@ -357,11 +355,21 @@ class CPSListField(CPSField):
     validation_error_msg = 'Not a list: '
 
     def validate(self, value):
-        if isinstance(value, list):
+        is_list = isinstance(value, list)
+        if is_list or isinstance(value, tuple):
             for v in value:
                 if not self.verifyType(v):
                     raise ValidationError(self.validation_error_msg +
                                           repr(value) + "=>" + repr(v))
+            # GR at the time of actually hooking this method, tuple
+            # were not allowed. I guess the contract of this field
+            # is that the dm value must be mutable. OTOH there are a few
+            # datamodel writes with tuple arguments in the current CPSDefault
+            # base profile. Therefore it is too risky to forbid tuples.
+            # Here's the compromise:
+            if not is_list:
+                return list(value)
+
             return value
         raise ValidationError(self.validation_error_msg + repr(value))
 
@@ -732,7 +740,6 @@ class CPSFileField(CPSField):
             data[html_field_id] = html_file
             data[html_subfiles_field_id] = files_dict
 
-    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
@@ -895,7 +902,6 @@ class CPSSubObjectsField(CPSField):
                 continue
             setattr(ob, k, v)
 
-    # XXX this is never called yet.
     def validate(self, value):
         if value is None:
             return None
@@ -916,7 +922,6 @@ class CPSImageField(CPSField):
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)
 
-    # XXX this is never called yet.
     def validate(self, value):
         if not value:
             return None
@@ -958,7 +963,6 @@ class CPSRangeListField(CPSListField):
 
     validation_error_msg = 'Not a range list: '
 
-    # XXX this is never called yet.
     def validate(self, value):
         if isinstance(value, list):
             for v in value:
@@ -1003,7 +1007,6 @@ class CPSCoupleField(CPSListField):
     def _getValidationErrorMessage(self, value):
         return self.validation_error_message + repr(value)
 
-    # XXX not called yet but should be done...
     def validate(self, value):
         """Validate the value
 

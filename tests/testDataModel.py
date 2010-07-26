@@ -14,6 +14,8 @@ from Products.CPSSchemas.DataModel import ProtectedFile
 from Products.CPSSchemas.StorageAdapter import AttributeStorageAdapter
 from Products.CPSSchemas.Schema import CPSSchema
 from Products.CPSSchemas.BasicFields import CPSStringField
+from Products.CPSSchemas.BasicFields import CPSAsciiStringField
+from Products.CPSSchemas.BasicFields import ValidationError
 from Products.CPSSchemas.FieldNamespace import fieldStorageNamespace
 #from Products.CPSSchemas.Schema import Schema
 #from Products.CPSSchemas.Fields.TextField import TextField
@@ -99,6 +101,7 @@ class TestDataModel(unittest.TestCase):
         self.schema.addField('f9', 'CPS String Field',
                              write_process_expr='python: value+f2',
                              )
+        self.schema.addField('fA', 'CPS Ascii String Field')
         self.schema.addField('file', 'CPS File Field')
 
         if with_language:
@@ -120,6 +123,7 @@ class TestDataModel(unittest.TestCase):
               'f7': 'some text',
               'f8': '',
               'f9': '',
+              'fA': '',
               'file': None,
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
@@ -153,6 +157,7 @@ class TestDataModel(unittest.TestCase):
               'f7': 'some text',
               'f8': '',
               'f9': '',
+              'fA': '',
               'file': None,
               }
         self.assertEquals(sort(dm.keys()), sort(ok.keys()))
@@ -199,6 +204,38 @@ class TestDataModel(unittest.TestCase):
         self.assertEquals(dm.isDirty('f3'), False)
         self.assertEquals(dm.isDirty('f4'), False)
         self.assertEquals(dm.isDirty('f5'), False)
+
+    def testValidation(self):
+        # Test that validation methods are being called by using the
+        # Ascii String Field
+        dm = self.makeOne()
+        def assert_kept(v):
+            kept = dm['fA']
+            self.assertTrue(isinstance(kept, str))
+            self.assertEquals(kept, v)
+
+        dm['fA'] = u'abc'
+        assert_kept('abc')
+
+        dm.set('fA', u'def')
+        assert_kept('def')
+
+        # update
+        upd = dict(fA=u'xyz')
+        dm.update(upd)
+        assert_kept('xyz')
+        in_upd = upd['fA']
+        # no side effects
+        self.assertTrue(isinstance(in_upd, unicode))
+        self.assertEquals(in_upd, u'xyz')
+
+        # setdefault
+        del dm.data['fA']
+        dm.setdefault('fA', u'tuv')
+        assert_kept('tuv')
+
+        # now with an error
+        self.assertRaises(ValidationError, dm.set, 'fA', u'\xe9')
 
     def testWriteDependencies(self):
         # We will change f2, and expect f8 to be updated because it has
