@@ -228,12 +228,19 @@ class CPSStringField(CPSField):
 
     implements(IFieldNodeIO)
 
+    _properties = CPSField._properties + (
+        dict(id="validate_none", mode="w", type="boolean",
+             label="Accept None as a correct value"), )
+
     default_expr = 'string:'
     default_expr_c = Expression(default_expr)
+    validate_none = False
 
     logger = getLogger("CPSSchemas.BasicFields.CPSStringField")
 
     def validate(self, value):
+        if value is None and self.validate_none:
+            return value
         if isinstance(value, unicode):
             return value
         elif isinstance(value, basestring):
@@ -290,13 +297,20 @@ class CPSAsciiStringField(CPSField):
 
     implements(IFieldNodeIO)
 
+    _properties = CPSField._properties + (
+        dict(id="validate_none", mode="w", type="boolean",
+             label="Accept None as a correct value"),
+        )
+
     default_expr = 'string:'
     default_expr_c = Expression(default_expr)
+    validate_none = False
 
     logger = getLogger("CPSSchemas.BasicFields.CPSAsciiStringField")
 
-    @classmethod
     def validate(self, value):
+        if value is None and self.validate_none:
+            return value
         if isinstance(value, str):
             try:
                 u = unicode(value, 'ascii')
@@ -463,10 +477,12 @@ class CPSAsciiStringListField(CPSListField):
 
     logger = getLogger("CPSSchemas.BasicFields.CPSAsciiStringListField")
 
+    element_validator = CPSAsciiStringField('validator')
+
     def verifyType(self, value):
         """Verify the type of one list value
         """
-        CPSAsciiStringField.validate(value)
+        self.element_validator.validate(value)
         return True
 
     def validate(self, values):

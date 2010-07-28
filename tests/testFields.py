@@ -107,6 +107,9 @@ class BasicFieldTests(unittest.TestCase):
         self.assertRaises(ValueError, field.validate, 0)
         self.assertRaises(ValueError, field.validate, None)
 
+        field.manage_changeProperties(validate_none=True)
+        self.assertTrue(field.validate(None) is None)
+
     def testAsciiStringField(self):
         field = self.makeOne(BasicFields.CPSAsciiStringField)
         self.assertEquals(field.getDefault(), '')
@@ -117,6 +120,9 @@ class BasicFieldTests(unittest.TestCase):
         self.assertRaises(ValueError, field.validate, u'\xe9')
         self.assertRaises(ValidationError, field.validate, 0)
         self.assertRaises(ValidationError, field.validate, None)
+
+        field.manage_changeProperties(validate_none=True)
+        self.assertTrue(field.validate(None) is None)
 
     def testPasswordField(self):
         # XXX So what's specific about password vs string ?

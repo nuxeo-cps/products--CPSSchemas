@@ -489,7 +489,7 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     'suffix_html': '_f2',
                     'suffix_html_subfiles': '_f3',
                     },
-                   {'is_searchabletext': 1}, {}, {},
+                   {'is_searchabletext': 1, 'validate_none': True}, {}, {},
                    )
 
     _properties = CPSFileWidget._properties + (
