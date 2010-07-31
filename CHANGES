@@ -6,6 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
+- #2186: default system sanitizer users latin1 encoding
 - #2180: String Field optionaly accepts None values
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~

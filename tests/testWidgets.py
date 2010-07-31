@@ -21,6 +21,8 @@
 # $Id$
 
 import unittest
+from zope.testing import doctest
+
 from DateTime.DateTime import DateTime
 from ZODB.tests.warnhook import WarningsHook
 from Acquisition import Implicit
@@ -1143,7 +1145,9 @@ function getLayoutMode() {
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestWidgets),
+        doctest.DocTestSuite('Products.CPSSchemas.ExtendedWidgets'),
         ))
+
 
 if __name__ == '__main__':
     unittest.TextTestRunner().run(test_suite())

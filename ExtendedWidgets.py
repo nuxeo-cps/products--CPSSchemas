@@ -79,8 +79,10 @@ class CPSTextWidget(CPSStringWidget):
         {'id': 'xhtml_sanitize', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_xhtml_sanitize_options',
          'label': 'XHTML sanitize the content'},
-        {'id': 'xhtml_sanitize_system', 'type': 'string', 'mode': 'w',
-         'label': 'XHTML sanitize through system command line'},
+        {'id': 'xhtml_sanitize_system',
+         'type': 'string', 'mode': 'w',
+         'label': 'XHTML sanitize through system command line '
+         '(use %(encoding)s for current encoding, %(file)s for the tmp file)'},
         {'id': 'file_uploader', 'type': 'boolean', 'mode': 'w',
          'label': 'Add a file uploader to the widget UI'},
 
@@ -111,12 +113,10 @@ class CPSTextWidget(CPSStringWidget):
     size_max = 2*1024*1024
     xhtml_sanitize = False
     # Notes about using tidy :
-    # * tidy doesn't know explicitly about the latin9 encoding but specifying
-    #   latin1 works well with latin9 encoded content.
     # * force-output makes tidy produce an output even if errors were found.
     # * show-body-only outputs only the content of the body tag.
     # * write-back modifies the file in place.
-    xhtml_sanitize_system = 'tidy -indent -wrap 80 --input-encoding latin1 --output-encoding latin1 --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments no %s 2>/dev/null'
+    xhtml_sanitize_system = 'tidy -indent -wrap 80 --input-encoding %(encoding)s --output-encoding %(encoding)s --force-output yes --clean yes --drop-font-tags yes --drop-proprietary-attributes yes --show-body-only yes --write-back yes --output-xhtml yes --show-errors 0 --show-warnings no --hide-comments no %(file)s 2>/dev/null'
     file_uploader = False
 
     # Possible values are "tinymce" and "fckeditor"
@@ -154,6 +154,34 @@ class CPSTextWidget(CPSStringWidget):
         datastructure[widget_id + '_fileupload'] = None
         datastructure[widget_id + '_rposition'] = rposition
         datastructure[widget_id + '_rformat'] = rformat
+
+    def make_xhtml_sanitize_cmd(self, **kw):
+        """Provide the xhtml sanitizing command
+
+        >>> wid = CPSTextWidget('the_widget')
+        >>> wid.manage_changeProperties(
+        ...     xhtml_sanitize_system="on %(file)s use %(encoding)s")
+        >>> wid.make_xhtml_sanitize_cmd(file='/tmp/tmpfile', encoding='utf8')
+        'on /tmp/tmpfile use utf8'
+
+        Old style prop as before #2186
+        >>> wid.manage_changeProperties(
+        ...     xhtml_sanitize_system="on %s work as usual")
+        >>> wid.make_xhtml_sanitize_cmd(file='/tmp/tmpfile', encoding='utf8')
+        'on /tmp/tmpfile work as usual'
+
+        The file kw arg is in that case implicit and really needed:
+        >>> try: wid.make_xhtml_sanitize_cmd(encoding='hop')
+        ... except KeyError, e: print e
+        'file'
+        """
+        fmt_cmd = self.xhtml_sanitize_system
+        if '%(file)s' in fmt_cmd:
+            return fmt_cmd % kw
+
+        # old style, see #2186
+        return fmt_cmd % kw['file']
+
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -216,7 +244,12 @@ class CPSTextWidget(CPSStringWidget):
                     file_to_clean = os.fdopen(file_to_clean_fd, 'w')
                     file_to_clean.write(v)
                     file_to_clean.close()
-                    os.system(self.xhtml_sanitize_system % file_to_clean_path)
+                    encoding = get_final_encoding(self)
+
+                    cmd = self.make_xhtml_sanitize_cmd(encoding=encoding,
+                                                       file=file_to_clean_path)
+                    os.system(cmd)
+
                     file_to_clean = open(file_to_clean_path)
                     v = file_to_clean.read()
                     file_to_clean.close()
