@@ -137,6 +137,8 @@ class CPSSearchModifiedWidget(CPSWidget):
             value = 0
         if value and value in self.times:
             value = now - value
+        else:
+            value = ''
         datamodel[self.fields[0]] = value
         if value:
             datamodel[self.fields[1]] = 'range:min'

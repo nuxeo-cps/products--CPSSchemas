@@ -8,6 +8,7 @@ Bug fixes
 ~~~~~~~~~
 - #2186: default system sanitizer users latin1 encoding
 - #2180: String Field optionaly accepts None values
+- #2188: advanced search breaks with ValidationError
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
