@@ -135,6 +135,9 @@ class CPSTextWidget(CPSStringWidget):
 
     xhtml_sanitizer = XhtmlSanitizer()
 
+    tidy_encodings = {'utf-8': 'utf8',
+                      'iso-8859-15': 'latin1'}
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
@@ -164,7 +167,16 @@ class CPSTextWidget(CPSStringWidget):
         >>> wid.make_xhtml_sanitize_cmd(file='/tmp/tmpfile', encoding='utf8')
         'on /tmp/tmpfile use utf8'
 
-        Old style prop as before #2186
+        There are a few specific rules for (default) tidy:
+        >>> wid.manage_changeProperties(
+        ...     xhtml_sanitize_system="tidy --char-encoding=%(encoding)s "
+        ...                           "%(file)s")
+        >>> wid.make_xhtml_sanitize_cmd(file='tmpfile', encoding='utf-8')
+        'tidy --char-encoding=utf8 tmpfile'
+        >>> wid.make_xhtml_sanitize_cmd(file='tmpfile', encoding='iso-8859-15')
+        'tidy --char-encoding=latin1 tmpfile'
+
+        Old style prop as before #2186:
         >>> wid.manage_changeProperties(
         ...     xhtml_sanitize_system="on %s work as usual")
         >>> wid.make_xhtml_sanitize_cmd(file='/tmp/tmpfile', encoding='utf8')
@@ -176,6 +188,10 @@ class CPSTextWidget(CPSStringWidget):
         'file'
         """
         fmt_cmd = self.xhtml_sanitize_system
+        if fmt_cmd.startswith('tidy '):
+            encoding = kw.get('encoding', '').strip().lower()
+            kw['encoding'] = self.tidy_encodings.get(encoding, encoding)
+
         if '%(file)s' in fmt_cmd:
             return fmt_cmd % kw
 
@@ -242,9 +258,9 @@ class CPSTextWidget(CPSStringWidget):
                         prefix="cps-schemas",
                         )
                     file_to_clean = os.fdopen(file_to_clean_fd, 'w')
-                    file_to_clean.write(v)
-                    file_to_clean.close()
                     encoding = get_final_encoding(self)
+                    file_to_clean.write(v.encode(encoding))
+                    file_to_clean.close()
 
                     cmd = self.make_xhtml_sanitize_cmd(encoding=encoding,
                                                        file=file_to_clean_path)
@@ -252,6 +268,7 @@ class CPSTextWidget(CPSStringWidget):
 
                     file_to_clean = open(file_to_clean_path)
                     v = file_to_clean.read()
+                    v = v.decode(encoding)
                     file_to_clean.close()
                     os.remove(file_to_clean_path)
 
