@@ -1,4 +1,23 @@
 ===========================================================
+Package: CPSSchemas 1.11.1
+===========================================================
+First release built by: gracinet at: 2010-08-02T19:58:27
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2186: default system sanitizer users latin1 encoding
+- #2180: String Field optionaly accepts None values
+- #2188: advanced search breaks with ValidationError
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.11.0
 ===========================================================
 First release built by: gracinet at: 2010-07-26T22:52:17
