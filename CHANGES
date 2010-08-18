@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2218: Validateion errors for file objects coming from a datamodel
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

@@ -331,6 +331,19 @@ class TestDataModel(unittest.TestCase):
         # file in new doc has been changed
         self.assertEquals(dm.getObject().file.title, 'changed')
 
+    def test_fileProtectionCopy(self):
+        # See #2218
+        dm = self.makeOne()
+        dm._setObject(self.doc, proxy=FakeProxy(en=self.doc))
+        dm._fetch()
+
+        fobj = File('file', 'original', 'spam')
+        dm['file'] = fobj
+        dm._commit(check_perms=0)
+
+        dm2 = self.makeOne()
+        dm2['file'] = dm['file']
+
 
 def test_suite():
     return unittest.makeSuite(TestDataModel)

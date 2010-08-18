@@ -230,7 +230,16 @@ class DataModel(UserDict):
     def __setitem__(self, key, item):
         self.checkWriteAccess(key)
         field = self._fields[key] # not catching KeyError on purpose
-        self.data[key] = field.validate(item) # same for ValidationError
+        # See #2218: ProtectedFile special case.
+        #TODO: this protection should probably be handled by field validation
+        #subsystem
+        if isinstance(item, ProtectedFile):
+            item = item._file_obj
+        validated = field.validate(item) # same for ValidationError
+        if isinstance(validated, File):
+            self.data[key] = ProtectedFile(validated, self, key)
+        else:
+            self.data[key] = validated
         self.dirty.add(key)
 
     def isDirty(self, key):
