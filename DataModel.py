@@ -323,6 +323,7 @@ class DataModel(UserDict):
     def _updateProtectedFiles(self):
         """Reload File fields and update references within protected files."""
 
+        # TODO unit test (this method is executed by CPSCourrier tests though)
         refetched = {}
         # GR: duplicated bit necessary. Enhancing _fetch for partial data
         # leads to side effects
@@ -335,9 +336,9 @@ class DataModel(UserDict):
                 # Default values are dirty because they have
                 # to be considered changed by the user
                 # (and written, and used for dependent computations)
-                field = fields[field_id]
-                data[field_id] = field.getDefault(self)
-                self.dirty.add(field_id)
+                field = self._fields[f_id]
+                self.data[f_id] = field.getDefault(self)
+                self.dirty.add(f_id)
 
     def _setEditable(self):
         """Set the editable object for this DataModel.
