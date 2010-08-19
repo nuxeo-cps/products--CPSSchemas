@@ -28,7 +28,6 @@ An instance w of it is parametrized, notably by one or several field names.
 It can then be rendered by passing it a datastructure.
 """
 
-from zLOG import LOG, DEBUG
 from Persistence import Persistent
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
@@ -40,6 +39,7 @@ from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 
 from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CPSUtil.resourceregistry import get_request_resource_registry
 from Products.CPSSchemas.DataModel import WriteAccessError
 
 from zope.interface import implements
@@ -49,6 +49,8 @@ from Products.CPSSchemas.interfaces import IWidget
 #
 # CONSTANTS
 #
+
+RESOURCE_CATEGORY = 'widget'
 
 # key passed in through kwargs to render() to map parts referred to by cid
 CIDPARTS_KEY = '_cidparts'
@@ -411,6 +413,12 @@ class CPSWidget(Widget):
         """
         self.fields = ['?']
 
+    def requireResource(self, resource_id):
+        """Mark the resource as required in request level resource registry.
+        """
+        registry = get_request_resource_registry(context=self)
+        registry.require(resource_id, category=RESOURCE_CATEGORY)
+
     #
     # ZMI
     #
@@ -492,6 +500,7 @@ class WidgetRegistry:
         glob = {'Persistent': Persistent}
         eval(compile(code, 'CPSSchemas/Widget.py', 'exec'), glob)
         setattr(module, name, glob[name])
+
 
 # Singleton
 widgetRegistry = WidgetRegistry()

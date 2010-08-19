@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #837: leverage new resource registry in TextWidget
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
