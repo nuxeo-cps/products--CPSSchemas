@@ -682,7 +682,15 @@ function getLayoutMode() {
     def test_CPSSearchModifiedWidget(self):
         from Products.CPSSchemas.SearchWidgets import CPSSearchModifiedWidget
         widget = CPSSearchModifiedWidget('foo').__of__(fakePortal)
-        # XXX: add more tests here
+        widget.fields = ('foo', )
+        wid = widget.getWidgetId()
+        dm = FakeDataModel()
+        ds = FakeDataStructure(dm)
+        widget.prepare(ds)
+        self.assertTrue(widget.validate(ds))
+        self.assertEquals(dm['foo'], None)
+        ds[wid] = 'not a int'
+        self.assertFalse(widget.validate(ds))
 
     def test_CPSSearchLanguageWidget(self):
         from Products.CPSSchemas.SearchWidgets import CPSSearchLanguageWidget

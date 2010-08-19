@@ -123,22 +123,24 @@ class CPSSearchModifiedWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         widget_id = self.getWidgetId()
-        datastructure[widget_id] = 0
+        datastructure[widget_id] = '0'
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         datamodel = datastructure.getDataModel()
         now = DateTime()
-        value = escape(datastructure[widget_id])
+        value = datastructure[widget_id]
         try:
             value = int(value)
         except (ValueError, TypeError):
-            value = 0
+            datastructure.setError(widget_id,  "cpsschemas_err_select")
+            return False
+
         if value and value in self.times:
             value = now - value
         else:
-            value = ''
+            value = None
         datamodel[self.fields[0]] = value
         if value:
             datamodel[self.fields[1]] = 'range:min'
