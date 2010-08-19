@@ -184,6 +184,10 @@ class DiskFile(File, VTM):
         data = file.read()
         return data
 
+    security.declareProtected(View, 'getFileHandler')
+    def getFileHandler(self):
+        return open(self.getFullFilename())
+
     def __str__(self):
         if self.content_type.startswith('text/'):
             return str(self.getData()[:500])
