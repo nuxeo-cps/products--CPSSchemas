@@ -50,7 +50,7 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     if context is not None:
         default_encoding = context.default_charset
     else:
-        default_encoding = 'latin9'
+        default_encoding = 'utf-8'
 
     data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
                                  # filename='fooXXX', encoding='',
