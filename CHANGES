@@ -9,9 +9,8 @@ Bug fixes
 - #2220: ModifiedSearchWidget validation issues
 - #2218: Validation errors for file objects coming from a datamodel
 - #1998: fixed some rarely executed internal logic
-- Made TinyMCE use the default.css and custom.css CSS files in the content
-  render view so that HTML edited through TinyMCE looks closer to the final
-  render as obtained from the View action.
+- #2232: Make TinyMCE use the default.css and custom.css CSS files in the content
+  render view.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
