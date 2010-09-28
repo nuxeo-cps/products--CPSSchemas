@@ -64,7 +64,8 @@ tinyMCE.init({
     theme_advanced_toolbar_location : 'top',
     theme_advanced_statusbar_location : 'bottom',
     theme_advanced_resizing : true,
-    convert_urls : false
+    convert_urls : false,
+    content_css : 'default.css,custom.css,document.css,schemas.css'
 });
 document.getElementById('rte_value').value = opener.document.getElementById('${input_id}').value;
 ">
