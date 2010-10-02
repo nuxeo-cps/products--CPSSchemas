@@ -24,8 +24,9 @@ from Acquisition import aq_base
 from OFS.Image import File
 from OFS.SimpleItem import Item
 
-from Products.CPSUtil.text import OLD_CPS_ENCODING
+from Products.CPSUtil.text import OLD_CPS_ENCODING, upgrade_string_unicode
 from Vocabulary import Vocabulary, CPSVocabulary
+
 
 def fix_338_340_attached_files(portal):
     """Fix attached files' and images' names
@@ -113,3 +114,47 @@ def upgrade_voctool_unicode(portal):
         logger.info("Converting vocabulary %s to unicode", voc.getId())
         fix_voc_unicode(voc)
     logger.info("Finished to convert vocabularies found in tool.")
+
+def upgrade_datamodel_unicode(dm):
+    """Upgrade the datamodel to unicode strings and commits its content.
+
+    Dependent fields and new revision spawning are *not* executed
+    """
+    sfields = []
+    slfields = []
+    for f_id, f in dm._fields.items():
+        if f.write_ignore_storage:
+            continue
+
+        try:
+            if f.meta_type == 'CPS String Field':
+                dm[f_id] = upgrade_string_unicode(dm[f_id])
+            elif f.meta_type == 'CPS String List Field':
+                lv = dm[f_id]
+                if not lv:
+                    continue
+                dm[f_id] = [upgrade_string_unicode(v) for v in lv]
+            elif f.meta_type == 'CPS Ascii String Field':
+                v = dm[f_id]
+                try:
+                    dm[f_id] = str(v)
+                except UnicodeError:
+                    logger.error("Non ascii content for CPS Ascii String Field"
+                                 " in %s", doc.getId())
+            elif f.meta_type == 'CPS Ascii String List Field':
+                lv = dm[f_id]
+                if not lv:
+                    continue
+                try:
+                    dm[f_id] = [str(v) for v in lv]
+                except UnicodeError:
+                    logger.error("Non ascii content for CPS Ascii String List "
+                                 "Field in %s", doc.getId())
+        except WriteAccessError:
+            # no write_ignore, but even Manager can't write to it ?
+            # not this step's job to guess what this means
+            pass
+
+    dm._commitData() # avoid _commit() (see docstring)
+    return True
+
