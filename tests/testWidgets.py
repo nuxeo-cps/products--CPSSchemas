@@ -436,6 +436,26 @@ class TestWidgets(unittest.TestCase):
         self.assert_(isinstance(ds['foo'], bool))
         self.assertEquals(ds['foo'], True)
 
+    def testTextWidget(self):
+        from Products.CPSSchemas.ExtendedWidgets import CPSTextWidget
+        widget = CPSTextWidget('foo').__of__(fakePortal)
+        def meth(*args, **kwargs):
+            """fake render method"""
+
+        fakePortal.widget_text_render = meth
+        widget.manage_changeProperties(hidden_empty=True, fields=['f'])
+        dm = FakeDataModel()
+        ds = FakeDataStructure(dm)
+
+        dm['f'] = ''
+        widget.prepare(ds)
+        self.assertEquals(widget.render('view', ds), '')
+        self.failIfEqual(widget.render('edit', ds), '')
+
+        dm['f'] = '  '
+        widget.prepare(ds)
+        self.assertEquals(widget.render('view', ds), '')
+
     def testDateTimeWidget_getDateTimeInfo(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget
         from DateTime.DateTime import DateTime

@@ -10,6 +10,7 @@ Bug fixes
 - #2218: Validation errors for file objects coming from a datamodel
 - #1998: fixed some rarely executed internal logic
 - #2232: Make TinyMCE use CPS CSS files in the content render view
+- #2115: Text widget with hidden_empty now effectively disappears
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

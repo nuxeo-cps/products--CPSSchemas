@@ -289,6 +289,8 @@ class CPSTextWidget(CPSStringWidget):
                                % (render_method, self.getId()))
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
+        if not value.strip() and self.hidden_empty and mode == 'view':
+            return '' # See #2115
         rposition = datastructure[widget_id + '_rposition']
         rformat = datastructure[widget_id + '_rformat']
         if mode == 'view':
