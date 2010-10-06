@@ -26,7 +26,7 @@ from OFS.SimpleItem import Item
 
 from Products.CPSUtil.text import OLD_CPS_ENCODING, upgrade_string_unicode
 from Vocabulary import Vocabulary, CPSVocabulary
-
+from DataModel import WriteAccessError
 
 def fix_338_340_attached_files(portal):
     """Fix attached files' and images' names
@@ -153,7 +153,7 @@ def upgrade_datamodel_unicode(dm):
         except WriteAccessError:
             # no write_ignore, but even Manager can't write to it ?
             # not this step's job to guess what this means
-            pass
+            logger.exception("Failed upgrade on field %s ", f)
 
     dm._commitData() # avoid _commit() (see docstring)
     return True

@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2248: robustness in datamodel unicode upgrade
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
