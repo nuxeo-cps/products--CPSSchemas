@@ -7,6 +7,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 - #2248: robustness in datamodel unicode upgrade
+- #837: leverage new resource registry in TextWidget
 - #2249: new DateTime List field
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
