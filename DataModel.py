@@ -235,7 +235,12 @@ class DataModel(UserDict):
         # subsystem or StorageAdapter
         if isinstance(item, ProtectedFile):
             item = item._file_obj
-        self.data[key] = field.validate(item)
+        try:
+            self.data[key] = field.validate(item)
+        except ValidationError, e:
+            logger.info("Validation failed on obj %r (proxy %r), field %r",
+                        self.getObject(), self.getProxy(), field)
+            raise
         self.dirty.add(key)
 
     def isDirty(self, key):
