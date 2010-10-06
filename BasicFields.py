@@ -595,6 +595,12 @@ class CPSDateTimeField(CPSField):
         """Convert a value to LDAP attribute values."""
         if not value:
             return []
+        return [self._toLDAPFormat(value)]
+
+    @classmethod
+    def _toLDAPFormat(self, value):
+        """Does the actual conversion job, not the list wrapping."""
+
         # The recommended time format for LDAP is
         # "Generalized Time", see rfc2252.
         if value.Time() == "00:00:00":
@@ -606,7 +612,7 @@ class CPSDateTimeField(CPSField):
         v = '%04d%02d%02d%02d%02d%02dZ' % (
             value.year(), value.month(), value.day(),
             value.hour(), value.minute(), value.second())
-        return [v]
+        return v
 
     def convertFromLDAP(self, values):
         """Convert a value from LDAP attribute values."""
@@ -615,7 +621,14 @@ class CPSDateTimeField(CPSField):
         try:
             if len(values) != 1:
                 raise ValueError
-            v = values[0]
+            return self._fromLDAPFormat(values[0])
+        except (ValueError, TypeError):
+            raise ValidationError("Incorrect DateTime value from LDAP: %s" %
+                                  `values`)
+
+    @classmethod
+    def _fromLDAPFormat(self, v):
+            """Does the actual conversion job, not the list wrapping."""
             # strptime is not available on Windows, so do this the
             # hard way:
             year = int(v[0:4])
@@ -638,9 +651,6 @@ class CPSDateTimeField(CPSField):
             if v[8:14] != '000000':
                 value = value.toZone(value.localZone())
             return  value
-        except (ValueError, TypeError):
-            raise ValidationError("Incorrect DateTime value from LDAP: %s" %
-                                  `values`)
 
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
@@ -664,6 +674,58 @@ class CPSDateTimeField(CPSField):
 
 InitializeClass(CPSDateTimeField)
 
+class CPSDateTimeListField(CPSListField):
+    """DateTime List field."""
+    meta_type = "CPS DateTime List Field"
+
+    implements(IFieldNodeIO)
+
+    validation_error_msg = 'Not a list of DateTime objects: '
+
+    logger = getLogger('.'.join((__name__, 'CPSDateTimeListField')))
+
+    element_validator = CPSDateTimeField('validator')
+
+    def verifyType(self, value):
+        """Verify the type of one list value
+        """
+        self.element_validator.validate(value)
+        return True
+
+    def validate(self, values):
+        CPSListField.validate(self, values)
+        return [v for v in values]
+
+    def convertToLDAP(self, values):
+        """Convert a value to LDAP attribute values."""
+        # Empty values are not allowed in LDAP
+        return [CPSDateTimeField._toLDAPFormat(v) for v in values if v]
+
+    def convertFromLDAP(self, values):
+        """Convert a value from LDAP attribute values."""
+        return [CPSDateTimeField._fromLDAPFormat(v) for v in values]
+
+    def setNodeValue(self, node, value, context):
+        """See IFieldNodeIO.
+        """
+        for v in value:
+            child = context.createStrictTextElement('e')
+            context.setNodeValue(
+                child, v and CPSDateTimeField._toLDAPFormat(v) or None)
+            node.appendChild(child)
+
+    def getNodeValue(self, node, context):
+        """See IFieldNodeIO.
+        """
+        res = []
+        for child in node.childNodes:
+            if child.nodeName != 'e':
+                continue
+            v = CPSDateTimeField._fromLDAPFormat(context.getNodeValue(child))
+            res.append(v)
+        return res
+
+InitializeClass(CPSDateTimeListField)
 
 class CPSFileField(CPSField):
     """File field."""
@@ -1070,6 +1132,7 @@ FieldRegistry.register(CPSIntField)
 FieldRegistry.register(CPSLongField) # deprecated
 FieldRegistry.register(CPSFloatField)
 FieldRegistry.register(CPSDateTimeField)
+FieldRegistry.register(CPSDateTimeListField)
 FieldRegistry.register(CPSFileField)
 FieldRegistry.register(CPSDiskFileField)
 FieldRegistry.register(CPSSubObjectsField)

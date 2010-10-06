@@ -189,6 +189,33 @@ class BasicFieldTests(unittest.TestCase):
         self.assertEquals(field.validate(now), now)
         self.assertRaises(ValueError, field.validate, [1])
         self.assertRaises(ValueError, field.validate, 'blob')
+        d = DateTime('2010/10/16 3:57:00 GMT+2')
+        self.assertEquals(field.convertToLDAP(d), ['20101016015700Z'])
+        self.assertEquals(field.convertFromLDAP(['20101016015700Z']), d)
+
+    def testDateTimeListField(self):
+        field = self.makeOne(BasicFields.CPSDateTimeListField)
+        self.assertEquals(field.getDefault(), [])
+        now = DateTime()
+        self.assertEquals(field.validate([now]), [now])
+        self.assertEquals(field.validate([None]), [None])
+        self.assertRaises (ValueError, field.validate, [1])
+        self.assertRaises(ValueError, field.validate, now)
+
+        d = DateTime('2010/10/16 3:57:00 GMT+2')
+        d_ldap = '20101016015700Z'
+        d2 = DateTime('2010/10/06 18:51:22 GMT+2')
+        d2_ldap = '20101006165122Z'
+
+        self.assertEquals(field.convertToLDAP([d]), [d_ldap])
+        self.assertEquals(field.convertFromLDAP([d2_ldap]), [d2])
+
+        # can't use 'now' here because conversion granularity is the second,
+        # not the millisecond
+        self.assertEquals(field.convertFromLDAP(field.convertToLDAP([d2, d])),
+                          [d2, d])
+        self.assertEquals(field.convertToLDAP(field.convertFromLDAP(
+                    [d_ldap, d2_ldap])), [d_ldap, d2_ldap])
 
     def testFileField(self):
         field = self.makeOne(BasicFields.CPSFileField)
