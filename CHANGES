@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #2223: allow unicode label, help etc in widgets
 Bug fixes
 ~~~~~~~~~
 - #2248: robustness in datamodel unicode upgrade
