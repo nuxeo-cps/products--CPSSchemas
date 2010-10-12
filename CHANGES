@@ -6,6 +6,7 @@ New features
 - #2223: allow unicode label, help etc in widgets
 Bug fixes
 ~~~~~~~~~
+- #1940: apply transforms to special file types (TramlineFile...) 
 - #2248: robustness in datamodel unicode upgrade
 - #837: leverage new resource registry in TextWidget
 - #2249: new DateTime List field

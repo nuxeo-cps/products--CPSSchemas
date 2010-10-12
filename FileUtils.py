@@ -22,6 +22,7 @@ Utilities to deal with files: conversion to HTML, or text.
 """
 
 from Products.CMFCore.utils import getToolByName
+from Products.CPSUtil.file import ofsFileHandler
 from logging import getLogger
 
 logger = getLogger('CPSSchemas.FileUtils._convertFileToMimeType')
@@ -41,7 +42,10 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     if transformer is None:
         logger.debug('No portal_transforms')
         return None
-    raw = str(file)
+    fh = ofsFileHandler(file)
+    raw = fh.read() # TODO RAM efficiency
+    fh.close()
+
     if not raw:
         return None
     logger.debug('to %s for file %s', mime_type, repr(file))
