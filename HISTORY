@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.12.0
+===========================================================
+First release built by: gracinet at: 2010-10-13T11:46:26
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2223: allow unicode label, help etc in widgets
+Bug fixes
+~~~~~~~~~
+- #1940: apply transforms to special file types (TramlineFile...) 
+- #2248: robustness in datamodel unicode upgrade
+- #837: leverage new resource registry in TextWidget
+- #2249: new DateTime List field
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.11.2
 ===========================================================
 First release built by: gracinet at: 2010-10-03T11:46:45
