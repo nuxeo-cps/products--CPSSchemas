@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- improved progess logging and marginally RAM usage for upgrade attached files
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

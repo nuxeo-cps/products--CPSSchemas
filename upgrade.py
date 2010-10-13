@@ -28,6 +28,8 @@ from Products.CPSUtil.text import OLD_CPS_ENCODING, upgrade_string_unicode
 from Vocabulary import Vocabulary, CPSVocabulary
 from DataModel import WriteAccessError
 
+logger = logging.getLogger(__name__)
+
 def fix_338_340_attached_files(portal):
     """Fix attached files' and images' names
 
@@ -40,6 +42,10 @@ def fix_338_340_attached_files(portal):
 
     So in 3.4.0, the File id is whatever the container decides, and the
     File title is used to store the filename.
+
+    GR: this is a bit slow and RAM intensive, but it's possible that the
+    relatively new walking utilities would not work, precisely because of
+    the id problem explained above. Still called iterValues at the start.
     """
 
     starts = [
@@ -49,29 +55,27 @@ def fix_338_340_attached_files(portal):
         '.cps_portlets',
         ]
 
-    n = 0
+    counter = [0]
     for rootid in starts:
         if getattr(aq_base(portal), rootid, None) is None:
             continue
         root = getattr(portal, rootid)
-        for ob in root.objectValues():
-            n += _fix_attached_recurse(ob)
-    msg = "Fixed %d files." % n
-    # FIXME: should be logged by CPSCore upgrade engine
-    logging.getLogger('CPSSchemas.upgrade').debug(msg)
-    return msg
+        it = getattr(aq_base(root), 'iterValues', None)
+        if it is None:
+            it = root.objectValues
+        for ob in it():
+            _fix_attached_recurse(ob, counter)
+    logger.info("Fixed %d attached files names.", counter[0])
 
-def _fix_attached_recurse(ob):
-    n = 0
+def _fix_attached_recurse(ob, counter):
     ob.getId() # unghostify, so that __dict__ is fetched
     for key, value in ob.__dict__.items():
         if isinstance(value, Item):
             subob = getattr(ob, key) # get acquisition wrappers
-            n += _fix_attached_one(key, subob)
-            n += _fix_attached_recurse(subob)
-    return n
+            _fix_attached_one(key, subob, counter)
+            _fix_attached_recurse(subob, counter)
 
-def _fix_attached_one(id, ob):
+def _fix_attached_one(id, ob, counter):
     if not isinstance(ob, File):
         return 0
     if ob.getId() == id:
@@ -85,7 +89,9 @@ def _fix_attached_one(id, ob):
         # want to migrate to a widget with an 'alt' field
         #ob._alt_title = old_title
         pass
-    return 1
+    counter[0] += 1
+    if counter[0] % 1000 == 0:
+        logger.info("Fixed %d attached file names so far", counter[0])
 
 def fix_voc_unicode(voc):
     if not isinstance(voc, CPSVocabulary):
