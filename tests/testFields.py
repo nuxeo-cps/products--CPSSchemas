@@ -291,22 +291,6 @@ class BasicFieldTests(unittest.TestCase):
 
         # TODO: add test for "dependant fields" themselves there.
 
-    # Test that Tramline File are ignored
-    def testFileField_Tramline(self):
-        field = self.makeOne(BasicFields.CPSFileField)
-        field.suffix_text = '_text'
-        fobj = File("", "", "")
-        data = {field.getFieldId() : fobj}
-        
-        fobj.meta_type = 'Tramline Field'
-        # schemas is None, but we got no exception thanks to early return
-        field.computeDependantFields(None, data)
-        
-        # With a regular File, TypeError would have been raised for 
-        # schemas=None (it get itered on)
-        fobj.meta_type = File.meta_type
-        self.assertRaises(TypeError, field.computeDependantFields, None, data)
-
     def testSubOjectsField(self):
         # non-regression test for #1943
         field = self.makeOne(BasicFields.CPSSubObjectsField)
