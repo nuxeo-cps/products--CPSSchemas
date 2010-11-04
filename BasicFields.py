@@ -38,6 +38,7 @@ from Products.CPSSchemas.Field import CPSField, FieldRegistry
 from Products.CPSSchemas.Field import ValidationError
 from Products.CPSSchemas.FileUtils import convertFileToHtml
 from Products.CPSSchemas.FileUtils import convertFileToText
+from Products.CPSSchemas.FileUtils import FileObjectFactory
 from Products.CPSSchemas.DiskFile import DiskFile
 
 from zope.interface import implements
@@ -850,6 +851,7 @@ class CPSFileField(CPSField):
         return None
 
 InitializeClass(CPSFileField)
+FileObjectFactory.methods[CPSFileField.meta_type] = (File, {})
 
 class CPSDiskFileField(CPSFileField):
     """File field."""
@@ -944,6 +946,7 @@ class CPSDiskFileField(CPSFileField):
 #         return File(self.getFieldId(), '', values[0])
 
 InitializeClass(CPSDiskFileField)
+FileObjectFactory.methods[CPSDiskFileField.meta_type] = (DiskFile, {})
 
 
 class CPSSubObjectsField(CPSField):
@@ -1032,6 +1035,7 @@ class CPSImageField(CPSField):
         return None
 
 InitializeClass(CPSImageField)
+FileObjectFactory.methods[CPSImageField.meta_type] = (Image, {})
 
 class CPSRangeListField(CPSListField):
     """Meta list Field"""

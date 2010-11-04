@@ -21,6 +21,7 @@
 Utilities to deal with files: conversion to HTML, or text.
 """
 
+from copy import deepcopy
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.file import ofsFileHandler
 from logging import getLogger
@@ -96,3 +97,41 @@ def convertFileToDocbook(file, context=None, **kwargs):
     """
     return _convertFileToMimeType(file, 'application/docbook+xml',
                                   context=context, **kwargs)
+
+# GR: this could be handled by a ZCA adapter,
+# but I don't want to open this pandora box now; just opening CPSSchema's
+# ZCML files is mind-blocking: two many things around
+# (StorageAdapter, TramlineFile itself?) that could be done this way
+# and clarified.
+# Besides, OFS.Image.File has no interface anyway (!)
+class FileObjectFactory(object):
+    """A class that generates File objects
+
+    constructors are stored in the 'method' class attribute, which maps
+    field meta_types to pairs (callable for construction, options dict),
+
+    Basic example:
+      {CPSFileField.meta_type: (File, {}),
+       CPSImageField.meta_type: (Image, {})}
+
+    Example with a factory method needing an aq context and having
+    another option (from CPSTramline):
+      {CPSFileFIeld.meta_type: (TramlineFile.direct_create,
+                                dict(context=True, thr=10240))}
+    """
+
+    methods = {}
+
+    @classmethod
+    def make(self, field, oid, title, data):
+        """Instantiation of the right File-like object.
+
+        options are constructed from known options stored in class and from
+        context. Other args are passed directly to the constructor."""
+
+        meth, options = self.methods[field.meta_type]
+        kw = deepcopy(options)
+        if kw.get('context', False):
+            kw['context'] = field
+        return meth(oid, title, data, **kw)
+
