@@ -44,7 +44,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CPSUtil.html import XhtmlSanitizer
 from Products.CPSUtil.text import get_final_encoding
-from Products.CPSUtil.resourceregistry import register_js_method
+from Products.CPSUtil.resourceregistry import JSGlobalMethodResource
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
@@ -58,7 +58,9 @@ from Products.CPSSchemas.swfHeaderData import analyseContent
 
 logger = getLogger('Products.CPSSChemas.ExtendedWidgets')
 
-register_js_method('tinymce', 'tiny_mce.js')
+TINY_MCE_RSRC = JSGlobalMethodResource.register('tiny_mce.js')
+
+RTE_RESOURCES = dict(tinymce=(TINY_MCE_RSRC,))
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
@@ -329,8 +331,8 @@ class CPSTextWidget(CPSStringWidget):
                 cssclass = 'ddefault'
             return '<div class="%s">\n%s\n</div>' % (cssclass, value)
         if mode == 'edit' and self.html_editor_position == 'embedded':
-            if self.html_editor_type == 'tinymce':
-                self.requireResource('tinymce')
+            for rid in RTE_RESOURCES[self.html_editor_type]:
+                self.requireResource(rid)
         return meth(mode=mode, datastructure=datastructure, value=value,
                     file_uploader=self.file_uploader,
                     html_editor_type=self.html_editor_type,
