@@ -45,6 +45,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import XhtmlSanitizer
 from Products.CPSUtil.text import get_final_encoding
 from Products.CPSUtil.resourceregistry import JSGlobalMethodResource
+from Products.CPSUtil.resourceregistry import HtmlResource
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
@@ -59,6 +60,21 @@ from Products.CPSSchemas.swfHeaderData import analyseContent
 logger = getLogger('Products.CPSSChemas.ExtendedWidgets')
 
 TINY_MCE_RSRC = JSGlobalMethodResource.register('tiny_mce.js')
+
+POPUP_RTE_RSRC = HtmlResource.register('popup_rte_script', """
+    <script type="text/javascript">
+     function popup_rte(input_id, label_edit) {
+       var args, value;
+       var width = 640;
+       var height = 520;
+       value = document.getElementById(input_id).value;
+       args = '?input_id='+input_id+'&amp;label_edit='+escape(label_edit);
+       str_window_features = 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,dependent=1,width=' + width + ',height=' + height;
+       popup = window.open(popup_editor_form + args, input_id, str_window_features);
+       return false;
+     }
+    </script>
+""")
 
 RTE_RESOURCES = dict(tinymce=(TINY_MCE_RSRC,))
 
@@ -330,9 +346,14 @@ class CPSTextWidget(CPSStringWidget):
             else:
                 cssclass = 'ddefault'
             return '<div class="%s">\n%s\n</div>' % (cssclass, value)
-        if mode == 'edit' and self.html_editor_position == 'embedded':
-            for rid in RTE_RESOURCES[self.html_editor_type]:
-                self.requireResource(rid)
+        if mode == 'edit' and rformat == 'html':
+            position = self.html_editor_position
+            if position == 'embedded':
+                for rid in RTE_RESOURCES[self.html_editor_type]:
+                    self.requireResource(rid)
+            elif position == 'popup':
+                self.requireResource('popup_rte_script')
+
         return meth(mode=mode, datastructure=datastructure, value=value,
                     file_uploader=self.file_uploader,
                     html_editor_type=self.html_editor_type,
