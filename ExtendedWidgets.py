@@ -59,7 +59,14 @@ from Products.CPSSchemas.swfHeaderData import analyseContent
 
 logger = getLogger('Products.CPSSChemas.ExtendedWidgets')
 
-TINY_MCE_RSRC = JSGlobalMethodResource.register('tiny_mce.js')
+register_js = JSGlobalMethodResource.register
+
+TINY_MCE_RSRC = register_js('tiny_mce.js')
+
+FCK_EDITOR_RSRC = register_js('fckeditor.js')
+
+FCK_EDITOR_FORM_RSRC = register_js('fckeditor_form.js',
+                                   depends=(FCK_EDITOR_RSRC,))
 
 POPUP_RTE_RSRC = HtmlResource.register('popup_rte_script', """
     <script type="text/javascript">
@@ -76,7 +83,9 @@ POPUP_RTE_RSRC = HtmlResource.register('popup_rte_script', """
     </script>
 """)
 
-RTE_RESOURCES = dict(tinymce=(TINY_MCE_RSRC,))
+RTE_RESOURCES = dict(tinymce=(TINY_MCE_RSRC,),
+                     fckeditor=(FCK_EDITOR_RSRC, FCK_EDITOR_FORM_RSRC),
+                     )
 
 ##################################################
 # previously named CPSTextAreaWidget in BasicWidget r1.78
