@@ -1,3 +1,10 @@
+<tal:comment condition="python:False">
+ GR: This ZPT is too complicated for what it does
+ and has too much conditionals and overall logic.
+ Find a way to make this programmatic while retaining
+ ZPT flexibility (maybe split into several ZPTs and have
+ the widget call the right one)
+</tal:comment>
 <tal:block define="mode options/mode;
   id here/getWidgetId;
   value_name here/getHtmlWidgetId;
@@ -17,7 +24,6 @@
   absolute here/absolute|python:False;
   base_url python:test(absolute, utool()+'/', utool.getBaseUrl());
   ">
-  <tal:block condition="python:mode == 'edit'">
         <textarea class="monospaceFont resizable"
           tal:attributes="id value_name;
           name string:${value_name}:utf8:ustring;
@@ -30,39 +36,32 @@
           "
           tal:content="value"
           />
-      <tal:block condition="python:rformat == 'html'">
+      <tal:block condition="python: rformat == 'html'
+			            and html_editor_position == 'popup'">
         <script type="text/javascript"
                 tal:define="popup_editor_form_file_name
                 python:test(html_editor_type == 'tinymce', 'popup_tinymce_form',
                             html_editor_type == 'fckeditor', 'popup_fckeditor_form')"
                 tal:content="structure string:
-var popup_editor_form = '${popup_editor_form_file_name}';
-">
+var popup_editor_form = '${popup_editor_form_file_name}';">
         </script>
       </tal:block>
-      <tal:block condition="python:rformat == 'html' and html_editor_position == 'embedded'">
+      <tal:block condition="python:rformat == 'html'
+                                   and html_editor_position == 'embedded'">
         <tal:block condition="python:html_editor_type == 'tinymce'">
-  <script type="text/javascript"
+	 <script type="text/javascript"
                 tal:define="selected_language portal/getSelectedLanguage"
                 tal:content="structure string:
-displayTinyMceEditor('${value_name}', '${selected_language}');
-">
-   </script>
+        displayTinyMceEditor('${value_name}', '${selected_language}');">
+         </script>
         </tal:block>
         <tal:block condition="python:html_editor_type == 'fckeditor'">
-        <script type="text/javascript" src=""
-                tal:attributes="src string:${base_url}fckeditor.js">
-        </script>
-        <script type="text/javascript" src=""
-                tal:attributes="src string:${base_url}fckeditor_form.js">
-        </script>
-        <script type="text/javascript"
+	 <script type="text/javascript"
                 tal:define="parent_path python:context.aq_inner.aq_parent.absolute_url_path()"
                 tal:content="structure string:
-displayFckEditor('${value_name}', '${parent_path}', '${base_url}');
-">
-        </script>
-      </tal:block>
+          displayFckEditor('${value_name}', '${parent_path}', '${base_url}');">
+	 </script>
+	</tal:block>
       </tal:block>
     <p>
       <tal:block condition="file_uploader">
@@ -111,4 +110,3 @@ displayFckEditor('${value_name}', '${parent_path}', '${base_url}');
     </p>
 
   </tal:block>
-</tal:block>
