@@ -3,10 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #2271: FileObjectFactory now provided by CPSSchemas
+-
 Bug fixes
 ~~~~~~~~~
-- improved progess logging and marginally RAM usage for upgrade attached files
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
