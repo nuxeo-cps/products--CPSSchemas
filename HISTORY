@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.13.0
+===========================================================
+First release built by: gracinet at: 2010-11-27T04:24:43
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2271: FileObjectFactory now provided by CPSSchemas
+Bug fixes
+~~~~~~~~~
+- improved progess logging and marginally RAM usage for upgrade attached files
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.12.0
 ===========================================================
 First release built by: gracinet at: 2010-10-13T11:46:26
