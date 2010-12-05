@@ -2,59 +2,151 @@
 Fields
 ======
 
-:Revision: $Id$
-
 .. sectnum::    :depth: 4
 .. contents::   :depth: 4
 
+Generalities
+============
 
-The fields represent the semantics of an attribute of an object.
-The object can be an actual ZODB object, or could be a directory
-entry; knowing this is not the field's concern but the job of the
-StorageAdapter.
+The fields represent the semantics of a named value for a storage
+object, for instance an attribute of a ZODB persistent object, a value
+in a ``dict``, a getter/setter pair, a column in SQL.
 
-The basic field types represent the standard types one can find in
-python
+Fields are grouped in schemas. Storage objects can typically have
+several schemas.
 
+Fields are abstractions : whatever the actual storage object is, its
+scope of persistence (ZODB, session, request) and how to read/write
+from it are outside the scope of fields. Read about storage adapters
+to learn about that. In the scope of this text, it is enough to know
+that storage for fields from a same schema on a given object will be
+accessed in the same way (namely through the same storage adapter).
+
+In normal circumstances, accessing data from downstream code should
+always be done through data models (instances of the ``DataModel`` class).
+Most concrete CPS components (CPSDocument, CPSDirectory)
+provide the logic to build data models and use it.
+
+Data models bootstrap everything in a transparent way, and in
+particular the logic defined and provided by fields :
+
+- read and write expressions
+- default values
+- access control fine tuning
+- dependent fields system
+
+As of CPS 3.5.1 (CPSSchemas >= 1.11.0, issue #2178), fields also guarantee type
+uniformity (both by rejecting invalid values and by transtyping if needed).
+
+All of this allows downstream code to focus on its own business logic
+by eliminating exceptional cases, while (read/write expressions)
+leaving a handle open for easy configuration-only tweaks.
 
 Basic field types
 =================
 
-- String Field -- A string
+Most basic field types represent the standard types one can find in
+python, but some represent standard Zope 2 types.
 
-- Password Field -- A password
+The predefined default value is the default value of a freshly created
+field, prior to configuration. See "common properties" below for details on
+default values.
 
-  The difference from a string is that there could be restrictions
-  on the way this field is read, because passwords may be stored
-  hashed or nor readable at all.
+Simplest fields
+---------------
+These are straightforward:
 
-- StringList Field -- A list of strings
-
-- Int Field -- An integer
-
-- Long Field -- A long
-
-- Float Field -- A float
-
-- DateTime Field -- A DateTime
-
-- File Field -- A File object
-
-- Image Field -- An Image object
+- Int Field (predefined default value: ``0``)
+- Long Field (predefined default value: ``0L``)
+- Float Field (predefined default value: ``0.0``)
+- Boolean Field (predefined default value: ``False``)
 
 
-Basic field properties
-======================
+String Field
+------------
+As of CPS 3.5.1 (CPSSchemas >= 1.11.0), this is a ``unicode`` string.
+Before that, it used to be an instance of ``str``.
+Predefined default value: empty string.
+
+Ascii String Field
+------------------
+A string that's guaranteed to be either an ``str`` instance made of
+ASCCI characters only, so that downstream code does not need to care
+about automatic promotion to ``unicode``. If there's a problem, it
+won't be because of content managed by an Acii String Field.
+
+Because Zope 2 traversal does not understand ``unicode`` path, any
+field for a Zope path should be an Ascii String Field.
+
+There are very rare cases where the content of this field can be a
+``unicode`` string, namely instances upgraded to a version close to
+3.5.1, and not upgraded again.
+Running the unicode upgrade steps meant for the relevant
+content (again) will clean them, because type coercition is done at
+the write time.
+
+Predefined default value : empty string.
+
+Password Field
+--------------
+The difference from a string is that there could be restrictions
+on the way this field is read, because passwords may be stored
+hashed or nor readable at all.
+
+StringList Field
+----------------
+A list of strings. Actually, the read value is a tuple.
+Predefined default value: ``()``
+
+Ascii StringList Field
+----------------------
+As expected, this is to StringListField what Ascii String Field is to
+String Field.
+
+DateTime Field
+--------------
+Represent Zope's ``DateTime`` objects, not to be confused with more
+recent python ``datetime`` objects.
+Predefined default value: ``None``
+
+File Field
+----------
+Usually, this represents instances of ``OFS.Image.File``, but
+other file objects are allowed, provided they have the same
+interface, such as CPSTramline's ``TramlineFile``.
+
+As of CPS 3.5.2 (CPSSchemas >= 1.13.0), ``Products.CPSUtil.file``
+has helpers to access in
+turn data from these "File" objects uniformly, through the usual
+(basic python's) ``file`` API : ``read()``, ``write()``, ``seek()``, etc.
+
+Also, to instantiate the correct "File" object, there is a pluggable factory in
+``CPSSchemas.FileUtils``. All file objects creation (prior to setting
+in data model) should go through it.
+Sample use-case: CPSDocument's bulk upload (#2205) capability uses
+this factory. This allows CPSTramline to plug a simple logic to decide
+whether to spawn an ordinary ``OFS.Image.File`` object or a
+``TramlineFile`` object.
+
+Image Field
+-----------
+Same remark as for the File Field, except that the stored value is an
+image, with type ``OFS.Image.Image`` or a derivative.
+The aforementioned factory can handle image creation as well.
+
+
+Common field properties
+=======================
 
 Fields are configured using the following properties.
 
-- default_expr -- Default value expression
+- default_expr -- Default value expression (TALES)
 
-  The default value for this field at creation time. It is also
-  used if the attribute is not found on an object when it is
-  accessed, this can happen on an old instances if its schema is
-  edited later. In the expression the following namespace is
-  available:
+  The default value for this field if missing from the storage, and in
+  particular at creation time or if the field is newer than the
+  storage object.
+
+  In the expression the following namespace is  available:
 
   - datamodel: the datamodel
 
@@ -70,8 +162,8 @@ Fields are configured using the following properties.
 
 - is_indexed -- Indexed in SearchableText
 
-  If true the field is indexed in SearchableText. This only has
-  meaning for String and String List fields.
+  If true the field is indexed in the SearchableText aggregator index.
+  This only has meaning for String and String List fields.
 
 - acl_read_permissions -- ACL: Read permissions
 
@@ -145,7 +237,7 @@ Fields are configured using the following properties.
 
   - portal: the portal
 
-  - proxy: the potentially associated proxy 
+  - proxy: the potentially associated proxy
 
   - object: the context object
 
@@ -201,35 +293,46 @@ Additional properties
 Some specific fields have additional properties beyond the basic
 ones, to configure their specific behavior.
 
-- File Field
+File Field
+----------
 
-  - suffix_text -- Suffix for field containing Text conversion
+The File Field has automatic conversion capabilities and stores at
+write time the result of the conversion in auxiliary fields of the same schema.
+Those fields ids are deduced from the current's  by application of a
+suffix.
 
-    Describes which String Field will hold the text conversion.
+In case the suffix is not provided, the corresponding conversion will
+not occur.
 
-  - suffix_html -- Suffix for field containing HTML conversion
+These are:
 
-    Describes which File Field will hold the HTML conversion.
+  - suffix_text -- Suffix for field containing Text conversion. Prime
+    use-case : indexing.
 
-    These two properties, if not empty, define the id of another
-    field of the schema (derived from the id of the current field
-    by adding the specified suffix) that will store an
-    automatically generated conversion to text or HTML.
+  - suffix_html -- Suffix for field containing HTML conversion. Prime
+    use-case: in-browser preview.
 
-    The conversion is currently done using the PortalTransforms
-    framework.
+The conversion is currently done using the PortalTransforms framework,
+through the dependent fields system mentioned above.
+PortalTransforms is a separate Zope2 product, that's itself very pluggable (see
+PortalTransforms documentation)
 
-- Disk File Field
-      
-  This field stores the file on the disk instead of in the ZODB.
-    
-  - disk_storage_path -- path relative to $INSTANCE_HOME for file storage.
-      
-    If this path is not set, it will check if portal_schemas has a
-    disk_storage_path property. If neither is set then var/files
-    will be used.
-        
-      
+
+Disk File Field
+---------------
+
+This field stores the file on the disk instead of in the ZODB.
+This field is currently deprecated in favor of the ordinary File
+field, together with CPSTramline for better transactional behaviour
+and upload/download efficiency.
+
+It has all the properties of the ordinary File Field, plus:
+
+- disk_storage_path -- path relative to $INSTANCE_HOME for file storage.
+
+If this path is not set, it will check if portal_schemas has a
+disk_storage_path property. If neither is set then var/files will be used.
+
 .. Emacs
 .. Local Variables:
 .. mode: rst
