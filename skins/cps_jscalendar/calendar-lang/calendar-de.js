@@ -11,7 +11,7 @@ Calendar._DN = new Array
 Calendar._MN = new Array
 ("Januar",
 "Februar",
-"M‰rz",
+"M√§rz",
 "April",
 "Mai",
 "Juni",
@@ -25,17 +25,17 @@ Calendar._MN = new Array
 // tooltips
 Calendar._TT = {};
 Calendar._TT["TOGGLE"] = "Wechsel des Wochenbeginns";
-Calendar._TT["PREV_YEAR"] = "vorh. Jahr (halten f. Men¸)";
-Calendar._TT["PREV_MONTH"] = "vorh. Monat (halten f. Men¸)";
+Calendar._TT["PREV_YEAR"] = "vorh. Jahr (halten f. Men√º)";
+Calendar._TT["PREV_MONTH"] = "vorh. Monat (halten f. Men√º)";
 Calendar._TT["GO_TODAY"] = "Heute";
-Calendar._TT["NEXT_MONTH"] = "n‰chst. Monat (halten f. Men¸)";
-Calendar._TT["NEXT_YEAR"] = "n‰chst. Jahr (halten f. Men¸)";
-Calendar._TT["SEL_DATE"] = "Datum w‰hlen";
+Calendar._TT["NEXT_MONTH"] = "n√§chst. Monat (halten f. Men√º)";
+Calendar._TT["NEXT_YEAR"] = "n√§chst. Jahr (halten f. Men√º)";
+Calendar._TT["SEL_DATE"] = "Datum w√§hlen";
 Calendar._TT["DRAG_TO_MOVE"] = "Verschieben";
 Calendar._TT["PART_TODAY"] = " (heute)";
 Calendar._TT["MON_FIRST"] = "Wochenanf. Montag";
 Calendar._TT["SUN_FIRST"] = "Wochenanf. Sonntag";
-Calendar._TT["CLOSE"] = "Schlieﬂen";
+Calendar._TT["CLOSE"] = "Schlie√üen";
 Calendar._TT["TODAY"] = "Heute";
 
 // date formats
