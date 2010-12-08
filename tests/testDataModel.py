@@ -60,6 +60,12 @@ class FakeProxy:
             lang = self.default
         return self.docs.get(lang)
 
+    def absolute_url_path(self):
+        return '/path/to/proxy'
+
+    def absolute_url(self):
+        return 'http://cps.example' + self.absolute_url_path()
+
 class TestDataModel(unittest.TestCase):
 
     def setUp(self):
@@ -294,6 +300,22 @@ class TestDataModel(unittest.TestCase):
 
     def TODO_testFieldProcessing(self):
         pass
+
+    def test_getSubContentUri(self):
+        # this also depends on the fact that AttributeStorageAdapter is working
+        dm = self.makeOne()
+        dm._setObject(self.doc, proxy=FakeProxy(en=self.doc))
+        dm._fetch()
+
+        fobj = File('file', 'original', 'spam')
+        dm['file'] = fobj
+        dm._commit(check_perms=0)
+
+        self.assertEquals(dm.getSubContentUri('file'),
+                          '/path/to/proxy/downloadFile/file/original')
+        self.assertEquals(
+            dm.getSubContentUri('file', absolute=True),
+            'http://cps.example/path/to/proxy/downloadFile/file/original')
 
     def test_fileProtection(self):
         dm = self.makeOne()
