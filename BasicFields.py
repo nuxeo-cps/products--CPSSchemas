@@ -237,7 +237,7 @@ class CPSStringField(CPSField):
     default_expr_c = Expression(default_expr)
     validate_none = False
 
-    logger = getLogger("CPSSchemas.BasicFields.CPSStringField")
+    logger = getLogger(__name__)
 
     def validate(self, value):
         if value is None and self.validate_none:

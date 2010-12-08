@@ -51,7 +51,7 @@ from OFS.Image import File
 
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.permissions import ModifyPortalContent
-logger = logging.getLogger('Products.CPSSchemas.DataModel')
+logger = logging.getLogger(__name__)
 
 try:
     True
