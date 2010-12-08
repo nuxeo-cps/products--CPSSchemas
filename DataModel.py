@@ -263,6 +263,25 @@ class DataModel(UserDict):
         # if needed
         return UserDict.setdefault(self, key, failobj=failobj)
 
+    def getSubContentUri(self, key, absolute=False, entry_point=None):
+        """Get an URI for key, applicable in a sub request.
+
+        Raise KeyError if key not found in self.
+        ValueError if key's field is incorrect.
+        Otherwise return None if not applicable.
+        Check StorageAdapter.getSubContentUri() for more details, esp.
+        about entry_point.
+        """
+        self.checkReadAccess(key)
+        for ad in self._adapters:
+            try:
+                return ad.getSubContentUri(key, absolute=absolute,
+                                           entry_point=entry_point)
+            except KeyError:
+                continue
+        else:
+            raise KeyError("No such field: %r" % key)
+
     # Unrestricted accessors
 
     def _itemsWithFields(self):

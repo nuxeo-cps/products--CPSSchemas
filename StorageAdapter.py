@@ -41,6 +41,7 @@ from Acquisition import aq_base
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
+from interfaces import IFileField
 
 logger = logging.getLogger(__name__)
 
@@ -174,9 +175,43 @@ class BaseStorageAdapter:
                 raise
             self._setData(data)
 
+    def getSubContentUri(self, field_id, absolute=False, entry_point=None):
+        """Return a valid URI for sub content (typically an attached file).
+
+        The entry_point keyword argument describes the object through
+        which the sub content is to be accessed and is used typically to
+        build the leading part of the URI.
+        It can also be a string, in which case it will
+        be considered directly as a base for the generated URI.
+        If not provided, some adapters have default behaviors, some haven't.
+
+        If no applicable URI can be generated, the returned value is None.
+        Example: MappingStorageAdapter working on a purely transient dict.
+
+        If absolute is False, a relative URI with absolute path is generated
+        If absolute is True, a full blown absolute URI is generated.
+
+        Exceptions: KeyError in case the field is unknown
+                    ValueError in case the field type is inappropriate
+                               (currently if it doesn't provide IFileField)
+        """
+        field = self._schema[field_id]
+        if not IFileField.providedBy(field):
+            raise ValueError("Not a IFileField: %r", field_id)
+
+        return self._getSubContentUri(entry_point, field_id, field,
+                                      absolute=absolute)
+
     #
     # Internal API for subclasses
     #
+
+    def _getSubContentUri(self, entry_point, field_id, field, absolute=False):
+        """Concrete implementation at subclass level for getSubContentUri().
+
+        Check getSubContentUri() doc for details.
+        """
+        return None # means not applicable to current adapter
 
     def _getWriteProcessFieldIds(self):
         res = set()
@@ -326,6 +361,35 @@ class AttributeStorageAdapter(BaseStorageAdapter):
     def _getContentUrl(self, object, field_id, file_name):
         return '%s/downloadFile/%s/%s' % (
             object.absolute_url(), field_id, file_name)
+
+    def _getSubContentUri(self, entry_point, field_id, field, absolute=False):
+        """See docstring in BaseStorageAdapter."""
+
+        proxy = None
+        if entry_point is None:
+            proxy = self._proxy
+            if proxy is not None:
+                entry_point = proxy
+            else:
+                entry_point = self._ob
+
+        if entry_point is None:
+            return
+
+        if isinstance(entry_point, basestring):
+            base_url = str(entry_point)
+        elif absolute:
+            base_uri = entry_point.absolute_url()
+        else:
+            base_uri = entry_point.absolute_url_path()
+
+        fobj = self._getFieldData(field_id, field)
+        if proxy is not None:
+            return '%s/downloadFile/%s/%s' % (base_uri, field_id,
+                                              fobj.title_or_id())
+        else:
+            return '%s/%s' % (base_uri, field_id)
+
 
 
 ACCESSOR = object()
