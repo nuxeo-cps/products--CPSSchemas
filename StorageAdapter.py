@@ -35,12 +35,14 @@ ZMI.
 
 """
 
+import logging
 import warnings
-from zLOG import LOG, DEBUG, ERROR
 from Acquisition import aq_base
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
+
+logger = logging.getLogger(__name__)
 
 class BaseStorageAdapter:
     """Base Storage Adapter
