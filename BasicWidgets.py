@@ -1785,43 +1785,7 @@ class CPSFileWidget(CPSWidget):
             size = 0
             last_modified = ''
 
-        # Find the URL for the file  XXX Refactor this!
-
-        # get the adapter
-        for adapter in dm._adapters:
-            if adapter.getSchema().has_key(field_id):
-                break # Note: 'adapter' is still the right one
-        else:
-            raise ValueError('No schema for field %r' % field_id)
-
-        # get the content_url from the adapter
-        content_url = None
-        ob = dm.getProxy()
-        if ob is None:
-            # non proxy case
-            ob = dm.getObject()
-        if ob is None:
-            # Not stored in the ZODB.
-            # StorageAdapters that do not store the object in
-            # ZODB takes the entry_id instead of object.
-            # Get the entry_id from the datamodel context(typically
-            # a directory).
-            id_field = getattr(dm.getContext(), 'id_field', None)
-            if id_field:
-                try:
-                    entry_id = datastructure[id_field]
-                except KeyError:
-                    entry_id = None
-            else:
-                # No object passed, and no id_field
-                entry_id = None
-            if entry_id:
-                # some adapters does not have _getContentUrl
-                if getattr(adapter, '_getContentUrl', None) is not None:
-                    content_url = adapter._getContentUrl(entry_id, field_id)
-        else:
-            content_url = adapter._getContentUrl(ob, field_id,
-                                                 current_filename)
+        content_url = dm.getSubContentUri(field_id) # can be None
 
         # get the mimetype
         registry = getToolByName(self, 'mimetypes_registry')

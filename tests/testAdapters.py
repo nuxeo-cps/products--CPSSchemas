@@ -52,13 +52,16 @@ fakePortal.portal_url = fakeUrlTool
 class FakeDocument:
     f1 = 'f1class'
 
+    def absolute_url_path(self):
+        return '/path/to/doc'
 
 class FakeProxy:
     def __init__(self, document):
         self.document = document
+    def absolute_url_path(self):
+        return '/path/to/proxy'
 
 class TestBaseStorageAdapter(ZopeTestCase):
-
     def afterSetUp(self):
         # Acquisition is needed for expression context computation during fetch
         schema = CPSSchema('s1', 'Schema1').__of__(fakePortal)
@@ -167,6 +170,20 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         self.adapter.setContextObject(self.doc, self.doc_proxy)
         context_object = self.adapter.getContextObject()
         self.assertNotEquals(context_object, None)
+
+    def testGetSubContentUri(self):
+        self.schema.addField('ff', 'CPS File Field')
+        # test with no file obj, other cases already covered by dm tests
+        self.adapter.setContextObject(self.doc, self.doc_proxy)
+        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        self.adapter.setContextObject(self.doc)
+        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        # Same with None set as value
+        self.doc.ff = None
+        self.adapter.setContextObject(self.doc, self.doc_proxy)
+        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        self.adapter.setContextObject(self.doc)
+        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
 
 
 class TestMetaDataStorageAdapter(ZopeTestCase):

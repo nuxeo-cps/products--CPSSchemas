@@ -138,8 +138,6 @@ class FakeAdapter(object):
         self.schema = schema
     def getSchema(self):
         return self.schema
-    def _getContentUrl(self, a, b, c=None):
-        return 'http://url for %s %s %s' % (a, b, c)
 
 class FakeDataModel(dict):
     _adapters = None
@@ -155,6 +153,9 @@ class FakeDataModel(dict):
         return self.proxy
     def getContext(self):
         return self.context
+    def getSubContentUri(self, *a, **kw):
+        # GR too much faking does not test much, but oh well
+        return "dm.getSubContentUri args=%r, kwargs=%r" % (a, kw)
 
 class FakeMimeTypeRegistry(Implicit):
     def lookupExtension(self, name):
@@ -1008,28 +1009,9 @@ function getLayoutMode() {
             'title': 'thetitle',
             'size': len('thefilecontent'),
             'last_modified': '',
-            'content_url': 'http://url for someproxy bar thefilename.txt',
+            'content_url': "dm.getSubContentUri args=('bar',), kwargs={}",
             'mimetype': 'testlookup/TXT',
             })
-        # Now without proxy nor object, for directory adapters
-        dm.proxy = None
-        context = Folder()
-        context.id_field = 'hah'
-        ds['hah'] = 'someentry'
-        dm.context = context
-        file_info = widget.getFileInfo(ds)
-        self.assertEquals(file_info, {
-            'empty_file': False,
-            'session_file': False,
-            'current_filename': 'thefilename.txt',
-            'title': 'thetitle',
-            'size': len('thefilecontent'),
-            'last_modified': '',
-            'content_url': 'http://url for someentry bar None',
-            'mimetype': 'testlookup/TXT',
-            })
-
-        return
 
     def test_CPSFileWidget_validate(self):
         from Products.CPSSchemas.BasicWidgets import CPSFileWidget

@@ -50,6 +50,8 @@ class FakeDocument:
         return ''
     def _setObject(self, oid, obj):
         setattr(self, oid, obj)
+    def absolute_url_path(self):
+        return '/path/to/doc'
 
 class FakeProxy:
     def __init__(self, default='en', **kw):
@@ -311,11 +313,55 @@ class TestDataModel(unittest.TestCase):
         dm['file'] = fobj
         dm._commit(check_perms=0)
 
+        # with proxy
         self.assertEquals(dm.getSubContentUri('file'),
                           '/path/to/proxy/downloadFile/file/original')
         self.assertEquals(
             dm.getSubContentUri('file', absolute=True),
             'http://cps.example/path/to/proxy/downloadFile/file/original')
+
+        # forcing base uri with string entry_point
+        self.assertEquals(dm.getSubContentUri('file', entry_point='/hop'),
+                          '/hop/file')
+
+        # without proxy
+        dm._setObject(self.doc, proxy=None)
+        self.assertEquals(dm.getSubContentUri('file'), '/path/to/doc/file')
+        self.assertEquals(dm.getSubContentUri('file', entry_point='/hop'),
+                          '/hop/file')
+
+    def testgetSubContentUri2(self):
+        # test with two schemata, and field in the second one
+
+        # dm preparation
+        doc = self.doc = FakeDocument()
+        doc.f2 = 'f2inst'
+
+        sch1 = CPSSchema('s1', 'Schema1').__of__(fakePortal)
+        sch1.addField('f1', 'CPS String Field')
+        sch2 = CPSSchema('s2', 'Schema2').__of__(fakePortal)
+        sch2.addField('ff', 'CPS File Field')
+
+        dm = DataModel(doc, adapters=tuple(
+                AttributeStorageAdapter(sch, doc, field_ids=sch.keys())
+                for sch in (sch1, sch2)))
+
+        dm._setObject(doc, proxy=FakeProxy(en=self.doc))
+        dm._fetch()
+
+        # setting a file
+        fobj = File('file', 'original.txt', 'spam')
+        dm['ff'] = fobj # note the different id
+        dm._commit(check_perms=0)
+
+        # assertions
+        self.assertEquals(dm.getSubContentUri('ff'),
+                          '/path/to/proxy/downloadFile/ff/original.txt')
+        # again with no proxy
+        dm._setObject(self.doc, proxy=None)
+        self.assertEquals(dm.getSubContentUri('ff'),
+                          '/path/to/doc/ff')
+
 
     def test_fileProtection(self):
         dm = self.makeOne()

@@ -376,14 +376,17 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if entry_point is None:
             return
 
+        fobj = self._getFieldData(field_id, field)
+        if fobj is DEFAULT_VALUE_MARKER or fobj is None:
+            return
+
         if isinstance(entry_point, basestring):
-            base_url = str(entry_point)
+            base_uri = str(entry_point)
         elif absolute:
             base_uri = entry_point.absolute_url()
         else:
             base_uri = entry_point.absolute_url_path()
 
-        fobj = self._getFieldData(field_id, field)
         if proxy is not None:
             return '%s/downloadFile/%s/%s' % (base_uri, field_id,
                                               fobj.title_or_id())
