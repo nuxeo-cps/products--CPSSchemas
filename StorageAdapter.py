@@ -46,6 +46,11 @@ from interfaces import IFileField
 
 logger = logging.getLogger(__name__)
 
+def deprecate_getContentUrl():
+    warnings.warn('_getContentUrl() is deprecated and will be removed in '
+                  'CPS 3.6. Use DataModel.getSubContentUri() instead',
+                  DeprecationWarning, stacklevel=2)
+
 class BaseStorageAdapter:
     """Base Storage Adapter
 
@@ -338,23 +343,23 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if isinstance(field, CPSSubObjectsField):
             field.setAsAttribute(ob, field_id, value)
         else:
+            ob_base = aq_base(ob)
 
             # If the field is stored as a subobject first delete it.
-            if hasattr(aq_base(ob),'objectIds') and field_id in ob.objectIds():
+            if hasattr(ob_base,'objectIds') and field_id in ob.objectIds():
                 ob._delObject(field_id)
 
-            # If it is a Zope object, store as subobject and not attribute
-            if hasattr(aq_base(value), 'manage_beforeDelete'):
-                if hasattr(aq_base(ob), field_id):
+            # If it is an OFS object, store as subobject and not attribute
+            if (hasattr(aq_base(value), 'manage_beforeDelete') and
+                hasattr(ob_base, '_setObject')):
+                if hasattr(ob_base, field_id):
                     delattr(ob, field_id)
                 ob._setObject(field_id, value)
             else:
                 setattr(ob, field_id, value)
 
     def _getContentUrl(self, object, field_id, file_name):
-        warnings.warn('_getContentUrl() is deprecated, '
-                      'use DataModel.getSubContentUri() instead',
-                      DeprecationWarning, stacklevel=2)
+        deprecate_getContentUrl()
         return '%s/downloadFile/%s/%s' % (
             object.absolute_url(), field_id, file_name)
 
