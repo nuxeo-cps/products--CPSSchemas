@@ -320,15 +320,9 @@ class TestDataModel(unittest.TestCase):
             dm.getSubContentUri('file', absolute=True),
             'http://cps.example/path/to/proxy/downloadFile/file/original')
 
-        # forcing base uri with string entry_point
-        self.assertEquals(dm.getSubContentUri('file', entry_point='/hop'),
-                          '/hop/file')
-
         # without proxy
         dm._setObject(self.doc, proxy=None)
         self.assertEquals(dm.getSubContentUri('file'), '/path/to/doc/file')
-        self.assertEquals(dm.getSubContentUri('file', entry_point='/hop'),
-                          '/hop/file')
 
     def testgetSubContentUri2(self):
         # test with two schemata, and field in the second one

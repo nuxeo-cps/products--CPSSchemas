@@ -263,7 +263,7 @@ class DataModel(UserDict):
         # if needed
         return UserDict.setdefault(self, key, failobj=failobj)
 
-    def getSubContentUri(self, key, absolute=False, entry_point=None):
+    def getSubContentUri(self, key, absolute=False):
         """Get an URI for key, applicable in a sub request.
 
         Raise KeyError if key not found in self.
@@ -275,8 +275,7 @@ class DataModel(UserDict):
         self.checkReadAccess(key)
         for ad in self._adapters:
             try:
-                return ad.getSubContentUri(key, absolute=absolute,
-                                           entry_point=entry_point)
+                return ad.getSubContentUri(key, absolute=absolute)
             except KeyError:
                 continue
         else:

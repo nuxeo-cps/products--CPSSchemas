@@ -175,15 +175,8 @@ class BaseStorageAdapter:
                 raise
             self._setData(data)
 
-    def getSubContentUri(self, field_id, absolute=False, entry_point=None):
+    def getSubContentUri(self, field_id, absolute=False):
         """Return a valid URI for sub content (typically an attached file).
-
-        The entry_point keyword argument describes the object through
-        which the sub content is to be accessed and is used typically to
-        build the leading part of the URI.
-        It can also be a string, in which case it will
-        be considered directly as a base for the generated URI.
-        If not provided, some adapters have default behaviors, some haven't.
 
         If no applicable URI can be generated, the returned value is None.
         Example: MappingStorageAdapter working on a purely transient dict.
@@ -199,14 +192,13 @@ class BaseStorageAdapter:
         if not IFileField.providedBy(field):
             raise ValueError("Not a IFileField: %r", field_id)
 
-        return self._getSubContentUri(entry_point, field_id, field,
-                                      absolute=absolute)
+        return self._getSubContentUri(field_id, field, absolute=absolute)
 
     #
     # Internal API for subclasses
     #
 
-    def _getSubContentUri(self, entry_point, field_id, field, absolute=False):
+    def _getSubContentUri(self, field_id, field, absolute=False):
         """Concrete implementation at subclass level for getSubContentUri().
 
         Check getSubContentUri() doc for details.
@@ -362,36 +354,24 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         return '%s/downloadFile/%s/%s' % (
             object.absolute_url(), field_id, file_name)
 
-    def _getSubContentUri(self, entry_point, field_id, field, absolute=False):
+    def _getSubContentUri(self, field_id, field, absolute=False):
         """See docstring in BaseStorageAdapter."""
 
-        proxy = None
-        if entry_point is None:
-            proxy = self._proxy
-            if proxy is not None:
-                entry_point = proxy
-            else:
-                entry_point = self._ob
-
-        if entry_point is None:
+        proxy = self._proxy
+        base = proxy is not None and proxy or self._ob
+        if base is None:
             return
 
         fobj = self._getFieldData(field_id, field)
         if fobj is DEFAULT_VALUE_MARKER or fobj is None:
             return
 
-        if isinstance(entry_point, basestring):
-            base_uri = str(entry_point)
-        elif absolute:
-            base_uri = entry_point.absolute_url()
-        else:
-            base_uri = entry_point.absolute_url_path()
-
-        if proxy is not None:
+        base_uri = absolute and base.absolute_url() or base.absolute_url_path()
+        if base is proxy:
             return '%s/downloadFile/%s/%s' % (base_uri, field_id,
                                               fobj.title_or_id())
-        else:
-            return '%s/%s' % (base_uri, field_id)
+
+        return '%s/%s' % (base_uri, field_id)
 
 
 
