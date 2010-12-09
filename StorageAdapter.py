@@ -37,6 +37,7 @@ ZMI.
 
 import logging
 import warnings
+import urllib
 from Acquisition import aq_base
 
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
@@ -351,6 +352,9 @@ class AttributeStorageAdapter(BaseStorageAdapter):
                 setattr(ob, field_id, value)
 
     def _getContentUrl(self, object, field_id, file_name):
+        warnings.warn('_getContentUrl() is deprecated, '
+                      'use DataModel.getSubContentUri() instead',
+                      DeprecationWarning, stacklevel=2)
         return '%s/downloadFile/%s/%s' % (
             object.absolute_url(), field_id, file_name)
 
@@ -369,7 +373,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         base_uri = absolute and base.absolute_url() or base.absolute_url_path()
         if base is proxy:
             return '%s/downloadFile/%s/%s' % (base_uri, field_id,
-                                              fobj.title_or_id())
+                                              urllib.quote(fobj.title_or_id()))
 
         return '%s/%s' % (base_uri, field_id)
 

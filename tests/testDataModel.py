@@ -351,6 +351,9 @@ class TestDataModel(unittest.TestCase):
         # assertions
         self.assertEquals(dm.getSubContentUri('ff'),
                           '/path/to/proxy/downloadFile/ff/original.txt')
+        fobj.title = 'av\xe9' # escape needed
+        self.assertEquals(dm.getSubContentUri('ff'),
+                          '/path/to/proxy/downloadFile/ff/av%E9')
         # again with no proxy
         dm._setObject(self.doc, proxy=None)
         self.assertEquals(dm.getSubContentUri('ff'),

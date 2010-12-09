@@ -185,6 +185,15 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         self.adapter.setContextObject(self.doc)
         self.assertEquals(self.adapter.getSubContentUri('ff'), None)
 
+    def test_getContentUrl_BBB(self):
+        # should issue a deprecation warning, but still work
+        # we don't even need to set ob, proxy or a file
+        self.schema.addField('ff', 'CPS File Field')
+        self.doc_proxy.absolute_url = lambda : '/abs'
+        self.assertEquals(
+            self.adapter._getContentUrl(self.doc_proxy, 'ff', 'file.txt'),
+            '/abs/downloadFile/ff/file.txt')
+
 
 class TestMetaDataStorageAdapter(ZopeTestCase):
     def afterSetUp(self):
