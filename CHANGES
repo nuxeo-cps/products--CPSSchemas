@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #2308: refactored generation of attached files and images URIs
 Bug fixes
 ~~~~~~~~~
 - #2303: fixed western localisations of javascript calendar (latin-9->utf-8)
