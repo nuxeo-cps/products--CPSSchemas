@@ -22,7 +22,7 @@
 A layout describes how to render a set of widgets.
 """
 
-from zLOG import LOG, DEBUG, WARNING
+import logging
 from copy import deepcopy
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
@@ -45,6 +45,7 @@ from Products.CPSSchemas.Widget import widgetRegistry
 from zope.interface import implements
 from Products.CPSSchemas.interfaces import ILayout
 
+logger = logging.getLogger(__name__)
 
 class LayoutContainer(Folder):
     """Layout Tool
@@ -249,9 +250,8 @@ class Layout(PropertiesPostProcessor,
             new_row = []
             for cell in row:
                 if not self.has_key(cell['widget_id']):
-                    LOG('CPSSchemas', WARNING,
-                        'Layout %s refers to deleted widget %s' % (
-                            self.getId(), cell['widget_id']))
+                    logger.warn('Layout %s refers to missing (deleted?) '
+                                'widget %r', self.getId(), cell['widget_id'])
                 elif cell['widget_mode'] != 'hidden':
                     new_row.append(cell)
             row[:] = new_row
@@ -332,9 +332,8 @@ class Layout(PropertiesPostProcessor,
                 if widgets.has_key(cell['widget_id']):
                     cell.update(widgets[cell['widget_id']])
                 else:
-                    LOG('CPSSchemas', WARNING,
-                        'Layout %s refers to deleted widget %s' % (
-                            self.getId(), cell['widget_id']))
+                    logger.warn('Layout %s refers to missing (deleted?) '
+                                'widget %r', self.getId(), cell['widget_id'])
         # Eliminate hidden widgets.
         self.removeHiddenWidgets(layout_structure)
         return layout_structure
@@ -400,9 +399,10 @@ class Layout(PropertiesPostProcessor,
                     rendered = widget.render(mode, datastructure,
                                              widget_infos=widget_infos, **kw)
                 except UnicodeDecodeError:
-                    LOG('renderLayoutStructure', WARNING,
-                        'widget %s mix unicode and non ascii string: ds=%s' %
-                        (widget.absolute_url(), str(datastructure)))
+                    logger.warn(
+                        'renderLayoutStructure: widget %r',
+                        'widget %r mixes unicode and non ascii string: ds=%s',
+                        widget.absolute_url_path(), str(datastructure))
                     raise
                 rendered = rendered.strip()
                 cell['widget_rendered'] = rendered

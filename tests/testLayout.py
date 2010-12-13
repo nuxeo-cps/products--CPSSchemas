@@ -125,6 +125,22 @@ class LayoutTests(unittest.TestCase):
         self.assertEquals(ls['widgets'].has_key('my_int'), True)
         self.assertEquals(ls['widgets'].has_key('my_string'), True)
 
+    def test_computeLayoutStructure_missing(self):
+        # test case where the table references a widget that's missing
+        layout = self.makeLayout()
+        layoutdef = {'ncols': 1, 'rows': [
+            [{'widget_id': 'missing', 'ncols': 1},],
+            [{'widget_id': 'my_int2', 'ncols': 1},],
+            [{'widget_id': 'my_string', 'ncols': 1},]]}
+        layout.setLayoutDefinition(layoutdef)
+        dm = self.makeDataModelWithSchema()
+        ds = self.makeDataStructure(dm)
+        layout.prepareLayoutWidgets(ds)
+
+        ls = layout.computeLayoutStructure('edit', dm)
+        self.assertEquals(ls['widgets'].has_key('my_int'), True)
+        self.assertEquals(ls['widgets'].has_key('my_string'), True)
+
     def test_validateLayoutStructure(self):
         layout = self.makeLayout()
         dm = self.makeDataModelWithSchema()
