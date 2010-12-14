@@ -1,0 +1,42 @@
+<configure xmlns="http://namespaces.nuxeo.org/cps">
+
+ <!-- Registration for standard widget classes -->
+
+ <widget class=".BasicWidgets.CPSHtmlWidget"/>
+ <widget class=".BasicWidgets.CPSMethodWidget"/>
+ <widget class=".BasicWidgets.CPSStringWidget"/>
+ <widget class=".BasicWidgets.CPSURLWidget"/>
+ <widget class=".BasicWidgets.CPSEmailWidget"/>
+ <widget class=".BasicWidgets.CPSIdentifierWidget"/>
+ <widget class=".BasicWidgets.CPSHeadingWidget"/>
+ <widget class=".BasicWidgets.CPSPasswordWidget"/>
+ <widget class=".BasicWidgets.CPSCheckBoxWidget"/>
+ <widget class=".BasicWidgets.CPSTextAreaWidget"/> <!-- very deprecated -->
+ <widget class=".BasicWidgets.CPSLinesWidget"/>
+ <widget class=".BasicWidgets.CPSEmailListWidget"/>
+ <widget class=".BasicWidgets.CPSListWidget"/>
+ <widget class=".BasicWidgets.CPSOrderedListWidget"/>
+ <widget class=".BasicWidgets.CPSUnorderedListWidget"/>
+ <widget class=".BasicWidgets.CPSSelectWidget"/>
+ <widget class=".BasicWidgets.CPSMultiSelectWidget"/>
+ <widget class=".BasicWidgets.CPSBooleanWidget"/>
+ <widget class=".BasicWidgets.CPSIntWidget"/>
+ <widget class=".BasicWidgets.CPSLongWidget"/>
+ <widget class=".BasicWidgets.CPSFloatWidget"/>
+ <widget class=".BasicWidgets.CPSDateWidget"/> <!-- very deprecated -->
+ <widget class=".BasicWidgets.CPSFileWidget"/>
+ <widget class=".BasicWidgets.CPSImageWidget"/>
+ <widget class=".BasicWidgets.CPSCompoundWidget"/>
+ <widget class=".BasicWidgets.CPSProgrammerCompoundWidget"/>
+ <widget class=".BasicWidgets.CPSBylineWidget"/>
+ <widget class=".BasicWidgets.CPSRevisionWidget"/>
+
+ <!--widget class=".BasicWidgets.CPSWidget"/>
+ <widget class=".BasicWidgets.CPSWidget"/>
+ <widget class=".BasicWidgets.CPSWidget"/>
+ <widget class=".BasicWidgets.CPSWidget"/>
+ <widget class=".BasicWidgets.CPSWidget"/>
+ <widget class=".BasicWidgets.CPSWidget"/>
+ <widget class=".BasicWidgets.CPSWidget"/-->
+
+</configure>

@@ -58,7 +58,6 @@ from Products.CPSUtil.file import makeFileUploadFromOFSFile
 
 from Products.CPSSchemas.utils import getHumanReadableSize
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.Widget import CIDPARTS_KEY
 from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
@@ -129,8 +128,6 @@ class CPSHtmlWidget(CPSWidget):
 
 InitializeClass(CPSHtmlWidget)
 
-widgetRegistry.register(CPSHtmlWidget)
-
 ##################################################
 
 class CPSMethodWidget(CPSWidget):
@@ -180,8 +177,6 @@ class CPSMethodWidget(CPSWidget):
         return meth(mode=mode, datastructure=datastructure)
 
 InitializeClass(CPSMethodWidget)
-
-widgetRegistry.register(CPSMethodWidget)
 
 ##################################################
 
@@ -298,8 +293,6 @@ class CPSStringWidget(CPSWidget):
 
 InitializeClass(CPSStringWidget)
 
-widgetRegistry.register(CPSStringWidget)
-
 ##################################################
 
 class CPSURLWidget(CPSStringWidget):
@@ -385,8 +378,6 @@ class CPSURLWidget(CPSStringWidget):
 
 InitializeClass(CPSURLWidget)
 
-widgetRegistry.register(CPSURLWidget)
-
 ##################################################
 
 class CPSEmailWidget(CPSStringWidget):
@@ -443,10 +434,6 @@ class CPSEmailWidget(CPSStringWidget):
 
 InitializeClass(CPSEmailWidget)
 
-widgetRegistry.register(CPSEmailWidget)
-
-
-
 ##################################################
 
 class CPSIdentifierWidget(CPSStringWidget):
@@ -489,8 +476,6 @@ class CPSIdentifierWidget(CPSStringWidget):
 
 InitializeClass(CPSIdentifierWidget)
 
-widgetRegistry.register(CPSIdentifierWidget)
-
 ##################################################
 
 class CPSHeadingWidget(CPSStringWidget):
@@ -516,10 +501,6 @@ class CPSHeadingWidget(CPSStringWidget):
             return renderHtmlTag('h%s' % self.level, **kw)
         return CPSStringWidget.render(self, mode, datastructure, **kw)
 
-
-InitializeClass(CPSHeadingWidget)
-
-widgetRegistry.register(CPSHeadingWidget)
 
 ##################################################
 
@@ -634,8 +615,6 @@ class CPSPasswordWidget(CPSStringWidget):
 
 InitializeClass(CPSPasswordWidget)
 
-widgetRegistry.register(CPSPasswordWidget)
-
 ##################################################
 
 class CPSCheckBoxWidget(CPSWidget):
@@ -696,8 +675,6 @@ class CPSCheckBoxWidget(CPSWidget):
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSCheckBoxWidget)
-
-widgetRegistry.register(CPSCheckBoxWidget)
 
 ##################################################
 # Warning textarea widget code is back to r1.75
@@ -786,8 +763,6 @@ class CPSTextAreaWidget(CPSWidget):
         return ret
 
 InitializeClass(CPSTextAreaWidget)
-
-widgetRegistry.register(CPSTextAreaWidget)
 
 ##################################################
 
@@ -897,9 +872,6 @@ class CPSLinesWidget(CPSWidget):
 
 InitializeClass(CPSLinesWidget)
 
-widgetRegistry.register(CPSLinesWidget)
-
-
 class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
     """List of Emails with a textarea for input and rendered mailto: links"""
 
@@ -949,9 +921,6 @@ class CPSEmailListWidget(CPSLinesWidget, CPSEmailWidget):
 
 InitializeClass(CPSEmailListWidget)
 
-widgetRegistry.register(CPSEmailListWidget)
-
-
 ##################################################
 
 class CPSListWidget(CPSLinesWidget):
@@ -971,8 +940,6 @@ class CPSListWidget(CPSLinesWidget):
                     % self.getId())
         return meth(mode=mode, value=value)
 
-InitializeClass(CPSListWidget)
-
 ##################################################
 
 class CPSOrderedListWidget(CPSListWidget):
@@ -982,8 +949,6 @@ class CPSOrderedListWidget(CPSListWidget):
 
 InitializeClass(CPSOrderedListWidget)
 
-widgetRegistry.register(CPSOrderedListWidget)
-
 ##################################################
 
 class CPSUnorderedListWidget(CPSListWidget):
@@ -992,8 +957,6 @@ class CPSUnorderedListWidget(CPSListWidget):
     display = 'unordered'
 
 InitializeClass(CPSUnorderedListWidget)
-
-widgetRegistry.register(CPSUnorderedListWidget)
 
 ##################################################
 
@@ -1141,8 +1104,6 @@ class CPSSelectWidget(CPSWidget):
 
 InitializeClass(CPSSelectWidget)
 
-widgetRegistry.register(CPSSelectWidget)
-
 ##################################################
 
 class CPSMultiSelectWidget(CPSSelectWidget):
@@ -1268,8 +1229,6 @@ class CPSMultiSelectWidget(CPSSelectWidget):
 
 InitializeClass(CPSMultiSelectWidget)
 
-widgetRegistry.register(CPSMultiSelectWidget)
-
 ##################################################
 
 class CPSBooleanWidget(CPSWidget):
@@ -1337,8 +1296,6 @@ class CPSBooleanWidget(CPSWidget):
                     render_format=render_format)
 
 InitializeClass(CPSBooleanWidget)
-
-widgetRegistry.register(CPSBooleanWidget)
 
 ##################################################
 
@@ -1426,8 +1383,6 @@ class CPSIntWidget(CPSWidget):
 
 InitializeClass(CPSIntWidget)
 
-widgetRegistry.register(CPSIntWidget)
-
 #######################################################
 
 class CPSLongWidget(CPSIntWidget):
@@ -1446,8 +1401,6 @@ class CPSLongWidget(CPSIntWidget):
         CPSIntWidget.render(self, mode, datastructure, **kw)
 
 InitializeClass(CPSLongWidget)
-
-widgetRegistry.register(CPSLongWidget)
 
 ##################################################
 
@@ -1551,8 +1504,6 @@ class CPSFloatWidget(CPSWidget):
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSFloatWidget)
-
-widgetRegistry.register(CPSFloatWidget)
 
 ##################################################
 # Warning Date widget code is back to r1.49
@@ -1699,8 +1650,6 @@ class CPSDateWidget(CPSWidget):
         raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSDateWidget)
-
-widgetRegistry.register(CPSDateWidget)
 
 ##################################################
 
@@ -1960,8 +1909,6 @@ class CPSFileWidget(CPSWidget):
 
 InitializeClass(CPSFileWidget)
 
-widgetRegistry.register(CPSFileWidget)
-
 ##################################################
 
 class CPSImageWidget(CPSFileWidget):
@@ -2180,8 +2127,6 @@ class CPSImageWidget(CPSFileWidget):
 
 InitializeClass(CPSImageWidget)
 
-widgetRegistry.register(CPSImageWidget)
-
 ##################################################
 
 class CPSCompoundWidget(CPSWidget):
@@ -2316,8 +2261,6 @@ class CPSCompoundWidget(CPSWidget):
 
 InitializeClass(CPSCompoundWidget)
 
-widgetRegistry.register(CPSCompoundWidget)
-
 
 class CPSProgrammerCompoundWidget(CPSCompoundWidget):
     """Base class for compound widgets defined in code.
@@ -2377,8 +2320,6 @@ class CPSBylineWidget(CPSWidget):
 
 InitializeClass(CPSBylineWidget)
 
-widgetRegistry.register(CPSBylineWidget)
-
 ##################################################
 
 class CPSRevisionWidget(CPSWidget):
@@ -2404,5 +2345,3 @@ class CPSRevisionWidget(CPSWidget):
             return ''
 
 InitializeClass(CPSRevisionWidget)
-
-widgetRegistry.register(CPSRevisionWidget)

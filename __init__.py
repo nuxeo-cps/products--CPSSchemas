@@ -35,7 +35,6 @@ import LayoutsTool
 import WidgetTypesTool
 
 import BasicFields
-import BasicWidgets
 import ExtendedWidgets
 import SearchWidgets
 
@@ -43,7 +42,7 @@ import DublinCorePatch
 
 import LocalVocabulary
 
-logger = getLogger('CPSSchemas.__init__')
+logger = getLogger(__name__)
 
 import DiskFile
 
