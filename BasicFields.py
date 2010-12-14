@@ -1117,27 +1117,3 @@ class CPSCoupleField(CPSListField):
         return [int(v0), int(v1)]
 
 InitializeClass(CPSCoupleField)
-
-
-
-# Register field classes
-
-FieldRegistry.register(CPSBooleanField)
-FieldRegistry.register(CPSStringField)
-FieldRegistry.register(CPSAsciiStringField)
-FieldRegistry.register(CPSPasswordField)
-#FieldRegistry.register(CPSListListField) # Not registered on purpose
-FieldRegistry.register(CPSIntListListField)
-FieldRegistry.register(CPSStringListField)
-FieldRegistry.register(CPSAsciiStringListField)
-FieldRegistry.register(CPSIntField)
-FieldRegistry.register(CPSLongField) # deprecated
-FieldRegistry.register(CPSFloatField)
-FieldRegistry.register(CPSDateTimeField)
-FieldRegistry.register(CPSDateTimeListField)
-FieldRegistry.register(CPSFileField)
-FieldRegistry.register(CPSDiskFileField)
-FieldRegistry.register(CPSSubObjectsField)
-FieldRegistry.register(CPSImageField)
-FieldRegistry.register(CPSRangeListField)
-FieldRegistry.register(CPSCoupleField)

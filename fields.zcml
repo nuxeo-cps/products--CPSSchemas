@@ -1,0 +1,22 @@
+<configure xmlns="http://namespaces.nuxeo.org/cps">
+
+ <field class=".BasicFields.CPSBooleanField" />
+ <field class=".BasicFields.CPSStringField" />
+ <field class=".BasicFields.CPSAsciiStringField "/>
+ <field class=".BasicFields.CPSPasswordField "/>
+ <field class=".BasicFields.CPSIntListListField "/>
+ <field class=".BasicFields.CPSStringListField "/>
+ <field class=".BasicFields.CPSAsciiStringListField "/>
+ <field class=".BasicFields.CPSIntField "/>
+ <field class=".BasicFields.CPSLongField" /> <!-- deprecated -->
+ <field class=".BasicFields.CPSFloatField" />
+ <field class=".BasicFields.CPSDateTimeField" />
+ <field class=".BasicFields.CPSDateTimeListField" />
+ <field class=".BasicFields.CPSFileField" />
+ <field class=".BasicFields.CPSDiskFileField" />
+ <field class=".BasicFields.CPSSubObjectsField" />
+ <field class=".BasicFields.CPSImageField" />
+ <field class=".BasicFields.CPSRangeListField" />
+ <field class=".BasicFields.CPSCoupleField" />
+
+</configure>

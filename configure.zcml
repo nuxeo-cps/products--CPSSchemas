@@ -2,7 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:cps="http://namespaces.nuxeo.org/cps">
 
-  <!--include file="fields.zcml" /-->
+  <include file="fields.zcml" />
   <include file="widgets.zcml" />
 
   <include file="schema.zcml" />
