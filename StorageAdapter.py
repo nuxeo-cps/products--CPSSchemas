@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 
 def deprecate_getContentUrl():
     warnings.warn('_getContentUrl() is deprecated and will be removed in '
-                  'CPS 3.6. Use DataModel.getSubFileUri() instead',
+                  'CPS 3.6. Use DataModel.fileUri() instead',
                   DeprecationWarning, stacklevel=2)
 
 class BaseStorageAdapter:
@@ -186,7 +186,7 @@ class BaseStorageAdapter:
                 raise
             self._setData(data)
 
-    def getSubFileUri(self, field_id, absolute=False):
+    def fileUri(self, field_id, absolute=False):
         """Return a valid URI for sub content (typically an attached file).
 
         If no applicable URI can be generated, the returned value is None.
@@ -203,21 +203,21 @@ class BaseStorageAdapter:
         if not IFileField.providedBy(field):
             raise ValueError("Not a IFileField: %r", field_id)
 
-        return self._getSubFileUri(field_id, field, absolute=absolute)
+        return self._fileUri(field_id, field, absolute=absolute)
 
-    def getSubImageUri(self, field_id, height=0, width=0, largest=0,
+    def imageUri(self, field_id, height=0, width=0, largest=0,
                        absolute=False):
         """Return an URI to download an image, according to size options.
 
-        Behavior similar to getSubFileUri
+        Behavior similar to fileUri
         """
         if not (height or width or largest):
-            return self.getSubFileUri(field_id, absolute=absolute)
+            return self.fileUri(field_id, absolute=absolute)
         field = self._schema[field_id]
         if not IImageField.providedBy(field):
             raise ValueError("Not a IImageField: %r", field_id)
 
-        return self._getSubImageUri(field_id, field, largest=largest,
+        return self._imageUri(field_id, field, largest=largest,
                                     height=height, width=width,
                                     absolute=absolute)
 
@@ -225,18 +225,18 @@ class BaseStorageAdapter:
     # Internal API for subclasses
     #
 
-    def _getSubFileUri(self, field_id, field, absolute=False):
-        """Concrete implementation at subclass level for getSubFileUri().
+    def _fileUri(self, field_id, field, absolute=False):
+        """Concrete implementation at subclass level for fileUri().
 
-        Check getSubFileUri() doc for details.
+        Check fileUri() doc for details.
         """
         return None # means not applicable to current adapter
 
-    def _getSubImageUri(self, field_id,  height=0, width=0, largest=0,
+    def _imageUri(self, field_id,  height=0, width=0, largest=0,
                        absolute=False):
-        """Concrete implementation at subclass level for getSubFileUri().
+        """Concrete implementation at subclass level for fileUri().
 
-        Check getSubImageUri() doc for details.
+        Check imageUri() doc for details.
         """
         return None # means not applicable to current adapter
 
@@ -395,7 +395,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
     def _subContentCommon(self, field_id, field, absolute=False):
         """Return base object, URI, sub object, or None
 
-        This is the common part between _getSubFileUri and _getSubImageUri
+        This is the common part between _fileUri and _imageUri
         Should be considered private
         """
         proxy = self._proxy
@@ -412,7 +412,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
                 fobj)
 
 
-    def _getSubFileUri(self, field_id, field, absolute=False):
+    def _fileUri(self, field_id, field, absolute=False):
         """See docstring in BaseStorageAdapter."""
 
         common = self._subContentCommon(field_id, field, absolute=absolute)
@@ -424,7 +424,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
                                               urllib.quote(fobj.title_or_id()))
         return '%s/%s' % (base_uri, field_id)
 
-    def _getSubImageUri(self, field_id, field, height=0, width=0, largest=0,
+    def _imageUri(self, field_id, field, height=0, width=0, largest=0,
                        absolute=False):
         common = self._subContentCommon(field_id, field, absolute=absolute)
         if common is None:
@@ -436,7 +436,7 @@ class AttributeStorageAdapter(BaseStorageAdapter):
             if ImageDownloader is None:
                 logger.warn("Can't use image resizing without CPSCore. "
                             "Fallback to full size")
-                return self._getSubFileUri(field_id, field)
+                return self._fileUri(field_id, field)
 
             field_size_part = ImageDownloader.makeSizeUriPart(
                 field_id,

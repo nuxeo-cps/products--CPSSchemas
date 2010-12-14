@@ -303,7 +303,7 @@ class TestDataModel(unittest.TestCase):
     def TODO_testFieldProcessing(self):
         pass
 
-    def test_getSubFileUri(self):
+    def test_fileUri(self):
         # this also depends on the fact that AttributeStorageAdapter is working
         dm = self.makeOne()
         dm._setObject(self.doc, proxy=FakeProxy(en=self.doc))
@@ -314,17 +314,17 @@ class TestDataModel(unittest.TestCase):
         dm._commit(check_perms=0)
 
         # with proxy
-        self.assertEquals(dm.getSubFileUri('file'),
+        self.assertEquals(dm.fileUri('file'),
                           '/path/to/proxy/downloadFile/file/original')
         self.assertEquals(
-            dm.getSubFileUri('file', absolute=True),
+            dm.fileUri('file', absolute=True),
             'http://cps.example/path/to/proxy/downloadFile/file/original')
 
         # without proxy
         dm._setObject(self.doc, proxy=None)
-        self.assertEquals(dm.getSubFileUri('file'), '/path/to/doc/file')
+        self.assertEquals(dm.fileUri('file'), '/path/to/doc/file')
 
-    def testgetSubFileUri2(self):
+    def testfileUri2(self):
         # test with two schemata, and field in the second one
 
         # dm preparation
@@ -349,18 +349,18 @@ class TestDataModel(unittest.TestCase):
         dm._commit(check_perms=0)
 
         # assertions
-        self.assertEquals(dm.getSubFileUri('ff'),
+        self.assertEquals(dm.fileUri('ff'),
                           '/path/to/proxy/downloadFile/ff/original.txt')
         fobj.title = 'av\xe9' # escape needed
-        self.assertEquals(dm.getSubFileUri('ff'),
+        self.assertEquals(dm.fileUri('ff'),
                           '/path/to/proxy/downloadFile/ff/av%E9')
         # again with no proxy
         dm._setObject(self.doc, proxy=None)
-        self.assertEquals(dm.getSubFileUri('ff'),
+        self.assertEquals(dm.fileUri('ff'),
                           '/path/to/doc/ff')
 
 
-    def testgetSubImageUri(self):
+    def testimageUri(self):
         # test with two schemata, and field in the second one
 
         # dm preparation
@@ -385,26 +385,26 @@ class TestDataModel(unittest.TestCase):
         dm._commit(check_perms=0)
 
         # assertions. First, no size spec
-        self.assertEquals(dm.getSubImageUri('if'),
+        self.assertEquals(dm.imageUri('if'),
                           '/path/to/proxy/downloadFile/if/original.png')
         fobj.title = 'av\xe9' # escape needed
-        self.assertEquals(dm.getSubFileUri('if'),
+        self.assertEquals(dm.fileUri('if'),
                           '/path/to/proxy/downloadFile/if/av%E9')
         fobj.title = 'original.png'
 
         # with size specs
-        self.assertEquals(dm.getSubImageUri('if', largest=800),
+        self.assertEquals(dm.imageUri('if', largest=800),
                           '/path/to/proxy/sizedImg/if/l800/original.png')
-        self.assertEquals(dm.getSubImageUri('if', width=320, height=200),
+        self.assertEquals(dm.imageUri('if', width=320, height=200),
                           '/path/to/proxy/sizedImg/if/320x200/original.png')
-        self.assertEquals(dm.getSubImageUri('if', width=320),
+        self.assertEquals(dm.imageUri('if', width=320),
                           '/path/to/proxy/sizedImg/if/w320/original.png')
-        self.assertEquals(dm.getSubImageUri('if', height=400),
+        self.assertEquals(dm.imageUri('if', height=400),
                           '/path/to/proxy/sizedImg/if/h400/original.png')
 
         # again with no proxy (no resize capability at this point)
         dm._setObject(self.doc, proxy=None)
-        self.assertEquals(dm.getSubFileUri('if'),
+        self.assertEquals(dm.fileUri('if'),
                           '/path/to/doc/if')
 
 

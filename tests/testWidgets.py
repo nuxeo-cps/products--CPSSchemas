@@ -153,9 +153,9 @@ class FakeDataModel(dict):
         return self.proxy
     def getContext(self):
         return self.context
-    def getSubFileUri(self, *a, **kw):
+    def fileUri(self, *a, **kw):
         # GR too much faking does not test much, but oh well
-        return "dm.getSubFileUri args=%r, kwargs=%r" % (a, kw)
+        return "dm.fileUri args=%r, kwargs=%r" % (a, kw)
 
 class FakeMimeTypeRegistry(Implicit):
     def lookupExtension(self, name):
@@ -1009,7 +1009,7 @@ function getLayoutMode() {
             'title': 'thetitle',
             'size': len('thefilecontent'),
             'last_modified': '',
-            'content_url': "dm.getSubFileUri args=('bar',), kwargs={}",
+            'content_url': "dm.fileUri args=('bar',), kwargs={}",
             'mimetype': 'testlookup/TXT',
             })
 

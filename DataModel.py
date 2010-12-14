@@ -263,28 +263,28 @@ class DataModel(UserDict):
         # if needed
         return UserDict.setdefault(self, key, failobj=failobj)
 
-    def getSubFileUri(self, key, absolute=False):
+    def fileUri(self, key, absolute=False):
         """Get an URI for key, applicable in a separate request.
 
         Raise KeyError if key not found in self.
         ValueError if key's field is incorrect.
         Otherwise return None if not applicable.
-        Check StorageAdapter.getSubFileUri() for more details.
+        Check StorageAdapter.fileUri() for more details.
         """
         self.checkReadAccess(key)
         for ad in self._adapters:
             try:
-                return ad.getSubFileUri(key, absolute=absolute)
+                return ad.fileUri(key, absolute=absolute)
             except KeyError:
                 continue
         else:
             raise KeyError("No such field: %r" % key)
 
-    def getSubImageUri(self, key, height=0, width=0, largest=0,
+    def imageUri(self, key, height=0, width=0, largest=0,
                        absolute=False):
         """Get an sized image URI for key, applicable in a separate request.
 
-        Works like getSubFileUri.
+        Works like fileUri.
         Additionnal exception : Value error if the three value are specified.
         This is indeed contradictory, and if it happens to be consistent for a
         given image, this is a bug source, and the case is annoying to check
@@ -293,7 +293,7 @@ class DataModel(UserDict):
         self.checkReadAccess(key)
         for ad in self._adapters:
             try:
-                return ad.getSubImageUri(key, height=height, width=width,
+                return ad.imageUri(key, height=height, width=width,
                                          largest=largest, absolute=absolute)
             except KeyError:
                 continue
