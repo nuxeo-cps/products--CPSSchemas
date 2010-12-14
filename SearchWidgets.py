@@ -27,7 +27,6 @@ from DateTime import DateTime
 
 from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 
 #
@@ -100,8 +99,6 @@ class CPSSearchZCTextWidget(CPSWidget):
 
 InitializeClass(CPSSearchZCTextWidget)
 
-widgetRegistry.register(CPSSearchZCTextWidget)
-
 #
 # Modified widget
 #
@@ -157,8 +154,6 @@ class CPSSearchModifiedWidget(CPSWidget):
         return meth(mode=mode, value=value)
 
 InitializeClass(CPSSearchModifiedWidget)
-
-widgetRegistry.register(CPSSearchModifiedWidget)
 
 #
 # Language widget
@@ -219,8 +214,6 @@ class CPSSearchLanguageWidget(CPSWidget):
                     vocabulary=self._getLanguageVoc())
 
 InitializeClass(CPSSearchLanguageWidget)
-
-widgetRegistry.register(CPSSearchLanguageWidget)
 
 #
 # Sort widget
@@ -287,8 +280,6 @@ class CPSSearchSortWidget(CPSWidget):
 
 InitializeClass(CPSSearchSortWidget)
 
-widgetRegistry.register(CPSSearchSortWidget)
-
 ##################################################
 
 class CPSSearchWidget(CPSProgrammerCompoundWidget):
@@ -300,8 +291,6 @@ class CPSSearchWidget(CPSProgrammerCompoundWidget):
 
 InitializeClass(CPSSearchWidget)
 
-widgetRegistry.register(CPSSearchWidget)
-
 
 class CPSSearchLocationWidget(CPSProgrammerCompoundWidget):
     """Widget to display a search location.
@@ -312,5 +301,3 @@ class CPSSearchLocationWidget(CPSProgrammerCompoundWidget):
     field_types = ('CPS String Field',)
 
 InitializeClass(CPSSearchLocationWidget)
-
-widgetRegistry.register(CPSSearchLocationWidget)

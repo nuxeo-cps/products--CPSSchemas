@@ -51,9 +51,11 @@
  <widget class=".ExtendedWidgets.CPSImageLinkWidget"/>
  <widget class=".ExtendedWidgets.CPSAutocompletionStringWidget"/>
 
- <!--widget class=".ExtendedWidgets.CPSWidget"/>
- <widget class=".ExtendedWidgets.CPSWidget"/>
- <widget class=".ExtendedWidgets.CPSWidget"/>
- <widget class=".ExtendedWidgets.CPSWidget"/-->
+ <widget class=".SearchWidgets.CPSSearchZCTextWidget"/>
+ <widget class=".SearchWidgets.CPSSearchModifiedWidget"/>
+ <widget class=".SearchWidgets.CPSSearchLanguageWidget"/>
+ <widget class=".SearchWidgets.CPSSearchSortWidget"/>
+ <widget class=".SearchWidgets.CPSSearchWidget"/>
+ <widget class=".SearchWidgets.CPSSearchLocationWidget"/>
 
 </configure>
