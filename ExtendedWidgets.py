@@ -47,7 +47,6 @@ from Products.CPSUtil.text import get_final_encoding
 from Products.CPSUtil.resourceregistry import JSGlobalMethodResource
 from Products.CPSUtil.resourceregistry import HtmlResource
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
 from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
@@ -372,8 +371,6 @@ class CPSTextWidget(CPSStringWidget):
 
 InitializeClass(CPSTextWidget)
 
-widgetRegistry.register(CPSTextWidget)
-
 ##################################################
 # previously named CPSDateWidget in BasicWidget r1.78
 class CPSDateTimeWidget(CPSWidget):
@@ -562,8 +559,6 @@ class CPSDateTimeWidget(CPSWidget):
 
 InitializeClass(CPSDateTimeWidget)
 
-widgetRegistry.register(CPSDateTimeWidget)
-
 ##################################################
 class CPSAttachedFileWidget(CPSFileWidget):
     """AttachedFile widget."""
@@ -630,8 +625,6 @@ class CPSAttachedFileWidget(CPSFileWidget):
                     **file_info)
 
 InitializeClass(CPSAttachedFileWidget)
-
-widgetRegistry.register(CPSAttachedFileWidget)
 
 ##################################################
 
@@ -705,8 +698,6 @@ class CPSZippedHtmlWidget(CPSAttachedFileWidget):
 
 InitializeClass(CPSZippedHtmlWidget)
 
-widgetRegistry.register(CPSZippedHtmlWidget)
-
 #################################################
 
 class CPSRichTextEditorWidget(CPSWidget):
@@ -777,8 +768,6 @@ class CPSRichTextEditorWidget(CPSWidget):
 
 InitializeClass(CPSRichTextEditorWidget)
 
-widgetRegistry.register(CPSRichTextEditorWidget)
-
 ##########################################
 
 class CPSExtendedSelectWidget(CPSSelectWidget):
@@ -805,8 +794,6 @@ class CPSExtendedSelectWidget(CPSSelectWidget):
             raise RuntimeError('unknown mode %s' % mode)
 
 InitializeClass(CPSExtendedSelectWidget)
-
-widgetRegistry.register(CPSExtendedSelectWidget)
 
 ##########################################
 
@@ -868,8 +855,6 @@ class CPSInternalLinksWidget(CPSWidget):
         return meth(mode=mode, datastructure=datastructure)
 
 InitializeClass(CPSInternalLinksWidget)
-
-widgetRegistry.register(CPSInternalLinksWidget)
 
 ##################################################
 
@@ -1016,8 +1001,6 @@ class CPSPhotoWidget(CPSImageWidget):
 
 
 InitializeClass(CPSPhotoWidget)
-
-widgetRegistry.register(CPSPhotoWidget)
 
 ##################################################
 
@@ -1278,8 +1261,6 @@ class CPSGenericSelectWidget(CPSSelectWidget):
 
 InitializeClass(CPSGenericSelectWidget)
 
-widgetRegistry.register(CPSGenericSelectWidget)
-
 ##################################################
 
 class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
@@ -1478,8 +1459,6 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
 
 InitializeClass(CPSGenericMultiSelectWidget)
 
-widgetRegistry.register(CPSGenericMultiSelectWidget)
-
 ##################################################
 
 class CPSRangeListWidget(CPSWidget):
@@ -1568,8 +1547,6 @@ class CPSRangeListWidget(CPSWidget):
 
 InitializeClass(CPSRangeListWidget)
 
-widgetRegistry.register(CPSRangeListWidget)
-
 ##################################################
 
 class CPSDateTimeRangeWidget(CPSProgrammerCompoundWidget):
@@ -1637,8 +1614,6 @@ class CPSDateTimeRangeWidget(CPSProgrammerCompoundWidget):
 
 InitializeClass(CPSDateTimeRangeWidget)
 
-widgetRegistry.register(CPSDateTimeRangeWidget)
-
 ##################################################
 
 class CPSDocumentLanguageSelectWidget(CPSWidget):
@@ -1700,8 +1675,6 @@ class CPSDocumentLanguageSelectWidget(CPSWidget):
 
 InitializeClass(CPSDocumentLanguageSelectWidget)
 
-widgetRegistry.register(CPSDocumentLanguageSelectWidget)
-
 ##################################################
 
 class CPSSubjectWidget(CPSMultiSelectWidget):
@@ -1748,8 +1721,6 @@ class CPSSubjectWidget(CPSMultiSelectWidget):
         return "%s/search_form?Subject=%s" % (self.portal_url(), subject_name)
 
 InitializeClass(CPSSubjectWidget)
-
-widgetRegistry.register(CPSSubjectWidget)
 
 ##################################################
 
@@ -1815,8 +1786,6 @@ class CPSFlashWidget(CPSAttachedFileWidget):
 
 InitializeClass(CPSFlashWidget)
 
-widgetRegistry.register(CPSFlashWidget)
-
 ##################################################
 
 class CPSLinkWidget(CPSProgrammerCompoundWidget):
@@ -1828,8 +1797,6 @@ class CPSLinkWidget(CPSProgrammerCompoundWidget):
 
 InitializeClass(CPSLinkWidget)
 
-widgetRegistry.register(CPSLinkWidget)
-
 
 class CPSTextImageWidget(CPSProgrammerCompoundWidget):
     """Widget for text+image.
@@ -1840,8 +1807,6 @@ class CPSTextImageWidget(CPSProgrammerCompoundWidget):
 
 InitializeClass(CPSTextImageWidget)
 
-widgetRegistry.register(CPSTextImageWidget)
-
 
 class CPSImageLinkWidget(CPSProgrammerCompoundWidget):
     """
@@ -1851,8 +1816,6 @@ class CPSImageLinkWidget(CPSProgrammerCompoundWidget):
     prepare_validate_method = 'widget_imagelink_prepare_validate'
 
 InitializeClass(CPSImageLinkWidget)
-
-widgetRegistry.register(CPSImageLinkWidget)
 
 class CPSAutocompletionStringWidget(CPSStringWidget):
     """Autocompletion String widget."""
@@ -1882,6 +1845,3 @@ class CPSAutocompletionStringWidget(CPSStringWidget):
                     html_widget_id=html_widget_id)
 
 InitializeClass(CPSAutocompletionStringWidget)
-
-widgetRegistry.register(CPSAutocompletionStringWidget)
-

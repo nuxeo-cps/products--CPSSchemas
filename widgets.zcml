@@ -1,7 +1,7 @@
 <configure xmlns="http://namespaces.nuxeo.org/cps">
 
- <!-- Registration for standard widget classes -->
-
+ <!-- Registration for the widget classes provided by CPSSchemas itself.
+ -->
  <widget class=".BasicWidgets.CPSHtmlWidget"/>
  <widget class=".BasicWidgets.CPSMethodWidget"/>
  <widget class=".BasicWidgets.CPSStringWidget"/>
@@ -31,12 +31,29 @@
  <widget class=".BasicWidgets.CPSBylineWidget"/>
  <widget class=".BasicWidgets.CPSRevisionWidget"/>
 
- <!--widget class=".BasicWidgets.CPSWidget"/>
- <widget class=".BasicWidgets.CPSWidget"/>
- <widget class=".BasicWidgets.CPSWidget"/>
- <widget class=".BasicWidgets.CPSWidget"/>
- <widget class=".BasicWidgets.CPSWidget"/>
- <widget class=".BasicWidgets.CPSWidget"/>
- <widget class=".BasicWidgets.CPSWidget"/-->
+ <widget class=".ExtendedWidgets.CPSTextWidget"/>
+ <widget class=".ExtendedWidgets.CPSDateTimeWidget"/>
+ <widget class=".ExtendedWidgets.CPSAttachedFileWidget"/>
+ <widget class=".ExtendedWidgets.CPSZippedHtmlWidget"/>
+ <widget class=".ExtendedWidgets.CPSRichTextEditorWidget"/> <!-- deprecated -->
+ <widget class=".ExtendedWidgets.CPSExtendedSelectWidget"/>
+ <widget class=".ExtendedWidgets.CPSInternalLinksWidget"/>
+ <widget class=".ExtendedWidgets.CPSPhotoWidget"/>
+ <widget class=".ExtendedWidgets.CPSGenericSelectWidget"/>
+ <widget class=".ExtendedWidgets.CPSGenericMultiSelectWidget"/>
+ <widget class=".ExtendedWidgets.CPSRangeListWidget"/>
+ <widget class=".ExtendedWidgets.CPSDateTimeRangeWidget"/>
+ <widget class=".ExtendedWidgets.CPSDocumentLanguageSelectWidget"/>
+ <widget class=".ExtendedWidgets.CPSSubjectWidget"/>
+ <widget class=".ExtendedWidgets.CPSFlashWidget"/>
+ <widget class=".ExtendedWidgets.CPSLinkWidget"/>
+ <widget class=".ExtendedWidgets.CPSTextImageWidget"/>
+ <widget class=".ExtendedWidgets.CPSImageLinkWidget"/>
+ <widget class=".ExtendedWidgets.CPSAutocompletionStringWidget"/>
+
+ <!--widget class=".ExtendedWidgets.CPSWidget"/>
+ <widget class=".ExtendedWidgets.CPSWidget"/>
+ <widget class=".ExtendedWidgets.CPSWidget"/>
+ <widget class=".ExtendedWidgets.CPSWidget"/-->
 
 </configure>
