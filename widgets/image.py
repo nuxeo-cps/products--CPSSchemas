@@ -48,11 +48,9 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
     dimension" (i.e. the size spec is 'l320'), and the size widget must subclass
     of CPSIntWidget.
 
-    There are a few assumptions on auxiliary widgets, which are very commonly
-    fulfilled among simple widgets:
-    - they must use their own id as the key in datastructure for the main value
-    (used to produce the img tag)
-    - the main field must be the first.
+    There are a simple assumptions on auxiliary widgets, which is a largely
+    observed convention:
+    - the field used to store the value must be its first.
     """
 
     meta_type = 'Image Widget'
@@ -157,14 +155,22 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         return info
 
     def getSizeSpec(self, ds):
+        """Return a usable size spec from what's in ds' datamodel.
+
+        If the dm value evaluates to False, the widget property is used.
+        """
         if not self.widget_ids:
             return self.size_spec
 
         # GR: this in almost always equivalent to self.widget_ids[0]
         # thank you ZODB cache
         swidget = self.getSizeWidget()
-        v = ds[swidget.getWidgetId()]
-        return isinstance(swidget, CPSIntWidget) and 'l' + v or v
+        v = ds.getDataModel()[swidget.fields[0]]
+        if not v:
+            return self.size_spec
+        elif isinstance(v, int):
+            return 'l%d' % v
+        return v
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -220,12 +226,7 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         if not self.widget_ids:
             return True
 
-        # now post-validate the size spec from what's been stored by subwidget,
-        # which may be different from what's in datastructure (strip(), or more
-        # meaningful treatment)
-        spec = dm[self.getSizeWidget().fields[0]]
-        if isinstance(spec, int):
-            spec = 'l%d' % spec
+        spec = self.getSizeSpec(ds)
         from Products.CPSCore.ProxyBase import ImageDownloader
         try:
             ImageDownloader._parseSizeSpec(spec)
