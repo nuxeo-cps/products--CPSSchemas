@@ -40,15 +40,20 @@ import warnings
 import urllib
 from Acquisition import aq_base
 
+try:
+    from Products.CPSCore.ProxyBase import ImageDownloader
+except ImportError:
+    ImageDownloader = None
+
 from Products.CPSSchemas.BasicFields import CPSSubObjectsField
 from Products.CPSSchemas.DataModel import DEFAULT_VALUE_MARKER
-from interfaces import IFileField
+from interfaces import IFileField, IImageField
 
 logger = logging.getLogger(__name__)
 
 def deprecate_getContentUrl():
     warnings.warn('_getContentUrl() is deprecated and will be removed in '
-                  'CPS 3.6. Use DataModel.getSubContentUri() instead',
+                  'CPS 3.6. Use DataModel.getSubFileUri() instead',
                   DeprecationWarning, stacklevel=2)
 
 class BaseStorageAdapter:
@@ -181,7 +186,7 @@ class BaseStorageAdapter:
                 raise
             self._setData(data)
 
-    def getSubContentUri(self, field_id, absolute=False):
+    def getSubFileUri(self, field_id, absolute=False):
         """Return a valid URI for sub content (typically an attached file).
 
         If no applicable URI can be generated, the returned value is None.
@@ -198,16 +203,40 @@ class BaseStorageAdapter:
         if not IFileField.providedBy(field):
             raise ValueError("Not a IFileField: %r", field_id)
 
-        return self._getSubContentUri(field_id, field, absolute=absolute)
+        return self._getSubFileUri(field_id, field, absolute=absolute)
+
+    def getSubImageUri(self, field_id, height=0, width=0, largest=0,
+                       absolute=False):
+        """Return an URI to download an image, according to size options.
+
+        Behavior similar to getSubFileUri
+        """
+        if not (height or width or largest):
+            return self.getSubFileUri(field_id, absolute=absolute)
+        field = self._schema[field_id]
+        if not IImageField.providedBy(field):
+            raise ValueError("Not a IImageField: %r", field_id)
+
+        return self._getSubImageUri(field_id, field, largest=largest,
+                                    height=height, width=width,
+                                    absolute=absolute)
 
     #
     # Internal API for subclasses
     #
 
-    def _getSubContentUri(self, field_id, field, absolute=False):
-        """Concrete implementation at subclass level for getSubContentUri().
+    def _getSubFileUri(self, field_id, field, absolute=False):
+        """Concrete implementation at subclass level for getSubFileUri().
 
-        Check getSubContentUri() doc for details.
+        Check getSubFileUri() doc for details.
+        """
+        return None # means not applicable to current adapter
+
+    def _getSubImageUri(self, field_id,  height=0, width=0, largest=0,
+                       absolute=False):
+        """Concrete implementation at subclass level for getSubFileUri().
+
+        Check getSubImageUri() doc for details.
         """
         return None # means not applicable to current adapter
 
@@ -363,9 +392,12 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         return '%s/downloadFile/%s/%s' % (
             object.absolute_url(), field_id, file_name)
 
-    def _getSubContentUri(self, field_id, field, absolute=False):
-        """See docstring in BaseStorageAdapter."""
+    def _subContentCommon(self, field_id, field, absolute=False):
+        """Return base object, URI, sub object, or None
 
+        This is the common part between _getSubFileUri and _getSubImageUri
+        Should be considered private
+        """
         proxy = self._proxy
         base = proxy is not None and proxy or self._ob
         if base is None:
@@ -375,13 +407,44 @@ class AttributeStorageAdapter(BaseStorageAdapter):
         if fobj is DEFAULT_VALUE_MARKER or fobj is None:
             return
 
-        base_uri = absolute and base.absolute_url() or base.absolute_url_path()
-        if base is proxy:
+        return (base,
+                absolute and base.absolute_url() or base.absolute_url_path(),
+                fobj)
+
+
+    def _getSubFileUri(self, field_id, field, absolute=False):
+        """See docstring in BaseStorageAdapter."""
+
+        common = self._subContentCommon(field_id, field, absolute=absolute)
+        if common is None:
+            return
+        base, base_uri, fobj = common
+        if base is self._proxy:
             return '%s/downloadFile/%s/%s' % (base_uri, field_id,
                                               urllib.quote(fobj.title_or_id()))
-
         return '%s/%s' % (base_uri, field_id)
 
+    def _getSubImageUri(self, field_id, field, height=0, width=0, largest=0,
+                       absolute=False):
+        common = self._subContentCommon(field_id, field, absolute=absolute)
+        if common is None:
+            return
+        base, base_uri, fobj = common
+
+        if base is self._proxy:
+            # TODO resizing should be more general than proxy
+            if ImageDownloader is None:
+                logger.warn("Can't use image resizing without CPSCore. "
+                            "Fallback to full size")
+                return self._getSubFileUri(field_id, field)
+
+            field_size_part = ImageDownloader.makeSizeUriPart(
+                field_id,
+                width=width, height=height, largest=largest)
+            return '/'.join((base_uri, field_size_part,
+                             urllib.quote(fobj.title_or_id())))
+
+        return '%s/%s' % (base_uri, field_id)
 
 
 ACCESSOR = object()

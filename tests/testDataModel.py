@@ -7,7 +7,7 @@ import unittest
 from copy import deepcopy
 
 from Acquisition import Implicit
-from OFS.Image import File
+from OFS.Image import File, Image
 
 from Products.CPSSchemas.DataModel import DataModel, ValidationError
 from Products.CPSSchemas.DataModel import ProtectedFile
@@ -303,7 +303,7 @@ class TestDataModel(unittest.TestCase):
     def TODO_testFieldProcessing(self):
         pass
 
-    def test_getSubContentUri(self):
+    def test_getSubFileUri(self):
         # this also depends on the fact that AttributeStorageAdapter is working
         dm = self.makeOne()
         dm._setObject(self.doc, proxy=FakeProxy(en=self.doc))
@@ -314,17 +314,17 @@ class TestDataModel(unittest.TestCase):
         dm._commit(check_perms=0)
 
         # with proxy
-        self.assertEquals(dm.getSubContentUri('file'),
+        self.assertEquals(dm.getSubFileUri('file'),
                           '/path/to/proxy/downloadFile/file/original')
         self.assertEquals(
-            dm.getSubContentUri('file', absolute=True),
+            dm.getSubFileUri('file', absolute=True),
             'http://cps.example/path/to/proxy/downloadFile/file/original')
 
         # without proxy
         dm._setObject(self.doc, proxy=None)
-        self.assertEquals(dm.getSubContentUri('file'), '/path/to/doc/file')
+        self.assertEquals(dm.getSubFileUri('file'), '/path/to/doc/file')
 
-    def testgetSubContentUri2(self):
+    def testgetSubFileUri2(self):
         # test with two schemata, and field in the second one
 
         # dm preparation
@@ -349,15 +349,63 @@ class TestDataModel(unittest.TestCase):
         dm._commit(check_perms=0)
 
         # assertions
-        self.assertEquals(dm.getSubContentUri('ff'),
+        self.assertEquals(dm.getSubFileUri('ff'),
                           '/path/to/proxy/downloadFile/ff/original.txt')
         fobj.title = 'av\xe9' # escape needed
-        self.assertEquals(dm.getSubContentUri('ff'),
+        self.assertEquals(dm.getSubFileUri('ff'),
                           '/path/to/proxy/downloadFile/ff/av%E9')
         # again with no proxy
         dm._setObject(self.doc, proxy=None)
-        self.assertEquals(dm.getSubContentUri('ff'),
+        self.assertEquals(dm.getSubFileUri('ff'),
                           '/path/to/doc/ff')
+
+
+    def testgetSubImageUri(self):
+        # test with two schemata, and field in the second one
+
+        # dm preparation
+        doc = self.doc = FakeDocument()
+        doc.f2 = 'f2inst'
+
+        sch1 = CPSSchema('s1', 'Schema1').__of__(fakePortal)
+        sch1.addField('f1', 'CPS String Field')
+        sch2 = CPSSchema('s2', 'Schema2').__of__(fakePortal)
+        sch2.addField('if', 'CPS Image Field')
+
+        dm = DataModel(doc, adapters=tuple(
+                AttributeStorageAdapter(sch, doc, field_ids=sch.keys())
+                for sch in (sch1, sch2)))
+
+        dm._setObject(doc, proxy=FakeProxy(en=self.doc))
+        dm._fetch()
+
+        # setting a file
+        fobj = Image('file', 'original.png', 'image binary content')
+        dm['if'] = fobj # note the different id
+        dm._commit(check_perms=0)
+
+        # assertions. First, no size spec
+        self.assertEquals(dm.getSubImageUri('if'),
+                          '/path/to/proxy/downloadFile/if/original.png')
+        fobj.title = 'av\xe9' # escape needed
+        self.assertEquals(dm.getSubFileUri('if'),
+                          '/path/to/proxy/downloadFile/if/av%E9')
+        fobj.title = 'original.png'
+
+        # with size specs
+        self.assertEquals(dm.getSubImageUri('if', largest=800),
+                          '/path/to/proxy/sizedImg/if/l800/original.png')
+        self.assertEquals(dm.getSubImageUri('if', width=320, height=200),
+                          '/path/to/proxy/sizedImg/if/320x200/original.png')
+        self.assertEquals(dm.getSubImageUri('if', width=320),
+                          '/path/to/proxy/sizedImg/if/w320/original.png')
+        self.assertEquals(dm.getSubImageUri('if', height=400),
+                          '/path/to/proxy/sizedImg/if/h400/original.png')
+
+        # again with no proxy (no resize capability at this point)
+        dm._setObject(self.doc, proxy=None)
+        self.assertEquals(dm.getSubFileUri('if'),
+                          '/path/to/doc/if')
 
 
     def test_fileProtection(self):

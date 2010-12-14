@@ -43,6 +43,7 @@ from Products.CPSSchemas.DiskFile import DiskFile
 
 from zope.interface import implements
 from Products.CPSSchemas.interfaces import IFileField
+from Products.CPSSchemas.interfaces import IImageField
 from Products.CPSSchemas.interfaces import IFieldNodeIO
 
 from Products.CPSUtil.text import OLD_CPS_ENCODING
@@ -996,7 +997,7 @@ class CPSImageField(CPSField):
     """Image field."""
     meta_type = "CPS Image Field"
 
-    implements(IFieldNodeIO, IFileField)
+    implements(IFieldNodeIO, IImageField)
 
     default_expr = 'nothing'
     default_expr_c = Expression(default_expr)

@@ -94,7 +94,7 @@ class FakeDataModel(dict):
         return self.proxy
     def getContext(self):
         return self.context
-    def getSubContentUri(self, field_id, absolute=False, entry_point=None):
+    def getSubFileUri(self, field_id, absolute=False, entry_point=None):
         return '/fake/uri'
 
 

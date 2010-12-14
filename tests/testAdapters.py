@@ -175,15 +175,15 @@ class TestAttributeStorageAdapter(TestStorageAdapter):
         self.schema.addField('ff', 'CPS File Field')
         # test with no file obj, other cases already covered by dm tests
         self.adapter.setContextObject(self.doc, self.doc_proxy)
-        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        self.assertEquals(self.adapter.getSubFileUri('ff'), None)
         self.adapter.setContextObject(self.doc)
-        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        self.assertEquals(self.adapter.getSubFileUri('ff'), None)
         # Same with None set as value
         self.doc.ff = None
         self.adapter.setContextObject(self.doc, self.doc_proxy)
-        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        self.assertEquals(self.adapter.getSubFileUri('ff'), None)
         self.adapter.setContextObject(self.doc)
-        self.assertEquals(self.adapter.getSubContentUri('ff'), None)
+        self.assertEquals(self.adapter.getSubFileUri('ff'), None)
 
     def test_getContentUrl_BBB(self):
         # should issue a deprecation warning, but still work

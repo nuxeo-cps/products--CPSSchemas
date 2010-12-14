@@ -39,6 +39,10 @@ class IFileField(IField):
     """Field holding a File object.
     """
 
+class IImageField(IFileField):
+    """Field holding an Image object.
+    """
+
 class IFieldNodeIO(Interface):
     """GenericSetup Node I/O methods for a Field.
     """

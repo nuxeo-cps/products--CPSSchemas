@@ -1734,7 +1734,7 @@ class CPSFileWidget(CPSWidget):
             size = 0
             last_modified = ''
 
-        content_url = dm.getSubContentUri(field_id) # can be None
+        content_url = dm.getSubFileUri(field_id) # can be None
 
         # get the mimetype
         registry = getToolByName(self, 'mimetypes_registry')
