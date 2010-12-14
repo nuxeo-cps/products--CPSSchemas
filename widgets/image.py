@@ -19,11 +19,12 @@ import logging
 
 from Globals import InitializeClass
 from OFS.Image import Image
+from zExceptions import BadRequest
 
 from Products.CPSUtil.html import renderHtmlTag
 from Products.CPSUtil.mail import make_cid
 from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
-from Products.CPSSchemas.BasicWidgets import CPSFileWidget
+from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSIntWidget
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 from Products.CPSSchemas.Widget import CIDPARTS_KEY
 
@@ -33,10 +34,25 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
     """Image widget.
 
     Stores an image in document and display it according to a size spec
-    either fixed in property or managed by another widget.
-    It is assumed that this latter widget uses its id as datastructure key
-    for the main value it handles (as most widget do).
-    Typically, a Select widget is being used
+    either fixed in property or managed by another widget. In that case,
+    the Image widget acts in edit mode like the compound widget.
+    Actually, all sub widgets are rendered in edit mode.
+    Subclasses using several of them to manipulate several renderings
+    (popup, mouse-over etc) therefore don't have to override the edit rendering.
+
+    These size widgets can manipulate either:
+    - string fields: in that case, the value is expected to be a valid
+    size spec as for the live resizing system hooked in traversal
+    (e.g., 320x200, w640)
+    - integer fields: in that case, the value is applied as a "largest
+    dimension" (i.e. the size spec is 'l320'), and the size widget must subclass
+    of CPSIntWidget.
+
+    There are a few assumptions on auxiliary widgets, which are very commonly
+    fulfilled among simple widgets:
+    - they must use their own id as the key in datastructure for the main value
+    (used to produce the img tag)
+    - the main field must be the first.
     """
 
     meta_type = 'Image Widget'
@@ -132,7 +148,7 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         else: # generate resizing URI
             # TODO -> CPSUtil
             from Products.CPSCore.ProxyBase import ImageDownloader
-            size_spec = ds[wid + '_size']
+            size_spec = self.getSizeSpec(ds)
             parsed_spec = ImageDownloader._parseSizeSpecAsDict(size_spec)
             dm = ds.getDataModel()
             uri = dm.imageUri(self.fields[0], **parsed_spec)
@@ -140,17 +156,15 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
 
         return info
 
-    def sizeKey(self):
-        if self.widget_ids:
-            # GR: this in almost always equivalent to widget_ids[0]
-            # thank you ZODB cache
-            return self._getSubWidgets()[0].getWidgetId()
-        return self.getWidgetId() + '_size'
+    def getSizeSpec(self, ds):
+        if not self.widget_ids:
+            return self.size_spec
 
-    def getSizeWidget(self):
-        if self.widget_ids:
-            return self._getSubWidgets()[0]
-        return self
+        # GR: this in almost always equivalent to self.widget_ids[0]
+        # thank you ZODB cache
+        swidget = self.getSizeWidget()
+        v = ds[swidget.getWidgetId()]
+        return isinstance(swidget, CPSIntWidget) and 'l' + v or v
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -160,10 +174,8 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         widget_id = self.getWidgetId()
 
         if self.widget_ids:
-            for widget in subw:
+            for widget in self._getSubWidgets():
                 widget.prepare(datastructure, **kw)
-        else:
-            datastructure[widget_id + '_size'] = self.size_spec
 
         title = ''
         if len(self.fields) > 2:
@@ -179,6 +191,10 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
             if not alt:
                 alt = datastructure[widget_id + '_filename']
         datastructure[widget_id + '_alt'] = alt
+
+    def getSizeWidget(self):
+        if self.widget_ids:
+            return self._getSubWidgets()[0]
 
     def otherProcessing(self, choice, ds):
         """Override FileWidget's method."""
@@ -198,16 +214,24 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         if len(self.fields) > 3:
             dm[self.fields[3]] = ds[widget_id + '_alt']
 
+        if not self.widget_ids:
+            return True
 
-#        from Products.CPSCore.ProxyBase import ImageDownloader
-#        try:
-#            ImageDownloader._parseSizeSpec(size_spec)
-#        except BadRequest:
-#            ds.setError(self.getSizeWidget().getWidgetId(),
-#                        'cpsschemas_invalid_size_spec')
-#            return False
-#        dm[self.fields[1]] = size_spec
-#        return True
+        # now post-validate the size spec from what's been stored by subwidget,
+        # which may be different from what's in datastructure (strip(), or more
+        # meaningful treatment)
+        spec = dm[self.getSizeWidget().fields[0]]
+        if isinstance(spec, int):
+            spec = 'l%d' % spec
+        from Products.CPSCore.ProxyBase import ImageDownloader
+        try:
+            ImageDownloader._parseSizeSpec(spec)
+        except BadRequest:
+            ds.setError(swidget.getWidgetId(),
+                        'cpsschemas_invalid_size_spec')
+            return False
+
+        return True
 
     def makeFile(self, filename, fileupload, datastructure):
         return Image(self.fields[0], filename, fileupload)
