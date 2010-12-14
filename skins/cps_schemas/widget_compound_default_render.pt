@@ -23,6 +23,7 @@
 
   <tal:block condition="python: mode == 'edit'">
     <tal:block repeat="cell cells">
+     <metal:block define-macro="cell">
       <tal:block define="widget cell/widget;
                          wid widget/getWidgetId;
                          dm options/datastructure/getDataModel;
@@ -67,6 +68,7 @@
         </div>
         </div>
       </tal:block>
+     </metal:block>
     </tal:block>
   </tal:block>
 </tal:block>

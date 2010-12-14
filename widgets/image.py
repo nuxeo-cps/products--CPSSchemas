@@ -196,8 +196,11 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         if self.widget_ids:
             return self._getSubWidgets()[0]
 
-    def otherProcessing(self, choice, ds):
+    def validate(self, ds, **kw):
         """Override FileWidget's method."""
+        if not CPSFileWidget.validate(self, ds, **kw):
+            return False
+
         if self.widget_ids:
             for subw in self._getSubWidgets():
                 if not subw.validate(ds):

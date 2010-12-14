@@ -1,6 +1,7 @@
 <tal:block define="mode options/mode;
   id here/getHtmlWidgetId;
   fields here/fields;
+  ds options/datastructure;
   current_filename options/current_filename;
   empty_file options/empty_file;
   session_file options/session_file;
@@ -45,8 +46,10 @@
       </metal:block>
     </metal:block>
 
-    <tal:block condition="size_widget"
-               content="structure size_widget/widget_rendered">
+    <tal:block define="cell size_widget;"
+               condition="size_widget">
+     <metal:block
+       use-macro="here/widget_compound_default_render/macros/cell" />
     </tal:block>
 
     <tal:block condition="python:len(fields) > 1">
