@@ -20,7 +20,7 @@
 Widget used to build search forms.
 """
 
-from zLOG import LOG, DEBUG, TRACE
+import warnings
 from cgi import escape
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -28,6 +28,11 @@ from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
+
+warnings.warn("Products.CPSchemas.SearchWidgets is currently been split and "
+              "will be kept as a compatibility alias or holding deprecated "
+              "widgets only. It should disappear in CPS 3.6",
+              DeprecationWarning, stacklevel=2)
 
 #
 # Search ZCText widget
