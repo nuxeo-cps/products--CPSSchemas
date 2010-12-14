@@ -1912,7 +1912,10 @@ InitializeClass(CPSFileWidget)
 ##################################################
 
 class CPSImageWidget(CPSFileWidget):
-    """Image widget."""
+    """Image widget.
+
+    This widget is deprecated in favor of .widgets.image.CPSImageWidget
+    """
     meta_type = 'Image Widget'
 
     field_types = ('CPS Image Field',
@@ -2124,8 +2127,6 @@ class CPSImageWidget(CPSFileWidget):
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
         return meth(mode=mode, datastructure=datastructure, **img_info)
-
-InitializeClass(CPSImageWidget)
 
 ##################################################
 

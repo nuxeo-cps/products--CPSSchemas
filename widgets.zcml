@@ -1,7 +1,10 @@
 <configure xmlns="http://namespaces.nuxeo.org/cps">
+ <!-- Registration for the widget classes provided by CPSSchemas itself.  -->
 
- <!-- Registration for the widget classes provided by CPSSchemas itself.
- -->
+ <!--  CPS 3.5.2 reorg -->
+ <widget class=".widgets.image.CPSImageWidget"/>
+
+ <!-- Deprecated packages -->
  <widget class=".BasicWidgets.CPSHtmlWidget"/>
  <widget class=".BasicWidgets.CPSMethodWidget"/>
  <widget class=".BasicWidgets.CPSStringWidget"/>
@@ -25,7 +28,6 @@
  <widget class=".BasicWidgets.CPSFloatWidget"/>
  <widget class=".BasicWidgets.CPSDateWidget"/> <!-- very deprecated -->
  <widget class=".BasicWidgets.CPSFileWidget"/>
- <widget class=".BasicWidgets.CPSImageWidget"/>
  <widget class=".BasicWidgets.CPSCompoundWidget"/>
  <widget class=".BasicWidgets.CPSProgrammerCompoundWidget"/>
  <widget class=".BasicWidgets.CPSBylineWidget"/>
