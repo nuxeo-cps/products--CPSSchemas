@@ -1,0 +1,28 @@
+===============
+Builtin Widgets
+===============
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+Image Widget
+============
+
+The Image Widget and its derivatives behave like a compound widget:
+the display size can be exposed in edit mode to the user through an
+auxiliary widget, whose id is specified in the ``widget_ids``
+property.
+
+If no such aux widget is specified, or if the corresponding field
+value is empty or zero, then the ``size_spec`` property is used.
+
+That way, depending on needs the configuration can leave a full liberty
+to the user, or constrain (and help him) by a vocabulary (Select
+Widget) or leave no liberty at all.
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
