@@ -34,10 +34,6 @@ import SchemasTool
 import LayoutsTool
 import WidgetTypesTool
 
-import BasicFields
-import ExtendedWidgets
-import SearchWidgets
-
 import DublinCorePatch
 
 import LocalVocabulary

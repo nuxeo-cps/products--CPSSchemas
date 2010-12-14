@@ -21,7 +21,7 @@
 Base classes for fields, the individual parts of a schema.
 """
 
-from zLOG import LOG, DEBUG
+import logging
 from copy import deepcopy
 from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass, DTMLFile
@@ -50,6 +50,7 @@ from zope.interface import implements
 from zope.interface import implementedBy
 from Products.CPSSchemas.interfaces import IField
 
+logger = logging.getLogger(__name__)
 
 class Field(PropertiesPostProcessor, SimpleItemWithProperties):
     """Basic Field.
@@ -467,7 +468,7 @@ class FieldRegistry:
         self._field_types.append(field_type)
         self._field_classes[field_type] = cls
 
-        # Five-like registration, will move to ZCML later
+        # Five-like registration, make more ZTK-ish later
         import Products
         info = {'name': cls.meta_type,
                 'action': '', # addview and ('+/%s' % addview) or '',
@@ -478,6 +479,7 @@ class FieldRegistry:
                 'instance': cls,
                 'container_filter': None}
         Products.meta_types += (info,)
+        logger.debug("Registered field %r (meta_type=%r)", cls, field_type)
 
     def listFieldTypes(self):
         """Return the list of field types."""

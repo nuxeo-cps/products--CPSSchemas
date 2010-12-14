@@ -28,6 +28,7 @@ An instance w of it is parametrized, notably by one or several field names.
 It can then be rendered by passing it a datastructure.
 """
 
+import logging
 from Persistence import Persistent
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
@@ -45,6 +46,8 @@ from Products.CPSSchemas.DataModel import WriteAccessError
 from zope.interface import implements
 from zope.interface import implementedBy
 from Products.CPSSchemas.interfaces import IWidget
+
+logger = logging.getLogger(__name__)
 
 #
 # CONSTANTS
@@ -461,7 +464,7 @@ class WidgetRegistry:
         self._widget_classes[meta_type] = class_
         self.BBB_register_widget_type(class_)
 
-        # Five-like registration, will move to ZCML later
+        # Five-like registration with meta_type, make more ZTK-ish later
         import Products
         info = {'name': meta_type,
                 'action': '',
@@ -472,6 +475,8 @@ class WidgetRegistry:
                 'instance': class_,
                 'container_filter': None}
         Products.meta_types += (info,)
+        logger.debug("Registered widget %r (meta_type=%r)", class_, meta_type)
+
 
     def listWidgetMetaTypes(self):
         """Return the list of widget meta types.
