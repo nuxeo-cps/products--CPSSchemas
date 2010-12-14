@@ -463,6 +463,7 @@ class FieldRegistry:
         if field_type in self._field_types:
             return
         # Avoid duplicate registrations during convoluted imports
+        # GR TODO: test if that's ok with ZCML override logic
         self._field_types.append(field_type)
         self._field_classes[field_type] = cls
 
@@ -492,3 +493,11 @@ class FieldRegistry:
 
 # Singleton
 FieldRegistry = FieldRegistry()
+
+# ZCML handler
+def register_field_class(_context, class_):
+    meta_type = class_.meta_type
+    _context.action(discriminator=('Field', meta_type,),
+                    callable=FieldRegistry.register,
+                    args=(class_,))
+

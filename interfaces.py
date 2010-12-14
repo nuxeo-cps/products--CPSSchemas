@@ -20,6 +20,7 @@
 """
 
 from zope.interface import Interface
+from zope.configuration.fields import GlobalObject
 
 
 class ISchemaTool(Interface):
@@ -64,6 +65,22 @@ class ILayout(Interface):
 class IWidget(Interface):
     """Widget.
     """
+
+class IWidgetDirective(Interface):
+    """Register a widget class.
+    """
+
+    class_ = GlobalObject(
+        title=u"Wigdet class",
+        required=True)
+
+class IFieldDirective(Interface):
+    """Register a widget class.
+    """
+
+    class_ = GlobalObject(
+        title=u"Field class",
+        required=True)
 
 
 class IVocabularyTool(Interface):

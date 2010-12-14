@@ -501,10 +501,16 @@ class WidgetRegistry:
         eval(compile(code, 'CPSSchemas/Widget.py', 'exec'), glob)
         setattr(module, name, glob[name])
 
-
 # Singleton
 widgetRegistry = WidgetRegistry()
 
+# ZCML handler
+def register_widget_class(_context, class_):
+
+    meta_type = class_.meta_type
+    _context.action(discriminator=('Widget', meta_type,),
+                    callable=widgetRegistry.register,
+                    args=(class_,))
 
 # BBB compatibility code, will be removed in CPS 3.4.1
 class CPSWidgetType(Persistent):

@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:meta="http://namespaces.zope.org/meta">
+
+  <meta:directives namespace="http://namespaces.nuxeo.org/cps">
+
+    <meta:directive
+       name="widget"
+       schema=".interfaces.IWidgetDirective"
+       handler=".Widget.register_widget_class"
+       />
+
+    <meta:directive
+       name="field"
+       schema=".interfaces.IFieldDirective"
+       handler=".Field.register_field_class"
+       />
+
+  </meta:directives>
+
+</configure>
