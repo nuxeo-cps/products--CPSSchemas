@@ -3,6 +3,7 @@
 
  <!--  CPS 3.5.2 reorg -->
  <widget class=".widgets.image.CPSImageWidget"/>
+ <widget class=".widgets.image.CPSPhotoWidget"/>
 
  <!-- Deprecated packages -->
  <widget class=".BasicWidgets.CPSHtmlWidget"/>
@@ -32,7 +33,6 @@
  <widget class=".BasicWidgets.CPSProgrammerCompoundWidget"/>
  <widget class=".BasicWidgets.CPSBylineWidget"/>
  <widget class=".BasicWidgets.CPSRevisionWidget"/>
-
  <widget class=".ExtendedWidgets.CPSTextWidget"/>
  <widget class=".ExtendedWidgets.CPSDateTimeWidget"/>
  <widget class=".ExtendedWidgets.CPSAttachedFileWidget"/>
@@ -40,7 +40,6 @@
  <widget class=".ExtendedWidgets.CPSRichTextEditorWidget"/> <!-- deprecated -->
  <widget class=".ExtendedWidgets.CPSExtendedSelectWidget"/>
  <widget class=".ExtendedWidgets.CPSInternalLinksWidget"/>
- <widget class=".ExtendedWidgets.CPSPhotoWidget"/>
  <widget class=".ExtendedWidgets.CPSGenericSelectWidget"/>
  <widget class=".ExtendedWidgets.CPSGenericMultiSelectWidget"/>
  <widget class=".ExtendedWidgets.CPSRangeListWidget"/>

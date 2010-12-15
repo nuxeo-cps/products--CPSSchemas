@@ -12,82 +12,60 @@
   image_tag options/image_tag;
   image_width options/width;
   image_height options/height;
+  zoom options/zoom|nothing;
   subtitle options/subtitle;
   title options/title;
   alt options/alt;
   rposition options/render_position;
   configurable options/configurable;
   last_modified options/last_modified;
-  photo_path python:content_url and '/'.join(content_url.split('/')[:-3]) or '';
-  original_photo_field python:len(fields)>3 and fields[3] or 'photo_original'
+  ds options/datastructure;
+  base_url here/portal_url/getBaseUrl;
   ">
   <div class="photoWidget"
-       tal:condition="python: mode == 'view' and not empty_file"
-       tal:define="original_photo python:getattr(here,original_photo_field, None)">
+       tal:condition="python: mode == 'view' and not empty_file">
     <p tal:attributes="class python:test(rposition == 'right', 'dright',
                                       test(rposition == 'center', 'dcenter', 'dleft'))">
-      <tal:block condition="python: original_photo">
+      <tal:block condition="python: zoom">
         <a href="#"
-          tal:define="original_width python:original_photo.width or 100;
-                      original_height python:original_photo.height or 100"
-          tal:attributes="onclick python:'window.open(\'%s/popup_photo?id=%s\',\'original_image\',\'innerwidth=%s'%(photo_path,original_photo_field,str(int(original_width)+40)) +
-                         ',innerheight=%s'%str(int(original_height) + 40) +
-                         ',width=%s'%str(int(original_width) + 40) +
-                         ',height=%s'%str(int(original_height) + 40) +
+          tal:define="zoom_width zoom/width|python:600;
+                      zoom_height zomm/height|python:600;
+                      zoom_uri zoom/escaped_uri;"
+          tal:attributes="onclick
+              python:'window.open(\'%spopup_photo?uri=%s\', \'zoom\', '
+                             % (base_url, zoom_uri) +
+                         '\'innerwidth=%d' %  (zoom_width + 40) +
+                         ',innerheight=%d' % (zoom_height + 40) +
+                         ',width=%d' % (zoom_width + 40) +
+                         ',height=%d' % (zoom_height + 40) +
                          ',location=no,menubar=no' +
                          ',personalbar=no,toolbar=no,status=no,resizable=yes' +
-                         ',scrollbars=yes\');;return false;;'"><img tal:replace="structure image_tag" /></a>
+                         ',scrollbars=yes\');;return false;;'">
+         <img tal:replace="structure image_tag" />
+        </a>
       </tal:block>
-      <tal:block condition="not: original_photo">
+
+      <tal:block condition="not: zoom">
         <img tal:replace="structure image_tag" />
       </tal:block>
+
       <tal:block condition="subtitle">
         <br/>
         <span tal:attributes="style string:width:${image_width}px"
               tal:content="subtitle" />
       </tal:block>
     </p>
+
   </div>
 
   <tal:block condition="python: mode == 'edit'">
     <img tal:condition="python: not empty_file and not session_file"
       tal:replace="structure image_tag" />
 
-    <tal:block define="allow_resize here/allow_resize|nothing;
-                       keep_original here/keep_original|nothing;
-                       can_keep_original python:allow_resize and keep_original and len(fields)>3 or 0">
-    <metal:block use-macro="here/widget_image_render/macros/image_edit">
-      <metal:block fill-slot="edit_file_action"
-        tal:condition="python:not empty_file and can_keep_original">
-        <li>
-          <input type="radio" class="noborder" name="." value="resize"
-                 tal:attributes="name radio_name;
-                                 id string:${radio_name}_resize" />
-          <label i18n:translate="cpsschemas_label_image_resize"
-                 tal:attributes="for string:${radio_name}_resize">resize</label>
-          <select tal:attributes="name string:${name}_resize_kept;
-            onchange string:document.getElementById('${radio_name}_resize').checked='checked';"
-            tal:define="wid_size python:(here.display_width,
-                                         here.display_height);
-                        sizes python:[s for s in here.getImgSizes()
-                                        if not wid_size[0]
-                                           or s['size'] <= wid_size]">
-            <option tal:repeat="op sizes"
-              tal:attributes="value op/id;
-              selected python: op['size'] and (op['size'][0]==image_width
-                                               or op['size'][1]==image_height)"
-              i18n:translate=""
-              ><span tal:replace="op/id" /> <span tal:condition="op/size"
-                i18n:name="dim"
-                tal:content="python:'(%sx%s)' % op['size']">
-                640x480</span></option>
-          </select>
-        </li>
-      </metal:block>
-    </metal:block>
-    </tal:block>
+    <metal:block use-macro="here/widget_image_render/macros/image_edit"/>
 
-    <tal:block condition="python:len(fields) > 2 and 'position' in configurable">
+    <tal:block
+      condition="python:id+'_rposition' in ds and 'position' in configurable">
       <p>
         <tal:block i18n:translate="cpsschemas_render_position">
           Render position
@@ -105,8 +83,8 @@
     <tal:block condition="python:len(fields) > 1">
       <table>
 
-        <tal:block condition="python:len(fields) > 4">
-          <tr>
+       <tal:block tal:define="dskey string:${id}_title">
+          <tr tal:condition="python: dskey in ds">
             <td>
               <tal:block i18n:translate="cpsschemas_image_title">
                 Title :
@@ -114,14 +92,14 @@
             </td>
             <td>
               <input type="text" size="30" maxlength="60"
-                tal:attributes="name string:${id}_title:utf8:ustring;
+                tal:attributes="name string:${dskey}:utf8:ustring;
                 value title" />
             </td>
           </tr>
         </tal:block>
 
-        <tal:block condition="python:len(fields) > 5">
-          <tr>
+        <tal:block tal:define="dskey string:${id}_alt">
+         <tr tal:condition="python: dskey in ds">
             <td>
               <tal:block i18n:translate="cpsschemas_image_alt">
                 Alternate text :
@@ -129,25 +107,26 @@
             </td>
             <td>
               <input type="text" size="30" maxlength="60"
-                tal:attributes="name string:${id}_alt:utf8:ustring;
+                tal:attributes="name string:${dskey}:utf8:ustring;
                 value alt" />
             </td>
           </tr>
         </tal:block>
 
-        <tr>
+        <tal:block tal:define="dskey string:${id}_subtitle">
+         <tr>
           <td>
-            <tal:block i18n:translate="cpsschemas_photo_subtitle">
-              Subtitle :
-            </tal:block>
+           <tal:block i18n:translate="cpsschemas_photo_subtitle">
+            Subtitle :
+           </tal:block>
           </td>
           <td>
-            <input type="text" size="30"
-              tal:attributes="name string:${id}_subtitle:utf8:ustring;
-              value subtitle" />
+           <input type="text" size="30"
+                  tal:attributes="name string:${dskey}:utf8:ustring;
+                                  value subtitle" />
           </td>
-        </tr>
-
+         </tr>
+        </tal:block>
       </table>
     </tal:block>
 
