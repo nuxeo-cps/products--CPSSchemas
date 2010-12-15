@@ -1,3 +1,4 @@
+
 Requires
 ~~~~~~~~
 -
@@ -8,6 +9,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 - #2303: fixed western localisations of javascript calendar (latin-9->utf-8)
+- #2311: widget transtyping in imports now based on actual class
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

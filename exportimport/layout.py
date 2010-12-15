@@ -33,6 +33,7 @@ from Products.GenericSetup.utils import ObjectManagerHelpers
 from Products.GenericSetup.utils import PropertyManagerHelpers
 from Products.CPSUtil.PropertiesPostProcessor import (
     PostProcessingPropertyManagerHelpers)
+from Products.CPSSchemas.Widget import widgetRegistry
 
 from Products.GenericSetup.interfaces import INode
 from Products.GenericSetup.interfaces import IBody
@@ -192,8 +193,9 @@ class LayoutXMLAdapter(XMLAdapterBase, PostProcessingPropertyManagerHelpers):
             old_state = None
             if layout.has_key(widget_id) and meta_type:
                 widget = layout[widget_id]
-                if widget.meta_type != str(meta_type):
-                    # Need to transtype the widget
+                cls = widgetRegistry.getClass(meta_type)
+                if cls != widget.__class__:
+                    # Need to transtype the widget or at least reinstantiate
                     old_state = widget.__dict__.copy()
                     layout.delSubObject(widget_id)
 
