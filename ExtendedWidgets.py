@@ -348,7 +348,7 @@ class CPSTextWidget(CPSStringWidget):
                 RuntimeError("unknown render_format '%s' for '%s'" %
                              (rformat, self.getId()))
             if rposition == 'col_left':
-                cssclass = 'dcollleft'
+                cssclass = 'dcolleft'
             elif rposition == 'col_right':
                 cssclass = 'dcolright'
             else:
