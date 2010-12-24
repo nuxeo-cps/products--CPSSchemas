@@ -55,6 +55,12 @@ TEST_IMAGE = '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
 
 class FakePortal(Implicit):
     default_charset = 'unicode'
+    def unrestrictedTraverse(self, rpath):
+        rpath = rpath.split('/')
+        ob = self
+        for segment in rpath:
+            ob = getattr(ob, segment)
+        return ob
 
 fakePortal = FakePortal()
 
@@ -1152,10 +1158,17 @@ function getLayoutMode() {
         wid = CPSSubjectWidget('foo').__of__(fakePortal)
         link = wid.getSubjectSearchLink(u'events', '\xc3\x89v\xc3\xa9nements')
 
+doctest_globs=dict(portal=fakePortal)
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestWidgets),
         doctest.DocTestSuite('Products.CPSSchemas.ExtendedWidgets'),
+        doctest.DocFileTest('doc/developer/indirect_widget.txt',
+                            package='Products.CPSSchemas',
+                            globs=doctest_globs,
+                            optionflags=(doctest.NORMALIZE_WHITESPACE|
+                                         doctest.ELLIPSIS)),
         ))
 
 

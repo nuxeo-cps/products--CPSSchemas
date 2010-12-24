@@ -1,0 +1,194 @@
+===============
+INDIRECT WIDGET
+===============
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+Introduction
+============
+
+Indirect widgets refer to a base widget and keep a set of properties.
+They behave as if they were the base widget with those properties applied.
+Therefore, changing the configuration of the base widget directly
+affects all indirect widgets referring to it.
+
+The main use case is for CPSDocument's flexible documents: the
+properties of the indirect widget are local to the document (typically
+at least the list of fields the widget works with), while the properties of the
+base widget, being defined in the global layouts tool, are to be
+thought as global configuration.
+
+This document is a doctest: the examples are actually run and
+checked. This has lots of benefits, but can also make for a strange
+writing style.
+
+Instantiation
+=============
+
+Let's begin by providing a base widget class::
+
+ >>> from Products.CPSSchemas.Widget import CPSWidget
+ >>> class BaseWidget(CPSWidget):
+ ...     _properties = CPSWidget._properties + (
+ ...        dict(id='separator', type='string', mode='w', label='Separator'),)
+ ...
+ ...     separator = '; '
+ ...
+ ...     def prepare(self, datastructure, **kw):
+ ...         datastructure[self.getWidgetId()] = self.fields
+ ...
+ ...     def render(self, mode, ds, **kw):
+ ...         return self.separator.join(ds[self.getWidgetId()])
+ ...
+ ...     def validate(self, ds, **kw):
+ ...         return ds[self.getWidgetId()] == self.fields
+
+In a nutshell, this ``BaseWidget`` stores nothing in a datamodel: it
+just pushes its list of fields in the datastructure, uses its
+separator to render it and the validation will reject any
+attempt to change it. This is so simple that we can use ``dict``
+instances as datastructure. In the examples, the
+separator will treated as a global configuration element, while the
+list of fields will depend on the indirect widgets.
+
+ >>> base_widget = BaseWidget('base')
+ >>> base_widget.manage_changeProperties(fields='f0 f1')
+ >>> ds = dict()
+ >>> base_widget.prepare(ds)
+ >>> ds[base_widget.getWidgetId()]
+ ('f0', 'f1')
+ >>> base_widget.render('view', ds)
+ 'f0; f1'
+ >>> base_widget.validate(ds)
+ True
+ >>> ds[base_widget.getWidgetId()] = ('f0', 'f2')
+ >>> base_widget.validate(ds)
+ False
+
+Indirect widgets refer to their base widgets by portal-relative path.
+A portal object is already provided in globals of these examples.
+Let's store this base widget within it, so that an indirect
+widget can refer to it::
+
+ >>> from OFS.Folder import Folder
+ >>> portal.fold1 = Folder('fold1')
+ >>> fold1 = portal.fold1
+ >>> fold1._setOb('base', base_widget)
+
+Now we'll make an indirect widget, with different fields, and put it
+in another folder::
+
+ >>> from Products.CPSSchemas.widgets.indirect import IndirectWidget
+ >>> indirect = IndirectWidget('ind')
+ >>> indirect.manage_changeProperties(base_widget_rpath='fold1/base')
+ >>> portal.fold2 = Folder('fold2')
+ >>> fold2 = portal.fold2
+ >>> fold2._setOb('ind', indirect)
+ >>> indirect = fold2.ind
+
+All other properties on the indirect widget have to be added with
+explicit type::
+
+ >>> indirect.manage_addProperty('fields', ('g0', 'g1'), 'lines')
+ >>> indirect.fields
+ ('g0', 'g1')
+
+Widget API demonstration
+========================
+
+We are now ready to see the indirect widget in action::
+
+ >>> ds = dict()
+ >>> indirect.prepare(ds)
+ >>> indirect.render('view', ds)
+ 'g0; g1'
+ >>> ds[indirect.getWidgetId()] = ('f0', 'f1')
+ >>> indirect.validate(ds)
+ False
+
+As the separator is a property of the base widget only, changing it
+applies, provided that we clear the indirect widget transient state::
+
+ >>> base_widget.separator = '|'
+ >>> indirect.clear()
+ >>> indirect.prepare(ds)
+ >>> indirect.render('view', ds)
+ 'g0|g1'
+
+In most cases, this clearing would not be necessary, since a base
+widget properties update will very likely occur in a different
+request. You can think of it as a technical detail in the context of
+this doctest.
+
+Indirect widgets and siblings
+=============================
+
+Some base widgets need to access other widgets from the same
+layout. For instance, all types of compound widgets rely on this.
+There are in this case two different possibilities, whether those
+siblings are expected to be also indirected or not. The first is default.
+
+For instance, an indirected text/image widget would be likely to
+expect the corresponding text and image widgets to be also indirected.
+
+In that case, the base widget is tricked into believing that it
+actually sits in the same place as the indirect widget. In Zope2
+context, this means that its aq parent is the same as the indirect
+widget's.
+
+Let's make a new base widget to illustrate that::
+
+ >>> from Acquisition import aq_inner, aq_parent
+ >>> class AqIntrospectWidget(CPSWidget):
+ ...     def render(self, mode, ds, **kw):
+ ...         return aq_parent(aq_inner(self)).getId()
+ >>> fold1._setOb('aq_int', AqIntrospectWidget('aq_int'))
+ >>> aq_int = fold1.aq_int
+ >>> aq_int.render('', None)
+ 'fold1'
+
+Now let's see what happens for an indirect widget pointing to aq_int::
+
+ >>> fold2._setOb('ind', IndirectWidget('ind'))
+ >>> ind = fold2.ind
+ >>> ind.manage_changeProperties(base_widget_rpath='fold1/aq_int')
+ >>> ind.render('', None)
+ 'fold2'
+
+This behaviour can be changed by a property::
+
+ >>> ind.manage_changeProperties(is_parent_indirect=False)
+ >>> ind.clear()
+ >>> ind.render('', None)
+ 'fold1'
+
+Instance level properties
+=========================
+Some widgets may use optional properties that aren't defined at
+class level. Indirect widgets can cope with that::
+
+ >>> class MorePropsWidget(CPSWidget):
+ ...     def render(self, mode, ds, **kw):
+ ...         return self.getProperty('new_prop', 'not defined')
+ >>> fold1._setOb('more_props', MorePropsWidget('more_props'))
+ >>> fold2._setOb('ind', IndirectWidget('ind'))
+ >>> ind = fold2.ind
+ >>> ind.manage_changeProperties(base_widget_rpath='fold1/more_props')
+ >>> ind.render('', None)
+ 'not defined'
+ >>> ind.manage_addProperty('new_prop', 'good value', 'string')
+ >>> ind.clear()
+ >>> ind.render('', None)
+ 'good value'
+
+
+
+.. Local Variables:
+.. mode: rst
+.. End:
+.. vim: set filetype=rst:
+
+
+
+
