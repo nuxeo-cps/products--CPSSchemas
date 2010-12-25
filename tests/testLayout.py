@@ -19,6 +19,7 @@
 # $Id$
 
 import unittest
+
 from Acquisition import Implicit
 from Products.CPSSchemas.Layout import CPSLayout
 from Products.CPSSchemas.Schema import CPSSchema
