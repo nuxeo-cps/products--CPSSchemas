@@ -16,18 +16,44 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from copy import deepcopy
-from Acquisition import aq_base, aq_inner, aq_parent
+
+from zope.interface import implements
+from Globals import InitializeClass
+from AccessControl import ClassSecurityInfo
+from Acquisition import aq_base, aq_inner, aq_parent, aq_get
+
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import SimpleItemWithProperties
 
-from Products.CPSSchemas.Widget import CPSWidget
+from Products.CPSSchemas.interfaces import IWidget
 
-class IndirectWidget(SimpleItemWithProperties): # why not SimpleItemWithProperties ?
+class IndirectWidget(SimpleItemWithProperties, object):
     """See documentation in CPSSchemas/doc/indirect_widget
 
     current implementation actually makes a copy of the base widget and store
     it as a volatile attribute. This is good enough for now, we'll see what
-    profiling tells us."""
+    profiling tells us.
+
+    This is not an adapter because:
+    - making an adapter persistent is probably funky
+    - flexibility does not seem to be needed there
+
+    The current implementation uses dirty acquisition hacks. Namely, it stores
+    the wrapped parent in a volatile attribute, to perform lookup on it.
+    The reason is that both in @property or in __getattr__, aq_chain is None,
+    but we need to avoid constructing the worker widget each time a simple
+    attribute is being looked up, and the Layout class does lots of them.
+
+    An alternative would have been to use zope.proxy, but it's not clear
+    without further study whether this goes well with acquisition, although
+    rewriting in ZTK style would certainly have to be tried this way first.
+    """
+
+    implements(IWidget)
+
+    meta_type = 'Indirect Widget'
+
+    security = ClassSecurityInfo()
 
     _properties = (dict(id='base_widget_rpath', type='string', mode='w',
                         label='Relative path of base widget'),
@@ -35,23 +61,38 @@ class IndirectWidget(SimpleItemWithProperties): # why not SimpleItemWithProperti
                         label="Is the worker widget aq parent the indirect's"),
                    )
 
-    _v_worker = None
+    _v_worker = (None, None) # actualy, worker + base widget
+    _v_parent = (None,)
     is_parent_indirect = True
 
     def __init__(self, wid, **kw):
         self._setId(wid)
 
     def getWorkerWidget(self):
-        worker_widget = self._v_worker
-        if worker_widget is None:
-            worker_widget = self.makeWorkerWidget()
-        return worker_widget
+        worker, base = self._v_worker
+        if worker is None:
+            self.makeWorkerWidget()
+            worker, base = self._v_worker
+
+        # place in right aq context
+        # _v_parent is more volatile that _v_worker because it gets
+        # written over with each traversal, and in particular each request.
+        # This is important: if we store the worker with its aq chain,
+        # an expired request with no URL or RESPONSE can be acquired
+        # from the widget in subsequent requests.
+        if self.is_parent_indirect: # avoid and/or pattern to avoid bool(self)
+            parent = self._v_parent[0]
+        else:
+            parent = aq_parent(aq_inner(base))
+        return worker.__of__(parent)
 
     def clear(self):
-        self._v_worker = None
+        delattr(self, '_v_worker')
 
     def makeWorkerWidget(self):
-        portal = getToolByName(self, 'portal_url').getPortalObject()
+        # using _v_parent to avoid loops in __getattr__
+        utool = getToolByName(self._v_parent[0], 'portal_url')
+        portal = utool.getPortalObject()
         base = portal.unrestrictedTraverse(self.base_widget_rpath)
         worker = deepcopy(aq_base(base))
 
@@ -70,39 +111,56 @@ class IndirectWidget(SimpleItemWithProperties): # why not SimpleItemWithProperti
         worker.manage_changeProperties(**props_upd)
 
         # fix worker widget id
-        worker.getWidgetId = lambda : self.getWidgetId()
+        worker._setId(self.getId())
 
-        # place in right aq context
-        if self.is_parent_indirect: # avoid and/or to avoid bool(self)
-            aq_ref = self
-        else:
-            aq_ref = base
-        worker = worker.__of__(aq_parent(aq_inner(aq_ref)))
+        # store in volatile var, without any aq wrapping (tuple hack)
+        self._v_worker = (worker, base)
 
-        self._v_worker = worker
-        return worker
-
-    # we cannot inherit from CPSWidget
+    security.declarePublic('getWidgetId')
     def getWidgetId(self):
         """Get this widget's id."""
-        id = self.getId()
-        if hasattr(self, 'getIdUnprefixed'):
+        zid = self.getId()
+        try:
             # Inside a FolderWithPrefixedIds.
-            return self.getIdUnprefixed(id)
-        else:
+            # method on parent used in makeWorkerWidget: avoid aq loops
+            return getattr(self._v_parent[0], 'getIdUnprefixed')(zid)
+        except AttributeError:
             # Standalone
-            return id
+            return zid
+
+    def isHidden(self):
+        return False # By definition, this is no template
 
     #
-    # Widget API is completely indirected to worker widget
+    # All other attributes from Widget API are indirected to worker widget
     #
 
+    def __of__(self, parent):
+        """Zope2 trick so that we can carry on aq chain from __getattr__
+        """
+        # tuple hack to store original aq (includes request container)
+        self._v_parent = (parent,)
+        return SimpleItemWithProperties.__of__(self, parent)
 
-    def prepare(self, ds, **kw):
-        self.getWorkerWidget().prepare(ds, **kw)
+    def __getattr__(self, k):
+        """This is called if normal python attr lookup fails, but before aq.
 
-    def validate(self, ds, **kw):
-        return self.getWorkerWidget().validate(ds, **kw)
+        In this method, the instance is never wrapped by acquisition.
+        """
+        if k in self.forwarded_attributes:
+            try:
+                return getattr(self.getWorkerWidget(), k)
+            except AttributeError:
+                pass
+        if k.startswith('_'):
+            raise AttributeError(k) # XXX maybe some have to get through
+        assert self._v_parent[0] is not None
+        return getattr(self._v_parent[0], k)
 
-    def render(self, mode, ds, **kw):
-        return self.getWorkerWidget().render(mode, ds, **kw)
+    forwarded_attributes = frozenset([
+            'has_input_area', 'label_edit', 'hidden_empty', 'required',
+            'label', 'help', 'is_i18n', 'fieldset', 'prepare', 'validate',
+            'render', 'getHtmlWidgetId', 'getModeFromLayoutMode',
+            'isReadOnly', 'getCssClass', 'getJavaScriptCode'])
+
+InitializeClass(IndirectWidget)
