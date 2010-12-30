@@ -63,6 +63,11 @@ from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
 from Products.CPSSchemas.MethodVocabulary import MethodVocabularyWithContext
 from Products.CPSSchemas.Vocabulary import EmptyKeyVocabularyWrapper
 
+warnings.warn("Products.CPSchemas.BasicWidgets is currently been split and "
+              "will be kept as a compatibility alias or holding deprecated "
+              "widgets only. It should disappear in CPS 3.6",
+              DeprecationWarning, stacklevel=2)
+
 # BBB (remove this in CPS-3.6)
 def cleanFileName(name):
     return generateFileName(name)
@@ -1912,7 +1917,10 @@ InitializeClass(CPSFileWidget)
 ##################################################
 
 class CPSImageWidget(CPSFileWidget):
-    """Image widget."""
+    """Image widget.
+
+    This widget is deprecated in favor of .widgets.image.CPSImageWidget
+    """
     meta_type = 'Image Widget'
 
     field_types = ('CPS Image Field',
@@ -2124,8 +2132,6 @@ class CPSImageWidget(CPSFileWidget):
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
         return meth(mode=mode, datastructure=datastructure, **img_info)
-
-InitializeClass(CPSImageWidget)
 
 ##################################################
 

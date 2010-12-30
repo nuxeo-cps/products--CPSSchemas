@@ -1,6 +1,6 @@
 <metal:html tal:define="emptybody python:1;
                         doc python:here.getContent();
-                        id here/REQUEST/id;
+                        uri here/REQUEST/uri;
                         info python:here.getContentInfo();
                         ">
   <metal:body use-macro="here/main_template/macros/master">
@@ -17,7 +17,7 @@
         <button onclick="window.close()" i18n:translate="button_close">Fermer</button>
       </div>
       <div class="popupImg">
-        <img tal:replace="structure python:here.getImgTag(id, base_url='')" />
+        <img tal:attributes="src uri" />
       </div>
     </metal:main>
   </metal:body>

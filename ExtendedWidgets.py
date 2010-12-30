@@ -56,6 +56,11 @@ from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 from Products.CPSSchemas.swfHeaderData import analyseContent
 
+warnings.warn("Products.CPSchemas.ExtendedWidgets is currently been split and "
+              "will be kept as a compatibility alias or holding deprecated "
+              "widgets only. It should disappear in CPS 3.6",
+              DeprecationWarning, stacklevel=2)
+
 logger = getLogger('Products.CPSSChemas.ExtendedWidgets')
 
 register_js = JSGlobalMethodResource.register

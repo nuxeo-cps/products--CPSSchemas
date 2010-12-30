@@ -163,6 +163,9 @@ class FakeDataModel(dict):
     def fileUri(self, *a, **kw):
         # GR too much faking does not test much, but oh well
         return "dm.fileUri args=%r, kwargs=%r" % (a, kw)
+    def imageUri(self, *a, **kw):
+        # GR too much faking does not test much, but oh well
+        return "dm.imageUri args=%r, kwargs=%r" % (a, kw)
 
 class FakeMimeTypeRegistry(Implicit):
     def lookupExtension(self, name):
@@ -1101,13 +1104,13 @@ function getLayoutMode() {
         self.assertEquals(dm['bar'], None)
 
     def test_CPSImageWidget_validate_email_render(self):
-        from Products.CPSSchemas.BasicWidgets import CPSImageWidget
+        from Products.CPSSchemas.widgets.image import CPSImageWidget
         folder = Folder()
         widget = CPSImageWidget('foo').__of__(folder)
         folder.mimetypes_registry = FakeMimeTypeRegistry()
-        widget.fields = ['bar']
+        widget.fields = ['bar', 'size']
         dm = FakeDataModel()
-        dm._adapters = [FakeAdapter({'bar': 'thatsme'})]
+        dm._adapters = [FakeAdapter({'bar': 'thatsme', 'size': 'w480'})]
         dm.proxy = 'someproxy'
         dm['bar'] = None
         ds = FakeDataStructure(dm)
@@ -1117,6 +1120,7 @@ function getLayoutMode() {
         ds['foo_title'] = 'im.png'
         ds['foo_choice'] = 'change'
         ds['foo_filename'] = 'search_popup.png'
+        ds['foo_size'] = '320x200'
         # now validate in order to put something appropriate in datamodel
         self.assertTrue(widget.validate(ds))
         self.assertEquals(dm['bar'].data, TEST_IMAGE)
@@ -1143,8 +1147,7 @@ function getLayoutMode() {
 
         # URL for final rendering is consistent
         self.assertEquals(rendered['image_tag'],
-                          '<img src="cid:%s" alt="" height="32" '
-                          'width="32" />' % cid)
+                          '<img src="cid:%s" alt="" />' % cid)
 
         # delete image from datastructure and check that we can still render
         ds['foo'] = None
