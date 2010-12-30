@@ -26,6 +26,7 @@ from Products.CPSUtil.html import renderHtmlTag
 from Products.CPSUtil.mail import make_cid
 from Products.CPSUtil.image import resized_img_geometry
 from Products.CPSUtil.image import parse_size_spec_as_dict
+from Products.CPSUtil.image import parse_size_spec
 from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
 from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSIntWidget
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
@@ -52,10 +53,10 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
     size spec as for the live resizing system hooked in traversal
     (e.g., 320x200, w640)
     - integer fields: in that case, the value is applied as a "largest
-    dimension" (i.e. the size spec is 'l320'), and the size widget must subclass
-    of CPSIntWidget.
+    dimension" (i.e. the size spec is 'l320'), and the size widget must
+    subclass CPSIntWidget.
 
-    There are a simple assumptions on auxiliary widgets, which is a largely
+    There is a simple assumptions on auxiliary widgets, which is a largely
     observed convention:
     - the field used to store the value must be its first.
     """
