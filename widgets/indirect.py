@@ -89,11 +89,14 @@ class IndirectWidget(SimpleItemWithProperties, object):
     def clear(self):
         delattr(self, '_v_worker')
 
-    def makeWorkerWidget(self):
-        # using _v_parent to avoid loops in __getattr__
+    def getTemplateWidget(self):
         utool = getToolByName(self._v_parent[0], 'portal_url')
         portal = utool.getPortalObject()
-        base = portal.unrestrictedTraverse(self.base_widget_rpath)
+        return portal.unrestrictedTraverse(self.base_widget_rpath)
+
+    def makeWorkerWidget(self):
+        # using _v_parent to avoid loops in __getattr__
+        base = self.getTemplateWidget()
         worker = deepcopy(aq_base(base))
 
         # update worker properties, by creating them if needed
