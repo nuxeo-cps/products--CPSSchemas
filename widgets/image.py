@@ -421,6 +421,8 @@ class CPSPhotoWidget(CPSImageWidget):
             spec = self.zoom_size_spec
         wid = self.getWidgetId()
         uri = dm.imageUri(self.fields[0], **parse_size_spec_as_dict(spec))
+        if uri is None:
+            return
         w, h = resized_img_geometry(ds[wid], spec)
         return dict(uri=uri, width=w, height=h,
                     escaped_uri=urllib.quote_plus(uri))
