@@ -21,6 +21,7 @@
   last_modified options/last_modified;
   ds options/datastructure;
   base_url here/portal_url/getBaseUrl;
+  size_widget options/size_widget|nothing;
   ">
   <div class="photoWidget"
        tal:condition="python: mode == 'view' and not empty_file">
@@ -63,6 +64,13 @@
       tal:replace="structure image_tag" />
 
     <metal:block use-macro="here/widget_image_render/macros/image_edit"/>
+
+    <tal:block define="cell size_widget;"
+               condition="size_widget">
+     <metal:block
+       use-macro="here/widget_compound_default_render/macros/cell" />
+    </tal:block>
+
 
     <tal:block
       condition="python:id+'_rposition' in ds and 'position' in configurable">
