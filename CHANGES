@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #2234: all image related widgets now use the on-the-fly resizing
 Bug fixes
 ~~~~~~~~~
 -
