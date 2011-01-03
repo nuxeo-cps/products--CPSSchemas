@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.15.0
+===========================================================
+First release built by: gracinet at: 2011-01-03T01:14:41
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2234: all image related widgets now use the on-the-fly resizing
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.14.0
 ===========================================================
 First release built by: gracinet at: 2010-12-30T12:10:30
