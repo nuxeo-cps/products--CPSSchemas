@@ -1805,12 +1805,27 @@ InitializeClass(CPSLinkWidget)
 
 class CPSTextImageWidget(CPSProgrammerCompoundWidget):
     """Widget for text+image.
+
+    Also Support two column for backwards compatibility.
     """
     meta_type = 'Text Image Widget'
     render_method = 'widget_textimage_render'
     prepare_validate_method = 'widget_textimage_prepare_validate'
 
 InitializeClass(CPSTextImageWidget)
+
+
+class CPSTextColumnsWidget(CPSProgrammerCompoundWidget):
+    """Widget for two columns of texts.
+
+    Currently supports only two columns, but should evolve to support any of
+    them (note that there are CSS3 properties for that).
+    """
+    meta_type = 'Text Columns Widget'
+    render_method = 'widget_textimage_render'
+    prepare_validate_method = 'widget_textcolumns_prepare_validate'
+
+InitializeClass(CPSTextColumnsWidget)
 
 
 class CPSImageLinkWidget(CPSProgrammerCompoundWidget):

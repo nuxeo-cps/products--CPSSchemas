@@ -49,6 +49,7 @@
  <widget class=".ExtendedWidgets.CPSFlashWidget"/>
  <widget class=".ExtendedWidgets.CPSLinkWidget"/>
  <widget class=".ExtendedWidgets.CPSTextImageWidget"/>
+ <widget class=".ExtendedWidgets.CPSTextColumnsWidget"/>
  <widget class=".ExtendedWidgets.CPSImageLinkWidget"/>
  <widget class=".ExtendedWidgets.CPSAutocompletionStringWidget"/>
 
