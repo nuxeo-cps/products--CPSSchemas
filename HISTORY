@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.15.1
+===========================================================
+First release built by: gracinet at: 2011-01-13T02:31:02
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2321: provide Text Columns Widget
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.0
 ===========================================================
 First release built by: gracinet at: 2011-01-03T01:14:41
