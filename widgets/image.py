@@ -234,8 +234,8 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         self.mainPrepare(ds, **kw)
         self.optPrepare(ds, **kw)
 
-    def validate(self, ds, **kw):
-        """Override FileWidget's method."""
+    def imageValidate(self, ds, **kw):
+        """Validation for image and size_spec widgets only."""
         if not CPSFileWidget.validate(self, ds, **kw):
             return False
 
@@ -243,6 +243,12 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
             for subw in self._getSubWidgets():
                 if not subw.validate(ds):
                     return False
+        return True
+
+    def validate(self, ds, **kw):
+        """Override FileWidget's method."""
+        if not self.imageValidate(ds, **kw):
+            return False
 
         dm = ds.getDataModel()
         widget_id = self.getWidgetId()
@@ -397,20 +403,34 @@ class CPSPhotoWidget(CPSImageWidget):
                 alt = datastructure[widget_id + '_filename']
         datastructure[widget_id + '_alt'] = alt
 
-    def otherProcessing(self, choice, datastructure):
-        datamodel = datastructure.getDataModel()
+    def validate(self, ds, **kw):
+        """Override FileWidget's method."""
+        if not self.imageValidate(ds, **kw):
+            return False
+
+        dm = ds.getDataModel()
         widget_id = self.getWidgetId()
 
         # Caption
         if len(self.fields) > 1:
-            subtitle = datastructure[widget_id + '_subtitle']
-            datamodel[self.fields[1]] = subtitle
+            subtitle = ds[widget_id + '_subtitle']
+            dm[self.fields[1]] = subtitle
 
         # Position
         if self.configurable != 'nothing' and len(self.fields) > 2:
-            rposition = datastructure[widget_id + '_rposition']
+            rposition = ds[widget_id + '_rposition']
             if rposition and rposition in self.all_render_positions:
-                datamodel[self.fields[2]] = rposition
+                dm[self.fields[2]] = rposition
+
+        # Title
+        if len(self.fields) > 3:
+            dm[self.fields[3]] = ds[widget_id + '_title']
+
+        # Alt
+        if len(self.fields) > 4:
+            dm[self.fields[4]] = ds[widget_id + '_alt']
+
+        return True
 
     def getZoomInfo(self, ds):
         """Extract info about zoomed image from datastructure."""
