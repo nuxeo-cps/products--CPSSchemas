@@ -24,9 +24,10 @@ from zExceptions import BadRequest
 
 from Products.CPSUtil.html import renderHtmlTag
 from Products.CPSUtil.mail import make_cid
-from Products.CPSUtil.image import resized_img_geometry
+from Products.CPSUtil.image import resized_geometry
 from Products.CPSUtil.image import parse_size_spec_as_dict
 from Products.CPSUtil.image import parse_size_spec
+from Products.CPSUtil.image import geometry as image_geometry
 from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
 from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSIntWidget
 from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
@@ -104,24 +105,6 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
                           }
             fupload.seek(0)
 
-    def readImageGeometry(self, ds):
-        """Return width, height for image in datastructure.
-        """
-        image = ds[self.getWidgetId()]
-        # TODO getImageInfo has problems with some jpg images
-        # use PIL instead if available
-        from OFS.Image import getImageInfo
-        image.seek(0)
-        width, height = getImageInfo(image.read(24))[1:]
-        image.seek(0)
-
-        if width < 0:
-            width = None
-        if height < 0:
-            height = None
-
-        return width, height
-
     def getImageInfo(self, ds, dump_cid_parts=False, **kw):
         """Get the image info from the datastructure.
 
@@ -144,7 +127,7 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
             info['image_tag'] = info['alt'] = ''
             return info
 
-        info['height'], info['width'] = self.readImageGeometry(ds)
+        info['height'], info['width'] = image_geometry(ds[self.getWidgetId()])
 
         title = info['title']
 
@@ -443,7 +426,7 @@ class CPSPhotoWidget(CPSImageWidget):
         uri = dm.imageUri(self.fields[0], **parse_size_spec_as_dict(spec))
         if uri is None:
             return
-        w, h = resized_img_geometry(ds[wid], spec)
+        w, h = resized_geometry(ds[wid], spec)
         return dict(uri=uri, width=w, height=h,
                     escaped_uri=urllib.quote_plus(uri))
 
