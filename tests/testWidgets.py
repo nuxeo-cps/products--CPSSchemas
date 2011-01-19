@@ -39,7 +39,7 @@ from Products.CPSSchemas.Widget import widgetRegistry
 
 DUMMY_DICT = {'a': 'ZZZ', 'b': 'YYY', 'c': 'XXX'}
 
-TEST_IMAGE = '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
+TEST_IMAGE = ('\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
 '\x04\x03\x00\x00\x00\x81Tg\xc7\x00\x00\x00\x18PLTE\x8e\x0b\x08\x00\x00\x00'
 '\x99\x99\x99\xcc\xcc\xccfff333\x99\x99f\xff\xff\xff\x15E\xae\xa3\x00\x00\x00'
 '\x01tRNS\x00@\xe6\xd8f\x00\x00\x00\x01bKGD\x00\x88\x05\x1dH\x00\x00\x00\tpHYs'
@@ -52,7 +52,8 @@ TEST_IMAGE = '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 '
 '\xc1q8\x84\x02\xe1\xb4\xa5\xe9\xd7\xfeL\x8eA\xd5\x98\xf1yS\xd12\xd5\xcag1\xde'
 '\xb9c\xd8\xe5\x86b4|\xf5\xed\xcd:S\xb9\x18\xe0\xad\xc9\xfa\\\xc7\x16\xe6\xc6C'
 '\xea\xac\x15\x00\x8bQ\x88\xe4\x0b\xc4j@\x0eV#\xdb\xb6\x7f*\xe9\x7f\x94\xf5O'
-'\x10\x0f\x1a\xadA\xb9\xc2\xaa\xf96\x00\x00\x00\x00IEND\xaeB`\x82'
+'\x10\x0f\x1a\xadA\xb9\xc2\xaa\xf96\x00\x00\x00\x00IEND\xaeB`\x82')
+
 
 class FakePortal(Implicit):
     default_charset = 'unicode'
@@ -1105,10 +1106,18 @@ function getLayoutMode() {
 
     def test_CPSImageWidget_validate_email_render(self):
         from Products.CPSSchemas.widgets.image import CPSImageWidget
-        folder = Folder()
-        widget = CPSImageWidget('foo').__of__(folder)
-        folder.mimetypes_registry = FakeMimeTypeRegistry()
-        widget.fields = ['bar', 'size']
+        from Products.CPSSchemas.BasicWidgets import CPSStringWidget
+        from Products.CPSSchemas.Layout import Layout
+        layout = Layout()
+        layout.mimetypes_registry = FakeMimeTypeRegistry()
+        layout.addSubObject(CPSImageWidget('foo'))
+        layout.addSubObject(CPSStringWidget('foo_size'))
+        widget = layout['foo']
+        size_widget = layout['foo_size']
+        widget.fields = ['bar']
+        widget.widget_ids = ['foo_size']
+        size_widget.fields = ['size']
+
         dm = FakeDataModel()
         dm._adapters = [FakeAdapter({'bar': 'thatsme', 'size': 'w480'})]
         dm.proxy = 'someproxy'
@@ -1121,24 +1130,27 @@ function getLayoutMode() {
         ds['foo_title'] = 'im.png'
         ds['foo_choice'] = 'change'
         ds['foo_filename'] = 'search_popup.png'
-        ds['foo_size'] = '320x200'
+        ds['foo_size'] = 'full' # easy first round
+
         # now validate in order to put something appropriate in datamodel
         self.assertTrue(widget.validate(ds))
         self.assertEquals(dm['bar'].data, TEST_IMAGE)
+        self.assertEquals(dm['size'], 'full')
 
-        # start with a fresh datastructure and render for email
-        ds = FakeDataStructure(dm)
-        widget.prepare(ds)
-        from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
         # using a fake render method and having it return a dict, not an str !
         def widget_image_render(mode='', ds=None, **img_info):
             return img_info
         widget.widget_image_render = widget_image_render
+        from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
+        from Products.CPSSchemas.Widget import CIDPARTS_KEY
+
+        # start with a fresh datastructure and render for email
+        ds = FakeDataStructure(dm)
+        widget.prepare(ds)
         rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
 
         # Extraction and assertions
         # image properly dumped in dict for cid parts
-        from Products.CPSSchemas.Widget import CIDPARTS_KEY
         parts = ds.get(CIDPARTS_KEY)
         self.assertFalse(parts is None)
         self.assertEquals(len(parts), 1)
@@ -1149,6 +1161,27 @@ function getLayoutMode() {
         # URL for final rendering is consistent
         self.assertEquals(rendered,
                           '<img src="cid:%s" alt="" />' % cid)
+
+        # Now intercept the call to image.resize() to check with a less trivial
+        # size spec
+        from Products.CPSSchemas.widgets import image
+        orig_resize = image.image_resize
+        def resize(src, width, height, resized_id, raw=False):
+            return 'Resized w=%d, h=%d' % (width, height)
+        image.image_resize = resize
+        dm['size'] = '320x200'
+        ds = FakeDataStructure(dm)
+        widget.prepare(ds)
+
+        rendered = widget.render('view', ds, layout_mode=EMAIL_LAYOUT_MODE)
+        parts = ds.get(CIDPARTS_KEY)
+        self.assertFalse(parts is None)
+        self.assertEquals(len(parts), 1)
+        cid, part = parts.items()[0]
+        self.assertEquals(part['content'], 'Resized w=320, h=200')
+
+        # cleanup
+        image.resize = orig_resize
 
         # delete image from datastructure and check that we can still render
         ds['foo'] = None

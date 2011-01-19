@@ -24,9 +24,12 @@ from zExceptions import BadRequest
 
 from Products.CPSUtil.html import renderHtmlTag
 from Products.CPSUtil.mail import make_cid
+from Products.CPSUtil.file import ofsFileHandler
 from Products.CPSUtil.image import resized_geometry
 from Products.CPSUtil.image import parse_size_spec_as_dict
 from Products.CPSUtil.image import parse_size_spec
+from Products.CPSUtil.image import resize as image_resize
+from Products.CPSUtil.image import SizeSpecError
 from Products.CPSUtil.image import geometry as image_geometry
 from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
 from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSIntWidget
@@ -94,16 +97,32 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         if not dump:
             return
 
-        # TODO now we need resizing here also!
-        fupload = datastructure[self.getWidgetId()]
-        if fupload is not None:
-            fupload.seek(0)
+        # we must avoid the FileUpload object that's in datastructure,
+        # because we may have a TramlineImage here and in that case the
+        # FileUpload is just the id.
+        # note that using this method between prepare and validate is
+        # a really strange idea
+        dm = datastructure.getDataModel()
+        fobj = dm[self.fields[0]]
+        if fobj is not None:
             parts = datastructure.setdefault(CIDPARTS_KEY, {})
-            parts[cid] = {'content': fupload.read(),
-                          'filename': info['current_filename'],
+            filename = info['current_filename']
+            try:
+                spec = self.getSizeSpec(dm, w_index=0)
+            except MissingSizeWidget:
+                spec = self.size_spec
+
+            if spec == 'full':
+                resized = ofsFileHandler(fobj).read() # Youps, RAM
+            else:
+                w, h = resized_geometry(fobj, spec)
+                resized = image_resize(fobj, w, h,
+                                       fobj.getId(), raw=True)
+
+            parts[cid] = {'content': resized,
+                          'filename': filename,
                           'content-type': info['mimetype'],
                           }
-            fupload.seek(0)
 
     def getImageInfo(self, ds, dump_cid_parts=False, **kw):
         """Get the image info from the datastructure.
@@ -117,6 +136,10 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         set this kwarg to True in the call of getImageInfo and pass **kw.
         """
         info = self.getFileInfo(ds)
+        if info['empty_file']:
+            return info
+
+        info['height'], info['width'] = image_geometry(ds[self.getWidgetId()])
 
         layout_mode = kw.get('layout_mode')
         if layout_mode == EMAIL_LAYOUT_MODE:
@@ -126,8 +149,6 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
             info['height'] = info['width'] = 0
             info['image_tag'] = info['alt'] = ''
             return info
-
-        info['height'], info['width'] = image_geometry(ds[self.getWidgetId()])
 
         title = info['title']
 
@@ -245,14 +266,19 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
             dm[self.fields[3]] = ds[widget_id + '_alt']
 
         for i in self.size_widgets:
-            if not self.validateSizeSpec(dm, i):
+            if not self.validateSizeSpec(ds, i):
                 return False
 
         return True
 
-    def validateSizeSpec(self, dm, widget_index):
+    def validateSizeSpec(self, ds, widget_index):
         """Validate the size specification handled by sub widget #widget_index.
+
+        Note that we need the typed value, so it's read from datamodel.
+        This means that this method must be called *after* validation of
+        the subwidgets has validated the datamodel.
         """
+        dm = ds.getDataModel()
         try:
             spec, swidget = self.getSizeSpec(dm, w_index=widget_index,
                                              with_widget=True)
@@ -261,7 +287,7 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
 
         try:
             parse_size_spec(spec)
-        except ValueError:
+        except SizeSpecError:
             if swidget is None:
                 raise
             ds.setError(swidget.getWidgetId(),
