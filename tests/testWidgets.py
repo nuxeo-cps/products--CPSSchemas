@@ -1113,6 +1113,7 @@ function getLayoutMode() {
         dm._adapters = [FakeAdapter({'bar': 'thatsme', 'size': 'w480'})]
         dm.proxy = 'someproxy'
         dm['bar'] = None
+        dm['size'] = 'w480'
         ds = FakeDataStructure(dm)
         f = StringIO(TEST_IMAGE)
         fu = FileUpload(FakeFieldStorage(f, 'search_popup.png'))
@@ -1146,7 +1147,7 @@ function getLayoutMode() {
         self.assertEquals(part['content-type'], 'image/png')
 
         # URL for final rendering is consistent
-        self.assertEquals(rendered['image_tag'],
+        self.assertEquals(rendered,
                           '<img src="cid:%s" alt="" />' % cid)
 
         # delete image from datastructure and check that we can still render
