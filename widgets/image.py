@@ -137,6 +137,8 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         """
         info = self.getFileInfo(ds)
         if info['empty_file']:
+            info['height'] = info['width'] = 0
+            info['image_tag'] = info['alt'] = ''
             return info
 
         info['height'], info['width'] = image_geometry(ds[self.getWidgetId()])
@@ -144,11 +146,6 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         layout_mode = kw.get('layout_mode')
         if layout_mode == EMAIL_LAYOUT_MODE:
             self.updateImageInfoForEmail(info, ds, dump=dump_cid_parts)
-
-        if info['empty_file']:
-            info['height'] = info['width'] = 0
-            info['image_tag'] = info['alt'] = ''
-            return info
 
         title = info['title']
 
