@@ -33,7 +33,7 @@ CPSSchemas JavaScript functions.
  * Display a TinyMCE embedded frame.
  */
 function displayTinyMceEditor(htmlWidgetId, selected_language) {
-  tinymce.init({
+  tinyMCE.init({
     mode : 'specific_textareas',
     editor_selector : htmlWidgetId,
     // Don't convert accented and special characters into entities
@@ -41,30 +41,14 @@ function displayTinyMceEditor(htmlWidgetId, selected_language) {
     theme : 'advanced',
     language : selected_language,
     plugins : 'table',
-    theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,bullist,numlist,blockquote,formatselect,justifyleft,justifycenter,justifyright,justifyfull,removeformat,separator,link,unlink,anchor,image,separator,undo,redo,code,help',
+    theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,bullist,numlist,blockquote,formatselect,justifyleft,justifycenter,justifyright,justifyfull,removeformat,separator,link,unlink,anchor,image,separator,undo,redo,code',
     theme_advanced_buttons2 : 'hr,separator,tablecontrols',
     theme_advanced_buttons3 : '',
     theme_advanced_toolbar_location : 'top',
     theme_advanced_statusbar_location : 'bottom',
     theme_advanced_resizing : true,
     convert_urls : false,
-    content_css : 'default.css,custom.css,document.css,schemas.css',
-
-    setup : function(ed) {
-      // ed.onRemove.add(function(ed) {
-      //   alert('Editor was removed: ' + ed.id);
-      // });
-
-      // ed.onSaveContent.add(function(ed, o) {
-      //   alert("onSaveContent: " + o.element.nodeName);
-      // });
-
-      // ed.onSubmit.add(function(ed, e) {
-      //   alert('Form submit: ' + e.target.id +
-      //         " className: " + e.target.className);
-      //   });
-    }
-
+    content_css : 'default.css,custom.css,document.css,schemas.css'
   });
 }
 
