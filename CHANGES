@@ -3,7 +3,8 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- Added the "help" button on TinyMCE toolbar so that it's easy for users,
+  developers, administrators, what version of TinyMCE is loaded and deployed.
 Bug fixes
 ~~~~~~~~~
 - #2323: restored Photo widget position controls
