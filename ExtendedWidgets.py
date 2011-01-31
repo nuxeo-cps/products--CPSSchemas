@@ -67,6 +67,8 @@ register_js = JSGlobalMethodResource.register
 
 TINY_MCE_RSRC = register_js('tiny_mce.js')
 
+DISPLAY_TINY_MCE_RSRC = register_js('display_tiny_mce.js', depends=TINY_MCE_RSRC)
+
 FCK_EDITOR_RSRC = register_js('fckeditor.js')
 
 FCK_EDITOR_FORM_RSRC = register_js('fckeditor_form.js',
@@ -87,7 +89,7 @@ POPUP_RTE_RSRC = HtmlResource.register('popup_rte_script', """
     </script>
 """)
 
-RTE_RESOURCES = dict(tinymce=(TINY_MCE_RSRC,),
+RTE_RESOURCES = dict(tinymce=(DISPLAY_TINY_MCE_RSRC,),
                      fckeditor=(FCK_EDITOR_RSRC, FCK_EDITOR_FORM_RSRC),
                      )
 
