@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSSchemas 1.15.2
+===========================================================
+First release built by: gracinet at: 2011-02-01T21:22:00
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- 
+Bug fixes
+~~~~~~~~~
+- #2328: made TinyMCE configuration easier to override
+- #2323: restored Photo widget position controls
+- Added the "help" button on TinyMCE toolbar so that it's easy for users,
+  developers, administrators, what version of TinyMCE is loaded and deployed. 
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.1
 ===========================================================
 First release built by: gracinet at: 2011-01-13T02:31:02
