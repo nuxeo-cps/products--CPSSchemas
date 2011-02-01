@@ -3,13 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- 
+-
 Bug fixes
 ~~~~~~~~~
-- #2328: made TinyMCE configuration easier to override
-- #2323: restored Photo widget position controls
-- Added the "help" button on TinyMCE toolbar so that it's easy for users,
-  developers, administrators, what version of TinyMCE is loaded and deployed. 
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
