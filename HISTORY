@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.15.3
+===========================================================
+First release built by: gracinet at: 2011-02-07T12:42:34
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2334: Added an option on link widget to control URL rendering
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.2
 ===========================================================
 First release built by: gracinet at: 2011-02-01T21:22:00
