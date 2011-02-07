@@ -1802,6 +1802,12 @@ class CPSLinkWidget(CPSProgrammerCompoundWidget):
     render_method = 'widget_link_render'
     prepare_validate_method = ''
 
+    _properties = CPSProgrammerCompoundWidget._properties + (
+        dict(id='display_href_if_title', type='boolean', mode='w',
+             label="Display the URL in view mode if the title is filled ?"),)
+
+    display_href_if_title = True # BBB, although it's pretty useless imho
+
 InitializeClass(CPSLinkWidget)
 
 

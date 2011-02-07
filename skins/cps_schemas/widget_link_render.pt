@@ -30,7 +30,7 @@
         </p>
       </tal:block>
       <p tal:condition="description" tal:content="structure description" />
-      <p tal:content="structure href" />
+      <p tal:content="structure href" tal:condition="python: here.display_href_if_title or not title"/>
     </div>
 
   </tal:block>

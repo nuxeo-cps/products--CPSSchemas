@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2334: Added an option on link widget to control URL rendering
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
