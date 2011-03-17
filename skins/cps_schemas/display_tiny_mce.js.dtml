@@ -2,7 +2,7 @@
 <dtml-let last_modified="_.DateTime()-14" expires="_.DateTime() + 1">
 <dtml-call "REQUEST.RESPONSE.setHeader('Content-Type', 'text/javascript')">
 <dtml-call "REQUEST.RESPONSE.setHeader('Last-Modified', last_modified.toZone('GMT').rfc822())">
-<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=36000, must-revalidate')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=300, must-revalidate')">
 <dtml-call "REQUEST.RESPONSE.setHeader('Expires', expires.toZone('GMT').rfc822())" >
 </dtml-let>
 */
@@ -26,6 +26,6 @@ function displayTinyMceEditor(htmlWidgetId, selected_language) {
     theme_advanced_statusbar_location : 'bottom',
     theme_advanced_resizing : true,
     convert_urls : false,
-    content_css : 'default.css,custom.css,document.css,schemas.css'
+    content_css : <dtml-var expr="cps_rte_stylesheets(climb=4)">,
   });
 }

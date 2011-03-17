@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2329: included theme provided stylesheets in TinyMCE editor
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
