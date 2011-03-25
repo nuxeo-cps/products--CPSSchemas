@@ -19,7 +19,6 @@
  *
  * Zope + Plone2 adaptation : Jean-mat Grimaldi - jean-mat@macadames.com
  *
- * $Id$
  */
 
 FCKConfig.Debug = false;
