@@ -18,7 +18,6 @@
  *		Frederico Caldeira Knabben (fredck@fckeditor.net)
  *
  * Zope + Plone2 adaptation : Jean-mat Grimaldi - jean-mat@macadames.com
- *
  */
 
 FCKConfig.Debug = false;
