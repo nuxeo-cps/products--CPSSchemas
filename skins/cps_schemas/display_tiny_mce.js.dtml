@@ -10,7 +10,6 @@
 /**
  * Display a TinyMCE embedded frame.
  */
-
 function displayTinyMceEditor(htmlWidgetId, selected_language) {
  
   tinyMCE.init({
