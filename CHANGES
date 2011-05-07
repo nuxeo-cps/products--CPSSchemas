@@ -6,6 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
+- #2392: indirect widgets, title_or_id and instance level properties
 - #2329: included theme provided stylesheets in TinyMCE editor
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~

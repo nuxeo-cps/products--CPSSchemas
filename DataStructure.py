@@ -182,6 +182,7 @@ class DataStructure(UserDict):
 
         Uses ``formuid`` to identify the form.
         """
+
         if not sessionHasKey(request, _SESSION_DATASTRUCTURE_KEY):
             return
         dataformuid, data = request.SESSION[_SESSION_DATASTRUCTURE_KEY]
