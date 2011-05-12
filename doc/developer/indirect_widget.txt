@@ -172,15 +172,57 @@ class level. Indirect widgets can cope with that::
  ...     def render(self, mode, ds, **kw):
  ...         return self.getProperty('new_prop', 'not defined')
  >>> fold1._setOb('more_props', MorePropsWidget('more_props'))
+ >>> base = fold1.more_props
  >>> fold2._setOb('ind', IndirectWidget('ind'))
  >>> ind = fold2.ind
  >>> ind.manage_changeProperties(base_widget_rpath='fold1/more_props')
  >>> ind.render('', None)
  'not defined'
+
+Now let's add the property on the base widget::
+
+ >>> fold1.more_props.manage_addProperty('new_prop', 'base value', 'string')
+ >>> ind.clear()
+ >>> ind.render('', None)
+ 'base value'
+
+With the property on the indirect and not on the base widget::
+ >>> base.manage_delProperties(['new_prop'])
+ >>> base.getProperty('new_prop', 'missing')
+ 'missing'
  >>> ind.manage_addProperty('new_prop', 'good value', 'string')
  >>> ind.clear()
  >>> ind.render('', None)
  'good value'
+
+Now with both::
+ >>> base.manage_addProperty('new_prop', 'base value', 'string')
+ >>> base.getProperty('new_prop', 'missing')
+ 'base value'
+ >>> ind.clear()
+ >>> ind.render('', None)
+ 'good value'
+
+Special cases
+=============
+Object titles are predefined in Zope class hierarchy. This could lead
+to some suprises::
+
+ >>> base.title = 'base title'
+ >>> ind.clear()
+ >>> ind.title
+ 'base title'
+
+We chose to default to the indirect id if title is missing in the
+following::
+
+ >>> base.title = ''
+ >>> ind.clear()
+ >>> ind.title
+ ''
+ >>> ind.title_or_id()
+ 'ind'
+
 
 
 

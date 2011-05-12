@@ -68,6 +68,11 @@ class IndirectWidget(SimpleItemWithProperties, object):
     def __init__(self, wid, **kw):
         self._setId(wid)
 
+    @classmethod
+    def localProps(cls):
+        """Properties that are always local to the indirected widget."""
+        return (p['id'] for p in cls._properties)
+
     def getWorkerWidget(self):
         worker, base = self._v_worker
         if worker is None:
@@ -86,6 +91,13 @@ class IndirectWidget(SimpleItemWithProperties, object):
             parent = aq_parent(aq_inner(base))
         return worker.__of__(parent)
 
+    @property
+    def title(self):
+        return self.getProperty('title', None) or self.getWorkerWidget().title
+
+#    def title_or_id(self):
+#        return self.getWorkerWidget().title or self.getId()
+
     def clear(self):
         delattr(self, '_v_worker')
 
@@ -101,12 +113,12 @@ class IndirectWidget(SimpleItemWithProperties, object):
 
         # update worker properties, by creating them if needed
         props_upd = {}
-        worker_class_props = set(p['id'] for p in worker.__class__._properties)
+        worker_base_props = set(p['id'] for p in worker._properties)
         for p in self._properties:
             pid = p['id']
-            if pid in ('base_widget_rpath', 'is_parent_indirect'):
+            if pid in self.localProps():
                 continue
-            if pid in worker_class_props:
+            if pid in worker_base_props:
                 props_upd[pid] = self.getProperty(pid)
             else:
                 worker.manage_addProperty(pid, self.getProperty(pid),
@@ -166,6 +178,7 @@ class IndirectWidget(SimpleItemWithProperties, object):
             'has_input_area', 'label_edit', 'hidden_empty', 'required',
             'label', 'help', 'is_i18n', 'fieldset', 'prepare', 'validate',
             'render', 'getHtmlWidgetId', 'getModeFromLayoutMode',
+            'getProperty',
             'isReadOnly', 'getCssClass', 'getJavaScriptCode'])
 
 InitializeClass(IndirectWidget)

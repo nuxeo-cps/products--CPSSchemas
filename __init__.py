@@ -1,4 +1,3 @@
-# -*- coding: iso-8859-15 -*-
 # (C) Copyright 2003-2004 Nuxeo SARL <http://nuxeo.com>
 # Author: Florent Guillaume <fg@nuxeo.com>
 #
@@ -15,8 +14,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
 
 from logging import getLogger
 

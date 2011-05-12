@@ -45,6 +45,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import XhtmlSanitizer
 from Products.CPSUtil.text import get_final_encoding
 from Products.CPSUtil.resourceregistry import JSGlobalMethodResource
+from Products.CPSUtil.resourceregistry import JSLocalMethodResource
 from Products.CPSUtil.resourceregistry import HtmlResource
 from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.BasicWidgets import CPSSelectWidget
@@ -67,7 +68,8 @@ register_js = JSGlobalMethodResource.register
 
 TINY_MCE_RSRC = register_js('tiny_mce.js')
 
-DISPLAY_TINY_MCE_RSRC = register_js('display_tiny_mce.js', depends=TINY_MCE_RSRC)
+DISPLAY_TINY_MCE_RSRC = JSLocalMethodResource.register('display_tiny_mce.js',
+                                                       depends=TINY_MCE_RSRC)
 
 FCK_EDITOR_RSRC = register_js('fckeditor.js')
 
