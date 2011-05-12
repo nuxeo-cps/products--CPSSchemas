@@ -110,6 +110,9 @@ class FakeWidget(SimpleItem):
         self.id = id
         self.field_ids = field_ids
 
+    def getWidgetId(self):
+        return self.id
+
     def render(self, widget_mode, ds, **kw):
         return 'FakeWidget %s mode=%s val=%s' % (self.id, widget_mode,
                                                  ds[self.field_ids[0]])
@@ -122,7 +125,12 @@ class FakeWidget(SimpleItem):
 
 
 class FakeLayout(Folder):
-    pass
+    def __getitem__(self, k):
+        """ObjectManagers plays with REQUEST and doesn't like the fake."""
+        try:
+            return self._getOb(k)
+        except AttributeError:
+            raise KeyError(k)
 
 fakePortal.portal_url = FakeUrlTool()
 fakePortal.portal_workflow = None
@@ -783,6 +791,26 @@ function getLayoutMode() {
         ds['w2'] = 'Bar'
         widget.validate(ds)
         self.assertEquals(dm, dict(f1='Foo', f2='Bar'))
+
+    def test_CPSCompoundWidget_missing(self):
+        # #2394: don't break if a subwidget is missing
+        from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
+        layout = FakeLayout('layout')
+        widget = CPSCompoundWidget('foo').__of__(layout)
+        widget.widget_ids = ['w1', 'w2']
+        w1 = FakeWidget('w1', ['f1'])
+        layout._setObject('w1', w1)
+
+        self.assertEquals(widget._getSubWidgets(), ())
+        self.assertTrue(widget.isHidden())
+
+        w2 = FakeWidget('w2', ['f2'])
+        layout._setObject('w2', w2)
+        widget = CPSCompoundWidget('foo').__of__(layout)
+        widget.widget_ids = ['w1', 'w2']
+
+        sws = widget._getSubWidgets()
+        self.assertEquals([sw.getWidgetId() for sw in sws], ['w1', 'w2'])
 
     def test_CPSDateTimeRangeWidget_validation(self):
         from Products.CPSSchemas.ExtendedWidgets import CPSDateTimeWidget

@@ -2187,9 +2187,16 @@ class CPSCompoundWidget(CPSWidget):
         }
 
     def _getSubWidgets(self, with_ids=False):
+        """Return the subwidgets, or None if one is missing."""
         layout = aq_parent(aq_inner(self))
         wids = self.widget_ids
-        widgets = tuple(layout[wid] for wid in wids)
+        try:
+            widgets = tuple(layout[wid] for wid in wids)
+        except KeyError, e:
+            self._v_hidden = True
+            logger.error("Missing subwidget %s in compound widget %r. Hiding",
+                         e, self)
+            return () # don't break downstream code
 
         if with_ids:
             return zip(wids, widgets)
@@ -2216,6 +2223,11 @@ class CPSCompoundWidget(CPSWidget):
     def getFieldInits(self):
         """Get field inits from the underlying widgets."""
         return [] # XXX
+
+    def isHidden(self):
+        if getattr(aq_base(self), '_v_hidden', False):
+            return True
+        return CPSWidget.isHidden(self)
 
     def prepare(self, datastructure, **kw):
         """Prepare the underlying widgets."""

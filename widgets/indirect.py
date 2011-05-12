@@ -132,7 +132,9 @@ class IndirectWidget(SimpleItemWithProperties, object):
             return zid
 
     def isHidden(self):
-        return False # By definition, this is no template
+        # some buggy old template widgets may have been there and got through
+        # if upgraded before fix for #2394
+        return self.fields == ('?',)
 
     #
     # All other attributes from Widget API are indirected to worker widget
