@@ -21,6 +21,7 @@ from zope.interface import implements
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base, aq_inner, aq_parent, aq_get
+from OFS.PropertyManager import PropertyManager
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import SimpleItemWithProperties
@@ -180,5 +181,20 @@ class IndirectWidget(SimpleItemWithProperties, object):
             'render', 'getHtmlWidgetId', 'getModeFromLayoutMode',
             'getProperty',
             'isReadOnly', 'getCssClass', 'getJavaScriptCode'])
+
+    forwarded_properties = frozenset([
+            'label_edit', 'hidden_empty', 'required',
+            'label', 'help', 'is_i18n', 'fieldset'])
+
+    def valid_property_id(self, pid):
+        """Allow adding properties on attributes that are forwarded.
+        """
+        if pid in self.forwarded_properties:
+            # at least it is well formed, just check if already there
+            return not pid in self.__dict__ # avoid getattr, of course
+
+        return PropertyManager.valid_property_id(self, pid)
+
+
 
 InitializeClass(IndirectWidget)

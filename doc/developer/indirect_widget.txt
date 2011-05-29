@@ -223,6 +223,13 @@ following::
  >>> ind.title_or_id()
  'ind'
 
+One can change the really basic properties (label, etc.), see #2399::
+
+ >>> ind.label
+ ''
+ >>> ind.manage_addProperty('label', u'new label', 'ustring')
+ >>> ind.label
+ u'new label'
 
 
 
