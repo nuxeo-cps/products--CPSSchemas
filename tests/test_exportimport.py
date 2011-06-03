@@ -29,6 +29,7 @@ from Products.CPSSchemas.Layout import CPSLayout
 from Products.CPSSchemas.BasicWidgets import CPSStringWidget
 from Products.CPSSchemas.BasicWidgets import CPSLinesWidget
 from Products.CPSSchemas.VocabulariesTool import VocabulariesTool
+from Products.CPSSchemas.Vocabulary import CPSVocabulary
 
 class TestFieldXMLAdapter(TestXMLAdapter):
     layer = CPSZCMLLayer
@@ -292,6 +293,26 @@ class TestVocabulariesToolXMLAdapter(TestXMLAdapter):
                           '   <object name="non-ex" remove="True"/>'
                           ' </object>')
 
+class TestVocabularyXMLAdapter(TestXMLAdapter):
+    layer = CPSZCMLLayer
+
+    def buildObject(self):
+        return CPSVocabulary('voc')
+
+    def test_export_unicode(self):
+        self.object.set('foo', u'Av\xe9lassent')
+        adapted = self.adapt(self.object)
+        xml = adapted.body
+        self.failIf(xml is None)
+        self.assert_(xml.startswith('<?xml'))
+        self.failIf(isinstance(xml, unicode))
+        try:
+            xml.decode('utf-8')
+        except UnicodeError:
+            self.fail("Output not proper utf8")
+        self.assert_(u'Av\xe9lassent'.encode('utf-8') in xml)
+
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestSchemaXMLAdapter),
@@ -299,6 +320,7 @@ def test_suite():
         unittest.makeSuite(TestWidgetXMLAdapter),
         unittest.makeSuite(TestFieldXMLAdapter),
         unittest.makeSuite(TestVocabulariesToolXMLAdapter),
+        unittest.makeSuite(TestVocabularyXMLAdapter),
         ))
 
 if __name__ == '__main__':

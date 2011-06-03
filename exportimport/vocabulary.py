@@ -143,6 +143,8 @@ class CPSVocabularyXMLAdapter(XMLAdapterBase,
             key = str(key) # key should be ascii only
             child = self._doc.createElement('item')
             child.setAttribute('key', key)
+            if isinstance(value, unicode):
+                value = value.encode('utf-8') # default xml encoding
             child.appendChild(self._doc.createTextNode(value))
             msgid = vocab.getMsgid(key)
             if msgid is not None:
