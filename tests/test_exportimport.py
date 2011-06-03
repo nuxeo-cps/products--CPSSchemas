@@ -299,6 +299,14 @@ class TestVocabularyXMLAdapter(TestXMLAdapter):
     def buildObject(self):
         return CPSVocabulary('voc')
 
+    def test_import_unicode(self):
+        self.importString('<?xml version="1.0"?>'
+                          ' <object name="voc">'
+                          u'   <item key="bar">Av\xe9lassent</item>'
+                          ' </object>'.encode('utf-8'))
+
+        self.assertEquals(self.object['bar'], u'Av\xe9lassent')
+
     def test_export_unicode(self):
         self.object.set('foo', u'Av\xe9lassent')
         adapted = self.adapt(self.object)
