@@ -30,7 +30,7 @@
       <tal:block condition="python: zoom">
         <a href="#"
           tal:define="zoom_width zoom/width|python:600;
-                      zoom_height zomm/height|python:600;
+                      zoom_height zoom/height|python:600;
                       zoom_uri zoom/escaped_uri;"
           tal:attributes="onclick
               python:'window.open(\'%spopup_photo?uri=%s\', \'zoom\', '
