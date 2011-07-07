@@ -1,4 +1,26 @@
 ===========================================================
+Package: CPSSchemas 1.15.4
+===========================================================
+First release built by: gracinet at: 2011-07-07T17:47:16
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2407: error with older photo popup URLs
+- #2403: export of CPS Vocabularies with unicode labels now works
+- #2399: can't override most basic widget properties in indirects
+- #2394: robustness in compounds if template or missing subwidgets
+- #2392: indirect widgets, title_or_id and instance level properties
+- #2329: included theme provided stylesheets in TinyMCE editor
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.3
 ===========================================================
 First release built by: gracinet at: 2011-02-07T12:42:34
