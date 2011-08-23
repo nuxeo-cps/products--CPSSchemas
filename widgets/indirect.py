@@ -20,11 +20,13 @@ from copy import deepcopy
 from zope.interface import implements
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_inner, aq_parent, aq_get
+from Acquisition import aq_base, aq_inner, aq_parent, aq_chain
 from OFS.PropertyManager import PropertyManager
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import SimpleItemWithProperties
+
+from Products.CPSSchemas.Layout import CPSLayout
 
 from Products.CPSSchemas.interfaces import IWidget
 
@@ -157,7 +159,8 @@ class IndirectWidget(SimpleItemWithProperties, object):
         """Zope2 trick so that we can carry on aq chain from __getattr__
         """
         # tuple hack to store original aq (includes request container)
-        self._v_parent = (parent,)
+        if isinstance(parent, CPSLayout): # see #2430, avoid infinite loops
+            self._v_parent = (parent,)
         return SimpleItemWithProperties.__of__(self, parent)
 
     def __getattr__(self, k):
