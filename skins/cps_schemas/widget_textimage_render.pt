@@ -16,8 +16,9 @@
 <tal:block condition="python: mode == 'edit'">
 
 <tal:block repeat="cell cells">
-<div  tal:define="err python:ds.getError(cell['widget'].getWidgetId());
-                  css_class python:test(err, 'row error', 'row');">
+<div tal:attributes="class string:subwidget${repeat/cell/index}"
+     tal:define="err python:ds.getError(cell['widget'].getWidgetId());
+                 css_class python:test(err, 'row error', 'row');">
   <div class="label" tal:content="cell/widget/label_edit" i18n:translate="" />
   <div class="field" tal:content="structure cell/widget_rendered" />
   <div tal:condition="err">
