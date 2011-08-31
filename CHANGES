@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- made GenericMultiSelect used a <div> with class rather than <br/>
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

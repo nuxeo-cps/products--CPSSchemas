@@ -1399,12 +1399,13 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                     if k in value:
                         kw['checked'] = 'checked'
                         in_selection = 1
-                    res += renderHtmlTag('input', **kw)
+                    res += '<div class="labelledCheckbox">'
+		    res += renderHtmlTag('input', **kw)
                     kw = {'for': html_widget_id+'_'+k,
                           'contents': v,
                           }
                     res += renderHtmlTag('label', **kw)
-                    res += '<br/>\n'
+                    res += '</div>\n'
             # invalid selections
             for value_item in value:
                 if value_item and value_item not in vocabulary.keys():
