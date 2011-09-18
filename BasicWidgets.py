@@ -2314,6 +2314,13 @@ class CPSBylineWidget(CPSWidget):
     """Byline widget showing credentials and document status."""
     meta_type = 'Byline Widget'
 
+    _properties = CPSWidget._properties + (
+        {'id': 'display_effective_date', 'type': 'boolean', 'mode': 'w',
+         'label': "Display effective date"},
+    )
+
+    display_effective_date = False
+
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         pass
@@ -2334,7 +2341,8 @@ class CPSBylineWidget(CPSWidget):
         if meth is None:
             raise RuntimeError("Unknown Render Method %s for widget type %s"
                                % (render_method, self.getId()))
-        return meth(mode=mode, proxy=proxy, doc=doc)
+        return meth(mode=mode, proxy=proxy, doc=doc,
+                    display_effective_date=self.display_effective_date)
 
 InitializeClass(CPSBylineWidget)
 

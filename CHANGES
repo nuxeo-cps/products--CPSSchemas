@@ -6,7 +6,8 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- made GenericMultiSelect used a <div> with class rather than <br/>
+- Made GenericMultiSelect used a <div> with class rather than <br/>
+- Added a new "display_effective_date" property for the Byline widget.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

@@ -1,12 +1,19 @@
 <tal:block define="mode options/mode;
                    doc nocall:options/doc;
                    proxy nocall:options/proxy;
+                   display_effective_date options/display_effective_date;
                    mtool here/portal_membership;
                    isAnon mtool/isAnonymousUser;
                   ">
 <tal:block condition="python: mode == 'view'">
-  <small>
-  <tal:block condition="not:isAnon">
+  <tal:block condition="display_effective_date">
+    <span class="date-effective">
+      <tal:block i18n:translate="label_effective_date"></tal:block>
+      <tal:block content="python:here.getDateStr(doc.effective_date, 'medium')"/>
+      <span class="date-separator">&#8226;</span>
+    </span>
+  </tal:block>
+   <tal:block condition="not:isAnon">
     <tal:block define="
       wtool nocall:here/portal_workflow;
       dtool nocall:here/portal_directories;
@@ -17,7 +24,7 @@
       review_state python:wtool.getInfoFor(proxy, 'review_state', '');
       rev proxy/getRevision;
       lang proxy/getLanguage;
-">
+                       ">
   <span i18n:translate="">
     Created by
     <a href="." title="Here" tal:omit-tag="not:email"
@@ -44,9 +51,11 @@
   </tal:block>
   </tal:block>
   <tal:block condition="isAnon">
-    <span i18n:translate="label_last_modified">Last modified:</span>
-    <tal:block content="python:here.getDateStr(doc.modification_date, 'medium')"/>
+    <span class="date-modified">
+      <tal:block i18n:translate="label_last_modified">Last modified:</tal:block>
+      <tal:block content="python:here.getDateStr(doc.modification_date, 'medium')"/>
+    </span>
   </tal:block>
-  </small>
+
 </tal:block>
 </tal:block>
