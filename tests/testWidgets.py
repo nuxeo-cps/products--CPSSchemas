@@ -1053,6 +1053,33 @@ function getLayoutMode() {
             'mimetype': 'testlookup/TXT',
             })
 
+    def test_CPSFileWidget_utf8_filename(self):
+        from Products.CPSSchemas.BasicWidgets import CPSFileWidget
+        folder = Folder()
+        widget = CPSFileWidget('foo').__of__(folder)
+        folder.mimetypes_registry = FakeMimeTypeRegistry()
+        widget.fields = ['bar']
+        dm = FakeDataModel()
+        dm._adapters = [FakeAdapter({'bar': 'thatsme'})]
+        dm.proxy = 'someproxy'
+        dm['bar'] = None
+        ds = FakeDataStructure(dm)
+        f = StringIO('thefilecontent')
+        fu = FileUpload(FakeFieldStorage(f, 'thefilename.txt'))
+        ds['foo'] = fu
+        ds['foo_title'] = 'th\xc3\xa9title'
+        file_info = widget.getFileInfo(ds)
+        self.assertEquals(file_info, {
+            'empty_file': False,
+            'session_file': False,
+            'current_filename': 'thefilename.txt',
+            'title': 'th\xc3\xa9title',
+            'size': len('thefilecontent'),
+            'last_modified': '',
+            'content_url': "dm.fileUri args=('bar',), kwargs={}",
+            'mimetype': 'testlookup/TXT',
+            })
+
     def test_CPSFileWidget_validate(self):
         from Products.CPSSchemas.BasicWidgets import CPSFileWidget
         from Products.CPSUtil.file import makeFileUploadFromOFSFile
