@@ -6,7 +6,7 @@ New features
 - Creation of the stable CPS-3.5 branch
 Bug fixes
 ~~~~~~~~~
--
+- #2430: fixed doctest of indirect widget
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

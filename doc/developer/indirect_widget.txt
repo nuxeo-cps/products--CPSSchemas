@@ -77,12 +77,14 @@ widget can refer to it::
  >>> fold1._setOb('base', base_widget)
 
 Now we'll make an indirect widget, with different fields, and put it
-in another folder::
+in somewhere else. For technical reasons, indirect widgets have to be
+in a layout::
 
  >>> from Products.CPSSchemas.widgets.indirect import IndirectWidget
+ >>> from Products.CPSSchemas.Layout import CPSLayout
  >>> indirect = IndirectWidget('ind')
  >>> indirect.manage_changeProperties(base_widget_rpath='fold1/base')
- >>> portal.fold2 = Folder('fold2')
+ >>> portal.fold2 = CPSLayout('fold2')
  >>> fold2 = portal.fold2
  >>> fold2._setOb('ind', indirect)
  >>> indirect = fold2.ind
