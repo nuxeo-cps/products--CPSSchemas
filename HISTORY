@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSSchemas 1.16.0-CPS-3.5
+===========================================================
+First release built by: gracinet at: 2011-09-28T20:54:55
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Creation of the stable CPS-3.5 branch
+Bug fixes
+~~~~~~~~~
+- #2458: option not to degrade to ASCII file names
+- #2430: fixed doctest of indirect widget
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.5
 ===========================================================
 First release built by: gracinet at: 2011-09-23T00:28:32
