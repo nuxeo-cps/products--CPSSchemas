@@ -18,7 +18,6 @@
  <widget class=".BasicWidgets.CPSTextAreaWidget"/> <!-- very deprecated -->
  <widget class=".BasicWidgets.CPSLinesWidget"/>
  <widget class=".BasicWidgets.CPSEmailListWidget"/>
- <widget class=".BasicWidgets.CPSListWidget"/>
  <widget class=".BasicWidgets.CPSOrderedListWidget"/>
  <widget class=".BasicWidgets.CPSUnorderedListWidget"/>
  <widget class=".BasicWidgets.CPSSelectWidget"/>
