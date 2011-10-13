@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2471: boolean widget can't be required
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

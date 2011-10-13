@@ -8,9 +8,9 @@
 </tal:block>
 
 <tal:block condition="python:mode == 'edit'">
-  <tal:block define="true_checked value;
+  <tal:block define="true_checked python:value is True;
+                     false_checked python:value is False;
     ">
-
     <tal:checkbox condition="python:render_format == 'checkbox'">
       <input type="checkbox" value="True"
              tal:attributes="checked true_checked;
@@ -32,7 +32,7 @@
              tal:attributes="for string:${here/getHtmlWidgetId}_true"
              i18n:translate="" > True </label><br/>
       <input type="radio" value="False"
-             tal:attributes="checked not:true_checked;
+             tal:attributes="checked false_checked;
                              id string:${here/getHtmlWidgetId}_false;
                              name string:${here/getHtmlWidgetId}:boolean;" />
       <label tal:content="here/label_false"
@@ -51,7 +51,7 @@
                 tal:content="here/label_true"
                 i18n:translate="" />
         <option value="False"
-                tal:attributes="selected not:true_checked"
+                tal:attributes="selected false_checked"
                 tal:content="here/label_false"
                 i18n:translate="" />
       </select>

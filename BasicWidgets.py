@@ -1263,17 +1263,26 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        datastructure[self.getWidgetId()] = bool(datamodel[self.fields[0]])
+        v = datamodel[self.fields[0]]
+        if v is not None:
+            v = bool(v)
+        datastructure[self.getWidgetId()] = v
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
-        value = datastructure[self.getWidgetId()]
+        wid = self.getWidgetId()
+        v = datastructure[wid]
+
+        if self.is_required and v is None:
+            datastructure.setError(wid, 'cpsschemas_err_required')
+            return False
 
         if self.render_format not in self.render_formats:
             self.render_format = 'select'
 
         try:
-            v = bool(value)
+            if v is not None:
+                v = bool(v)
         except (ValueError, TypeError):
             datastructure.setError(self.getWidgetId(),
                                    "cpsschemas_err_boolean")
