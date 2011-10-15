@@ -69,6 +69,7 @@ class CPSFileWidget(CPSWidget):
         )
     size_max = 4*1024*1024
     display_external_editor = True
+    ascii_filename = False
 
     logger = logger # available for subclasses
 
