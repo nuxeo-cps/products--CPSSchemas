@@ -64,6 +64,7 @@ warnings.warn("Products.CPSchemas.ExtendedWidgets is currently been split and "
 
 from widgets.select import CPSGenericSelectWidget
 from widgets.select import CPSGenericMultiSelectWidget
+from widgets.select import CPSExtendedSelectWidget
 
 logger = getLogger('Products.CPSSChemas.ExtendedWidgets')
 
@@ -779,33 +780,6 @@ class CPSRichTextEditorWidget(CPSWidget):
         raise RuntimeError("unknown mode %s" % mode)
 
 InitializeClass(CPSRichTextEditorWidget)
-
-##########################################
-
-class CPSExtendedSelectWidget(CPSSelectWidget):
-    """Extended Select widget."""
-    meta_type = 'ExtendedSelect Widget'
-
-    def render(self, mode, datastructure, **kw):
-        """Render in mode from datastructure."""
-
-        if mode == 'view':
-            return CPSSelectWidget.render(self, mode, datastructure)
-
-        elif mode == 'edit':
-            render_method = 'widget_extendedselect_render'
-
-            meth = getattr(self, render_method, None)
-            if meth is None:
-                raise RuntimeError("Unknown Render Method %s for widget type %s"
-                                   % (render_method, self.getId()))
-            return meth(mode=mode, datastructure=datastructure,
-                        vocabulary=self._getVocabulary(datastructure))
-
-        else:
-            raise RuntimeError('unknown mode %s' % mode)
-
-InitializeClass(CPSExtendedSelectWidget)
 
 ##########################################
 
