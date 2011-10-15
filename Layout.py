@@ -37,7 +37,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 
-from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CPSUtil.property import PropertiesPostProcessor
 from Products.CPSSchemas.FolderWithPrefixedIds import FolderWithPrefixedIds
 from Products.CPSSchemas.DataModel import ReadAccessError
 from Products.CPSSchemas.Widget import widgetRegistry

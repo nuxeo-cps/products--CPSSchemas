@@ -39,7 +39,7 @@ from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.Expression import getEngine
 from Products.CMFCore.Expression import SecureModuleImporter
 
-from Products.CPSUtil.PropertiesPostProcessor import PropertiesPostProcessor
+from Products.CPSUtil.property import PropertiesPostProcessor
 from Products.CPSUtil.resourceregistry import get_request_resource_registry
 from Products.CPSSchemas.DataModel import WriteAccessError
 
