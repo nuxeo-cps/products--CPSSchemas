@@ -32,9 +32,10 @@ from Products.CPSUtil.image import resize as image_resize
 from Products.CPSUtil.image import SizeSpecError
 from Products.CPSUtil.image import geometry as image_geometry
 from Products.CPSSchemas.Widget import EMAIL_LAYOUT_MODE
-from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSIntWidget
-from Products.CPSSchemas.BasicWidgets import CPSProgrammerCompoundWidget
 from Products.CPSSchemas.Widget import CIDPARTS_KEY
+from Products.CPSSchemas.BasicWidgets import CPSIntWidget
+from Products.CPSSchemas.widgets.file import CPSFileWidget
+from Products.CPSSchemas.widgets.compound import CPSProgrammerCompoundWidget
 
 logger = logging.getLogger(__name__)
 

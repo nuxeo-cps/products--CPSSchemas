@@ -11,6 +11,8 @@
  <widget class=".widgets.select.CPSGenericSelectWidget"/>
  <widget class=".widgets.select.CPSGenericMultiSelectWidget"/>
  <widget class=".widgets.select.CPSExtendedSelectWidget"/>
+ <widget class=".widgets.file.CPSFileWidget"/>
+ <widget class=".widgets.file.CPSAttachedFileWidget"/>
 
  <!-- Deprecated packages -->
  <widget class=".BasicWidgets.CPSHtmlWidget"/>
@@ -33,12 +35,10 @@
  <widget class=".BasicWidgets.CPSLongWidget"/>
  <widget class=".BasicWidgets.CPSFloatWidget"/>
  <widget class=".BasicWidgets.CPSDateWidget"/> <!-- very deprecated -->
- <widget class=".BasicWidgets.CPSFileWidget"/>
  <widget class=".BasicWidgets.CPSBylineWidget"/>
  <widget class=".BasicWidgets.CPSRevisionWidget"/>
  <widget class=".ExtendedWidgets.CPSTextWidget"/>
  <widget class=".ExtendedWidgets.CPSDateTimeWidget"/>
- <widget class=".ExtendedWidgets.CPSAttachedFileWidget"/>
  <widget class=".ExtendedWidgets.CPSZippedHtmlWidget"/>
  <widget class=".ExtendedWidgets.CPSRichTextEditorWidget"/> <!-- deprecated -->
  <widget class=".ExtendedWidgets.CPSInternalLinksWidget"/>
