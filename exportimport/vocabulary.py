@@ -140,11 +140,12 @@ class CPSVocabularyXMLAdapter(XMLAdapterBase,
         vocab = self.context
         fragment = self._doc.createDocumentFragment()
         for key, value in vocab.items():
-            key = str(key) # key should be ascii only
+            try:
+                key = str(key) # key should be ascii only
+            except UnicodeError:
+                raise ValueError("Non ascii key %r in %r", key, self.context)
             child = self._doc.createElement('item')
             child.setAttribute('key', key)
-            if isinstance(value, unicode):
-                value = value.encode('utf-8') # default xml encoding
             child.appendChild(self._doc.createTextNode(value))
             msgid = vocab.getMsgid(key)
             if msgid is not None:

@@ -320,6 +320,13 @@ class TestVocabularyXMLAdapter(TestXMLAdapter):
             self.fail("Output not proper utf8")
         self.assert_(u'Av\xe9lassent'.encode('utf-8') in xml)
 
+    def test_export_unicode_key(self):
+        self.object.set(u'fo\xf4', 'Foo with a hat')
+        adapted = self.adapt(self.object)
+        def body():
+            return adapted.body
+        self.assertRaises(ValueError, body)
+
 
 def test_suite():
     return unittest.TestSuite((
