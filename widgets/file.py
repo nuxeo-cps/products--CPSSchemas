@@ -64,6 +64,8 @@ class CPSFileWidget(CPSWidget):
          'label': 'Maximum file size'},
         {'id': 'display_external_editor', 'type': 'boolean', 'mode': 'w',
          'label': 'Display link to external editor in edit mode'},
+        {'id': 'ascii_filename', 'type': 'boolean', 'mode': 'w',
+         'label': 'Convert file name to ascii'},
         )
     size_max = 4*1024*1024
     display_external_editor = True
@@ -99,6 +101,9 @@ class CPSFileWidget(CPSWidget):
         fileupload.seek(current)
         return size
 
+    def cleanFileName(self, name):
+        return generateFileName(name, ascii=self.ascii_filename)
+
     def getFileInfo(self, datastructure):
         """Get the file info from the datastructure."""
         widget_id = self.getWidgetId()
@@ -108,7 +113,7 @@ class CPSFileWidget(CPSWidget):
         if fileupload:
             empty_file = False
             session_file = isinstance(fileupload, PersistableFileUpload)
-            current_filename = generateFileName(fileupload.filename)
+            current_filename = self.cleanFileName(fileupload.filename)
             size = self.getFileSize(fileupload)
             file = dm[field_id] # last stored file
             if file is not None:
@@ -176,7 +181,7 @@ class CPSFileWidget(CPSWidget):
         if choice == 'change' and filename == old_filename:
             # if upload with input field unchanged, use fileupload filename
             filename = cookId('', '', fileupload)[0].strip()
-        filename = generateFileName(filename or 'file.bin')
+        filename = self.cleanFileName(filename or 'file.bin')
         return filename
 
     def checkFileName(self, filename, mimetype):
