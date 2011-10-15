@@ -1,11 +1,15 @@
 <configure xmlns="http://namespaces.nuxeo.org/cps">
  <!-- Registration for the widget classes provided by CPSSchemas itself.  -->
 
- <!--  CPS 3.5.2 reorg -->
+ <!--  CPS 3.5.2 to 3.6 reorg -->
  <widget class=".widgets.image.CPSImageWidget"/>
  <widget class=".widgets.image.CPSPhotoWidget"/>
  <widget class=".widgets.compound.CPSCompoundWidget"/>
  <widget class=".widgets.compound.CPSProgrammerCompoundWidget"/>
+ <widget class=".widgets.select.CPSSelectWidget"/>
+ <widget class=".widgets.select.CPSMultiSelectWidget"/>
+ <widget class=".widgets.select.CPSGenericSelectWidget"/>
+ <widget class=".widgets.select.CPSGenericMultiSelectWidget"/>
 
  <!-- Deprecated packages -->
  <widget class=".BasicWidgets.CPSHtmlWidget"/>
@@ -23,8 +27,6 @@
  <widget class=".BasicWidgets.CPSListWidget"/>
  <widget class=".BasicWidgets.CPSOrderedListWidget"/>
  <widget class=".BasicWidgets.CPSUnorderedListWidget"/>
- <widget class=".BasicWidgets.CPSSelectWidget"/>
- <widget class=".BasicWidgets.CPSMultiSelectWidget"/>
  <widget class=".BasicWidgets.CPSBooleanWidget"/>
  <widget class=".BasicWidgets.CPSIntWidget"/>
  <widget class=".BasicWidgets.CPSLongWidget"/>
@@ -40,8 +42,6 @@
  <widget class=".ExtendedWidgets.CPSRichTextEditorWidget"/> <!-- deprecated -->
  <widget class=".ExtendedWidgets.CPSExtendedSelectWidget"/>
  <widget class=".ExtendedWidgets.CPSInternalLinksWidget"/>
- <widget class=".ExtendedWidgets.CPSGenericSelectWidget"/>
- <widget class=".ExtendedWidgets.CPSGenericMultiSelectWidget"/>
  <widget class=".ExtendedWidgets.CPSRangeListWidget"/>
  <widget class=".ExtendedWidgets.CPSDateTimeRangeWidget"/>
  <widget class=".ExtendedWidgets.CPSDocumentLanguageSelectWidget"/>
