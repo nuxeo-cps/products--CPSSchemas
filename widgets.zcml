@@ -4,6 +4,8 @@
  <!--  CPS 3.5.2 reorg -->
  <widget class=".widgets.image.CPSImageWidget"/>
  <widget class=".widgets.image.CPSPhotoWidget"/>
+ <widget class=".widgets.compound.CPSCompoundWidget"/>
+ <widget class=".widgets.compound.CPSProgrammerCompoundWidget"/>
 
  <!-- Deprecated packages -->
  <widget class=".BasicWidgets.CPSHtmlWidget"/>
@@ -29,8 +31,6 @@
  <widget class=".BasicWidgets.CPSFloatWidget"/>
  <widget class=".BasicWidgets.CPSDateWidget"/> <!-- very deprecated -->
  <widget class=".BasicWidgets.CPSFileWidget"/>
- <widget class=".BasicWidgets.CPSCompoundWidget"/>
- <widget class=".BasicWidgets.CPSProgrammerCompoundWidget"/>
  <widget class=".BasicWidgets.CPSBylineWidget"/>
  <widget class=".BasicWidgets.CPSRevisionWidget"/>
  <widget class=".ExtendedWidgets.CPSTextWidget"/>

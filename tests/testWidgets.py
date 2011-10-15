@@ -743,7 +743,7 @@ function getLayoutMode() {
         # XXX: add more tests here
 
     def test_CPSCompoundWidget(self):
-        from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
+        from Products.CPSSchemas.widgets.compound import CPSCompoundWidget
         widget = CPSCompoundWidget('foo')
         widget.widget_ids = ['w1', 'w2']
         widget.field_ids = [] # some widgets are badly configured
@@ -766,6 +766,8 @@ function getLayoutMode() {
             }
         ds = {'f1': 'Foo',
               'f2': 'Bar'}
+        self.assertFalse(widget.isHidden())
+
         rendered = widget.render('view', ds, widget_infos=widget_infos)
         self.assertEquals(rendered,
                           'mode view|'
@@ -794,7 +796,7 @@ function getLayoutMode() {
 
     def test_CPSCompoundWidget_missing(self):
         # #2394: don't break if a subwidget is missing
-        from Products.CPSSchemas.BasicWidgets import CPSCompoundWidget
+        from Products.CPSSchemas.widgets.compound import CPSCompoundWidget
         layout = FakeLayout('layout')
         widget = CPSCompoundWidget('foo').__of__(layout)
         widget.widget_ids = ['w1', 'w2']
