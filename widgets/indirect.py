@@ -102,7 +102,10 @@ class IndirectWidget(SimpleItemWithProperties, object):
 #        return self.getWorkerWidget().title or self.getId()
 
     def clear(self):
-        delattr(self, '_v_worker')
+        try:
+            delattr(self, '_v_worker')
+        except AttributeError:
+            pass
 
     def getTemplateWidget(self):
         utool = getToolByName(self._v_parent[0], 'portal_url')
