@@ -15,24 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
 from copy import deepcopy
 
 from zope.interface import implements
-from zope.app.publisher.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_inner, aq_parent, aq_get
+from Acquisition import aq_base, aq_inner, aq_parent, aq_chain
 from OFS.PropertyManager import PropertyManager
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import SimpleItemWithProperties
 
-from Products.CPSSchemas.interfaces import IWidget
+from Products.CPSSchemas.Layout import CPSLayout
 
-logger = logging.getLogger(__name__)
+from Products.CPSSchemas.interfaces import IWidget
 
 class IndirectWidget(SimpleItemWithProperties, object):
     """See documentation in CPSSchemas/doc/indirect_widget
@@ -126,7 +122,9 @@ class IndirectWidget(SimpleItemWithProperties, object):
             if pid in self.localProps():
                 continue
             if pid in worker_base_props:
-                props_upd[pid] = self.getProperty(pid)
+                # in some very special case, we may have complex objects
+                # (vocabulary...) They need to be unwrapped first.
+                props_upd[pid] = aq_base(self.getProperty(pid))
             else:
                 worker.manage_addProperty(pid, self.getProperty(pid),
                                           p['type'])
@@ -163,8 +161,7 @@ class IndirectWidget(SimpleItemWithProperties, object):
         """Zope2 trick so that we can carry on aq chain from __getattr__
         """
         # tuple hack to store original aq (includes request container)
-        if not isinstance(parent, BrowserView) and not isinstance(parent, ZopeTwoPageTemplateFile):
-            logger.debug("__of__ %r", parent)
+        if isinstance(parent, CPSLayout): # see #2430, avoid infinite loops
             self._v_parent = (parent,)
         return SimpleItemWithProperties.__of__(self, parent)
 
