@@ -1258,7 +1258,6 @@ class CPSBooleanWidget(CPSWidget):
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
-    has_input_area = True
 
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
@@ -1267,6 +1266,15 @@ class CPSBooleanWidget(CPSWidget):
         if v is not None:
             v = bool(v)
         datastructure[self.getWidgetId()] = v
+
+        # in radio case, there is no particular input the label should be
+        # linked to. Will be corrected at first use after a property change
+        # could also be done in properties post processing, but how well
+        if self.render_format == 'radio':
+            if self.has_input_area:
+                self.has_input_area = False
+        elif not self.has_input_area:
+            self.has_input_area = True
 
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
@@ -1293,6 +1301,8 @@ class CPSBooleanWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
+        if self.getWidgetId() == 'instant_display':
+            import pdb; pdb.set_trace()
         value = datastructure[self.getWidgetId()]
         if value:
             label_value = self.label_true
