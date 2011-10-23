@@ -1301,8 +1301,6 @@ class CPSBooleanWidget(CPSWidget):
 
     def render(self, mode, datastructure, **kw):
         """Render in mode from datastructure."""
-        if self.getWidgetId() == 'instant_display':
-            import pdb; pdb.set_trace()
         value = datastructure[self.getWidgetId()]
         if value:
             label_value = self.label_true
