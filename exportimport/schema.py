@@ -68,7 +68,6 @@ def importSchemaTool(context):
     tool = getToolByName(site, TOOL)
     importObjects(tool, '', context)
 
-
 class SchemaToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers,
                            PropertyManagerHelpers):
     """XML importer and exporter for Schema tool.
