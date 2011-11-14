@@ -39,11 +39,11 @@ The storage itself is done through a storage adapter.
 """
 
 import logging
-
-from Acquisition import aq_base
 from UserDict import UserDict
 from cgi import escape
 
+from zope.interface import implements
+from Acquisition import aq_base
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo, Unauthorized
 from AccessControl import getSecurityManager
@@ -51,6 +51,9 @@ from OFS.Image import File
 
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.permissions import ModifyPortalContent
+
+from interfaces import IDataModel
+
 logger = logging.getLogger(__name__)
 
 try:
@@ -121,6 +124,8 @@ class ProtectedFile(object):
 
 class DataModel(UserDict):
     """An abstraction for the data stored in an object."""
+
+    implements(IDataModel)
 
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')

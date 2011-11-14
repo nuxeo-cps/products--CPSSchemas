@@ -22,6 +22,23 @@
 from zope.interface import Interface
 from zope.configuration.fields import GlobalObject
 
+class IDataModel(Interface):
+    """DataModel.
+
+    Datamodels are the preferred way to acces data for an object specified
+    with CPSSchemas. They implement the dict semantics.
+    """
+
+    def _commit(check_perms=1, _set_editable=True):
+        """Commit modified data into object.
+
+        Returns the resulting object.
+
+        Try to re-get an editable version of the object before modifying
+        it. This is needed by CPS for frozen objects and can be bypassed
+        with the _set_editable kwarg. This bypass should be used at creation
+        time only: the proxy doesn't know the new object yet in this case.
+        """
 
 class ISchemaTool(Interface):
     """Schema Tool.
