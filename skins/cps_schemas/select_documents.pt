@@ -1,0 +1,42 @@
+<tal:block>
+
+<script type="text/javascript"
+        src="/cps/tiny_mce_popup.js"></script>
+
+<script type="text/javascript">
+
+var document_browser_dialog = {
+    // Here goes your code for setting your custom things onLoad.
+    init : function () {
+
+    //var win = tinyMCEPopup.getWindowArg("window");
+    //var input = tinyMCEPopup.getWindowArg("input");
+    //var res = tinyMCEPopup.getWindowArg("resizable");
+    //var inline = tinyMCEPopup.getWindowArg("inline");
+
+    },
+    submit : function () {
+    // Here goes your code to insert the retrieved URL value into the original dialog window.
+
+    // insert information now
+    var win = tinyMCEPopup.getWindowArg("window");
+    win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = 'lullal';
+
+    // close popup window
+    tinyMCEPopup.close();
+    }
+}
+
+tinyMCEPopup.onInit.add(document_browser_dialog.init, document_browser_dialog);
+</script>
+
+<form>
+<p>
+C'est bien la.
+</p>
+<p>
+<button type="button" onclick="document_browser_dialog.submit();">OK
+</button>
+</p>
+</form>
+</tal:block>
