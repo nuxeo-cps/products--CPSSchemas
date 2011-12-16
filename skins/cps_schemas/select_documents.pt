@@ -42,11 +42,35 @@ tinyMCEPopup.onInit.add(document_browser_dialog.init, document_browser_dialog);
 
   <script type="text/javascript">
     $(document).ready(function() {
+
       $(function() {
         $("#tree").dynatree({
           // using default options
         });
       });
+
+   $("#btnAddObject").click(function(){
+      // Sample: add an hierarchic branch using an array
+      var obj = [
+        { title: 'Folder node 3', isFolder: true,
+          children: [
+            { title: 'node 3.1' },
+            { title: 'node 3.2',
+              children: [
+                { title: 'node 3.2.1' },
+                { title: 'node 3.2.2',
+                  children: [
+                    { title: 'node 3.2.2.1' }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ];
+      $("#tree").dynatree("getRoot").addChild(obj);
+    });
+
     });
   </script>
 
@@ -89,8 +113,10 @@ C'est bien la.
   </div>
 
 <p>
-<button type="button" onclick="document_browser_dialog.submit();">OK
-</button>
+<button type="button" onclick="document_browser_dialog.submit();">OK</button>
+</p>
+<p>
+<button type="button" id="btnAddObject">Add nodes</button>
 </p>
 </form>
 </tal:block>
