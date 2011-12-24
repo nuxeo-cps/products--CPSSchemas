@@ -29,8 +29,7 @@ from Products.GenericSetup.utils import importObjects
 from Products.GenericSetup.utils import XMLAdapterBase
 from Products.GenericSetup.utils import ObjectManagerHelpers
 from Products.GenericSetup.utils import PropertyManagerHelpers
-from Products.CPSUtil.PropertiesPostProcessor import (
-    PostProcessingPropertyManagerHelpers)
+from Products.CPSUtil.property import PostProcessingPropertyManagerHelpers
 #XXX GR move this to some common place or when remove attribute bug is
 # fixed in GenericSetup
 from Products.CPSDocument.exportimport import CPSObjectManagerHelpers
