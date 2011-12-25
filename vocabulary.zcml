@@ -42,16 +42,6 @@
       global="False"
       />
 
-
-  <five:traversable
-      class=".VocabulariesTool.VocabulariesTool"/>
-
-  <five:traversable
-      class=".Vocabulary.CPSVocabulary"/>
-
-  <five:traversable
-      class=".MethodVocabulary.MethodVocabulary"/>
-
   <configure package="Products.GenericSetup.browser">
 
     <browser:page

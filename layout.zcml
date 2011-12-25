@@ -25,15 +25,6 @@
       />
 
 
-  <five:traversable
-      class=".LayoutsTool.LayoutsTool"/>
-  <five:traversable
-      class=".Layout.CPSLayout"/>
-  <five:traversable
-      class=".Widget.CPSWidget"/>
-  <five:traversable
-      class=".widgets.indirect.IndirectWidget"/>
-
   <configure package="Products.GenericSetup.browser">
 
     <browser:page

@@ -24,14 +24,6 @@
            Products.GenericSetup.interfaces.ISetupEnviron"
       />
 
-
-  <five:traversable
-      class=".SchemasTool.SchemasTool"/>
-  <five:traversable
-      class=".Schema.CPSSchema"/>
-  <five:traversable
-      class=".Field.CPSField"/>
-
   <configure package="Products.GenericSetup.browser">
 
     <browser:page
