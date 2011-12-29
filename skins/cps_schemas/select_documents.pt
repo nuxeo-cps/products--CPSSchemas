@@ -80,7 +80,7 @@ C'est bien la.
 </p>
 
 <div id="tree">
-    <ul id="treeData" style="display: none;">
+    <ul id="treeData">
       <li id="id1" title="Look, a tool tip!">item1 with key and tooltip
       <li id="id2">item2
       <li id="id3" class="folder">Folder with some children
