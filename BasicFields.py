@@ -118,7 +118,8 @@ class CPSBooleanField(CPSField):
     default_expr_c = Expression(default_expr)
 
     def validate(self, value):
-        if isinstance(value, bool):
+        """Accept booleans and None, meaning : not known."""
+        if isinstance(value, bool) or value is None:
             return value
         raise ValidationError('Not a boolean: %s' % repr(value))
 

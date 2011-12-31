@@ -123,6 +123,12 @@ widget properties update will very likely occur in a different
 request. You can think of it as a technical detail in the context of
 this doctest.
 
+By the way, we can clear, even if there's nothing to clear::
+
+ >>> indirect.clear()
+ >>> indirect.clear()
+
+
 Indirect widgets and siblings
 =============================
 

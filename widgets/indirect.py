@@ -102,7 +102,10 @@ class IndirectWidget(SimpleItemWithProperties, object):
 #        return self.getWorkerWidget().title or self.getId()
 
     def clear(self):
-        delattr(self, '_v_worker')
+        try:
+            delattr(self, '_v_worker')
+        except AttributeError:
+            pass
 
     def getTemplateWidget(self):
         utool = getToolByName(self._v_parent[0], 'portal_url')
@@ -122,7 +125,9 @@ class IndirectWidget(SimpleItemWithProperties, object):
             if pid in self.localProps():
                 continue
             if pid in worker_base_props:
-                props_upd[pid] = self.getProperty(pid)
+                # in some very special case, we may have complex objects
+                # (vocabulary...) They need to be unwrapped first.
+                props_upd[pid] = aq_base(self.getProperty(pid))
             else:
                 worker.manage_addProperty(pid, self.getProperty(pid),
                                           p['type'])

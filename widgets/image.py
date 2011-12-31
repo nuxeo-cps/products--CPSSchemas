@@ -218,8 +218,8 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         widget_id = self.getWidgetId()
 
         title = ''
-        if len(self.fields) > 2:
-            title = dm[self.fields[2]]
+        if len(self.fields) > 1:
+            title = dm[self.fields[1]]
         ds[widget_id + '_title'] = title
 
         alt = ''
@@ -256,12 +256,12 @@ class CPSImageWidget(CPSFileWidget, CPSProgrammerCompoundWidget):
         widget_id = self.getWidgetId()
 
         # Title
-        if len(self.fields) > 2:
-            dm[self.fields[2]] = ds[widget_id + '_title']
+        if len(self.fields) > 1:
+            dm[self.fields[1]] = ds[widget_id + '_title']
 
         # Alt
-        if len(self.fields) > 3:
-            dm[self.fields[3]] = ds[widget_id + '_alt']
+        if len(self.fields) > 2:
+            dm[self.fields[2]] = ds[widget_id + '_alt']
 
         for i in self.size_widgets:
             if not self.validateSizeSpec(ds, i):
