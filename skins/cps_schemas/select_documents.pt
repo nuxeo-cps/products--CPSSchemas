@@ -28,12 +28,20 @@ var document_browser_dialog = {
     //var inline = tinyMCEPopup.getWindowArg("inline");
 
     },
-    submit : function () {
-    // Here goes your code to insert the retrieved URL value into the original dialog window.
 
-    // insert information now
+    // Inserts the retrieved URL value into the original dialog window.
+    submit : function () {
+
+    // Finding out the selected doc URL
+    var active_node = $("#tree").dynatree('getActiveNode');
+    //alert("Currently active: " + active_node.data.title);
+
+    // Note that this URL is a relative URL
+    var url = active_node.data.href;
+
+    // Insert information now
     var win = tinyMCEPopup.getWindowArg("window");
-    win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = 'lullal';
+    win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = url;
 
     // close popup window
     tinyMCEPopup.close();
