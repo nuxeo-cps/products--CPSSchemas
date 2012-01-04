@@ -11,7 +11,22 @@
  * Display a TinyMCE embedded frame.
  */
 function displayTinyMceEditor(htmlWidgetId, selected_language) {
- 
+
+  function openDocumentBrowser(field_name, url, type, win) {
+    tinyMCE.activeEditor.windowManager.open({
+      file : '/cps/select_documents',
+      title : 'My File Browser',
+      width : 420,
+      height : 400,
+      resizable : "yes",
+      close_previous : "no"
+    }, {
+      window : win,
+      input : field_name
+    });
+    return false;
+  };
+
   tinyMCE.init({
     mode : 'specific_textareas',
     editor_selector : htmlWidgetId,
@@ -30,5 +45,6 @@ function displayTinyMceEditor(htmlWidgetId, selected_language) {
     gecko_spellcheck : true,
     convert_urls : false,
     content_css : <dtml-var expr="cps_rte_stylesheets(climb=4)">,
+    file_browser_callback : openDocumentBrowser
   });
 }
