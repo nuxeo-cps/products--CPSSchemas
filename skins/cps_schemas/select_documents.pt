@@ -1,11 +1,9 @@
 <tal:block
-    tal:define="published_docs_dynatree_json
-                string:${here/portal_url}/portal_cpsportlets/sections_doc_browser/.context/sections/.view/dynatree_unfold/unfold.json;
-                sections_doc_browser_portlet_url string:${here/portal_url}/portal_cpsportlets/sections_doc_browser/.context;
-                sections_doc_browser_portlet_view string:/.view/dynatree_unfold/unfold.json;
-                ">
+  tal:define="
+  sections_doc_browser_portlet_url string:${here/portal_url}/portal_cpsportlets/sections_doc_browser/.context;
+  sections_doc_browser_portlet_view string:/.view/dynatree_unfold/unfold.json;
+  ">
   <script type="text/javascript" tal:content="structure string:
-    var method_url = '${published_docs_dynatree_json}';
     var sections_doc_browser_portlet_url = '${sections_doc_browser_portlet_url}';
     var sections_doc_browser_portlet_view = '${sections_doc_browser_portlet_view}';
     ">
@@ -64,6 +62,10 @@ $(document).ready(function() {
   $("#tree").dynatree({
     // using default options
 
+    initAjax: {
+      url: sections_doc_browser_portlet_url + '/sections' + sections_doc_browser_portlet_view
+    },
+
     onLazyRead: function(node) {
       node.appendAjax({
         url: sections_doc_browser_portlet_url + node.data.href + sections_doc_browser_portlet_view,
@@ -78,17 +80,6 @@ $(document).ready(function() {
       });
     }
 
-  });
-
-  $.ajax({
-    url: method_url,
-    type: 'get',
-    success: function(data, textStatus, jqXHR) {
-      $("#tree").dynatree('getRoot').addChild(data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.error(errorThrown);
-    }
   });
 
 });
