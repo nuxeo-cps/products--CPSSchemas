@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.17.0-CPS-3.5
+===========================================================
+First release built by: gracinet at: 2012-01-09T16:11:44
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2503: TinyMCE document browser for links
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.16.1-CPS-3.5
 ===========================================================
 First release built by: gracinet at: 2011-11-23T19:44:32
