@@ -421,7 +421,7 @@ class CPSDateTimeWidget(CPSWidget):
     # accessibility.
     has_input_area = True
 
-    def getDateTimeInfo(self, value, mode=None):
+    def getDateTimeInfo(self, value, mode=None, layout_mode=None):
         """Return a tuple that is used to set the datastructure
 
         Called in prepare when mode is not known, and called again in render
@@ -437,7 +437,8 @@ class CPSDateTimeWidget(CPSWidget):
         # - value is not alrady set and
         # - widget is required an
         # - mode is 'edit' or 'create'
-        if not value and self.is_required and mode in ['edit', 'create']:
+        if (not value and self.isRequired(layout_mode=layout_mode)
+            and mode in ['edit', 'create']):
             value = DateTime()
 
         if value == 'None':
@@ -481,7 +482,7 @@ class CPSDateTimeWidget(CPSWidget):
         datastructure[widget_id + '_hour'] = hour or self.time_hour_default
         datastructure[widget_id + '_minute'] = minute or self.time_minutes_default
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
@@ -494,7 +495,7 @@ class CPSDateTimeWidget(CPSWidget):
                  self.time_minutes_default
 
         if not (date):
-            if self.is_required:
+            if self.isRequired(layout_mode=layout_mode):
                 datastructure[widget_id] = ''
                 datastructure.setError(widget_id, 'cpsschemas_err_required')
                 return 0
@@ -543,7 +544,7 @@ class CPSDateTimeWidget(CPSWidget):
         datamodel[field_id] = v
         return True
 
-    def render(self, mode, datastructure, **kw):
+    def render(self, mode, datastructure, layout_mode=None, **kw):
         """Render in mode from datastructure."""
         render_method = 'widget_datetime_render'
         meth = getattr(self, render_method, None)
@@ -556,7 +557,8 @@ class CPSDateTimeWidget(CPSWidget):
         if mode in ['edit', 'create']:
             datamodel = datastructure.getDataModel()
             v = datamodel[self.fields[0]]
-            v, date, hour, minute = self.getDateTimeInfo(v, mode=mode)
+            v, date, hour, minute = self.getDateTimeInfo(
+                v, mode=mode, layout_mode=layout_mode)
             widget_id = self.getWidgetId()
             datastructure[widget_id] = v
             datastructure[widget_id + '_date'] = date
@@ -830,12 +832,13 @@ class CPSInternalLinksWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
         err = 0
-        if self.is_required and (value == [] or value == ['']):
+        if (value == [] or value == ['']) and self.isRequired(
+            layout_mode=layout_mode):
             err = 'cpsschemas_err_required'
         v = []
 
@@ -1064,7 +1067,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                 value = ''
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -1075,7 +1078,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_select")
                     return 0
         else:
-            if self.is_required:
+            if self.isRequired(layout_mode=layout_mode):
                 # set error unless vocabulary holds blank values and
                 # blank_value_ok_if_required is set to 1
                 if vocabulary.has_key(value):
@@ -1090,7 +1093,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         return 1
 
 
-    def render(self, mode, datastructure, **kw):
+    def render(self, mode, datastructure, layout_mode=None, **kw):
         """Render in mode from datastructure."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -1238,7 +1241,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     res += renderHtmlTag('input', **kw)
                     res += '<br/>\n'
             # default option
-            if not self.is_required and not vocabulary.has_key(''):
+            if not self.isRequired(layout_mode=layout_mode) and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
                           'contents': self._getTranslatedMsgid(
@@ -1310,7 +1313,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
         datastructure[self.getWidgetId()] = value
 
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -1330,7 +1333,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                     return 0
             else:
-                if self.is_required:
+                if self.isRequired(layout_mode=layout_mode):
                     # set error unless vocabulary holds blank values and
                     # blank_value_ok_if_required is set to 1
                     if vocabulary.has_key(i):
@@ -1341,7 +1344,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                         datastructure.setError(widget_id, "cpsschemas_err_required")
                         return 0
             v.append(i)
-        if self.is_required and not len(v):
+        if not v and self.isRequired(layout_mode=layout_mode):
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
         datamodel = datastructure.getDataModel()
@@ -1432,7 +1435,8 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                         res += renderHtmlTag('label', **kw)
                         res += '<br/>\n'
             # default option
-            if not self.is_required and not vocabulary.has_key(''):
+            if (not self.isRequired(layout_mode=layout_mode)
+                and not vocabulary.has_key('')):
                 if render_format == 'select':
                     kw = {'value': '',
                           'contents': self._getTranslatedMsgid(
@@ -1495,7 +1499,7 @@ class CPSRangeListWidget(CPSWidget):
         datastructure[self.getWidgetId()] = value
 
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -1523,7 +1527,7 @@ class CPSRangeListWidget(CPSWidget):
             else:
                 datastructure.setError(widget_id, "cpsschemas_err_rangelist")
                 return 0
-        if self.is_required and not len(v):
+        if not v and self.isRequired(layout_mode=layout_mode):
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
         datamodel = datastructure.getDataModel()
@@ -1591,7 +1595,7 @@ class CPSDateTimeRangeWidget(CPSProgrammerCompoundWidget):
         # Nothing to do : preparation of all widgets in the layout is automatic.
         pass
 
-    def validate(self, ds, **kw):
+    def validate(self, ds, layout_mode=None, **kw):
         dm = ds.getDataModel()
         skip_expr = self.skip_validate_if_expr_c
         if skip_expr is not None:
@@ -1606,7 +1610,7 @@ class CPSDateTimeRangeWidget(CPSProgrammerCompoundWidget):
 
         wid = self.getWidgetId()
         begin, end = [dm[widget.fields[0]] for widget in subs]
-        if self.is_required:
+        if self.isRequired(layout_mode=layout_mode):
             if begin is None and end is None:
                 ds.setError(wid, 'cpsschemas_err_required')
                 return False

@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- #2480: mixup of alt and title in Image widget
-- #2471: boolean widget can't be required
+- #2521: Finer control of required in widgets
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
