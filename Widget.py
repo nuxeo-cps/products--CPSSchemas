@@ -101,6 +101,9 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
          'label': 'Fields'},
         {'id': 'is_required', 'type': 'boolean', 'mode': 'w',
          'label': 'Required widget'},
+        {'id': 'required_layout_modes', 'type': 'tokens', 'mode': 'w',
+         'label': 'Required applies only to those layout modes '
+         '(for widgets that support it)'},
         {'id': 'label', 'type': 'ustring', 'mode': 'w',
          'label': 'Label in view layout mode'},
         {'id': 'label_edit', 'type': 'ustring', 'mode': 'w',
@@ -140,6 +143,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
 
     fields = []
     is_required = 0
+    required_layout_modes = ()
     label = ''
     label_edit = ''
     description = ''
@@ -253,6 +257,12 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             if self.readonly_if_expr_c(expr_context):
                 return 1
         return self._isReadOnly(datamodel)
+
+    def isRequired(self, layout_mode=None):
+        """Tell if value is required in validation, according to layout_mode.
+        """
+        req_modes = self.required_layout_modes
+        return self.is_required and (not req_modes or layout_mode in req_modes)
 
     security.declarePrivate('getModeFromLayoutMode')
     def getModeFromLayoutMode(self, layout_mode, datamodel):

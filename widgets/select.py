@@ -114,7 +114,7 @@ class CPSSelectWidget(CPSWidget):
         datamodel = datastructure.getDataModel()
         datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -127,7 +127,7 @@ class CPSSelectWidget(CPSWidget):
         if not vocabulary.has_key(value):
             datastructure.setError(widget_id, "cpsschemas_err_select")
             return 0
-        if self.is_required and not len(v):
+        if not v and self.isRequired(layout_mode):
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
 
@@ -214,7 +214,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
         # XXX make a copy of the list ?
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -233,7 +233,7 @@ class CPSMultiSelectWidget(CPSSelectWidget):
                 datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                 return 0
             v.append(i)
-        if self.is_required and not len(v):
+        if not v and self.isRequired(layout_mode):
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
         datamodel = datastructure.getDataModel()
@@ -356,7 +356,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                 value = ''
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -367,7 +367,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_select")
                     return 0
         else:
-            if self.is_required:
+            if self.isRequired(layout_mode):
                 # set error unless vocabulary holds blank values and
                 # blank_value_ok_if_required is set to 1
                 if vocabulary.has_key(value):
@@ -382,7 +382,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
         return 1
 
 
-    def render(self, mode, datastructure, **kw):
+    def render(self, mode, datastructure, layout_mode=None, **kw):
         """Render in mode from datastructure."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -530,7 +530,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                     res += renderHtmlTag('input', **kw)
                     res += '<br/>\n'
             # default option
-            if not self.is_required and not vocabulary.has_key(''):
+            if not self.isRequired(layout_mode) and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
                           'contents': self._getTranslatedMsgid(
@@ -602,7 +602,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
         datastructure[self.getWidgetId()] = value
 
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -622,7 +622,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                     datastructure.setError(widget_id, "cpsschemas_err_multiselect")
                     return 0
             else:
-                if self.is_required:
+                if self.isRequired(layout_mode):
                     # set error unless vocabulary holds blank values and
                     # blank_value_ok_if_required is set to 1
                     if vocabulary.has_key(i):
@@ -633,14 +633,14 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                         datastructure.setError(widget_id, "cpsschemas_err_required")
                         return 0
             v.append(i)
-        if self.is_required and not len(v):
+        if not v and self.iRsequired(layout_mode):
             datastructure.setError(widget_id, "cpsschemas_err_required")
             return 0
         datamodel = datastructure.getDataModel()
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, **kw):
+    def render(self, mode, datastructure, layout_mode=None, **kw):
         """Render in mode from datastructure."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -724,7 +724,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                         res += renderHtmlTag('label', **kw)
                         res += '<br/>\n'
             # default option
-            if not self.is_required and not vocabulary.has_key(''):
+            if not self.isRequired(layout_mode) and not vocabulary.has_key(''):
                 if render_format == 'select':
                     kw = {'value': '',
                           'contents': self._getTranslatedMsgid(

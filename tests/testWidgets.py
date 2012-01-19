@@ -251,6 +251,21 @@ class TestWidgets(unittest.TestCase):
         self.assertEquals(res, False)
         self.assertEquals(dm['foo'], 'before')
 
+    def testStringWidgetRequired(self):
+        from Products.CPSSchemas.BasicWidgets import CPSStringWidget
+        widget = CPSStringWidget('foo', fields=('foo',), is_required=True)
+
+        dm = {}
+        ds = FakeDataStructure(dm)
+
+        ds['foo'] = ''
+        self.assertFalse(widget.validate(ds))
+
+        widget.manage_changeProperties(required_layout_modes=('create',))
+        self.assertTrue(widget.validate(ds)) # no layout mode
+        self.assertTrue(widget.validate(ds, layout_mode='edit'))
+        self.assertFalse(widget.validate(ds, layout_mode='create'))
+
     def testIntWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSIntWidget
         widget = CPSIntWidget('foo')
@@ -434,6 +449,14 @@ class TestWidgets(unittest.TestCase):
         self.assert_(isinstance(dm['foo'], bool))
         self.assertEquals(dm['foo'], 1)
 
+        widget.is_required = True
+        ds['foo'] = None
+        self.assertFalse(widget.validate(ds))
+        widget.manage_changeProperties(required_layout_modes=('create',))
+        self.assertTrue(widget.validate(ds)) # no layout mode
+        self.assertTrue(widget.validate(ds, layout_mode='edit'))
+        self.assertFalse(widget.validate(ds, layout_mode='create'))
+
         # prepare
 
         dm['foo'] = 0
@@ -549,6 +572,13 @@ class TestWidgets(unittest.TestCase):
         widget.translated = True
         self.assertEquals(widget.render('view', ds), unicode('S\xe9lectionnez',
                                                              'latin-1'))
+
+        widget.manage_changeProperties(is_required=True,
+                                       required_layout_modes=('create',))
+        self.assertTrue(widget.validate(ds)) # no layout mode
+        self.assertTrue(widget.validate(ds, layout_mode='edit'))
+        self.assertFalse(widget.validate(ds, layout_mode='create'))
+
 
     def testMultiSelectWidget(self):
         from Products.CPSSchemas.BasicWidgets import CPSMultiSelectWidget

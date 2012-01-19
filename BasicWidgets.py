@@ -230,7 +230,7 @@ class CPSStringWidget(CPSWidget):
         datastructure[self.getWidgetId()] = datamodel[self.fields[0]]
 
 
-    def _extractValue(self, value):
+    def _extractValue(self, value, layout_mode=None):
         """Return err and new value."""
         err = None
         if not value:
@@ -252,7 +252,7 @@ class CPSStringWidget(CPSWidget):
             except (ValueError, UnicodeError):
                 err = 'cpsschemas_err_string'
         if err is None:
-            if self.is_required and not v:
+            if not v and self.isRequired(layout_mode=layout_mode):
                 err = 'cpsschemas_err_required'
             elif self.size_min and len(v) < self.size_min:
                 err = 'cpsschemas_err_string_too_short'
@@ -268,7 +268,8 @@ class CPSStringWidget(CPSWidget):
     def validate(self, datastructure, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
-        err, v = self._extractValue(datastructure[widget_id])
+        err, v = self._extractValue(datastructure[widget_id],
+                                    layout_mode=kw.get('layout_mode'))
         if err:
             datastructure.setError(widget_id, err)
             datastructure[widget_id] = v
@@ -572,7 +573,7 @@ class CPSPasswordWidget(CPSStringWidget):
             return renderHtmlTag('input', **kw)
         raise RuntimeError('unknown mode %s' % mode)
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
@@ -591,7 +592,7 @@ class CPSPasswordWidget(CPSStringWidget):
                     err = 'cpsschemas_err_password_mismatch'
             else:
                 if not v:
-                    if self.is_required:
+                    if self.isRequired(layout_mode=layout_mode):
                         datamodel = datastructure.getDataModel()
                         if not datamodel[self.fields[0]]:
                             err = 'cpsschemas_err_required'
@@ -839,7 +840,7 @@ class CPSLinesWidget(CPSWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def _validateValue(self, value, datastructure, **kw):
+    def _validateValue(self, value, datastructure, layout_mode=None, **kw):
         """Helper method to make it easier to chain validation steps"""
         if value == ['']:
             # Buggy Zope :lines prop may give us [''] instead of []
@@ -847,7 +848,7 @@ class CPSLinesWidget(CPSWidget):
         v = value # Zope handle lines automagically
         if self.auto_strip:
             v = [line.strip() for line in v if line.strip()]
-        if self.is_required and not v:
+        if not v and self.isRequired(layout_mode=layout_mode):
             return None, "cpsschemas_err_required"
         return v, None
 
@@ -974,9 +975,6 @@ InitializeClass(CPSUnorderedListWidget)
 
 ##################################################
 
-
-##################################################
-
 class CPSBooleanWidget(CPSWidget):
     """Boolean widget."""
     meta_type = 'Boolean Widget'
@@ -1017,12 +1015,12 @@ class CPSBooleanWidget(CPSWidget):
         elif not self.has_input_area:
             self.has_input_area = True
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         wid = self.getWidgetId()
         v = datastructure[wid]
 
-        if self.is_required and v is None:
+        if v is None and self.isRequired(layout_mode=layout_mode):
             datastructure.setError(wid, 'cpsschemas_err_required')
             return False
 
@@ -1100,7 +1098,7 @@ class CPSIntWidget(CPSWidget):
                 value = self.thousands_separator.join(thousands)
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
@@ -1111,7 +1109,7 @@ class CPSIntWidget(CPSWidget):
             value = value.replace(self.thousands_separator, '')
 
         if not value:
-            if self.is_required:
+            if self.isRequired(layout_mode=layout_mode):
                 datastructure.setError(widget_id, 'cpsschemas_err_required')
                 return False
             v = None
@@ -1219,7 +1217,7 @@ class CPSFloatWidget(CPSWidget):
                 value = value.replace('.', self.decimals_separator)
         datastructure[self.getWidgetId()] = value
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Validate datastructure and update datamodel."""
         datamodel = datastructure.getDataModel()
         widget_id = self.getWidgetId()
@@ -1232,7 +1230,7 @@ class CPSFloatWidget(CPSWidget):
             value = value.replace(self.decimals_separator, '.')
 
         if not value:
-            if self.is_required:
+            if self.isRequired(layout_mode=layout_mode):
                 datastructure.setError(widget_id, 'cpsschemas_err_required')
                 return False
             v = None
@@ -1310,7 +1308,7 @@ class CPSDateWidget(CPSWidget):
         datastructure[widget_id+'_m'] = m
         datastructure[widget_id+'_y'] = y
 
-    def validate(self, datastructure, **kw):
+    def validate(self, datastructure, layout_mode=None, **kw):
         """Update datamodel from user data in datastructure."""
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
@@ -1321,7 +1319,7 @@ class CPSDateWidget(CPSWidget):
         y = datastructure[widget_id+'_y'].strip()
 
         if not (d+m+y):
-            if self.is_required:
+            if self.isRequired(layout_mode=layout_mode):
                 datastructure[widget_id] = ''
                 datastructure.setError(widget_id, "cpsschemas_err_required")
                 return 0
