@@ -1351,7 +1351,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
         datamodel[self.fields[0]] = v
         return 1
 
-    def render(self, mode, datastructure, **kw):
+    def render(self, mode, datastructure, layout_mode=None, **kw):
         """Render in mode from datastructure."""
         widget_id = self.getWidgetId()
         value = datastructure[widget_id]
