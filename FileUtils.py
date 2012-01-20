@@ -22,6 +22,7 @@ Utilities to deal with files: conversion to HTML, or text.
 """
 
 from copy import deepcopy
+from ZODB.POSException import ConflictError
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.file import ofsFileHandler
 from logging import getLogger
@@ -57,11 +58,20 @@ def _convertFileToMimeType(file, mime_type, context=None, **kwargs):
     else:
         default_encoding = 'utf-8'
 
-    data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
-                                 # filename='fooXXX', encoding='',
-                                 encoding = default_encoding,
-                                 **kwargs
-                                 )
+    try:
+      data = transformer.convertTo(mime_type, raw, mimetype=current_mime_type,
+      	                           # filename='fooXXX', encoding='',
+        	                         encoding = default_encoding,
+                	                 **kwargs
+                        	         )
+    except ConflictError:
+      raise
+    except:
+      
+      logger.exception("Transform failed from %s to %s for %s",
+	current_mime_type, mime_type, repr(file))
+      return None
+
     if not data:
         return None
     return data
