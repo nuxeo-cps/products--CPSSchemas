@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.17.1-CPS-3.5
+===========================================================
+First release built by: gracinet at: 2012-01-20T15:56:37
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2524: don't fail if a transform does
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.17.0-CPS-3.5
 ===========================================================
 First release built by: gracinet at: 2012-01-09T16:11:44
