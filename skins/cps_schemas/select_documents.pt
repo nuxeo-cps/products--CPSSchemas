@@ -1,0 +1,97 @@
+<tal:block
+  tal:define="
+  sections_doc_browser_portlet_url string:${here/portal_url}/portal_cpsportlets/sections_doc_browser/.context;
+  sections_doc_browser_portlet_view string:/.view/dynatree_unfold/unfold.json;
+  ">
+  <script type="text/javascript" tal:content="structure string:
+    var sections_doc_browser_portlet_url = '${sections_doc_browser_portlet_url}';
+    var sections_doc_browser_portlet_view = '${sections_doc_browser_portlet_view}';
+    ">
+  </script>
+
+ <script src="/cps/jquery.min.js" type="text/javascript"></script>
+  <script src="/cps/jquery-ui.custom.min.js" type="text/javascript"></script>
+  <script src="/cps/jquery.cookie.js" type="text/javascript"></script>
+
+  <link href="/cps/ui.dynatree.css" rel="stylesheet" type="text/css" id="skinSheet">
+  <script src="/cps/jquery.dynatree.min.js" type="text/javascript"></script>
+
+
+<script type="text/javascript"
+        src="/cps/tiny_mce_popup.js"></script>
+
+<script type="text/javascript">
+
+var document_browser_dialog = {
+    // Here goes your code for setting your custom things onLoad.
+    init : function () {
+
+    //var win = tinyMCEPopup.getWindowArg("window");
+    //var input = tinyMCEPopup.getWindowArg("input");
+    //var res = tinyMCEPopup.getWindowArg("resizable");
+    //var inline = tinyMCEPopup.getWindowArg("inline");
+
+    },
+
+    // Inserts the retrieved URL value into the original dialog window.
+    submit : function () {
+
+    // Finding out the selected doc URL
+    var active_node = $("#tree").dynatree('getActiveNode');
+    //alert("Currently active: " + active_node.data.title);
+
+    // Note that this URL is a relative URL
+    var url = active_node.data.href;
+
+    // Insert information now
+    var win = tinyMCEPopup.getWindowArg("window");
+    win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = url;
+
+    // close popup window
+    tinyMCEPopup.close();
+    }
+}
+
+tinyMCEPopup.onInit.add(document_browser_dialog.init, document_browser_dialog);
+</script>
+
+
+  <script type="text/javascript">
+$(document).ready(function() {
+
+  $("#tree").dynatree({
+    // using default options
+
+    initAjax: {
+      url: sections_doc_browser_portlet_url + '/sections' + sections_doc_browser_portlet_view
+    },
+
+    onLazyRead: function(node) {
+      node.appendAjax({
+        url: sections_doc_browser_portlet_url + node.data.href + sections_doc_browser_portlet_view,
+        success: function(node) {
+          // Called after nodes have been created and the waiting icon was removed.
+          // 'this' is the options for this Ajax request
+        },
+        error: function(node, XMLHttpRequest, textStatus, errorThrown) {
+          // Called on error, after error icon was created.
+          console.error(errorThrown);
+        }
+      });
+    }
+
+  });
+
+});
+  </script>
+
+<form>
+
+  <div id="tree">
+  </div>
+
+  <p>
+    <button type="button" onclick="document_browser_dialog.submit();">OK</button>
+  </p>
+</form>
+</tal:block>
