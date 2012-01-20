@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSSchemas 1.17.1-2521-finer-is_required
+===========================================================
+First release built by: gracinet at: 2012-01-20T11:39:47
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2521: Finer control of required in widgets
+- #2524: don't fail if a transform does
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.17.0-CPS-3.5
 ===========================================================
 First release built by: gracinet at: 2012-01-09T16:11:44
