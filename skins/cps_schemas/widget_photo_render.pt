@@ -52,7 +52,7 @@
 
       <tal:block condition="subtitle">
         <br/>
-        <span tal:attributes="style string:width:${image_width}px"
+        <span 
               tal:content="subtitle" />
       </tal:block>
     </p>

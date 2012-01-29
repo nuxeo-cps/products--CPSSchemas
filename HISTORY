@@ -16,6 +16,23 @@ New internal features
 - 
 
 ===========================================================
+Package: CPSSchemas 1.17.2-CPS-3.5
+===========================================================
+First release built by: gracinet at: 2012-01-29T14:29:06
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2490: removed harmful style:width on photo captions
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.17.1-CPS-3.5
 ===========================================================
 First release built by: gracinet at: 2012-01-20T15:56:37
