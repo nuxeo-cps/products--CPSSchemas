@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #2521: finer control of required widgets
 Bug fixes
 ~~~~~~~~~
 -
