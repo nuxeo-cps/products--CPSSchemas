@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.15.6-1.15.4-bugfix
+===========================================================
+First release built by: gracinet at: 2012-01-30T16:19:44
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- trigger bump to 1.15.6 on the branch
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.5-1.15.4-bugfix
 ===========================================================
 First release built by: gracinet at: 2012-01-30T16:18:05
