@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- #2494: conversion from UTF8 (LDAP) too permissive (UnicodeError downstream)
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
