@@ -26,7 +26,7 @@ from DateTime.DateTime import DateTime
 from Products.CPSSchemas import BasicFields
 from Products.CPSSchemas.Field import FieldRegistry
 from Products.CPSSchemas.Field import ValidationError
-
+from Products.CPSSchemas.BasicFields import fromUTF8
 
 class FakePortal(Implicit):
     pass
@@ -39,6 +39,13 @@ fakeUrlTool = FakeUrlTool()
 
 fakePortal.portal_url = fakeUrlTool
 
+
+class Unit(unittest.TestCase):
+
+    def test_fromUTF8(self):
+        self.assertEquals(fromUTF8('\xc3\xa9'), u'\xe9')
+        # iso-latin-1 instead of utf8, we return unicode in any case
+        self.assertTrue(isinstance(fromUTF8('\xc9'), unicode))
 
 class BasicFieldTests(unittest.TestCase):
 
@@ -334,7 +341,7 @@ class BasicFieldTests(unittest.TestCase):
         self.assertRaises(ValueError, field.validate, ['a'])
 
 def test_suite():
-    suites = [unittest.makeSuite(BasicFieldTests)]
+    suites = [unittest.makeSuite(klass) for klass in (BasicFieldTests, Unit)]
     return unittest.TestSuite(suites)
 
 if __name__=="__main__":

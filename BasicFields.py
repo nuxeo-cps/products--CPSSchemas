@@ -48,6 +48,8 @@ from Products.CPSSchemas.interfaces import IFieldNodeIO
 
 from Products.CPSUtil.text import OLD_CPS_ENCODING
 
+logger = getLogger(__name__)
+
 #
 # UTF-8
 #
@@ -59,8 +61,11 @@ def toUTF8(s):
     return s.encode('utf-8')
 
 def fromUTF8(s):
-    return unicode(s, 'utf-8')
-
+    try:
+        return unicode(s, 'utf-8')
+    except UnicodeError:
+        logger.warning('convertFromLDAP: Problem recoding %r', s, exc_info=True)
+        return s.decode('utf-8', 'replace')
 
 class CPSIntField(CPSField):
     """Integer field."""
@@ -268,13 +273,7 @@ class CPSStringField(CPSField):
             self.logger.warning('convertFromLDAP: Multi-valued field, '
                                 'cutting: %r', values)
             values = values[:1]
-        value = values[0]
-        try:
-            value = fromUTF8(value)
-        except UnicodeError:
-            self.logger.warning('convertFromLDAP: Problem recoding %r', value)
-            pass
-        return value
+        return fromUTF8(values[0])
 
     def setNodeValue(self, node, value, context):
         """See IFieldNodeIO.
