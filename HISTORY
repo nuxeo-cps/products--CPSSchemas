@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.15.5-1.15.4-bugfix
+===========================================================
+First release built by: gracinet at: 2012-01-30T16:18:05
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2494: conversion from UTF8 (LDAP) too permissive (UnicodeError downstream)
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.15.4
 ===========================================================
 First release built by: gracinet at: 2011-07-07T17:47:16
