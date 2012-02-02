@@ -1251,11 +1251,14 @@ class CPSBooleanWidget(CPSWidget):
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format'},
-        )
+        {'id':'onchange','type':'string','mode':'w','label':'onchange attribute \
+(edit mode only)'},
+	)
     label_false = 'cpsschemas_label_false'
     label_true = 'cpsschemas_label_true'
     render_formats = ('checkbox', 'radio', 'select')
     render_format = render_formats[2]
+    onchange=''
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
