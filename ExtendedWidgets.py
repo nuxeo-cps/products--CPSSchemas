@@ -1194,7 +1194,7 @@ class CPSGenericSelectWidget(CPSSelectWidget):
                         kw = {'type': 'text',
                               'name': html_widget_id+'_other',
                               'value': value,
-                              'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value this.parentNode.submit()",
+                              'onchange': "document.getElementById('"+html_widget_id+"_other_selection').value = this.value ; this.parentNode.submit()",
                               'onclick': "document.getElementById('"+html_widget_id+"_other_selection').checked='checked'",
                               'size': self.other_option_display_width,
                               }
