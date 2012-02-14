@@ -2,7 +2,7 @@
                    value options/value;
                    label_value options/label_value;
                    render_format options/render_format;
-                   onchange here/onchange">
+                   onchange here/onchange|nothing">
 
 <tal:block condition="python:mode == 'view'">
   <tal:block i18n:translate="" tal:content="label_value"/>
