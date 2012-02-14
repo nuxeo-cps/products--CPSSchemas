@@ -1266,7 +1266,11 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        v = datamodel[self.fields[0]]
+        if len(self.fields) > 0:
+            v = datamodel[self.fields[0]]
+        else:
+            v = None
+	
         if v is not None:
             v = bool(v)
         datastructure[self.getWidgetId()] = v
