@@ -3,6 +3,7 @@
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
+# C Goutte <cgoutte@anybox.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -1266,7 +1267,11 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        v = datamodel[self.fields[0]]
+        if len(self.fields) > 0:
+            v = datamodel[self.fields[0]]
+        else:
+            v = None
+	
         if v is not None:
             v = bool(v)
         datastructure[self.getWidgetId()] = v

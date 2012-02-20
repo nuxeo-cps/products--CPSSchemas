@@ -1,7 +1,8 @@
 <tal:block define="mode options/mode;
                    value options/value;
                    label_value options/label_value;
-                   render_format options/render_format">
+                   render_format options/render_format;
+                   onchange here/onchange|nothing">
 
 <tal:block condition="python:mode == 'view'">
   <tal:block i18n:translate="" tal:content="label_value"/>
@@ -45,6 +46,7 @@
       <select tal:attributes="
               name string:${here/getHtmlWidgetId}:boolean;
               id string:${here/getHtmlWidgetId};
+              onchange string:${onchange};
           ">
         <option value="True"
                 tal:attributes="selected true_checked"
