@@ -2,6 +2,7 @@
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
+# C. Goutte <cgoutte@anybox.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -1292,12 +1293,14 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
         # blank_value_ok_if_required = 1)
         {'id': 'blank_value_ok_if_required', 'type': 'boolean', 'mode':'w',
          'label': "Accept blank values when validating"},
-        )
+        {'id': 'onchange', 'type': 'string', 'mode':'w',
+         'label': "onchange attribute (edit mode only)"}
+         )
     render_formats = ['select', 'radio', 'checkbox']
 
     render_format = render_formats[0]
     blank_value_ok_if_required = 1
-
+    onchange = ''
     # BBB for [46171]. Remove this once an upgrade step has been written
     sorted = False
 
@@ -1375,7 +1378,7 @@ class CPSGenericMultiSelectWidget(CPSMultiSelectWidget):
                 kw = {'name': html_widget_id + ':utf8:ulist',
                       'id': html_widget_id,
                       'multiple': 'multiple',
-                      }
+                      'onchange' : self.onchange}
                 if self.size:
                     kw['size'] = self.size
                 res = renderHtmlTag('select', **kw)
