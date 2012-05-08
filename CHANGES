@@ -3,11 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #2521: finer control of required widgets
-- #2501: Onchange attribute is now available for Boolean and Generic(Multi)Select widgets
+-
 Bug fixes
 ~~~~~~~~~
-- #2494: conversion from UTF8 (LDAP) too permissive (UnicodeError downstream)
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
