@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.18.1
+===========================================================
+First release built by: gracinet at: 2012-05-27T21:01:19
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- General merge after CPS 3.5.5 release
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.18.0
 ===========================================================
 First release built by: gracinet at: 2012-01-21T22:23:49
