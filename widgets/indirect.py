@@ -187,7 +187,7 @@ class IndirectWidget(SimpleItemWithProperties, object):
             'has_input_area', 'label_edit', 'hidden_empty', 'required',
             'label', 'help', 'is_i18n', 'fieldset', 'prepare', 'validate',
             'render', 'getHtmlWidgetId', 'getModeFromLayoutMode',
-            'getProperty',
+            'getProperty', 'getFileInfo',
             'isReadOnly', 'getCssClass', 'getJavaScriptCode'])
 
     forwarded_properties = frozenset([
