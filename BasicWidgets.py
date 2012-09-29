@@ -3,6 +3,7 @@
 # Authors:
 # Florent Guillaume <fg@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
+# C Goutte <cgoutte@anybox.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -989,11 +990,14 @@ class CPSBooleanWidget(CPSWidget):
         {'id': 'render_format', 'type': 'selection', 'mode': 'w',
          'select_variable': 'render_formats',
          'label': 'Render format'},
-        )
+        {'id':'onchange','type':'string','mode':'w','label':'onchange attribute \
+(edit mode only)'},
+	)
     label_false = 'cpsschemas_label_false'
     label_true = 'cpsschemas_label_true'
     render_formats = ('checkbox', 'radio', 'select')
     render_format = render_formats[2]
+    onchange=''
 
     # Associating the widget label with an input area to improve the widget
     # accessibility.
@@ -1001,7 +1005,11 @@ class CPSBooleanWidget(CPSWidget):
     def prepare(self, datastructure, **kw):
         """Prepare datastructure from datamodel."""
         datamodel = datastructure.getDataModel()
-        v = datamodel[self.fields[0]]
+        if len(self.fields) > 0:
+            v = datamodel[self.fields[0]]
+        else:
+            v = None
+	
         if v is not None:
             v = bool(v)
         datastructure[self.getWidgetId()] = v

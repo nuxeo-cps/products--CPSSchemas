@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2571 (related): getFileInfo forwarded by IndirectWidgets (eases listing)
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
