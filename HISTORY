@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSSchemas 1.18.2
+===========================================================
+First release built by: gracinet at: 2012-09-30T10:15:53
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2571 (related): getFileInfo forwarded by IndirectWidgets (eases listing)
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSSchemas 1.18.1
 ===========================================================
 First release built by: gracinet at: 2012-05-27T21:01:19
