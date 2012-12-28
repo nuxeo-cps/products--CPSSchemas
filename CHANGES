@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2579: reStructuredText tables miss cell styling
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

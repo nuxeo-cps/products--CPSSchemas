@@ -69,6 +69,14 @@ For the URL Widget
   padding-left: 2em;
 }
 
+table.docutils,
+table.docutils th,
+table.docutils td
+{
+  border: 0.1em solid #cccccc;
+  padding: 0.4em;
+}
+
 /*
 </dtml-with>
 */
