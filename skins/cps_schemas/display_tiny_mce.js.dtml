@@ -44,6 +44,7 @@ function displayTinyMceEditor(htmlWidgetId, selected_language) {
     theme_advanced_resizing : true,
     gecko_spellcheck : true,
     convert_urls : false,
+    body_class : 'ddefault',
     content_css : <dtml-var expr="cps_rte_stylesheets(climb=4)">,
     file_browser_callback : openDocumentBrowser
   });
