@@ -14,7 +14,10 @@ $Id$
 <dtml-with stylesheet_properties>
 */
 
-.ddefault ol,
+.ddefault ol {
+  list-style-type: decimal;
+  margin-left: 2em;
+}
 .ddefault ul {
   list-style: disc;
   margin-left: 2em;
