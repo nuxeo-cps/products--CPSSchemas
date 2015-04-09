@@ -47,6 +47,13 @@ from zope.interface import implements
 from zope.interface import implementedBy
 from Products.CPSSchemas.interfaces import IWidget
 
+# GR importing from CPSDesignerThemes create a loop. I still prefer the small
+# dup. Maybe this kind of constant could go to CPSCore. After all, it would not
+# out of bonds that CPSCore plans for existence of a theming engine of some
+# kind, without precluding much more than "how it operates depends on a small
+# easily serializable piece of data called 'theme_page'"
+REQUEST_NEGOCIATED_THEME_MARKER = 'cps_negociated_theme_page'
+
 logger = logging.getLogger(__name__)
 
 #
@@ -217,6 +224,17 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             review_state = wftool.getInfoFor(proxy, 'review_state', None)
         else:
             review_state = None
+
+        # providing theming info from here as cached from the request
+        # for performance. Expression could also do it through the 'modules'
+        # object, but would have to do it maybe several times and go through
+        # adaptors etc.
+        if REQUEST_NEGOCIATED_THEME_MARKER is None:
+            theme_page = None
+        else:
+            theme_page = getattr(self.REQUEST, REQUEST_NEGOCIATED_THEME_MARKER,
+                                 None)
+        logger.debug("theme_page: %r", theme_page)
         data = {
             'widget': self,
             'datamodel': datamodel,
@@ -229,6 +247,7 @@ class Widget(PropertiesPostProcessor, SimpleItemWithProperties):
             'portal_workflow': wftool,
             'review_state': review_state,
             'layout_mode': layout_mode,
+            'theme_page': theme_page,
             }
         return getEngine().getContext(data)
 
